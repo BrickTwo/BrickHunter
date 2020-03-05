@@ -1,4 +1,4 @@
-var DISPLAYLIST = [["brickId", "designId", "image", "brickLinkColor", "legoColor", "colorCode", "quantity", "maxPrice", "pabprice", "sapPrice"]];
+var DISPLAYLIST;
 var TABLE;
 
 function addBrickToDisplayList(brickId, designId, brickLinkColorId, brickLinkColorName, legoColorName, colorCode, quantity, maxPrice, pabPrice, sapPrice) {

@@ -1,4 +1,5 @@
 var SATERROR = 0;
+var satBricks;
 
 function loadPrices() {
     $("#dialogProgress").dialog({
@@ -12,16 +13,25 @@ function loadPrices() {
     startLoadPrice();
 }
 
+
+
 function startLoadPrice() {
     initDisplayList();
 
+    var lastBrickId = 0;
+
     var i = 0;
     const myInterval = setInterval(function () {
-        if (!loadPrice(i++)) {
+        if(lastBrickId != WANTEDLIST[i].brickId){
+            satBricks = [];
+        }
+        if (!loadPrice(i)) {
             clearInterval(myInterval);
             SATERROR = 0;
         }
-        if (i === $(ITEMS).length) {
+        lastBrickId = WANTEDLIST[i].brickId;
+        i++;
+        if (i === $(WANTEDLIST).length) {
             clearInterval(myInterval);
             afterLoadPrice();
         }
@@ -35,9 +45,12 @@ function afterLoadPrice() {
 }
 
 function loadPrice(index) {
-    $("#dialogProgress").html(`${index}/${ITEMS.length}`);
-    var item = ITEMS[index];
-    var satBricks = loadSteineAndTeile(item.designId);
+    console.log(index);
+    $("#dialogProgress").html(`${index}/${WANTEDLIST.length}`);
+    var item = WANTEDLIST[index];
+    if(satBricks.length == 0){
+        satBricks = loadSteineAndTeile(item.designId);
+    }
     if (SATERROR == 440) {
         $("#dialogSteineTeile").dialog({
             modal: true,
@@ -54,6 +67,7 @@ function loadPrice(index) {
         if (typeof foundSatBrick != 'undefined') {
             if (typeof foundSatBrick.PriceStr != 'undefined') {
                 item.sapPrice = foundSatBrick.Price;
+                item.designId = foundSatBrick.DesignId.toString();
             }
             /*if (typeof foundSatBrick.Asset != 'undefined') {
                 item.image = foundSatBrick.Asset;
@@ -69,17 +83,17 @@ function loadPrice(index) {
             }*/
         }
         if (item.sapPrice <= 0) {
-            item.alternateNo = loadBrickLinkAlternativeNumbers(item.itemId)?.replace(/ /g, "").split(",");
-
+            item.alternateNo = loadBrickLinkAlternativeNumbers(item.brickId)?.replace(/ /g, "").split(",");
             $(item.alternateNo).each(function (index) {
                 item.designId = item.alternateNo[index];
-                satBricks = loadSteineAndTeile(item.designId);
+                satBricks = $.merge(loadSteineAndTeile(item.designId), satBricks);
                 var foundSatBrick = $(satBricks).filter(function (index) {
                     return satBricks[index].ColourDescr.replace(/ /g, "").toUpperCase() == item.color.piecesAndBricksName.replace(/ /g, "").toUpperCase();
                 })[0];
                 if (typeof foundSatBrick != 'undefined') {
                     if (typeof foundSatBrick.PriceStr != 'undefined') {
                         item.sapPrice = foundSatBrick.Price;
+                        item.designId = foundSatBrick.DesignId.toString();
                         return true;
                     }
                 }
@@ -118,7 +132,7 @@ function loadPrice(index) {
         }
 
         addBrickToDisplayList(
-            item.itemId,
+            item.brickId,
             item.designId,
             item.color.brickLinkId,
             item.color.brickLinkName,
@@ -137,6 +151,7 @@ function loadPrice(index) {
 
 
 function loadSteineAndTeile(itemNo) {
+    console.log("load", itemNo);
     var result;
     if (SATERROR > 0) {
         return;
@@ -192,6 +207,10 @@ function loadPickABrick(itemNo) {
 }
 
 function loadBrickLinkAlternativeNumbers(itemNo) {
+    if (typeof itemNo == 'undefined') {
+        return;
+    }
+
     $.ajax({
         type: "GET",
         url: `https://www.bricklink.com/v2/catalog/catalogitem.page?P=${itemNo}`,

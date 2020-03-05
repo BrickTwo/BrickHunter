@@ -13,13 +13,21 @@ function handleFileSelect(evt) {
         return function (e) {
             var output = $.parseXML(e.target.result);
             $("#dialogWantedList").dialog("close");
+            initDisplayList();
             readWantedList(output);
             drawTable();
+            WANTEDLIST.sort(SortByBrickId);
         };
     })(f);
-
+    
     // Read in the image file as a data URL.
     reader.readAsText(f);
+}
+
+function SortByBrickId(a, b) {
+    var aBrickId = a.brickId.toLowerCase();
+    var bBrickId = b.brickId.toLowerCase();
+    return ((aBrickId < bBrickId) ? -1 : ((aBrickId > bBrickId) ? 1 : 0));
 }
 
 function readWantedList(wantedList) {

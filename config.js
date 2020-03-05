@@ -1,1 +1,1 @@
-const maxItemsWantedList = 10;
+const maxItemsWantedList = 1000;
