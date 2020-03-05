@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BrickTwo's glorious brick price finder</title>
+    <link rel="shortcut icon" type="image/png" href="icon.png">
+
+    <script src="jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="jquery-ui-1.12.1/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="styles/examples.css">
+    <link rel="stylesheet" href="styles/kingtable.css" />
+    <link rel="stylesheet" href="styles/open-iconic.min.css" />
+    <link rel="stylesheet" href="css.css" />
+    <script src="jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script src="displaylist.js"></script>    
+    <script src="wantedlist.js"></script>
+    <script src="loadPrices.js"></script>
+    <script src="color.js"></script>
+    <script src="kingtable/kingtable.js"></script>
+    <script src="kingtable/xlsx.core.min.js" async="async"></script>
+    <script src="kingtable/kingtable.xlsx.js"></script>
+  </head>
+  <body class="theme-flatwhite">
+    <h1>BrickTwo's glorious brick price finder (alpha v0.0.3)</h1>
+    <!--<h2>1. Alter und Land auf der LEGO Seite "Steine Kaufen" eingeben</h2>
+    <a
+      href="https://www.lego.com/de-de/service/replacementparts"
+      target="_blank"
+      >Direkt zu LEGO Steine Kaufen gehen</a
+    >
+    <h2>2. Region für Pick a Brick auswählen</h2>
+    <select id="pabLanguage">
+      <option value="de-DE" selected="selected">Deutschland / Deutsch</option>
+      <option value="en-DE">Deutschland / Englisch</option>
+      <option value="de-CH">Schweiz / Deutsch</option>
+      <option value="fr-CH">Suisse / Français</option>
+      <option value="en-CH">Suisse / English</option>
+      <option value="de-AT">Österreich / Deutsch</option>
+      <option value="en-AT">Austria / English</option>
+    </select>
+    <h2>3. Wanted List von BrickLink hier hochladen</h2>
+    <form enctype="multipart/form-data">
+      <input id="upload" type=file   accept="text/xml" name="files[]">
+    </form>-->
+    <div id="dialogCountry" title="Select Country">
+      <p>Please select your country</p>
+      <p><select id="pabLanguage">
+        <option value="de-DE" selected="selected">Deutschland / Deutsch</option>
+        <option value="en-DE">Deutschland / Englisch</option>
+        <option value="de-CH">Schweiz / Deutsch</option>
+        <option value="fr-CH">Suisse / Français</option>
+        <option value="en-CH">Suisse / English</option>
+        <option value="de-AT">Österreich / Deutsch</option>
+        <option value="en-AT">Austria / English</option>
+      </select></p>
+      <p><button id="country">OK</button></p>
+    </div>
+    <div id="dialogWantedList" title="BrickLink Wanted">
+      <p>Please upload BrickLink Wanted List</p>
+      <p><input id="upload" type="file" accept="text/xml" name="files[]" /></p>
+    </div>
+    <div id="dialogSteineTeile" title="Age & Country missing">
+      <p>Please select the age & country on the LEGO Page for Bricks & Pieces</p>
+      <a href="https://www.lego.com/de-de/service/replacementparts" target="_blank">Open LEGO Bircks & Pieces Page</a>
+      <p><button id="ageCountry">Done</button></p>
+    </div>
+    <div id="dialogProgress" title="Progress">
+    </div>
+    <div id="main"></div>
+    <!--<table class="table" id="my-table">
+            <thead>
+                <tr>
+                    <th>BLId</th>
+                    <th>DesignId</th>
+                    <th>Image</th>
+                    <th>Color</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th id="pabTitle">PaB</th>
+                    <th id="satTitle">S&T</th>
+                </tr>
+            </thead>
+            <tbody id="blub">
+
+            </tbody>
+        </table>-->
+  </body>
+</html>
