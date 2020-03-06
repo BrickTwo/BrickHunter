@@ -12,6 +12,6 @@
     },
     "permissions": [
         "https://www.lego.com/",
-        "http://www.bricklink.com/"
+        "https://www.bricklink.com/"
     ]
 }

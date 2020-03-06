@@ -46,7 +46,7 @@ function drawTable() {
     };
 
     TABLE = window.table = new KingTable({
-        id: "colors-table",
+        id: "wantedlist-table",
         data: DISPLAYLIST, // array of items: this demo shows a Fixed table (see tables mode wiki page for more information)
         element: document.getElementById("main"),
         filtersViewExpandable: false,
@@ -84,7 +84,6 @@ function drawTable() {
         }
     });
     TABLE.render();
-    console.log(TABLE);
     $(".pagination-bar-refresh").remove();
     $(".anchor-timestamp-info").remove();
     //$(".pagination-bar-buttons").append('<span tabindex="0" id="loadData" class="pagination-button pagination-bar-getprice oi" data-glyph="data-transfer-dowload" title="LoadData">');

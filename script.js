@@ -1,6 +1,9 @@
 $(document).ready(function () {
+    localStorage.removeItem('colors-table:/home.html.kt:::filters');
+
     $(function () {
         $("#dialogCountry").dialog({
+        //    $("#dialogProgress").dialog({
             dialogClass: "no-close",
             modal: true,
             closeOnEscape: false,
