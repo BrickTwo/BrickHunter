@@ -1,4 +1,4 @@
-var SATERROR = 0;
+var SATERROR440 = false;
 var satBricks;
 
 function loadPrices() {
@@ -27,7 +27,7 @@ function startLoadPrice() {
         }
         if (!loadPrice(i)) {
             clearInterval(myInterval);
-            SATERROR = 0;
+            SATERROR440 = false;
         }
         lastBrickId = WANTEDLIST[i].brickId;
         i++;
@@ -39,7 +39,7 @@ function startLoadPrice() {
 }
 
 function afterLoadPrice() {
-    SATERROR = 0;
+    SATERROR440 = false;
     drawTable();
     $("#dialogProgress").dialog("close");
 }
@@ -55,7 +55,7 @@ function loadPrice(index) {
     if (!satBricks) {
         satBricks = loadSteineAndTeile(item.designId);
     }
-    if (SATERROR == 440) {
+    if (SATERROR440) {
         $("#dialogSteineTeile").dialog({
             modal: true,
             closeOnEscape: false,
@@ -64,7 +64,6 @@ function loadPrice(index) {
         });
         return false;
     } else {
-        SATERROR = 0;
         var foundSatBrick = $(satBricks).filter(function (index) {
             return satBricks[index].ColourDescr.replace(/ /g, "").toUpperCase() == item.color.piecesAndBricksName.replace(/ /g, "").toUpperCase();
         })[0];
@@ -162,14 +161,12 @@ function loadPrice(index) {
 
 function loadSteineAndTeile(itemNo) {
     console.log("load", itemNo);
-    console.log(1, SATERROR);
     var result;
-    if (SATERROR > 0) {
+    if (SATERROR440) {
         return;
     }
 
-    console.log("SteinTeile");
-    console.log(2, `https://www.lego.com/en-US/service/rpservice/getitemordesign?itemordesignnumber=${itemNo}&isSalesFlow=true`);
+    console.log("SteinTeile", `https://www.lego.com/en-US/service/rpservice/getitemordesign?itemordesignnumber=${itemNo}&isSalesFlow=true`);
 
     $.ajax({
         type: "GET",
@@ -182,7 +179,9 @@ function loadSteineAndTeile(itemNo) {
             result = data.Bricks;
         },
         error: function (result) {
-            SATERROR = result.status;
+            if (result.status == 440){
+                SATERROR440 = true;
+            }
         }
     });
 
