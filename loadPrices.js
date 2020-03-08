@@ -64,6 +64,7 @@ function loadPrice(index) {
         });
         return false;
     } else {
+        SATERROR = 0;
         var foundSatBrick = $(satBricks).filter(function (index) {
             return satBricks[index].ColourDescr.replace(/ /g, "").toUpperCase() == item.color.piecesAndBricksName.replace(/ /g, "").toUpperCase();
         })[0];
@@ -161,12 +162,14 @@ function loadPrice(index) {
 
 function loadSteineAndTeile(itemNo) {
     console.log("load", itemNo);
+    console.log(1, SATERROR);
     var result;
     if (SATERROR > 0) {
         return;
     }
 
     console.log("SteinTeile");
+    console.log(2, `https://www.lego.com/en-US/service/rpservice/getitemordesign?itemordesignnumber=${itemNo}&isSalesFlow=true`);
 
     $.ajax({
         type: "GET",
