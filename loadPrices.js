@@ -47,8 +47,8 @@ function afterLoadPrice() {
 function loadPrice(index) {
     console.log(index);
     $("#progressStep").text(`${index}/${WANTEDLIST.length}`);
-    console.log(`https://img.bricklink.com/ItemImage/PT/${WANTEDLIST[index].color.brickLinkId}/${WANTEDLIST[index].brickId}.t1.png`);
-    $("#progressBrickImage").attr("src", `https://img.bricklink.com/ItemImage/PT/${WANTEDLIST[index].color.brickLinkId}/${WANTEDLIST[index].brickId}.t1.png`);
+    console.log(`https://img.bricklink.com/ItemImage/PT/${WANTEDLIST[index]?.color?.brickLinkId}/${WANTEDLIST[index].brickId}.t1.png`);
+    $("#progressBrickImage").attr("src", `https://img.bricklink.com/ItemImage/PT/${WANTEDLIST[index]?.color?.brickLinkId}/${WANTEDLIST[index].brickId}.t1.png`);
     $("#progressBrickImage").css("display", "inline");
     $("#progressBrickId").text(WANTEDLIST[index].brickId);
     var item = WANTEDLIST[index];
@@ -89,7 +89,12 @@ function loadPrice(index) {
             }
         }
         if (item.sapPrice <= 0) {
-            item.alternateNo = loadBrickLinkAlternativeNumbers(item.brickId)?.replace(/ /g, "").split(",");
+            if (~item.brickId.indexOf("pb")){ // if printed brick
+                item.alternateNo = loadBrickLinkDesignNumbers(item.brickId);
+            }
+            else {
+                item.alternateNo = loadBrickLinkAlternativeNumbers(item.brickId)?.replace(/ /g, "").split(",");
+            }
             $(item.alternateNo).each(function (index) {
                 item.designId = item.alternateNo[index];
                 var addSatBricks = loadSteineAndTeile(item.designId);
@@ -143,10 +148,10 @@ function loadPrice(index) {
         addBrickToDisplayList(
             item.brickId,
             item.designId,
-            item.color.brickLinkId,
-            item.color.brickLinkName,
-            item.color.legoName,
-            item.color.colorCode,
+            item?.color?.brickLinkId,
+            item?.color?.brickLinkName,
+            item?.color?.legoName,
+            item?.color?.colorCode,
             item.quantity,
             item.maxPrice,
             item.pabPrice,
@@ -239,4 +244,31 @@ function loadBrickLinkAlternativeNumbers(itemNo) {
     });
 
     return result;
+}
+
+function loadBrickLinkDesignNumbers(itemNo) {
+    if (typeof itemNo == 'undefined') {
+        return;
+    }
+
+    var resultList = [];
+
+    $.ajax({
+        type: "GET",
+        url: `https://www.bricklink.com/catalogColors.asp?itemType=P&itemNo=${itemNo}`,
+        async: false,
+        success: function (data) {
+            var tdList = $($($(data).contents().find("center")[1]).find("table")[3]).find("td");
+            var i = 9;
+            var j = 0;
+            
+            while(tdList.length >= i) {
+                resultList[j] = $(tdList[i])[0].innerText.trim();
+                i += 7;
+                j++;
+            }
+        }
+    });
+
+    return resultList;
 }
