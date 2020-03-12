@@ -33,9 +33,18 @@ function SortByBrickId(a, b) {
 function readWantedList(wantedList) {
     $(wantedList).find('INVENTORY').find('ITEM').each(function (index) {
         var brickLinkColorCode = $(this).find('COLOR').text();
+
+        if(!brickLinkColorCode) {
+            brickLinkColorCode = 0;
+        }
+
         var foundColor = $(COLOR).filter(function (index) {
             return COLOR[index].brickLinkId == brickLinkColorCode;
         })[0];
+
+        if(!foundColor){
+            foundColor = COLOR[0];
+        }
 
         var item = {
             brickId: $(this).find('ITEMID').text(),
@@ -58,10 +67,10 @@ function readWantedList(wantedList) {
         addBrickToDisplayList(
             item.brickId,
             item.designId,
-            item.color?.brickLinkId,
-            item.color?.brickLinkName,
-            item.color?.legoName,
-            item.color?.colorCode,
+            item.color.brickLinkId,
+            item.color.brickLinkName,
+            item.color.legoName,
+            item.color.colorCode,
             item.quantity,
             item.maxPrice,
             0,

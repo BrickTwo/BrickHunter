@@ -1,4 +1,5 @@
 const COLOR = [
+    { brickLinkId: 0, brickLinkName: "Not defined!", legoId: 9999, legoName: "", piecesAndBricksName: "", pickABrickName: "", colorCode: "#FFFFFF" },
     { brickLinkId: 1, brickLinkName: "White", legoId: 1, legoName: "White", piecesAndBricksName: "White", pickABrickName: "White", colorCode: "#F4F4F4" },
     { brickLinkId: 2, brickLinkName: "Tan", legoId: 5, legoName: "Brick Yellow", piecesAndBricksName: "Brick-Yel", pickABrickName: "Brick Yellow", colorCode: "#B0A06F" },
     { brickLinkId: 3, brickLinkName: "Yellow", legoId: 24, legoName: "Bright Yellow", piecesAndBricksName: "Br.Yel", pickABrickName: "Bright Yellow", colorCode: "#FAC80A" },
