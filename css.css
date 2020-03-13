@@ -21,6 +21,9 @@
 #dialogSteineTeile {
     display: none;
 }
+#dialog404 {
+    display: none;
+}
 #dialogProgress {
     display: none;
 }

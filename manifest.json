@@ -1,7 +1,8 @@
 {
     "manifest_version": 2,
     "name": "BrickHunter",
-    "version": "0.0.5",
+    "description": "Upload a WantedList from BrickLink and search automatic for offizial prices on the LEGO page.",
+    "version": "0.0.6",
     "icons": {
         "96": "icon.png"
     },
