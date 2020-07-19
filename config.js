@@ -1,1 +1,0 @@
-const maxItemsWantedList = 100;
