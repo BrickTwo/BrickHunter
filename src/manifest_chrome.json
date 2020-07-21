@@ -4,7 +4,7 @@
   "description": "Upload a WantedList from BrickLink and search automatic for offizial prices on the LEGO page.",
   "default_locale": "de",
   "permissions": [
-    "tabs",
+    "declarativeContent",
     "<all_urls>",
     "*://*/*"
   ],
@@ -19,7 +19,7 @@
     ]
   },
   "page_action": {
-    "show_matches": ["https://*.lego.com/*"],
+    "show_matches": ["*://*.lego.com/*"],
     "default_popup": "popup.html",
     "default_title": "__MSG_extName__",
     "default_icon": {

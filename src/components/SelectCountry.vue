@@ -1,4 +1,5 @@
 <template>
+  <div style="width: 500px">
     <ValidationObserver ref="observer" v-slot="{ invalid }">
         <b-form @submit.prevent="onSubmit" novalidate>
             <b-form-group label="Dein Land" label-for="country">
@@ -10,7 +11,7 @@
             <b-button type="submit" variant="primary">Speichern</b-button>
         </b-form>
     </ValidationObserver>
-  
+  </div>
 </template>
 <script>
 export default {

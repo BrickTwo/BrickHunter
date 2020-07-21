@@ -1,11 +1,4 @@
-browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (tab.url.indexOf('https://www.lego.com') == 0) {
-    browser.pageAction.show(tabId);
-  } else {
-    browser.pageAction.hide(tabId);
-  }
-});
-/*chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(function() {
   // Replace all rules ...
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     // With a new rule ...
@@ -22,7 +15,7 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       }
     ]);
   });
-});*/
+});
 
 browser.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {

@@ -1,20 +1,31 @@
-<template>
+    <template>
   <div style="width: 770px">
-    <span><xml-reader @load="loadXml" style="width: 650px" ></xml-reader></span>
+    <span>
+        <xml-reader @load="loadXml" style="width: 650px" v-if="isChrome"></xml-reader>
+        <b-button variant="primary" v-if="!isChrome && !loadWantedList" @click="loadWantedList=true">WantedList</b-button>
+        <xml-field @load="loadXml" @cancel="loadWantedList=false" style="width: 650px" v-if="loadWantedList"></xml-field>
+    </span>
     <span style="margin-left: 10px; vertical-align: bottom;" v-if="priceLoaded"><div style="width: 200px;"></div></span>
-    <span style="margin-left: 10px; vertical-align: bottom" v-if="!priceLoaded"><b-button variant="primary" @click="loadPrice">Lade Preis</b-button></span>
-    <span style="font-weight: bolder;">Pick a Brick geladen:</span><span> {{pabBrickCounter}}/{{totalBricks}}</span>
-    <span style="font-weight: bolder; margin-left: 10px;">Steine und Teile geladen:</span><span> {{satBrickCounter}}/{{totalBricks}}</span>
+    <span style="margin-left: 10px; vertical-align: bottom" v-if="!priceLoaded && !loadWantedList"><b-button variant="primary" @click="loadPrice">Lade Preis</b-button></span>
+    <span style="margin-left: 10px; vertical-align: bottom;" v-if="!priceLoaded && !isChrome"><div style="width: 200px;"></div></span>
+    <span v-if="!loadWantedList">
+        <span style="font-weight: bolder;">Pick a Brick geladen:</span>
+        <span> {{pabBrickCounter}}/{{totalBricks}}</span>
+        <span style="font-weight: bolder; margin-left: 10px;">Steine und Teile geladen:</span>
+        <span> {{satBrickCounter}}/{{totalBricks}}</span>
+    </span>
     <vuetable ref="vuetable"
     :api-mode="false"
     :data="wantedList"
     :fields="columns"
+     v-if="!loadWantedList"
   ></vuetable>
   </div>
 </template>
 
 <script>
 import XmlReader from "./XmlReader";
+import XmlField from "./XmlField";
 import Vuetable from 'vuetable-2/src/components/Vuetable'
 import { brickProcessorMixin } from "@/mixins/brickProcessorMixin";
 import { brickColorMixin } from "@/mixins/brickColorMixin";
@@ -24,6 +35,8 @@ import { brickLinkProcessorMixin } from "@/mixins/brickLinkProcessorMixin";
 export default {
     name: 'UploadWantedList',
     data: () => ({ 
+        isChrome: navigator.userAgent.indexOf("Chrome") != -1,
+        loadWantedList: false,
         totalBricks: 0,
         pabBrickCounter: 0,
         satBrickCounter: 0,
@@ -65,12 +78,14 @@ export default {
         }),
   components: {
     XmlReader,
+    XmlField,
     Vuetable
   },
   mixins: [brickProcessorMixin, brickColorMixin, requestsMixin, brickLinkProcessorMixin],
   methods: {
     loadXml (wantedList) {
         //console.log(wantedList);
+        this.loadWantedList = false;
         this.priceLoaded = false;
         this.totalBricks = 0;
         this.pabBrickCounter = 0;

@@ -13,6 +13,12 @@ module.exports = {
           entry: 'src/background.js'
         }
       }
+    },
+    manifestTransformer: (manifest) => {
+      if (process.env.BROWSER === 'chrome') {
+        manifest.permissions.push('pageCapture')
+      }
+      return manifest
     }
   }
 }
