@@ -98,13 +98,17 @@ export default {
                 //console.log(this.ItemIdToDesignId(item.itemid));
                 item.searchids = [this.CleanItemId(item.itemid)];
                 item.designid = "";
-                item.color = item.color[0];
-                item.color = this.FindColor(item.color, this.COLOR);
+                if(item.color){
+                    item.color = item.color[0];
+                    item.color = this.FindColor(item.color, this.COLOR);
+                } else {
+                    item.color = this.FindColor(0, this.COLOR);
+                }
                 item.maxprice = item.maxprice[0];
                 item.minqty = item.minqty[0];
                 item.condition = item.condition[0];
                 item.notify = item.notify[0];
-                item.image = `https://img.bricklink.com/ItemImage/PT/${item.color.brickLinkId}/${item.itemid}.t1.png`;
+                item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color.brickLinkId}/${item.itemid}.t1.png`;
                 item.sat = null;
                 item.pab = null;
             })

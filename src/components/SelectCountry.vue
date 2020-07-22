@@ -21,7 +21,7 @@ export default {
         form_country: null,
         options: [
           { value: 'de', text: 'Deutschland' },
-          { value: 'at', text: 'Östereich' },
+          { value: 'at', text: 'Österreich' },
           { value: 'ch', text: 'Schweiz' }
         ]
     };
