@@ -84,7 +84,10 @@ browser.runtime.onMessage.addListener(
           'x-api-key': 'saVSCq0hpuxYV48mrXMGfdKnMY1oUs3s'
         },
       })
-        .then(response => response.json())
+        .then(response => {
+          console.log(response)
+          response.json()
+        })
         .then(results => sendResponse(results))
       return true;  // Will respond asynchronously.
     }

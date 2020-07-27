@@ -3,7 +3,6 @@
 </template>
 <script>
 export default {
-  name: "SelectCountry",
   data() {
     return {
         form_country: null,
@@ -17,7 +16,6 @@ export default {
   methods: {
     changeCountry() {
         localStorage.setItem("country", this.form_country);
-        console.log(this.form_country);
         this.$emit('countrySelected', this.form_country)
         //this.$store.commit("setKeyword", this.form.keyword);
     }

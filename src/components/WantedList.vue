@@ -5,14 +5,15 @@
         <b-button variant="primary" v-if="!isChrome && !loadWantedList" @click="loadWantedList=true">WantedList</b-button>
         <xml-field @load="loadXml" @cancel="loadWantedList=false" style="width: 650px" v-if="loadWantedList"></xml-field>
     </span>
-    <span style="margin-left: 10px; vertical-align: bottom;" v-if="priceLoaded"><div style="width: 200px;"></div></span>
-    <span style="margin-left: 10px; vertical-align: bottom" v-if="!priceLoaded && !loadWantedList"><b-button variant="primary" @click="loadPrice">Lade Preis</b-button></span>
-    <span style="margin-left: 10px; vertical-align: bottom;" v-if="!priceLoaded && !isChrome"><div style="width: 200px;"></div></span>
+    <!--<span style="margin-left: 10px; vertical-align: bottom;" v-if="priceLoaded"><div style="width: 200px;"></div></span>-->
+    <span style="margin-left: 10px; vertical-align: bottom" v-if="!loadWantedList"><b-button variant="primary" @click="loadPrice">Lade Preis</b-button></span>
+    <!--<span style="margin-left: 10px; vertical-align: bottom;" v-if="!priceLoaded && !isChrome"><div style="width: 200px;"></div></span>-->
     <span v-if="!loadWantedList">
-        <span style="font-weight: bolder;">Pick a Brick geladen:</span>
+        <b-progress :value="loadPercentage" :max="100" show-progress animated v-if="loadPercentage < 100" style="margin-top: 10px"></b-progress>
+        <!--<span style="font-weight: bolder;">Pick a Brick geladen:</span>
         <span> {{pabBrickCounter}}/{{totalBricks}}</span>
         <span style="font-weight: bolder; margin-left: 10px;">Steine und Teile geladen:</span>
-        <span> {{satBrickCounter}}/{{totalBricks}}</span>
+        <span> {{satBrickCounter}}/{{totalBricks}} : {{this.loadPercentage}}</span> -->
     </span>
     <vuetable ref="vuetable"
     :api-mode="false"
@@ -33,19 +34,20 @@ import { requestsMixin } from "@/mixins/requestsMixin";
 import { brickLinkProcessorMixin } from "@/mixins/brickLinkProcessorMixin";
 
 export default {
-    name: 'UploadWantedList',
     data: () => ({ 
         isChrome: navigator.userAgent.indexOf("Chrome") != -1,
         loadWantedList: false,
         totalBricks: 0,
         pabBrickCounter: 0,
         satBrickCounter: 0,
+        loadPercentage: 100,
         priceLoaded: true,
         wantedList: [],
         columns: [
             {
                 name: '__sequence',
-                title: "#"
+                title: "#",
+                callback: 'lineNumber'
             },
             {
                 name: 'itemid',
@@ -114,7 +116,7 @@ export default {
             })
             this.wantedList = [...list[0]];
             this.totalBricks = this.wantedList.length;
-            console.log(this.wantedList);
+            this.$store.commit("setWantedList", this.wantedList);
             return list;
         });
     },
@@ -131,8 +133,13 @@ export default {
         var returnValue = `${value.price.currency} ${value.price.amount}<br><span style="color: grey; font-size: small;">[${value.designId}]</span>`;
         return returnValue;
     },
+    lineNumber(value) {
+        console.log(value)
+        return value +1 
+    },
     loadPrice() {
         this.priceLoaded = true;
+        this.loadPercentage = 0;
 
         this.wantedList.map((item, i) => {
             this.delay(200 * this.wantedList.length - 200 * i).then(d => {
@@ -160,7 +167,7 @@ export default {
                             if(id){
                                 await browser.runtime.sendMessage({contentScriptQuery: "SteineUndTeile", itemId: id})
                                 .then(response => {
-                                    //console.log("SteineUndTeile", response);
+                                    //console.log("SteineUndTeile", id);
                                     bricks = bricks.concat(response.bricks);
                                 })
                                 .catch(error => {
@@ -171,31 +178,60 @@ export default {
 
                     Promise.all(requests)
                     .then(value => {
+                        console.log("SteineUndTeile", item.itemid);
                         var foundBrick = this.FindBrick(item, bricks);
                         if(foundBrick) {
                             item.sat = foundBrick;
                         }
+                        this.satBrickCounter++;
+                        this.calcLoad();
                     })
-                    this.satBrickCounter++;
+                    .catch(() => {
+                        console.log("SteineUndTeileerror", item.itemid);
+                        this.satBrickCounter++;
+                        this.calcLoad();
+                    })
+                    
                 })
                 .then(value=>{
                     browser.runtime.sendMessage({contentScriptQuery: "PickABrick", itemId: item.searchids.join('-')})
                     .then(response => {
+                        console.log("PickABrick", item.searchids.join('-'));
                         var foundBrick = this.FindBrickPab(item, response);
                         if(foundBrick) {
                             item.pab = foundBrick;
                         }
+                        this.pabBrickCounter++;
+                        this.calcLoad();
                     })
-                    this.pabBrickCounter++;
+                    .catch(() => {
+                        this.pabBrickCounter++;
+                        this.calcLoad();
+                    })
                 });
             });
         });
+
+        
     },
     delay(t, data) {
         return new Promise(resolve => {
             setTimeout(resolve.bind(null, data), t);
-        });
+        })
+    },
+    calcLoad(){
+        console.log("pab: ", this.pabBrickCounter, " sap: ", this.satBrickCounter)
+        var one = 100/this.totalBricks/2;
+
+        this.loadPercentage = Math.round((one*this.pabBrickCounter) + (one*this.satBrickCounter))
+        if(this.loadPercentage == 100) {
+            this.$store.commit("setWantedList", this.wantedList);
+        }
     }
+  },
+  beforeMount() {
+    this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
+    this.totalBricks = this.wantedList.length
   }
 }
 </script>
