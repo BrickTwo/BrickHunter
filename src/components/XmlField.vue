@@ -7,8 +7,10 @@
         rows="6"
         max-rows="6"
         ></b-form-textarea>
-        <b-button variant="secondary" @click="cancelXml">Abbrechen</b-button>
-        <b-button variant="primary" @click="loadXml">Lade WantedList</b-button>
+        <p style="margin-top: 10px">
+            <b-button variant="primary" @click="loadXml">Lade WantedList</b-button>
+            <b-button variant="danger" @click="cancelXml" style="margin-left: 10px">Abbrechen</b-button>
+        </p>
     </span>
 </template>
 
