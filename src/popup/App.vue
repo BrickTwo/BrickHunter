@@ -8,7 +8,7 @@
       <b-navbar-nav class="ml-auto" v-if="showPage!='selectCountry'">
         
         <b-nav-item @click="showPage = 'wantedList'"><!-- <b-icon icon="card-list" aria-hidden="true"></b-icon> -->Wanted List</b-nav-item>
-        <!-- <b-nav-item href="#"><b-icon icon="cart" aria-hidden="true"></b-icon> Shopping</b-nav-item> -->
+        <b-nav-item @click="showPage = 'shopping'"><!-- <b-icon icon="cart" aria-hidden="true"></b-icon>  -->Shopping</b-nav-item>
         <!-- <b-nav-item href="#"><b-icon icon="question-circle" aria-hidden="true"></b-icon> Tipps</b-nav-item> -->
 
         <b-nav-item-dropdown>
@@ -29,6 +29,7 @@
     <div class="page">
       <SelectCountry @countrySelected="onCountrySelected" v-if="showPage=='selectCountry'"/>
       <WantedList v-if="showPage=='wantedList'"/>
+      <Shopping v-if="showPage=='shopping'"/>
       <ExportWantedList v-if="showPage=='exportWantedList'"/>
     </div>
   </div>
@@ -38,12 +39,13 @@
 import SelectCountry from '@/components/SelectCountry.vue'
 import SelectCountryOneLine from '@/components/SelectCountryOneLine.vue'
 import WantedList from '@/components/WantedList.vue'
+import Shopping from '@/components/Shopping.vue'
 import ExportWantedList from '@/components/ExportWantedList.vue'
 import BrickList from '@/components/BrickList.vue'
 
 export default {
   name: 'App',
-  components: { SelectCountry, SelectCountryOneLine, WantedList, ExportWantedList, BrickList },
+  components: { SelectCountry, SelectCountryOneLine, WantedList, Shopping, ExportWantedList, BrickList },
   data() {
     return {
       showPage: 'wantedList',

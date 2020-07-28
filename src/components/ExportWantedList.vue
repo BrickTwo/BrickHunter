@@ -91,7 +91,7 @@ export default {
         onChangeWriteSourceOfPriceInRemark(checked) {
             localStorage.setItem("writeSourceOfPriceInRemark", checked)
         },
-        onChangeBehaviourOnSamePrice(checked ) {
+        onChangeBehaviourOnSamePrice(checked) {
             localStorage.setItem("behaviourOnSamePrice", checked)
         },
         onDownload() {
@@ -133,7 +133,7 @@ export default {
                 var pabPrice = 0;
 
                 if (wantedList[i].sat && wantedList[i].sat.price && wantedList[i].sat.price.amount) sapPrice = wantedList[i].sat.price.amount
-                if (wantedList[i].pab && wantedList[i].pab && wantedList[i].pab.variant.price && wantedList[i].pab.variant.price.centAmount) pabPrice = wantedList[i].pab.variant.price.centAmount / 100
+                if (wantedList[i].pab && wantedList[i].pab.variant && wantedList[i].pab.variant.price && wantedList[i].pab.variant.price.centAmount) pabPrice = wantedList[i].pab.variant.price.centAmount / 100
                 var price = this.calculatePrice(pabPrice, sapPrice, wantedList[i].maxprice);
 
                 var remarks = "";
@@ -170,20 +170,19 @@ export default {
             return brickLink;
         },
         calculatePrice(pabPrice, sapPrice, blPrice) {
-            if (!pabPrice) pabPrice = 0;
-            if (!sapPrice) sapPrice = 0;
-            if (!blPrice) blPrice = 0;
+            if (!pabPrice) pabPrice = 0
+            if (!sapPrice) sapPrice = 0
+            if (!blPrice) blPrice = 0
 
             var prices = Array()
-            console.log(this.exportPickaBrickPrices, pabPrice)
 
             if(this.exportPickaBrickPrices && pabPrice > 0) prices.push(["pab", pabPrice])
             if(this.exportStonesAndPiecesPrices && sapPrice > 0) prices.push(["sap", sapPrice])
             if(blPrice > 0) prices.push(["bl", blPrice])
 
             if(prices.length == 0) return ["bl", '-1.0000']
-            prices = prices.sort(function(a, b){return a[1]-b[1]});
-            console.log(prices);
+            prices = prices.sort(function(a, b){return a[1]-b[1]})
+            console.log(prices)
             return prices[0]
         }
     },

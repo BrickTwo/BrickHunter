@@ -85,8 +85,8 @@ browser.runtime.onMessage.addListener(
         },
       })
         .then(response => {
-          console.log(response)
-          response.json()
+          //console.log(response.json())
+          return response.json()
         })
         .then(results => sendResponse(results))
       return true;  // Will respond asynchronously.
