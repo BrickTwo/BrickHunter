@@ -37,8 +37,8 @@
             </b-form-radio-group>
         </b-form-group>
 
-        <b-button variant="primary" @click="onDownload">Download</b-button>
-        <b-button variant="primary" @click="onCopy" style="margin-left: 5px">Kopieren</b-button>
+        <b-button variant="primary" @click="onDownload" :disabled="!wantedList || wantedList.length == 0">Download</b-button>
+        <b-button variant="primary" @click="onCopy" :disabled="!wantedList || wantedList.length == 0" style="margin-left: 5px">Kopieren</b-button>
 
         <!-- <input type="text" value="" id="wantedList" style="position:absolute; top: 5000px"> -->
         <textarea id="wantedList" style="position:absolute; top: 5000px">
@@ -192,6 +192,7 @@ export default {
         this.writeLegoIdInRemark = localStorage.getItem("writeLegoIdInRemark") || true
         this.writeSourceOfPriceInRemark = localStorage.getItem("writeSourceOfPriceInRemark") || true
         this.behaviourOnSamePrice = localStorage.getItem("behaviourOnSamePrice") || 'sap'
+        this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
     }
 }
 </script>

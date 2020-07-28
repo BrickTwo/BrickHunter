@@ -1,12 +1,16 @@
     <template>
-  <div style="width: 770px">
-    <span>
-        <xml-reader @load="loadXml" style="width: 650px" v-if="isChrome"></xml-reader>
+  <div>
+    <p>
+        <xml-reader @load="loadXml" style="width: 500px" v-if="isChrome"></xml-reader>
         <b-button variant="primary" v-if="!isChrome && !loadWantedList" @click="loadWantedList=true">WantedList</b-button>
         <xml-field @load="loadXml" @cancel="loadWantedList=false" style="width: 650px" v-if="loadWantedList"></xml-field>
-    </span>
-    <!--<span style="margin-left: 10px; vertical-align: bottom;" v-if="priceLoaded"><div style="width: 200px;"></div></span>-->
-    <span style="margin-left: 10px; vertical-align: bottom" v-if="!loadWantedList"><b-button variant="primary" @click="loadPrice">Lade Preis</b-button></span>
+        <b-button variant="primary" @click="loadPrice" style="margin-left: 10px; vertical-align: bottom;" :disabled="!wantedList || wantedList.length == 0" v-if="!loadWantedList">Lade Preise</b-button>
+        <b-button variant="danger" @click="clear" style="margin-left: 10px; vertical-align: bottom;" v-if="!loadWantedList">Leeren</b-button>
+    </p>
+    <!-- <span style="margin-left: 10px; vertical-align: bottom;" v-if="priceLoaded"><div style="width: 200px;"></div></span>-->
+    <!-- <p style="margin-top: 10px" v-if="!loadWantedList">
+        
+    </p> -->
     <!--<span style="margin-left: 10px; vertical-align: bottom;" v-if="!priceLoaded && !isChrome"><div style="width: 200px;"></div></span>-->
     <span v-if="!loadWantedList">
         <b-progress :value="loadPercentage" :max="100" show-progress animated v-if="loadPercentage < 100" style="margin-top: 10px"></b-progress>
@@ -134,8 +138,14 @@ export default {
         return returnValue;
     },
     lineNumber(value) {
-        console.log(value)
+        //console.log(value)
         return value +1 
+    },
+    clear() {
+        //this.$refs.vuetable.resetData
+        this.wantedList = []
+        //this.wantedList = null
+        this.$store.commit("setWantedList", this.wantedList);
     },
     loadPrice() {
         this.priceLoaded = true;
@@ -168,19 +178,19 @@ export default {
                                 await browser.runtime.sendMessage({contentScriptQuery: "SteineUndTeile", itemId: id})
                                 .then(response => {
                                     //console.log("SteineUndTeile", id);
-                                    console.log(response)
+                                    //console.log(response)
                                     bricks = bricks.concat(response.bricks);
                                     
                                 })
                                 .catch(error => {
-                                    console.log("error", error);
+                                    //console.log("error", error);
                                 });
                             }
                         });
 
                     Promise.all(requests)
                     .then(value => {
-                        console.log("SteineUndTeile", item.itemid, bricks);
+                        //console.log("SteineUndTeile", item.itemid, bricks);
                         var foundBrick = this.FindBrick(item, bricks);
                         if(foundBrick) {
                             item.sat = foundBrick;
@@ -233,7 +243,8 @@ export default {
   },
   beforeMount() {
     this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
-    this.totalBricks = this.wantedList.length
+    this.totalBricks = 0
+    if(this.wantedList) this.totalBricks = this.wantedList.length
   }
 }
 </script>
