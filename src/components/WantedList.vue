@@ -168,17 +168,19 @@ export default {
                                 await browser.runtime.sendMessage({contentScriptQuery: "SteineUndTeile", itemId: id})
                                 .then(response => {
                                     //console.log("SteineUndTeile", id);
+                                    console.log(response)
                                     bricks = bricks.concat(response.bricks);
+                                    
                                 })
                                 .catch(error => {
-                                    //console.log("error", error);
+                                    console.log("error", error);
                                 });
                             }
                         });
 
                     Promise.all(requests)
                     .then(value => {
-                        console.log("SteineUndTeile", item.itemid);
+                        console.log("SteineUndTeile", item.itemid, bricks);
                         var foundBrick = this.FindBrick(item, bricks);
                         if(foundBrick) {
                             item.sat = foundBrick;
@@ -187,7 +189,7 @@ export default {
                         this.calcLoad();
                     })
                     .catch(() => {
-                        console.log("SteineUndTeileerror", item.itemid);
+                        //console.log("SteineUndTeileerror", item.itemid);
                         this.satBrickCounter++;
                         this.calcLoad();
                     })
@@ -196,7 +198,7 @@ export default {
                 .then(value=>{
                     browser.runtime.sendMessage({contentScriptQuery: "PickABrick", itemId: item.searchids.join('-')})
                     .then(response => {
-                        console.log("PickABrick", item.searchids.join('-'));
+                        //console.log("PickABrick", item.searchids.join('-'));
                         var foundBrick = this.FindBrickPab(item, response);
                         if(foundBrick) {
                             item.pab = foundBrick;
@@ -220,7 +222,7 @@ export default {
         })
     },
     calcLoad(){
-        console.log("pab: ", this.pabBrickCounter, " sap: ", this.satBrickCounter)
+        //console.log("pab: ", this.pabBrickCounter, " sap: ", this.satBrickCounter)
         var one = 100/this.totalBricks/2;
 
         this.loadPercentage = Math.round((one*this.pabBrickCounter) + (one*this.satBrickCounter))
