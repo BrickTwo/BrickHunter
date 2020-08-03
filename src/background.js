@@ -5,24 +5,11 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     browser.pageAction.hide(tabId);
   }
 });
-/*chrome.runtime.onInstalled.addListener(function() {
-  // Replace all rules ...
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    // With a new rule ...
-    chrome.declarativeContent.onPageChanged.addRules([
-      {
-        // That fires when a page's URL contains a 'g' ...
-        conditions: [
-          new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { hostEquals: 'www.lego.com' },
-          })
-        ],
-        // And shows the extension's page action.
-        actions: [ new chrome.declarativeContent.ShowPageAction() ]
-      }
-    ]);
-  });
-});*/
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    
+ });
 
 browser.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -90,6 +77,17 @@ browser.runtime.onMessage.addListener(
         })
         .then(results => sendResponse(results))
       return true;  // Will respond asynchronously.
+    }
+    else if (request.contentScriptQuery == "sapFillCart") {
+      //console.log("sessionStorage.setItem('b_and_p_buy_" + locale.toUpperCase() + "', '" + JSON.stringify(request.order)+ "')")
+      chrome.tabs.executeScript({
+        code: "sessionStorage.setItem('b_and_p_buy_" + locale.toUpperCase() + "', '" + JSON.stringify(request.order)+ "')"
+      });
+      browser.tabs.query({'currentWindow': true, 'active': true})
+      .then(tabs => {
+          var tab = tabs[0]
+          browser.tabs.update(tab.id, {url: `https://www.lego.com/${locale4}/service/replacementparts/sale`})
+      })
     }
   }     
 )

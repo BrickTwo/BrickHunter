@@ -35,6 +35,10 @@
         Pick a Brick: {{currency}} {{pabPrice}}<br />
         Steine und Teile: {{currency}} {{satPrice}}<br />
         Total: {{currency}} {{Math.round((satPrice + pabPrice)*100)/100}}
+
+        <hr>
+
+        <b-button variant="primary" @click="sapFillCart" :disabled="!wantedList || wantedList.length == 0">Steine & Teile Warenkorb füllen</b-button>
     </div>
 </template>
 
@@ -54,6 +58,38 @@ export default {
         }
     },
     methods: {
+        sapFillCart(){
+            var order = []
+
+            for(var i = 0; i < this.wantedList.length; i++) {
+                if(this.wantedList[i].sat){
+                    var qty = this.wantedList[i].minqty
+                    if(qty > 200) qty = 200 // it's not possible to order more than 200 pieces per brick
+
+                    var pos = {
+                        id: this.wantedList[i].sat.designId,
+                        product: this.wantedList[i].sat,
+                        quantity: parseInt(qty)
+                    }
+
+                    pos.product.description = pos.product.description.replace(/[\""]/g, '\\"')  // escape quotes in description
+                    //console.log(pos.product.description)
+                    order.push(pos)
+                }
+            }
+
+            browser.runtime.sendMessage({contentScriptQuery: "sapFillCart", order: order})
+            //browser.runtime.sendMessage("placeOrder")
+
+            /*browser.tabs.query({'currentWindow': true, 'active': true})
+            .then(tabs => {
+                var tab = tabs[0]
+                browser.tabs.update(tab.id, {url: 'https://www.lego.com/de-ch/service/replacementparts/sale'})
+            }).then(() => {
+                browser.runtime.sendMessage("selectCountry")
+            })*/
+            
+        },
         onChangedUsePickaBrick(checked){
             this.usePickaBrick = checked
             if(!checked) {
@@ -89,7 +125,7 @@ export default {
             localStorage.setItem("behaviourOnSamePriceShopping", checked)
             this.calcTotalPrice()
         },
-        calculatePrice(pabPrice, sapPrice, blPrice) {
+        /*calculatePrice(pabPrice, sapPrice, blPrice) {
             if (!pabPrice) pabPrice = 0;
             if (!sapPrice) sapPrice = 0
             if (!blPrice) blPrice = 0
@@ -104,7 +140,7 @@ export default {
             prices = prices.sort(function(a, b){return a[1]-b[1]})
             
             return prices[0]
-        },
+        },*/
         calcTotalPrice() {
             this.satPositions = 0
             this.pabPositions = 0
@@ -118,6 +154,8 @@ export default {
                 if (this.wantedList[i].sat && this.wantedList[i].sat.price && this.wantedList[i].sat.price.amount) sapPrice = this.wantedList[i].sat.price.amount
                 if (this.wantedList[i].pab && this.wantedList[i].pab.variant && this.wantedList[i].pab.variant.price && this.wantedList[i].pab.variant.price.centAmount) pabPrice = this.wantedList[i].pab.variant.price.centAmount / 100
                 var price = this.getPrice(pabPrice, sapPrice, this.wantedList[i].maxprice)
+
+                console.log(price)
 
                 if(price[1]) {
                     if(price[0] == 'sap'){
@@ -141,7 +179,7 @@ export default {
             if (!sapPrice) sapPrice = 0
 
             var prices = Array()
-
+            console.log(this.usePickaBrick, pabPrice > 0, this.usePickaBrick && pabPrice > 0)
             if(this.usePickaBrick && pabPrice > 0) prices.push(['pab', pabPrice])
             if(this.useStonesAndPieces && sapPrice > 0) prices.push(['sap', sapPrice])
 
@@ -155,8 +193,8 @@ export default {
 
     },
     beforeMount() {
-        this.usePickaBrick = localStorage.getItem("usePickaBrick") || true
-        this.useStonesAndPieces = localStorage.getItem("useStonesAndPieces") || true
+        this.usePickaBrick = ((localStorage.getItem("usePickaBrick") || 'true') === 'true')
+        this.useStonesAndPieces = ((localStorage.getItem("useStonesAndPieces") || 'true') === 'true')
         this.behaviourOnSamePrice = localStorage.getItem("behaviourOnSamePriceShopping") || 'sap'
         this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
 
