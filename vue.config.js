@@ -11,14 +11,15 @@ module.exports = {
       componentOptions: {
         background: {
           entry: 'src/background.js'
-        }
+        }/*,
+        contentScripts: {
+          entries: {
+            'content-script': [
+              'src/contentScript.js'
+            ]
+          }
+        }*/
       }
-    },
-    manifestTransformer: (manifest) => {
-      if (process.env.BROWSER === 'chrome') {
-        manifest.permissions.push('pageCapture')
-      }
-      return manifest
     }
   }
 }
