@@ -19,19 +19,14 @@
         <span style="font-weight: bolder; margin-left: 10px;">Steine und Teile geladen:</span>
         <span> {{satBrickCounter}}/{{totalBricks}} : {{this.loadPercentage}}</span> -->
     </span>
-    <vuetable ref="vuetable"
-    :api-mode="false"
-    :data="wantedList"
-    :fields="columns"
-     v-if="!loadWantedList"
-  ></vuetable>
+    <brick-list v-if="!loadWantedList" :bricklist="wantedList"></brick-list>
   </div>
 </template>
 
 <script>
 import XmlReader from "./XmlReader";
 import XmlField from "./XmlField";
-import Vuetable from 'vuetable-2/src/components/Vuetable'
+import BrickList from "./BrickList"
 import { brickProcessorMixin } from "@/mixins/brickProcessorMixin";
 import { brickColorMixin } from "@/mixins/brickColorMixin";
 import { requestsMixin } from "@/mixins/requestsMixin";
@@ -46,46 +41,12 @@ export default {
         satBrickCounter: 0,
         loadPercentage: 100,
         priceLoaded: true,
-        wantedList: [],
-        columns: [
-            {
-                name: '__sequence',
-                title: "#",
-                callback: 'lineNumber'
-            },
-            {
-                name: 'itemid',
-                title: "Id"
-            },
-            {
-                name: 'image',
-                title: "Bild",
-                callback: 'showImage'
-            },
-            {
-                name: 'color.legoName',
-                title: "BrickLink Farbe"
-            },
-            {
-                name: 'minqty',
-                title: "Anzahl"
-            },
-            {
-                name: 'pab',
-                title: "Pick a Brick Preis",
-                callback: 'pabPrice'
-            },
-            {
-                name: 'sat',
-                title: "Steine & Teile Preis",
-                callback: 'satPrice'
-            }
-        ]
+        wantedList: []
         }),
   components: {
     XmlReader,
     XmlField,
-    Vuetable
+    BrickList
   },
   mixins: [brickProcessorMixin, brickColorMixin, requestsMixin, brickLinkProcessorMixin],
   methods: {
@@ -124,23 +85,6 @@ export default {
             return list;
         });
     },
-    showImage(value) {
-        return `<img src="${value}" height="40">`
-    },
-    pabPrice(value) {
-        if(!value) return "";
-        var returnValue = `${value.variant.price.currencyCode} ${value.variant.price.centAmount/100}<br><span style="color: grey; font-size: small;">[${value.variant.attributes.designNumber}]</span>`;
-        return returnValue;
-    },
-    satPrice(value) {
-        if(!value) return "";
-        var returnValue = `${value.price.currency} ${value.price.amount}<br><span style="color: grey; font-size: small;">[${value.designId}]</span>`;
-        return returnValue;
-    },
-    lineNumber(value) {
-        //console.log(value)
-        return value +1 
-    },
     clear() {
         //this.$refs.vuetable.resetData
         this.wantedList = []
@@ -149,7 +93,14 @@ export default {
     },
     loadPrice() {
         this.priceLoaded = true;
+        this.pabBrickCounter = 0;
+        this.satBrickCounter = 0;
         this.loadPercentage = 0;
+
+        for(var i = 0; i < this.wantedList.length; i++ ){
+            this.wantedList[i].sat = null
+            this.wantedList[i].pab = null
+        }
 
         this.wantedList.map((item, i) => {
             this.delay(200 * this.wantedList.length - 200 * i).then(d => {
@@ -234,11 +185,12 @@ export default {
     calcLoad(){
         //console.log("pab: ", this.pabBrickCounter, " sap: ", this.satBrickCounter)
         var one = 100/this.totalBricks/2;
-
+        
         this.loadPercentage = Math.round((one*this.pabBrickCounter) + (one*this.satBrickCounter))
         if(this.loadPercentage == 100) {
             this.$store.commit("setWantedList", this.wantedList);
         }
+        //console.log(this.loadPercentage)
     }
   },
   beforeMount() {

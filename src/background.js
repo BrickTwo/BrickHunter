@@ -31,6 +31,11 @@ browser.runtime.onMessage.addListener(
         break;
     }
 
+    const timeout = setTimeout(function() {
+      //didTimeOut = true;
+      reject(new Error('Request timed out'));
+    }, 5000);
+
     if (request.contentScriptQuery == "PickABrick") {
       var PickABrickQuery = {
         operationName: "PickABrickQuery",
@@ -53,7 +58,13 @@ browser.runtime.onMessage.addListener(
             },
             body: JSON.stringify(PickABrickQuery)
         })
-        .then(response => response.json())
+        .then(response => {
+          clearTimeout(timeout)
+          return response.json()
+        })
+        .catch(err => {
+          return sendResponse(null)
+        })
         .then(data => data.data.elements.results)
         .then(results => sendResponse(results))
       return true;  // Will respond asynchronously.
@@ -73,7 +84,11 @@ browser.runtime.onMessage.addListener(
       })
         .then(response => {
           //console.log(response.json())
+          clearTimeout(timeout)
           return response.json()
+        })
+        .catch(err => {
+          return sendResponse(null)
         })
         .then(results => sendResponse(results))
       return true;  // Will respond asynchronously.
@@ -82,12 +97,14 @@ browser.runtime.onMessage.addListener(
       //console.log("sessionStorage.setItem('b_and_p_buy_" + locale.toUpperCase() + "', '" + JSON.stringify(request.order)+ "')")
       chrome.tabs.executeScript({
         code: "sessionStorage.setItem('b_and_p_buy_" + locale.toUpperCase() + "', '" + JSON.stringify(request.order)+ "')"
-      });
+      })
       browser.tabs.query({'currentWindow': true, 'active': true})
       .then(tabs => {
           var tab = tabs[0]
           browser.tabs.update(tab.id, {url: `https://www.lego.com/${locale4}/service/replacementparts/sale`})
       })
+      sendResponse(true)
+      return true
     }
   }     
 )
