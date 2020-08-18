@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "__MSG_extName__",
+  "description": "Upload a WantedList from BrickLink and search automatic for offizial prices on the LEGO page.",
+  "default_locale": "de",
+  "permissions": [
+    "tabs",
+    "<all_urls>",
+    "*://*/*"
+  ],
+  "icons": {
+    "16": "icons/icon_16.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ]
+  },
+  "page_action": {
+    "show_matches": ["https://*.lego.com/*"],
+    "default_popup": "popup.html",
+    "default_title": "__MSG_extName__",
+    "default_icon": {
+      "16": "icons/icon_16.png",
+      "24": "icons/icon_24.png",
+      "32": "icons/icon_32.png"
+    }
+  }
+}
