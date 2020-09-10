@@ -138,14 +138,14 @@ export default {
         },
         sapFillCart(){
             var order = []
-
+            console.log("saplist", this.sapList)
             for(var i = 0; i < this.sapList.length; i++) {
                 if(this.sapList[i].sat){
                     var qty = this.sapList[i].minqty
                     if(qty > 200) qty = 200 // it's not possible to order more than 200 pieces per brick
 
                     var pos = {
-                        id: this.sapList[i].sat.designId,
+                        id: this.sapList[i].sat.itemNumber,
                         product: this.sapList[i].sat,
                         quantity: parseInt(qty)
                     }
