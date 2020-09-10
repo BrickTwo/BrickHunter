@@ -51,6 +51,11 @@
             <brick-list :bricklist="sapList" :limitMaxQty="true"></brick-list>
         </div>
         <div v-if="page=='pab'">
+            <b-button id="btn-pab-add-to-card" variant="primary" @click="pabFillCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">Pick a Brick füllen</b-button>
+            <b-button variant="danger" @click="pabClearCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick" style="margin-left: 10px;">Pick a Brick Warenkorb leeren</b-button>
+            <span>
+                <b-progress :value="loadPAPPercentage" :max="100" show-progress animated v-if="loadPAPPercentage < 100" style="margin-top: 10px"></b-progress>
+            </span>
             <brick-list :bricklist="pabList"></brick-list>
         </div>
     </div>
@@ -73,24 +78,75 @@ export default {
             satPrice: 0,
             pabPrice: 0,
             currency: null,
-            page: 'overview'
+            page: 'overview',
+            pabShoppingCartId: null,
+            authorization: null,
+            loadPAPPercentage: 100
         }
     },
     components: {
         BrickList
     },
     methods: {
+        pabClearCart(){            
+            browser.runtime.sendMessage({contentScriptQuery: "PickABrickClearCart", authorization: this.authorization, PABCartId: this.pabShoppingCartId})
+            .then(response => {
+                console.log("PickABrickClearCart", response);
+                browser.tabs.query({'currentWindow': true, 'active': true})
+                .then(tabs => {
+                    var tab = tabs[0]
+                    //var countrySelected = localStorage.getItem("country") || null
+                    browser.tabs.update(tab.id, {url: `https://www.lego.com/page/static/pick-a-brick`})
+                })
+            })
+            .catch(() => {
+                
+            })
+        },
+        async pabFillCart() {
+            var percentageSingle = 100/this.pabList.length
+            this.loadPAPPercentage = 0
+            for(var i = 0; i < this.pabList.length; i++) {
+                this.loadPAPPercentage += percentageSingle
+                console.log(this.pabList[i])
+                await this.pabAddToCart(this.pabList[i])
+            }
+            this.loadPAPPercentage = 100
+            browser.tabs.query({'currentWindow': true, 'active': true})
+            .then(tabs => {
+                var tab = tabs[0]
+                //var countrySelected = localStorage.getItem("country") || null
+                browser.tabs.update(tab.id, {url: `https://www.lego.com/page/static/pick-a-brick`})
+            })
+        },
+        async pabAddToCart(item) {
+            if(item.pab){
+                var qty = item.minqty
+                if(qty > 999) qty = 999 // it's not possible to order more than 200 pieces per brick
+
+                var partId = item.pab.variant.id
+                
+                var response = await browser.runtime.sendMessage({contentScriptQuery: "PickABrickAddToCart", authorization: this.authorization, PABCartId: this.pabShoppingCartId, qty: qty, partId: partId})
+                console.log("PickABrickAddToCart", response);
+                /*.then(response => {
+                    console.log("PickABrickAddToCart", response);
+                })
+                .catch(() => {
+                    
+                })*/
+            }
+        },
         sapFillCart(){
             var order = []
-
-            for(var i = 0; i < this.wantedList.length; i++) {
-                if(this.wantedList[i].sat){
-                    var qty = this.wantedList[i].minqty
+            console.log("saplist", this.sapList)
+            for(var i = 0; i < this.sapList.length; i++) {
+                if(this.sapList[i].sat){
+                    var qty = this.sapList[i].minqty
                     if(qty > 200) qty = 200 // it's not possible to order more than 200 pieces per brick
 
                     var pos = {
-                        id: this.wantedList[i].sat.designId,
-                        product: this.wantedList[i].sat,
+                        id: this.sapList[i].sat.itemNumber,
+                        product: this.sapList[i].sat,
                         quantity: parseInt(qty)
                     }
 
@@ -124,7 +180,7 @@ export default {
             
         },
         sapClearCart(){
-            browser.runtime.sendMessage({contentScriptQuery: "sapFillCart", order: ""})
+            browser.runtime.sendMessage({contentScriptQuery: "sapClearCart"})
             .then(response => {
                 
                 console.log(response)
@@ -133,7 +189,6 @@ export default {
                     autoHideDelay: 5000,
                     variant: 'success'
                 })
-                
             })
 
             //browser.runtime.sendMessage("placeOrder")
@@ -271,6 +326,33 @@ export default {
         this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
 
         this.calcTotalPrice()
+
+        browser.runtime.sendMessage({contentScriptQuery: "readQAuth"})
+        .then(response => {
+            this.authorization = response;
+            //console.log("authorization", this.authorization);
+            browser.runtime.sendMessage({contentScriptQuery: "PickABrickReadCart", authorization: this.authorization})
+            .then(response => {
+                //console.log("PickABrickReadCart", response);
+                this.pabShoppingCartId = response.id;
+                //console.log("PickABrickReadCartId", this.pabShoppingCartId);
+            })
+            .catch(() => {
+                
+            })
+        })
+        .catch(() => {
+            
+        })
+        
+        /*browser.runtime.sendMessage({contentScriptQuery: "PickABrickLogin"})
+                    .then(response => {
+                        this.authorization = response.login
+                        console.log("PickABrickLogin", response);
+                    })
+                    .catch(() => {
+                        
+                    })*/
     }
 }
 </script>
