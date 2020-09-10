@@ -8,7 +8,7 @@ export const brickLinkProcessorMixin = {
       },
       FindDesignNumbers(html) {
         //console.log("printed", html);
-        var startPos = html.data.indexOf("mapPCCs")+15;
+        var startPos = html.data.indexOf("mapPCCs")+16;
         var length = html.data.substr(startPos).indexOf('"');
         var alternateNo = html.data.substr(startPos,length);
         //console.log("printed array", alternateNo.replace(/ /g, "").split(","));
