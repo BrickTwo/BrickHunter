@@ -180,7 +180,7 @@ export default {
             
         },
         sapClearCart(){
-            browser.runtime.sendMessage({contentScriptQuery: "sapFillCart", order: ""})
+            browser.runtime.sendMessage({contentScriptQuery: "sapClearCart"})
             .then(response => {
                 
                 console.log(response)
@@ -189,7 +189,6 @@ export default {
                     autoHideDelay: 5000,
                     variant: 'success'
                 })
-                
             })
 
             //browser.runtime.sendMessage("placeOrder")

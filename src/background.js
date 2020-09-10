@@ -253,5 +253,18 @@ browser.runtime.onMessage.addListener(
       sendResponse(true)
       return true
     }
+    else if (request.contentScriptQuery == "sapClearCart") {
+      //console.log("sessionStorage.setItem('b_and_p_buy_" + locale.toUpperCase() + "', '" + JSON.stringify(request.order)+ "')")
+      chrome.tabs.executeScript({
+        code: "sessionStorage.removeItem('b_and_p_buy_" + locale.toUpperCase() + "')"
+      })
+      browser.tabs.query({'currentWindow': true, 'active': true})
+      .then(tabs => {
+          var tab = tabs[0]
+          browser.tabs.update(tab.id, {url: `https://www.lego.com/${locale4}/service/replacementparts/sale`})
+      })
+      sendResponse(true)
+      return true
+    }
   }     
 )
