@@ -1,11 +1,14 @@
     <template>
   <div>
     <p>
-        <xml-reader @load="loadXml" style="width: 500px" v-if="isChrome"></xml-reader>
+        <xml-reader @load="loadXml" style="width: 470px" v-if="isChrome"></xml-reader>
         <b-button variant="primary" v-if="!isChrome && !loadWantedList" @click="loadWantedList=true">WantedList</b-button>
         <xml-field @load="loadXml" @cancel="loadWantedList=false" style="width: 650px" v-if="loadWantedList"></xml-field>
         <b-button variant="primary" @click="loadPrice" style="margin-left: 10px; vertical-align: bottom;" :disabled="!wantedList || wantedList.length == 0" v-if="!loadWantedList">Lade Preise</b-button>
         <b-button variant="danger" @click="clear" style="margin-left: 10px; vertical-align: bottom;" v-if="!loadWantedList">Leeren</b-button>
+        <b-button variant="primary" @click="print" style="margin-left: 10px; vertical-align: bottom;" :disabled="!wantedList || wantedList.length == 0" v-if="!loadWantedList">
+            <b-icon icon="printer" aria-hidden="true"></b-icon>
+        </b-button>
     </p>
     <!-- <span style="margin-left: 10px; vertical-align: bottom;" v-if="priceLoaded"><div style="width: 200px;"></div></span>-->
     <!-- <p style="margin-top: 10px" v-if="!loadWantedList">
@@ -19,7 +22,9 @@
         <span style="font-weight: bolder; margin-left: 10px;">Steine und Teile geladen:</span>
         <span> {{satBrickCounter}}/{{totalBricks}} : {{this.loadPercentage}}</span> -->
     </span>
+    <div  id="wantedList">
     <brick-list v-if="!loadWantedList" :bricklist="wantedList"></brick-list>
+    </div>
   </div>
 </template>
 
@@ -191,6 +196,10 @@ export default {
             this.$store.commit("setWantedList", this.wantedList);
         }
         //console.log(this.loadPercentage)
+    },
+    print(){
+        console.log("print")
+        this.$htmlToPaper('wantedList')
     }
   },
   beforeMount() {
