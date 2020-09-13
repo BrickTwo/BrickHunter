@@ -53,8 +53,11 @@ export default {
             selectedSapOptions: [],
             options: [
                 { text: 'Id', value: 'bricklinkId' },
-                { text: 'Anzahl', value: 'quantity' },
-                { text: 'LEGO Bezeichnung', value: 'legoDescription' }
+                { text: 'Anzahl Want', value: 'want' },
+                { text: 'Anzahl Have', value: 'have' },
+                { text: 'Anzahl Differenz', value: 'balance' },
+                { text: 'LEGO Bezeichnung', value: 'legoDescription' },
+                { text: 'BrickLink Max Price', value: 'blMaxPrice' }
             ],
             optionsColor: [
                 { text: 'BrickLink Id', value: 'brickLinkId' },
@@ -92,8 +95,14 @@ export default {
                     console.log('bricklinkId', true)
                     csvLine = this.addToCSVLine(csvLine, element.itemid)
                 }
-                if(this.selectedOptions.includes('quantity')){
-                    csvLine = this.addToCSVLine(csvLine, element.minqty)
+                if(this.selectedOptions.includes('want')){
+                    csvLine = this.addToCSVLine(csvLine, element.qty.min)
+                }
+                if(this.selectedOptions.includes('have')){
+                    csvLine = this.addToCSVLine(csvLine, element.qty.have)
+                }
+                if(this.selectedOptions.includes('balance')){
+                    csvLine = this.addToCSVLine(csvLine, element.qty.balance)
                 }
                 if(this.selectedOptions.includes('legoDescription')){
                     if(element.sat){
@@ -105,6 +114,9 @@ export default {
                     else{
                         csvLine = this.addToCSVLine(csvLine, '')
                     }                    
+                }
+                if(this.selectedOptions.includes('blMaxPrice')){
+                    csvLine = this.addToCSVLine(csvLine, element.maxprice)                   
                 }
 
                 // color options
@@ -209,12 +221,21 @@ export default {
             if(this.selectedOptions.includes('bricklinkId')){
                 csvLine = this.addToCSVLine(csvLine, 'Id')
             }
-            if(this.selectedOptions.includes('quantity')){
-                csvLine = this.addToCSVLine(csvLine, 'Anzahl')
+            if(this.selectedOptions.includes('want')){
+                csvLine = this.addToCSVLine(csvLine, 'Anzahl Want')
+            }
+            if(this.selectedOptions.includes('have')){
+                csvLine = this.addToCSVLine(csvLine, 'Anzahl Have')
+            }
+            if(this.selectedOptions.includes('balance')){
+                csvLine = this.addToCSVLine(csvLine, 'Anzahl Differenz')
             }
             if(this.selectedOptions.includes('legoDescription')){
                 csvLine = this.addToCSVLine(csvLine, 'LEGO Bezeichnung')                   
             }
+            if(this.selectedOptions.includes('blMaxPrice')){
+                csvLine = this.addToCSVLine(csvLine, 'BrickLink Max Price')                   
+            }            
 
             // color options
             if(this.selectedColorOptions.includes('brickLinkId')){
@@ -285,7 +306,7 @@ export default {
     beforeMount() {
         this.wantedList = JSON.parse(localStorage.getItem('wantedList') || null)
 
-        var selection = localStorage.getItem('selectedOptions') || 'bricklinkId,quantity,legoDescription'
+        var selection = localStorage.getItem('selectedOptions') || 'bricklinkId,balance,legoDescription'
         this.selectedOptions = selection.split(',')
 
         selection = localStorage.getItem('selectedColorOptions') || 'brickLinkName'

@@ -77,7 +77,20 @@ export default {
                     item.color = this.FindColor(0, this.COLOR);
                 }
                 item.maxprice = item.maxprice[0];
-                item.minqty = item.minqty[0];
+                item.qty = {
+                    min: 0,
+                    have: 0,
+                    balance: 0,
+                    order: 0
+                }
+                item.qty.min = item.minqty[0];
+                if(item.qtyfilled){
+                    item.qty.have = item.qtyfilled[0];
+                }
+                item.qty.balance = item.qty.min - item.qty.have
+                if(item.qty.balance < 0){
+                    item.qty.balance = 0
+                }
                 item.condition = item.condition[0];
                 item.notify = item.notify[0];
                 item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color.brickLinkId}/${item.itemid}.t1.png`;
