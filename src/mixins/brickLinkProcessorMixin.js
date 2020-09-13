@@ -13,6 +13,13 @@ export const brickLinkProcessorMixin = {
         var alternateNo = html.data.substr(startPos,length);
         //console.log("printed array", alternateNo.replace(/ /g, "").split(","));
         return alternateNo.replace(/ /g, "").split(",");
+      },
+      ReturnModelsObject(html) {
+        var startPos = html.data.indexOf("blapp.models.set(")+18;
+        var length = html.data.substr(startPos).indexOf(');');
+        var models = html.data.substr(startPos,length);
+        console.log(JSON.parse(models))
+        return JSON.parse(models)
       }
     }
   };

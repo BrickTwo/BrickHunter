@@ -16,7 +16,7 @@
             <!-- <b-icon icon="arrow-bar-up" aria-hidden="true"></b-icon> -->Export
           </template>
           <b-dropdown-item @click="showPage = 'exportWantedList'">Wanted List</b-dropdown-item>
-          <!-- <b-dropdown-item href="#">CSV</b-dropdown-item> -->
+          <b-dropdown-item @click="showPage = 'exportCsv'">CSV</b-dropdown-item>
         </b-nav-item-dropdown>
 
         <!-- <b-nav-item href="#"><b-icon icon="info-circle" aria-hidden="true"></b-icon> About</b-nav-item> -->
@@ -31,6 +31,7 @@
       <WantedList v-if="showPage=='wantedList'"/>
       <Shopping v-if="showPage=='shopping'"/>
       <ExportWantedList v-if="showPage=='exportWantedList'"/>
+      <ExportCsv v-if="showPage=='exportCsv'"/>
     </div>
   </div>
 </template>
@@ -41,11 +42,12 @@ import SelectCountryOneLine from '@/components/SelectCountryOneLine.vue'
 import WantedList from '@/components/WantedList.vue'
 import Shopping from '@/components/Shopping.vue'
 import ExportWantedList from '@/components/ExportWantedList.vue'
+import ExportCsv from '@/components/ExportCsv.vue'
 import BrickList from '@/components/BrickList.vue'
 
 export default {
   name: 'App',
-  components: { SelectCountry, SelectCountryOneLine, WantedList, Shopping, ExportWantedList, BrickList },
+  components: { SelectCountry, SelectCountryOneLine, WantedList, Shopping, ExportWantedList, ExportCsv, BrickList },
   data() {
     return {
       showPage: 'wantedList',
