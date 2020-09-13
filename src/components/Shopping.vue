@@ -3,25 +3,30 @@
         <b-form-checkbox
             id="usePickaBrick"
             v-model="usePickaBrick"
-            @change="onChangedUsePickaBrick"
             >
             Pick a Brick verwenden
         </b-form-checkbox>
         <b-form-checkbox
             id="useStonesAndPieces"
             v-model="useStonesAndPieces"
-            @change="onChangedUseStonesAndPieces"
             >
             Steine und Teile verwenden
         </b-form-checkbox>
 
         <b-form-group label="Was soll bei gleichem Preis bevorzugt werden?" style="margin-top: 10px">
-            <b-form-radio-group v-model="behaviourOnSamePrice" @change="onChangeBehaviourOnSamePrice" name="behaviourOnSamePrice">
+            <b-form-radio-group v-model="behaviourOnSamePrice" name="behaviourOnSamePrice">
                 <b-form-radio value="pab" :disabled="!usePickaBrick">Pick a Brick</b-form-radio>
                 <b-form-radio value="sap" :disabled="!useStonesAndPieces">Steine und Teile</b-form-radio>
                 <b-form-radio value="bl">BrickLink</b-form-radio>
             </b-form-radio-group>
         </b-form-group>
+
+        <b-form-checkbox
+            id="useHave"
+            v-model="useHave"
+            >
+            Vorhandene Steine berücksichtigen
+        </b-form-checkbox>
 
 
         <b-nav tabs>
@@ -46,17 +51,29 @@
             <p style="margin-top: 5px; margin-bottom: 5px;">
                 <b-button id="btn-sap-add-to-card" variant="primary" @click="sapFillCart" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces">Steine & Teile Warenkorb füllen</b-button>
                 <b-button variant="danger" @click="sapClearCart" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces" style="margin-left: 10px;">Steine & Teile Warenkorb leeren</b-button>
+                <b-button variant="primary" @click="printSap" style="margin-left: 10px; vertical-align: bottom;" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces">
+                    <b-icon icon="printer" aria-hidden="true"></b-icon>
+                </b-button>
                 <b-tooltip target="btn-sap-add-to-card" variant="danger">Zuvor ausgewählte Steine &amp; Teile werden aus dem Warenkorb entfernt!</b-tooltip>
             </p>
-            <brick-list :bricklist="sapList" :limitMaxQty="true"></brick-list>
+            <div id="sapList">
+                <brick-list :bricklist="sapList" :limitMaxQty="200"></brick-list>
+            </div>
         </div>
         <div v-if="page=='pab'">
-            <b-button id="btn-pab-add-to-card" variant="primary" @click="pabFillCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">Pick a Brick füllen</b-button>
-            <b-button variant="danger" @click="pabClearCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick" style="margin-left: 10px;">Pick a Brick Warenkorb leeren</b-button>
-            <span>
-                <b-progress :value="loadPAPPercentage" :max="100" show-progress animated v-if="loadPAPPercentage < 100" style="margin-top: 10px"></b-progress>
-            </span>
-            <brick-list :bricklist="pabList"></brick-list>
+            <p style="margin-top: 5px; margin-bottom: 5px;">
+                <b-button id="btn-pab-add-to-card" variant="primary" @click="pabFillCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">Pick a Brick füllen</b-button>
+                <b-button variant="danger" @click="pabClearCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick" style="margin-left: 10px;">Pick a Brick Warenkorb leeren</b-button>
+                <b-button variant="primary" @click="printPab" style="margin-left: 10px; vertical-align: bottom;" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">
+                    <b-icon icon="printer" aria-hidden="true"></b-icon>
+                </b-button>
+                <span>
+                    <b-progress :value="loadPAPPercentage" :max="100" show-progress animated v-if="loadPAPPercentage < 100" style="margin-top: 10px"></b-progress>
+                </span>
+            </p>
+            <div id="pabList">
+                <brick-list :bricklist="pabList" :limitMaxQty="999"></brick-list>
+            </div>
         </div>
     </div>
 </template>
@@ -70,6 +87,7 @@ export default {
             usePickaBrick: null,
             useStonesAndPieces: null,
             behaviourOnSamePrice: null,
+            useHave: null,
             wantedList: null,
             sapList: null,
             pabList: null,
@@ -91,7 +109,7 @@ export default {
         pabClearCart(){            
             browser.runtime.sendMessage({contentScriptQuery: "PickABrickClearCart", authorization: this.authorization, PABCartId: this.pabShoppingCartId})
             .then(response => {
-                console.log("PickABrickClearCart", response);
+                //console.log("PickABrickClearCart", response);
                 browser.tabs.query({'currentWindow': true, 'active': true})
                 .then(tabs => {
                     var tab = tabs[0]
@@ -108,7 +126,7 @@ export default {
             this.loadPAPPercentage = 0
             for(var i = 0; i < this.pabList.length; i++) {
                 this.loadPAPPercentage += percentageSingle
-                console.log(this.pabList[i])
+                //console.log(this.pabList[i])
                 await this.pabAddToCart(this.pabList[i])
             }
             this.loadPAPPercentage = 100
@@ -121,27 +139,20 @@ export default {
         },
         async pabAddToCart(item) {
             if(item.pab){
-                var qty = item.minqty
-                if(qty > 999) qty = 999 // it's not possible to order more than 200 pieces per brick
+                var qty = item.qty.order
+                if(qty > 999) qty = 999 // it's not possible to order more than 999 pieces per brick
 
                 var partId = item.pab.variant.id
                 
                 var response = await browser.runtime.sendMessage({contentScriptQuery: "PickABrickAddToCart", authorization: this.authorization, PABCartId: this.pabShoppingCartId, qty: qty, partId: partId})
-                console.log("PickABrickAddToCart", response);
-                /*.then(response => {
-                    console.log("PickABrickAddToCart", response);
-                })
-                .catch(() => {
-                    
-                })*/
             }
         },
         sapFillCart(){
             var order = []
-            console.log("saplist", this.sapList)
+            //console.log("saplist", this.sapList)
             for(var i = 0; i < this.sapList.length; i++) {
                 if(this.sapList[i].sat){
-                    var qty = this.sapList[i].minqty
+                    var qty = this.sapList[i].qty.order
                     if(qty > 200) qty = 200 // it's not possible to order more than 200 pieces per brick
 
                     var pos = {
@@ -159,7 +170,7 @@ export default {
             browser.runtime.sendMessage({contentScriptQuery: "sapFillCart", order: order})
             .then(response => {
                 
-                console.log(response)
+                //console.log(response)
                 this.$bvToast.toast(`Warenkorb erfolgreich befüllt`, {
                     title: 'Steine & Teile',
                     autoHideDelay: 5000,
@@ -167,92 +178,18 @@ export default {
                 })
                 
             })
-
-            //browser.runtime.sendMessage("placeOrder")
-
-            /*browser.tabs.query({'currentWindow': true, 'active': true})
-            .then(tabs => {
-                var tab = tabs[0]
-                browser.tabs.update(tab.id, {url: 'https://www.lego.com/de-ch/service/replacementparts/sale'})
-            }).then(() => {
-                browser.runtime.sendMessage("selectCountry")
-            })*/
-            
         },
         sapClearCart(){
             browser.runtime.sendMessage({contentScriptQuery: "sapClearCart"})
             .then(response => {
-                
-                console.log(response)
+                //console.log(response)
                 this.$bvToast.toast(`Warenkorb erfolgreich geleert`, {
                     title: 'Steine & Teile',
                     autoHideDelay: 5000,
                     variant: 'success'
                 })
-            })
-
-            //browser.runtime.sendMessage("placeOrder")
-
-            /*browser.tabs.query({'currentWindow': true, 'active': true})
-            .then(tabs => {
-                var tab = tabs[0]
-                browser.tabs.update(tab.id, {url: 'https://www.lego.com/de-ch/service/replacementparts/sale'})
-            }).then(() => {
-                browser.runtime.sendMessage("selectCountry")
-            })*/
-            
+            })            
         },
-        onChangedUsePickaBrick(checked){
-            this.usePickaBrick = checked
-            if(!checked) {
-                if(this.behaviourOnSamePrice == 'pab'){
-                    if(this.useStonesAndPieces) {
-                        this.behaviourOnSamePrice = 'sap'
-                    } else {
-                        this.behaviourOnSamePrice = 'bl'
-                    }
-                }
-            }
-            localStorage.setItem("usePickaBrick", checked)
-            localStorage.setItem("behaviourOnSamePriceShopping", this.behaviourOnSamePrice)
-            this.calcTotalPrice()
-        },
-        onChangedUseStonesAndPieces(checked){
-            this.useStonesAndPieces = checked
-            if(!checked) {
-                if(this.behaviourOnSamePrice == 'sap'){
-                    if(this.usePickaBrick) {
-                        this.behaviourOnSamePrice = 'pab'
-                    } else {
-                        this.behaviourOnSamePrice = 'bl'
-                    }
-                }
-            }
-            localStorage.setItem("useStonesAndPieces", checked)
-            localStorage.setItem("behaviourOnSamePriceShopping", this.behaviourOnSamePrice)
-            this.calcTotalPrice()
-        },
-        onChangeBehaviourOnSamePrice(checked) {
-            this.behaviourOnSamePrice = checked
-            localStorage.setItem("behaviourOnSamePriceShopping", checked)
-            this.calcTotalPrice()
-        },
-        /*calculatePrice(pabPrice, sapPrice, blPrice) {
-            if (!pabPrice) pabPrice = 0;
-            if (!sapPrice) sapPrice = 0
-            if (!blPrice) blPrice = 0
-
-            var prices = Array()
-
-            if(this.usePickaBrick && pabPrice > 0) prices.push(["pab", pabPrice])
-            if(this.useStonesAndPieces && sapPrice > 0) prices.push(["sap", sapPrice])
-            if(blPrice > 0) prices.push(["bl", blPrice])
-
-            if(prices.length == 0) return ["bl", '-1.0000']
-            prices = prices.sort(function(a, b){return a[1]-b[1]})
-            
-            return prices[0]
-        },*/
         calcTotalPrice() {
             this.satPositions = 0
             this.pabPositions = 0
@@ -261,29 +198,38 @@ export default {
             this.sapList = []
             this.pabList = []
 
-            for(var i = 0; i < this.wantedList.length; i++) {
-                var sapPrice = 0;
-                var pabPrice = 0;
-
-                if (this.wantedList[i].sat && this.wantedList[i].sat.price && this.wantedList[i].sat.price.amount) sapPrice = this.wantedList[i].sat.price.amount
-                if (this.wantedList[i].pab && this.wantedList[i].pab.variant && this.wantedList[i].pab.variant.price && this.wantedList[i].pab.variant.price.centAmount) pabPrice = this.wantedList[i].pab.variant.price.centAmount / 100
-                var price = this.getPrice(pabPrice, sapPrice, this.wantedList[i].maxprice)
-
-                if(price[1]) {
-                    if(price[0] == 'sap'){
-                        this.satPositions++
-                        this.satPrice += this.wantedList[i].minqty * price[1]
-                        this.currency = this.wantedList[i].sat.price.currency
-                        this.fillSapList(this.wantedList[i])
-                    } 
-                    if(price[0] == 'pab'){
-                        this.pabPositions++
-                        this.pabPrice += this.wantedList[i].minqty * price[1]
-                        this.currency = this.wantedList[i].pab.variant.price.currencyCode
-                        this.fillPabList(this.wantedList[i])
-                    } 
+            this.wantedList.forEach(element => {
+                if(this.useHave){
+                    element.qty.order = element.qty.balance
                 }
-            }
+                else {
+                    element.qty.order = element.qty.min
+                }
+                if(element.qty.order > 0){
+                    
+                    var sapPrice = 0;
+                    var pabPrice = 0;
+
+                    if (element.sat && element.sat.price && element.sat.price.amount) sapPrice = element.sat.price.amount
+                    if (element.pab && element.pab.variant && element.pab.variant.price && element.pab.variant.price.centAmount) pabPrice = element.pab.variant.price.centAmount / 100
+                    var price = this.getPrice(pabPrice, sapPrice, element.maxprice)
+
+                    if(price[1]) {
+                        if(price[0] == 'sap'){
+                            this.satPositions++
+                            this.satPrice += element.minqty * price[1]
+                            this.currency = element.sat.price.currency
+                            this.fillSapList(element)
+                        } 
+                        if(price[0] == 'pab'){
+                            this.pabPositions++
+                            this.pabPrice += element.minqty * price[1]
+                            this.currency = element.pab.variant.price.currencyCode
+                            this.fillPabList(element)
+                        } 
+                    }
+                }
+            })
 
             this.satPrice = Math.round(this.satPrice * 100) / 100
             this.pabPrice = Math.round(this.pabPrice * 100) / 100
@@ -317,12 +263,59 @@ export default {
         },
         fillPabList(pos){
             this.pabList.push(pos)
+        },
+        printSap(){
+            console.log("print")
+            this.$htmlToPaper('sapList')
+        },
+        printPab(){
+            console.log("print")
+            this.$htmlToPaper('pabList')
         }
     },
+    watch:{
+        usePickaBrick: function(val, oldVal){
+            if(!val) {
+                if(this.behaviourOnSamePrice == 'pab'){
+                    if(this.useStonesAndPieces) {
+                        this.behaviourOnSamePrice = 'sap'
+                    } else {
+                        this.behaviourOnSamePrice = 'bl'
+                    }
+                }
+            }
+            localStorage.setItem("usePickaBrick", val)
+            localStorage.setItem("behaviourOnSamePriceShopping", this.behaviourOnSamePrice)
+            this.calcTotalPrice()
+        },
+        useStonesAndPieces: function(val, oldVal){
+            if(!val) {
+                if(this.behaviourOnSamePrice == 'sap'){
+                    if(this.usePickaBrick) {
+                        this.behaviourOnSamePrice = 'pab'
+                    } else {
+                        this.behaviourOnSamePrice = 'bl'
+                    }
+                }
+            }
+            localStorage.setItem("useStonesAndPieces", val)
+            localStorage.setItem("behaviourOnSamePriceShopping", this.behaviourOnSamePrice)
+            this.calcTotalPrice()
+        },
+        behaviourOnSamePrice: function(val, oldVal){
+            localStorage.setItem("behaviourOnSamePriceShopping", val)
+            this.calcTotalPrice()
+        },
+        useHave: function(val, oldVal){
+            localStorage.setItem('useHave', val)
+            this.calcTotalPrice()
+        }
+    },    
     beforeMount() {
         this.usePickaBrick = ((localStorage.getItem("usePickaBrick") || 'true') === 'true')
         this.useStonesAndPieces = ((localStorage.getItem("useStonesAndPieces") || 'true') === 'true')
         this.behaviourOnSamePrice = localStorage.getItem("behaviourOnSamePriceShopping") || 'sap'
+        this.useHave = ((localStorage.getItem("useHave") || 'true') === 'true')
         this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
 
         this.calcTotalPrice()
@@ -344,15 +337,6 @@ export default {
         .catch(() => {
             
         })
-        
-        /*browser.runtime.sendMessage({contentScriptQuery: "PickABrickLogin"})
-                    .then(response => {
-                        this.authorization = response.login
-                        console.log("PickABrickLogin", response);
-                    })
-                    .catch(() => {
-                        
-                    })*/
     }
 }
 </script>

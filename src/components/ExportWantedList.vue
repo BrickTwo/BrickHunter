@@ -3,39 +3,42 @@
         <b-form-checkbox
             id="exportPickaBrickPrices"
             v-model="exportPickaBrickPrices"
-            @change="onChangedExportPickaBrickPrices"
             >
             Pick a Brick Preise verwenden
         </b-form-checkbox>
         <b-form-checkbox
             id="exportStonesAndPiecesPrices"
             v-model="exportStonesAndPiecesPrices"
-            @change="onChangedExportStonesAndPiecesPrices"
             >
             Steine und Teile Preise verwenden
         </b-form-checkbox>
         <b-form-checkbox
             id="writeLegoIdInRemark"
             v-model="writeLegoIdInRemark"
-            @change="onChangeWriteLegoIdInRemark"
             >
             LEGO Id in Remarks vermerken
         </b-form-checkbox>
         <b-form-checkbox
             id="writeSourceOfPriceInRemark"
             v-model="writeSourceOfPriceInRemark"
-            @change="onChangeWriteSourceOfPriceInRemark"
             >
             Ursprung des Preises in Remarks vermerken
         </b-form-checkbox>
 
         <b-form-group label="Was soll bei gleichem Preis bevorzugt werden?" style="margin-top: 10px">
-            <b-form-radio-group v-model="behaviourOnSamePrice" @change="onChangeBehaviourOnSamePrice" name="behaviourOnSamePrice">
+            <b-form-radio-group v-model="behaviourOnSamePrice" name="behaviourOnSamePrice">
                 <b-form-radio value="pab" :disabled="!exportPickaBrickPrices">Pick a Brick</b-form-radio>
                 <b-form-radio value="sap" :disabled="!exportStonesAndPiecesPrices">Steine und Teile</b-form-radio>
                 <b-form-radio value="bl">BrickLink</b-form-radio>
             </b-form-radio-group>
         </b-form-group>
+
+        <b-form-checkbox
+            id="recalcHave"
+            v-model="recalcHave"
+            >
+            "Have" um anzahl "Differenz" erhöhen
+        </b-form-checkbox>
 
         <b-button variant="primary" @click="onDownload" :disabled="!wantedList || wantedList.length == 0">Download</b-button>
         <b-button variant="primary" @click="onCopy" :disabled="!wantedList || wantedList.length == 0" style="margin-left: 5px">Kopieren</b-button>
@@ -55,45 +58,11 @@ export default {
             writeLegoIdInRemark: null,
             writeSourceOfPriceInRemark: null,
             behaviourOnSamePrice: null,
+            recalcHave: null,
             wantedList: null
         }
     },
     methods: {
-        onChangedExportPickaBrickPrices(checked){
-            if(!checked) {
-                if(this.behaviourOnSamePrice == 'pab'){
-                    if(this.exportStonesAndPiecesPrices) {
-                        this.behaviourOnSamePrice = 'sap'
-                    } else {
-                        this.behaviourOnSamePrice = 'bl'
-                    }
-                }
-            }
-            localStorage.setItem("exportPickaBrickPrices", checked)
-            localStorage.setItem("behaviourOnSamePrice", this.behaviourOnSamePrice)
-        },
-        onChangedExportStonesAndPiecesPrices(checked){
-            if(!checked) {
-                if(this.behaviourOnSamePrice == 'sap'){
-                    if(this.exportPickaBrickPrices) {
-                        this.behaviourOnSamePrice = 'pab'
-                    } else {
-                        this.behaviourOnSamePrice = 'bl'
-                    }
-                }
-            }
-            localStorage.setItem("exportStonesAndPiecesPrices", checked)
-            localStorage.setItem("behaviourOnSamePrice", this.behaviourOnSamePrice)
-        },
-        onChangeWriteLegoIdInRemark(checked) {
-            localStorage.setItem("writeLegoIdInRemark", checked)
-        },
-        onChangeWriteSourceOfPriceInRemark(checked) {
-            localStorage.setItem("writeSourceOfPriceInRemark", checked)
-        },
-        onChangeBehaviourOnSamePrice(checked) {
-            localStorage.setItem("behaviourOnSamePrice", checked)
-        },
         onDownload() {
             let xmlContent = "data:text/xml;charset=utf-8,"
             xmlContent += this.creatXml()
@@ -150,6 +119,11 @@ export default {
                     if(price[0] === "sap") remarks += "Steine und Teile"
                     if(price[0] === "bl") remarks += "BrickLink"
                 }
+                
+                var have = parseInt(wantedList[i].qty.have)
+                if(this.recalcHave && price[1] > 0 && price[0] != "bl"){
+                    have += parseInt(wantedList[i].qty.balance)
+                }
 
                 var item = {
                     ITEM: {
@@ -157,7 +131,8 @@ export default {
                         ITEMID: wantedList[i].itemid,
                         COLOR: wantedList[i].color.brickLinkId,
                         MAXPRICE: price[1],
-                        MINQTY: wantedList[i].minqty,
+                        MINQTY: wantedList[i].qty.min,
+                        QTYFILLED: have,
                         CONDITION: wantedList[i].condition,
                         NOTIFY: wantedList[i].notify,
                         REMARKS: remarks
@@ -186,12 +161,53 @@ export default {
             return prices[0]
         }
     },
+    watch:{
+        exportPickaBrickPrices: function(val, oldVal){
+            if(!val) {
+                if(this.behaviourOnSamePrice == 'pab'){
+                    if(this.exportStonesAndPiecesPrices) {
+                        this.behaviourOnSamePrice = 'sap'
+                    } else {
+                        this.behaviourOnSamePrice = 'bl'
+                    }
+                }
+            }
+            localStorage.setItem("exportPickaBrickPrices", val)
+            localStorage.setItem("behaviourOnSamePrice", this.behaviourOnSamePrice)
+        },
+        exportStonesAndPiecesPrices: function(val, oldVal){
+            if(!val) {
+                if(this.behaviourOnSamePrice == 'sap'){
+                    if(this.exportPickaBrickPrices) {
+                        this.behaviourOnSamePrice = 'pab'
+                    } else {
+                        this.behaviourOnSamePrice = 'bl'
+                    }
+                }
+            }
+            localStorage.setItem("exportStonesAndPiecesPrices", val)
+            localStorage.setItem("behaviourOnSamePrice", this.behaviourOnSamePrice)
+        },
+        writeLegoIdInRemark: function(val, oldVal){
+            localStorage.setItem("writeLegoIdInRemark", val)
+        },
+        writeSourceOfPriceInRemark: function(val, oldVal){
+            localStorage.setItem("writeSourceOfPriceInRemark", val)
+        },
+        behaviourOnSamePrice: function(val, oldVal){
+            localStorage.setItem("behaviourOnSamePrice", val)
+        },
+        usePickaBrick: function(val, oldVal){
+            localStorage.setItem("recalcHave", val)
+        }
+    },
     beforeMount() {
         this.exportPickaBrickPrices = localStorage.getItem("exportPickaBrickPrices") || true
         this.exportStonesAndPiecesPrices = localStorage.getItem("exportStonesAndPiecesPrices") || true
         this.writeLegoIdInRemark = localStorage.getItem("writeLegoIdInRemark") || true
         this.writeSourceOfPriceInRemark = localStorage.getItem("writeSourceOfPriceInRemark") || true
         this.behaviourOnSamePrice = localStorage.getItem("behaviourOnSamePrice") || 'sap'
+        this.recalcHave = localStorage.getItem("recalcHave") || true
         this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
     }
 }
