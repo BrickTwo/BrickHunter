@@ -44,7 +44,7 @@
         <b-button variant="primary" @click="onCopy" :disabled="!wantedList || wantedList.length == 0" style="margin-left: 5px">Kopieren</b-button>
 
         <!-- <input type="text" value="" id="wantedList" style="position:absolute; top: 5000px"> -->
-        <textarea id="wantedList" style="position:absolute; top: 5000px">
+        <textarea id="wantedList" style="position:absolute; top: 5px; height: 0; width: 0; z-index: -5 ">
         </textarea>
     </div>
 </template>
