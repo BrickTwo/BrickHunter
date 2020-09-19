@@ -54,6 +54,9 @@
                 <b-button variant="primary" @click="printSap" style="margin-left: 10px; vertical-align: bottom;" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces">
                     <b-icon icon="printer" aria-hidden="true"></b-icon>
                 </b-button>
+                <b-button variant="primary" @click="showInfo" style="margin-left: 10px; vertical-align: bottom;">
+                    <b-icon icon="info-circle" aria-hidden="true"></b-icon>
+                </b-button>
                 <b-tooltip target="btn-sap-add-to-card" variant="danger">Zuvor ausgewählte Steine &amp; Teile werden aus dem Warenkorb entfernt!</b-tooltip>
             </p>
             <div id="sapList">
@@ -66,6 +69,9 @@
                 <b-button variant="danger" @click="pabClearCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick" style="margin-left: 10px;">Pick a Brick Warenkorb leeren</b-button>
                 <b-button variant="primary" @click="printPab" style="margin-left: 10px; vertical-align: bottom;" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">
                     <b-icon icon="printer" aria-hidden="true"></b-icon>
+                </b-button>
+                <b-button variant="primary" @click="showInfo" style="margin-left: 10px; vertical-align: bottom;">
+                    <b-icon icon="info-circle" aria-hidden="true"></b-icon>
                 </b-button>
                 <span>
                     <b-progress :value="loadPAPPercentage" :max="100" show-progress animated v-if="loadPAPPercentage < 100" style="margin-top: 10px"></b-progress>
@@ -106,6 +112,10 @@ export default {
         BrickList
     },
     methods: {
+        showInfo() {
+            console.log("changePage")
+            this.$emit('changePage', 'info')
+        },
         pabClearCart(){            
             browser.runtime.sendMessage({contentScriptQuery: "PickABrickClearCart", authorization: this.authorization, PABCartId: this.pabShoppingCartId})
             .then(response => {
@@ -198,7 +208,8 @@ export default {
             this.sapList = []
             this.pabList = []
 
-            this.wantedList.forEach(element => {
+            if(this.wantedList){
+                this.wantedList.forEach(element => {
                 if(this.useHave){
                     element.qty.order = element.qty.balance
                 }
@@ -230,6 +241,8 @@ export default {
                     }
                 }
             })
+            }
+            
 
             this.satPrice = Math.round(this.satPrice * 100) / 100
             this.pabPrice = Math.round(this.pabPrice * 100) / 100
