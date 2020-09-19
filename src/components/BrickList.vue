@@ -17,8 +17,8 @@ export default {
         type: Array
       },
       limitMaxQty: {
-        type: Boolean,
-        default: false
+        type: Number,
+        default: 0
       }
     },
     data: () => ({ 
@@ -43,7 +43,7 @@ export default {
                 title: "BrickLink Farbe"
             },
             {
-                name: 'minqty',
+                name: 'qty',
                 title: "Anzahl",
                 callback: 'showQty'
             },
@@ -81,10 +81,15 @@ export default {
         return value +1 
     },
     showQty(value) {
-        if(this.limitMaxQty){
-          if(value > 200) return `<span id="maxqty" style="color: red">200</span><br><span style="color: grey; font-size: small;">[${value}]</span>`
+        //console.log(value)
+        if(this.limitMaxQty > 0){
+          if(value.order > this.limitMaxQty) return `<span id="maxqty" style="color: red">${this.limitMaxQty}</span><br><span style="color: grey; font-size: small;">[${value.order}]</span>`
+          if(value.have > 0) return value.order
         }
-        return value
+        else{
+          if(value.have > 0) return `<span id="maxqty">${value.min}</span><br><span style="color: grey; font-size: small;">(${value.have})</span>`
+        }
+        return value.min
     }
   }
 }
