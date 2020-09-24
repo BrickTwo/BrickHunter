@@ -241,9 +241,9 @@ browser.runtime.onMessage.addListener(
       return true;  // Will respond asynchronously.
     }
     else if (request.contentScriptQuery == "sapFillCart") {
-      //console.log("sessionStorage.setItem('b_and_p_buy_" + locale.toUpperCase() + "', '" + JSON.stringify(request.order)+ "')")
+      //console.log("sessionStorage.setItem('b_and_p_buy_" + locale.toUpperCase() + "', '" + JSON.stringify(request.order).replace(/'/g, "\\\'")+ "')")
       chrome.tabs.executeScript({
-        code: "sessionStorage.setItem('b_and_p_buy_" + locale.toUpperCase() + "', '" + JSON.stringify(request.order)+ "')"
+        code: "sessionStorage.setItem('b_and_p_buy_" + locale.toUpperCase() + "', '" + JSON.stringify(request.order).replace(/'/g, "\\\'")+ "')"
       })
       browser.tabs.query({'currentWindow': true, 'active': true})
       .then(tabs => {
