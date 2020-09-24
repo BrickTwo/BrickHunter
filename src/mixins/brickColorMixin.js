@@ -85,7 +85,7 @@ export const brickColorMixin = {
             { brickLinkId: 81, brickLinkName: "Flat Dark Gold", legoId: 147, legoName: "Metallic Sand Yellow", piecesAndBricksName: "Met.Sand.Yel", pickABrickName: "N/A", colorCode: "#83724F" },
             { brickLinkId: 82, brickLinkName: "Chrome Pink", legoId: 9999, legoName: "N/A", piecesAndBricksName: "N/A", pickABrickName: "N/A", colorCode: "#FFFFFF" },
             { brickLinkId: 83, brickLinkName: "Pearl White", legoId: 183, legoName: "Metallic White", piecesAndBricksName: "Met. White", pickABrickName: "N/A", colorCode: "#F6F2DF" },
-            { brickLinkId: 84, brickLinkName: "Copper", legoId: 139, legoName: "Copper", piecesAndBricksName: "Copper", pickABrickName: "N/A", colorCode: "#764D3B" },
+            { brickLinkId: 84, brickLinkName: "Copper", legoId: 139, legoName: "Copper", piecesAndBricksName: "Copper Metallic", pickABrickName: "N/A", colorCode: "#764D3B" },
             { brickLinkId: 85, brickLinkName: "Dark Bluish Gray", legoId: 199, legoName: "Dark Stone Grey", piecesAndBricksName: "Dk. St. Grey", pickABrickName: "Dark Stone Grey", colorCode: "#646464" },
             { brickLinkId: 86, brickLinkName: "Light Bluish Gray", legoId: 194, legoName: "Medium Stone Grey", piecesAndBricksName: "Med. St-Grey", pickABrickName: "Medium Stone Grey", colorCode: "#969696" },
             { brickLinkId: 87, brickLinkName: "Sky Blue", legoId: 232, legoName: "Dove Blue", piecesAndBricksName: "Do. Blue", pickABrickName: "N/A", colorCode: "#77C9D8" },
