@@ -4,32 +4,32 @@
             id="exportPickaBrickPrices"
             v-model="exportPickaBrickPrices"
             >
-            Pick a Brick Preise verwenden
+            {{ usePickABrickPrices }}
         </b-form-checkbox>
         <b-form-checkbox
             id="exportStonesAndPiecesPrices"
             v-model="exportStonesAndPiecesPrices"
             >
-            Steine und Teile Preise verwenden
+            {{ useBricksAndPiecesPrices }}
         </b-form-checkbox>
         <b-form-checkbox
             id="writeLegoIdInRemark"
             v-model="writeLegoIdInRemark"
             >
-            LEGO Id in Remarks vermerken
+            {{ writeLegoIdRemark }}
         </b-form-checkbox>
         <b-form-checkbox
             id="writeSourceOfPriceInRemark"
             v-model="writeSourceOfPriceInRemark"
             >
-            Ursprung des Preises in Remarks vermerken
+            {{ writePriceOriginRemark }}
         </b-form-checkbox>
 
-        <b-form-group label="Was soll bei gleichem Preis bevorzugt werden?" style="margin-top: 10px">
+        <b-form-group :label="whatShouldBePreferred" style="margin-top: 10px">
             <b-form-radio-group v-model="behaviourOnSamePrice" name="behaviourOnSamePrice">
-                <b-form-radio value="pab" :disabled="!exportPickaBrickPrices">Pick a Brick</b-form-radio>
-                <b-form-radio value="sap" :disabled="!exportStonesAndPiecesPrices">Steine und Teile</b-form-radio>
-                <b-form-radio value="bl">BrickLink</b-form-radio>
+                <b-form-radio value="pab" :disabled="!exportPickaBrickPrices">{{ pickABrick }}</b-form-radio>
+                <b-form-radio value="sap" :disabled="!exportStonesAndPiecesPrices">{{ bricksAndPieces }}</b-form-radio>
+                <b-form-radio value="bl">{{ brickLink }}</b-form-radio>
             </b-form-radio-group>
         </b-form-group>
 
@@ -37,11 +37,11 @@
             id="recalcHave"
             v-model="recalcHave"
             >
-            "Have" um anzahl "Differenz" erhöhen
+            {{ increaseHave }}
         </b-form-checkbox>
 
-        <b-button variant="primary" @click="onDownload" :disabled="!wantedList || wantedList.length == 0">Download</b-button>
-        <b-button variant="primary" @click="onCopy" :disabled="!wantedList || wantedList.length == 0" style="margin-left: 5px">Kopieren</b-button>
+        <b-button variant="primary" @click="onDownload" :disabled="!wantedList || wantedList.length == 0">{{ downloadButton }}</b-button>
+        <b-button variant="primary" @click="onCopy" :disabled="!wantedList || wantedList.length == 0" style="margin-left: 5px">{{ copyButton }}</b-button>
 
         <!-- <input type="text" value="" id="wantedList" style="position:absolute; top: 5000px"> -->
         <textarea id="wantedList" style="position:absolute; top: 5px; height: 0; width: 0; z-index: -5 ">
@@ -209,6 +209,41 @@ export default {
         this.behaviourOnSamePrice = localStorage.getItem("behaviourOnSamePrice") || 'sap'
         this.recalcHave = localStorage.getItem("recalcHave") || true
         this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
+    },
+    computed: {
+        pickABrick() {
+            return browser.i18n.getMessage('pickABrick')
+        },
+        bricksAndPieces() {
+            return browser.i18n.getMessage('bricksAndPieces')
+        },
+        brickLink() {
+            return browser.i18n.getMessage('brickLink')
+        },
+        usePickABrickPrices() {
+            return browser.i18n.getMessage('exportWantedList_usePickABrickPrices')
+        },
+        useBricksAndPiecesPrices() {
+            return browser.i18n.getMessage('exportWantedList_useBricksAndPiecesPrices')
+        },
+        writeLegoIdRemark() {
+            return browser.i18n.getMessage('exportWantedList_writeLegoIdRemark')
+        },
+        writePriceOriginRemark() {
+            return browser.i18n.getMessage('exportWantedList_writePriceOriginRemark')
+        },
+        whatShouldBePreferred() {
+            return browser.i18n.getMessage('exportWantedList_whatShouldBePreferred')
+        },
+        increaseHave() {
+            return browser.i18n.getMessage('exportWantedList_increaseHave')
+        },
+        downloadButton() {
+            return browser.i18n.getMessage('exportWantedList_downloadButton')
+        },
+        copyButton() {
+            return browser.i18n.getMessage('exportWantedList_copyButton')
+        }
     }
 }
 </script>

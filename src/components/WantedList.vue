@@ -2,10 +2,10 @@
   <div>
     <p>
         <xml-reader @load="loadXml" style="width: 470px" v-if="isChrome"></xml-reader>
-        <b-button variant="primary" v-if="!isChrome && !loadWantedList" @click="loadWantedList=true">WantedList</b-button>
+        <b-button variant="primary" v-if="!isChrome && !loadWantedList" @click="loadWantedList=true">{{ wantedList_buttonWantedList }}</b-button>
         <xml-field @load="loadXml" @cancel="loadWantedList=false" style="width: 650px" v-if="loadWantedList"></xml-field>
-        <b-button variant="primary" @click="loadPrice" style="margin-left: 10px; vertical-align: bottom;" :disabled="!wantedList || wantedList.length == 0" v-if="!loadWantedList">Lade Preise</b-button>
-        <b-button variant="danger" @click="clear" style="margin-left: 10px; vertical-align: bottom;" v-if="!loadWantedList">Leeren</b-button>
+        <b-button variant="primary" @click="loadPrice" style="margin-left: 10px; vertical-align: bottom;" :disabled="!wantedList || wantedList.length == 0" v-if="!loadWantedList">{{ buttonLoadPrices }}</b-button>
+        <b-button variant="danger" @click="clear" style="margin-left: 10px; vertical-align: bottom;" v-if="!loadWantedList">{{ buttonClear }}</b-button>
         <b-button variant="primary" @click="print" style="margin-left: 10px; vertical-align: bottom;" :disabled="!wantedList || wantedList.length == 0" v-if="!loadWantedList">
             <b-icon icon="printer" aria-hidden="true"></b-icon>
         </b-button>
@@ -48,177 +48,188 @@ export default {
         priceLoaded: true,
         wantedList: []
         }),
-  components: {
-    XmlReader,
-    XmlField,
-    BrickList
-  },
-  mixins: [brickProcessorMixin, brickColorMixin, requestsMixin, brickLinkProcessorMixin],
-  methods: {
-    loadXml (wantedList) {
-        //console.log(wantedList);
-        this.loadWantedList = false;
-        this.priceLoaded = false;
-        this.totalBricks = 0;
-        this.pabBrickCounter = 0;
-        this.satBrickCounter = 0;
+    components: {
+        XmlReader,
+        XmlField,
+        BrickList
+    },
+    mixins: [brickProcessorMixin, brickColorMixin, requestsMixin, brickLinkProcessorMixin],
+    methods: {
+        loadXml (wantedList) {
+            //console.log(wantedList);
+            this.loadWantedList = false;
+            this.priceLoaded = false;
+            this.totalBricks = 0;
+            this.pabBrickCounter = 0;
+            this.satBrickCounter = 0;
 
-        wantedList.then(list => {
-            list[0].map(item => {
-                item.itemtype = item.itemtype[0];
-                item.itemid = item.itemid[0];
-                //console.log(this.ItemIdToDesignId(item.itemid));
-                item.searchids = [this.CleanItemId(item.itemid)];
-                item.designid = "";
-                if(item.color){
-                    item.color = item.color[0];
-                    item.color = this.FindColor(item.color, this.COLOR);
-                } else {
-                    item.color = this.FindColor(0, this.COLOR);
-                }
-                item.maxprice = item.maxprice[0];
-                item.qty = {
-                    min: 0,
-                    have: 0,
-                    balance: 0,
-                    order: 0
-                }
-                item.qty.min = item.minqty[0];
-                if(item.qtyfilled){
-                    item.qty.have = item.qtyfilled[0];
-                }
-                item.qty.balance = item.qty.min - item.qty.have
-                if(item.qty.balance < 0){
-                    item.qty.balance = 0
-                }
-                item.condition = item.condition[0];
-                item.notify = item.notify[0];
-                item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color.brickLinkId}/${item.itemid}.t1.png`;
-                item.sat = null;
-                item.pab = null;
-            })
-            this.wantedList = [...list[0]];
-            this.totalBricks = this.wantedList.length;
+            wantedList.then(list => {
+                list[0].map(item => {
+                    item.itemtype = item.itemtype[0];
+                    item.itemid = item.itemid[0];
+                    //console.log(this.ItemIdToDesignId(item.itemid));
+                    item.searchids = [this.CleanItemId(item.itemid)];
+                    item.designid = "";
+                    if(item.color){
+                        item.color = item.color[0];
+                        item.color = this.FindColor(item.color, this.COLOR);
+                    } else {
+                        item.color = this.FindColor(0, this.COLOR);
+                    }
+                    item.maxprice = item.maxprice[0];
+                    item.qty = {
+                        min: 0,
+                        have: 0,
+                        balance: 0,
+                        order: 0
+                    }
+                    item.qty.min = item.minqty[0];
+                    if(item.qtyfilled){
+                        item.qty.have = item.qtyfilled[0];
+                    }
+                    item.qty.balance = item.qty.min - item.qty.have
+                    if(item.qty.balance < 0){
+                        item.qty.balance = 0
+                    }
+                    item.condition = item.condition[0];
+                    item.notify = item.notify[0];
+                    item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color.brickLinkId}/${item.itemid}.t1.png`;
+                    item.sat = null;
+                    item.pab = null;
+                })
+                this.wantedList = [...list[0]];
+                this.totalBricks = this.wantedList.length;
+                this.$store.commit("setWantedList", this.wantedList);
+                return list;
+            });
+        },
+        clear() {
+            //this.$refs.vuetable.resetData
+            this.wantedList = []
+            //this.wantedList = null
             this.$store.commit("setWantedList", this.wantedList);
-            return list;
-        });
-    },
-    clear() {
-        //this.$refs.vuetable.resetData
-        this.wantedList = []
-        //this.wantedList = null
-        this.$store.commit("setWantedList", this.wantedList);
-    },
-    loadPrice() {
-        this.priceLoaded = true;
-        this.pabBrickCounter = 0;
-        this.satBrickCounter = 0;
-        this.loadPercentage = 0;
+        },
+        loadPrice() {
+            this.priceLoaded = true;
+            this.pabBrickCounter = 0;
+            this.satBrickCounter = 0;
+            this.loadPercentage = 0;
 
-        for(var i = 0; i < this.wantedList.length; i++ ){
-            this.wantedList[i].sat = null
-            this.wantedList[i].pab = null
-        }
+            for(var i = 0; i < this.wantedList.length; i++ ){
+                this.wantedList[i].sat = null
+                this.wantedList[i].pab = null
+            }
 
-        this.wantedList.map((item, i) => {
-            this.delay(200 * this.wantedList.length - 200 * i).then(d => {
-                this.getBricklink(item.itemid)
-                .then(response => {
-                    
-                        var numbers = this.FindAlternateItemNumbers(response);
-                        item.searchids = item.searchids.concat(numbers);
-                        if (~item.itemid.indexOf("pb")) { // if printed brick
-                            //console.log(item.searchids);
-                            var desingIds= this.FindDesignNumbers(response);
-                            item.searchids = desingIds;
-                        }
-                        //console.log("searchIds", item.searchids);
-                    
-                })
-                .catch(error => {
-                    //this.satBrickCounter++;
-                    //this.pabBrickCounter++;
-                })
-                .then(value=>{
-                    var bricks = [];
-
-                    let requests = item.searchids.map(async id => {
-                            if(id){
-                                await browser.runtime.sendMessage({contentScriptQuery: "SteineUndTeile", itemId: id})
-                                .then(response => {
-                                    //console.log("SteineUndTeile", id);
-                                    //console.log(response)
-                                    bricks = bricks.concat(response.bricks);
-                                    
-                                })
-                                .catch(error => {
-                                    //console.log("error", error);
-                                });
-                            }
-                        });
-
-                    Promise.all(requests)
-                    .then(value => {
-                        //console.log("SteineUndTeile", item.itemid, bricks);
-                        var foundBrick = this.FindBrick(item, bricks);
-                        if(foundBrick) {
-                            item.sat = foundBrick;
-                        }
-                        this.satBrickCounter++;
-                        this.calcLoad();
-                    })
-                    .catch(() => {
-                        //console.log("SteineUndTeileerror", item.itemid);
-                        this.satBrickCounter++;
-                        this.calcLoad();
-                    })
-                    
-                })
-                .then(value=>{
-                    browser.runtime.sendMessage({contentScriptQuery: "PickABrick", itemId: item.searchids.join('-')})
+            this.wantedList.map((item, i) => {
+                this.delay(200 * this.wantedList.length - 200 * i).then(d => {
+                    this.getBricklink(item.itemid)
                     .then(response => {
-                        //console.log("PickABrick", item.searchids.join('-'));
-                        var foundBrick = this.FindBrickPab(item, response);
-                        if(foundBrick) {
-                            item.pab = foundBrick;
-                        }
-                        this.pabBrickCounter++;
-                        this.calcLoad();
+                        
+                            var numbers = this.FindAlternateItemNumbers(response);
+                            item.searchids = item.searchids.concat(numbers);
+                            if (~item.itemid.indexOf("pb")) { // if printed brick
+                                //console.log(item.searchids);
+                                var desingIds= this.FindDesignNumbers(response);
+                                item.searchids = desingIds;
+                            }
+                            //console.log("searchIds", item.searchids);
+                        
                     })
-                    .catch(() => {
-                        this.pabBrickCounter++;
-                        this.calcLoad();
+                    .catch(error => {
+                        //this.satBrickCounter++;
+                        //this.pabBrickCounter++;
                     })
+                    .then(value=>{
+                        var bricks = [];
+
+                        let requests = item.searchids.map(async id => {
+                                if(id){
+                                    await browser.runtime.sendMessage({contentScriptQuery: "SteineUndTeile", itemId: id})
+                                    .then(response => {
+                                        //console.log("SteineUndTeile", id);
+                                        //console.log(response)
+                                        bricks = bricks.concat(response.bricks);
+                                        
+                                    })
+                                    .catch(error => {
+                                        //console.log("error", error);
+                                    });
+                                }
+                            });
+
+                        Promise.all(requests)
+                        .then(value => {
+                            //console.log("SteineUndTeile", item.itemid, bricks);
+                            var foundBrick = this.FindBrick(item, bricks);
+                            if(foundBrick) {
+                                item.sat = foundBrick;
+                            }
+                            this.satBrickCounter++;
+                            this.calcLoad();
+                        })
+                        .catch(() => {
+                            //console.log("SteineUndTeileerror", item.itemid);
+                            this.satBrickCounter++;
+                            this.calcLoad();
+                        })
+                        
+                    })
+                    .then(value=>{
+                        browser.runtime.sendMessage({contentScriptQuery: "PickABrick", itemId: item.searchids.join('-')})
+                        .then(response => {
+                            //console.log("PickABrick", item.searchids.join('-'));
+                            var foundBrick = this.FindBrickPab(item, response);
+                            if(foundBrick) {
+                                item.pab = foundBrick;
+                            }
+                            this.pabBrickCounter++;
+                            this.calcLoad();
+                        })
+                        .catch(() => {
+                            this.pabBrickCounter++;
+                            this.calcLoad();
+                        })
+                    });
                 });
             });
-        });
 
-        
-    },
-    delay(t, data) {
-        return new Promise(resolve => {
-            setTimeout(resolve.bind(null, data), t);
-        })
-    },
-    calcLoad(){
-        //console.log("pab: ", this.pabBrickCounter, " sap: ", this.satBrickCounter)
-        var one = 100/this.totalBricks/2;
-        
-        this.loadPercentage = Math.round((one*this.pabBrickCounter) + (one*this.satBrickCounter))
-        if(this.loadPercentage == 100) {
-            this.$store.commit("setWantedList", this.wantedList);
+            
+        },
+        delay(t, data) {
+            return new Promise(resolve => {
+                setTimeout(resolve.bind(null, data), t);
+            })
+        },
+        calcLoad(){
+            //console.log("pab: ", this.pabBrickCounter, " sap: ", this.satBrickCounter)
+            var one = 100/this.totalBricks/2;
+            
+            this.loadPercentage = Math.round((one*this.pabBrickCounter) + (one*this.satBrickCounter))
+            if(this.loadPercentage == 100) {
+                this.$store.commit("setWantedList", this.wantedList);
+            }
+            //console.log(this.loadPercentage)
+        },
+        print(){
+            console.log("print")
+            this.$htmlToPaper('wantedList')
         }
-        //console.log(this.loadPercentage)
     },
-    print(){
-        console.log("print")
-        this.$htmlToPaper('wantedList')
+    beforeMount() {
+        this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
+        this.totalBricks = 0
+        if(this.wantedList) this.totalBricks = this.wantedList.length
+    },
+    computed: {
+        buttonWantedList() {
+            return browser.i18n.getMessage('wantedList_buttonWantedList')
+        },
+        buttonLoadPrices() {
+            return browser.i18n.getMessage('wantedList_buttonLoadPrices')
+        },
+        buttonClear() {
+            return browser.i18n.getMessage('wantedList_buttonClear')
+        }
     }
-  },
-  beforeMount() {
-    this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
-    this.totalBricks = 0
-    if(this.wantedList) this.totalBricks = this.wantedList.length
-  }
 }
 </script>

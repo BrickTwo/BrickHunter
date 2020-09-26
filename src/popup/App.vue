@@ -3,20 +3,20 @@
     <b-navbar type="dark" variant="dark">
       <b-navbar-brand>
         <img src="icons/icon_24.png" class="d-inline-block align-top">
-        BrickHunter
+        {{ extName }}
       </b-navbar-brand>
       <b-navbar-nav class="ml-auto" v-if="showPage!='selectCountry'">
         
-        <b-nav-item @click="showPage = 'wantedList'"><!-- <b-icon icon="card-list" aria-hidden="true"></b-icon> -->Wanted List</b-nav-item>
-        <b-nav-item @click="showPage = 'shopping'"><!-- <b-icon icon="cart" aria-hidden="true"></b-icon>  -->Shopping</b-nav-item>
+        <b-nav-item @click="showPage = 'wantedList'"><!-- <b-icon icon="card-list" aria-hidden="true"></b-icon> -->{{ menuWantedList }}</b-nav-item>
+        <b-nav-item @click="showPage = 'shopping'"><!-- <b-icon icon="cart" aria-hidden="true"></b-icon>  -->{{ menuShoppingCart }}</b-nav-item>
         <!-- <b-nav-item href="#"><b-icon icon="question-circle" aria-hidden="true"></b-icon> Tipps</b-nav-item> -->
 
         <b-nav-item-dropdown>
           <template v-slot:button-content>
-            <!-- <b-icon icon="arrow-bar-up" aria-hidden="true"></b-icon> -->Export
+            <!-- <b-icon icon="arrow-bar-up" aria-hidden="true"></b-icon> -->{{ menuExport }}
           </template>
-          <b-dropdown-item @click="showPage = 'exportWantedList'">Wanted List</b-dropdown-item>
-          <b-dropdown-item @click="showPage = 'exportCsv'">CSV</b-dropdown-item>
+          <b-dropdown-item @click="showPage = 'exportWantedList'">{{ menuExportWantedList }}</b-dropdown-item>
+          <b-dropdown-item @click="showPage = 'exportCsv'">{{ menuExportCsv }}</b-dropdown-item>
         </b-nav-item-dropdown>
 
         <b-nav-item @click="showPage = 'info'"><b-icon icon="info-circle" aria-hidden="true"></b-icon></b-nav-item>
@@ -75,6 +75,26 @@ export default {
   beforeMount() {
     this.countrySelected = localStorage.getItem("country") || null
     if(!this.countrySelected) this.showPage = 'selectCountry'
+  },
+  computed: {
+    extName() {
+      return browser.i18n.getMessage('extName')
+    },
+    menuWantedList() {
+      return browser.i18n.getMessage('menu_wantedList')
+    },
+    menuShoppingCart() {
+      return browser.i18n.getMessage('menu_shoppingCart')
+    },
+    menuExport() {
+      return browser.i18n.getMessage('menu_export')
+    },
+    menuExportWantedList() {
+      return browser.i18n.getMessage('menu_exportWantedList')
+    },
+    menuExportCsv() {
+      return browser.i18n.getMessage('menu_exportCsv')
+    }
   }
 };
 </script>

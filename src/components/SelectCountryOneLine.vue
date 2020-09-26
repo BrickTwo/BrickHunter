@@ -7,9 +7,9 @@ export default {
     return {
         form_country: null,
         options: [
-          { value: 'de', text: 'Deutschland' },
-          { value: 'at', text: 'Österreich' },
-          { value: 'ch', text: 'Schweiz' }
+          { value: 'de', text: browser.i18n.getMessage('country_germany') },
+          { value: 'at', text: browser.i18n.getMessage('country_austria') },
+          { value: 'ch', text: browser.i18n.getMessage('country_switzerland') }
         ]
     };
   },

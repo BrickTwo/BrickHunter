@@ -3,13 +3,13 @@
         <b-form-textarea
         id="textarea"
         v-model="text"
-        placeholder="Kopiere den Inhalt einer WantedList hier rein"
+        :placeholder="copyWantedList"
         rows="6"
         max-rows="6"
         ></b-form-textarea>
         <p style="margin-top: 10px">
-            <b-button variant="primary" @click="loadXml">Lade WantedList</b-button>
-            <b-button variant="danger" @click="cancelXml" style="margin-left: 10px">Abbrechen</b-button>
+            <b-button variant="primary" @click="loadXml">{{ buttonLoadWantedList }}</b-button>
+            <b-button variant="danger" @click="cancelXml" style="margin-left: 10px">{{ buttonCancel }}</b-button>
         </p>
     </span>
 </template>
@@ -30,6 +30,17 @@ export default {
         },
         cancelXml () {
             this.$emit("cancel");
+        }
+    },
+    computed: {
+        copyWantedList() {
+            return browser.i18n.getMessage('xmlField_copyWantedList')
+        },
+        buttonLoadWantedList() {
+            return browser.i18n.getMessage('xmlField_buttonLoadWantedList')
+        },
+        buttonCancel() {
+            return browser.i18n.getMessage('xmlField_buttonCancel')
         }
     }
 }

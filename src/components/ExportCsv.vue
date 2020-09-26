@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-form-group label="Allgemein">
+        <b-form-group :label="generalGroupTitle">
             <b-form-checkbox-group
                 id="checkbox-group-1"
                 v-model="selectedOptions"
@@ -9,7 +9,7 @@
                 stacked
             ></b-form-checkbox-group>
         </b-form-group>
-        <b-form-group label="Farbe">
+        <b-form-group :label="colorGroupTitle">
             <b-form-checkbox-group
                 id="checkbox-group-2"
                 v-model="selectedColorOptions"
@@ -18,7 +18,7 @@
                 stacked
             ></b-form-checkbox-group>
         </b-form-group>
-        <b-form-group label="Pick a Brick">
+        <b-form-group :label="pickABrickGroupTitle">
             <b-form-checkbox-group
                 id="checkbox-group-3"
                 v-model="selectedPabOptions"
@@ -27,7 +27,7 @@
                 stacked
             ></b-form-checkbox-group>
         </b-form-group>
-        <b-form-group label="Steine & Teile">
+        <b-form-group :label="bricksAndPiecesGroupTitle">
             <b-form-checkbox-group
                 id="checkbox-group-4"
                 v-model="selectedSapOptions"
@@ -37,7 +37,7 @@
             ></b-form-checkbox-group>
         </b-form-group>
 
-        <b-button variant="primary" @click="onDownload" :disabled="!wantedList || wantedList.length == 0">Download</b-button>
+        <b-button variant="primary" @click="onDownload" :disabled="!wantedList || wantedList.length == 0">{{ downloadButton }}</b-button>
 
     </div>
 </template>
@@ -52,31 +52,31 @@ export default {
             selectedPabOptions: [],
             selectedSapOptions: [],
             options: [
-                { text: 'Id', value: 'bricklinkId' },
-                { text: 'Anzahl Want', value: 'want' },
-                { text: 'Anzahl Have', value: 'have' },
-                { text: 'Anzahl Differenz', value: 'balance' },
-                { text: 'LEGO Bezeichnung', value: 'legoDescription' },
-                { text: 'BrickLink Max Price', value: 'blMaxPrice' }
+                { text: browser.i18n.getMessage('exportCsv_generalOptionBrickLinkId'), value: 'bricklinkId' },
+                { text: browser.i18n.getMessage('exportCsv_generalOptionWant'), value: 'want' },
+                { text: browser.i18n.getMessage('exportCsv_generalOptionAve'), value: 'have' },
+                { text: browser.i18n.getMessage('exportCsv_generalOptionBalance'), value: 'balance' },
+                { text: browser.i18n.getMessage('exportCsv_generalOptionLegoDescription'), value: 'legoDescription' },
+                { text: browser.i18n.getMessage('exportCsv_generalOptionBrickLinkMaxPrice'), value: 'blMaxPrice' }
             ],
             optionsColor: [
-                { text: 'BrickLink Id', value: 'brickLinkId' },
-                { text: 'BrickLink Name', value: 'brickLinkName' },
-                { text: 'RGB Farbcode', value: 'colorCode' },
-                { text: 'Lego Id', value: 'legoId' },
-                { text: 'Lego Name', value: 'legoName' }
+                { text: browser.i18n.getMessage('exportCsv_colorOptionBrickLinkId'), value: 'brickLinkId' },
+                { text: browser.i18n.getMessage('exportCsv_colorOptionBrickLinkName'), value: 'brickLinkName' },
+                { text: browser.i18n.getMessage('exportCsv_colorOptionColorCode'), value: 'colorCode' },
+                { text: browser.i18n.getMessage('exportCsv_colorOptionLegoId'), value: 'legoId' },
+                { text: browser.i18n.getMessage('exportCsv_colorOptionLegoName'), value: 'legoName' }
             ],
             optionsPab: [
-                { text: 'Id', value: 'id' },
-                { text: 'Designnummer', value: 'designNumber' },
-                { text: 'Preis', value: 'price' },
-                { text: 'Währung', value: 'currency' }
+                { text: browser.i18n.getMessage('exportCsv_pickABrickOptionId'), value: 'id' },
+                { text: browser.i18n.getMessage('exportCsv_pickABrickOptionDesignNumber'), value: 'designNumber' },
+                { text: browser.i18n.getMessage('exportCsv_pickABrickOptionPrice'), value: 'price' },
+                { text: browser.i18n.getMessage('exportCsv_pickABrickOptionCurrency'), value: 'currency' }
             ],
             optionsSap: [
-                { text: 'Id', value: 'id' },
-                { text: 'Designnummer', value: 'designNumber' },
-                { text: 'Preis', value: 'price' },
-                { text: 'Währung', value: 'currency' }
+                { text: browser.i18n.getMessage('exportCsv_bricksAndPiecesOptionId'), value: 'id' },
+                { text: browser.i18n.getMessage('exportCsv_bricksAndPiecesOptionDesignNumber'), value: 'designNumber' },
+                { text: browser.i18n.getMessage('exportCsv_bricksAndPiecesOptionPrice'), value: 'price' },
+                { text: browser.i18n.getMessage('exportCsv_bricksAndPiecesOptionCurrency'), value: 'currency' }
             ]            
         }
     },
@@ -219,67 +219,67 @@ export default {
 
             // general options
             if(this.selectedOptions.includes('bricklinkId')){
-                csvLine = this.addToCSVLine(csvLine, 'Id')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderBricklinkId'))
             }
             if(this.selectedOptions.includes('want')){
-                csvLine = this.addToCSVLine(csvLine, 'Anzahl Want')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderGeneralWant'))
             }
             if(this.selectedOptions.includes('have')){
-                csvLine = this.addToCSVLine(csvLine, 'Anzahl Have')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderGeneralHave'))
             }
             if(this.selectedOptions.includes('balance')){
-                csvLine = this.addToCSVLine(csvLine, 'Anzahl Differenz')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderGeneralBalance'))
             }
             if(this.selectedOptions.includes('legoDescription')){
-                csvLine = this.addToCSVLine(csvLine, 'LEGO Bezeichnung')                   
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderGeneralLegoDescription'))                   
             }
             if(this.selectedOptions.includes('blMaxPrice')){
-                csvLine = this.addToCSVLine(csvLine, 'BrickLink Max Price')                   
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderGeneralBrickLinkMaxPrice'))                   
             }            
 
             // color options
             if(this.selectedColorOptions.includes('brickLinkId')){
-                csvLine = this.addToCSVLine(csvLine, 'BrickLink Farbe Id')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderColorBrickLinkId'))
             }
             if(this.selectedColorOptions.includes('brickLinkName')){
-                csvLine = this.addToCSVLine(csvLine, 'BrickLink Farb Name')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderColorBrickLinkName'))
             }
             if(this.selectedColorOptions.includes('colorCode')){
-                csvLine = this.addToCSVLine(csvLine, 'RGB Farbcode')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderColorColorCode'))
             }
             if(this.selectedColorOptions.includes('legoId')){
-                csvLine = this.addToCSVLine(csvLine, 'LEGO Farb Id')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderColorLegoId'))
             }
             if(this.selectedColorOptions.includes('legoName')){
-                csvLine = this.addToCSVLine(csvLine, 'LEGO Farb Name')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderColorLegoName'))
             }
 
             // Pick a Brick options
             if(this.selectedPabOptions.includes('id')){
-                csvLine = this.addToCSVLine(csvLine, 'PaB Id')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderPickABrickId'))
             }
             if(this.selectedPabOptions.includes('designNumber')){
-                csvLine = this.addToCSVLine(csvLine, 'PaB Designnummer')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderPickABrickDesignNumber'))
             }
             if(this.selectedPabOptions.includes('price')){
-                csvLine = this.addToCSVLine(csvLine, 'PaB Preis')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderPickABrickPrice'))
             }
             if(this.selectedPabOptions.includes('currency')){
-                csvLine = this.addToCSVLine(csvLine, 'PaB Währung')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderPickABrickCurrency'))
             }
 
             // Stones and Pieces options
             if(this.selectedSapOptions.includes('id')){
-                csvLine = this.addToCSVLine(csvLine, 'SuT Id')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderBricksAndPiecesId'))
             }
             if(this.selectedSapOptions.includes('designNumber')){
-                csvLine = this.addToCSVLine(csvLine, 'Sut Designnummer')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderBricksAndPiecesDesignNumber'))
             }
             if(this.selectedSapOptions.includes('price')){
-                csvLine = this.addToCSVLine(csvLine, 'Sut Preis')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderBricksAndPiecesPrice'))
             }
             if(this.selectedSapOptions.includes('currency')){
-                csvLine = this.addToCSVLine(csvLine, 'Sut Währung')
+                csvLine = this.addToCSVLine(csvLine, browser.i18n.getMessage('exportCsv_csvHeaderBricksAndPiecesCurrency'))
             }
             return csvLine
         },
@@ -317,6 +317,23 @@ export default {
 
         selection = localStorage.getItem('selectedSapOptions') || 'designNumber,price,currency'
         this.selectedSapOptions = selection.split(',')
+    },
+    computed: {
+        generalGroupTitle() {
+            return browser.i18n.getMessage('exportCsv_generalGroupTitle')
+        },
+        colorGroupTitle() {
+            return browser.i18n.getMessage('exportCsv_colorGroupTitle')
+        },
+        pickABrickGroupTitle() {
+            return browser.i18n.getMessage('exportCsv_pickABrickGroupTitle')
+        },
+        bricksAndPiecesGroupTitle() {
+            return browser.i18n.getMessage('exportCsv_bricksAndPiecesGroupTitle')
+        },
+        downloadButton() {
+            return browser.i18n.getMessage('exportCsv_downloadButton')
+        }
     }
 }
 </script>

@@ -1,0 +1,27 @@
+{
+  "extName": {
+    "message": "BrickHunter",
+    "description": ""
+  },
+  "brickList_lineNumber": {
+    "message": "#"
+  },
+  "brickList_itemId": {
+    "message": "Id"
+  },
+  "brickList_brickLinkImage": {
+    "message": "Image"
+  },
+  "brickList_brickLinkColor": {
+    "message": "BrickLink Color"
+  },
+  "brickList_quantity": {
+    "message": "Quantity"
+  },
+  "brickList_pickABrickPrice": {
+    "message": "Pick a Brick"
+  },
+  "brickList_bricksAndPiecesPrice": {
+    "message": "Bricks & Pieces"
+  }
+}

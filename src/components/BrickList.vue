@@ -26,35 +26,35 @@ export default {
         columns: [
             {
                 name: '__sequence',
-                title: "#",
+                title: () => browser.i18n.getMessage('brickList_lineNumber'),
                 callback: 'lineNumber'
             },
             {
                 name: 'itemid',
-                title: "Id"
+                title: () => browser.i18n.getMessage('brickList_itemId')
             },
             {
                 name: 'image',
-                title: "Bild",
+                title: () => browser.i18n.getMessage('brickList_brickLinkImage'),
                 callback: 'showImage'
             },
             {
                 name: 'color.legoName',
-                title: "BrickLink Farbe"
+                title: () => browser.i18n.getMessage('brickList_brickLinkColor')
             },
             {
                 name: 'qty',
-                title: "Anzahl",
+                title: () => browser.i18n.getMessage('brickList_quantity'),
                 callback: 'showQty'
             },
             {
                 name: 'pab',
-                title: "Pick a Brick",
+                title: () => browser.i18n.getMessage('brickList_pickABrickPrice'),
                 callback: 'pabPrice'
             },
             {
                 name: 'sat',
-                title: "Steine & Teile",
+                title: () => browser.i18n.getMessage('brickList_bricksAndPiecesPrice'),
                 callback: 'satPrice'
             }
         ]
