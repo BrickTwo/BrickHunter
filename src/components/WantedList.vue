@@ -118,22 +118,23 @@ export default {
             for(var i = 0; i < this.wantedList.length; i++ ){
                 this.wantedList[i].sat = null
                 this.wantedList[i].pab = null
+                this.wantedList[i].brickLink = null
             }
 
             this.wantedList.map((item, i) => {
                 this.delay(200 * this.wantedList.length - 200 * i).then(d => {
                     this.getBricklink(item.itemid)
                     .then(response => {
-                        
-                            var numbers = this.FindAlternateItemNumbers(response);
-                            item.searchids = item.searchids.concat(numbers);
-                            if (~item.itemid.indexOf("pb")) { // if printed brick
+                            item.brickLink = this.ReturnModelsObject(response)
+                            item.searchids = [this.CleanItemId(item.itemid)];
+                            item.searchids = item.searchids.concat(this.FindAlternateItemNumbers(item));
+
+                            if (~item.itemid.indexOf("pb") || ~item.itemid.indexOf("c")) { // if printed brick
                                 //console.log(item.searchids);
-                                var desingIds= this.FindDesignNumbers(response);
+                                var desingIds= this.FindColorCodes(item);
                                 item.searchids = desingIds;
                             }
                             //console.log("searchIds", item.searchids);
-                        
                     })
                     .catch(error => {
                         //this.satBrickCounter++;
@@ -193,7 +194,7 @@ export default {
                 });
             });
 
-            
+            console.log(this.wantedList)
         },
         delay(t, data) {
             return new Promise(resolve => {
@@ -206,12 +207,13 @@ export default {
             
             this.loadPercentage = Math.round((one*this.pabBrickCounter) + (one*this.satBrickCounter))
             if(this.loadPercentage == 100) {
+                //console.log("setWantedList", this.wantedList)
                 this.$store.commit("setWantedList", this.wantedList);
             }
             //console.log(this.loadPercentage)
         },
         print(){
-            console.log("print")
+            //console.log("print")
             this.$htmlToPaper('wantedList')
         }
     },

@@ -16,6 +16,20 @@ export const brickProcessorMixin = {
         //console.log("satFind", item, bricks);
         var result = bricks.filter(brick => brick.colorFamily == item.color.piecesAndBricksName && !brick.isSoldOut);
         //console.log("result", result);
+
+        if(!result.length){
+          var colorCodesArray = item.brickLink.mapPCCs
+          var colorCodes = colorCodesArray[item.color.brickLinkId].split(",")
+          
+          result = bricks.filter(
+              function(brick) {
+                return this.indexOf(brick.itemNumber) < 0;
+              },
+              colorCodes
+          )
+          //console.log("result 2", result);
+        }
+
         result.sort((a,b) => {
           if(a.price.amount > b.price.amount){
             return 1;
@@ -25,10 +39,24 @@ export const brickProcessorMixin = {
         });
         return result[0]
       },
-      FindBrickPab(item, response) {
-        //console.log("pabFind", item, response);
-        var result = response.filter(brick => brick.variant.attributes.colour == item.color.pickABrickName);
-        //console.log("result", result);
+      FindBrickPab(item, bricks) {
+        console.log("pabFind", item, bricks);
+        var result = bricks.filter(brick => brick.variant.attributes.colour == item.color.pickABrickName);
+
+        if(!result.length){
+          var colorCodesArray = item.brickLink.mapPCCs
+          var colorCodes = colorCodesArray[item.color.brickLinkId].split(",")
+          //console.log("result", result);
+
+          result = bricks.filter(
+              function(brick) {
+                return this.indexOf(brick.itemNumber) < 0;
+              },
+              colorCodes
+          )
+          console.log("result 2", result);
+        }
+        
         return result[0]
       }
     }

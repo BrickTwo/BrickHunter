@@ -39,7 +39,7 @@ export default {
                 callback: 'showImage'
             },
             {
-                name: 'color.legoName',
+                name: 'color.brickLinkName',
                 title: () => browser.i18n.getMessage('brickList_brickLinkColor')
             },
             {
