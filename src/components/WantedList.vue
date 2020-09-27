@@ -129,7 +129,7 @@ export default {
                             item.searchids = [this.CleanItemId(item.itemid)];
                             item.searchids = item.searchids.concat(this.FindAlternateItemNumbers(item));
 
-                            if (~item.itemid.indexOf("pb") || ~item.itemid.indexOf("c")) { // if printed brick
+                            if (~item.itemid.indexOf("pb") || ~item.itemid.indexOf("c") || item.color.brickLinkId == 65) { // if printed brick
                                 //console.log(item.searchids);
                                 var desingIds= this.FindColorCodes(item);
                                 item.searchids = desingIds;

@@ -19,7 +19,7 @@ export const brickProcessorMixin = {
         var result = bricks.filter(brick => brick.colorFamily == item.color.piecesAndBricksName && !brick.isSoldOut);
         console.log("result", result);
 
-        if (~item.itemid.indexOf("pb") || ~item.itemid.indexOf("c")){
+        if (~item.itemid.indexOf("pb") || ~item.itemid.indexOf("c") || item.color.brickLinkId == 65){
           if(!result.length){
             var colorCodesArray = item.brickLink.mapPCCs
             var colorCodes = colorCodesArray[item.color.brickLinkId].split(",")
@@ -49,7 +49,7 @@ export const brickProcessorMixin = {
 
         var result = bricks.filter(brick => brick.variant.attributes.colour == item.color.pickABrickName);
 
-        if (~item.itemid.indexOf("pb") || ~item.itemid.indexOf("c")){
+        if (~item.itemid.indexOf("pb") || ~item.itemid.indexOf("c") || item.color.brickLinkId == 65){
           if(!result.length){
             var colorCodesArray = item.brickLink.mapPCCs
             var colorCodes = colorCodesArray[item.color.brickLinkId].split(",")

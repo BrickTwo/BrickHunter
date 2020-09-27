@@ -65,7 +65,7 @@ export const brickColorMixin = {
             { brickLinkId: 62, brickLinkName: "Light Blue", legoId: 45, legoName: "Light Blue", piecesAndBricksName: "L.Blue", pickABrickName: "N/A", colorCode: "#97CBD9" },
             { brickLinkId: 63, brickLinkName: "Dark Blue", legoId: 140, legoName: "Earth Blue", piecesAndBricksName: "Earth Blue", pickABrickName: "Earth Blue", colorCode: "#19325A" },
             { brickLinkId: 64, brickLinkName: "Chrome Green", legoId: 9999, legoName: "N/A", piecesAndBricksName: "N/A", pickABrickName: "N/A", colorCode: "#FFFFFF" },
-            { brickLinkId: 65, brickLinkName: "Metallic Gold", legoId: 299, legoName: "Warm Gold, Drum Lacquered / Gold Metalized / Gold Lacquered", piecesAndBricksName: "W.Gold", pickABrickName: "N/A", colorCode: "#DEB060" },
+            { brickLinkId: 65, brickLinkName: "Metallic Gold", legoId: 299, legoName: "Warm Gold, Drum Lacquered / Gold Metalized / Gold Lacquered", piecesAndBricksName: "Gold Ink", pickABrickName: "N/A", colorCode: "#DEB060" },
             { brickLinkId: 66, brickLinkName: "Pearl Light Gray", legoId: 131, legoName: "Silver", piecesAndBricksName: "Silver", pickABrickName: "N/A", colorCode: "#A0A0A0" },
             { brickLinkId: 66, brickLinkName: "Pearl Light Gray", legoId: 296, legoName: "Cool Silver", piecesAndBricksName: "C.Silver", pickABrickName: "N/A", colorCode: "#ADADAD" },
             { brickLinkId: 67, brickLinkName: "Metallic Silver", legoId: 298, legoName: "Cool Silver, Drum Lacquered", piecesAndBricksName: "C.Silver, Dr. L", pickABrickName: "N/A", colorCode: "#767676" },
