@@ -68,12 +68,12 @@ export default {
     },
     pabPrice(value) {
         if(!value) return "";
-        var returnValue = `${value.variant.price.currencyCode} ${value.variant.price.centAmount/100}<br><span style="color: grey; font-size: small;">[${value.variant.attributes.designNumber}]</span>`;
+        var returnValue = `${value.variant.price.currencyCode} ${value.variant.price.centAmount/100}<br><span style="color: grey; font-size: small;">[${value.variant.attributes.designNumber}/${value.variant.id}]</span>`;
         return returnValue;
     },
     satPrice(value) {
         if(!value) return "";
-        var returnValue = `${value.price.currency} ${value.price.amount}<br><span style="color: grey; font-size: small;">[${value.designId}]</span>`;
+        var returnValue = `${value.price.currency} ${value.price.amount}<br><span style="color: grey; font-size: small;">[${value.designId}/${value.itemNumber}]</span>`;
         return returnValue;
     },
     lineNumber(value) {
