@@ -194,7 +194,7 @@ export default {
                 });
             });
 
-            console.log(this.wantedList)
+            //console.log(this.wantedList)
         },
         delay(t, data) {
             return new Promise(resolve => {

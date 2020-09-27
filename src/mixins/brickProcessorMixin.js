@@ -13,11 +13,11 @@ export const brickProcessorMixin = {
         return result[0];
       },
       FindBrick(item, bricks) {
-        console.log("satFind", item, bricks);
+        //console.log("satFind", item, bricks);
         if(!bricks) return null
         bricks = bricks.filter(brick => !brick.isSoldOut);
         var result = bricks.filter(brick => brick.colorFamily == item.color.piecesAndBricksName && !brick.isSoldOut);
-        console.log("result", result);
+        //console.log("result", result);
 
         if (~item.itemid.indexOf("pb") || ~item.itemid.indexOf("c") || item.color.brickLinkId == 65){
           if(!result.length){
@@ -30,7 +30,7 @@ export const brickProcessorMixin = {
                 },
                 colorCodes
             )
-            console.log("result 2", result);
+            //console.log("result 2", result);
           }
         }
 
