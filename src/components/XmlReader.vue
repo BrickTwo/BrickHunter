@@ -3,8 +3,8 @@
         v-model="file"
         :state="Boolean(file)"
         accept="text/xml" 
-        placeholder="Choose a file or drop it here..."
-        drop-placeholder="Drop file here..."
+        :placeholder="chooseFile"
+        :drop-placeholder="dropFile"
         @change="loadTextFromFile"
         ></b-form-file>
 </template>
@@ -26,6 +26,14 @@ export default {
         }));
 
         reader.readAsText(file);
+    }
+  },
+  computed: {
+    chooseFile() {
+      return browser.i18n.getMessage('xmlReader_chooseFile')
+    },
+    dropFile() {
+      return browser.i18n.getMessage('xmlReader_dropFile')
     }
   }
 };

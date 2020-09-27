@@ -26,35 +26,35 @@ export default {
         columns: [
             {
                 name: '__sequence',
-                title: "#",
+                title: () => browser.i18n.getMessage('brickList_lineNumber'),
                 callback: 'lineNumber'
             },
             {
                 name: 'itemid',
-                title: "Id"
+                title: () => browser.i18n.getMessage('brickList_itemId')
             },
             {
                 name: 'image',
-                title: "Bild",
+                title: () => browser.i18n.getMessage('brickList_brickLinkImage'),
                 callback: 'showImage'
             },
             {
-                name: 'color.legoName',
-                title: "BrickLink Farbe"
+                name: 'color.brickLinkName',
+                title: () => browser.i18n.getMessage('brickList_brickLinkColor')
             },
             {
                 name: 'qty',
-                title: "Anzahl",
+                title: () => browser.i18n.getMessage('brickList_quantity'),
                 callback: 'showQty'
             },
             {
                 name: 'pab',
-                title: "Pick a Brick",
+                title: () => browser.i18n.getMessage('brickList_pickABrickPrice'),
                 callback: 'pabPrice'
             },
             {
                 name: 'sat',
-                title: "Steine & Teile",
+                title: () => browser.i18n.getMessage('brickList_bricksAndPiecesPrice'),
                 callback: 'satPrice'
             }
         ]
@@ -68,12 +68,12 @@ export default {
     },
     pabPrice(value) {
         if(!value) return "";
-        var returnValue = `${value.variant.price.currencyCode} ${value.variant.price.centAmount/100}<br><span style="color: grey; font-size: small;">[${value.variant.attributes.designNumber}]</span>`;
+        var returnValue = `${value.variant.price.currencyCode} ${value.variant.price.centAmount/100}<br><span style="color: grey; font-size: small;">[${value.variant.attributes.designNumber}/${value.variant.id}]</span>`;
         return returnValue;
     },
     satPrice(value) {
         if(!value) return "";
-        var returnValue = `${value.price.currency} ${value.price.amount}<br><span style="color: grey; font-size: small;">[${value.designId}]</span>`;
+        var returnValue = `${value.price.currency} ${value.price.amount}<br><span style="color: grey; font-size: small;">[${value.designId}/${value.itemNumber}]</span>`;
         return returnValue;
     },
     lineNumber(value) {

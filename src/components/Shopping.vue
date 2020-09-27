@@ -4,20 +4,20 @@
             id="usePickaBrick"
             v-model="usePickaBrick"
             >
-            Pick a Brick verwenden
+            {{ usePickABrick }}
         </b-form-checkbox>
         <b-form-checkbox
             id="useStonesAndPieces"
             v-model="useStonesAndPieces"
             >
-            Steine und Teile verwenden
+            {{ useBricksAndPieces }}
         </b-form-checkbox>
 
-        <b-form-group label="Was soll bei gleichem Preis bevorzugt werden?" style="margin-top: 10px">
+        <b-form-group :label="whatShouldBePreferred" style="margin-top: 10px">
             <b-form-radio-group v-model="behaviourOnSamePrice" name="behaviourOnSamePrice">
-                <b-form-radio value="pab" :disabled="!usePickaBrick">Pick a Brick</b-form-radio>
-                <b-form-radio value="sap" :disabled="!useStonesAndPieces">Steine und Teile</b-form-radio>
-                <b-form-radio value="bl">BrickLink</b-form-radio>
+                <b-form-radio value="pab" :disabled="!usePickaBrick">{{ pickABrick }}</b-form-radio>
+                <b-form-radio value="sap" :disabled="!useStonesAndPieces">{{ bricksAndPieces }}</b-form-radio>
+                <b-form-radio value="bl">{{ brickLink }}</b-form-radio>
             </b-form-radio-group>
         </b-form-group>
 
@@ -25,39 +25,39 @@
             id="useHave"
             v-model="useHave"
             >
-            Vorhandene Steine berücksichtigen
+            {{ useHaveText }}
         </b-form-checkbox>
 
 
         <b-nav tabs>
-            <b-nav-item :active="page=='overview'" @click="page='overview'">Übersicht</b-nav-item>
-            <b-nav-item :active="page=='sap'" @click="page='sap'">Steine & Teile</b-nav-item>
-            <b-nav-item :active="page=='pab'" @click="page='pab'">Pick a Brick</b-nav-item>
+            <b-nav-item :active="page=='overview'" @click="page='overview'">{{ tabOverview }}</b-nav-item>
+            <b-nav-item :active="page=='sap'" @click="page='sap'">{{ bricksAndPieces }}</b-nav-item>
+            <b-nav-item :active="page=='pab'" @click="page='pab'">{{ pickABrick }}</b-nav-item>
         </b-nav>
         
         <div v-if="page=='overview'">
-            <h2>Anzahl Positionen</h2>
-            Wanted List: {{wantedList.length}}<br />
-            Pick a Brick: {{pabPositions}}<br />
-            Steine und Teile: {{satPositions}}<br />        
-            Total bei LEGO: {{satPositions + pabPositions}}
+            <h2>{{ titleAmountPositions }}</h2>
+            {{ amountWantedList }}: {{wantedList.length}}<br />
+            {{ pickABrick }}: {{pabPositions}}<br />
+            {{ bricksAndPieces }}: {{satPositions}}<br />        
+            {{ amountTotalFoundLego }}: {{satPositions + pabPositions}}
 
-            <h2>Preis</h2>
-            Pick a Brick: {{currency}} {{pabPrice}}<br />
-            Steine und Teile: {{currency}} {{satPrice}}<br />
-            Total: {{currency}} {{Math.round((satPrice + pabPrice)*100)/100}}
+            <h2>{{ titlePrice }}</h2>
+            {{ pickABrick }}: {{currency}} {{pabPrice}}<br />
+            {{ bricksAndPieces }}: {{currency}} {{satPrice}}<br />
+            {{ total }}: {{currency}} {{Math.round((satPrice + pabPrice)*100)/100}}
         </div>
         <div v-if="page=='sap'">
             <p style="margin-top: 5px; margin-bottom: 5px;">
-                <b-button id="btn-sap-add-to-card" variant="primary" @click="sapFillCart" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces">Steine & Teile Warenkorb füllen</b-button>
-                <b-button variant="danger" @click="sapClearCart" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces" style="margin-left: 10px;">Steine & Teile Warenkorb leeren</b-button>
+                <b-button id="btn-sap-add-to-card" variant="primary" @click="sapFillCart" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces">{{ buttonFillBricksAndPiecesCart }}</b-button>
+                <b-button variant="danger" @click="sapClearCart" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces" style="margin-left: 10px;">{{ buttonClearBricksAndPiecesCart }}</b-button>
                 <b-button variant="primary" @click="printSap" style="margin-left: 10px; vertical-align: bottom;" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces">
                     <b-icon icon="printer" aria-hidden="true"></b-icon>
                 </b-button>
                 <b-button variant="primary" @click="showInfo" style="margin-left: 10px; vertical-align: bottom;">
                     <b-icon icon="info-circle" aria-hidden="true"></b-icon>
                 </b-button>
-                <b-tooltip target="btn-sap-add-to-card" variant="danger">Zuvor ausgewählte Steine &amp; Teile werden aus dem Warenkorb entfernt!</b-tooltip>
+                <b-tooltip target="btn-sap-add-to-card" variant="danger">{{ buttonFillBricksAndPiecesCartInfo }}</b-tooltip>
             </p>
             <div id="sapList">
                 <brick-list :bricklist="sapList" :limitMaxQty="200"></brick-list>
@@ -65,8 +65,8 @@
         </div>
         <div v-if="page=='pab'">
             <p style="margin-top: 5px; margin-bottom: 5px;">
-                <b-button id="btn-pab-add-to-card" variant="primary" @click="pabFillCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">Pick a Brick füllen</b-button>
-                <b-button variant="danger" @click="pabClearCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick" style="margin-left: 10px;">Pick a Brick Warenkorb leeren</b-button>
+                <b-button id="btn-pab-add-to-card" variant="primary" @click="pabFillCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">{{ buttonFillPickABrickCart }}</b-button>
+                <b-button variant="danger" @click="pabClearCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick" style="margin-left: 10px;">{{ buttonClearPickABrickCart }}</b-button>
                 <b-button variant="primary" @click="printPab" style="margin-left: 10px; vertical-align: bottom;" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">
                     <b-icon icon="printer" aria-hidden="true"></b-icon>
                 </b-button>
@@ -125,6 +125,12 @@ export default {
                     var tab = tabs[0]
                     //var countrySelected = localStorage.getItem("country") || null
                     browser.tabs.update(tab.id, {url: `https://www.lego.com/page/static/pick-a-brick`})
+
+                    this.$bvToast.toast(this.clearCartSuccessfullText, {
+                        title: this.pickABrick,
+                        autoHideDelay: 5000,
+                        variant: 'success'
+                    })
                 })
             })
             .catch(() => {
@@ -145,6 +151,12 @@ export default {
                 var tab = tabs[0]
                 //var countrySelected = localStorage.getItem("country") || null
                 browser.tabs.update(tab.id, {url: `https://www.lego.com/page/static/pick-a-brick`})
+
+                this.$bvToast.toast(this.fillCartSuccessfullText, {
+                    title: this.pickABrick,
+                    autoHideDelay: 5000,
+                    variant: 'success'
+                })
             })
         },
         async pabAddToCart(item) {
@@ -181,8 +193,8 @@ export default {
             .then(response => {
                 
                 //console.log(response)
-                this.$bvToast.toast(`Warenkorb erfolgreich befüllt`, {
-                    title: 'Steine & Teile',
+                this.$bvToast.toast(this.fillCartSuccessfullText, {
+                    title: this.bricksAndPieces,
                     autoHideDelay: 5000,
                     variant: 'success'
                 })
@@ -193,8 +205,8 @@ export default {
             browser.runtime.sendMessage({contentScriptQuery: "sapClearCart"})
             .then(response => {
                 //console.log(response)
-                this.$bvToast.toast(`Warenkorb erfolgreich geleert`, {
-                    title: 'Steine & Teile',
+                this.$bvToast.toast(this.clearCartSuccessfullText, {
+                    title: this.bricksAndPieces,
                     autoHideDelay: 5000,
                     variant: 'success'
                 })
@@ -350,6 +362,68 @@ export default {
         .catch(() => {
             
         })
+    },
+    computed: {
+        pickABrick() {
+            return browser.i18n.getMessage('pickABrick')
+        },
+        bricksAndPieces() {
+            return browser.i18n.getMessage('bricksAndPieces')
+        },
+        brickLink() {
+            return browser.i18n.getMessage('brickLink')
+        },
+        usePickABrick() {
+            return browser.i18n.getMessage('shopping_usePickABrick')
+        },
+        useBricksAndPieces() {
+            return browser.i18n.getMessage('shopping_useBricksAndPieces')
+        },
+        whatShouldBePreferred() {
+            return browser.i18n.getMessage('shopping_whatShouldBePreferred')
+        },
+        useHaveText() {
+            return browser.i18n.getMessage('shopping_useHave')
+        },
+        tabOverview() {
+            return browser.i18n.getMessage('shopping_tabOverview')
+        },
+        titleAmountPositions() {
+            return browser.i18n.getMessage('shopping_titleAmountPositions')
+        },
+        amountWantedList() {
+            return browser.i18n.getMessage('shopping_amountWantedList')
+        },
+        amountTotalFoundLego() {
+            return browser.i18n.getMessage('shopping_amountTotalFoundLego')
+        },
+        titlePrice() {
+            return browser.i18n.getMessage('shopping_titlePrice')
+        },
+        total() {
+            return browser.i18n.getMessage('shopping_total')
+        },
+        buttonFillBricksAndPiecesCart() {
+            return browser.i18n.getMessage('shopping_buttonFillBricksAndPiecesCart')
+        },
+        buttonFillBricksAndPiecesCartInfo() {
+            return browser.i18n.getMessage('shopping_buttonFillBricksAndPiecesCartInfo')
+        },
+        buttonClearBricksAndPiecesCart() {
+            return browser.i18n.getMessage('shopping_buttonClearBricksAndPiecesCart')
+        },
+        buttonFillPickABrickCart() {
+            return browser.i18n.getMessage('shopping_buttonFillPickABrickCart')
+        },
+        buttonClearPickABrickCart() {
+            return browser.i18n.getMessage('shopping_buttonClearPickABrickCart')
+        },
+        fillCartSuccessfullText() {
+            return browser.i18n.getMessage('shopping_fillCartSuccessfullText')
+        },
+        clearCartSuccessfullText() {
+            return browser.i18n.getMessage('shopping_clearCartSuccessfullText')
+        }
     }
 }
 </script>
