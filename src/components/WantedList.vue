@@ -2,7 +2,7 @@
   <div>
     <p>
         <xml-reader @load="loadXml" style="width: 470px" v-if="isChrome"></xml-reader>
-        <b-button variant="primary" v-if="!isChrome && !loadWantedList" @click="loadWantedList=true">{{ wantedList_buttonWantedList }}</b-button>
+        <b-button variant="primary" v-if="!isChrome && !loadWantedList" @click="loadWantedList=true">{{ buttonWantedList }}</b-button>
         <xml-field @load="loadXml" @cancel="loadWantedList=false" style="width: 650px" v-if="loadWantedList"></xml-field>
         <b-button variant="primary" @click="loadPrice" style="margin-left: 10px; vertical-align: bottom;" :disabled="!wantedList || wantedList.length == 0" v-if="!loadWantedList">{{ buttonLoadPrices }}</b-button>
         <b-button variant="danger" @click="clear" style="margin-left: 10px; vertical-align: bottom;" v-if="!loadWantedList">{{ buttonClear }}</b-button>
@@ -83,6 +83,7 @@ export default {
                         balance: 0,
                         order: 0
                     }
+
                     item.qty.min = item.minqty[0];
                     if(item.qtyfilled){
                         item.qty.have = item.qtyfilled[0];
