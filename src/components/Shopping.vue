@@ -1,92 +1,166 @@
 <template>
     <div>
-        <b-form-checkbox
-            id="usePickaBrick"
-            v-model="usePickaBrick"
-            >
+        <b-form-checkbox id="usePickaBrick" v-model="usePickaBrick">
             {{ usePickABrick }}
         </b-form-checkbox>
-        <b-form-checkbox
-            id="useStonesAndPieces"
-            v-model="useStonesAndPieces"
-            >
+        <b-form-checkbox id="useStonesAndPieces" v-model="useStonesAndPieces">
             {{ useBricksAndPieces }}
         </b-form-checkbox>
 
         <b-form-group :label="whatShouldBePreferred" style="margin-top: 10px">
-            <b-form-radio-group v-model="behaviourOnSamePrice" name="behaviourOnSamePrice">
-                <b-form-radio value="pab" :disabled="!usePickaBrick">{{ pickABrick }}</b-form-radio>
-                <b-form-radio value="sap" :disabled="!useStonesAndPieces">{{ bricksAndPieces }}</b-form-radio>
+            <b-form-radio-group
+                v-model="behaviourOnSamePrice"
+                name="behaviourOnSamePrice"
+            >
+                <b-form-radio value="pab" :disabled="!usePickaBrick">{{
+                    pickABrick
+                }}</b-form-radio>
+                <b-form-radio value="sap" :disabled="!useStonesAndPieces">{{
+                    bricksAndPieces
+                }}</b-form-radio>
                 <b-form-radio value="bl">{{ brickLink }}</b-form-radio>
             </b-form-radio-group>
         </b-form-group>
 
-        <b-form-checkbox
-            id="useHave"
-            v-model="useHave"
-            >
+        <b-form-checkbox id="useHave" v-model="useHave">
             {{ useHaveText }}
         </b-form-checkbox>
 
-
         <b-nav tabs>
-            <b-nav-item :active="page=='overview'" @click="page='overview'">{{ tabOverview }}</b-nav-item>
-            <b-nav-item :active="page=='sap'" @click="page='sap'">{{ bricksAndPieces }}</b-nav-item>
-            <b-nav-item :active="page=='pab'" @click="page='pab'">{{ pickABrick }}</b-nav-item>
+            <b-nav-item
+                :active="page == 'overview'"
+                @click="page = 'overview'"
+                >{{ tabOverview }}</b-nav-item
+            >
+            <b-nav-item :active="page == 'sap'" @click="page = 'sap'">{{
+                bricksAndPieces
+            }}</b-nav-item>
+            <b-nav-item :active="page == 'pab'" @click="page = 'pab'">{{
+                pickABrick
+            }}</b-nav-item>
         </b-nav>
-        
-        <div v-if="page=='overview'">
+
+        <div v-if="page == 'overview'">
             <h2>{{ titleAmountPositions }}</h2>
-            {{ amountWantedList }}: {{wantedList.length}}<br />
-            {{ pickABrick }}: {{pabPositions}}<br />
-            {{ bricksAndPieces }}: {{satPositions}}<br />        
-            {{ amountTotalFoundLego }}: {{satPositions + pabPositions}}
+            {{ amountWantedList }}: {{ wantedList.length }}<br />
+            {{ pickABrick }}: {{ pabPositions }}<br />
+            {{ bricksAndPieces }}: {{ satPositions }}<br />
+            {{ amountTotalFoundLego }}: {{ satPositions + pabPositions }}
 
             <h2>{{ titlePrice }}</h2>
-            {{ pickABrick }}: {{currency}} {{pabPrice}}<br />
-            {{ bricksAndPieces }}: {{currency}} {{satPrice}}<br />
-            {{ total }}: {{currency}} {{Math.round((satPrice + pabPrice)*100)/100}}
+            {{ pickABrick }}: {{ currency }} {{ pabPrice }}<br />
+            {{ bricksAndPieces }}: {{ currency }} {{ satPrice }}<br />
+            {{ total }}: {{ currency }}
+            {{ Math.round((satPrice + pabPrice) * 100) / 100 }}
         </div>
-        <div v-if="page=='sap'">
+        <div v-if="page == 'sap'">
             <p style="margin-top: 5px; margin-bottom: 5px;">
-                <b-button id="btn-sap-add-to-card" variant="primary" @click="sapFillCart" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces">{{ buttonFillBricksAndPiecesCart }}</b-button>
-                <b-button variant="danger" @click="sapClearCart" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces" style="margin-left: 10px;">{{ buttonClearBricksAndPiecesCart }}</b-button>
-                <b-button variant="primary" @click="printSap" style="margin-left: 10px; vertical-align: bottom;" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces">
+                <b-button
+                    id="btn-sap-add-to-card"
+                    variant="primary"
+                    @click="sapFillCart"
+                    :disabled="
+                        !sapList || sapList.length == 0 || !useStonesAndPieces
+                    "
+                    >{{ buttonFillBricksAndPiecesCart }}</b-button
+                >
+                <b-button
+                    variant="danger"
+                    @click="sapClearCart"
+                    :disabled="
+                        !sapList || sapList.length == 0 || !useStonesAndPieces
+                    "
+                    style="margin-left: 10px;"
+                    >{{ buttonClearBricksAndPiecesCart }}</b-button
+                >
+                <b-button
+                    variant="primary"
+                    @click="printSap"
+                    style="margin-left: 10px; vertical-align: bottom;"
+                    :disabled="
+                        !sapList || sapList.length == 0 || !useStonesAndPieces
+                    "
+                >
                     <b-icon icon="printer" aria-hidden="true"></b-icon>
                 </b-button>
-                <b-button variant="primary" @click="showInfo" style="margin-left: 10px; vertical-align: bottom;">
+                <b-button
+                    variant="primary"
+                    @click="showInfo"
+                    style="margin-left: 10px; vertical-align: bottom;"
+                >
                     <b-icon icon="info-circle" aria-hidden="true"></b-icon>
                 </b-button>
-                <b-tooltip target="btn-sap-add-to-card" variant="danger">{{ buttonFillBricksAndPiecesCartInfo }}</b-tooltip>
+                <b-tooltip target="btn-sap-add-to-card" variant="danger">{{
+                    buttonFillBricksAndPiecesCartInfo
+                }}</b-tooltip>
             </p>
             <div id="sapList">
-                <brick-list :bricklist="sapList" :limitMaxQty="200"></brick-list>
+                <brick-list
+                    :bricklist="sapList"
+                    :limitMaxQty="200"
+                ></brick-list>
             </div>
         </div>
-        <div v-if="page=='pab'">
+        <div v-if="page == 'pab'">
             <p style="margin-top: 5px; margin-bottom: 5px;">
-                <b-button id="btn-pab-add-to-card" variant="primary" @click="pabFillCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">{{ buttonFillPickABrickCart }}</b-button>
-                <b-button variant="danger" @click="pabClearCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick" style="margin-left: 10px;">{{ buttonClearPickABrickCart }}</b-button>
-                <b-button variant="primary" @click="printPab" style="margin-left: 10px; vertical-align: bottom;" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">
+                <b-button
+                    id="btn-pab-add-to-card"
+                    variant="primary"
+                    @click="pabFillCart"
+                    :disabled="
+                        !pabList || pabList.length == 0 || !usePickaBrick
+                    "
+                    >{{ buttonFillPickABrickCart }}</b-button
+                >
+                <b-button
+                    variant="danger"
+                    @click="pabClearCart"
+                    :disabled="
+                        !pabList || pabList.length == 0 || !usePickaBrick
+                    "
+                    style="margin-left: 10px;"
+                    >{{ buttonClearPickABrickCart }}</b-button
+                >
+                <b-button
+                    variant="primary"
+                    @click="printPab"
+                    style="margin-left: 10px; vertical-align: bottom;"
+                    :disabled="
+                        !pabList || pabList.length == 0 || !usePickaBrick
+                    "
+                >
                     <b-icon icon="printer" aria-hidden="true"></b-icon>
                 </b-button>
-                <b-button variant="primary" @click="showInfo" style="margin-left: 10px; vertical-align: bottom;">
+                <b-button
+                    variant="primary"
+                    @click="showInfo"
+                    style="margin-left: 10px; vertical-align: bottom;"
+                >
                     <b-icon icon="info-circle" aria-hidden="true"></b-icon>
                 </b-button>
                 <span>
-                    <b-progress :value="loadPAPPercentage" :max="100" show-progress animated v-if="loadPAPPercentage < 100" style="margin-top: 10px"></b-progress>
+                    <b-progress
+                        :value="loadPAPPercentage"
+                        :max="100"
+                        show-progress
+                        animated
+                        v-if="loadPAPPercentage < 100"
+                        style="margin-top: 10px"
+                    ></b-progress>
                 </span>
             </p>
             <div id="pabList">
-                <brick-list :bricklist="pabList" :limitMaxQty="999"></brick-list>
+                <brick-list
+                    :bricklist="pabList"
+                    :limitMaxQty="999"
+                ></brick-list>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-
-import BrickList from "./BrickList"
+import BrickList from './BrickList';
 export default {
     data() {
         return {
@@ -105,325 +179,385 @@ export default {
             page: 'overview',
             pabShoppingCartId: null,
             authorization: null,
-            loadPAPPercentage: 100
-        }
+            loadPAPPercentage: 100,
+        };
     },
     components: {
-        BrickList
+        BrickList,
     },
     methods: {
         showInfo() {
-            console.log("changePage")
-            this.$emit('changePage', 'info')
+            console.log('changePage');
+            this.$emit('changePage', 'info');
         },
-        pabClearCart(){            
-            browser.runtime.sendMessage({contentScriptQuery: "PickABrickClearCart", authorization: this.authorization, PABCartId: this.pabShoppingCartId})
-            .then(response => {
-                //console.log("PickABrickClearCart", response);
-                browser.tabs.query({'currentWindow': true, 'active': true})
-                .then(tabs => {
-                    var tab = tabs[0]
-                    //var countrySelected = localStorage.getItem("country") || null
-                    browser.tabs.update(tab.id, {url: `https://www.lego.com/page/static/pick-a-brick`})
-
-                    this.$bvToast.toast(this.clearCartSuccessfullText, {
-                        title: this.pickABrick,
-                        autoHideDelay: 5000,
-                        variant: 'success'
-                    })
+        pabClearCart() {
+            browser.runtime
+                .sendMessage({
+                    contentScriptQuery: 'PickABrickClearCart',
+                    authorization: this.authorization,
+                    PABCartId: this.pabShoppingCartId,
                 })
-            })
-            .catch(() => {
-                
-            })
+                .then((response) => {
+                    //console.log("PickABrickClearCart", response);
+                    browser.tabs
+                        .query({ currentWindow: true, active: true })
+                        .then((tabs) => {
+                            var tab = tabs[0];
+                            //var countrySelected = localStorage.getItem("country") || null
+                            browser.tabs.update(tab.id, {
+                                url: `https://www.lego.com/page/static/pick-a-brick`,
+                            });
+
+                            this.$bvToast.toast(this.clearCartSuccessfullText, {
+                                title: this.pickABrick,
+                                autoHideDelay: 5000,
+                                variant: 'success',
+                            });
+                        });
+                })
+                .catch(() => {});
         },
         async pabFillCart() {
-            var percentageSingle = 100/this.pabList.length
-            this.loadPAPPercentage = 0
-            for(var i = 0; i < this.pabList.length; i++) {
-                this.loadPAPPercentage += percentageSingle
+            var percentageSingle = 100 / this.pabList.length;
+            this.loadPAPPercentage = 0;
+            for (var i = 0; i < this.pabList.length; i++) {
+                this.loadPAPPercentage += percentageSingle;
                 //console.log(this.pabList[i])
-                await this.pabAddToCart(this.pabList[i])
+                await this.pabAddToCart(this.pabList[i]);
             }
-            this.loadPAPPercentage = 100
-            browser.tabs.query({'currentWindow': true, 'active': true})
-            .then(tabs => {
-                var tab = tabs[0]
-                //var countrySelected = localStorage.getItem("country") || null
-                browser.tabs.update(tab.id, {url: `https://www.lego.com/page/static/pick-a-brick`})
+            this.loadPAPPercentage = 100;
+            browser.tabs
+                .query({ currentWindow: true, active: true })
+                .then((tabs) => {
+                    var tab = tabs[0];
+                    //var countrySelected = localStorage.getItem("country") || null
+                    browser.tabs.update(tab.id, {
+                        url: `https://www.lego.com/page/static/pick-a-brick`,
+                    });
 
-                this.$bvToast.toast(this.fillCartSuccessfullText, {
-                    title: this.pickABrick,
-                    autoHideDelay: 5000,
-                    variant: 'success'
-                })
-            })
+                    this.$bvToast.toast(this.fillCartSuccessfullText, {
+                        title: this.pickABrick,
+                        autoHideDelay: 5000,
+                        variant: 'success',
+                    });
+                });
         },
         async pabAddToCart(item) {
-            if(item.pab){
-                var qty = item.qty.order
-                if(qty > 999) qty = 999 // it's not possible to order more than 999 pieces per brick
+            if (item.pab) {
+                var qty = item.qty.order;
+                if (qty > 999) qty = 999; // it's not possible to order more than 999 pieces per brick
 
-                var partId = item.pab.variant.id
-                
-                var response = await browser.runtime.sendMessage({contentScriptQuery: "PickABrickAddToCart", authorization: this.authorization, PABCartId: this.pabShoppingCartId, qty: qty, partId: partId})
+                var partId = item.pab.variant.id;
+
+                var response = await browser.runtime.sendMessage({
+                    contentScriptQuery: 'PickABrickAddToCart',
+                    authorization: this.authorization,
+                    PABCartId: this.pabShoppingCartId,
+                    qty: qty,
+                    partId: partId,
+                });
             }
         },
-        sapFillCart(){
-            var order = []
+        sapFillCart() {
+            var order = [];
             //console.log("saplist", this.sapList)
-            for(var i = 0; i < this.sapList.length; i++) {
-                if(this.sapList[i].sat){
-                    var qty = this.sapList[i].qty.order
-                    if(qty > 200) qty = 200 // it's not possible to order more than 200 pieces per brick
+            for (var i = 0; i < this.sapList.length; i++) {
+                if (this.sapList[i].sat) {
+                    var qty = this.sapList[i].qty.order;
+                    if (qty > 200) qty = 200; // it's not possible to order more than 200 pieces per brick
 
                     var pos = {
                         id: this.sapList[i].sat.itemNumber,
                         product: this.sapList[i].sat,
-                        quantity: parseInt(qty)
-                    }
+                        quantity: parseInt(qty),
+                    };
 
-                    pos.product.description = pos.product.description.replace(/[\""]/g, '\\"')  // escape quotes in description
+                    pos.product.description = pos.product.description.replace(
+                        /[\""]/g,
+                        '\\"'
+                    ); // escape quotes in description
                     //console.log(pos.product.description)
-                    order.push(pos)
+                    order.push(pos);
                 }
             }
 
-            browser.runtime.sendMessage({contentScriptQuery: "sapFillCart", order: order})
-            .then(response => {
-                
-                //console.log(response)
-                this.$bvToast.toast(this.fillCartSuccessfullText, {
-                    title: this.bricksAndPieces,
-                    autoHideDelay: 5000,
-                    variant: 'success'
+            browser.runtime
+                .sendMessage({
+                    contentScriptQuery: 'sapFillCart',
+                    order: order,
                 })
-                
-            })
+                .then((response) => {
+                    //console.log(response)
+                    this.$bvToast.toast(this.fillCartSuccessfullText, {
+                        title: this.bricksAndPieces,
+                        autoHideDelay: 5000,
+                        variant: 'success',
+                    });
+                });
         },
-        sapClearCart(){
-            browser.runtime.sendMessage({contentScriptQuery: "sapClearCart"})
-            .then(response => {
-                //console.log(response)
-                this.$bvToast.toast(this.clearCartSuccessfullText, {
-                    title: this.bricksAndPieces,
-                    autoHideDelay: 5000,
-                    variant: 'success'
-                })
-            })            
+        sapClearCart() {
+            browser.runtime
+                .sendMessage({ contentScriptQuery: 'sapClearCart' })
+                .then((response) => {
+                    //console.log(response)
+                    this.$bvToast.toast(this.clearCartSuccessfullText, {
+                        title: this.bricksAndPieces,
+                        autoHideDelay: 5000,
+                        variant: 'success',
+                    });
+                });
         },
         calcTotalPrice() {
-            this.satPositions = 0
-            this.pabPositions = 0
-            this.satPrice = 0
-            this.pabPrice = 0
-            this.sapList = []
-            this.pabList = []
+            this.satPositions = 0;
+            this.pabPositions = 0;
+            this.satPrice = 0;
+            this.pabPrice = 0;
+            this.sapList = [];
+            this.pabList = [];
 
-            if(this.wantedList){
-                this.wantedList.forEach(element => {
-                if(this.useHave){
-                    element.qty.order = element.qty.balance
-                }
-                else {
-                    element.qty.order = element.qty.min
-                }
-                if(element.qty.order > 0){
-                    
-                    var sapPrice = 0;
-                    var pabPrice = 0;
-
-                    if (element.sat && element.sat.price && element.sat.price.amount) sapPrice = element.sat.price.amount
-                    if (element.pab && element.pab.variant && element.pab.variant.price && element.pab.variant.price.centAmount) pabPrice = element.pab.variant.price.centAmount / 100
-                    var price = this.getPrice(pabPrice, sapPrice, element.maxprice)
-
-                    if(price[1]) {
-                        if(price[0] == 'sap'){
-                            this.satPositions++
-                            this.satPrice += element.minqty * price[1]
-                            this.currency = element.sat.price.currency
-                            this.fillSapList(element)
-                        } 
-                        if(price[0] == 'pab'){
-                            this.pabPositions++
-                            this.pabPrice += element.minqty * price[1]
-                            this.currency = element.pab.variant.price.currencyCode
-                            this.fillPabList(element)
-                        } 
+            if (this.wantedList) {
+                this.wantedList.forEach((element) => {
+                    if (this.useHave) {
+                        element.qty.order = element.qty.balance;
+                    } else {
+                        element.qty.order = element.qty.min;
                     }
-                }
-            })
-            }
-            
+                    if (element.qty.order > 0) {
+                        var sapPrice = 0;
+                        var pabPrice = 0;
 
-            this.satPrice = Math.round(this.satPrice * 100) / 100
-            this.pabPrice = Math.round(this.pabPrice * 100) / 100
+                        if (
+                            element.sat &&
+                            element.sat.price &&
+                            element.sat.price.amount
+                        )
+                            sapPrice = element.sat.price.amount;
+                        if (
+                            element.pab &&
+                            element.pab.variant &&
+                            element.pab.variant.price &&
+                            element.pab.variant.price.centAmount
+                        )
+                            pabPrice =
+                                element.pab.variant.price.centAmount / 100;
+                        var price = this.getPrice(
+                            pabPrice,
+                            sapPrice,
+                            element.maxprice
+                        );
+
+                        if (price[1]) {
+                            if (price[0] == 'sap') {
+                                this.satPositions++;
+                                this.satPrice += element.minqty * price[1];
+                                this.currency = element.sat.price.currency;
+                                this.fillSapList(element);
+                            }
+                            if (price[0] == 'pab') {
+                                this.pabPositions++;
+                                this.pabPrice += element.minqty * price[1];
+                                this.currency =
+                                    element.pab.variant.price.currencyCode;
+                                this.fillPabList(element);
+                            }
+                        }
+                    }
+                });
+            }
+
+            this.satPrice = Math.round(this.satPrice * 100) / 100;
+            this.pabPrice = Math.round(this.pabPrice * 100) / 100;
         },
         getPrice(pabPrice, sapPrice, blPrice) {
-            if (!pabPrice) pabPrice = 0
-            if (!sapPrice) sapPrice = 0
+            if (!pabPrice) pabPrice = 0;
+            if (!sapPrice) sapPrice = 0;
 
-            var prices = Array()
+            var prices = Array();
 
-            if(pabPrice == sapPrice && pabPrice > 0) {
-                if(this.behaviourOnSamePrice == 'sap') {
-                    prices.push(['sap', sapPrice])
+            if (pabPrice == sapPrice && pabPrice > 0) {
+                if (this.behaviourOnSamePrice == 'sap') {
+                    prices.push(['sap', sapPrice]);
                 } else {
-                    prices.push(['pab', pabPrice])
+                    prices.push(['pab', pabPrice]);
                 }
             } else {
-                if(this.usePickaBrick && pabPrice > 0) prices.push(['pab', pabPrice])
-                if(this.useStonesAndPieces && sapPrice > 0) prices.push(['sap', sapPrice])
+                if (this.usePickaBrick && pabPrice > 0)
+                    prices.push(['pab', pabPrice]);
+                if (this.useStonesAndPieces && sapPrice > 0)
+                    prices.push(['sap', sapPrice]);
             }
 
-            if(prices.length == 0) return 0
-            prices = prices.sort(function(a, b){return a[1]-b[1]})
+            if (prices.length == 0) return 0;
+            prices = prices.sort(function(a, b) {
+                return a[1] - b[1];
+            });
 
-            if(this.behaviourOnSamePrice == 'bl' && prices[0] == blPrice) return ['bl', 0]
+            if (this.behaviourOnSamePrice == 'bl' && prices[0] == blPrice)
+                return ['bl', 0];
 
-            return prices[0]
+            return prices[0];
         },
-        fillSapList(pos){
-            this.sapList.push(pos)
+        fillSapList(pos) {
+            this.sapList.push(pos);
         },
-        fillPabList(pos){
-            this.pabList.push(pos)
+        fillPabList(pos) {
+            this.pabList.push(pos);
         },
-        printSap(){
-            console.log("print")
-            this.$htmlToPaper('sapList')
+        printSap() {
+            console.log('print');
+            this.$htmlToPaper('sapList');
         },
-        printPab(){
-            console.log("print")
-            this.$htmlToPaper('pabList')
-        }
+        printPab() {
+            console.log('print');
+            this.$htmlToPaper('pabList');
+        },
     },
-    watch:{
-        usePickaBrick: function(val, oldVal){
-            if(!val) {
-                if(this.behaviourOnSamePrice == 'pab'){
-                    if(this.useStonesAndPieces) {
-                        this.behaviourOnSamePrice = 'sap'
+    watch: {
+        usePickaBrick: function(val, oldVal) {
+            if (!val) {
+                if (this.behaviourOnSamePrice == 'pab') {
+                    if (this.useStonesAndPieces) {
+                        this.behaviourOnSamePrice = 'sap';
                     } else {
-                        this.behaviourOnSamePrice = 'bl'
+                        this.behaviourOnSamePrice = 'bl';
                     }
                 }
             }
-            localStorage.setItem("usePickaBrick", val)
-            localStorage.setItem("behaviourOnSamePriceShopping", this.behaviourOnSamePrice)
-            this.calcTotalPrice()
+            localStorage.setItem('usePickaBrick', val);
+            localStorage.setItem(
+                'behaviourOnSamePriceShopping',
+                this.behaviourOnSamePrice
+            );
+            this.calcTotalPrice();
         },
-        useStonesAndPieces: function(val, oldVal){
-            if(!val) {
-                if(this.behaviourOnSamePrice == 'sap'){
-                    if(this.usePickaBrick) {
-                        this.behaviourOnSamePrice = 'pab'
+        useStonesAndPieces: function(val, oldVal) {
+            if (!val) {
+                if (this.behaviourOnSamePrice == 'sap') {
+                    if (this.usePickaBrick) {
+                        this.behaviourOnSamePrice = 'pab';
                     } else {
-                        this.behaviourOnSamePrice = 'bl'
+                        this.behaviourOnSamePrice = 'bl';
                     }
                 }
             }
-            localStorage.setItem("useStonesAndPieces", val)
-            localStorage.setItem("behaviourOnSamePriceShopping", this.behaviourOnSamePrice)
-            this.calcTotalPrice()
+            localStorage.setItem('useStonesAndPieces', val);
+            localStorage.setItem(
+                'behaviourOnSamePriceShopping',
+                this.behaviourOnSamePrice
+            );
+            this.calcTotalPrice();
         },
-        behaviourOnSamePrice: function(val, oldVal){
-            localStorage.setItem("behaviourOnSamePriceShopping", val)
-            this.calcTotalPrice()
+        behaviourOnSamePrice: function(val, oldVal) {
+            localStorage.setItem('behaviourOnSamePriceShopping', val);
+            this.calcTotalPrice();
         },
-        useHave: function(val, oldVal){
-            localStorage.setItem('useHave', val)
-            this.calcTotalPrice()
-        }
-    },    
+        useHave: function(val, oldVal) {
+            localStorage.setItem('useHave', val);
+            this.calcTotalPrice();
+        },
+    },
     beforeMount() {
-        this.usePickaBrick = ((localStorage.getItem("usePickaBrick") || 'true') === 'true')
-        this.useStonesAndPieces = ((localStorage.getItem("useStonesAndPieces") || 'true') === 'true')
-        this.behaviourOnSamePrice = localStorage.getItem("behaviourOnSamePriceShopping") || 'sap'
-        this.useHave = ((localStorage.getItem("useHave") || 'true') === 'true')
-        this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
+        this.usePickaBrick =
+            (localStorage.getItem('usePickaBrick') || 'true') === 'true';
+        this.useStonesAndPieces =
+            (localStorage.getItem('useStonesAndPieces') || 'true') === 'true';
+        this.behaviourOnSamePrice =
+            localStorage.getItem('behaviourOnSamePriceShopping') || 'sap';
+        this.useHave = (localStorage.getItem('useHave') || 'true') === 'true';
+        this.wantedList = JSON.parse(
+            localStorage.getItem('wantedList') || null
+        );
 
-        this.calcTotalPrice()
+        this.calcTotalPrice();
 
-        browser.runtime.sendMessage({contentScriptQuery: "readQAuth"})
-        .then(response => {
-            this.authorization = response;
-            //console.log("authorization", this.authorization);
-            browser.runtime.sendMessage({contentScriptQuery: "PickABrickReadCart", authorization: this.authorization})
-            .then(response => {
-                //console.log("PickABrickReadCart", response);
-                this.pabShoppingCartId = response.id;
-                //console.log("PickABrickReadCartId", this.pabShoppingCartId);
+        browser.runtime
+            .sendMessage({ contentScriptQuery: 'readQAuth' })
+            .then((response) => {
+                this.authorization = response;
+                //console.log("authorization", this.authorization);
+                browser.runtime
+                    .sendMessage({
+                        contentScriptQuery: 'PickABrickReadCart',
+                        authorization: this.authorization,
+                    })
+                    .then((response) => {
+                        //console.log("PickABrickReadCart", response);
+                        this.pabShoppingCartId = response.id;
+                        //console.log("PickABrickReadCartId", this.pabShoppingCartId);
+                    })
+                    .catch(() => {});
             })
-            .catch(() => {
-                
-            })
-        })
-        .catch(() => {
-            
-        })
+            .catch(() => {});
     },
     computed: {
         pickABrick() {
-            return browser.i18n.getMessage('pickABrick')
+            return browser.i18n.getMessage('pickABrick');
         },
         bricksAndPieces() {
-            return browser.i18n.getMessage('bricksAndPieces')
+            return browser.i18n.getMessage('bricksAndPieces');
         },
         brickLink() {
-            return browser.i18n.getMessage('brickLink')
+            return browser.i18n.getMessage('brickLink');
         },
         usePickABrick() {
-            return browser.i18n.getMessage('shopping_usePickABrick')
+            return browser.i18n.getMessage('shopping_usePickABrick');
         },
         useBricksAndPieces() {
-            return browser.i18n.getMessage('shopping_useBricksAndPieces')
+            return browser.i18n.getMessage('shopping_useBricksAndPieces');
         },
         whatShouldBePreferred() {
-            return browser.i18n.getMessage('shopping_whatShouldBePreferred')
+            return browser.i18n.getMessage('shopping_whatShouldBePreferred');
         },
         useHaveText() {
-            return browser.i18n.getMessage('shopping_useHave')
+            return browser.i18n.getMessage('shopping_useHave');
         },
         tabOverview() {
-            return browser.i18n.getMessage('shopping_tabOverview')
+            return browser.i18n.getMessage('shopping_tabOverview');
         },
         titleAmountPositions() {
-            return browser.i18n.getMessage('shopping_titleAmountPositions')
+            return browser.i18n.getMessage('shopping_titleAmountPositions');
         },
         amountWantedList() {
-            return browser.i18n.getMessage('shopping_amountWantedList')
+            return browser.i18n.getMessage('shopping_amountWantedList');
         },
         amountTotalFoundLego() {
-            return browser.i18n.getMessage('shopping_amountTotalFoundLego')
+            return browser.i18n.getMessage('shopping_amountTotalFoundLego');
         },
         titlePrice() {
-            return browser.i18n.getMessage('shopping_titlePrice')
+            return browser.i18n.getMessage('shopping_titlePrice');
         },
         total() {
-            return browser.i18n.getMessage('shopping_total')
+            return browser.i18n.getMessage('shopping_total');
         },
         buttonFillBricksAndPiecesCart() {
-            return browser.i18n.getMessage('shopping_buttonFillBricksAndPiecesCart')
+            return browser.i18n.getMessage(
+                'shopping_buttonFillBricksAndPiecesCart'
+            );
         },
         buttonFillBricksAndPiecesCartInfo() {
-            return browser.i18n.getMessage('shopping_buttonFillBricksAndPiecesCartInfo')
+            return browser.i18n.getMessage(
+                'shopping_buttonFillBricksAndPiecesCartInfo'
+            );
         },
         buttonClearBricksAndPiecesCart() {
-            return browser.i18n.getMessage('shopping_buttonClearBricksAndPiecesCart')
+            return browser.i18n.getMessage(
+                'shopping_buttonClearBricksAndPiecesCart'
+            );
         },
         buttonFillPickABrickCart() {
-            return browser.i18n.getMessage('shopping_buttonFillPickABrickCart')
+            return browser.i18n.getMessage('shopping_buttonFillPickABrickCart');
         },
         buttonClearPickABrickCart() {
-            return browser.i18n.getMessage('shopping_buttonClearPickABrickCart')
+            return browser.i18n.getMessage(
+                'shopping_buttonClearPickABrickCart'
+            );
         },
         fillCartSuccessfullText() {
-            return browser.i18n.getMessage('shopping_fillCartSuccessfullText')
+            return browser.i18n.getMessage('shopping_fillCartSuccessfullText');
         },
         clearCartSuccessfullText() {
-            return browser.i18n.getMessage('shopping_clearCartSuccessfullText')
-        }
-    }
-}
+            return browser.i18n.getMessage('shopping_clearCartSuccessfullText');
+        },
+    },
+};
 </script>

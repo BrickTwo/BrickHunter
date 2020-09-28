@@ -319,9 +319,9 @@
     "message": "Abbrechen"
   },
   "xmlReader_chooseFile": {
-    "message": "Choose a file or drop it here..."
+    "message": "Datei auswählen oder hier reinziehen..."
   },
   "xmlReader_dropFile": {
-    "message": "Drop file here..."
+    "message": "Hier reinziehen..."
   }
 }  
