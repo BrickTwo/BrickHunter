@@ -13,11 +13,11 @@ export default {
     data: () => ({ file: null }),
     watch: {
         file(val) {
-            if (!val) return;
+            if (!val) return
 
-            var xml2js = require('xml2js');
-
-            const fileReader = new FileReader();
+            var xml2js = require('xml2js')
+            const fileReader = new FileReader()
+            
             fileReader.onload = (e) =>
                 this.$emit(
                     'load',
@@ -26,22 +26,22 @@ export default {
                             normalizeTags: true,
                         })
                         .then(function(result) {
-                            return result.inventory.item;
+                            return result.inventory.item
                         })
                         .then((items) => {
-                            return [items];
+                            return [items]
                         })
                 );
-            fileReader.readAsText(this.file);
-        },
+            fileReader.readAsText(this.file)
+        }
     },
     computed: {
         chooseFile() {
-            return browser.i18n.getMessage('xmlReader_chooseFile');
+            return browser.i18n.getMessage('xmlReader_chooseFile')
         },
         dropFile() {
-            return browser.i18n.getMessage('xmlReader_dropFile');
+            return browser.i18n.getMessage('xmlReader_dropFile')
         },
-    },
-};
+    }
+}
 </script>

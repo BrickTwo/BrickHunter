@@ -55,5 +55,5 @@ export default {
             return browser.i18n.getMessage('xmlField_buttonCancel')
         },
     },
-};
+}
 </script>

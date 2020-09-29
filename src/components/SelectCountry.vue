@@ -1,72 +1,54 @@
 <template>
     <div style="width: 500px">
-        <ValidationObserver ref="observer" v-slot="{ invalid }">
-            <b-form @submit.prevent="onSubmit" novalidate>
-                <b-form-group :label="whereDoYouLive" label-for="country">
-                    <ValidationProvider
-                        name="country"
-                        rules="required"
-                        v-slot="{ errors }"
-                    >
-                        <b-form-select
-                            v-model="form_country"
-                            :options="options"
-                        ></b-form-select>
-                        <b-form-invalid-feedback :state="errors.length == 0">
-                            {{ selectCountry }}
-                        </b-form-invalid-feedback>
-                    </ValidationProvider>
-                </b-form-group>
-                <b-button type="submit" variant="primary">
-                    {{ saveButton }}
-                </b-button>
-            </b-form>
-        </ValidationObserver>
+        <b-form @submit.prevent="onSubmit">
+            <b-form-group :label="whereDoYouLive" label-for="country">
+                <SelectCountryDropDown @countrySelected="onCountrySelected" />
+                <span v-if="!isValid" style="color: red">
+                    {{ noCountrySelected }}
+                </span>
+            </b-form-group>
+            <b-button type="submit" variant="primary">
+                {{ saveButton }}
+            </b-button>
+        </b-form>
     </div>
 </template>
+
 <script>
+import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue'
 export default {
-    name: 'SelectCountry',
+    components: {
+        SelectCountryDropDown,
+    },
     data() {
         return {
             form_country: null,
-            options: [
-                {
-                    value: 'de',
-                    text: browser.i18n.getMessage('country_germany'),
-                },
-                {
-                    value: 'at',
-                    text: browser.i18n.getMessage('country_austria'),
-                },
-                {
-                    value: 'ch',
-                    text: browser.i18n.getMessage('country_switzerland'),
-                },
-            ],
-        };
+            isValid: true
+        }
     },
     methods: {
         async onSubmit() {
-            const isValid = await this.$refs.observer.validate();
-            if (!isValid) {
-                return;
+            if (!this.form_country) {
+                this.isValid = false
+                return
             }
-            localStorage.setItem('country', this.form_country);
-            this.$emit('countrySelected', this.form_country);
-            //this.$store.commit("setKeyword", this.form.keyword);
+            this.isValid = true
+            this.$emit('countrySelected', this.form_country)
+        },
+        onCountrySelected(country) {
+            this.form_country = country
         },
     },
     computed: {
         whereDoYouLive() {
-            return browser.i18n.getMessage('selectCountry_whereDoYouLive');
+            return browser.i18n.getMessage('selectCountry_whereDoYouLive')
         },
-        selectCountry() {
-            return browser.i18n.getMessage('selectCountry_selectCountry');
+        noCountrySelected() {
+            return browser.i18n.getMessage('selectCountry_noCountrySelected')
         },
         saveButton() {
-            return browser.i18n.getMessage('selectCountry_saveButton');
+            return browser.i18n.getMessage('selectCountry_saveButton')
         },
     },
-};
+}
 </script>

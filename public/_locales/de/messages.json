@@ -27,13 +27,13 @@
   "menu_exportCsv": {
     "message": "CSV"
   },
-  "country_germany": {
+  "country_de": {
     "message": "Deutschland"
   },
-  "country_switzerland": {
+  "country_ch": {
     "message": "Schweiz"
   },
-  "country_austria": {
+  "country_at": {
     "message": "Österreich"
   },
   "brickList_lineNumber": {
@@ -243,7 +243,7 @@
   "selectCountry_whereDoYouLive": {
     "message": "Wo wohnst du?"
   },
-  "selectCountry_selectCountry": {
+  "selectCountry_noCountrySelected": {
     "message": "Bitte ein Land auswählen"
   },
   "selectCountry_saveButton": {

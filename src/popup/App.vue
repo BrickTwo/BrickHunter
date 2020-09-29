@@ -29,8 +29,8 @@
                 ></b-nav-item>
 
                 <b-nav-form>
-                    <SelectCountryOneLine
-                        @countrySelected="onCountrySelected"
+                    <SelectCountryDropDown
+                        :showFlags="true"
                         v-if="countrySelected"
                     />
                 </b-nav-form>
@@ -51,20 +51,19 @@
 </template>
 
 <script>
-import SelectCountry from '@/components/SelectCountry.vue';
-import SelectCountryOneLine from '@/components/SelectCountryOneLine.vue';
-import WantedList from '@/components/WantedList.vue';
-import Shopping from '@/components/Shopping.vue';
-import ExportWantedList from '@/components/ExportWantedList.vue';
-import ExportCsv from '@/components/ExportCsv.vue';
-import BrickList from '@/components/BrickList.vue';
-import Info from '@/components/Info.vue';
+import SelectCountry from '@/components/SelectCountry.vue'
+import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue'
+import WantedList from '@/components/WantedList.vue'
+import Shopping from '@/components/Shopping.vue'
+import ExportWantedList from '@/components/ExportWantedList.vue'
+import ExportCsv from '@/components/ExportCsv.vue'
+import BrickList from '@/components/BrickList.vue'
+import Info from '@/components/Info.vue'
 
 export default {
-    name: 'App',
     components: {
         SelectCountry,
-        SelectCountryOneLine,
+        SelectCountryDropDown,
         WantedList,
         Shopping,
         ExportWantedList,
@@ -79,47 +78,48 @@ export default {
             options: [
                 { value: 'de', text: 'Deutschland' },
                 { value: 'at', text: 'Östereich' },
-                { value: 'ch', text: 'Schweiz' },
+                { value: 'ch', text: 'Schweiz' }
             ],
-            countrySelected: null,
-        };
+            countrySelected: null
+        }
     },
     methods: {
         onCountrySelected(country) {
-            this.countrySelected = country;
-            this.showPage = 'wantedList';
+            this.countrySelected = country
+            this.showPage = 'wantedList'
         },
         changePage(value) {
-            console.log(value);
-            this.showPage = value;
-        },
+            console.log(value)
+            this.showPage = value
+        }
     },
     beforeMount() {
-        this.countrySelected = localStorage.getItem('country') || null;
-        if (!this.countrySelected) this.showPage = 'selectCountry';
+        this.countrySelected = localStorage.getItem('country') || null
+        if (!this.countrySelected) this.showPage = 'selectCountry'
     },
     computed: {
         extName() {
-            return browser.i18n.getMessage('extName');
+            return browser.i18n.getMessage('extName')
         },
         menuWantedList() {
-            return browser.i18n.getMessage('menu_wantedList');
+            return browser.i18n.getMessage('menu_wantedList')
         },
         menuShoppingCart() {
-            return browser.i18n.getMessage('menu_shoppingCart');
+            return browser.i18n.getMessage('menu_shoppingCart')
         },
         menuExport() {
-            return browser.i18n.getMessage('menu_export');
+            return browser.i18n.getMessage('menu_export')
         },
         menuExportWantedList() {
-            return browser.i18n.getMessage('menu_exportWantedList');
+            return browser.i18n.getMessage('menu_exportWantedList')
         },
         menuExportCsv() {
-            return browser.i18n.getMessage('menu_exportCsv');
-        },
-    },
-};
+            return browser.i18n.getMessage('menu_exportCsv')
+        }
+    }
+}
 </script>
+
 <style>
 .page {
     padding: 20px;
