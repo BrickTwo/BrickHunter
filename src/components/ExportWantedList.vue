@@ -27,15 +27,17 @@
                 v-model="behaviourOnSamePrice"
                 name="behaviourOnSamePrice"
             >
-                <b-form-radio value="pickABrick" :disabled="!exportPickaBrickPrices">{{
-                    pickABrick
-                }}</b-form-radio>
+                <b-form-radio
+                    value="pickABrick"
+                    :disabled="!exportPickaBrickPrices"
+                    >{{ pickABrick }}</b-form-radio
+                >
                 <b-form-radio
                     value="bricksAndPieces"
                     :disabled="!exportStonesAndPiecesPrices"
                     >{{ bricksAndPieces }}</b-form-radio
                 >
-                <b-form-radio value="bl">{{ brickLink }}</b-form-radio>
+                <b-form-radio value="brickLink">{{ brickLink }}</b-form-radio>
             </b-form-radio-group>
         </b-form-group>
 
@@ -125,14 +127,16 @@ export default {
                     wantedList[i].bricksAndPieces.price &&
                     wantedList[i].bricksAndPieces.price.amount
                 )
-                    bricksAndPiecesPrice = wantedList[i].bricksAndPieces.price.amount;
+                    bricksAndPiecesPrice =
+                        wantedList[i].bricksAndPieces.price.amount;
                 if (
                     wantedList[i].pickABrick &&
                     wantedList[i].pickABrick.variant &&
                     wantedList[i].pickABrick.variant.price &&
                     wantedList[i].pickABrick.variant.price.centAmount
                 )
-                    pickABrickPrice = wantedList[i].pickABrick.variant.price.centAmount / 100;
+                    pickABrickPrice =
+                        wantedList[i].pickABrick.variant.price.centAmount / 100;
                 var price = this.calculatePrice(
                     pickABrickPrice,
                     bricksAndPiecesPrice,
@@ -142,12 +146,14 @@ export default {
                 var remarks = '';
                 if (
                     this.writeLegoIdInRemark &&
-                    (price[0] === 'pickABrick' || price[0] === 'bricksAndPieces')
+                    (price[0] === 'pickABrick' ||
+                        price[0] === 'bricksAndPieces')
                 ) {
                     remarks = 'LEGO Id: ';
                     if (price[0] === 'pickABrick')
                         remarks +=
-                            wantedList[i].pickABrick.variant.attributes.designNumber;
+                            wantedList[i].pickABrick.variant.attributes
+                                .designNumber;
                     if (price[0] === 'bricksAndPieces')
                         remarks += wantedList[i].bricksAndPieces.designId;
                 }
@@ -156,12 +162,13 @@ export default {
                     if (this.writeLegoIdInRemark) remarks += '\n';
                     remarks += 'Source: ';
                     if (price[0] === 'pickABrick') remarks += 'Pick a Brick';
-                    if (price[0] === 'bricksAndPieces') remarks += 'Steine und Teile';
-                    if (price[0] === 'bl') remarks += 'BrickLink';
+                    if (price[0] === 'bricksAndPieces')
+                        remarks += 'Steine und Teile';
+                    if (price[0] === 'brickLink') remarks += 'BrickLink';
                 }
 
                 var have = parseInt(wantedList[i].qty.have);
-                if (this.recalcHave && price[1] > 0 && price[0] != 'bl') {
+                if (this.recalcHave && price[1] > 0 && price[0] != 'brickLink') {
                     have += parseInt(wantedList[i].qty.balance);
                 }
 
@@ -184,10 +191,10 @@ export default {
 
             return brickLink;
         },
-        calculatePrice(pickABrickPrice, bricksAndPiecesPrice, blPrice) {
+        calculatePrice(pickABrickPrice, bricksAndPiecesPrice, brickLinkPrice) {
             if (!pickABrickPrice) pickABrickPrice = 0;
             if (!bricksAndPiecesPrice) bricksAndPiecesPrice = 0;
-            if (!blPrice) blPrice = 0;
+            if (!brickLinkPrice) brickLinkPrice = 0;
 
             var prices = Array();
 
@@ -195,9 +202,9 @@ export default {
                 prices.push(['pickABrick', pickABrickPrice]);
             if (this.exportStonesAndPiecesPrices && bricksAndPiecesPrice > 0)
                 prices.push(['bricksAndPieces', bricksAndPiecesPrice]);
-            if (blPrice > 0) prices.push(['bl', blPrice]);
+            if (brickLinkPrice > 0) prices.push(['brickLink', brickLinkPrice]);
 
-            if (prices.length == 0) return ['bl', '-1.0000'];
+            if (prices.length == 0) return ['brickLink', '-1.0000'];
             prices = prices.sort(function(a, b) {
                 return a[1] - b[1];
             });
@@ -212,7 +219,7 @@ export default {
                     if (this.exportStonesAndPiecesPrices) {
                         this.behaviourOnSamePrice = 'bricksAndPieces';
                     } else {
-                        this.behaviourOnSamePrice = 'bl';
+                        this.behaviourOnSamePrice = 'brickLink';
                     }
                 }
             }
@@ -228,7 +235,7 @@ export default {
                     if (this.exportPickaBrickPrices) {
                         this.behaviourOnSamePrice = 'pickABrick';
                     } else {
-                        this.behaviourOnSamePrice = 'bl';
+                        this.behaviourOnSamePrice = 'brickLink';
                     }
                 }
             }

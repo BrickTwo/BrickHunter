@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue'
+import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
 export default {
     components: {
         SelectCountryDropDown,
@@ -23,32 +23,32 @@ export default {
     data() {
         return {
             form_country: null,
-            isValid: true
-        }
+            isValid: true,
+        };
     },
     methods: {
         async onSubmit() {
             if (!this.form_country) {
-                this.isValid = false
-                return
+                this.isValid = false;
+                return;
             }
-            this.isValid = true
-            this.$emit('countrySelected', this.form_country)
+            this.isValid = true;
+            this.$emit('countrySelected', this.form_country);
         },
         onCountrySelected(country) {
-            this.form_country = country
+            this.form_country = country;
         },
     },
     computed: {
         whereDoYouLive() {
-            return browser.i18n.getMessage('selectCountry_whereDoYouLive')
+            return browser.i18n.getMessage('selectCountry_whereDoYouLive');
         },
         noCountrySelected() {
-            return browser.i18n.getMessage('selectCountry_noCountrySelected')
+            return browser.i18n.getMessage('selectCountry_noCountrySelected');
         },
         saveButton() {
-            return browser.i18n.getMessage('selectCountry_saveButton')
+            return browser.i18n.getMessage('selectCountry_saveButton');
         },
     },
-}
+};
 </script>

@@ -22,7 +22,7 @@ const options = {
     'https://unpkg.com/kidlat-css/css/kidlat.css'
   ]
 }
-
+window.eventHub = new Vue()
 Vue.component("ValidationProvider", ValidationProvider);
 Vue.component("ValidationObserver", ValidationObserver);
 Vue.use(BootstrapVue);
@@ -33,3 +33,5 @@ new Vue({
 store,
   render: h => h(App)
 }).$mount("#app");
+
+

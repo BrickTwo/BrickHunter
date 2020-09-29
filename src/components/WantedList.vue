@@ -96,7 +96,7 @@ export default {
     ],
     methods: {
         loadXml(wantedList) {
-            //console.log(wantedList);
+            //console.log(wantedList)
             this.loadWantedList = false;
             this.priceLoaded = false;
             this.totalBricks = 0;
@@ -148,6 +148,7 @@ export default {
         clear() {
             this.wantedList = [];
             this.$store.commit('setWantedList', this.wantedList);
+            eventHub.$emit('clearWantedList', '');
         },
         loadPrice() {
             this.priceLoaded = true;
@@ -161,101 +162,120 @@ export default {
                 this.wantedList[i].brickLink = null;
             }
 
-            this.wantedList.slice(0).reverse().map((item, i) => {
-                this.delay(200 * this.wantedList.length - 200 * i).then((d) => {
-                    //200ms timout to prevent to be blocked on the website
-                    this.getBricklink(item.itemid)
-                        .then((response) => {
-                            item.brickLink = this.ReturnModelsObject(response);
+            this.wantedList
+                .slice(0)
+                .reverse()
+                .map((item, i) => {
+                    this.delay(200 * this.wantedList.length - 200 * i).then(
+                        (d) => {
+                            //200ms timout to prevent to be blocked on the website
 
-                            if (this.IsSpecialBrick(item)) {
-                                //console.log("special brick")
-                                //console.log(item.searchids);
-                                var desingIds = this.FindColorCodes(item);
-                                item.searchids = desingIds;
-                            } else {
-                                //console.log("normal brick")
-                                item.searchids = [
-                                    this.CleanItemId(item.itemid),
-                                ];
-                                item.searchids = item.searchids.concat(
-                                    this.FindAlternateItemNumbers(item)
-                                );
-                            }
-                            //console.log("searchIds", item.searchids)
-                        })
-                        .catch((error) => {})
-                        .then((value) => {
-                            var bricks = [];
-
-                            let requests = item.searchids.map(async (id) => {
-                                if (id) {
-                                    await browser.runtime
-                                        .sendMessage({
-                                            contentScriptQuery:
-                                                'SteineUndTeile',
-                                            itemId: id,
-                                        })
-                                        .then((response) => {
-                                            //console.log("SteineUndTeile", id);
-                                            //console.log(response)
-                                            bricks = bricks.concat(
-                                                response.bricks
-                                            );
-                                        })
-                                        .catch((error) => {
-                                            //console.log("error", error);
-                                        })
-                                }
-                            })
-
-                            Promise.all(requests)
-                                .then((value) => {
-                                    //console.log("SteineUndTeile", item.itemid, bricks);
-                                    var foundBrick = this.FindBrick(
-                                        item,
-                                        bricks
-                                    )
-                                    //console.log(foundBrick)
-                                    if (foundBrick) {
-                                        item.bricksAndPieces = foundBrick
-                                    }
-                                    this.bricksAndPiecesBrickCounter++
-                                    this.calcLoad()
-                                })
-                                .catch(() => {
-                                    //console.log("SteineUndTeileerror", item.itemid)
-                                    this.bricksAndPiecesBrickCounter++
-                                    this.calcLoad()
-                                });
-                        })
-                        .then((value) => {
-                            browser.runtime
-                                .sendMessage({
-                                    contentScriptQuery: 'PickABrick',
-                                    itemId: item.searchids.join('-'),
-                                })
+                            // -----------------------------------------
+                            // Load BrickLink
+                            // -----------------------------------------
+                            this.getBricklink(item.itemid)
                                 .then((response) => {
-                                    //console.log("PickABrick", item.searchids.join('-'))
-                                    var foundBrick = this.FindBrickPickABrick(
-                                        item,
+                                    item.brickLink = this.ReturnModelsObject(
                                         response
                                     );
-                                    if (foundBrick) {
-                                        item.pickABrick = foundBrick;
-                                    }
-                                    this.pickABrickBrickCounter++;
-                                    this.calcLoad();
-                                })
-                                .catch(() => {
-                                    this.pickABrickBrickCounter++;
-                                    this.calcLoad();
-                                });
-                        });
-                });
-            });
 
-            console.log(this.wantedList)
+                                    if (this.IsSpecialBrick(item)) {
+                                        //console.log("special brick")
+                                        var desingIds = this.FindColorCodes(
+                                            item
+                                        );
+                                        item.searchids = desingIds;
+                                    } else {
+                                        //console.log("normal brick")
+                                        item.searchids = [
+                                            this.CleanItemId(item.itemid),
+                                        ];
+                                        item.searchids = item.searchids.concat(
+                                            this.FindAlternateItemNumbers(item)
+                                        );
+                                    }
+                                    //console.log("searchIds", item.searchids)
+                                })
+                                .catch((error) => {})
+                                // -----------------------------------------
+                                // Load Bricks And Pieces
+                                // -----------------------------------------
+                                .then((value) => {
+                                    var bricks = [];
+
+                                    let requests = item.searchids.map(
+                                        async (id) => {
+                                            if (id) {
+                                                await browser.runtime
+                                                    .sendMessage({
+                                                        contentScriptQuery:
+                                                            'SteineUndTeile',
+                                                        itemId: id,
+                                                    })
+                                                    .then((response) => {
+                                                        //console.log("SteineUndTeile", id, response)
+                                                        bricks = bricks.concat(
+                                                            response.bricks
+                                                        );
+                                                    })
+                                                    .catch((error) => {
+                                                        //console.log("error", error)
+                                                    });
+                                            }
+                                        }
+                                    );
+
+                                    Promise.all(requests)
+                                        .then((value) => {
+                                            //console.log("SteineUndTeile", item.itemid, bricks)
+                                            var foundBrick = this.FindBricksAndPiecesBrick(
+                                                item,
+                                                bricks
+                                            );
+                                            //console.log(foundBrick)
+                                            if (foundBrick) {
+                                                item.bricksAndPieces = foundBrick;
+                                            }
+                                            this.bricksAndPiecesBrickCounter++;
+                                            this.calcLoad();
+                                        })
+                                        .catch(() => {
+                                            //console.log("SteineUndTeileerror", item.itemid)
+                                            this.bricksAndPiecesBrickCounter++;
+                                            this.calcLoad();
+                                        });
+                                })
+                                // -----------------------------------------
+                                // Load Pick A Brick
+                                // -----------------------------------------
+                                .then((value) => {
+                                    browser.runtime
+                                        .sendMessage({
+                                            contentScriptQuery: 'PickABrick',
+                                            itemId: item.searchids.join('-'),
+                                        })
+                                        .then((response) => {
+                                            //console.log("PickABrick", item.searchids.join('-'))
+                                            var foundBrick = this.FindPickABrickBrick(
+                                                item,
+                                                response
+                                            );
+                                            if (foundBrick) {
+                                                item.pickABrick = foundBrick;
+                                            }
+                                            this.pickABrickBrickCounter++;
+                                            this.calcLoad();
+                                        })
+                                        .catch(() => {
+                                            this.pickABrickBrickCounter++;
+                                            this.calcLoad();
+                                        });
+                                });
+                        }
+                    );
+                });
+
+            //console.log(this.wantedList)
         },
         delay(t, data) {
             return new Promise((resolve) => {

@@ -274,7 +274,10 @@ export default {
                     }
                 }
                 if (this.selectedPickABrickOptions.includes('price')) {
-                    if (element.pickABrick && element.pickABrick.variant.price.centAmount) {
+                    if (
+                        element.pickABrick &&
+                        element.pickABrick.variant.price.centAmount
+                    ) {
                         csvLine = this.addToCSVLine(
                             csvLine,
                             element.pickABrick.variant.price.centAmount / 100
@@ -284,7 +287,10 @@ export default {
                     }
                 }
                 if (this.selectedPickABrickOptions.includes('currency')) {
-                    if (element.pickABrick && element.pickABrick.variant.price.currencyCode) {
+                    if (
+                        element.pickABrick &&
+                        element.pickABrick.variant.price.currencyCode
+                    ) {
                         csvLine = this.addToCSVLine(
                             csvLine,
                             element.pickABrick.variant.price.currencyCode
@@ -296,7 +302,10 @@ export default {
 
                 // Bricks and Pieces options
                 if (this.selectedBricksAndPiecesOptions.includes('id')) {
-                    if (element.bricksAndPieces && element.bricksAndPieces.itemNumber) {
+                    if (
+                        element.bricksAndPieces &&
+                        element.bricksAndPieces.itemNumber
+                    ) {
                         csvLine = this.addToCSVLine(
                             csvLine,
                             element.bricksAndPieces.itemNumber
@@ -305,8 +314,13 @@ export default {
                         csvLine = this.addToCSVLine(csvLine, '');
                     }
                 }
-                if (this.selectedBricksAndPiecesOptions.includes('designNumber')) {
-                    if (element.bricksAndPieces && element.bricksAndPieces.designId) {
+                if (
+                    this.selectedBricksAndPiecesOptions.includes('designNumber')
+                ) {
+                    if (
+                        element.bricksAndPieces &&
+                        element.bricksAndPieces.designId
+                    ) {
                         csvLine = this.addToCSVLine(
                             csvLine,
                             element.bricksAndPieces.designId
@@ -316,7 +330,10 @@ export default {
                     }
                 }
                 if (this.selectedBricksAndPiecesOptions.includes('price')) {
-                    if (element.bricksAndPieces && element.bricksAndPieces.price.amount) {
+                    if (
+                        element.bricksAndPieces &&
+                        element.bricksAndPieces.price.amount
+                    ) {
                         csvLine = this.addToCSVLine(
                             csvLine,
                             element.bricksAndPieces.price.amount
@@ -326,7 +343,10 @@ export default {
                     }
                 }
                 if (this.selectedBricksAndPiecesOptions.includes('currency')) {
-                    if (element.bricksAndPieces && element.bricksAndPieces.price.currency) {
+                    if (
+                        element.bricksAndPieces &&
+                        element.bricksAndPieces.price.currency
+                    ) {
                         csvLine = this.addToCSVLine(
                             csvLine,
                             element.bricksAndPieces.price.currency

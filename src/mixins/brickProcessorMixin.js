@@ -14,7 +14,7 @@ export const brickProcessorMixin = {
             );
             return result[0];
         },
-        FindBrick(item, bricks) {
+        FindBricksAndPiecesBrick(item, bricks) {
             //console.log("satFind", item, bricks);
             if (!bricks) return null;
             bricks = bricks.filter((brick) => !brick.isSoldOut);
@@ -48,7 +48,7 @@ export const brickProcessorMixin = {
             });
             return result[0];
         },
-        FindBrickPickABrick(item, bricks) {
+        FindPickABrickBrick(item, bricks) {
             //console.log("pickABrickFind", item, bricks);
             if (!bricks) return null;
 

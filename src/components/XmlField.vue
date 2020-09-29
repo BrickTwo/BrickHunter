@@ -26,7 +26,7 @@ export default {
     data: () => ({ text: '' }),
     methods: {
         loadXml() {
-            var xml2js = require('xml2js')
+            var xml2js = require('xml2js');
 
             this.$emit(
                 'load',
@@ -36,24 +36,24 @@ export default {
                         return result.inventory.item;
                     })
                     .then((items) => {
-                        return [items]
+                        return [items];
                     })
             );
         },
         cancelXml() {
-            this.$emit('cancel')
+            this.$emit('cancel');
         },
     },
     computed: {
         copyWantedList() {
-            return browser.i18n.getMessage('xmlField_copyWantedList')
+            return browser.i18n.getMessage('xmlField_copyWantedList');
         },
         buttonLoadWantedList() {
-            return browser.i18n.getMessage('xmlField_buttonLoadWantedList')
+            return browser.i18n.getMessage('xmlField_buttonLoadWantedList');
         },
         buttonCancel() {
-            return browser.i18n.getMessage('xmlField_buttonCancel')
+            return browser.i18n.getMessage('xmlField_buttonCancel');
         },
     },
-}
+};
 </script>

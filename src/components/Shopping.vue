@@ -15,10 +15,12 @@
                 <b-form-radio value="pickABrick" :disabled="!usePickaBrick">{{
                     pickABrick
                 }}</b-form-radio>
-                <b-form-radio value="bricksAndPieces" :disabled="!useStonesAndPieces">{{
-                    bricksAndPieces
-                }}</b-form-radio>
-                <b-form-radio value="bl">{{ brickLink }}</b-form-radio>
+                <b-form-radio
+                    value="bricksAndPieces"
+                    :disabled="!useStonesAndPieces"
+                    >{{ bricksAndPieces }}</b-form-radio
+                >
+                <b-form-radio value="brickLink">{{ brickLink }}</b-form-radio>
             </b-form-radio-group>
         </b-form-group>
 
@@ -32,12 +34,16 @@
                 @click="page = 'overview'"
                 >{{ tabOverview }}</b-nav-item
             >
-            <b-nav-item :active="page == 'bricksAndPieces'" @click="page = 'bricksAndPieces'">{{
-                bricksAndPieces
-            }}</b-nav-item>
-            <b-nav-item :active="page == 'pickABrick'" @click="page = 'pickABrick'">{{
-                pickABrick
-            }}</b-nav-item>
+            <b-nav-item
+                :active="page == 'bricksAndPieces'"
+                @click="page = 'bricksAndPieces'"
+                >{{ bricksAndPieces }}</b-nav-item
+            >
+            <b-nav-item
+                :active="page == 'pickABrick'"
+                @click="page = 'pickABrick'"
+                >{{ pickABrick }}</b-nav-item
+            >
         </b-nav>
 
         <div v-if="page == 'overview'">
@@ -45,13 +51,17 @@
             {{ amountWantedList }}: {{ wantedList.length }}<br />
             {{ pickABrick }}: {{ pickABrickPositions }}<br />
             {{ bricksAndPieces }}: {{ bricksAndPiecesPositions }}<br />
-            {{ amountTotalFoundLego }}: {{ bricksAndPiecesPositions + pickABrickPositions }}
+            {{ amountTotalFoundLego }}:
+            {{ bricksAndPiecesPositions + pickABrickPositions }}
 
             <h2>{{ titlePrice }}</h2>
             {{ pickABrick }}: {{ currency }} {{ pickABrickPrice }}<br />
-            {{ bricksAndPieces }}: {{ currency }} {{ bricksAndPiecesPrice }}<br />
+            {{ bricksAndPieces }}: {{ currency }} {{ bricksAndPiecesPrice
+            }}<br />
             {{ total }}: {{ currency }}
-            {{ Math.round((bricksAndPiecesPrice + pickABrickPrice) * 100) / 100 }}
+            {{
+                Math.round((bricksAndPiecesPrice + pickABrickPrice) * 100) / 100
+            }}
         </div>
         <div v-if="page == 'bricksAndPieces'">
             <p style="margin-top: 5px; margin-bottom: 5px;">
@@ -60,7 +70,9 @@
                     variant="primary"
                     @click="bricksAndPiecesFillCart"
                     :disabled="
-                        !bricksAndPiecesList || bricksAndPiecesList.length == 0 || !useStonesAndPieces
+                        !bricksAndPiecesList ||
+                            bricksAndPiecesList.length == 0 ||
+                            !useStonesAndPieces
                     "
                     >{{ buttonFillBricksAndPiecesCart }}</b-button
                 >
@@ -68,7 +80,9 @@
                     variant="danger"
                     @click="bricksAndPiecesClearCart"
                     :disabled="
-                        !bricksAndPiecesList || bricksAndPiecesList.length == 0 || !useStonesAndPieces
+                        !bricksAndPiecesList ||
+                            bricksAndPiecesList.length == 0 ||
+                            !useStonesAndPieces
                     "
                     style="margin-left: 10px;"
                     >{{ buttonClearBricksAndPiecesCart }}</b-button
@@ -78,7 +92,9 @@
                     @click="printBricksAndPieces"
                     style="margin-left: 10px; vertical-align: bottom;"
                     :disabled="
-                        !bricksAndPiecesList || bricksAndPiecesList.length == 0 || !useStonesAndPieces
+                        !bricksAndPiecesList ||
+                            bricksAndPiecesList.length == 0 ||
+                            !useStonesAndPieces
                     "
                 >
                     <b-icon icon="printer" aria-hidden="true"></b-icon>
@@ -90,9 +106,11 @@
                 >
                     <b-icon icon="info-circle" aria-hidden="true"></b-icon>
                 </b-button>
-                <b-tooltip target="btn-bricksAndPieces-add-to-card" variant="danger">{{
-                    buttonFillBricksAndPiecesCartInfo
-                }}</b-tooltip>
+                <b-tooltip
+                    target="btn-bricksAndPieces-add-to-card"
+                    variant="danger"
+                    >{{ buttonFillBricksAndPiecesCartInfo }}</b-tooltip
+                >
             </p>
             <div id="bricksAndPiecesList">
                 <brick-list
@@ -108,7 +126,9 @@
                     variant="primary"
                     @click="pickABrickFillCart"
                     :disabled="
-                        !pickABrickList || pickABrickList.length == 0 || !usePickaBrick
+                        !pickABrickList ||
+                            pickABrickList.length == 0 ||
+                            !usePickaBrick
                     "
                     >{{ buttonFillPickABrickCart }}</b-button
                 >
@@ -116,7 +136,9 @@
                     variant="danger"
                     @click="pickABrickClearCart"
                     :disabled="
-                        !pickABrickList || pickABrickList.length == 0 || !usePickaBrick
+                        !pickABrickList ||
+                            pickABrickList.length == 0 ||
+                            !usePickaBrick
                     "
                     style="margin-left: 10px;"
                     >{{ buttonClearPickABrickCart }}</b-button
@@ -126,7 +148,9 @@
                     @click="printPickABrick"
                     style="margin-left: 10px; vertical-align: bottom;"
                     :disabled="
-                        !pickABrickList || pickABrickList.length == 0 || !usePickaBrick
+                        !pickABrickList ||
+                            pickABrickList.length == 0 ||
+                            !usePickaBrick
                     "
                 >
                     <b-icon icon="printer" aria-hidden="true"></b-icon>
@@ -267,7 +291,8 @@ export default {
                     if (qty > 200) qty = 200; // it's not possible to order more than 200 pieces per brick
 
                     var pos = {
-                        id: this.bricksAndPiecesList[i].bricksAndPieces.itemNumber,
+                        id: this.bricksAndPiecesList[i].bricksAndPieces
+                            .itemNumber,
                         product: this.bricksAndPiecesList[i].bricksAndPieces,
                         quantity: parseInt(qty),
                     };
@@ -331,7 +356,8 @@ export default {
                             element.bricksAndPieces.price &&
                             element.bricksAndPieces.price.amount
                         )
-                            bricksAndPiecesPrice = element.bricksAndPieces.price.amount;
+                            bricksAndPiecesPrice =
+                                element.bricksAndPieces.price.amount;
                         if (
                             element.pickABrick &&
                             element.pickABrick.variant &&
@@ -339,7 +365,8 @@ export default {
                             element.pickABrick.variant.price.centAmount
                         )
                             pickABrickPrice =
-                                element.pickABrick.variant.price.centAmount / 100;
+                                element.pickABrick.variant.price.centAmount /
+                                100;
                         var price = this.getPrice(
                             pickABrickPrice,
                             bricksAndPiecesPrice,
@@ -349,13 +376,16 @@ export default {
                         if (price[1]) {
                             if (price[0] == 'bricksAndPieces') {
                                 this.bricksAndPiecesPositions++;
-                                this.bricksAndPiecesPrice += element.minqty * price[1];
-                                this.currency = element.bricksAndPieces.price.currency;
+                                this.bricksAndPiecesPrice +=
+                                    element.minqty * price[1];
+                                this.currency =
+                                    element.bricksAndPieces.price.currency;
                                 this.fillBricksAndPiecesList(element);
                             }
                             if (price[0] == 'pickABrick') {
                                 this.pickABrickPositions++;
-                                this.pickABrickPrice += element.minqty * price[1];
+                                this.pickABrickPrice +=
+                                    element.minqty * price[1];
                                 this.currency =
                                     element.pickABrick.variant.price.currencyCode;
                                 this.fillPickABrickList(element);
@@ -365,16 +395,20 @@ export default {
                 });
             }
 
-            this.bricksAndPiecesPrice = Math.round(this.bricksAndPiecesPrice * 100) / 100;
+            this.bricksAndPiecesPrice =
+                Math.round(this.bricksAndPiecesPrice * 100) / 100;
             this.pickABrickPrice = Math.round(this.pickABrickPrice * 100) / 100;
         },
-        getPrice(pickABrickPrice, bricksAndPiecesPrice, blPrice) {
+        getPrice(pickABrickPrice, bricksAndPiecesPrice, brickLinkPrice) {
             if (!pickABrickPrice) pickABrickPrice = 0;
             if (!bricksAndPiecesPrice) bricksAndPiecesPrice = 0;
 
             var prices = Array();
 
-            if (pickABrickPrice == bricksAndPiecesPrice && pickABrickPrice > 0) {
+            if (
+                pickABrickPrice == bricksAndPiecesPrice &&
+                pickABrickPrice > 0
+            ) {
                 if (this.behaviourOnSamePrice == 'bricksAndPieces') {
                     prices.push(['bricksAndPieces', bricksAndPiecesPrice]);
                 } else {
@@ -392,8 +426,8 @@ export default {
                 return a[1] - b[1];
             });
 
-            if (this.behaviourOnSamePrice == 'bl' && prices[0] == blPrice)
-                return ['bl', 0];
+            if (this.behaviourOnSamePrice == 'brickLink' && prices[0] == brickLinkPrice)
+                return ['brickLink', 0];
 
             return prices[0];
         },
@@ -419,7 +453,7 @@ export default {
                     if (this.useStonesAndPieces) {
                         this.behaviourOnSamePrice = 'bricksAndPieces';
                     } else {
-                        this.behaviourOnSamePrice = 'bl';
+                        this.behaviourOnSamePrice = 'brickLink';
                     }
                 }
             }
@@ -436,7 +470,7 @@ export default {
                     if (this.usePickaBrick) {
                         this.behaviourOnSamePrice = 'pickABrick';
                     } else {
-                        this.behaviourOnSamePrice = 'bl';
+                        this.behaviourOnSamePrice = 'brickLink';
                     }
                 }
             }
@@ -462,7 +496,8 @@ export default {
         this.useStonesAndPieces =
             (localStorage.getItem('useStonesAndPieces') || 'true') === 'true';
         this.behaviourOnSamePrice =
-            localStorage.getItem('behaviourOnSamePriceShopping') || 'bricksAndPieces';
+            localStorage.getItem('behaviourOnSamePriceShopping') ||
+            'bricksAndPieces';
         this.useHave = (localStorage.getItem('useHave') || 'true') === 'true';
         this.wantedList = JSON.parse(
             localStorage.getItem('wantedList') || null

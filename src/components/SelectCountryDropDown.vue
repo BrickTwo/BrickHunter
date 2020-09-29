@@ -1,9 +1,11 @@
 <template>
     <b-dropdown right>
         <template v-slot:button-content>
-            <span v-if=showFlags><img :src="getImgUrl(selectedCountry)" width="20px"/></span>
-            <span v-if=!showFlags>{{ getCountryName(selectedCountry) }}</span>
-            <span v-if=!selectedCountry>---</span>
+            <span v-if="showFlags"
+                ><img :src="getImgUrl(selectedCountry)" width="20px"
+            /></span>
+            <span v-if="!showFlags">{{ getCountryName(selectedCountry) }}</span>
+            <span v-if="!selectedCountry">---</span>
         </template>
         <b-dropdown-item
             href="#"
@@ -11,7 +13,7 @@
             :key="country.value"
             :value="country.value"
             @click="changeCountry(country.value)"
-            ><img :src="getImgUrl(country.value)" width="20px"/>
+            ><img :src="getImgUrl(country.value)" width="20px" />
             {{ country.text }}
         </b-dropdown-item>
     </b-dropdown>
@@ -22,7 +24,7 @@ export default {
     props: {
         showFlags: {
             type: Boolean,
-        }
+        },
     },
     data() {
         return {
@@ -39,9 +41,9 @@ export default {
                 {
                     value: 'ch',
                     text: this.getCountryName('ch'),
-                }
-            ]
-        }
+                },
+            ],
+        };
     },
     methods: {
         getCountryName(country) {
@@ -53,11 +55,11 @@ export default {
             this.$emit('countrySelected', this.selectedCountry);
         },
         getImgUrl(value) {
-            return 'flags/' + value + '.png'
+            return 'flags/' + value + '.png';
         },
     },
     beforeMount() {
         this.selectedCountry = localStorage.getItem('country') || null;
-    }
+    },
 };
 </script>
