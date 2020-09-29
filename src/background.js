@@ -246,7 +246,7 @@ browser.runtime.onMessage.addListener(function(
             })
             .then((results) => sendResponse(results));
         return true; // Will respond asynchronously.
-    } else if (request.contentScriptQuery == 'sapFillCart') {
+    } else if (request.contentScriptQuery == 'bricksAndPiecesFillCart') {
         //console.log("sessionStorage.setItem('b_and_p_buy_" + locale.toUpperCase() + "', '" + JSON.stringify(request.order).replace(/'/g, "\\\'")+ "')")
         chrome.tabs.executeScript({
             code:
@@ -266,7 +266,7 @@ browser.runtime.onMessage.addListener(function(
             });
         sendResponse(true);
         return true;
-    } else if (request.contentScriptQuery == 'sapClearCart') {
+    } else if (request.contentScriptQuery == 'bricksAndPiecesClearCart') {
         //console.log("sessionStorage.setItem('b_and_p_buy_" + locale.toUpperCase() + "', '" + JSON.stringify(request.order)+ "')")
         chrome.tabs.executeScript({
             code:

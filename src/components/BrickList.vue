@@ -48,16 +48,16 @@ export default {
                 callback: 'showQty',
             },
             {
-                name: 'pab',
+                name: 'pickABrick',
                 title: () =>
                     browser.i18n.getMessage('brickList_pickABrickPrice'),
-                callback: 'pabPrice',
+                callback: 'pickABrickPrice',
             },
             {
-                name: 'sat',
+                name: 'bricksAndPieces',
                 title: () =>
                     browser.i18n.getMessage('brickList_bricksAndPiecesPrice'),
-                callback: 'satPrice',
+                callback: 'bricksAndPiecesPrice',
             },
         ],
     }),
@@ -68,7 +68,7 @@ export default {
         showImage(value) {
             return `<img src="${value}" height="40">`;
         },
-        pabPrice(value) {
+        pickABrickPrice(value) {
             if (!value) return '';
             var returnValue = `${value.variant.price.currencyCode} ${value
                 .variant.price.centAmount /
@@ -77,7 +77,7 @@ export default {
             }/${value.variant.id}]</span>`;
             return returnValue;
         },
-        satPrice(value) {
+        bricksAndPiecesPrice(value) {
             if (!value) return '';
             var returnValue = `${value.price.currency} ${value.price.amount}<br><span style="color: grey; font-size: small;">[${value.designId}/${value.itemNumber}]</span>`;
             return returnValue;

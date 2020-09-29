@@ -123,6 +123,6 @@ export default {
 <style>
 .page {
     padding: 20px;
-    width: 800px;
+    width: 780px; /* max pop with 800px - scrollbar */
 }
 </style>

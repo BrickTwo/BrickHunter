@@ -25,11 +25,7 @@ export const brickProcessorMixin = {
             );
             //console.log("result", result);
 
-            if (
-                ~item.itemid.indexOf('pb') ||
-                ~item.itemid.indexOf('c') ||
-                item.color.brickLinkId == 65
-            ) {
+            if (this.IsSpecialBrick(item)) {
                 if (!result.length) {
                     var colorCodesArray = item.brickLink.mapPCCs;
                     var colorCodes = colorCodesArray[
@@ -52,8 +48,8 @@ export const brickProcessorMixin = {
             });
             return result[0];
         },
-        FindBrickPab(item, bricks) {
-            //console.log("pabFind", item, bricks);
+        FindBrickPickABrick(item, bricks) {
+            //console.log("pickABrickFind", item, bricks);
             if (!bricks) return null;
 
             var result = bricks.filter(
@@ -61,11 +57,7 @@ export const brickProcessorMixin = {
                     brick.variant.attributes.colour == item.color.pickABrickName
             );
 
-            if (
-                ~item.itemid.indexOf('pb') ||
-                ~item.itemid.indexOf('c') ||
-                item.color.brickLinkId == 65
-            ) {
+            if (this.IsSpecialBrick(item)) {
                 if (!result.length) {
                     var colorCodesArray = item.brickLink.mapPCCs;
                     var colorCodes = colorCodesArray[
@@ -81,6 +73,16 @@ export const brickProcessorMixin = {
             }
 
             return result[0];
+        },
+        IsSpecialBrick(item) {
+            if (
+                ~item.itemid.indexOf('pb') ||
+                ~item.itemid.indexOf('c') ||
+                item.color.brickLinkId == 65
+            ) {
+                return true;
+            }
+            return false;
         },
     },
 };

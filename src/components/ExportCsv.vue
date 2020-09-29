@@ -21,8 +21,8 @@
         <b-form-group :label="pickABrickGroupTitle">
             <b-form-checkbox-group
                 id="checkbox-group-3"
-                v-model="selectedPabOptions"
-                :options="optionsPab"
+                v-model="selectedPickABrickOptions"
+                :options="optionsPickABrick"
                 name="pickABrick"
                 stacked
             ></b-form-checkbox-group>
@@ -30,8 +30,8 @@
         <b-form-group :label="bricksAndPiecesGroupTitle">
             <b-form-checkbox-group
                 id="checkbox-group-4"
-                v-model="selectedSapOptions"
-                :options="optionsSap"
+                v-model="selectedBricksAndPiecesOptions"
+                :options="optionsBricksAndPieces"
                 name="stonesAndPieces"
                 stacked
             ></b-form-checkbox-group>
@@ -53,8 +53,8 @@ export default {
             wantedList: null,
             selectedOptions: [],
             selectedColorOptions: [],
-            selectedPabOptions: [],
-            selectedSapOptions: [],
+            selectedPickABrickOptions: [],
+            selectedBricksAndPiecesOptions: [],
             options: [
                 {
                     text: browser.i18n.getMessage(
@@ -123,7 +123,7 @@ export default {
                     value: 'legoName',
                 },
             ],
-            optionsPab: [
+            optionsPickABrick: [
                 {
                     text: browser.i18n.getMessage(
                         'exportCsv_pickABrickOptionId'
@@ -149,7 +149,7 @@ export default {
                     value: 'currency',
                 },
             ],
-            optionsSap: [
+            optionsBricksAndPieces: [
                 {
                     text: browser.i18n.getMessage(
                         'exportCsv_bricksAndPiecesOptionId'
@@ -202,15 +202,15 @@ export default {
                     csvLine = this.addToCSVLine(csvLine, element.qty.balance);
                 }
                 if (this.selectedOptions.includes('legoDescription')) {
-                    if (element.sat) {
+                    if (element.bricksAndPieces) {
                         csvLine = this.addToCSVLine(
                             csvLine,
-                            '"' + element.sat.description + '"'
+                            '"' + element.bricksAndPieces.description + '"'
                         );
-                    } else if (element.pab) {
+                    } else if (element.pickABrick) {
                         csvLine = this.addToCSVLine(
                             csvLine,
-                            '"' + element.pab.name + '"'
+                            '"' + element.pickABrick.name + '"'
                         );
                     } else {
                         csvLine = this.addToCSVLine(csvLine, '');
@@ -250,44 +250,44 @@ export default {
                 }
 
                 // Pick a Brick options
-                if (this.selectedPabOptions.includes('id')) {
-                    if (element.pab && element.pab.variant.id) {
+                if (this.selectedPickABrickOptions.includes('id')) {
+                    if (element.pickABrick && element.pickABrick.variant.id) {
                         csvLine = this.addToCSVLine(
                             csvLine,
-                            element.pab.variant.id
+                            element.pickABrick.variant.id
                         );
                     } else {
                         csvLine = this.addToCSVLine(csvLine, '');
                     }
                 }
-                if (this.selectedPabOptions.includes('designNumber')) {
+                if (this.selectedPickABrickOptions.includes('designNumber')) {
                     if (
-                        element.pab &&
-                        element.pab.variant.attributes.designNumber
+                        element.pickABrick &&
+                        element.pickABrick.variant.attributes.designNumber
                     ) {
                         csvLine = this.addToCSVLine(
                             csvLine,
-                            element.pab.variant.attributes.designNumber
+                            element.pickABrick.variant.attributes.designNumber
                         );
                     } else {
                         csvLine = this.addToCSVLine(csvLine, '');
                     }
                 }
-                if (this.selectedPabOptions.includes('price')) {
-                    if (element.pab && element.pab.variant.price.centAmount) {
+                if (this.selectedPickABrickOptions.includes('price')) {
+                    if (element.pickABrick && element.pickABrick.variant.price.centAmount) {
                         csvLine = this.addToCSVLine(
                             csvLine,
-                            element.pab.variant.price.centAmount / 100
+                            element.pickABrick.variant.price.centAmount / 100
                         );
                     } else {
                         csvLine = this.addToCSVLine(csvLine, '');
                     }
                 }
-                if (this.selectedPabOptions.includes('currency')) {
-                    if (element.pab && element.pab.variant.price.currencyCode) {
+                if (this.selectedPickABrickOptions.includes('currency')) {
+                    if (element.pickABrick && element.pickABrick.variant.price.currencyCode) {
                         csvLine = this.addToCSVLine(
                             csvLine,
-                            element.pab.variant.price.currencyCode
+                            element.pickABrick.variant.price.currencyCode
                         );
                     } else {
                         csvLine = this.addToCSVLine(csvLine, '');
@@ -295,41 +295,41 @@ export default {
                 }
 
                 // Bricks and Pieces options
-                if (this.selectedSapOptions.includes('id')) {
-                    if (element.sat && element.sat.itemNumber) {
+                if (this.selectedBricksAndPiecesOptions.includes('id')) {
+                    if (element.bricksAndPieces && element.bricksAndPieces.itemNumber) {
                         csvLine = this.addToCSVLine(
                             csvLine,
-                            element.sat.itemNumber
+                            element.bricksAndPieces.itemNumber
                         );
                     } else {
                         csvLine = this.addToCSVLine(csvLine, '');
                     }
                 }
-                if (this.selectedSapOptions.includes('designNumber')) {
-                    if (element.sat && element.sat.designId) {
+                if (this.selectedBricksAndPiecesOptions.includes('designNumber')) {
+                    if (element.bricksAndPieces && element.bricksAndPieces.designId) {
                         csvLine = this.addToCSVLine(
                             csvLine,
-                            element.sat.designId
+                            element.bricksAndPieces.designId
                         );
                     } else {
                         csvLine = this.addToCSVLine(csvLine, '');
                     }
                 }
-                if (this.selectedSapOptions.includes('price')) {
-                    if (element.sat && element.sat.price.amount) {
+                if (this.selectedBricksAndPiecesOptions.includes('price')) {
+                    if (element.bricksAndPieces && element.bricksAndPieces.price.amount) {
                         csvLine = this.addToCSVLine(
                             csvLine,
-                            element.sat.price.amount
+                            element.bricksAndPieces.price.amount
                         );
                     } else {
                         csvLine = this.addToCSVLine(csvLine, '');
                     }
                 }
-                if (this.selectedSapOptions.includes('currency')) {
-                    if (element.sat && element.sat.price.currency) {
+                if (this.selectedBricksAndPiecesOptions.includes('currency')) {
+                    if (element.bricksAndPieces && element.bricksAndPieces.price.currency) {
                         csvLine = this.addToCSVLine(
                             csvLine,
-                            element.sat.price.currency
+                            element.bricksAndPieces.price.currency
                         );
                     } else {
                         csvLine = this.addToCSVLine(csvLine, '');
@@ -428,13 +428,13 @@ export default {
             }
 
             // Pick a Brick options
-            if (this.selectedPabOptions.includes('id')) {
+            if (this.selectedPickABrickOptions.includes('id')) {
                 csvLine = this.addToCSVLine(
                     csvLine,
                     browser.i18n.getMessage('exportCsv_csvHeaderPickABrickId')
                 );
             }
-            if (this.selectedPabOptions.includes('designNumber')) {
+            if (this.selectedPickABrickOptions.includes('designNumber')) {
                 csvLine = this.addToCSVLine(
                     csvLine,
                     browser.i18n.getMessage(
@@ -442,7 +442,7 @@ export default {
                     )
                 );
             }
-            if (this.selectedPabOptions.includes('price')) {
+            if (this.selectedPickABrickOptions.includes('price')) {
                 csvLine = this.addToCSVLine(
                     csvLine,
                     browser.i18n.getMessage(
@@ -450,7 +450,7 @@ export default {
                     )
                 );
             }
-            if (this.selectedPabOptions.includes('currency')) {
+            if (this.selectedPickABrickOptions.includes('currency')) {
                 csvLine = this.addToCSVLine(
                     csvLine,
                     browser.i18n.getMessage(
@@ -460,7 +460,7 @@ export default {
             }
 
             // Bricks and Pieces options
-            if (this.selectedSapOptions.includes('id')) {
+            if (this.selectedBricksAndPiecesOptions.includes('id')) {
                 csvLine = this.addToCSVLine(
                     csvLine,
                     browser.i18n.getMessage(
@@ -468,7 +468,7 @@ export default {
                     )
                 );
             }
-            if (this.selectedSapOptions.includes('designNumber')) {
+            if (this.selectedBricksAndPiecesOptions.includes('designNumber')) {
                 csvLine = this.addToCSVLine(
                     csvLine,
                     browser.i18n.getMessage(
@@ -476,7 +476,7 @@ export default {
                     )
                 );
             }
-            if (this.selectedSapOptions.includes('price')) {
+            if (this.selectedBricksAndPiecesOptions.includes('price')) {
                 csvLine = this.addToCSVLine(
                     csvLine,
                     browser.i18n.getMessage(
@@ -484,7 +484,7 @@ export default {
                     )
                 );
             }
-            if (this.selectedSapOptions.includes('currency')) {
+            if (this.selectedBricksAndPiecesOptions.includes('currency')) {
                 csvLine = this.addToCSVLine(
                     csvLine,
                     browser.i18n.getMessage(
@@ -507,11 +507,11 @@ export default {
         selectedColorOptions: function(val, oldVal) {
             localStorage.setItem('selectedColorOptions', val);
         },
-        selectedPabOptions: function(val, oldVal) {
-            localStorage.setItem('selectedPabOptions', val);
+        selectedPickABrickOptions: function(val, oldVal) {
+            localStorage.setItem('selectedPickABrickOptions', val);
         },
-        selectedSapOptions: function(val, oldVal) {
-            localStorage.setItem('selectedSapOptions', val);
+        selectedBricksAndPiecesOptions: function(val, oldVal) {
+            localStorage.setItem('selectedBricksAndPiecesOptions', val);
         },
     },
     beforeMount() {
@@ -529,14 +529,14 @@ export default {
         this.selectedColorOptions = selection.split(',');
 
         selection =
-            localStorage.getItem('selectedPabOptions') ||
+            localStorage.getItem('selectedPickABrickOptions') ||
             'designNumber,price,currency';
-        this.selectedPabOptions = selection.split(',');
+        this.selectedPickABrickOptions = selection.split(',');
 
         selection =
-            localStorage.getItem('selectedSapOptions') ||
+            localStorage.getItem('selectedBricksAndPiecesOptions') ||
             'designNumber,price,currency';
-        this.selectedSapOptions = selection.split(',');
+        this.selectedBricksAndPiecesOptions = selection.split(',');
     },
     computed: {
         generalGroupTitle() {

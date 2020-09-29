@@ -4,7 +4,7 @@
             <xml-reader
                 id="uploadXml"
                 @load="loadXml"
-                style="width: 500px"
+                style="width: 480px"
                 v-if="isChrome"
             ></xml-reader>
             <b-button
@@ -77,8 +77,8 @@ export default {
         isChrome: navigator.userAgent.indexOf('Chrome') != -1,
         loadWantedList: false,
         totalBricks: 0,
-        pabBrickCounter: 0,
-        satBrickCounter: 0,
+        pickABrickBrickCounter: 0,
+        bricksAndPiecesBrickCounter: 0,
         loadPercentage: 100,
         priceLoaded: true,
         wantedList: [],
@@ -100,14 +100,14 @@ export default {
             this.loadWantedList = false;
             this.priceLoaded = false;
             this.totalBricks = 0;
-            this.pabBrickCounter = 0;
-            this.satBrickCounter = 0;
+            this.pickABrickBrickCounter = 0;
+            this.bricksAndPiecesBrickCounter = 0;
 
             wantedList.then((list) => {
                 list[0].map((item) => {
                     item.itemtype = item.itemtype[0];
                     item.itemid = item.itemid[0];
-                    //console.log(this.ItemIdToDesignId(item.itemid));
+                    //console.log(this.ItemIdToDesignId(item.itemid))
                     item.searchids = [this.CleanItemId(item.itemid)];
                     item.designid = '';
                     if (item.color) {
@@ -135,8 +135,9 @@ export default {
                     item.condition = item.condition[0];
                     item.notify = item.notify[0];
                     item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color.brickLinkId}/${item.itemid}.t1.png`;
-                    item.sat = null;
-                    item.pab = null;
+                    item.bricksAndPieces = null;
+                    item.pickABrick = null;
+                    item.brickLink = null;
                 });
                 this.wantedList = [...list[0]];
                 this.totalBricks = this.wantedList.length;
@@ -145,49 +146,45 @@ export default {
             });
         },
         clear() {
-            //this.$refs.vuetable.resetData
             this.wantedList = [];
-            //this.wantedList = null
             this.$store.commit('setWantedList', this.wantedList);
         },
         loadPrice() {
             this.priceLoaded = true;
-            this.pabBrickCounter = 0;
-            this.satBrickCounter = 0;
+            this.pickABrickBrickCounter = 0;
+            this.bricksAndPiecesBrickCounter = 0;
             this.loadPercentage = 0;
 
             for (var i = 0; i < this.wantedList.length; i++) {
-                this.wantedList[i].sat = null;
-                this.wantedList[i].pab = null;
+                this.wantedList[i].bricksAndPieces = null;
+                this.wantedList[i].pickABrick = null;
                 this.wantedList[i].brickLink = null;
             }
 
-            this.wantedList.map((item, i) => {
+            this.wantedList.slice(0).reverse().map((item, i) => {
                 this.delay(200 * this.wantedList.length - 200 * i).then((d) => {
+                    //200ms timout to prevent to be blocked on the website
                     this.getBricklink(item.itemid)
                         .then((response) => {
                             item.brickLink = this.ReturnModelsObject(response);
-                            item.searchids = [this.CleanItemId(item.itemid)];
-                            item.searchids = item.searchids.concat(
-                                this.FindAlternateItemNumbers(item)
-                            );
 
-                            if (
-                                ~item.itemid.indexOf('pb') ||
-                                ~item.itemid.indexOf('c') ||
-                                item.color.brickLinkId == 65
-                            ) {
-                                // if printed brick
+                            if (this.IsSpecialBrick(item)) {
+                                //console.log("special brick")
                                 //console.log(item.searchids);
                                 var desingIds = this.FindColorCodes(item);
                                 item.searchids = desingIds;
+                            } else {
+                                //console.log("normal brick")
+                                item.searchids = [
+                                    this.CleanItemId(item.itemid),
+                                ];
+                                item.searchids = item.searchids.concat(
+                                    this.FindAlternateItemNumbers(item)
+                                );
                             }
-                            //console.log("searchIds", item.searchids);
+                            //console.log("searchIds", item.searchids)
                         })
-                        .catch((error) => {
-                            //this.satBrickCounter++;
-                            //this.pabBrickCounter++;
-                        })
+                        .catch((error) => {})
                         .then((value) => {
                             var bricks = [];
 
@@ -208,9 +205,9 @@ export default {
                                         })
                                         .catch((error) => {
                                             //console.log("error", error);
-                                        });
+                                        })
                                 }
-                            });
+                            })
 
                             Promise.all(requests)
                                 .then((value) => {
@@ -218,17 +215,18 @@ export default {
                                     var foundBrick = this.FindBrick(
                                         item,
                                         bricks
-                                    );
+                                    )
+                                    //console.log(foundBrick)
                                     if (foundBrick) {
-                                        item.sat = foundBrick;
+                                        item.bricksAndPieces = foundBrick
                                     }
-                                    this.satBrickCounter++;
-                                    this.calcLoad();
+                                    this.bricksAndPiecesBrickCounter++
+                                    this.calcLoad()
                                 })
                                 .catch(() => {
-                                    //console.log("SteineUndTeileerror", item.itemid);
-                                    this.satBrickCounter++;
-                                    this.calcLoad();
+                                    //console.log("SteineUndTeileerror", item.itemid)
+                                    this.bricksAndPiecesBrickCounter++
+                                    this.calcLoad()
                                 });
                         })
                         .then((value) => {
@@ -238,26 +236,26 @@ export default {
                                     itemId: item.searchids.join('-'),
                                 })
                                 .then((response) => {
-                                    //console.log("PickABrick", item.searchids.join('-'));
-                                    var foundBrick = this.FindBrickPab(
+                                    //console.log("PickABrick", item.searchids.join('-'))
+                                    var foundBrick = this.FindBrickPickABrick(
                                         item,
                                         response
                                     );
                                     if (foundBrick) {
-                                        item.pab = foundBrick;
+                                        item.pickABrick = foundBrick;
                                     }
-                                    this.pabBrickCounter++;
+                                    this.pickABrickBrickCounter++;
                                     this.calcLoad();
                                 })
                                 .catch(() => {
-                                    this.pabBrickCounter++;
+                                    this.pickABrickBrickCounter++;
                                     this.calcLoad();
                                 });
                         });
                 });
             });
 
-            //console.log(this.wantedList)
+            console.log(this.wantedList)
         },
         delay(t, data) {
             return new Promise((resolve) => {
@@ -265,11 +263,12 @@ export default {
             });
         },
         calcLoad() {
-            //console.log("pab: ", this.pabBrickCounter, " sap: ", this.satBrickCounter)
+            //console.log("pickABrick: ", this.pickABrickBrickCounter, " bricksAndPieces: ", this.bricksAndPiecesBrickCounter)
             var one = 100 / this.totalBricks / 2;
 
             this.loadPercentage = Math.round(
-                one * this.pabBrickCounter + one * this.satBrickCounter
+                one * this.pickABrickBrickCounter +
+                    one * this.bricksAndPiecesBrickCounter
             );
             if (this.loadPercentage == 100) {
                 //console.log("setWantedList", this.wantedList)

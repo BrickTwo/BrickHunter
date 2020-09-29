@@ -27,11 +27,11 @@
                 v-model="behaviourOnSamePrice"
                 name="behaviourOnSamePrice"
             >
-                <b-form-radio value="pab" :disabled="!exportPickaBrickPrices">{{
+                <b-form-radio value="pickABrick" :disabled="!exportPickaBrickPrices">{{
                     pickABrick
                 }}</b-form-radio>
                 <b-form-radio
-                    value="sap"
+                    value="bricksAndPieces"
                     :disabled="!exportStonesAndPiecesPrices"
                     >{{ bricksAndPieces }}</b-form-radio
                 >
@@ -117,46 +117,46 @@ export default {
             var brickLink = { INVENTORY: Array() };
 
             for (var i = 0; i < wantedList.length; i++) {
-                var sapPrice = 0;
-                var pabPrice = 0;
+                var bricksAndPiecesPrice = 0;
+                var pickABrickPrice = 0;
 
                 if (
-                    wantedList[i].sat &&
-                    wantedList[i].sat.price &&
-                    wantedList[i].sat.price.amount
+                    wantedList[i].bricksAndPieces &&
+                    wantedList[i].bricksAndPieces.price &&
+                    wantedList[i].bricksAndPieces.price.amount
                 )
-                    sapPrice = wantedList[i].sat.price.amount;
+                    bricksAndPiecesPrice = wantedList[i].bricksAndPieces.price.amount;
                 if (
-                    wantedList[i].pab &&
-                    wantedList[i].pab.variant &&
-                    wantedList[i].pab.variant.price &&
-                    wantedList[i].pab.variant.price.centAmount
+                    wantedList[i].pickABrick &&
+                    wantedList[i].pickABrick.variant &&
+                    wantedList[i].pickABrick.variant.price &&
+                    wantedList[i].pickABrick.variant.price.centAmount
                 )
-                    pabPrice = wantedList[i].pab.variant.price.centAmount / 100;
+                    pickABrickPrice = wantedList[i].pickABrick.variant.price.centAmount / 100;
                 var price = this.calculatePrice(
-                    pabPrice,
-                    sapPrice,
+                    pickABrickPrice,
+                    bricksAndPiecesPrice,
                     wantedList[i].maxprice
                 );
 
                 var remarks = '';
                 if (
                     this.writeLegoIdInRemark &&
-                    (price[0] === 'pab' || price[0] === 'sap')
+                    (price[0] === 'pickABrick' || price[0] === 'bricksAndPieces')
                 ) {
                     remarks = 'LEGO Id: ';
-                    if (price[0] === 'pab')
+                    if (price[0] === 'pickABrick')
                         remarks +=
-                            wantedList[i].pab.variant.attributes.designNumber;
-                    if (price[0] === 'sap')
-                        remarks += wantedList[i].sat.designId;
+                            wantedList[i].pickABrick.variant.attributes.designNumber;
+                    if (price[0] === 'bricksAndPieces')
+                        remarks += wantedList[i].bricksAndPieces.designId;
                 }
 
                 if (this.writeSourceOfPriceInRemark) {
                     if (this.writeLegoIdInRemark) remarks += '\n';
                     remarks += 'Source: ';
-                    if (price[0] === 'pab') remarks += 'Pick a Brick';
-                    if (price[0] === 'sap') remarks += 'Steine und Teile';
+                    if (price[0] === 'pickABrick') remarks += 'Pick a Brick';
+                    if (price[0] === 'bricksAndPieces') remarks += 'Steine und Teile';
                     if (price[0] === 'bl') remarks += 'BrickLink';
                 }
 
@@ -184,17 +184,17 @@ export default {
 
             return brickLink;
         },
-        calculatePrice(pabPrice, sapPrice, blPrice) {
-            if (!pabPrice) pabPrice = 0;
-            if (!sapPrice) sapPrice = 0;
+        calculatePrice(pickABrickPrice, bricksAndPiecesPrice, blPrice) {
+            if (!pickABrickPrice) pickABrickPrice = 0;
+            if (!bricksAndPiecesPrice) bricksAndPiecesPrice = 0;
             if (!blPrice) blPrice = 0;
 
             var prices = Array();
 
-            if (this.exportPickaBrickPrices && pabPrice > 0)
-                prices.push(['pab', pabPrice]);
-            if (this.exportStonesAndPiecesPrices && sapPrice > 0)
-                prices.push(['sap', sapPrice]);
+            if (this.exportPickaBrickPrices && pickABrickPrice > 0)
+                prices.push(['pickABrick', pickABrickPrice]);
+            if (this.exportStonesAndPiecesPrices && bricksAndPiecesPrice > 0)
+                prices.push(['bricksAndPieces', bricksAndPiecesPrice]);
             if (blPrice > 0) prices.push(['bl', blPrice]);
 
             if (prices.length == 0) return ['bl', '-1.0000'];
@@ -208,9 +208,9 @@ export default {
     watch: {
         exportPickaBrickPrices: function(val, oldVal) {
             if (!val) {
-                if (this.behaviourOnSamePrice == 'pab') {
+                if (this.behaviourOnSamePrice == 'pickABrick') {
                     if (this.exportStonesAndPiecesPrices) {
-                        this.behaviourOnSamePrice = 'sap';
+                        this.behaviourOnSamePrice = 'bricksAndPieces';
                     } else {
                         this.behaviourOnSamePrice = 'bl';
                     }
@@ -224,9 +224,9 @@ export default {
         },
         exportStonesAndPiecesPrices: function(val, oldVal) {
             if (!val) {
-                if (this.behaviourOnSamePrice == 'sap') {
+                if (this.behaviourOnSamePrice == 'bricksAndPieces') {
                     if (this.exportPickaBrickPrices) {
-                        this.behaviourOnSamePrice = 'pab';
+                        this.behaviourOnSamePrice = 'pickABrick';
                     } else {
                         this.behaviourOnSamePrice = 'bl';
                     }
@@ -261,7 +261,7 @@ export default {
         this.writeSourceOfPriceInRemark =
             localStorage.getItem('writeSourceOfPriceInRemark') || true;
         this.behaviourOnSamePrice =
-            localStorage.getItem('behaviourOnSamePrice') || 'sap';
+            localStorage.getItem('behaviourOnSamePrice') || 'bricksAndPieces';
         this.recalcHave = localStorage.getItem('recalcHave') || true;
         this.wantedList = JSON.parse(
             localStorage.getItem('wantedList') || null
