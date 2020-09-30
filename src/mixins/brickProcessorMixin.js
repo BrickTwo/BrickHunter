@@ -1,6 +1,6 @@
 export const brickProcessorMixin = {
     methods: {
-        CleanItemId(itemId) {
+        cleanItemId(itemId) {
             var lastChar = itemId.substr(-1, 1);
             if (lastChar >= 'a' && lastChar <= 'h') {
                 return itemId.slice(0, -1);
@@ -8,13 +8,13 @@ export const brickProcessorMixin = {
                 return itemId;
             }
         },
-        FindColor(brickLinkColorId, colorList) {
+        findColor(brickLinkColorId, colorList) {
             var result = colorList.filter(
                 (color) => color.brickLinkId == brickLinkColorId
             );
             return result[0];
         },
-        FindBricksAndPiecesBrick(item, bricks) {
+        findBricksAndPiecesBrick(item, bricks) {
             //console.log("satFind", item, bricks);
             if (!bricks) return null;
             bricks = bricks.filter((brick) => !brick.isSoldOut);
@@ -25,7 +25,7 @@ export const brickProcessorMixin = {
             );
             //console.log("result", result);
 
-            if (this.IsSpecialBrick(item)) {
+            if (this.isSpecialBrick(item)) {
                 if (!result.length) {
                     var colorCodesArray = item.brickLink.mapPCCs;
                     var colorCodes = colorCodesArray[
@@ -48,7 +48,7 @@ export const brickProcessorMixin = {
             });
             return result[0];
         },
-        FindPickABrickBrick(item, bricks) {
+        findPickABrickBrick(item, bricks) {
             //console.log("pickABrickFind", item, bricks);
             if (!bricks) return null;
 
@@ -57,7 +57,7 @@ export const brickProcessorMixin = {
                     brick.variant.attributes.colour == item.color.pickABrickName
             );
 
-            if (this.IsSpecialBrick(item)) {
+            if (this.isSpecialBrick(item)) {
                 if (!result.length) {
                     var colorCodesArray = item.brickLink.mapPCCs;
                     var colorCodes = colorCodesArray[
@@ -74,7 +74,7 @@ export const brickProcessorMixin = {
 
             return result[0];
         },
-        IsSpecialBrick(item) {
+        isSpecialBrick(item) {
             if (
                 ~item.itemid.indexOf('pb') ||
                 ~item.itemid.indexOf('c') ||
@@ -84,5 +84,53 @@ export const brickProcessorMixin = {
             }
             return false;
         },
+        async loadBricksAndPieces(item) {
+            console.log('loadBricksAndPieces', item);
+            var bricks = [];
+
+            for (var j = 0; j < item.searchids.length; j++) {
+                if (item.searchids[j]) {
+                    var response = await browser.runtime.sendMessage({
+                        contentScriptQuery: 'SteineUndTeile',
+                        itemId: item.searchids[j],
+                    });
+                    //console.log('response', item.searchids[j], response);
+                    if (response?.bricks) {                        
+                        bricks = bricks.concat(response.bricks);
+                    }
+                }
+            }
+
+            //console.log("SteineUndTeile", item.itemid, bricks)
+            var foundBrick = this.findBricksAndPiecesBrick(item, bricks);
+            //console.log(foundBrick)
+            if (foundBrick) {
+                item.bricksAndPieces = foundBrick;
+            } else {
+                item.bricksAndPieces = null;
+            }
+            this.bricksAndPiecesBrickCounter++;
+            this.calcLoad();
+
+            return item;
+        },
+        async loadPickABrick(item) {
+            //console.log("PickABrick", item, item.searchids.join('-'))
+            var response = await browser.runtime.sendMessage({
+                contentScriptQuery: 'PickABrick',
+                itemId: item.searchids.join('-'),
+            });
+            
+            var foundBrick = this.findPickABrickBrick(item, response);
+            if (foundBrick) {
+                item.pickABrick = foundBrick;
+            } else {
+                item.pickABrick = null;
+            }
+            this.pickABrickBrickCounter++;
+            this.calcLoad();
+
+            return item;
+        }
     },
 };

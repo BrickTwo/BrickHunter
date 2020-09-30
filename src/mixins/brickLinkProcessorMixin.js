@@ -1,11 +1,11 @@
 export const brickLinkProcessorMixin = {
     methods: {
-        FindAlternateItemNumbers(item) {
+        findAlternateItemNumbers(item) {
             return item.brickLink.strAltNo.split(',').map(function(number) {
                 return number.trim();
             });
         },
-        FindColorCodes(item) {
+        findColorCodes(item) {
             //console.log("FindColorCodes", item)
             var colorCodesArray = item.brickLink.mapPCCs;
             //console.log(colorCodesArray, item.color.brickLinkId)
@@ -13,7 +13,7 @@ export const brickLinkProcessorMixin = {
             //console.log("FindColorCodes", colorCodes)
             return colorCodes;
         },
-        ReturnModelsObject(html) {
+        returnModelsObject(html) {
             var startPos = html.data.indexOf('blapp.models.set(') + 18;
             var length = html.data.substr(startPos).indexOf(');');
             var models = html.data.substr(startPos, length);
@@ -28,5 +28,20 @@ export const brickLinkProcessorMixin = {
 
             return returnModel;
         },
+        async prepareSearchIds(item) {
+            if (this.isSpecialBrick(item)) {
+                //console.log("special brick")
+                var desingIds = await this.findColorCodes(item);
+                item.searchids = desingIds;
+            } else {
+                //console.log("normal brick")
+                item.searchids = [this.cleanItemId(item.itemid)];
+                item.searchids = item.searchids.concat(
+                    await this.findAlternateItemNumbers(item)
+                );
+            }
+            //console.log("searchIds", item.searchids)
+            return item;
+        }
     },
 };
