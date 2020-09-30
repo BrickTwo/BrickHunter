@@ -85,7 +85,7 @@ export const brickProcessorMixin = {
             return false;
         },
         async loadBricksAndPieces(item) {
-            console.log('loadBricksAndPieces', item);
+            //console.log('loadBricksAndPieces', item);
             var bricks = [];
 
             for (var j = 0; j < item.searchids.length; j++) {

@@ -2,7 +2,7 @@ chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.contentScriptQuery == "readCookie") {
             var cookie = getCookie("gqauth")
-            console.log("cookie", cookie)
+            //console.log("cookie", cookie)
             return sendResponse(cookie)
         }
     }       
@@ -25,5 +25,5 @@ function getCookie(cname) {
 }
   
 
-console.log("installed!")
+//console.log("installed!")
 //console.log(ReadPABCart())

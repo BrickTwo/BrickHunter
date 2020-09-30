@@ -164,17 +164,17 @@ export default {
                 await this.sleep(200); //200ms timout to prevent to be blocked on the website
                 this.loadPrice(item);
 
-                console.log(item);
+                //console.log(item);
             }
 
-            console.log(this.wantedList);
+            //console.log(this.wantedList);
         },
         async loadPrice(item) {
             try {
                 var brickLinkHtml = await this.getBricklink(item.itemid);
                 item.brickLink = await this.returnModelsObject(brickLinkHtml);
             } catch (err) {
-                console.log('error', err);
+                console.log("couldn't find brick on bricklink");
                 this.pickABrickBrickCounter++;
                 this.bricksAndPiecesBrickCounter++;
                 this.calcLoad();

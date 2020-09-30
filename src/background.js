@@ -106,13 +106,13 @@ browser.runtime.onMessage.addListener(function(
         browser.tabs
             .query({ currentWindow: true, active: true })
             .then((logTabs) => {
-                console.log('tabs', logTabs);
+                //console.log('tabs', logTabs);
                 browser.tabs
                     .sendMessage(logTabs[0].id, {
                         contentScriptQuery: 'readCookie',
                     })
                     .then((authorization) => {
-                        console.log('Cookie qauth', authorization);
+                        //console.log('Cookie qauth', authorization);
                         sendResponse(authorization);
                     })
                     .catch((error) => console.log(error));

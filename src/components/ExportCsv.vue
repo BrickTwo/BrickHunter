@@ -189,7 +189,6 @@ export default {
 
                 // general options
                 if (this.selectedOptions.includes('bricklinkId')) {
-                    console.log('bricklinkId', true);
                     csvLine = this.addToCSVLine(csvLine, element.itemid);
                 }
                 if (this.selectedOptions.includes('want')) {

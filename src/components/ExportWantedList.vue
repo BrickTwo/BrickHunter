@@ -208,7 +208,7 @@ export default {
             prices = prices.sort(function(a, b) {
                 return a[1] - b[1];
             });
-            console.log(prices);
+            //console.log(prices);
             return prices[0];
         },
     },

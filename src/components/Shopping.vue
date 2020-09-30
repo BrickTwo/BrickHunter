@@ -211,7 +211,7 @@ export default {
     },
     methods: {
         showInfo() {
-            console.log('changePage');
+            //console.log('changePage');
             this.$emit('changePage', 'info');
         },
         pickABrickClearCart() {
@@ -438,11 +438,11 @@ export default {
             this.pickABrickList.push(pos);
         },
         printBricksAndPieces() {
-            console.log('print');
+            //console.log('print');
             this.$htmlToPaper('bricksAndPiecesList');
         },
         printPickABrick() {
-            console.log('print');
+            //console.log('print');
             this.$htmlToPaper('pickABrickList');
         },
     },

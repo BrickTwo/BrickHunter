@@ -89,7 +89,6 @@ export default {
             this.showPage = 'wantedList';
         },
         changePage(value) {
-            console.log(value);
             this.showPage = value;
         },
     },
