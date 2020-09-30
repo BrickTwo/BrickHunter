@@ -259,7 +259,7 @@
     "message": "Was soll bei gleichem Preis bevorzugt werden?"
   },
   "shopping_useHave": {
-    "message": "Vorhandene Steine berücksichtigen"
+    "message": "WantedList-Have abziehen"
   },
   "shopping_tabOverview": {
     "message": "Übersicht"

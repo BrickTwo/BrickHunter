@@ -227,9 +227,9 @@ export default {
                         .query({ currentWindow: true, active: true })
                         .then((tabs) => {
                             var tab = tabs[0];
-                            //var countrySelected = localStorage.getItem("country") || null
+                            var countrySelected = localStorage.getItem("country") || null
                             browser.tabs.update(tab.id, {
-                                url: `https://www.lego.com/page/static/pick-a-brick`,
+                                url: `https://www.lego.com/de-${countrySelected}/page/static/pick-a-brick`,
                             });
 
                             this.$bvToast.toast(this.clearCartSuccessfullText, {
@@ -254,9 +254,9 @@ export default {
                 .query({ currentWindow: true, active: true })
                 .then((tabs) => {
                     var tab = tabs[0];
-                    //var countrySelected = localStorage.getItem("country") || null
+                    var countrySelected = localStorage.getItem("country") || null
                     browser.tabs.update(tab.id, {
-                        url: `https://www.lego.com/page/static/pick-a-brick`,
+                        url: `https://www.lego.com/de-${countrySelected}/page/static/pick-a-brick`,
                     });
 
                     this.$bvToast.toast(this.fillCartSuccessfullText, {
