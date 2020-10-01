@@ -315,7 +315,7 @@ export const brickColorMixin = {
                     legoName: 'Bright Green',
                     bricksAndPiecesName: 'Br.Green',
                     pickABrickName: 'Bright Green',
-                    colorCode: '#CDADF8',
+                    colorCode: '#10CB31',
                 },
                 {
                     brickLinkId: 37,
@@ -586,7 +586,7 @@ export const brickColorMixin = {
                     legoName: 'Dark Orange',
                     bricksAndPiecesName: 'Dk.Ora',
                     pickABrickName: 'Dark Orange',
-                    colorCode: '#29A5FA',
+                    colorCode: '#b35408',
                 },
                 {
                     brickLinkId: 69,

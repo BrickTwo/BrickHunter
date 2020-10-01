@@ -16,7 +16,7 @@ export const brickProcessorMixin = {
         },
         findBricksAndPiecesBrick(item, bricks) {
             console.log(item.color.brickLinkName);
-            console.log("satFind", item, bricks);
+            console.log('satFind', item, bricks);
             if (!bricks) return null;
             bricks = bricks.filter((brick) => !brick.isSoldOut);
             var result = bricks.filter(
@@ -76,9 +76,10 @@ export const brickProcessorMixin = {
             return result[0];
         },
         isSpecialBrick(item) {
+            var itemid = this.cleanItemId(item.itemid);
+
             if (
-                ~item.itemid.indexOf('pb') ||
-                ~item.itemid.indexOf('c') ||
+                isNaN(itemid) ||
                 item.color.brickLinkId == 65 ||
                 item.color.brickLinkId == 67
             ) {
@@ -97,7 +98,7 @@ export const brickProcessorMixin = {
                         itemId: item.searchids[j],
                     });
                     //console.log('response', item.searchids[j], response);
-                    if (response?.bricks) {                        
+                    if (response?.bricks) {
                         bricks = bricks.concat(response.bricks);
                     }
                 }
@@ -122,7 +123,7 @@ export const brickProcessorMixin = {
                 contentScriptQuery: 'PickABrick',
                 itemId: item.searchids.join('-'),
             });
-            
+
             var foundBrick = this.findPickABrickBrick(item, response);
             if (foundBrick) {
                 item.pickABrick = foundBrick;
@@ -133,6 +134,6 @@ export const brickProcessorMixin = {
             this.calcLoad();
 
             return item;
-        }
+        },
     },
 };
