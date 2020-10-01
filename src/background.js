@@ -49,11 +49,9 @@ browser.runtime.onMessage.addListener(function(
                     return response.json();
                 })
                 .catch((err) => {
-                    console.log('error', err);
                     return sendResponse(null);
                 })
                 .then((data) => {
-                    console.log('data', data);
                     return data.data.elements.results;
                 })
                 .then((results) => sendResponse(results));
@@ -152,7 +150,7 @@ browser.runtime.onMessage.addListener(function(
                     'mutation AddToPABCart($sku: String!, $quantity: Int, $PABCartId: String!) {\n  addPABItemToCart(input: {sku: $sku, quantity: $quantity, PABCartId: $PABCartId}) {\n    id\n    taxedPrice {\n      totalGross {\n        formattedAmount\n        __typename\n      }\n      __typename\n    }\n    PABLineItems {\n      ...PABLineItemData\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment PABLineItemData on PABCartLineItem {\n  id\n  quantity\n  element {\n    id\n    name\n    primaryImage\n    __typename\n  }\n  price {\n    centAmount\n    currencyCode\n    __typename\n  }\n  elementVariant {\n    id\n    attributes {\n      designNumber\n      __typename\n    }\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    __typename\n  }\n  __typename\n}\n',
             };
 
-            console.log('query', PickABrickQuery);
+            //console.log('query', PickABrickQuery);
 
             var url = 'https://www.lego.com/api/graphql/AddToPABCart';
 
