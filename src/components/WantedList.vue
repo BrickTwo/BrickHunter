@@ -136,7 +136,7 @@ export default {
                     }
                     item.condition = item.condition[0];
                     item.notify = item.notify[0];
-                    item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color.brickLinkId}/${item.itemid}.t1.png`;
+                    item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color?.brickLinkId}/${item.itemid}.t1.png`;
                     item.bricksAndPieces = null;
                     item.pickABrick = null;
                     item.brickLink = null;

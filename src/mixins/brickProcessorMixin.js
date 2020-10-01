@@ -15,12 +15,13 @@ export const brickProcessorMixin = {
             return result[0];
         },
         findBricksAndPiecesBrick(item, bricks) {
-            //console.log("satFind", item, bricks);
+            console.log(item.color.brickLinkName);
+            console.log("satFind", item, bricks);
             if (!bricks) return null;
             bricks = bricks.filter((brick) => !brick.isSoldOut);
             var result = bricks.filter(
                 (brick) =>
-                    brick.colorFamily == item.color.piecesAndBricksName &&
+                    brick.colorFamily == item.color.bricksAndPiecesName &&
                     !brick.isSoldOut
             );
             //console.log("result", result);
@@ -78,7 +79,8 @@ export const brickProcessorMixin = {
             if (
                 ~item.itemid.indexOf('pb') ||
                 ~item.itemid.indexOf('c') ||
-                item.color.brickLinkId == 65
+                item.color.brickLinkId == 65 ||
+                item.color.brickLinkId == 67
             ) {
                 return true;
             }

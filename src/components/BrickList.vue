@@ -38,9 +38,10 @@ export default {
                 callback: 'showImage',
             },
             {
-                name: 'color.brickLinkName',
+                name: 'color',
                 title: () =>
                     browser.i18n.getMessage('brickList_brickLinkColor'),
+                callback: 'showColor',
             },
             {
                 name: 'qty',
@@ -67,6 +68,9 @@ export default {
     methods: {
         showImage(value) {
             return `<img src="${value}" height="40">`;
+        },
+        showColor(value) {
+            return `<span style="display: block"><div style="background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"></div><span>${value.brickLinkName}</span></span>`;
         },
         pickABrickPrice(value) {
             if (!value) return '';
