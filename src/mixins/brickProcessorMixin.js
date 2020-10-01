@@ -76,12 +76,10 @@ export const brickProcessorMixin = {
             return result[0];
         },
         isSpecialBrick(item) {
-            var itemid = this.cleanItemId(item.itemid);
-
             if (
-                isNaN(itemid) ||
-                item.color.brickLinkId == 65 ||
-                item.color.brickLinkId == 67
+                isNaN(this.cleanItemId(item.itemid)) ||
+                item.color.brickLinkId == 65 || // metallic gold
+                item.color.brickLinkId == 67 // metallic silver
             ) {
                 return true;
             }
@@ -94,7 +92,7 @@ export const brickProcessorMixin = {
             for (var j = 0; j < item.searchids.length; j++) {
                 if (item.searchids[j]) {
                     var response = await browser.runtime.sendMessage({
-                        contentScriptQuery: 'SteineUndTeile',
+                        contentScriptQuery: 'getBricksAndPieces',
                         itemId: item.searchids[j],
                     });
                     //console.log('response', item.searchids[j], response);
@@ -104,7 +102,7 @@ export const brickProcessorMixin = {
                 }
             }
 
-            //console.log("SteineUndTeile", item.itemid, bricks)
+            //console.log("getBricksAndPieces", item.itemid, bricks)
             var foundBrick = this.findBricksAndPiecesBrick(item, bricks);
             //console.log(foundBrick)
             if (foundBrick) {
@@ -120,7 +118,7 @@ export const brickProcessorMixin = {
         async loadPickABrick(item) {
             //console.log("PickABrick", item, item.searchids.join('-'))
             var response = await browser.runtime.sendMessage({
-                contentScriptQuery: 'PickABrick',
+                contentScriptQuery: 'getPickABrick',
                 itemId: item.searchids.join('-'),
             });
 

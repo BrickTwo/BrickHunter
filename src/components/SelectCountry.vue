@@ -3,9 +3,9 @@
         <b-form @submit.prevent="onSubmit">
             <b-form-group :label="whereDoYouLive" label-for="country">
                 <SelectCountryDropDown @countrySelected="onCountrySelected" />
-                <span v-if="!isValid" style="color: red">
+                <p v-if="!isValid" style="color: red">
                     {{ noCountrySelected }}
-                </span>
+                </p>
             </b-form-group>
             <b-button type="submit" variant="primary">
                 {{ saveButton }}
