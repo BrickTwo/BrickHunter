@@ -280,19 +280,19 @@
     "message": "Total"
   },
   "shopping_buttonFillBricksAndPiecesCart": {
-    "message": "Steine & Teile Warenkorb füllen"
+    "message": "Warenkorb füllen"
   },
   "shopping_buttonFillBricksAndPiecesCartInfo": {
     "message": "Zuvor ausgewählte Steine & Teile werden aus dem Warenkorb entfernt!"
   },
   "shopping_buttonClearBricksAndPiecesCart": {
-    "message": "Steine & Teile Warenkorb leeren"
+    "message": "Warenkorb leeren"
   },
   "shopping_buttonFillPickABrickCart": {
-    "message": "Pick a Brick füllen"
+    "message": "dem Warenkorb hinzufügen"
   },
   "shopping_buttonClearPickABrickCart": {
-    "message": "Pick a Brick Warenkorb leeren"
+    "message": "Warenkorb leeren"
   },
   "shopping_fillCartSuccessfullText": {
     "message": "Warenkorb erfolgreich befüllt"
