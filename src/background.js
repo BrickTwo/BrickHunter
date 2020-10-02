@@ -26,7 +26,7 @@ browser.runtime.onMessage.addListener(function(
                 operationName: 'PickABrickQuery',
                 variables: {
                     page: 1,
-                    perPage: 20,
+                    perPage: 200,
                     query: encodeURIComponent(request.itemId),
                 },
                 query:

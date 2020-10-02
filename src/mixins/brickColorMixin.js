@@ -161,7 +161,7 @@ export const brickColorMixin = {
                     legoId: 41,
                     legoName: 'Transparent Red',
                     bricksAndPiecesName: 'Tr.Red',
-                    pickABrickName: 'Tr.Red',
+                    pickABrickName: 'Tr. Red',
                     colorCode: '#B82700',
                 },
                 {
@@ -810,7 +810,7 @@ export const brickColorMixin = {
                     legoId: 315,
                     legoName: 'Silver Metallic',
                     bricksAndPiecesName: 'Silver Met.',
-                    pickABrickName: 'N/A',
+                    pickABrickName: 'Silver Metallic',
                     colorCode: '#8C8C8C',
                 },
                 {
@@ -928,7 +928,7 @@ export const brickColorMixin = {
                     legoId: 311,
                     legoName: 'Transparent Bright Green',
                     bricksAndPiecesName: 'Tr. Br. Green',
-                    pickABrickName: 'N/A',
+                    pickABrickName: 'Tr. Bright Green',
                     colorCode: '#AFD246',
                 },
                 {
@@ -1306,7 +1306,7 @@ export const brickColorMixin = {
                     legoId: 323,
                     legoName: 'Aqua',
                     bricksAndPiecesName: 'Aqua',
-                    pickABrickName: 'N/A',
+                    pickABrickName: 'Aqua',
                     colorCode: '#D3F2EA',
                 },
                 {
@@ -1351,7 +1351,7 @@ export const brickColorMixin = {
                     legoId: 324,
                     legoName: 'Medium Lavender',
                     bricksAndPiecesName: 'Medium Lavender',
-                    pickABrickName: 'Medium Lavendel',
+                    pickABrickName: 'Medium Lavender',
                     colorCode: '#A06EB9',
                 },
                 {
