@@ -27,7 +27,7 @@ export const brickProcessorMixin = {
             //console.log("result", result);
 
             if (this.isSpecialBrick(item)) {
-                if (!result.length) {
+                if (!result.length && item.brickLink.mapPCCs) {
                     var colorCodesArray = item.brickLink.mapPCCs;
                     var colorCodes = colorCodesArray[
                         item.color.brickLinkId
@@ -50,7 +50,7 @@ export const brickProcessorMixin = {
             return result[0];
         },
         findPickABrickBrick(item, bricks) {
-            console.log("pickABrickFind", item, bricks);
+            console.log('pickABrickFind', item, bricks);
             if (!bricks) return null;
 
             var result = bricks.filter(
@@ -59,7 +59,7 @@ export const brickProcessorMixin = {
             );
 
             if (this.isSpecialBrick(item)) {
-                if (!result.length) {
+                if (!result.length && item.brickLink.mapPCCs) {
                     var colorCodesArray = item.brickLink.mapPCCs;
                     var colorCodes = colorCodesArray[
                         item.color.brickLinkId
@@ -87,6 +87,13 @@ export const brickProcessorMixin = {
         },
         async loadBricksAndPieces(item) {
             //console.log('loadBricksAndPieces', item);
+            if (!item.searchids) {
+                item.bricksAndPieces = null;
+                this.bricksAndPiecesBrickCounter++;
+                this.calcLoad();
+                return item;
+            }
+
             var bricks = [];
 
             for (var j = 0; j < item.searchids.length; j++) {
@@ -117,6 +124,13 @@ export const brickProcessorMixin = {
         },
         async loadPickABrick(item) {
             //console.log("PickABrick", item, item.searchids.join('-'))
+            if (!item.searchids) {
+                item.pickABrick = null;
+                this.pickABrickBrickCounter++;
+                this.calcLoad();
+                return item;
+            }
+
             var response = await browser.runtime.sendMessage({
                 contentScriptQuery: 'getPickABrick',
                 itemId: item.searchids.join('-'),

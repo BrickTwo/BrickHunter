@@ -7,6 +7,8 @@ export const brickLinkProcessorMixin = {
         },
         findColorCodes(item) {
             //console.log("FindColorCodes", item)
+            if(!item.brickLink.mapPCCs) return null;
+
             var colorCodesArray = item.brickLink.mapPCCs;
             //console.log(colorCodesArray, item.color.brickLinkId)
             var colorCodes = colorCodesArray[item.color.brickLinkId].split(',');
