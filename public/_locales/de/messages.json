@@ -291,6 +291,9 @@
   "shopping_total": {
     "message": "Total"
   },
+  "shopping_brickLinkCurrencyInfo": {
+    "message": "Die Währung aus der BrickLink WantedList ist unbekannt, da diese nicht exportiert wird!"
+  },
   "shopping_buttonFillBricksAndPiecesCart": {
     "message": "Warenkorb füllen"
   },
@@ -301,7 +304,7 @@
     "message": "Warenkorb leeren"
   },
   "shopping_buttonFillPickABrickCart": {
-    "message": "dem Warenkorb hinzufügen"
+    "message": "Dem Warenkorb hinzufügen"
   },
   "shopping_buttonClearPickABrickCart": {
     "message": "Warenkorb leeren"

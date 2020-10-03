@@ -87,12 +87,21 @@
             {{ bricksAndPieces }}: {{ currency }} {{ bricksAndPiecesPrice
             }}<br />
             {{ pickABrick }}: {{ currency }} {{ pickABrickPrice }}<br />
-            {{ brickLink }}: {{ currency }}(?) {{ brickLinkPrice }}<br />
+            {{ brickLink }}: (<a id="bricklinkCurrency" href="">?</a>) {{ brickLinkPrice }}<br />
             {{ total }}: {{ currency }}
             {{
-                Math.round((bricksAndPiecesPrice + pickABrickPrice + brickLinkPrice) * 100) / 100
+                Math.round(
+                    (bricksAndPiecesPrice + pickABrickPrice + brickLinkPrice) *
+                        100
+                ) / 100
             }}
+            <b-tooltip
+                target="bricklinkCurrency"
+                variant="danger"
+                >{{ brickLinkCurrencyInfo }}</b-tooltip
+            >
         </div>
+
         <div v-if="page == 'bricksAndPieces'">
             <p style="margin-top: 5px; margin-bottom: 5px;">
                 <b-button
@@ -574,7 +583,7 @@ export default {
             return xml.substr(startpos, xml.length);
         },
         createBrickLinkObject() {
-            if(!this.brickLinkList) return;
+            if (!this.brickLinkList) return;
 
             var brickLink = { INVENTORY: Array() };
 
@@ -595,12 +604,12 @@ export default {
                         MAXPRICE: this.brickLinkList[i].maxprice,
                         MINQTY: this.brickLinkList[i].qty.min,
                         CONDITION: this.brickLinkList[i].condition,
-                        NOTIFY: this.brickLinkList[i].notify
+                        NOTIFY: this.brickLinkList[i].notify,
                     },
                 };
 
                 if (!this.recalcHave) {
-                    item.QTYFILLED = have
+                    item.QTYFILLED = have;
                 }
 
                 brickLink.INVENTORY.push(item);
@@ -719,6 +728,9 @@ export default {
         },
         total() {
             return browser.i18n.getMessage('shopping_total');
+        },
+        brickLinkCurrencyInfo() {
+            return browser.i18n.getMessage('shopping_brickLinkCurrencyInfo');
         },
         buttonFillBricksAndPiecesCart() {
             return browser.i18n.getMessage(
