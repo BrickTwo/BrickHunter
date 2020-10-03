@@ -1,20 +1,70 @@
 <template>
-  <div>
-    <h1>Disclaimer</h1>
-    <p>BrickHunter ist eine nicht durch LEGO authorisierte Browsererweiterung die den Anwender bei einer Pick a Brick oder Steine & Teile Bestellung unterstützt. Für die durchführung der Bestellung wird keine Verantwortung übernommen, dies gilt insbesondere für das korrekte auffinden sowie befüllen des Warenkorbes eines gesuchten Teiles in Form, Farbe, Preis und Anzahl. Der Anwender ist aufgefodert, die Bestellung vor dem Absenden im LEGO Shop nochmals zu prüfen.</p>
-    <p>BrickHunter ist darauf programmiert, die automatisch durchgeführten interaktionen sowohl mit der LEGO als auch mit der BrickLink Website so gering wie möglich zu halten. Für evtl. durch BrickHunter verursachte Fehler oder Sperrungen auf den genannten Webseiten übernimmt BrickHunter keine verantwortung.</p>
-    <h1>Lizenz</h1>
-    <p>BrickHunter steht unter der <a @click="link('https://github.com/BrickTwo/BrickHunter/blob/master/LICENSE')" href="">GPL-3.0</a> Lizenz.</p>
-    <p>Source Code verfügbar auf <a @click="link('https://github.com/BrickTwo/BrickHunter')" href="">GitHub</a>.</p>
-  </div>
+    <div>
+        <h1>{{ disclaimerTitle }}</h1>
+        <p>{{ disclaimerText1 }}</p>
+        <p>{{ disclaimerText2 }}</p>
+        <h1>{{ licenseTitel }}</h1>
+        <p>
+            {{ licenseText1
+            }}<a
+                @click="
+                    link(
+                        'https://github.com/BrickTwo/BrickHunter/blob/master/LICENSE'
+                    )
+                "
+                href=""
+                >{{ licenseLink }}</a
+            >{{ licenseText2 }}
+        </p>
+        <p>
+            {{ sourceCodeText1
+            }}<a
+                @click="link('https://github.com/BrickTwo/BrickHunter')"
+                href=""
+                >{{ sourceCodeLink }}</a
+            >{{ sourceCodeText2 }}
+        </p>
+    </div>
 </template>
 
 <script>
 export default {
     methods: {
-        link(value){
-            browser.tabs.create({ url: value })
-        }
-    }
-}
+        link(value) {
+            browser.tabs.create({ url: value });
+        },
+    },
+    computed: {
+        disclaimerTitle() {
+            return browser.i18n.getMessage('info_disclaimerTitle');
+        },
+        disclaimerText1() {
+            return browser.i18n.getMessage('info_disclaimerText1');
+        },
+        disclaimerText2() {
+            return browser.i18n.getMessage('info_disclaimerText2');
+        },
+        licenseTitel() {
+            return browser.i18n.getMessage('info_licenseTitel');
+        },
+        licenseText1() {
+            return browser.i18n.getMessage('info_licenseText1');
+        },
+        licenseLink() {
+            return browser.i18n.getMessage('info_licenseLink');
+        },
+        licenseText2() {
+            return browser.i18n.getMessage('info_licenseText2');
+        },
+        sourceCodeText1() {
+            return browser.i18n.getMessage('info_sourceCodeText1');
+        },
+        sourceCodeLink() {
+            return browser.i18n.getMessage('info_sourceCodeLink');
+        },
+        sourceCodeText2() {
+            return browser.i18n.getMessage('info_sourceCodeText2');
+        },
+    },
+};
 </script>

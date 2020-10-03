@@ -1,41 +1,54 @@
 <template>
-  <div style="width: 500px">
-    <ValidationObserver ref="observer" v-slot="{ invalid }">
-        <b-form @submit.prevent="onSubmit" novalidate>
-            <b-form-group label="Dein Land" label-for="country">
-            <ValidationProvider name="country" rules="required" v-slot="{ errors }">
-                <b-form-select v-model="form_country" :options="options"></b-form-select>
-                <b-form-invalid-feedback :state="errors.length == 0">Bitte ein Land auswählen</b-form-invalid-feedback>
-            </ValidationProvider>
+    <div style="width: 500px">
+        <b-form @submit.prevent="onSubmit">
+            <b-form-group :label="whereDoYouLive" label-for="country">
+                <SelectCountryDropDown @countrySelected="onCountrySelected" />
+                <p v-if="!isValid" style="color: red">
+                    {{ noCountrySelected }}
+                </p>
             </b-form-group>
-            <b-button type="submit" variant="primary">Speichern</b-button>
+            <b-button type="submit" variant="primary">
+                {{ saveButton }}
+            </b-button>
         </b-form>
-    </ValidationObserver>
-  </div>
+    </div>
 </template>
+
 <script>
+import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
 export default {
-  name: "SelectCountry",
-  data() {
-    return {
-        form_country: null,
-        options: [
-          { value: 'de', text: 'Deutschland' },
-          { value: 'at', text: 'Österreich' },
-          { value: 'ch', text: 'Schweiz' }
-        ]
-    };
-  },
-  methods: {
-    async onSubmit() {
-        const isValid = await this.$refs.observer.validate();
-        if (!isValid) {
-            return;
-        }
-        localStorage.setItem("country", this.form_country);
-        this.$emit('countrySelected', this.form_country)
-        //this.$store.commit("setKeyword", this.form.keyword);
-    }
-  }
+    components: {
+        SelectCountryDropDown,
+    },
+    data() {
+        return {
+            form_country: null,
+            isValid: true,
+        };
+    },
+    methods: {
+        async onSubmit() {
+            if (!this.form_country) {
+                this.isValid = false;
+                return;
+            }
+            this.isValid = true;
+            this.$emit('countrySelected', this.form_country);
+        },
+        onCountrySelected(country) {
+            this.form_country = country;
+        },
+    },
+    computed: {
+        whereDoYouLive() {
+            return browser.i18n.getMessage('selectCountry_whereDoYouLive');
+        },
+        noCountrySelected() {
+            return browser.i18n.getMessage('selectCountry_noCountrySelected');
+        },
+        saveButton() {
+            return browser.i18n.getMessage('selectCountry_saveButton');
+        },
+    },
 };
 </script>

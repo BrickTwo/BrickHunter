@@ -1,355 +1,772 @@
 <template>
     <div>
-        <b-form-checkbox
-            id="usePickaBrick"
-            v-model="usePickaBrick"
-            >
-            Pick a Brick verwenden
-        </b-form-checkbox>
-        <b-form-checkbox
-            id="useStonesAndPieces"
-            v-model="useStonesAndPieces"
-            >
-            Steine und Teile verwenden
-        </b-form-checkbox>
-
-        <b-form-group label="Was soll bei gleichem Preis bevorzugt werden?" style="margin-top: 10px">
-            <b-form-radio-group v-model="behaviourOnSamePrice" name="behaviourOnSamePrice">
-                <b-form-radio value="pab" :disabled="!usePickaBrick">Pick a Brick</b-form-radio>
-                <b-form-radio value="sap" :disabled="!useStonesAndPieces">Steine und Teile</b-form-radio>
-                <b-form-radio value="bl">BrickLink</b-form-radio>
-            </b-form-radio-group>
-        </b-form-group>
-
-        <b-form-checkbox
-            id="useHave"
-            v-model="useHave"
-            >
-            Vorhandene Steine berücksichtigen
-        </b-form-checkbox>
-
-
         <b-nav tabs>
-            <b-nav-item :active="page=='overview'" @click="page='overview'">Übersicht</b-nav-item>
-            <b-nav-item :active="page=='sap'" @click="page='sap'">Steine & Teile</b-nav-item>
-            <b-nav-item :active="page=='pab'" @click="page='pab'">Pick a Brick</b-nav-item>
-        </b-nav>
-        
-        <div v-if="page=='overview'">
-            <h2>Anzahl Positionen</h2>
-            Wanted List: {{wantedList.length}}<br />
-            Pick a Brick: {{pabPositions}}<br />
-            Steine und Teile: {{satPositions}}<br />        
-            Total bei LEGO: {{satPositions + pabPositions}}
+            <b-nav-item
+                :active="page == 'settings'"
+                @click="page = 'settings'"
+                >{{ tabSettings }}</b-nav-item
+            >
+            <b-nav-item
+                :active="page == 'overview'"
+                @click="page = 'overview'"
+                >{{ tabOverview }}</b-nav-item
+            >
+            <b-nav-item
+                :active="page == 'bricksAndPieces'"
+                @click="page = 'bricksAndPieces'"
+                v-if="
+                    selectedPrio1 == 'bricksAndPieces' ||
+                        selectedPrio2 == 'bricksAndPieces' ||
+                        selectedPrio3 == 'bricksAndPieces'
+                "
+                >{{ bricksAndPieces }} ({{
+                    bricksAndPiecesPositions
+                }})</b-nav-item
+            >
+            <b-nav-item
+                :active="page == 'pickABrick'"
+                @click="page = 'pickABrick'"
+                v-if="
+                    selectedPrio1 == 'pickABrick' ||
+                        selectedPrio2 == 'pickABrick' ||
+                        selectedPrio3 == 'pickABrick'
+                "
+                >{{ pickABrick }} ({{ pickABrickPositions }})</b-nav-item
+            >
 
-            <h2>Preis</h2>
-            Pick a Brick: {{currency}} {{pabPrice}}<br />
-            Steine und Teile: {{currency}} {{satPrice}}<br />
-            Total: {{currency}} {{Math.round((satPrice + pabPrice)*100)/100}}
+            <b-nav-item
+                :active="page == 'brickLink'"
+                @click="page = 'brickLink'"
+                v-if="
+                    selectedPrio1 == 'brickLink' ||
+                        selectedPrio2 == 'brickLink' ||
+                        selectedPrio3 == 'brickLink'
+                "
+                >{{ brickLink }} ({{ brickLinkPositions }})</b-nav-item
+            >
+        </b-nav>
+        <div v-if="page == 'settings'">
+            <ul style="padding: 0px; list-style-type: none;">
+                <li>
+                    {{ priorityOne }}
+                    <b-form-select
+                        v-model="selectedPrio1"
+                        :options="optionsPrio1"
+                    ></b-form-select>
+                </li>
+                <li>
+                    {{ priorityTwo }}
+                    <b-form-select
+                        v-model="selectedPrio2"
+                        :options="optionsPrio2"
+                    ></b-form-select>
+                </li>
+                <li>
+                    {{ priorityThree }}
+                    <b-form-select
+                        v-model="selectedPrio3"
+                        :options="optionsPrio3"
+                    ></b-form-select>
+                </li>
+            </ul>
+            <b-form-checkbox id="useHave" v-model="useHave">
+                {{ useHaveText }}
+            </b-form-checkbox>
         </div>
-        <div v-if="page=='sap'">
+
+        <div v-if="page == 'overview'">
+            <h2>{{ titleAmountPositions }}</h2>
+            {{ amountWantedList }}: {{ wantedListPositions }}<br />
+            {{ bricksAndPieces }}: {{ bricksAndPiecesPositions }}<br />
+            {{ pickABrick }}: {{ pickABrickPositions }}<br />
+            {{ brickLink }}: {{ brickLinkPositions }}<br />
+            {{ amountTotalFoundLego }}:
+            {{ bricksAndPiecesPositions + pickABrickPositions }}
+
+            <h2>{{ titlePrice }}</h2>
+            {{ bricksAndPieces }}: {{ currency }} {{ bricksAndPiecesPrice
+            }}<br />
+            {{ pickABrick }}: {{ currency }} {{ pickABrickPrice }}<br />
+            {{ brickLink }}: (<a id="bricklinkCurrency" href="">?</a>) {{ brickLinkPrice }}<br />
+            {{ total }}: {{ currency }}
+            {{
+                Math.round(
+                    (bricksAndPiecesPrice + pickABrickPrice + brickLinkPrice) *
+                        100
+                ) / 100
+            }}
+            <b-tooltip
+                target="bricklinkCurrency"
+                variant="danger"
+                >{{ brickLinkCurrencyInfo }}</b-tooltip
+            >
+        </div>
+
+        <div v-if="page == 'bricksAndPieces'">
             <p style="margin-top: 5px; margin-bottom: 5px;">
-                <b-button id="btn-sap-add-to-card" variant="primary" @click="sapFillCart" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces">Steine & Teile Warenkorb füllen</b-button>
-                <b-button variant="danger" @click="sapClearCart" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces" style="margin-left: 10px;">Steine & Teile Warenkorb leeren</b-button>
-                <b-button variant="primary" @click="printSap" style="margin-left: 10px; vertical-align: bottom;" :disabled="!sapList || sapList.length == 0 || !useStonesAndPieces">
+                <b-button
+                    id="btn-bricksAndPieces-add-to-card"
+                    variant="primary"
+                    @click="bricksAndPiecesFillCart"
+                    :disabled="
+                        !bricksAndPiecesList || bricksAndPiecesList.length == 0
+                    "
+                    >{{ buttonFillBricksAndPiecesCart }}</b-button
+                >
+                <b-button
+                    variant="danger"
+                    @click="bricksAndPiecesClearCart"
+                    :disabled="
+                        !bricksAndPiecesList || bricksAndPiecesList.length == 0
+                    "
+                    style="margin-left: 10px;"
+                    >{{ buttonClearBricksAndPiecesCart }}</b-button
+                >
+                <b-button
+                    variant="primary"
+                    @click="printBricksAndPieces"
+                    style="margin-left: 10px; vertical-align: bottom;"
+                    :disabled="
+                        !bricksAndPiecesList || bricksAndPiecesList.length == 0
+                    "
+                >
                     <b-icon icon="printer" aria-hidden="true"></b-icon>
                 </b-button>
-                <b-button variant="primary" @click="showInfo" style="margin-left: 10px; vertical-align: bottom;">
+                <b-button
+                    variant="primary"
+                    @click="showInfo"
+                    style="margin-left: 10px; vertical-align: bottom;"
+                >
                     <b-icon icon="info-circle" aria-hidden="true"></b-icon>
                 </b-button>
-                <b-tooltip target="btn-sap-add-to-card" variant="danger">Zuvor ausgewählte Steine &amp; Teile werden aus dem Warenkorb entfernt!</b-tooltip>
+                <b-tooltip
+                    target="btn-bricksAndPieces-add-to-card"
+                    variant="danger"
+                    >{{ buttonFillBricksAndPiecesCartInfo }}</b-tooltip
+                >
             </p>
-            <div id="sapList">
-                <brick-list :bricklist="sapList" :limitMaxQty="200"></brick-list>
+            <div id="bricksAndPiecesList">
+                <brick-list
+                    :bricklist="bricksAndPiecesList"
+                    :limitMaxQty="200"
+                ></brick-list>
             </div>
         </div>
-        <div v-if="page=='pab'">
+        <div v-if="page == 'pickABrick'">
             <p style="margin-top: 5px; margin-bottom: 5px;">
-                <b-button id="btn-pab-add-to-card" variant="primary" @click="pabFillCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">Pick a Brick füllen</b-button>
-                <b-button variant="danger" @click="pabClearCart" :disabled="!pabList || pabList.length == 0 || !usePickaBrick" style="margin-left: 10px;">Pick a Brick Warenkorb leeren</b-button>
-                <b-button variant="primary" @click="printPab" style="margin-left: 10px; vertical-align: bottom;" :disabled="!pabList || pabList.length == 0 || !usePickaBrick">
+                <b-button
+                    id="btn-pickABrick-add-to-card"
+                    variant="primary"
+                    @click="pickABrickFillCart"
+                    :disabled="!pickABrickList || pickABrickList.length == 0"
+                    >{{ buttonFillPickABrickCart }}</b-button
+                >
+                <b-button
+                    variant="danger"
+                    @click="pickABrickClearCart"
+                    :disabled="!pickABrickList || pickABrickList.length == 0"
+                    style="margin-left: 10px;"
+                    >{{ buttonClearPickABrickCart }}</b-button
+                >
+                <b-button
+                    variant="primary"
+                    @click="printPickABrick"
+                    style="margin-left: 10px; vertical-align: bottom;"
+                    :disabled="!pickABrickList || pickABrickList.length == 0"
+                >
                     <b-icon icon="printer" aria-hidden="true"></b-icon>
                 </b-button>
-                <b-button variant="primary" @click="showInfo" style="margin-left: 10px; vertical-align: bottom;">
+                <b-button
+                    variant="primary"
+                    @click="showInfo"
+                    style="margin-left: 10px; vertical-align: bottom;"
+                >
                     <b-icon icon="info-circle" aria-hidden="true"></b-icon>
                 </b-button>
                 <span>
-                    <b-progress :value="loadPAPPercentage" :max="100" show-progress animated v-if="loadPAPPercentage < 100" style="margin-top: 10px"></b-progress>
+                    <b-progress
+                        :value="loadPABPercentage"
+                        :max="100"
+                        show-progress
+                        animated
+                        v-if="loadPABPercentage < 100"
+                        style="margin-top: 10px"
+                    ></b-progress>
                 </span>
             </p>
-            <div id="pabList">
-                <brick-list :bricklist="pabList" :limitMaxQty="999"></brick-list>
+            <div id="pickABrickList">
+                <brick-list
+                    :bricklist="pickABrickList"
+                    :limitMaxQty="999"
+                ></brick-list>
+            </div>
+        </div>
+        <div v-if="page == 'brickLink'">
+            <p style="margin-top: 5px; margin-bottom: 5px;">
+                <b-button
+                    variant="primary"
+                    @click="onDownload"
+                    :disabled="!wantedList || wantedList.length == 0"
+                    >{{ buttonBrickLinkDownload }}</b-button
+                >
+                <b-button
+                    variant="primary"
+                    @click="onCopy"
+                    :disabled="!wantedList || wantedList.length == 0"
+                    style="margin-left: 5px"
+                    >{{ buttonBrickLinkCopy }}</b-button
+                >
+
+                <!-- <input type="text" value="" id="wantedList" style="position:absolute; top: 5000px"> -->
+                <textarea
+                    id="wantedList"
+                    style="position:absolute; top: 5px; height: 0; width: 0; z-index: -5 "
+                >
+                </textarea>
+                <b-button
+                    variant="primary"
+                    @click="printBrickLink"
+                    style="margin-left: 10px; vertical-align: bottom;"
+                    :disabled="!brickLinkList || brickLinkList.length == 0"
+                >
+                    <b-icon icon="printer" aria-hidden="true"></b-icon>
+                </b-button>
+                <b-button
+                    variant="primary"
+                    @click="showInfo"
+                    style="margin-left: 10px; vertical-align: bottom;"
+                >
+                    <b-icon icon="info-circle" aria-hidden="true"></b-icon>
+                </b-button>
+            </p>
+            <div id="brickLinkList">
+                <brick-list :bricklist="brickLinkList"></brick-list>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-
-import BrickList from "./BrickList"
+import BrickList from './BrickList';
 export default {
     data() {
         return {
-            usePickaBrick: null,
-            useStonesAndPieces: null,
-            behaviourOnSamePrice: null,
             useHave: null,
             wantedList: null,
-            sapList: null,
-            pabList: null,
-            satPositions: 0,
-            pabPositions: 0,
-            satPrice: 0,
-            pabPrice: 0,
+            bricksAndPiecesList: null,
+            pickABrickList: null,
+            brickLinkList: null,
+            wantedListPositions: 0,
+            bricksAndPiecesPositions: 0,
+            pickABrickPositions: 0,
+            brickLinkPositions: 0,
+            bricksAndPiecesPrice: 0,
+            pickABrickPrice: 0,
+            brickLinkPrice: 0,
             currency: null,
             page: 'overview',
-            pabShoppingCartId: null,
+            pickABrickShoppingCartId: null,
             authorization: null,
-            loadPAPPercentage: 100
-        }
+            loadPABPercentage: 100,
+            optionsPrio1: [
+                {
+                    value: 'none',
+                    text: browser.i18n.getMessage('shopping_optionsNone'),
+                },
+                {
+                    value: 'bricksAndPieces',
+                    text: browser.i18n.getMessage('bricksAndPieces'),
+                },
+                {
+                    value: 'pickABrick',
+                    text: browser.i18n.getMessage('pickABrick'),
+                },
+                {
+                    value: 'brickLink',
+                    text: browser.i18n.getMessage('brickLink'),
+                },
+            ],
+            optionsPrio2: [
+                { value: 'none', text: 'Nicht verwenden' },
+                { value: 'bricksAndPieces', text: 'Steine und Teile' },
+                { value: 'pickABrick', text: 'Pick a Brick' },
+                { value: 'brickLink', text: 'BrickLink' },
+            ],
+            optionsPrio3: [
+                { value: 'none', text: 'Nicht verwenden' },
+                { value: 'bricksAndPieces', text: 'Steine und Teile' },
+                { value: 'pickABrick', text: 'Pick a Brick' },
+                { value: 'brickLink', text: 'BrickLink' },
+            ],
+            selectedPrio1: 'bricksAndPieces',
+            selectedPrio2: 'pickABrick',
+            selectedPrio3: 'brickLink',
+        };
     },
     components: {
-        BrickList
+        BrickList,
     },
     methods: {
         showInfo() {
-            console.log("changePage")
-            this.$emit('changePage', 'info')
+            //console.log('changePage');
+            this.$emit('changePage', 'info');
         },
-        pabClearCart(){            
-            browser.runtime.sendMessage({contentScriptQuery: "PickABrickClearCart", authorization: this.authorization, PABCartId: this.pabShoppingCartId})
-            .then(response => {
-                //console.log("PickABrickClearCart", response);
-                browser.tabs.query({'currentWindow': true, 'active': true})
-                .then(tabs => {
-                    var tab = tabs[0]
-                    //var countrySelected = localStorage.getItem("country") || null
-                    browser.tabs.update(tab.id, {url: `https://www.lego.com/page/static/pick-a-brick`})
+        pickABrickClearCart() {
+            browser.runtime
+                .sendMessage({
+                    contentScriptQuery: 'pickABrickClearCart',
+                    authorization: this.authorization,
+                    PABCartId: this.pickABrickShoppingCartId,
                 })
-            })
-            .catch(() => {
-                
-            })
-        },
-        async pabFillCart() {
-            var percentageSingle = 100/this.pabList.length
-            this.loadPAPPercentage = 0
-            for(var i = 0; i < this.pabList.length; i++) {
-                this.loadPAPPercentage += percentageSingle
-                //console.log(this.pabList[i])
-                await this.pabAddToCart(this.pabList[i])
-            }
-            this.loadPAPPercentage = 100
-            browser.tabs.query({'currentWindow': true, 'active': true})
-            .then(tabs => {
-                var tab = tabs[0]
-                //var countrySelected = localStorage.getItem("country") || null
-                browser.tabs.update(tab.id, {url: `https://www.lego.com/page/static/pick-a-brick`})
-            })
-        },
-        async pabAddToCart(item) {
-            if(item.pab){
-                var qty = item.qty.order
-                if(qty > 999) qty = 999 // it's not possible to order more than 999 pieces per brick
+                .then((response) => {
+                    //console.log("PickABrickClearCart", response);
+                    browser.tabs
+                        .query({ currentWindow: true, active: true })
+                        .then((tabs) => {
+                            var tab = tabs[0];
+                            var countrySelected =
+                                localStorage.getItem('country') || null;
+                            browser.tabs.update(tab.id, {
+                                url: `https://www.lego.com/de-${countrySelected}/page/static/pick-a-brick`,
+                            });
 
-                var partId = item.pab.variant.id
-                
-                var response = await browser.runtime.sendMessage({contentScriptQuery: "PickABrickAddToCart", authorization: this.authorization, PABCartId: this.pabShoppingCartId, qty: qty, partId: partId})
+                            this.$bvToast.toast(this.clearCartSuccessfullText, {
+                                title: this.pickABrick,
+                                autoHideDelay: 5000,
+                                variant: 'success',
+                            });
+                        });
+                })
+                .catch(() => {});
+        },
+        async pickABrickFillCart() {
+            var percentageSingle = 100 / this.pickABrickList.length;
+            this.loadPABPercentage = 0;
+            for (var i = 0; i < this.pickABrickList.length; i++) {
+                this.loadPABPercentage += percentageSingle;
+                //console.log(this.pickABrickList[i])
+                await this.pickABrickAddToCart(this.pickABrickList[i]);
+            }
+            this.loadPABPercentage = 100;
+            browser.tabs
+                .query({ currentWindow: true, active: true })
+                .then((tabs) => {
+                    var tab = tabs[0];
+                    var countrySelected =
+                        localStorage.getItem('country') || null;
+                    browser.tabs.update(tab.id, {
+                        url: `https://www.lego.com/de-${countrySelected}/page/static/pick-a-brick`,
+                    });
+
+                    this.$bvToast.toast(this.fillCartSuccessfullText, {
+                        title: this.pickABrick,
+                        autoHideDelay: 5000,
+                        variant: 'success',
+                    });
+                });
+        },
+        async pickABrickAddToCart(item) {
+            if (item.pickABrick) {
+                var qty = item.qty.order;
+                if (qty > 999) qty = 999; // it's not possible to order more than 999 pieces per brick
+
+                var partId = item.pickABrick.variant.id;
+
+                var response = await browser.runtime.sendMessage({
+                    contentScriptQuery: 'pickABrickAddToCart',
+                    authorization: this.authorization,
+                    PABCartId: this.pickABrickShoppingCartId,
+                    qty: qty,
+                    partId: partId,
+                });
             }
         },
-        sapFillCart(){
-            var order = []
-            //console.log("saplist", this.sapList)
-            for(var i = 0; i < this.sapList.length; i++) {
-                if(this.sapList[i].sat){
-                    var qty = this.sapList[i].qty.order
-                    if(qty > 200) qty = 200 // it's not possible to order more than 200 pieces per brick
+        bricksAndPiecesFillCart() {
+            var order = [];
+            //console.log("bricksAndPieceslist", this.bricksAndPiecesList)
+            for (var i = 0; i < this.bricksAndPiecesList.length; i++) {
+                if (this.bricksAndPiecesList[i].bricksAndPieces) {
+                    var qty = this.bricksAndPiecesList[i].qty.order;
+                    if (qty > 200) qty = 200; // it's not possible to order more than 200 pieces per brick
 
                     var pos = {
-                        id: this.sapList[i].sat.itemNumber,
-                        product: this.sapList[i].sat,
-                        quantity: parseInt(qty)
-                    }
+                        id: this.bricksAndPiecesList[i].bricksAndPieces
+                            .itemNumber,
+                        product: this.bricksAndPiecesList[i].bricksAndPieces,
+                        quantity: parseInt(qty),
+                    };
 
-                    pos.product.description = pos.product.description.replace(/[\""]/g, '\\"')  // escape quotes in description
+                    pos.product.description = pos.product.description.replace(
+                        /[\""]/g,
+                        '\\"'
+                    ); // escape quotes in description
                     //console.log(pos.product.description)
-                    order.push(pos)
+                    order.push(pos);
                 }
             }
 
-            browser.runtime.sendMessage({contentScriptQuery: "sapFillCart", order: order})
-            .then(response => {
-                
-                //console.log(response)
-                this.$bvToast.toast(`Warenkorb erfolgreich befüllt`, {
-                    title: 'Steine & Teile',
-                    autoHideDelay: 5000,
-                    variant: 'success'
+            browser.runtime
+                .sendMessage({
+                    contentScriptQuery: 'bricksAndPiecesFillCart',
+                    order: order,
                 })
-                
-            })
+                .then((response) => {
+                    //console.log(response)
+                    this.$bvToast.toast(this.fillCartSuccessfullText, {
+                        title: this.bricksAndPieces,
+                        autoHideDelay: 5000,
+                        variant: 'success',
+                    });
+                });
         },
-        sapClearCart(){
-            browser.runtime.sendMessage({contentScriptQuery: "sapClearCart"})
-            .then(response => {
-                //console.log(response)
-                this.$bvToast.toast(`Warenkorb erfolgreich geleert`, {
-                    title: 'Steine & Teile',
-                    autoHideDelay: 5000,
-                    variant: 'success'
-                })
-            })            
+        bricksAndPiecesClearCart() {
+            browser.runtime
+                .sendMessage({ contentScriptQuery: 'bricksAndPiecesClearCart' })
+                .then((response) => {
+                    //console.log(response)
+                    this.$bvToast.toast(this.clearCartSuccessfullText, {
+                        title: this.bricksAndPieces,
+                        autoHideDelay: 5000,
+                        variant: 'success',
+                    });
+                });
         },
         calcTotalPrice() {
-            this.satPositions = 0
-            this.pabPositions = 0
-            this.satPrice = 0
-            this.pabPrice = 0
-            this.sapList = []
-            this.pabList = []
+            this.bricksAndPiecesPositions = 0;
+            this.pickABrickPositions = 0;
+            this.brickLinkPositions = 0;
+            this.bricksAndPiecesPrice = 0;
+            this.pickABrickPrice = 0;
+            this.brickLinkPrice = 0;
+            this.bricksAndPiecesList = [];
+            this.pickABrickList = [];
+            this.brickLinkList = [];
 
-            if(this.wantedList){
-                this.wantedList.forEach(element => {
-                if(this.useHave){
-                    element.qty.order = element.qty.balance
-                }
-                else {
-                    element.qty.order = element.qty.min
-                }
-                if(element.qty.order > 0){
-                    
-                    var sapPrice = 0;
-                    var pabPrice = 0;
-
-                    if (element.sat && element.sat.price && element.sat.price.amount) sapPrice = element.sat.price.amount
-                    if (element.pab && element.pab.variant && element.pab.variant.price && element.pab.variant.price.centAmount) pabPrice = element.pab.variant.price.centAmount / 100
-                    var price = this.getPrice(pabPrice, sapPrice, element.maxprice)
-
-                    if(price[1]) {
-                        if(price[0] == 'sap'){
-                            this.satPositions++
-                            this.satPrice += element.minqty * price[1]
-                            this.currency = element.sat.price.currency
-                            this.fillSapList(element)
-                        } 
-                        if(price[0] == 'pab'){
-                            this.pabPositions++
-                            this.pabPrice += element.minqty * price[1]
-                            this.currency = element.pab.variant.price.currencyCode
-                            this.fillPabList(element)
-                        } 
+            if (this.wantedList) {
+                this.wantedList.forEach((item) => {
+                    if (this.useHave) {
+                        item.qty.order = item.qty.balance;
+                    } else {
+                        item.qty.order = item.qty.min;
                     }
-                }
-            })
+                    if (item.qty.order > 0) {
+                        var bricksAndPiecesPrice = 0;
+                        var pickABrickPrice = 0;
+
+                        if (item?.bricksAndPieces?.price?.amount)
+                            bricksAndPiecesPrice =
+                                item.bricksAndPieces.price.amount;
+                        if (item?.pickABrick?.variant?.price?.centAmount)
+                            pickABrickPrice =
+                                item.pickABrick.variant.price.centAmount / 100;
+                        var price = this.getPrice(
+                            bricksAndPiecesPrice,
+                            pickABrickPrice,
+                            item.maxprice
+                        );
+
+                        if (price[1]) {
+                            if (price[0] == 'bricksAndPieces') {
+                                this.bricksAndPiecesPositions++;
+                                this.bricksAndPiecesPrice +=
+                                    item.qty.order * price[1];
+                                this.currency =
+                                    item.bricksAndPieces.price.currency;
+                                this.fillBricksAndPiecesList(item);
+                            } else if (price[0] == 'pickABrick') {
+                                this.pickABrickPositions++;
+                                this.pickABrickPrice +=
+                                    item.qty.order * price[1];
+                                this.currency =
+                                    item.pickABrick.variant.price.currencyCode;
+                                this.fillPickABrickList(item);
+                            } else {
+                                this.brickLinkPositions++;
+                                this.brickLinkPrice +=
+                                    item.qty.order * price[1];
+                                this.fillBrickLinkList(item);
+                            }
+                        }
+                    }
+                });
             }
-            
 
-            this.satPrice = Math.round(this.satPrice * 100) / 100
-            this.pabPrice = Math.round(this.pabPrice * 100) / 100
+            this.bricksAndPiecesPrice =
+                Math.round(this.bricksAndPiecesPrice * 100) / 100;
+            this.pickABrickPrice = Math.round(this.pickABrickPrice * 100) / 100;
+            this.brickLinkPrice = Math.round(this.brickLinkPrice * 100) / 100;
         },
-        getPrice(pabPrice, sapPrice, blPrice) {
-            if (!pabPrice) pabPrice = 0
-            if (!sapPrice) sapPrice = 0
+        getPrice(bricksAndPiecesPrice, pickABrickPrice, brickLinkPrice) {
+            if (!bricksAndPiecesPrice) bricksAndPiecesPrice = 0;
+            if (!pickABrickPrice) pickABrickPrice = 0;
+            if (!brickLinkPrice || brickLinkPrice < 0) brickLinkPrice = 0;
 
-            var prices = Array()
+            var prices = Array();
 
-            if(pabPrice == sapPrice && pabPrice > 0) {
-                if(this.behaviourOnSamePrice == 'sap') {
-                    prices.push(['sap', sapPrice])
-                } else {
-                    prices.push(['pab', pabPrice])
-                }
-            } else {
-                if(this.usePickaBrick && pabPrice > 0) prices.push(['pab', pabPrice])
-                if(this.useStonesAndPieces && sapPrice > 0) prices.push(['sap', sapPrice])
+            if (
+                this.selectedPrio1 == 'bricksAndPieces' &&
+                bricksAndPiecesPrice
+            ) {
+                prices.push(['bricksAndPieces', bricksAndPiecesPrice]);
+            } else if (this.selectedPrio1 == 'pickABrick' && pickABrickPrice) {
+                prices.push(['pickABrick', pickABrickPrice]);
+            } else if (this.selectedPrio1 == 'brickLink' && brickLinkPrice) {
+                prices.push(['brickLink', brickLinkPrice]);
             }
 
-            if(prices.length == 0) return 0
-            prices = prices.sort(function(a, b){return a[1]-b[1]})
+            if (
+                this.selectedPrio2 == 'bricksAndPieces' &&
+                bricksAndPiecesPrice
+            ) {
+                prices.push(['bricksAndPieces', bricksAndPiecesPrice]);
+            } else if (this.selectedPrio2 == 'pickABrick' && pickABrickPrice) {
+                prices.push(['pickABrick', pickABrickPrice]);
+            } else if (this.selectedPrio2 == 'brickLink' && brickLinkPrice) {
+                prices.push(['brickLink', brickLinkPrice]);
+            }
 
-            if(this.behaviourOnSamePrice == 'bl' && prices[0] == blPrice) return ['bl', 0]
+            if (
+                this.selectedPrio3 == 'bricksAndPieces' &&
+                bricksAndPiecesPrice
+            ) {
+                prices.push(['bricksAndPieces', bricksAndPiecesPrice]);
+            } else if (this.selectedPrio3 == 'pickABrick' && pickABrickPrice) {
+                prices.push(['pickABrick', pickABrickPrice]);
+            } else if (this.selectedPrio3 == 'brickLink' && brickLinkPrice) {
+                prices.push(['brickLink', brickLinkPrice]);
+            }
 
-            return prices[0]
+            if (prices.length == 0) return 0;
+            prices = prices.sort(function(a, b) {
+                return a[1] - b[1];
+            });
+
+            return prices[0];
         },
-        fillSapList(pos){
-            this.sapList.push(pos)
+        fillBricksAndPiecesList(pos) {
+            this.bricksAndPiecesList.push(pos);
         },
-        fillPabList(pos){
-            this.pabList.push(pos)
+        fillPickABrickList(pos) {
+            this.pickABrickList.push(pos);
         },
-        printSap(){
-            console.log("print")
-            this.$htmlToPaper('sapList')
+        fillBrickLinkList(pos) {
+            this.brickLinkList.push(pos);
         },
-        printPab(){
-            console.log("print")
-            this.$htmlToPaper('pabList')
-        }
+        onDownload() {
+            let xmlContent = 'data:text/xml;charset=utf-8,';
+            xmlContent += this.creatXml();
+
+            const data = encodeURI(xmlContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', data);
+            link.setAttribute('download', 'WantedList.xml');
+            link.click();
+        },
+        onCopy() {
+            var copyText = document.getElementById('wantedList');
+            copyText.value = this.creatXml(false);
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+        },
+        creatXml(withHeader = true) {
+            var xml2js = require('xml2js');
+
+            var wantedList = this.createBrickLinkObject();
+
+            var builder = new xml2js.Builder();
+            var xml = builder.buildObject(wantedList);
+
+            if (withHeader) return xml;
+
+            var startpos = xml.substr(xml).indexOf('>') + 2;
+            return xml.substr(startpos, xml.length);
+        },
+        createBrickLinkObject() {
+            if (!this.brickLinkList) return;
+
+            var brickLink = { INVENTORY: Array() };
+
+            for (var i = 0; i < this.brickLinkList.length; i++) {
+                var bricksAndPiecesPrice = 0;
+                var pickABrickPrice = 0;
+
+                var have = parseInt(this.brickLinkList[i].qty.have);
+                if (this.recalcHave) {
+                    have += parseInt(this.brickLinkList[i].qty.balance);
+                }
+
+                var item = {
+                    ITEM: {
+                        ITEMTYPE: this.brickLinkList[i].itemtype,
+                        ITEMID: this.brickLinkList[i].itemid,
+                        COLOR: this.brickLinkList[i].color.brickLinkId,
+                        MAXPRICE: this.brickLinkList[i].maxprice,
+                        MINQTY: this.brickLinkList[i].qty.min,
+                        CONDITION: this.brickLinkList[i].condition,
+                        NOTIFY: this.brickLinkList[i].notify,
+                    },
+                };
+
+                if (!this.recalcHave) {
+                    item.QTYFILLED = have;
+                }
+
+                brickLink.INVENTORY.push(item);
+            }
+
+            return brickLink;
+        },
+        printBricksAndPieces() {
+            //console.log('print');
+            this.$htmlToPaper('bricksAndPiecesList');
+        },
+        printPickABrick() {
+            //console.log('print');
+            this.$htmlToPaper('pickABrickList');
+        },
+        printBrickLink() {
+            //console.log('print');
+            this.$htmlToPaper('brickLinkList');
+        },
     },
-    watch:{
-        usePickaBrick: function(val, oldVal){
-            if(!val) {
-                if(this.behaviourOnSamePrice == 'pab'){
-                    if(this.useStonesAndPieces) {
-                        this.behaviourOnSamePrice = 'sap'
-                    } else {
-                        this.behaviourOnSamePrice = 'bl'
-                    }
-                }
-            }
-            localStorage.setItem("usePickaBrick", val)
-            localStorage.setItem("behaviourOnSamePriceShopping", this.behaviourOnSamePrice)
-            this.calcTotalPrice()
+    watch: {
+        selectedPrio1: function(val, oldVal) {
+            localStorage.setItem('selectedPrio1', val);
+            this.calcTotalPrice();
         },
-        useStonesAndPieces: function(val, oldVal){
-            if(!val) {
-                if(this.behaviourOnSamePrice == 'sap'){
-                    if(this.usePickaBrick) {
-                        this.behaviourOnSamePrice = 'pab'
-                    } else {
-                        this.behaviourOnSamePrice = 'bl'
-                    }
-                }
-            }
-            localStorage.setItem("useStonesAndPieces", val)
-            localStorage.setItem("behaviourOnSamePriceShopping", this.behaviourOnSamePrice)
-            this.calcTotalPrice()
+        selectedPrio2: function(val, oldVal) {
+            localStorage.setItem('selectedPrio2', val);
+            this.calcTotalPrice();
         },
-        behaviourOnSamePrice: function(val, oldVal){
-            localStorage.setItem("behaviourOnSamePriceShopping", val)
-            this.calcTotalPrice()
+        selectedPrio3: function(val, oldVal) {
+            localStorage.setItem('selectedPrio3', val);
+            this.calcTotalPrice();
         },
-        useHave: function(val, oldVal){
-            localStorage.setItem('useHave', val)
-            this.calcTotalPrice()
-        }
-    },    
+        useHave: function(val, oldVal) {
+            localStorage.setItem('useHave', val);
+            this.calcTotalPrice();
+        },
+    },
     beforeMount() {
-        this.usePickaBrick = ((localStorage.getItem("usePickaBrick") || 'true') === 'true')
-        this.useStonesAndPieces = ((localStorage.getItem("useStonesAndPieces") || 'true') === 'true')
-        this.behaviourOnSamePrice = localStorage.getItem("behaviourOnSamePriceShopping") || 'sap'
-        this.useHave = ((localStorage.getItem("useHave") || 'true') === 'true')
-        this.wantedList = JSON.parse(localStorage.getItem("wantedList") || null)
+        this.selectedPrio1 =
+            localStorage.getItem('selectedPrio1') || 'bricksAndPieces';
+        this.selectedPrio2 =
+            localStorage.getItem('selectedPrio2') || 'pickABrick';
+        this.selectedPrio3 =
+            localStorage.getItem('selectedPrio3') || 'brickLink';
+        this.useHave = (localStorage.getItem('useHave') || 'true') === 'true';
+        this.wantedList = JSON.parse(
+            localStorage.getItem('wantedList') || null
+        );
+        if (this.wantedList.length)
+            this.wantedListPositions = this.wantedList.length;
 
-        this.calcTotalPrice()
+        this.calcTotalPrice();
 
-        browser.runtime.sendMessage({contentScriptQuery: "readQAuth"})
-        .then(response => {
-            this.authorization = response;
-            //console.log("authorization", this.authorization);
-            browser.runtime.sendMessage({contentScriptQuery: "PickABrickReadCart", authorization: this.authorization})
-            .then(response => {
-                //console.log("PickABrickReadCart", response);
-                this.pabShoppingCartId = response.id;
-                //console.log("PickABrickReadCartId", this.pabShoppingCartId);
+        browser.runtime
+            .sendMessage({ contentScriptQuery: 'readQAuth' })
+            .then((response) => {
+                this.authorization = response;
+                //console.log("authorization", this.authorization);
+                browser.runtime
+                    .sendMessage({
+                        contentScriptQuery: 'pickABrickReadCart',
+                        authorization: this.authorization,
+                    })
+                    .then((response) => {
+                        //console.log("PickABrickReadCart", response);
+                        this.pickABrickShoppingCartId = response.id;
+                        //console.log("PickABrickReadCartId", this.pickABrickShoppingCartId);
+                    })
+                    .catch(() => {});
             })
-            .catch(() => {
-                
-            })
-        })
-        .catch(() => {
-            
-        })
-    }
-}
+            .catch(() => {});
+    },
+    computed: {
+        pickABrick() {
+            return browser.i18n.getMessage('pickABrick');
+        },
+        bricksAndPieces() {
+            return browser.i18n.getMessage('bricksAndPieces');
+        },
+        brickLink() {
+            return browser.i18n.getMessage('brickLink');
+        },
+        priorityOne() {
+            return browser.i18n.getMessage('shopping_priorityOne');
+        },
+        priorityTwo() {
+            return browser.i18n.getMessage('shopping_priorityTwo');
+        },
+        priorityThree() {
+            return browser.i18n.getMessage('shopping_priorityThree');
+        },
+        whatShouldBePreferred() {
+            return browser.i18n.getMessage('shopping_whatShouldBePreferred');
+        },
+        useHaveText() {
+            return browser.i18n.getMessage('shopping_useHave');
+        },
+        tabSettings() {
+            return browser.i18n.getMessage('shopping_tabSettings');
+        },
+        tabOverview() {
+            return browser.i18n.getMessage('shopping_tabOverview');
+        },
+        titleAmountPositions() {
+            return browser.i18n.getMessage('shopping_titleAmountPositions');
+        },
+        amountWantedList() {
+            return browser.i18n.getMessage('shopping_amountWantedList');
+        },
+        amountTotalFoundLego() {
+            return browser.i18n.getMessage('shopping_amountTotalFoundLego');
+        },
+        titlePrice() {
+            return browser.i18n.getMessage('shopping_titlePrice');
+        },
+        total() {
+            return browser.i18n.getMessage('shopping_total');
+        },
+        brickLinkCurrencyInfo() {
+            return browser.i18n.getMessage('shopping_brickLinkCurrencyInfo');
+        },
+        buttonFillBricksAndPiecesCart() {
+            return browser.i18n.getMessage(
+                'shopping_buttonFillBricksAndPiecesCart'
+            );
+        },
+        buttonFillBricksAndPiecesCartInfo() {
+            return browser.i18n.getMessage(
+                'shopping_buttonFillBricksAndPiecesCartInfo'
+            );
+        },
+        buttonClearBricksAndPiecesCart() {
+            return browser.i18n.getMessage(
+                'shopping_buttonClearBricksAndPiecesCart'
+            );
+        },
+        buttonFillPickABrickCart() {
+            return browser.i18n.getMessage('shopping_buttonFillPickABrickCart');
+        },
+        buttonClearPickABrickCart() {
+            return browser.i18n.getMessage(
+                'shopping_buttonClearPickABrickCart'
+            );
+        },
+        fillCartSuccessfullText() {
+            return browser.i18n.getMessage('shopping_fillCartSuccessfullText');
+        },
+        clearCartSuccessfullText() {
+            return browser.i18n.getMessage('shopping_clearCartSuccessfullText');
+        },
+        buttonBrickLinkDownload() {
+            return browser.i18n.getMessage('shopping_buttonBrickLinkDownload');
+        },
+        buttonBrickLinkCopy() {
+            return browser.i18n.getMessage('shopping_buttonBrickLinkCopy');
+        },
+    },
+};
 </script>

@@ -1,32 +1,53 @@
 <template>
-<b-form-file
+    <b-form-file
         v-model="file"
         :state="Boolean(file)"
-        accept="text/xml" 
-        placeholder="Choose a file or drop it here..."
-        drop-placeholder="Drop file here..."
-        @change="loadTextFromFile"
-        ></b-form-file>
+        accept="text/xml"
+        :placeholder="chooseFile"
+        :drop-placeholder="dropFile"
+    ></b-form-file>
 </template>
 
 <script>
 export default {
-  data: () => ({ file: null }),
-  methods: {
-    loadTextFromFile(ev) {
-        var xml2js = require('xml2js');
+    data: () => ({ file: null }),
+    created() {
+        eventHub.$on('clearWantedList', () => this.file = null);
+    },
+    watch: {
+        file(val) {
+            if (!val) return;
 
-        const file = ev.target.files[0];
-        const reader = new FileReader();
+            var xml2js = require('xml2js');
+            const fileReader = new FileReader();
 
-        reader.onload = e => this.$emit("load", xml2js.parseStringPromise(e.target.result, {normalizeTags: true}).then(function (result) {
-            return result.inventory.item;
-        }).then(items => {
-            return [items];
-        }));
-
-        reader.readAsText(file);
-    }
-  }
+            fileReader.onload = (e) =>
+                this.$emit(
+                    'load',
+                    xml2js
+                        .parseStringPromise(e.target.result, {
+                            normalizeTags: true,
+                        })
+                        .then(function(result) {
+                            return result.inventory.item;
+                        })
+                        .then((items) => {
+                            return [items];
+                        })
+                );
+            fileReader.readAsText(this.file);
+        },
+    },
+    computed: {
+        chooseFile() {
+            return browser.i18n.getMessage('xmlReader_chooseFile');
+        },
+        dropFile() {
+            return browser.i18n.getMessage('xmlReader_dropFile');
+        },
+    },
+    beforeDestroy() {
+        eventHub.$off('clearWantedList');
+    },
 };
 </script>
