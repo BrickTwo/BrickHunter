@@ -50,7 +50,7 @@ export const brickProcessorMixin = {
             return result[0];
         },
         findPickABrickBrick(item, bricks) {
-            console.log('pickABrickFind', item, bricks);
+            //console.log('pickABrickFind', item, bricks);
             if (!bricks) return null;
 
             var result = bricks.filter(

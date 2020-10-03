@@ -116,14 +116,17 @@ export default {
                     } else {
                         item.color = this.findColor(0, this.COLOR);
                     }
-                    item.maxprice = item.maxprice[0];
+                    if (item.maxprice) {
+                        item.maxprice = item.maxprice[0];
+                    } else {
+                        item.maxprice = 0;
+                    }
                     item.qty = {
                         min: 0,
                         have: 0,
                         balance: 0,
                         order: 0,
                     };
-
                     if (item.minqty) {
                         item.qty.min = item.minqty[0];
                     }
@@ -134,8 +137,16 @@ export default {
                     if (item.qty.balance < 0) {
                         item.qty.balance = 0;
                     }
-                    item.condition = item.condition[0];
-                    item.notify = item.notify[0];
+                    if (item.condition) {
+                        item.condition = item.condition[0];
+                    } else {
+                        item.condition = null;
+                    }
+                    if (item.notify) {
+                        item.notify = item.notify[0];
+                    } else {
+                        item.notify = null;
+                    }
                     item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color?.brickLinkId}/${item.itemid}.t1.png`;
                     item.bricksAndPieces = null;
                     item.pickABrick = null;
