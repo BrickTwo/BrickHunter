@@ -4,7 +4,7 @@
             <xml-reader
                 id="uploadXml"
                 @load="loadXml"
-                style="width: 480px"
+                style="width: 370px"
                 v-if="isChrome"
             ></xml-reader>
             <b-button
@@ -22,10 +22,21 @@
             <b-button
                 variant="primary"
                 @click="loadPrices"
+                :disabled="
+                    !wantedList ||
+                        wantedList.length == 0 ||
+                        loadPercentage < 100
+                "
                 style="margin-left: 10px; vertical-align: bottom;"
-                :disabled="!wantedList || wantedList.length == 0"
                 v-if="!loadWantedList"
                 >{{ buttonLoadPrices }}</b-button
+            ><b-button
+                variant="danger"
+                @click="cancel"
+                :disabled="loadPercentage >= 100"
+                style="margin-left: 10px; vertical-align: bottom;"
+                v-if="!loadWantedList"
+                >{{ buttonCancelLoading }}</b-button
             >
             <b-button
                 variant="danger"
@@ -82,6 +93,7 @@ export default {
         loadPercentage: 100,
         priceLoaded: true,
         wantedList: [],
+        cancelLoading: false,
     }),
     components: {
         XmlReader,
@@ -116,14 +128,17 @@ export default {
                     } else {
                         item.color = this.findColor(0, this.COLOR);
                     }
-                    item.maxprice = item.maxprice[0];
+                    if (item.maxprice) {
+                        item.maxprice = item.maxprice[0];
+                    } else {
+                        item.maxprice = 0;
+                    }
                     item.qty = {
                         min: 0,
                         have: 0,
                         balance: 0,
                         order: 0,
                     };
-
                     if (item.minqty) {
                         item.qty.min = item.minqty[0];
                     }
@@ -134,8 +149,16 @@ export default {
                     if (item.qty.balance < 0) {
                         item.qty.balance = 0;
                     }
-                    item.condition = item.condition[0];
-                    item.notify = item.notify[0];
+                    if (item.condition) {
+                        item.condition = item.condition[0];
+                    } else {
+                        item.condition = null;
+                    }
+                    if (item.notify) {
+                        item.notify = item.notify[0];
+                    } else {
+                        item.notify = null;
+                    }
                     item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color?.brickLinkId}/${item.itemid}.t1.png`;
                     item.bricksAndPieces = null;
                     item.pickABrick = null;
@@ -160,8 +183,13 @@ export default {
             }
 
             for (var i = 0; i < this.wantedList.length; i++) {
+                if (this.cancelLoading) {
+                    this.cancelLoading = false;
+                    return;
+                }
                 var item = this.wantedList[i];
                 await this.sleep(200); //200ms timout to prevent to be blocked on the website
+                console.log('blub');
                 this.loadPrice(item);
 
                 //console.log(item);
@@ -180,9 +208,17 @@ export default {
                 this.calcLoad();
             }
 
+            if (this.cancelLoading) {
+                this.cancelLoading = false;
+                return;
+            }
             if (item.brickLink) {
                 item = await this.prepareSearchIds(item);
                 item.bricksAndPieces = { isLoading: true };
+                if (this.cancelLoading) {
+                    this.cancelLoading = false;
+                    return;
+                }
                 item = await this.loadBricksAndPieces(item);
                 item.pickABrick = { isLoading: true };
                 item = await this.loadPickABrick(item);
@@ -199,7 +235,7 @@ export default {
                 one * this.pickABrickBrickCounter +
                     one * this.bricksAndPiecesBrickCounter
             );
-            if (this.loadPercentage == 100) {
+            if (this.loadPercentage >= 100) {
                 //console.log("setWantedList", this.wantedList)
                 this.$store.commit('setWantedList', this.wantedList);
             }
@@ -213,6 +249,12 @@ export default {
         print() {
             //console.log("print")
             this.$htmlToPaper('wantedList');
+        },
+        cancel() {
+            this.cancelLoading = true;
+            this.pickABrickBrickCounter = this.totalBricks;
+            this.bricksAndPiecesBrickCounter = this.totalBricks;
+            this.calcLoad();
         },
     },
     beforeMount() {
@@ -228,6 +270,9 @@ export default {
         },
         buttonLoadPrices() {
             return browser.i18n.getMessage('wantedList_buttonLoadPrices');
+        },
+        buttonCancelLoading() {
+            return browser.i18n.getMessage('wantedList_buttonCancelLoading');
         },
         buttonClear() {
             return browser.i18n.getMessage('wantedList_buttonClear');

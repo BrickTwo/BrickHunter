@@ -51,6 +51,9 @@
   "brickList_quantity": {
     "message": "Anzahl"
   },
+  "brickList_brickLinkPrice": {
+    "message": "BrickLink Max Preis"
+  },
   "brickList_pickABrickPrice": {
     "message": "Pick a Brick"
   },
@@ -252,20 +255,26 @@
   "selectCountry_saveButton": {
     "message": "Speichern"
   },
-  "shopping_usePickABrick": {
-    "message": "Pick a Brick verwenden"
+  "shopping_priorityOne": {
+    "message": "Prio 1"
   },
-  "shopping_useBricksAndPieces": {
-    "message": "Steine und Teile verwenden"
+  "shopping_priorityTwo": {
+    "message": "Prio 2"
   },
-  "shopping_whatShouldBePreferred": {
-    "message": "Was soll bei gleichem Preis bevorzugt werden?"
+  "shopping_priorityThree": {
+    "message": "Prio 3"
+  },
+  "shopping_optionsNone": {
+    "message": "nicht verwenden"
   },
   "shopping_useHave": {
-    "message": "WantedList-Have abziehen"
+    "message": "WantedList-Have von Anzahl abziehen"
   },
   "shopping_tabOverview": {
     "message": "Übersicht"
+  },
+  "shopping_tabSettings": {
+    "message": "Einstellungen"
   },
   "shopping_titleAmountPositions": {
     "message": "Anzahl Positionen"
@@ -282,6 +291,9 @@
   "shopping_total": {
     "message": "Total"
   },
+  "shopping_brickLinkCurrencyInfo": {
+    "message": "Die Währung aus der BrickLink WantedList ist unbekannt, da diese nicht exportiert wird!"
+  },
   "shopping_buttonFillBricksAndPiecesCart": {
     "message": "Warenkorb füllen"
   },
@@ -292,7 +304,7 @@
     "message": "Warenkorb leeren"
   },
   "shopping_buttonFillPickABrickCart": {
-    "message": "dem Warenkorb hinzufügen"
+    "message": "Dem Warenkorb hinzufügen"
   },
   "shopping_buttonClearPickABrickCart": {
     "message": "Warenkorb leeren"
@@ -303,11 +315,20 @@
   "shopping_clearCartSuccessfullText": {
     "message": "Warenkorb erfolgreich geleert"
   },
+  "shopping_buttonBrickLinkDownload": {
+    "message": "Download"
+  },
+  "shopping_buttonBrickLinkCopy": {
+    "message": "In Zwischenablage kopieren"
+  },
   "wantedList_buttonWantedList": {
     "message": "WantedList"
   },
   "wantedList_buttonLoadPrices": {
     "message": "Lade Preise"
+  },
+  "wantedList_buttonCancelLoading": {
+    "message": "Abbrechen"
   },
   "wantedList_buttonClear": {
     "message": "Leeren"
