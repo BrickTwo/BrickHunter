@@ -186,7 +186,6 @@ export default {
                 item = await this.loadBricksAndPieces(item);
                 item.pickABrick = { isLoading: true };
                 item = await this.loadPickABrick(item);
-                item.isLoading = false;
             }
         },
         sleep(ms) {

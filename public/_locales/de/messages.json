@@ -243,6 +243,9 @@
   "selectCountry_whereDoYouLive": {
     "message": "Wo wohnst du?"
   },
+  "selectCountry_country": {
+    "message": "Land"
+  },
   "selectCountry_noCountrySelected": {
     "message": "Bitte ein Land auswählen"
   },

@@ -5,7 +5,7 @@
                 ><img :src="getImgUrl(selectedCountry)" width="20px"
             /></span>
             <span v-if="!showFlags">{{ getCountryName(selectedCountry) }}</span>
-            <span v-if="!selectedCountry">---</span>
+            <span v-if="!selectedCountry">{{ country }}</span>
         </template>
         <b-dropdown-item
             href="#"
@@ -60,6 +60,11 @@ export default {
     },
     beforeMount() {
         this.selectedCountry = localStorage.getItem('country') || null;
+    },
+    computed: {
+        country() {
+            return browser.i18n.getMessage('selectCountry_country');
+        },
     },
 };
 </script>

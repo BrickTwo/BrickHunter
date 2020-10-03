@@ -217,7 +217,7 @@ export default {
         pickABrickClearCart() {
             browser.runtime
                 .sendMessage({
-                    contentScriptQuery: 'PickABrickClearCart',
+                    contentScriptQuery: 'pickABrickClearCart',
                     authorization: this.authorization,
                     PABCartId: this.pickABrickShoppingCartId,
                 })
@@ -274,7 +274,7 @@ export default {
                 var partId = item.pickABrick.variant.id;
 
                 var response = await browser.runtime.sendMessage({
-                    contentScriptQuery: 'PickABrickAddToCart',
+                    contentScriptQuery: 'pickABrickAddToCart',
                     authorization: this.authorization,
                     PABCartId: this.pickABrickShoppingCartId,
                     qty: qty,
@@ -512,7 +512,7 @@ export default {
                 //console.log("authorization", this.authorization);
                 browser.runtime
                     .sendMessage({
-                        contentScriptQuery: 'PickABrickReadCart',
+                        contentScriptQuery: 'pickABrickReadCart',
                         authorization: this.authorization,
                     })
                     .then((response) => {
