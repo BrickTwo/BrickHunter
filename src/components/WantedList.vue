@@ -36,7 +36,7 @@
                 :disabled="loadPercentage >= 100"
                 style="margin-left: 10px; vertical-align: bottom;"
                 v-if="!loadWantedList"
-                >Abbrechen</b-button
+                >{{ buttonCancelLoading }}</b-button
             >
             <b-button
                 variant="danger"
@@ -270,6 +270,9 @@ export default {
         },
         buttonLoadPrices() {
             return browser.i18n.getMessage('wantedList_buttonLoadPrices');
+        },
+        buttonCancelLoading() {
+            return browser.i18n.getMessage('wantedList_buttonCancelLoading');
         },
         buttonClear() {
             return browser.i18n.getMessage('wantedList_buttonClear');
