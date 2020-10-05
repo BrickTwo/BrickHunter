@@ -189,7 +189,6 @@ export default {
                 }
                 var item = this.wantedList[i];
                 await this.sleep(200); //200ms timout to prevent to be blocked on the website
-                console.log('blub');
                 this.loadPrice(item);
 
                 //console.log(item);
@@ -199,6 +198,7 @@ export default {
         },
         async loadPrice(item) {
             try {
+                item.bricksAndPieces = { isLoading: true };
                 var brickLinkHtml = await this.getBricklink(item.itemid);
                 item.brickLink = await this.returnModelsObject(brickLinkHtml);
             } catch (err) {
@@ -206,23 +206,27 @@ export default {
                 this.pickABrickBrickCounter++;
                 this.bricksAndPiecesBrickCounter++;
                 this.calcLoad();
+                item.bricksAndPieces = null;
             }
 
             if (this.cancelLoading) {
                 this.cancelLoading = false;
+                item.bricksAndPieces = null;
                 return;
             }
-            if (item.brickLink) {
-                item = await this.prepareSearchIds(item);
-                item.bricksAndPieces = { isLoading: true };
-                if (this.cancelLoading) {
-                    this.cancelLoading = false;
-                    return;
-                }
-                item = await this.loadBricksAndPieces(item);
-                item.pickABrick = { isLoading: true };
-                item = await this.loadPickABrick(item);
+            if (!item.brickLink) {
+                item.bricksAndPieces = null;
+                return;
             }
+
+            item = await this.prepareSearchIds(item);
+            if (this.cancelLoading) {
+                this.cancelLoading = false;
+                return;
+            }
+            item = await this.loadBricksAndPieces(item);
+            item.pickABrick = { isLoading: true };
+            item = await this.loadPickABrick(item);
         },
         sleep(ms) {
             return new Promise((resolve) => setTimeout(resolve, ms));
