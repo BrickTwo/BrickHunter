@@ -24,6 +24,13 @@
                     }}</b-dropdown-item>
                 </b-nav-item-dropdown>
 
+                <b-nav-item @click="
+                    link(
+                        'https://github.com/BrickTwo/BrickHunter/wiki'
+                    )">{{
+                    menuHelp
+                }}</b-nav-item>
+
                 <b-nav-item @click="showPage = 'info'"
                     ><b-icon icon="info-circle" aria-hidden="true"></b-icon
                 ></b-nav-item>
@@ -91,6 +98,9 @@ export default {
         changePage(value) {
             this.showPage = value;
         },
+        link(value) {
+            browser.tabs.create({ url: value });
+        },
     },
     beforeMount() {
         this.countrySelected = localStorage.getItem('country') || null;
@@ -114,6 +124,9 @@ export default {
         },
         menuExportCsv() {
             return browser.i18n.getMessage('menu_exportCsv');
+        },
+        menuHelp() {
+            return browser.i18n.getMessage('menu_help');
         },
     },
 };
