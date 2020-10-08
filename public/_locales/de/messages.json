@@ -12,8 +12,11 @@
   "brickLink": {
     "message": "BrickLink"
   },
+  "menu_import": {
+    "message": "Import"
+  },
   "menu_wantedList": {
-    "message": "Wanted List"
+    "message": "Steinelisten"
   },
   "menu_shoppingCart": {
     "message": "Warenkorb"
@@ -30,14 +33,26 @@
   "menu_help": {
     "message": "Hilfe"
   },
-  "country_de": {
+  "countryDE": {
     "message": "Deutschland"
   },
-  "country_ch": {
+  "countryCH": {
     "message": "Schweiz"
   },
-  "country_at": {
+  "countryAT": {
     "message": "Österreich"
+  },
+  "countryLU": {
+    "message": "Luxenburg"
+  },
+  "languageDE": {
+    "message": "Deutsch"
+  },
+  "languageEN": {
+    "message": "Englisch"
+  },
+  "languageFR": {
+    "message": "Französisch"
   },
   "brickList_lineNumber": {
     "message": "#"
@@ -252,8 +267,17 @@
   "selectCountry_country": {
     "message": "Land"
   },
+  "selectCountry_langaugeOnLegoWebsite": {
+    "message": "Welche Sprache verwendest du im LEGO® Online-Shop?"
+  },
+  "selectCountry_language": {
+    "message": "Sprache"
+  },
   "selectCountry_noCountrySelected": {
     "message": "Bitte ein Land auswählen"
+  },
+  "selectCountry_noLanguageSelected": {
+    "message": "Bitte eine Sprache auswählen"
   },
   "selectCountry_saveButton": {
     "message": "Speichern"

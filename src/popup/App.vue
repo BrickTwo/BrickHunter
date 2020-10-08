@@ -5,7 +5,10 @@
                 <img src="icons/icon_24.png" class="d-inline-block align-top" />
                 {{ extName }}
             </b-navbar-brand>
-            <b-navbar-nav class="ml-auto" v-if="showPage != 'selectCountry'">
+            <b-navbar-nav class="ml-auto" v-if="countrySelected && languageSelected">
+                <b-nav-item @click="showPage = 'import'">{{
+                    menuImport
+                }}</b-nav-item>
                 <b-nav-item @click="showPage = 'wantedList'">{{
                     menuWantedList
                 }}</b-nav-item>
@@ -24,12 +27,12 @@
                     }}</b-dropdown-item>
                 </b-nav-item-dropdown>
 
-                <b-nav-item @click="
-                    link(
-                        'https://github.com/BrickTwo/BrickHunter/wiki'
-                    )">{{
-                    menuHelp
-                }}</b-nav-item>
+                <b-nav-item
+                    @click="
+                        link('https://github.com/BrickTwo/BrickHunter/wiki')
+                    "
+                    >{{ menuHelp }}</b-nav-item
+                >
 
                 <b-nav-item @click="showPage = 'info'"
                     ><b-icon icon="info-circle" aria-hidden="true"></b-icon
@@ -46,13 +49,19 @@
         <div class="page">
             <SelectCountry
                 @countrySelected="onCountrySelected"
-                v-if="showPage == 'selectCountry'"
+                @languageSelected="onLanguageSelected"
+                v-if="!countrySelected || !languageSelected"
             />
-            <WantedList v-if="showPage == 'wantedList'" />
-            <Shopping v-if="showPage == 'shopping'" @changePage="changePage" />
-            <ExportWantedList v-if="showPage == 'exportWantedList'" />
-            <ExportCsv v-if="showPage == 'exportCsv'" />
-            <Info v-if="showPage == 'info'" />
+            <div v-if="countrySelected && languageSelected">
+                <WantedList v-if="showPage == 'wantedList'" />
+                <Shopping
+                    v-if="showPage == 'shopping'"
+                    @changePage="changePage"
+                />
+                <ExportWantedList v-if="showPage == 'exportWantedList'" />
+                <ExportCsv v-if="showPage == 'exportCsv'" />
+                <Info v-if="showPage == 'info'" />
+            </div>
         </div>
     </div>
 </template>
@@ -88,12 +97,15 @@ export default {
                 { value: 'ch', text: 'Schweiz' },
             ],
             countrySelected: null,
+            languageSelected: null,
         };
     },
     methods: {
         onCountrySelected(country) {
             this.countrySelected = country;
-            this.showPage = 'wantedList';
+        },
+        onLanguageSelected(language) {
+            this.languageSelected = language;
         },
         changePage(value) {
             this.showPage = value;
@@ -104,11 +116,15 @@ export default {
     },
     beforeMount() {
         this.countrySelected = localStorage.getItem('country') || null;
-        if (!this.countrySelected) this.showPage = 'selectCountry';
+        this.languageSelected = localStorage.getItem('language') || null;
+        //if (!this.countrySelected) this.showPage = 'selectCountry';
     },
     computed: {
         extName() {
             return browser.i18n.getMessage('extName');
+        },
+        menuImport() {
+            return browser.i18n.getMessage('menu_import');
         },
         menuWantedList() {
             return browser.i18n.getMessage('menu_wantedList');
