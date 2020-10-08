@@ -87,7 +87,8 @@
             {{ bricksAndPieces }}: {{ currency }} {{ bricksAndPiecesPrice
             }}<br />
             {{ pickABrick }}: {{ currency }} {{ pickABrickPrice }}<br />
-            {{ brickLink }}: (<a id="bricklinkCurrency" href="">?</a>) {{ brickLinkPrice }}<br />
+            {{ brickLink }}: (<a id="bricklinkCurrency" href="">?</a>)
+            {{ brickLinkPrice }}<br />
             {{ total }}: {{ currency }}
             {{
                 Math.round(
@@ -95,11 +96,9 @@
                         100
                 ) / 100
             }}
-            <b-tooltip
-                target="bricklinkCurrency"
-                variant="danger"
-                >{{ brickLinkCurrencyInfo }}</b-tooltip
-            >
+            <b-tooltip target="bricklinkCurrency" variant="danger">{{
+                brickLinkCurrencyInfo
+            }}</b-tooltip>
         </div>
 
         <div v-if="page == 'bricksAndPieces'">
@@ -287,16 +286,40 @@ export default {
                 },
             ],
             optionsPrio2: [
-                { value: 'none', text: 'Nicht verwenden' },
-                { value: 'bricksAndPieces', text: 'Steine und Teile' },
-                { value: 'pickABrick', text: 'Pick a Brick' },
-                { value: 'brickLink', text: 'BrickLink' },
+                {
+                    value: 'none',
+                    text: browser.i18n.getMessage('shopping_optionsNone'),
+                },
+                {
+                    value: 'bricksAndPieces',
+                    text: browser.i18n.getMessage('bricksAndPieces'),
+                },
+                {
+                    value: 'pickABrick',
+                    text: browser.i18n.getMessage('pickABrick'),
+                },
+                {
+                    value: 'brickLink',
+                    text: browser.i18n.getMessage('brickLink'),
+                },
             ],
             optionsPrio3: [
-                { value: 'none', text: 'Nicht verwenden' },
-                { value: 'bricksAndPieces', text: 'Steine und Teile' },
-                { value: 'pickABrick', text: 'Pick a Brick' },
-                { value: 'brickLink', text: 'BrickLink' },
+                {
+                    value: 'none',
+                    text: browser.i18n.getMessage('shopping_optionsNone'),
+                },
+                {
+                    value: 'bricksAndPieces',
+                    text: browser.i18n.getMessage('bricksAndPieces'),
+                },
+                {
+                    value: 'pickABrick',
+                    text: browser.i18n.getMessage('pickABrick'),
+                },
+                {
+                    value: 'brickLink',
+                    text: browser.i18n.getMessage('brickLink'),
+                },
             ],
             selectedPrio1: 'bricksAndPieces',
             selectedPrio2: 'pickABrick',
@@ -486,9 +509,18 @@ export default {
                                     item.qty.order * price[1];
                                 this.fillBrickLinkList(item);
                             }
+                        } else {
+                            this.brickLinkPositions++;
+                            this.brickLinkPrice += item.qty.order * price[1];
+                            this.fillBrickLinkList(item);
                         }
                     }
                 });
+
+                if(this.selectedPrio1 != 'brickLink' && this.selectedPrio2 != 'brickLink' && this.selectedPrio3 != 'brickLink') {
+                    this.brickLinkPositions = 0;
+                    this.brickLinkPrice = 0;
+                }
             }
 
             this.bricksAndPiecesPrice =
@@ -500,7 +532,7 @@ export default {
             if (!bricksAndPiecesPrice) bricksAndPiecesPrice = 0;
             if (!pickABrickPrice) pickABrickPrice = 0;
             if (!brickLinkPrice || brickLinkPrice < 0) brickLinkPrice = 0;
-
+            
             var prices = Array();
 
             if (
@@ -536,7 +568,10 @@ export default {
                 prices.push(['brickLink', brickLinkPrice]);
             }
 
-            if (prices.length == 0) return 0;
+            if (prices.length == 0){
+                prices.push(['brickLink', 0]);
+            }
+
             prices = prices.sort(function(a, b) {
                 return a[1] - b[1];
             });
