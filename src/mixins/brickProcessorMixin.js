@@ -27,7 +27,7 @@ export const brickProcessorMixin = {
             //console.log("result", result);
 
             if (this.isSpecialBrick(item)) {
-                if (!result.length && item.brickLink.mapPCCs) {
+                if (item.brickLink.mapPCCs) {
                     var colorCodesArray = item.brickLink.mapPCCs;
                     var colorCodes = colorCodesArray[
                         item.color.brickLinkId
@@ -47,6 +47,8 @@ export const brickProcessorMixin = {
                     return -1;
                 }
             });
+
+            //console.log("resultSorted", result);
             return result[0];
         },
         findPickABrickBrick(item, bricks) {
@@ -79,7 +81,12 @@ export const brickProcessorMixin = {
             if (
                 isNaN(this.cleanItemId(item.itemid)) ||
                 item.color.brickLinkId == 65 || // metallic gold
-                item.color.brickLinkId == 67 // metallic silver
+                item.color.brickLinkId == 67 || // metallic silver
+                item.itemid == '90398' ||
+                item.itemid == '67583' ||
+                item.itemid == '27328' ||
+                item.itemid == '21699' ||
+                item.itemid == '38547'
             ) {
                 return true;
             }
