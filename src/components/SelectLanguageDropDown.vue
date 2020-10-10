@@ -66,8 +66,9 @@ export default {
     },
     beforeMount() {
         this.selectedLanguage = localStorage.getItem('language') || null;
-        console.log(this.countrySelected)
-        if (this.countrySelected && !this.selectedLanguage) {
+        
+        if (this.countrySelected && this.selectedLanguage) {
+            console.log(this.countrySelected)
             this.COUNTRIES.filter(
                 (country) => country.countryCode == this.countrySelected
             )[0].languages.forEach((language) => {

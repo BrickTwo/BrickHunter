@@ -37,13 +37,16 @@
                 <b-nav-item @click="showPage = 'info'"
                     ><b-icon icon="info-circle" aria-hidden="true"></b-icon
                 ></b-nav-item>
+                <b-nav-item @click="showPage = 'settings'"
+                    ><b-icon icon="gear" aria-hidden="true"></b-icon
+                ></b-nav-item>
 
-                <b-nav-form>
+                <!--<b-nav-form>
                     <SelectCountryDropDown
                         :showFlags="true"
                         v-if="countrySelected"
                     />
-                </b-nav-form>
+                </b-nav-form>-->
             </b-navbar-nav>
         </b-navbar>
         <div class="page">
@@ -61,6 +64,7 @@
                 <ExportWantedList v-if="showPage == 'exportWantedList'" />
                 <ExportCsv v-if="showPage == 'exportCsv'" />
                 <Info v-if="showPage == 'info'" />
+                <Settings v-if="showPage == 'settings'" />
             </div>
         </div>
     </div>
@@ -75,6 +79,7 @@ import ExportWantedList from '@/components/ExportWantedList.vue';
 import ExportCsv from '@/components/ExportCsv.vue';
 import BrickList from '@/components/BrickList.vue';
 import Info from '@/components/Info.vue';
+import Settings from '@/components/Settings.vue';
 
 export default {
     components: {
@@ -86,27 +91,17 @@ export default {
         ExportCsv,
         BrickList,
         Info,
+        Settings,
     },
     data() {
         return {
             showPage: 'wantedList',
             selected: null,
-            options: [
-                { value: 'de', text: 'Deutschland' },
-                { value: 'at', text: 'Östereich' },
-                { value: 'ch', text: 'Schweiz' },
-            ],
             countrySelected: null,
             languageSelected: null,
         };
     },
     methods: {
-        onCountrySelected(country) {
-            this.countrySelected = country;
-        },
-        onLanguageSelected(language) {
-            this.languageSelected = language;
-        },
         changePage(value) {
             this.showPage = value;
         },
@@ -117,7 +112,6 @@ export default {
     beforeMount() {
         this.countrySelected = localStorage.getItem('country') || null;
         this.languageSelected = localStorage.getItem('language') || null;
-        //if (!this.countrySelected) this.showPage = 'selectCountry';
     },
     computed: {
         extName() {
