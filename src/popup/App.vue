@@ -5,7 +5,10 @@
                 <img src="icons/icon_24.png" class="d-inline-block align-top" />
                 {{ extName }}
             </b-navbar-brand>
-            <b-navbar-nav class="ml-auto" v-if="countrySelected && languageSelected">
+            <b-navbar-nav
+                class="ml-auto"
+                v-if="countrySelected && languageSelected"
+            >
                 <b-nav-item @click="showPage = 'import'">{{
                     menuImport
                 }}</b-nav-item>
@@ -107,6 +110,12 @@ export default {
         },
         link(value) {
             browser.tabs.create({ url: value });
+        },
+        onCountrySelected(country) {
+            this.countrySelected = country;
+        },
+        onLanguageSelected(language) {
+            this.languageSelected = language;
         },
     },
     beforeMount() {

@@ -54,7 +54,7 @@ export default {
         countrySelected: function(val, oldVal) {
             this.options = [];
             this.COUNTRIES.filter(
-                (ddd) => ddd.countryCode == val
+                (country) => country.countryCode == val
             )[0].languages.forEach((language) => {
                 this.options.push({
                     value: language.languageCode,
@@ -62,13 +62,15 @@ export default {
                 });
             });
             this.selectedLanguage = this.options[0].value;
+            localStorage.setItem('language', this.selectedLanguage);
+            this.$emit('languageSelected', this.selectedLanguage);
         },
     },
     beforeMount() {
         this.selectedLanguage = localStorage.getItem('language') || null;
-        
+
         if (this.countrySelected && this.selectedLanguage) {
-            console.log(this.countrySelected)
+            console.log(this.countrySelected);
             this.COUNTRIES.filter(
                 (country) => country.countryCode == this.countrySelected
             )[0].languages.forEach((language) => {

@@ -16,7 +16,8 @@ browser.runtime.onMessage.addListener(function(
     reject
 ) {
     var localeCountry = localStorage.getItem('country') || 'DE';
-    var localeCountryLanguage = 'de-' + localeCountry.toUpperCase();
+    var localeLanguage = localStorage.getItem('language') || 'DE';
+    var localeCountryLanguage = localeLanguage.toLowerCase() + '-' + localeCountry.toUpperCase();
 
     const timeout = setTimeout(function() {}, 5000);
 
