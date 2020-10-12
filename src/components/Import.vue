@@ -1,57 +1,42 @@
 <template>
     <div>
-        <p>
+        <b-nav tabs>
+            <b-nav-item
+                :active="page == 'brickLink'"
+                @click="page = 'brickLink'"
+                >{{ brickLink }}</b-nav-item
+            >
+            <b-nav-item
+                :active="page == 'bricksAndPieces'"
+                @click="page = 'bricksAndPieces'"
+                >{{ bricksAndPieces }}</b-nav-item
+            >
+            <b-nav-item
+                :active="page == 'pickABrick'"
+                @click="page = 'pickABrick'"
+                >{{ pickABrick }}</b-nav-item
+            >
+            
+        </b-nav>
+        <div v-if="page == 'brickLink'">
+            <xml-reader
+                id="uploadXml"
+                @load="loadXml"
+                style="width: 370px"
+                v-if="isChrome"
+            ></xml-reader>
             <b-button
                 variant="primary"
-                @click="loadPrices"
-                :disabled="
-                    !wantedList ||
-                        wantedList.length == 0 ||
-                        loadPercentage < 100
-                "
-                style="margin-left: 10px; vertical-align: bottom;"
-                v-if="!loadWantedList"
-                >{{ buttonLoadPrices }}</b-button
-            ><b-button
-                variant="danger"
-                @click="cancel"
-                :disabled="loadPercentage >= 100"
-                style="margin-left: 10px; vertical-align: bottom;"
-                v-if="!loadWantedList"
-                >{{ buttonCancelLoading }}</b-button
+                v-if="!isChrome && !loadWantedList"
+                @click="loadWantedList = true"
+                >{{ buttonWantedList }}</b-button
             >
-            <b-button
-                variant="danger"
-                @click="clear"
-                style="margin-left: 10px; vertical-align: bottom;"
-                v-if="!loadWantedList"
-                >{{ buttonClear }}</b-button
-            >
-            <b-button
-                variant="primary"
-                @click="print"
-                style="margin-left: 10px; vertical-align: bottom;"
-                :disabled="!wantedList || wantedList.length == 0"
-                v-if="!loadWantedList"
-            >
-                <b-icon icon="printer" aria-hidden="true"></b-icon>
-            </b-button>
-        </p>
-        <span v-if="!loadWantedList">
-            <b-progress
-                :value="loadPercentage"
-                :max="100"
-                show-progress
-                animated
-                v-if="loadPercentage < 100"
-                style="margin-top: 10px"
-            ></b-progress>
-        </span>
-        <div id="wantedList">
-            <brick-list
-                v-if="!loadWantedList"
-                :bricklist="wantedList"
-            ></brick-list>
+            <xml-field
+                @load="loadXml"
+                @cancel="loadWantedList = false"
+                style="width: 650px"
+                v-if="loadWantedList"
+            ></xml-field>
         </div>
     </div>
 </template>
@@ -67,6 +52,7 @@ import { brickLinkProcessorMixin } from '@/mixins/brickLinkProcessorMixin';
 
 export default {
     data: () => ({
+        page: 'brickLink',
         isChrome: navigator.userAgent.indexOf('Chrome') != -1,
         loadWantedList: false,
         totalBricks: 0,
@@ -251,6 +237,15 @@ export default {
         if (this.wantedList) this.totalBricks = this.wantedList.length;
     },
     computed: {
+        pickABrick() {
+            return browser.i18n.getMessage('pickABrick');
+        },
+        bricksAndPieces() {
+            return browser.i18n.getMessage('bricksAndPieces');
+        },
+        brickLink() {
+            return browser.i18n.getMessage('brickLink');
+        },
         buttonWantedList() {
             return browser.i18n.getMessage('wantedList_buttonWantedList');
         },

@@ -12,8 +12,11 @@
   "brickLink": {
     "message": "BrickLink"
   },
+  "menu_import": {
+    "message": "Import"
+  },
   "menu_wantedList": {
-    "message": "Wanted List"
+    "message": "Teilelisten"
   },
   "menu_shoppingCart": {
     "message": "Warenkorb"

@@ -6,7 +6,10 @@
                 {{ extName }}
             </b-navbar-brand>
             <b-navbar-nav class="ml-auto" v-if="showPage != 'selectCountry'">
-                <b-nav-item @click="showPage = 'wantedList'">{{
+                <b-nav-item @click="showPage = 'import'">{{
+                    menuImport
+                }}</b-nav-item>
+                <b-nav-item @click="showPage = 'partLists'">{{
                     menuWantedList
                 }}</b-nav-item>
                 <b-nav-item @click="showPage = 'shopping'">{{
@@ -48,6 +51,8 @@
                 @countrySelected="onCountrySelected"
                 v-if="showPage == 'selectCountry'"
             />
+            <Import v-if="showPage == 'import'" />
+            <PartLists v-if="showPage == 'partLists'" @changePage="changePage" />
             <WantedList v-if="showPage == 'wantedList'" />
             <Shopping v-if="showPage == 'shopping'" @changePage="changePage" />
             <ExportWantedList v-if="showPage == 'exportWantedList'" />
@@ -60,6 +65,8 @@
 <script>
 import SelectCountry from '@/components/SelectCountry.vue';
 import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
+import Import from '@/components/Import.vue';
+import PartLists from '@/components/PartLists.vue';
 import WantedList from '@/components/WantedList.vue';
 import Shopping from '@/components/Shopping.vue';
 import ExportWantedList from '@/components/ExportWantedList.vue';
@@ -71,6 +78,8 @@ export default {
     components: {
         SelectCountry,
         SelectCountryDropDown,
+        Import,
+        PartLists,
         WantedList,
         Shopping,
         ExportWantedList,
@@ -80,7 +89,7 @@ export default {
     },
     data() {
         return {
-            showPage: 'wantedList',
+            showPage: 'partLists',
             selected: null,
             options: [
                 { value: 'de', text: 'Deutschland' },
@@ -109,6 +118,9 @@ export default {
     computed: {
         extName() {
             return browser.i18n.getMessage('extName');
+        },
+        menuImport() {
+            return browser.i18n.getMessage('menu_import');
         },
         menuWantedList() {
             return browser.i18n.getMessage('menu_wantedList');
