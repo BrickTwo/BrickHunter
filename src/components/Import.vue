@@ -18,77 +18,67 @@
             >
         </b-nav>
         <div v-if="page == 'brickLink'">
-            <p style="margin-top: 5px; margin-bottom: 5px;">
-                
-                <b-button
-                    variant="primary"
-                    v-if="!isChrome && !loadWantedList"
-                    @click="loadWantedList = true"
-                    >{{ buttonWantedList }}</b-button
-                >
-                <xml-field
-                    @load="loadXml"
-                    @cancel="loadWantedList = false"
-                    style="width: 650px"
-                    v-if="loadWantedList"
-                ></xml-field>
-            </p>
+            <p style="margin-top: 5px; margin-bottom: 5px;"></p>
             <b-container fluid>
-                <b-row class="my-1"
+                <b-row class="my-1" v-if="!isChrome"
                     ><b-col sm="2">
-                        <label
-                            >Datei:</label
-                        >
+                        <label>Datei:</label>
+                    </b-col>
+                    <b-col sm="10">
+                        <xml-field
+                            @load="loadXml"
+                            style="width: 650px"
+                        ></xml-field> </b-col
+                ></b-row>
+                <b-row class="my-1" v-if="isChrome"
+                    ><b-col sm="2">
+                        <label>Datei:</label>
                     </b-col>
                     <b-col sm="10">
                         <xml-reader
-                    id="uploadXml"
-                    @load="loadXml"
-                    v-if="isChrome"
-                ></xml-reader> </b-col
+                            id="uploadXml"
+                            @load="loadXml"
+                        ></xml-reader> </b-col
                 ></b-row>
                 <b-row class="my-1">
                     <b-col sm="2">
-                        <label
-                            >Name:</label
-                        >
+                        <label>Name:</label>
                     </b-col>
                     <b-col sm="10">
                         <b-form-input
-                        :state="false"
+                            v-model="name"
+                            :state="name.length > 0"
                         ></b-form-input>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
                     <b-col sm="2">
-                        <label
-                            >Warenkorb:</label
-                        >
+                        <label>Warenkorb:</label>
                     </b-col>
                     <b-col sm="10">
                         <b-form-checkbox
-      id="checkbox-1"
-      name="checkbox-1"
-      value="accepted"
-      unchecked-value="not_accepted"
-      checked
-    ></b-form-checkbox>
+                            id="checkbox-1"
+                            v-model="cart"
+                            name="checkbox-1"
+                        ></b-form-checkbox>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
-                    <b-col sm="2">
-                    </b-col>
+                    <b-col sm="2"> </b-col>
                     <b-col sm="10">
                         <b-button
-                    id="btn-pickABrick-add-to-card"
-                    variant="primary"
-                    >Importieren</b-button
-                >
-                <b-button
-                    variant="danger"
-                    style="margin-left: 10px;"
-                    >Zurücksetzen</b-button
-                >
+                            id="btn-pickABrick-add-to-card"
+                            variant="primary"
+                            @click="importList()"
+                            :disabled="name.length == 0 || !wantedList"
+                            >Importieren</b-button
+                        >
+                        <b-button
+                            variant="danger"
+                            style="margin-left: 10px;"
+                            @click="clear()"
+                            >Zurücksetzen</b-button
+                        >
                     </b-col>
                 </b-row>
             </b-container>
@@ -99,42 +89,32 @@
 <script>
 import XmlReader from './XmlReader';
 import XmlField from './XmlField';
-import BrickList from './BrickList';
 import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
-import { requestsMixin } from '@/mixins/requestsMixin';
-import { brickLinkProcessorMixin } from '@/mixins/brickLinkProcessorMixin';
+//import { requestsMixin } from '@/mixins/requestsMixin';
+//import { brickLinkProcessorMixin } from '@/mixins/brickLinkProcessorMixin';
 
 export default {
     data: () => ({
         page: 'brickLink',
         isChrome: navigator.userAgent.indexOf('Chrome') != -1,
-        loadWantedList: false,
-        totalBricks: 0,
-        pickABrickBrickCounter: 0,
-        bricksAndPiecesBrickCounter: 0,
-        loadPercentage: 100,
-        priceLoaded: true,
         wantedList: [],
-        cancelLoading: false,
+        name: '',
+        cart: true,
     }),
     components: {
         XmlReader,
         XmlField,
-        BrickList,
     },
     mixins: [
         brickProcessorMixin,
         brickColorMixin,
-        requestsMixin,
-        brickLinkProcessorMixin,
+        //requestsMixin,
+        //brickLinkProcessorMixin,
     ],
     methods: {
         loadXml(wantedList) {
             //console.log(wantedList)
-            this.loadWantedList = false;
-            this.priceLoaded = false;
-            this.totalBricks = 0;
             this.pickABrickBrickCounter = 0;
             this.bricksAndPiecesBrickCounter = 0;
 
@@ -189,99 +169,46 @@ export default {
                 });
                 this.wantedList = [...list[0]];
                 this.totalBricks = this.wantedList.length;
-                this.$store.commit('setWantedList', this.wantedList);
+
                 return list;
             });
         },
-        async loadPrices() {
-            this.priceLoaded = true;
-            this.pickABrickBrickCounter = 0;
-            this.bricksAndPiecesBrickCounter = 0;
-            this.loadPercentage = 0;
-
-            for (var i = 0; i < this.wantedList.length; i++) {
-                this.wantedList[i].bricksAndPieces = null;
-                this.wantedList[i].pickABrick = null;
-                this.wantedList[i].brickLink = null;
-            }
-
-            for (var i = 0; i < this.wantedList.length; i++) {
-                if (this.cancelLoading) {
-                    this.cancelLoading = false;
-                    return;
-                }
-                var item = this.wantedList[i];
-                await this.sleep(200); //200ms timout to prevent to be blocked on the website
-                this.loadPrice(item);
-
-                //console.log(item);
-            }
-
-            //console.log(this.wantedList);
-        },
-        async loadPrice(item) {
-            try {
-                item.bricksAndPieces = { isLoading: true };
-                var brickLinkHtml = await this.getBricklink(item.itemid);
-                item.brickLink = await this.returnModelsObject(brickLinkHtml);
-            } catch (err) {
-                console.log("couldn't find brick on bricklink");
-                this.pickABrickBrickCounter++;
-                this.bricksAndPiecesBrickCounter++;
-                this.calcLoad();
-                item.bricksAndPieces = null;
-            }
-
-            if (this.cancelLoading) {
-                this.cancelLoading = false;
-                item.bricksAndPieces = null;
-                return;
-            }
-            if (!item.brickLink) {
-                item.bricksAndPieces = null;
-                return;
-            }
-
-            item = await this.prepareSearchIds(item);
-            if (this.cancelLoading) {
-                this.cancelLoading = false;
-                return;
-            }
-            item = await this.loadBricksAndPieces(item);
-            item.pickABrick = { isLoading: true };
-            item = await this.loadPickABrick(item);
-        },
-        sleep(ms) {
-            return new Promise((resolve) => setTimeout(resolve, ms));
-        },
-        calcLoad() {
-            //console.log("pickABrick: ", this.pickABrickBrickCounter, " bricksAndPieces: ", this.bricksAndPiecesBrickCounter)
-            var one = 100 / this.totalBricks / 2;
-
-            this.loadPercentage = Math.round(
-                one * this.pickABrickBrickCounter +
-                    one * this.bricksAndPiecesBrickCounter
-            );
-            if (this.loadPercentage >= 100) {
-                //console.log("setWantedList", this.wantedList)
-                this.$store.commit('setWantedList', this.wantedList);
-            }
-            //console.log(this.loadPercentage)
+        importList() {
+            var partList = {
+                id: this.generateUUID(),
+                name: this.name,
+                cart: this.cart,
+                date: new Date(0,0,0,0,0,0,0),
+                positions: this.wantedList,
+            };
+            console.log("importList", partList)
+            this.$store.commit('setPartList', partList);
         },
         clear() {
             this.wantedList = [];
-            this.$store.commit('setWantedList', this.wantedList);
+            this.name = '';
+            this.cart = true;
             eventHub.$emit('clearWantedList', '');
         },
-        print() {
-            //console.log("print")
-            this.$htmlToPaper('wantedList');
-        },
-        cancel() {
-            this.cancelLoading = true;
-            this.pickABrickBrickCounter = this.totalBricks;
-            this.bricksAndPiecesBrickCounter = this.totalBricks;
-            this.calcLoad();
+        generateUUID: function() {
+            // Public Domain/MIT
+            var d = new Date().getTime();
+            if (
+                typeof performance !== 'undefined' &&
+                typeof performance.now === 'function'
+            ) {
+                d += performance.now(); //use high-precision timer if available
+            }
+            var newGuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+                /[xy]/g,
+                function(c) {
+                    var r = (d + Math.random() * 16) % 16 | 0;
+                    d = Math.floor(d / 16);
+                    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+                }
+            );
+
+            return newGuid;
         },
     },
     beforeMount() {
@@ -300,18 +227,6 @@ export default {
         },
         brickLink() {
             return browser.i18n.getMessage('brickLink');
-        },
-        buttonWantedList() {
-            return browser.i18n.getMessage('wantedList_buttonWantedList');
-        },
-        buttonLoadPrices() {
-            return browser.i18n.getMessage('wantedList_buttonLoadPrices');
-        },
-        buttonCancelLoading() {
-            return browser.i18n.getMessage('wantedList_buttonCancelLoading');
-        },
-        buttonClear() {
-            return browser.i18n.getMessage('wantedList_buttonClear');
         },
     },
 };
