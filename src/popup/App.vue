@@ -89,7 +89,7 @@ export default {
     },
     data() {
         return {
-            showPage: 'wantedList',
+            showPage: 'partLists',
             selected: null,
             options: [
                 { value: 'de', text: 'Deutschland' },
