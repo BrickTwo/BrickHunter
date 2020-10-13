@@ -4,6 +4,7 @@
         :api-mode="false"
         :data="bricklist"
         :fields="columns"
+        :table-height="tableHeight"
     >
     </vuetable>
 </template>
@@ -21,49 +22,59 @@ export default {
         },
     },
     data: () => ({
+        tableHeight: '300px',
         columns: [
             {
                 name: '__sequence',
                 title: () => browser.i18n.getMessage('brickList_lineNumber'),
                 callback: 'lineNumber',
+                width: '4.5%',
             },
             {
                 name: 'itemid',
                 title: () => browser.i18n.getMessage('brickList_itemId'),
+                width: '12.5%',
             },
             {
                 name: 'image',
                 title: () =>
                     browser.i18n.getMessage('brickList_brickLinkImage'),
                 callback: 'showImage',
+                width: '12.5%',
             },
             {
                 name: 'color',
                 title: () =>
                     browser.i18n.getMessage('brickList_brickLinkColor'),
                 callback: 'showColor',
+                width: '24%',
             },
             {
                 name: 'qty',
                 title: () => browser.i18n.getMessage('brickList_quantity'),
                 callback: 'showQty',
+                width: '10%',
             },
             {
                 name: 'maxprice',
-                title: () => browser.i18n.getMessage('brickList_brickLinkPrice'),
+                title: () =>
+                    browser.i18n.getMessage('brickList_brickLinkPrice'),
                 callback: 'brickLinkPrice',
+                width: '13.5%',
             },
             {
                 name: 'pickABrick',
                 title: () =>
                     browser.i18n.getMessage('brickList_pickABrickPrice'),
                 callback: 'pickABrickPrice',
+                width: '10.5%',
             },
             {
                 name: 'bricksAndPieces',
                 title: () =>
                     browser.i18n.getMessage('brickList_bricksAndPiecesPrice'),
                 callback: 'bricksAndPiecesPrice',
+                width: '12.5%',
             },
         ],
     }),
@@ -78,7 +89,7 @@ export default {
             return `<span style="display: block"><div style="background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"></div><span>${value.brickLinkName}</span></span><span style="color: grey; font-size: small; margin-left: 20px">[${value.legoName}]</span>`;
         },
         brickLinkPrice(value) {
-            if(value < 0) return 0;
+            if (value < 0) return 0;
             return value;
         },
         pickABrickPrice(value) {

@@ -1,5 +1,23 @@
 <template>
     <div>
+        <h2>
+            Nebulon
+            <b-button variant="primary">
+                <b-icon icon="pencil" aria-hidden="true"></b-icon>
+            </b-button>
+        </h2>
+        <span style=" float: right"
+            ><span>Zuletzt aktualisiert: 12.10.2020 13:35</span><br />
+            <span style="display: inline-block;"
+                ><b-form-checkbox
+                    id="checkbox-1"
+                    name="checkbox-1"
+                    value="accepted"
+                    unchecked-value="not_accepted"
+                    >Warenkorb</b-form-checkbox
+                ></span
+            ></span
+        >
         <p>
             <b-button
                 variant="primary"
@@ -25,7 +43,7 @@
                 @click="clear"
                 style="margin-left: 10px; vertical-align: bottom;"
                 v-if="!loadWantedList"
-                >{{ buttonClear }}</b-button
+                >Löschen</b-button
             >
             <b-button
                 variant="primary"

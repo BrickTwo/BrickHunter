@@ -16,27 +16,82 @@
                 @click="page = 'pickABrick'"
                 >{{ pickABrick }}</b-nav-item
             >
-            
         </b-nav>
         <div v-if="page == 'brickLink'">
-            <xml-reader
-                id="uploadXml"
-                @load="loadXml"
-                style="width: 370px"
-                v-if="isChrome"
-            ></xml-reader>
-            <b-button
-                variant="primary"
-                v-if="!isChrome && !loadWantedList"
-                @click="loadWantedList = true"
-                >{{ buttonWantedList }}</b-button
-            >
-            <xml-field
-                @load="loadXml"
-                @cancel="loadWantedList = false"
-                style="width: 650px"
-                v-if="loadWantedList"
-            ></xml-field>
+            <p style="margin-top: 5px; margin-bottom: 5px;">
+                
+                <b-button
+                    variant="primary"
+                    v-if="!isChrome && !loadWantedList"
+                    @click="loadWantedList = true"
+                    >{{ buttonWantedList }}</b-button
+                >
+                <xml-field
+                    @load="loadXml"
+                    @cancel="loadWantedList = false"
+                    style="width: 650px"
+                    v-if="loadWantedList"
+                ></xml-field>
+            </p>
+            <b-container fluid>
+                <b-row class="my-1"
+                    ><b-col sm="2">
+                        <label
+                            >Datei:</label
+                        >
+                    </b-col>
+                    <b-col sm="10">
+                        <xml-reader
+                    id="uploadXml"
+                    @load="loadXml"
+                    v-if="isChrome"
+                ></xml-reader> </b-col
+                ></b-row>
+                <b-row class="my-1">
+                    <b-col sm="2">
+                        <label
+                            >Name:</label
+                        >
+                    </b-col>
+                    <b-col sm="10">
+                        <b-form-input
+                        :state="false"
+                        ></b-form-input>
+                    </b-col>
+                </b-row>
+                <b-row class="my-1">
+                    <b-col sm="2">
+                        <label
+                            >Warenkorb:</label
+                        >
+                    </b-col>
+                    <b-col sm="10">
+                        <b-form-checkbox
+      id="checkbox-1"
+      name="checkbox-1"
+      value="accepted"
+      unchecked-value="not_accepted"
+      checked
+    ></b-form-checkbox>
+                    </b-col>
+                </b-row>
+                <b-row class="my-1">
+                    <b-col sm="2">
+                    </b-col>
+                    <b-col sm="10">
+                        <b-button
+                    id="btn-pickABrick-add-to-card"
+                    variant="primary"
+                    >Importieren</b-button
+                >
+                <b-button
+                    variant="danger"
+                    style="margin-left: 10px;"
+                    >Zurücksetzen</b-button
+                >
+                    </b-col>
+                </b-row>
+            </b-container>
         </div>
     </div>
 </template>
