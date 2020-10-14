@@ -12,8 +12,10 @@ export default new Vuex.Store({
                 sKey;
 
             for (; (sKey = window.localStorage.key(i)); i++) {
-                if(sKey.startsWith("partList_")){
-                    state.partLists.push(JSON.parse(window.localStorage.getItem(sKey)));
+                if (sKey.startsWith('partList_')) {
+                    state.partLists.push(
+                        JSON.parse(window.localStorage.getItem(sKey))
+                    );
                 }
             }
         },
@@ -22,12 +24,24 @@ export default new Vuex.Store({
             localStorage.setItem('wantedList', JSON.stringify(payload));
         },
         setPartList(state, payload) {
-            state.partLists.push(payload);
+            var found = state.partLists.find((partList) => partList.id === payload.id);
+
+            if (found) {
+                found = payload;
+            } else {
+                state.partLists.push(payload);
+            }
+
             localStorage.setItem(
                 'partList_' + payload.id,
                 JSON.stringify(payload)
             );
         },
+        deletePartList(state, partListId) {
+            console.log(state.partLists, state.partLists.filter((partList) => partList.id != partListId))
+            state.partLists = state.partLists.filter((partList) => partList.id != partListId);
+            localStorage.removeItem('partList_' + partListId);
+        }
     },
     getters: {
         getPartListsById: (state) => (id) => {

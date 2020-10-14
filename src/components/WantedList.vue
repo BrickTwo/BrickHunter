@@ -1,13 +1,13 @@
 <template>
     <div>
         <h2>
-            Nebulon
+            {{ partList.name }}
             <b-button variant="primary">
                 <b-icon icon="pencil" aria-hidden="true"></b-icon>
             </b-button>
         </h2>
         <span style=" float: right"
-            ><span>Zuletzt aktualisiert: 12.10.2020 13:35</span><br />
+            ><span>Zuletzt aktualisiert: {{ partList.date | formatDate }}</span><br />
             <span style="display: inline-block;"
                 ><b-form-checkbox
                     id="checkbox-1"
@@ -40,7 +40,7 @@
             >
             <b-button
                 variant="danger"
-                @click="clear"
+                @click="deleteList"
                 style="margin-left: 10px; vertical-align: bottom;"
                 v-if="!loadWantedList"
                 >Löschen</b-button
@@ -75,8 +75,6 @@
 </template>
 
 <script>
-import XmlReader from './XmlReader';
-import XmlField from './XmlField';
 import BrickList from './BrickList';
 import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
@@ -84,6 +82,11 @@ import { requestsMixin } from '@/mixins/requestsMixin';
 import { brickLinkProcessorMixin } from '@/mixins/brickLinkProcessorMixin';
 
 export default {
+    props: {
+        partListId: {
+            type: String,
+        },
+    },
     data: () => ({
         isChrome: navigator.userAgent.indexOf('Chrome') != -1,
         loadWantedList: false,
@@ -94,10 +97,9 @@ export default {
         priceLoaded: true,
         wantedList: [],
         cancelLoading: false,
+        partList: null
     }),
     components: {
-        XmlReader,
-        XmlField,
         BrickList,
     },
     mixins: [
@@ -107,69 +109,6 @@ export default {
         brickLinkProcessorMixin,
     ],
     methods: {
-        loadXml(wantedList) {
-            //console.log(wantedList)
-            this.loadWantedList = false;
-            this.priceLoaded = false;
-            this.totalBricks = 0;
-            this.pickABrickBrickCounter = 0;
-            this.bricksAndPiecesBrickCounter = 0;
-
-            wantedList.then((list) => {
-                list[0].map((item) => {
-                    item.itemtype = item.itemtype[0];
-                    item.itemid = item.itemid[0];
-                    //console.log(this.ItemIdToDesignId(item.itemid))
-                    item.searchids = [this.cleanItemId(item.itemid)];
-                    item.designid = '';
-                    if (item.color) {
-                        item.color = item.color[0];
-                        item.color = this.findColor(item.color, this.COLOR);
-                    } else {
-                        item.color = this.findColor(0, this.COLOR);
-                    }
-                    if (item.maxprice) {
-                        item.maxprice = item.maxprice[0];
-                    } else {
-                        item.maxprice = 0;
-                    }
-                    item.qty = {
-                        min: 0,
-                        have: 0,
-                        balance: 0,
-                        order: 0,
-                    };
-                    if (item.minqty) {
-                        item.qty.min = item.minqty[0];
-                    }
-                    if (item.qtyfilled) {
-                        item.qty.have = item.qtyfilled[0];
-                    }
-                    item.qty.balance = item.qty.min - item.qty.have;
-                    if (item.qty.balance < 0) {
-                        item.qty.balance = 0;
-                    }
-                    if (item.condition) {
-                        item.condition = item.condition[0];
-                    } else {
-                        item.condition = null;
-                    }
-                    if (item.notify) {
-                        item.notify = item.notify[0];
-                    } else {
-                        item.notify = null;
-                    }
-                    item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color?.brickLinkId}/${item.itemid}.t1.png`;
-                    item.bricksAndPieces = null;
-                    item.pickABrick = null;
-                    item.brickLink = null;
-                });
-                this.wantedList = [...list[0]];
-                this.totalBricks = this.wantedList.length;
-                this.$store.commit('setWantedList', this.wantedList);
-                return list;
-            });
-        },
         async loadPrices() {
             this.priceLoaded = true;
             this.pickABrickBrickCounter = 0;
@@ -241,14 +180,11 @@ export default {
             );
             if (this.loadPercentage >= 100) {
                 //console.log("setWantedList", this.wantedList)
-                this.$store.commit('setWantedList', this.wantedList);
+                this.partList.date = new Date(Date.now());
+                this.partList.positions = this.wantedList;
+                this.$store.commit('setPartList', this.partList);
             }
             //console.log(this.loadPercentage)
-        },
-        clear() {
-            this.wantedList = [];
-            this.$store.commit('setWantedList', this.wantedList);
-            eventHub.$emit('clearWantedList', '');
         },
         print() {
             //console.log("print")
@@ -260,11 +196,13 @@ export default {
             this.bricksAndPiecesBrickCounter = this.totalBricks;
             this.calcLoad();
         },
+        deleteList() {
+            this.$store.commit('deletePartList', this.partList.id);
+        }
     },
     beforeMount() {
-        this.wantedList = JSON.parse(
-            localStorage.getItem('wantedList') || null
-        );
+        this.partList = this.$store.getters.getPartListsById(this.partListId);
+        this.wantedList = this.partList.positions;
         this.totalBricks = 0;
         if (this.wantedList) this.totalBricks = this.wantedList.length;
     },

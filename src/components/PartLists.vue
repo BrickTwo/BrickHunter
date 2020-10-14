@@ -1,75 +1,36 @@
 <template>
     <div>
         <span style="float: right">183 / 2500 Positionen</span>
-        <b-list-group style="clear: both" >
-            <b-list-group-item v-for="partList in partLists" :key="partList.id"
+        <b-list-group style="clear: both">
+            <b-list-group-item
+                v-for="partList in partLists"
+                :key="partList.id"
                 href="#"
-                @click="selectPartList('')"
+                @click="selectPartList(partList.id)"
                 style="display: inline"
+                :variant="variant(partList.date)"
             >
                 <span style="display: inline-block; margin-right: 20px"
-                    ><b-form-checkbox
-                        id="checkbox-1"
-                        name="checkbox-1"
-                        value="accepted"
-                        unchecked-value="not_accepted"
-                        ><b-icon
-                            icon="cart4"
-                            aria-hidden="true"
-                        ></b-icon></b-form-checkbox></span
+                    ><div @click.stop>
+                        <b-form-checkbox
+                            :id="'cart-' + partList.id"
+                            v-model="partList.cart"
+                            name="checkbox-1"
+                            @click="cart(partList.id, partList.cart)"
+                            ><b-icon icon="cart4" aria-hidden="true"></b-icon
+                        ></b-form-checkbox></div></span
                 ><span>{{ partList.name }}</span
-                ><span style="float: right"
-                    ><b-icon icon="trash" aria-hidden="true"></b-icon></span
-                ><span style="float: right; margin-right: 20px"
-                    >{{ partList.date }}</span
+                ><span style="float: right" @click.stop
+                    ><b-icon
+                        icon="trash"
+                        aria-hidden="true"
+                        @click="deleteList(partList.id)"
+                    ></b-icon></span
+                ><span style="float: right; margin-right: 20px">{{
+                    partList.date | formatDate
+                }}</span
                 ><span style="float: right; margin-right: 20px;"
-                    >Positions:</span
-                ></b-list-group-item
-            >
-            <b-list-group-item
-                href="#"
-                @click="selectPartList('')"
-                variant="warning"
-                ><span style="display: inline-block; margin-right: 20px"
-                    ><b-form-checkbox
-                        id="checkbox-1"
-                        name="checkbox-1"
-                        value="accepted"
-                        unchecked-value="not_accepted"
-                        ><b-icon
-                            icon="cart4"
-                            aria-hidden="true"
-                        ></b-icon></b-form-checkbox></span
-                ><span>Zweite WantedList</span
-                ><span style="float: right"
-                    ><b-icon icon="trash" aria-hidden="true"></b-icon></span
-                ><span style="float: right; margin-right: 20px; color:"
-                    >11.10.2020 13:34</span
-                ><span style="float: right; margin-right: 20px;"
-                    >Positions: 12</span
-                ></b-list-group-item
-            >
-            <b-list-group-item
-                href="#"
-                @click="selectPartList('')"
-                variant="danger"
-                ><span style="display: inline-block; margin-right: 20px"
-                    ><b-form-checkbox
-                        id="checkbox-1"
-                        name="checkbox-1"
-                        value="accepted"
-                        unchecked-value="not_accepted"
-                        ><b-icon
-                            icon="cart4"
-                            aria-hidden="true"
-                        ></b-icon></b-form-checkbox></span
-                ><span>Nebulon GWP</span
-                ><span style="float: right"
-                    ><b-icon icon="trash" aria-hidden="true"></b-icon></span
-                ><span style="float: right; margin-right: 20px;"
-                    >09.10.2020 13:34</span
-                ><span style="float: right; margin-right: 20px;"
-                    >Positions: 115</span
+                    >{{ partList.positions.length }} Positionen</span
                 ></b-list-group-item
             >
         </b-list-group>
@@ -79,20 +40,39 @@
 <script>
 export default {
     data: () => ({
-        partLists: null
+        partLists: null,
     }),
     methods: {
-        selectPartList(partList) {
-            this.$emit('changePage', 'wantedList');
+        selectPartList(id) {
+            this.$emit('changePage', 'wantedList+' + id);
+        },
+        variant(date) {
+            var d = Date.now() - new Date(date).getTime();
+            if (d > 1000 * 60 * 60 * 48) {
+                return 'danger';
+            } else if (d > 1000 * 60 * 60 * 24) {
+                return 'warning';
+            }
+        },
+        cart(id, value) {
+            console.log(this.partLists, id, value);
+        },
+        deleteList(id) {
+            this.$store.commit('deletePartList', id);
+            this.loadPartLists();
+        },
+        loadPartLists() {
+            this.partLists = this.$store.state.partLists.sort((a, b) => {
+                if (a.name.toUpperCase() > b.name.toUpperCase()) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
         },
     },
     beforeMount() {
-        this.partLists = this.$store.state.partLists
-        console.log(this.partLists);
-
-        this.partLists.forEach(element => {
-            console.log(element.name, element)
-        });
-    }
+        this.loadPartLists();
+    },
 };
 </script>

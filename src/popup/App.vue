@@ -27,12 +27,12 @@
                     }}</b-dropdown-item>
                 </b-nav-item-dropdown>
 
-                <b-nav-item @click="
-                    link(
-                        'https://github.com/BrickTwo/BrickHunter/wiki'
-                    )">{{
-                    menuHelp
-                }}</b-nav-item>
+                <b-nav-item
+                    @click="
+                        link('https://github.com/BrickTwo/BrickHunter/wiki')
+                    "
+                    >{{ menuHelp }}</b-nav-item
+                >
 
                 <b-nav-item @click="showPage = 'info'"
                     ><b-icon icon="info-circle" aria-hidden="true"></b-icon
@@ -52,8 +52,14 @@
                 v-if="showPage == 'selectCountry'"
             />
             <Import v-if="showPage == 'import'" />
-            <PartLists v-if="showPage == 'partLists'" @changePage="changePage" />
-            <WantedList v-if="showPage == 'wantedList'" />
+            <PartLists
+                v-if="showPage == 'partLists'"
+                @changePage="changePage"
+            />
+            <WantedList
+                v-if="showPage == 'wantedList'"
+                :partListId="partListId"
+            />
             <Shopping v-if="showPage == 'shopping'" @changePage="changePage" />
             <ExportWantedList v-if="showPage == 'exportWantedList'" />
             <ExportCsv v-if="showPage == 'exportCsv'" />
@@ -89,7 +95,7 @@ export default {
     },
     data() {
         return {
-            showPage: 'import',
+            showPage: 'partLists',
             selected: null,
             options: [
                 { value: 'de', text: 'Deutschland' },
@@ -97,6 +103,7 @@ export default {
                 { value: 'ch', text: 'Schweiz' },
             ],
             countrySelected: null,
+            partListId: null,
         };
     },
     methods: {
@@ -105,7 +112,9 @@ export default {
             this.showPage = 'wantedList';
         },
         changePage(value) {
-            this.showPage = value;
+            var p = value.split('+');
+            if (p[1]) this.partListId = p[1];
+            this.showPage = p[0];
         },
         link(value) {
             browser.tabs.create({ url: value });
