@@ -5,24 +5,24 @@
                 <img src="icons/icon_24.png" class="d-inline-block align-top" />
                 {{ extName }}
             </b-navbar-brand>
-            <b-navbar-nav class="ml-auto" v-if="showPage != 'selectCountry'">
-                <b-nav-item @click="showPage = 'import'">{{
+            <b-navbar-nav class="ml-auto" v-if="this.countrySelected">
+                <b-nav-item @click="showPage('import')">{{
                     menuImport
                 }}</b-nav-item>
-                <b-nav-item @click="showPage = 'partLists'">{{
+                <b-nav-item @click="showPage('partLists')">{{
                     menuWantedList
                 }}</b-nav-item>
-                <b-nav-item @click="showPage = 'shopping'">{{
+                <b-nav-item @click="showPage('shopping')">{{
                     menuShoppingCart
                 }}</b-nav-item>
                 <b-nav-item-dropdown>
                     <template v-slot:button-content>
                         {{ menuExport }}
                     </template>
-                    <b-dropdown-item @click="showPage = 'exportWantedList'">{{
+                    <b-dropdown-item @click="showPage('exportWantedList')">{{
                         menuExportWantedList
                     }}</b-dropdown-item>
-                    <b-dropdown-item @click="showPage = 'exportCsv'">{{
+                    <b-dropdown-item @click="showPage('exportCsv')">{{
                         menuExportCsv
                     }}</b-dropdown-item>
                 </b-nav-item-dropdown>
@@ -34,7 +34,7 @@
                     >{{ menuHelp }}</b-nav-item
                 >
 
-                <b-nav-item @click="showPage = 'info'"
+                <b-nav-item @click="showPage('info')"
                     ><b-icon icon="info-circle" aria-hidden="true"></b-icon
                 ></b-nav-item>
 
@@ -47,23 +47,11 @@
             </b-navbar-nav>
         </b-navbar>
         <div class="page">
+            <router-view v-if="this.countrySelected"></router-view>
             <SelectCountry
                 @countrySelected="onCountrySelected"
-                v-if="showPage == 'selectCountry'"
+                v-if="!this.countrySelected"
             />
-            <Import v-if="showPage == 'import'" />
-            <PartLists
-                v-if="showPage == 'partLists'"
-                @changePage="changePage"
-            />
-            <WantedList
-                v-if="showPage == 'wantedList'"
-                :partListId="partListId"
-            />
-            <Shopping v-if="showPage == 'shopping'" @changePage="changePage" />
-            <ExportWantedList v-if="showPage == 'exportWantedList'" />
-            <ExportCsv v-if="showPage == 'exportCsv'" />
-            <Info v-if="showPage == 'info'" />
         </div>
     </div>
 </template>
@@ -71,31 +59,14 @@
 <script>
 import SelectCountry from '@/components/SelectCountry.vue';
 import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
-import Import from '@/components/Import.vue';
-import PartLists from '@/components/PartLists.vue';
-import WantedList from '@/components/WantedList.vue';
-import Shopping from '@/components/Shopping.vue';
-import ExportWantedList from '@/components/ExportWantedList.vue';
-import ExportCsv from '@/components/ExportCsv.vue';
-import BrickList from '@/components/BrickList.vue';
-import Info from '@/components/Info.vue';
 
 export default {
     components: {
         SelectCountry,
         SelectCountryDropDown,
-        Import,
-        PartLists,
-        WantedList,
-        Shopping,
-        ExportWantedList,
-        ExportCsv,
-        BrickList,
-        Info,
     },
     data() {
         return {
-            showPage: 'partLists',
             selected: null,
             options: [
                 { value: 'de', text: 'Deutschland' },
@@ -109,20 +80,17 @@ export default {
     methods: {
         onCountrySelected(country) {
             this.countrySelected = country;
-            this.showPage = 'wantedList';
         },
-        changePage(value) {
-            var p = value.split('+');
-            if (p[1]) this.partListId = p[1];
-            this.showPage = p[0];
+        showPage(page) {
+            this.$router.push('/' + page);
         },
         link(value) {
             browser.tabs.create({ url: value });
         },
     },
     beforeMount() {
+        this.$router.push('/partLists');
         this.countrySelected = localStorage.getItem('country') || null;
-        if (!this.countrySelected) this.showPage = 'selectCountry';
     },
     computed: {
         extName() {

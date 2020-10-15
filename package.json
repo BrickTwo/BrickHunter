@@ -14,6 +14,7 @@
     "vee-validate": "^3.3.11",
     "vue": "^2.6.12",
     "vue-html-to-paper": "^1.3.1",
+    "vue-router": "^3.4.6",
     "vuex": "^3.4.0",
     "xml2js": "^0.4.23"
   },

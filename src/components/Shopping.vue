@@ -332,7 +332,7 @@ export default {
     methods: {
         showInfo() {
             //console.log('changePage');
-            this.$emit('changePage', 'info');
+            this.$router.push('/info');
         },
         pickABrickClearCart() {
             browser.runtime

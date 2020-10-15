@@ -44,7 +44,8 @@ export default {
     }),
     methods: {
         selectPartList(id) {
-            this.$emit('changePage', 'wantedList+' + id);
+            this.$router.push("/partLists/" + id)
+            //this.$emit('changePage', 'wantedList+' + id);
         },
         variant(date) {
             var d = Date.now() - new Date(date).getTime();

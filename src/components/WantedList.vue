@@ -82,11 +82,6 @@ import { requestsMixin } from '@/mixins/requestsMixin';
 import { brickLinkProcessorMixin } from '@/mixins/brickLinkProcessorMixin';
 
 export default {
-    props: {
-        partListId: {
-            type: String,
-        },
-    },
     data: () => ({
         isChrome: navigator.userAgent.indexOf('Chrome') != -1,
         loadWantedList: false,
@@ -201,7 +196,7 @@ export default {
         }
     },
     beforeMount() {
-        this.partList = this.$store.getters.getPartListsById(this.partListId);
+        this.partList = this.$store.getters.getPartListsById(this.$route.params.id);
         this.wantedList = this.partList.positions;
         this.totalBricks = 0;
         if (this.wantedList) this.totalBricks = this.wantedList.length;

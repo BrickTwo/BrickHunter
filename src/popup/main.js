@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueRouter from 'vue-router'
 import App from './App.vue';
 import store from '../store';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -7,6 +8,15 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import { ValidationProvider, extend, ValidationObserver } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
 import VueHtmlToPaper from 'vue-html-to-paper';
+
+import Import from '@/components/Import.vue';
+import PartLists from '@/components/PartLists.vue';
+import WantedList from '@/components/WantedList.vue';
+import Shopping from '@/components/Shopping.vue';
+import ExportWantedList from '@/components/ExportWantedList.vue';
+import ExportCsv from '@/components/ExportCsv.vue';
+import Info from '@/components/Info.vue';
+
 /* eslint-disable no-new */
 extend('required', required);
 
@@ -18,9 +28,25 @@ const options = {
         'https://unpkg.com/kidlat-css/css/kidlat.css',
     ],
 };
+
+const routes = [
+  { path: '/import', component: Import },
+  { path: '/partLists', component: PartLists },
+  { path: '/partLists/:id', component: WantedList },
+  { path: '/shopping', component: Shopping },
+  { path: '/exportWantedList', component: ExportWantedList },
+  { path: '/exportCsv', component: ExportCsv },
+  { path: '/info', component: Info }
+]
+
+const router = new VueRouter({
+  routes // short for `routes: routes`
+})
+
 window.eventHub = new Vue();
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
+Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 Vue.use(VueHtmlToPaper, options);
@@ -41,6 +67,7 @@ Vue.filter('formatDate', function(value) {
 });
 new Vue({
     store,
+    router,
     beforeCreate() {
         this.$store.commit('initialiseStore');
     },
