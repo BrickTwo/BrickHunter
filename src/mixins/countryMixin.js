@@ -13,6 +13,46 @@ export const countryMixin = {
                 languageCode: 'fr',
                 text: this.getLanguageName('fr'),
             },
+            languageNL: {
+                languageCode: 'nl',
+                text: this.getLanguageName('nl'),
+            },
+            languageDA: {
+                languageCode: 'da',
+                text: this.getLanguageName('da'),
+            },
+            languageFI: {
+                languageCode: 'fi',
+                text: this.getLanguageName('fi'),
+            },
+            languageIT: {
+                languageCode: 'it',
+                text: this.getLanguageName('it'),
+            },
+            languageNO: {
+                languageCode: 'no',
+                text: this.getLanguageName('no'),
+            },
+            languagePL: {
+                languageCode: 'pl',
+                text: this.getLanguageName('pl'),
+            },
+            languageSV: {
+                languageCode: 'sv',
+                text: this.getLanguageName('sv'),
+            },
+            languageES: {
+                languageCode: 'es',
+                text: this.getLanguageName('es'),
+            },
+            languageCS: {
+                languageCode: 'cs',
+                text: this.getLanguageName('cs'),
+            },
+            languageHU: {
+                languageCode: 'hu',
+                text: this.getLanguageName('hu'),
+            },
             COUNTRIES: null,
         };
     },
@@ -36,12 +76,12 @@ export const countryMixin = {
             {
                 countryCode: 'be',
                 text: this.getCountryName('be'),
-                languages: [this.languageEN],
+                languages: [this.languageFR, this.languageNL, this.languageEN],
             },
             {
                 countryCode: 'dk',
                 text: this.getCountryName('dk'),
-                languages: [this.languageEN],
+                languages: [this.languageDA, this.languageEN],
             },
             {
                 countryCode: 'de',
@@ -51,12 +91,12 @@ export const countryMixin = {
             {
                 countryCode: 'fi',
                 text: this.getCountryName('fi'),
-                languages: [this.languageEN],
+                languages: [this.languageEN, this.languageFI],
             },
             {
                 countryCode: 'fr',
                 text: this.getCountryName('fr'),
-                languages: [this.languageEN],
+                languages: [this.languageFR, this.languageEN],
             },
             {
                 countryCode: 'gb',
@@ -71,12 +111,12 @@ export const countryMixin = {
             {
                 countryCode: 'it',
                 text: this.getCountryName('it'),
-                languages: [this.languageEN],
+                languages: [this.languageIT, this.languageEN],
             },
             {
                 countryCode: 'ca',
                 text: this.getCountryName('ca'),
-                languages: [this.languageEN],
+                languages: [this.languageEN, this.languageFR],
             },
             {
                 countryCode: 'lu',
@@ -91,12 +131,12 @@ export const countryMixin = {
             {
                 countryCode: 'nl',
                 text: this.getCountryName('nl'),
-                languages: [this.languageEN],
+                languages: [this.languageNL, this.languageEN],
             },
             {
                 countryCode: 'no',
                 text: this.getCountryName('no'),
-                languages: [this.languageEN],
+                languages: [this.languageEN, this.languageNO],
             },
             {
                 countryCode: 'at',
@@ -106,7 +146,7 @@ export const countryMixin = {
             {
                 countryCode: 'pl',
                 text: this.getCountryName('pl'),
-                languages: [this.languageEN],
+                languages: [this.languagePL, this.languageEN],
             },
             {
                 countryCode: 'pt',
@@ -116,7 +156,7 @@ export const countryMixin = {
             {
                 countryCode: 'se',
                 text: this.getCountryName('se'),
-                languages: [this.languageEN],
+                languages: [this.languageSV, this.languageEN],
             },
             {
                 countryCode: 'ch',
@@ -126,17 +166,17 @@ export const countryMixin = {
             {
                 countryCode: 'es',
                 text: this.getCountryName('es'),
-                languages: [this.languageEN],
+                languages: [this.languageES, this.languageEN],
             },
             {
                 countryCode: 'cz',
                 text: this.getCountryName('cz'),
-                languages: [this.languageEN],
+                languages: [this.languageCS, this.languageEN],
             },
             {
                 countryCode: 'hu',
                 text: this.getCountryName('hu'),
-                languages: [this.languageEN],
+                languages: [this.languageEN, this.languageHU],
             },
             {
                 countryCode: 'us',

@@ -65,6 +65,36 @@
     "languageFR": {
         "message": "Französisch"
     },
+    "languageNL": {
+        "message": "Niederländisch"
+    },
+    "languageDA": {
+        "message": "Dänisch"
+    },
+    "languageFI": {
+        "message": "Finisch"
+    },
+    "languageIT": {
+        "message": "Italienisch"
+    },
+    "languageNO": {
+        "message": "Norwegisch"
+    },
+    "languagePL": {
+        "message": "Polnisch"
+    },
+    "languageSV": {
+        "message": "Schwedisch"
+    },
+    "languageES": {
+        "message": "Spanisch"
+    },
+    "languageCS": {
+        "message": "Tschechisch"
+    },
+    "languageHU": {
+        "message": "Ungarisch"
+    },
     "brickList_lineNumber": {
         "message": "#"
     },
