@@ -57,7 +57,7 @@ export default {
             this.form_country = country;
         },
         onLanguageSelected(language) {
-            console.log(language)
+            //console.log(language)
             this.form_language = language;
         },
     },

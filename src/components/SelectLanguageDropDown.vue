@@ -70,7 +70,7 @@ export default {
         this.selectedLanguage = localStorage.getItem('language') || null;
 
         if (this.countrySelected && this.selectedLanguage) {
-            console.log(this.countrySelected);
+            //console.log(this.countrySelected);
             this.COUNTRIES.filter(
                 (country) => country.countryCode == this.countrySelected
             )[0].languages.forEach((language) => {

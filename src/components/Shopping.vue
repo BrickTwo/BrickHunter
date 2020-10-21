@@ -382,7 +382,7 @@ export default {
                     var languageSelected =
                         localStorage.getItem('language') || null;
 
-                    console.log(`https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`);
+                    //console.log(`https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`);
                     browser.tabs.update(tab.id, {
                         url: `https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`,
                     });
