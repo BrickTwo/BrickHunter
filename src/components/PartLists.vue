@@ -19,7 +19,7 @@
                             @click="cart(partList.id, partList.cart)"
                             ><b-icon icon="cart4" aria-hidden="true"></b-icon
                         ></b-form-checkbox></div></span
-                ><span>{{ partList.name }}</span
+                ><span style="max-width:340px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom">{{ partList.name }}</span
                 ><span style="float: right" @click.stop
                     ><b-icon
                         icon="trash"

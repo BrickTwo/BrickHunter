@@ -1,13 +1,31 @@
 <template>
     <div>
         <h2>
-            {{ partList.name }}
-            <b-button variant="primary">
-                <b-icon icon="pencil" aria-hidden="true"></b-icon>
+            <div
+                style="max-width:680px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom"
+            >
+                {{ partList.name }}
+            </div>
+            <b-button
+                variant="primary"
+                v-b-modal.modal-edit-name
+                @click="editName = partList.name"
+                    style="margin-left: 10px"
+            >
+                <b-icon
+                    icon="pencil"
+                    aria-hidden="true"
+                ></b-icon>
             </b-button>
         </h2>
+        <b-modal id="modal-edit-name" hide-header @ok="saveName">
+            <p class="my-4">
+                <b-form-input v-model="editName"></b-form-input>
+            </p>
+        </b-modal>
         <span style=" float: right"
-            ><span>Zuletzt aktualisiert: {{ partList.date | formatDate }}</span><br />
+            ><span>Zuletzt aktualisiert: {{ partList.date | formatDate }}</span
+            ><br />
             <span style="display: inline-block;"
                 ><b-form-checkbox
                     id="checkbox-1"
@@ -92,7 +110,8 @@ export default {
         priceLoaded: true,
         wantedList: [],
         cancelLoading: false,
-        partList: null
+        partList: null,
+        editName: null,
     }),
     components: {
         BrickList,
@@ -193,10 +212,28 @@ export default {
         },
         deleteList() {
             this.$store.commit('deletePartList', this.partList.id);
-        }
+        },
+        saveName(bvModalEvt) {
+            // Prevent modal from closing
+            bvModalEvt.preventDefault();
+
+            if (!this.editName) {
+                return;
+            }
+
+            this.partList.name = this.editName;
+            console.log(this.partList.name, this.editName);
+            this.$store.commit('setPartList', this.partList);
+
+            this.$nextTick(() => {
+                this.$bvModal.hide('modal-edit-name');
+            });
+        },
     },
     beforeMount() {
-        this.partList = this.$store.getters.getPartListsById(this.$route.params.id);
+        this.partList = this.$store.getters.getPartListsById(
+            this.$route.params.id
+        );
         this.wantedList = this.partList.positions;
         this.totalBricks = 0;
         if (this.wantedList) this.totalBricks = this.wantedList.length;
