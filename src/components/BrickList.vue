@@ -9,6 +9,17 @@
     </vuetable>
 </template>
 
+<style>
+.table {
+    margin-bottom: 0px;
+}
+
+.vuetable-body-wrapper {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+</style>
+
 <script>
 import Vuetable from 'vuetable-2/src/components/Vuetable';
 export default {
@@ -24,57 +35,57 @@ export default {
     data: () => ({
         tableHeight: '300px',
         columns: [
-            {
+            /*{
                 name: '__sequence',
                 title: () => browser.i18n.getMessage('brickList_lineNumber'),
                 callback: 'lineNumber',
                 width: '4.5%',
-            },
+            },*/
             {
                 name: 'itemid',
                 title: () => browser.i18n.getMessage('brickList_itemId'),
-                width: '12.5%',
+                width: '90px',
             },
             {
                 name: 'image',
                 title: () =>
                     browser.i18n.getMessage('brickList_brickLinkImage'),
                 callback: 'showImage',
-                width: '12.5%',
+                width: '60px',
             },
             {
                 name: 'color',
                 title: () =>
                     browser.i18n.getMessage('brickList_brickLinkColor'),
                 callback: 'showColor',
-                width: '24%',
+                width: '200px',
             },
             {
                 name: 'qty',
                 title: () => browser.i18n.getMessage('brickList_quantity'),
                 callback: 'showQty',
-                width: '10%',
+                width: '50px',
             },
             {
                 name: 'maxprice',
                 title: () =>
                     browser.i18n.getMessage('brickList_brickLinkPrice'),
                 callback: 'brickLinkPrice',
-                width: '13.5%',
+                width: '100px',
             },
             {
                 name: 'pickABrick',
                 title: () =>
                     browser.i18n.getMessage('brickList_pickABrickPrice'),
                 callback: 'pickABrickPrice',
-                width: '10.5%',
+                width: '110px',
             },
             {
                 name: 'bricksAndPieces',
                 title: () =>
                     browser.i18n.getMessage('brickList_bricksAndPiecesPrice'),
                 callback: 'bricksAndPiecesPrice',
-                width: '12.5%',
+                width: '130px',
             },
         ],
     }),

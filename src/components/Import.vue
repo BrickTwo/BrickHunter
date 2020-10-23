@@ -16,6 +16,11 @@
                 @click="page = 'pickABrick'"
                 >{{ pickABrick }}</b-nav-item
             >
+            <b-nav-item
+                :active="page == 'legoSet'"
+                @click="page = 'legoSet'"
+                >LEGO Set</b-nav-item
+            >
         </b-nav>
         <div v-if="page == 'brickLink'">
             <p style="margin-top: 5px; margin-bottom: 5px;"></p>
