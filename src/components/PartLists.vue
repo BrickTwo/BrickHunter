@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span style="float: right">183 / 2500 Positionen</span>
+        <span style="float: right">{{ $store.state.totalPositions }} / 2500 Positionen</span>
         <b-list-group style="clear: both">
             <b-list-group-item
                 v-for="partList in partLists"
@@ -41,6 +41,7 @@
 export default {
     data: () => ({
         partLists: null,
+        totalPositions: 0,
     }),
     methods: {
         selectPartList(id) {
@@ -74,6 +75,7 @@ export default {
     },
     beforeMount() {
         this.loadPartLists();
+        this.totalPositions = this.$store.state.totalPositions;
     },
 };
 </script>

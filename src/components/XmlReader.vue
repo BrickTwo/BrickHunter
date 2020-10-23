@@ -12,11 +12,13 @@
 export default {
     data: () => ({ file: null }),
     created() {
-        eventHub.$on('clearWantedList', () => this.file = null);
+        eventHub.$on('clearWantedList', () => (this.file = null));
     },
     watch: {
         file(val) {
             if (!val) return;
+
+            this.$emit('fileName', this.file.name);
 
             var xml2js = require('xml2js');
             const fileReader = new FileReader();

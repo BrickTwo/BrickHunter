@@ -6,7 +6,7 @@
                 @click="page = 'brickLink'"
                 >{{ brickLink }}</b-nav-item
             >
-            <b-nav-item
+            <!--<b-nav-item
                 :active="page == 'bricksAndPieces'"
                 @click="page = 'bricksAndPieces'"
                 >{{ bricksAndPieces }}</b-nav-item
@@ -16,18 +16,16 @@
                 @click="page = 'pickABrick'"
                 >{{ pickABrick }}</b-nav-item
             >
-            <b-nav-item
-                :active="page == 'legoSet'"
-                @click="page = 'legoSet'"
+            <b-nav-item :active="page == 'legoSet'" @click="page = 'legoSet'"
                 >LEGO Set</b-nav-item
-            >
+            >-->
         </b-nav>
         <div v-if="page == 'brickLink'">
             <p style="margin-top: 5px; margin-bottom: 5px;"></p>
             <b-container fluid>
                 <b-row class="my-1" v-if="!isChrome"
                     ><b-col sm="2">
-                        <label>Datei:</label>
+                        <label>{{ fileLabel }}:</label>
                     </b-col>
                     <b-col sm="10">
                         <xml-field
@@ -37,17 +35,18 @@
                 ></b-row>
                 <b-row class="my-1" v-if="isChrome"
                     ><b-col sm="2">
-                        <label>Datei:</label>
+                        <label>{{ fileLabel }}:</label>
                     </b-col>
                     <b-col sm="10">
                         <xml-reader
                             id="uploadXml"
                             @load="loadXml"
+                            @fileName="fileName"
                         ></xml-reader> </b-col
                 ></b-row>
                 <b-row class="my-1">
                     <b-col sm="2">
-                        <label>Name:</label>
+                        <label>{{ nameLabel }}:</label>
                     </b-col>
                     <b-col sm="10">
                         <b-form-input
@@ -58,7 +57,7 @@
                 </b-row>
                 <b-row class="my-1">
                     <b-col sm="2">
-                        <label>Warenkorb:</label>
+                        <label>{{ shoppingCartLabel }}:</label>
                     </b-col>
                     <b-col sm="10">
                         <b-form-checkbox
@@ -76,13 +75,13 @@
                             variant="primary"
                             @click="importList()"
                             :disabled="name.length == 0 || !wantedList"
-                            >Importieren</b-button
+                            >{{ importButton }}</b-button
                         >
                         <b-button
                             variant="danger"
                             style="margin-left: 10px;"
                             @click="clear()"
-                            >Zurücksetzen</b-button
+                            >{{ clearButton }}</b-button
                         >
                     </b-col>
                 </b-row>
@@ -96,8 +95,6 @@ import XmlReader from './XmlReader';
 import XmlField from './XmlField';
 import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
-//import { requestsMixin } from '@/mixins/requestsMixin';
-//import { brickLinkProcessorMixin } from '@/mixins/brickLinkProcessorMixin';
 
 export default {
     data: () => ({
@@ -114,10 +111,11 @@ export default {
     mixins: [
         brickProcessorMixin,
         brickColorMixin,
-        //requestsMixin,
-        //brickLinkProcessorMixin,
     ],
     methods: {
+        fileName(fileName) {
+            this.name = fileName.substring(0, fileName.length - 4);
+        },
         loadXml(wantedList) {
             //console.log(wantedList)
             this.pickABrickBrickCounter = 0;
@@ -179,15 +177,38 @@ export default {
             });
         },
         importList() {
+            var totalPositionsAfterImport =
+                this.$store.state.totalPositions + this.wantedList.length;
+
+            if (totalPositionsAfterImport > 2500) {
+                this.$bvToast.toast(
+                    this.errorImportBrickLinkTextToManyPositions,
+                    {
+                        title: this.successfullImportBrickLinkTitle,
+                        autoHideDelay: 5000,
+                        variant: 'danger',
+                    }
+                );
+                return;
+            }
+
             var partList = {
                 id: this.generateUUID(),
                 name: this.name,
                 cart: this.cart,
-                date: new Date(0,0,0,0,0,0,0),
+                date: new Date(0, 0, 0, 0, 0, 0, 0),
                 positions: this.wantedList,
             };
-            console.log("importList", partList)
+            //console.log('importList', partList);
             this.$store.commit('setPartList', partList);
+
+            this.$bvToast.toast(this.successfullImportBrickLinkText, {
+                title: this.successfullImportBrickLinkTitle,
+                autoHideDelay: 5000,
+                variant: 'success',
+            });
+
+            this.clear();
         },
         clear() {
             this.wantedList = [];
@@ -232,6 +253,36 @@ export default {
         },
         brickLink() {
             return browser.i18n.getMessage('brickLink');
+        },
+        fileLabel() {
+            return browser.i18n.getMessage('import_file');
+        },
+        nameLabel() {
+            return browser.i18n.getMessage('import_name');
+        },
+        shoppingCartLabel() {
+            return browser.i18n.getMessage('import_shoppingCart');
+        },
+        importButton() {
+            return browser.i18n.getMessage('import_importButton');
+        },
+        clearButton() {
+            return browser.i18n.getMessage('import_clearButton');
+        },
+        successfullImportBrickLinkTitle() {
+            return browser.i18n.getMessage(
+                'import_successfullImportBrickLinkTitle'
+            );
+        },
+        successfullImportBrickLinkText() {
+            return browser.i18n.getMessage(
+                'import_successfullImportBrickLinkText'
+            );
+        },
+        errorImportBrickLinkTextToManyPositions() {
+            return browser.i18n.getMessage(
+                'import_errorImportBrickLinkTextToManyPositions'
+            );
         },
     },
 };

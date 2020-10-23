@@ -5,8 +5,11 @@ export default new Vuex.Store({
     state: {
         wantedList: '',
         partLists: [],
+        totalPositions: 0,
     },
     mutations: {
+        totalPositions(state) {
+        },
         initialiseStore(state) {
             var i = 0,
                 sKey;
@@ -18,13 +21,20 @@ export default new Vuex.Store({
                     );
                 }
             }
+
+            state.totalPositions = 0;
+            state.partLists.map((partList) => {
+                state.totalPositions += partList.positions.length;
+            });
         },
         setWantedList(state, payload) {
             state.wantedList = payload;
             localStorage.setItem('wantedList', JSON.stringify(payload));
         },
         setPartList(state, payload) {
-            var found = state.partLists.find((partList) => partList.id === payload.id);
+            var found = state.partLists.find(
+                (partList) => partList.id === payload.id
+            );
 
             if (found) {
                 found = payload;
@@ -36,12 +46,23 @@ export default new Vuex.Store({
                 'partList_' + payload.id,
                 JSON.stringify(payload)
             );
+            
+            state.totalPositions = 0;
+            state.partLists.map((partList) => {
+                state.totalPositions += partList.positions.length;
+            });
         },
         deletePartList(state, partListId) {
-            console.log(state.partLists, state.partLists.filter((partList) => partList.id != partListId))
-            state.partLists = state.partLists.filter((partList) => partList.id != partListId);
+            state.partLists = state.partLists.filter(
+                (partList) => partList.id != partListId
+            );
             localStorage.removeItem('partList_' + partListId);
-        }
+
+            state.totalPositions = 0;
+            state.partLists.map((partList) => {
+                state.totalPositions += partList.positions.length;
+            });
+        },
     },
     getters: {
         getPartListsById: (state) => (id) => {
