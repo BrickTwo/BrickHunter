@@ -82,14 +82,14 @@ export default {
             this.countrySelected = country;
         },
         showPage(page) {
-            this.$router.push('/' + page);
+            this.$router.push('/' + page).catch(()=>{});
         },
         link(value) {
             browser.tabs.create({ url: value });
         },
     },
     beforeMount() {
-        this.$router.push('/partLists');
+        this.$router.push('/partLists').catch(()=>{});
         this.countrySelected = localStorage.getItem('country') || null;
     },
     computed: {

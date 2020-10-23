@@ -1,6 +1,8 @@
 <template>
     <div>
-        <span style="float: right">{{ $store.state.totalPositions }} / 2500 Positionen</span>
+        <span style="float: right"
+            >{{ $store.state.totalPositions }} / 2500 Positionen</span
+        >
         <b-list-group style="clear: both">
             <b-list-group-item
                 v-for="partList in partLists"
@@ -19,7 +21,9 @@
                             @click="cart(partList.id, partList.cart)"
                             ><b-icon icon="cart4" aria-hidden="true"></b-icon
                         ></b-form-checkbox></div></span
-                ><span style="max-width:340px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom">{{ partList.name }}</span
+                ><span
+                    style="max-width:340px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom"
+                    >{{ partList.name }}</span
                 ><span style="float: right" @click.stop
                     ><b-icon
                         icon="trash"
@@ -45,7 +49,7 @@ export default {
     }),
     methods: {
         selectPartList(id) {
-            this.$router.push("/partLists/" + id)
+            this.$router.push('/partLists/' + id).catch(() => {});
             //this.$emit('changePage', 'wantedList+' + id);
         },
         variant(date) {

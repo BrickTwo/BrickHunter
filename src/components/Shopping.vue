@@ -251,7 +251,7 @@ export default {
     data() {
         return {
             useHave: null,
-            wantedList: null,
+            wantedList: [],
             bricksAndPiecesList: null,
             pickABrickList: null,
             brickLinkList: null,
@@ -332,7 +332,7 @@ export default {
     methods: {
         showInfo() {
             //console.log('changePage');
-            this.$router.push('/info');
+            this.$router.push('/info').catch(()=>{});
         },
         pickABrickClearCart() {
             browser.runtime
@@ -517,7 +517,11 @@ export default {
                     }
                 });
 
-                if(this.selectedPrio1 != 'brickLink' && this.selectedPrio2 != 'brickLink' && this.selectedPrio3 != 'brickLink') {
+                if (
+                    this.selectedPrio1 != 'brickLink' &&
+                    this.selectedPrio2 != 'brickLink' &&
+                    this.selectedPrio3 != 'brickLink'
+                ) {
                     this.brickLinkPositions = 0;
                     this.brickLinkPrice = 0;
                 }
@@ -532,7 +536,7 @@ export default {
             if (!bricksAndPiecesPrice) bricksAndPiecesPrice = 0;
             if (!pickABrickPrice) pickABrickPrice = 0;
             if (!brickLinkPrice || brickLinkPrice < 0) brickLinkPrice = 0;
-            
+
             var prices = Array();
 
             if (
@@ -568,7 +572,7 @@ export default {
                 prices.push(['brickLink', brickLinkPrice]);
             }
 
-            if (prices.length == 0){
+            if (prices.length == 0) {
                 prices.push(['brickLink', 0]);
             }
 
@@ -664,6 +668,24 @@ export default {
             //console.log('print');
             this.$htmlToPaper('brickLinkList');
         },
+        loadPartLists() {
+            var countOld = 0;
+
+            this.$store.state.partLists.map((partList) => {
+                if (!partList.positions) return;
+                if (!partList.cart) return;
+
+                if (
+                    Date.now() - new Date(partList.date).getTime() >
+                    1000 * 60 * 60 * 48
+                ) {
+                    this.countOld++;
+                    return;
+                }
+
+                this.wantedList = [].concat(this.wantedList, partList.positions);
+            });
+        },
     },
     watch: {
         selectedPrio1: function(val, oldVal) {
@@ -691,9 +713,11 @@ export default {
         this.selectedPrio3 =
             localStorage.getItem('selectedPrio3') || 'brickLink';
         this.useHave = (localStorage.getItem('useHave') || 'true') === 'true';
-        this.wantedList = JSON.parse(
+        /*this.wantedList = JSON.parse(
             localStorage.getItem('wantedList') || null
-        );
+        );*/
+        this.loadPartLists();
+
         if (this.wantedList.length)
             this.wantedListPositions = this.wantedList.length;
 
