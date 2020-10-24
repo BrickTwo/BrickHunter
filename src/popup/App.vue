@@ -5,7 +5,7 @@
                 <img src="icons/icon_24.png" class="d-inline-block align-top" />
                 {{ extName }}
             </b-navbar-brand>
-            <b-navbar-nav class="ml-auto" v-if="this.countrySelected">
+            <b-navbar-nav class="ml-auto" v-if="countrySelected && languageSelected">
                 <b-nav-item @click="showPage('import')">{{
                     menuImport
                 }}</b-nav-item>
@@ -37,20 +37,24 @@
                 <b-nav-item @click="showPage('info')"
                     ><b-icon icon="info-circle" aria-hidden="true"></b-icon
                 ></b-nav-item>
+                <b-nav-item @click="showPage('settings')"
+                    ><b-icon icon="gear" aria-hidden="true"></b-icon
+                ></b-nav-item>
 
-                <b-nav-form>
+                <!--<b-nav-form>
                     <SelectCountryDropDown
                         :showFlags="true"
                         v-if="countrySelected"
                     />
-                </b-nav-form>
+                </b-nav-form>-->
             </b-navbar-nav>
         </b-navbar>
         <div class="page">
-            <router-view v-if="this.countrySelected"></router-view>
+            <router-view v-if="countrySelected && languageSelected"></router-view>
             <SelectCountry
                 @countrySelected="onCountrySelected"
-                v-if="!this.countrySelected"
+                @languageSelected="onLanguageSelected"
+                v-if="!countrySelected || !languageSelected"
             />
         </div>
     </div>
@@ -68,12 +72,8 @@ export default {
     data() {
         return {
             selected: null,
-            options: [
-                { value: 'de', text: 'Deutschland' },
-                { value: 'at', text: 'Östereich' },
-                { value: 'ch', text: 'Schweiz' },
-            ],
             countrySelected: null,
+            languageSelected: null,
             partListId: null,
         };
     },
@@ -87,10 +87,17 @@ export default {
         link(value) {
             browser.tabs.create({ url: value });
         },
+        onCountrySelected(country) {
+            this.countrySelected = country;
+        },
+        onLanguageSelected(language) {
+            this.languageSelected = language;
+        },
     },
     beforeMount() {
         this.$router.push('/partLists').catch(()=>{});
         this.countrySelected = localStorage.getItem('country') || null;
+        this.languageSelected = localStorage.getItem('language') || null;
     },
     computed: {
         extName() {

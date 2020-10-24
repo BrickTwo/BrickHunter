@@ -16,6 +16,7 @@ import Shopping from '@/components/Shopping.vue';
 import ExportWantedList from '@/components/ExportWantedList.vue';
 import ExportCsv from '@/components/ExportCsv.vue';
 import Info from '@/components/Info.vue';
+import Settings from '@/components/Settings.vue';
 
 /* eslint-disable no-new */
 extend('required', required);
@@ -36,7 +37,8 @@ const routes = [
   { path: '/shopping', component: Shopping },
   { path: '/exportWantedList', component: ExportWantedList },
   { path: '/exportCsv', component: ExportCsv },
-  { path: '/info', component: Info }
+  { path: '/info', component: Info },
+  { path: '/settings', component: Settings }
 ]
 
 const router = new VueRouter({

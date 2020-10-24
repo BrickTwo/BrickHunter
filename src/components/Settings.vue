@@ -9,16 +9,13 @@
             </b-form-group>
             <b-form-group :label="langaugeOnLegoWebsite" label-for="country">
                 <SelectLanguageDropDown
-                    :countrySelected="form_country"
+                    :countrySelected="selectedCountry"
                     @languageSelected="onLanguageSelected"
                 />
                 <p v-if="!isValidLanguage" style="color: red">
                     {{ noLanguageSelected }}
                 </p>
             </b-form-group>
-            <b-button type="submit" variant="primary">
-                {{ saveButton }}
-            </b-button>
         </b-form>
     </div>
 </template>
@@ -33,36 +30,22 @@ export default {
     },
     data() {
         return {
-            form_country: null,
-            form_language: null,
+            selectedCountry: null,
+            selectedLanguage: null,
             isValidCountry: true,
             isValidLanguage: true,
         };
     },
     methods: {
-        async onSubmit() {
-            if (!this.form_country) {
-                this.isValidCountry = false;
-                return;
-            }
-            if (!this.form_language) {
-                this.isValidLanguage = false;
-                return;
-            }
-            this.isValid = true;
-            this.$emit('countrySelected', this.form_country);
-            this.$emit('languageSelected', this.form_language);
-        },
         onCountrySelected(country) {
-            this.form_country = country;
+            this.selectedCountry = country;
         },
         onLanguageSelected(language) {
-            //console.log(language)
-            this.form_language = language;
+            this.selectedLanguage = language;
         },
     },
     beforeMount() {
-        this.form_country = localStorage.getItem('country') || null;
+        this.selectedCountry = localStorage.getItem('country') || null;
     },
     computed: {
         whereDoYouLive() {
@@ -78,9 +61,6 @@ export default {
             return browser.i18n.getMessage(
                 'selectCountry_langaugeOnLegoWebsite'
             );
-        },
-        saveButton() {
-            return browser.i18n.getMessage('selectCountry_saveButton');
         },
     },
 };
