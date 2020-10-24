@@ -24,14 +24,14 @@
             </p>
         </b-modal>
         <span style=" float: right"
-            ><span>Zuletzt aktualisiert: {{ partList.date | formatDate }}</span
+            ><span>{{ lastUpdated }}: {{ partList.date | formatDate }}</span
             ><br />
             <span style="display: inline-block;"
                 ><b-form-checkbox
                     v-model="partList.cart"
                     id="checkbox-1"
                     name="checkbox-1"
-                    >Warenkorb</b-form-checkbox
+                    >{{ shoppingCart }}</b-form-checkbox
                 ></span
             ></span
         >
@@ -60,7 +60,7 @@
                 @click="deleteList"
                 style="margin-left: 10px; vertical-align: bottom;"
                 v-if="!loadWantedList"
-                >Löschen</b-button
+                >{{ buttonDelete }}</b-button
             >
             <b-button
                 variant="primary"
@@ -211,6 +211,7 @@ export default {
         },
         deleteList() {
             this.$store.commit('deletePartList', this.partList.id);
+            this.$router.push('/partLists').catch(()=>{});
         },
         saveName(bvModalEvt) {
             // Prevent modal from closing
@@ -252,8 +253,14 @@ export default {
         buttonCancelLoading() {
             return browser.i18n.getMessage('wantedList_buttonCancelLoading');
         },
-        buttonClear() {
-            return browser.i18n.getMessage('wantedList_buttonClear');
+        buttonDelete() {
+            return browser.i18n.getMessage('wantedList_buttonDelete');
+        },
+        lastUpdated() {
+            return browser.i18n.getMessage('wantedList_lastUpdated');
+        },
+        shoppingCart() {
+            return browser.i18n.getMessage('wantedList_shoppingCart');
         },
     },
 };

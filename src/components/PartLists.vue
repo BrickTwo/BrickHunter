@@ -1,7 +1,7 @@
 <template>
     <div>
         <span style="float: right"
-            >{{ $store.state.totalPositions }} / 2500 Positionen</span
+            >{{ $store.state.totalPositions }} / 2500 {{ positions }}</span
         >
         <b-list-group style="clear: both">
             <b-list-group-item
@@ -34,7 +34,7 @@
                     partList.date | formatDate
                 }}</span
                 ><span style="float: right; margin-right: 20px;"
-                    >{{ partList.positions.length }} Positionen</span
+                    >{{ partList.positions.length }} {{ positions }}</span
                 ></b-list-group-item
             >
         </b-list-group>
@@ -90,6 +90,11 @@ export default {
     beforeMount() {
         this.loadPartLists();
         this.totalPositions = this.$store.state.totalPositions;
+    },
+    computed: {
+        positions() {
+            return browser.i18n.getMessage('partList_Positions');
+        },
     },
 };
 </script>

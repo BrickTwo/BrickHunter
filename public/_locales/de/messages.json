@@ -273,6 +273,9 @@
   "info_sourceCodeText2": {
     "message": "."
   },
+  "partList_positions": {
+    "message": "Positionen"
+  },
   "selectCountry_whereDoYouLive": {
     "message": "Wo wohnst du?"
   },
@@ -360,8 +363,14 @@
   "wantedList_buttonCancelLoading": {
     "message": "Abbrechen"
   },
-  "wantedList_buttonClear": {
-    "message": "Leeren"
+  "wantedList_buttonDelete": {
+    "message": "Löschen"
+  },
+  "wantedList_lastUpdated": {
+    "message": "Zuletzt aktualisiert"
+  },
+  "wantedList_shoppingCart": {
+    "message": "Warenkorb"
   },
   "xmlField_copyWantedList": {
     "message": "Kopiere den Inhalt einer WantedList hier rein"
