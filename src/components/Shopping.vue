@@ -349,8 +349,10 @@ export default {
                             var tab = tabs[0];
                             var countrySelected =
                                 localStorage.getItem('country') || null;
+                            var languageSelected =
+                                localStorage.getItem('language') || null;
                             browser.tabs.update(tab.id, {
-                                url: `https://www.lego.com/de-${countrySelected}/page/static/pick-a-brick`,
+                                url: `https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`,
                             });
 
                             this.$bvToast.toast(this.clearCartSuccessfullText, {
@@ -377,8 +379,12 @@ export default {
                     var tab = tabs[0];
                     var countrySelected =
                         localStorage.getItem('country') || null;
+                    var languageSelected =
+                        localStorage.getItem('language') || null;
+
+                    //console.log(`https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`);
                     browser.tabs.update(tab.id, {
-                        url: `https://www.lego.com/de-${countrySelected}/page/static/pick-a-brick`,
+                        url: `https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`,
                     });
 
                     this.$bvToast.toast(this.fillCartSuccessfullText, {
@@ -517,7 +523,11 @@ export default {
                     }
                 });
 
-                if(this.selectedPrio1 != 'brickLink' && this.selectedPrio2 != 'brickLink' && this.selectedPrio3 != 'brickLink') {
+                if (
+                    this.selectedPrio1 != 'brickLink' &&
+                    this.selectedPrio2 != 'brickLink' &&
+                    this.selectedPrio3 != 'brickLink'
+                ) {
                     this.brickLinkPositions = 0;
                     this.brickLinkPrice = 0;
                 }
@@ -532,7 +542,7 @@ export default {
             if (!bricksAndPiecesPrice) bricksAndPiecesPrice = 0;
             if (!pickABrickPrice) pickABrickPrice = 0;
             if (!brickLinkPrice || brickLinkPrice < 0) brickLinkPrice = 0;
-            
+
             var prices = Array();
 
             if (
@@ -568,7 +578,7 @@ export default {
                 prices.push(['brickLink', brickLinkPrice]);
             }
 
-            if (prices.length == 0){
+            if (prices.length == 0) {
                 prices.push(['brickLink', 0]);
             }
 

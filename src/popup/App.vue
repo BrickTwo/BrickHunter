@@ -5,7 +5,13 @@
                 <img src="icons/icon_24.png" class="d-inline-block align-top" />
                 {{ extName }}
             </b-navbar-brand>
-            <b-navbar-nav class="ml-auto" v-if="showPage != 'selectCountry'">
+            <b-navbar-nav
+                class="ml-auto"
+                v-if="countrySelected && languageSelected"
+            >
+                <b-nav-item @click="showPage = 'import'">{{
+                    menuImport
+                }}</b-nav-item>
                 <b-nav-item @click="showPage = 'wantedList'">{{
                     menuWantedList
                 }}</b-nav-item>
@@ -24,35 +30,45 @@
                     }}</b-dropdown-item>
                 </b-nav-item-dropdown>
 
-                <b-nav-item @click="
-                    link(
-                        'https://github.com/BrickTwo/BrickHunter/wiki'
-                    )">{{
-                    menuHelp
-                }}</b-nav-item>
+                <b-nav-item
+                    @click="
+                        link('https://github.com/BrickTwo/BrickHunter/wiki')
+                    "
+                    >{{ menuHelp }}</b-nav-item
+                >
 
                 <b-nav-item @click="showPage = 'info'"
                     ><b-icon icon="info-circle" aria-hidden="true"></b-icon
                 ></b-nav-item>
+                <b-nav-item @click="showPage = 'settings'"
+                    ><b-icon icon="gear" aria-hidden="true"></b-icon
+                ></b-nav-item>
 
-                <b-nav-form>
+                <!--<b-nav-form>
                     <SelectCountryDropDown
                         :showFlags="true"
                         v-if="countrySelected"
                     />
-                </b-nav-form>
+                </b-nav-form>-->
             </b-navbar-nav>
         </b-navbar>
         <div class="page">
             <SelectCountry
                 @countrySelected="onCountrySelected"
-                v-if="showPage == 'selectCountry'"
+                @languageSelected="onLanguageSelected"
+                v-if="!countrySelected || !languageSelected"
             />
-            <WantedList v-if="showPage == 'wantedList'" />
-            <Shopping v-if="showPage == 'shopping'" @changePage="changePage" />
-            <ExportWantedList v-if="showPage == 'exportWantedList'" />
-            <ExportCsv v-if="showPage == 'exportCsv'" />
-            <Info v-if="showPage == 'info'" />
+            <div v-if="countrySelected && languageSelected">
+                <WantedList v-if="showPage == 'wantedList'" />
+                <Shopping
+                    v-if="showPage == 'shopping'"
+                    @changePage="changePage"
+                />
+                <ExportWantedList v-if="showPage == 'exportWantedList'" />
+                <ExportCsv v-if="showPage == 'exportCsv'" />
+                <Info v-if="showPage == 'info'" />
+                <Settings v-if="showPage == 'settings'" />
+            </div>
         </div>
     </div>
 </template>
@@ -66,6 +82,7 @@ import ExportWantedList from '@/components/ExportWantedList.vue';
 import ExportCsv from '@/components/ExportCsv.vue';
 import BrickList from '@/components/BrickList.vue';
 import Info from '@/components/Info.vue';
+import Settings from '@/components/Settings.vue';
 
 export default {
     components: {
@@ -77,38 +94,40 @@ export default {
         ExportCsv,
         BrickList,
         Info,
+        Settings,
     },
     data() {
         return {
             showPage: 'wantedList',
             selected: null,
-            options: [
-                { value: 'de', text: 'Deutschland' },
-                { value: 'at', text: 'Östereich' },
-                { value: 'ch', text: 'Schweiz' },
-            ],
             countrySelected: null,
+            languageSelected: null,
         };
     },
     methods: {
-        onCountrySelected(country) {
-            this.countrySelected = country;
-            this.showPage = 'wantedList';
-        },
         changePage(value) {
             this.showPage = value;
         },
         link(value) {
             browser.tabs.create({ url: value });
         },
+        onCountrySelected(country) {
+            this.countrySelected = country;
+        },
+        onLanguageSelected(language) {
+            this.languageSelected = language;
+        },
     },
     beforeMount() {
         this.countrySelected = localStorage.getItem('country') || null;
-        if (!this.countrySelected) this.showPage = 'selectCountry';
+        this.languageSelected = localStorage.getItem('language') || null;
     },
     computed: {
         extName() {
             return browser.i18n.getMessage('extName');
+        },
+        menuImport() {
+            return browser.i18n.getMessage('menu_import');
         },
         menuWantedList() {
             return browser.i18n.getMessage('menu_wantedList');
