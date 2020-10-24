@@ -8,8 +8,6 @@ export default new Vuex.Store({
         totalPositions: 0,
     },
     mutations: {
-        totalPositions(state) {
-        },
         initialiseStore(state) {
             var i = 0,
                 sKey;
@@ -19,6 +17,25 @@ export default new Vuex.Store({
                     state.partLists.push(
                         JSON.parse(window.localStorage.getItem(sKey))
                     );
+                } else if (
+                    sKey != 'selectedOptions' &&
+                    sKey != 'selectedColorOptions' &&
+                    sKey != 'selectedPickABrickOptions' &&
+                    sKey != 'selectedBricksAndPiecesOptions' &&
+                    sKey != 'exportPickaBrickPrices' &&
+                    sKey != 'exportStonesAndPiecesPrices' &&
+                    sKey != 'writeLegoIdInRemark' &&
+                    sKey != 'writeSourceOfPriceInRemark' &&
+                    sKey != 'behaviourOnSamePrice' &&
+                    sKey != 'recalcHave' &&
+                    sKey != 'country' &&
+                    sKey != 'language' &&
+                    sKey != 'selectedPrio1' &&
+                    sKey != 'selectedPrio2' &&
+                    sKey != 'selectedPrio3' &&
+                    sKey != 'useHave'
+                ) {
+                    localStorage.removeItem(sKey);
                 }
             }
 
@@ -26,10 +43,6 @@ export default new Vuex.Store({
             state.partLists.map((partList) => {
                 state.totalPositions += partList.positions.length;
             });
-        },
-        setWantedList(state, payload) {
-            state.wantedList = payload;
-            localStorage.setItem('wantedList', JSON.stringify(payload));
         },
         setPartList(state, payload) {
             var found = state.partLists.find(
@@ -46,7 +59,7 @@ export default new Vuex.Store({
                 'partList_' + payload.id,
                 JSON.stringify(payload)
             );
-            
+
             state.totalPositions = 0;
             state.partLists.map((partList) => {
                 state.totalPositions += partList.positions.length;
