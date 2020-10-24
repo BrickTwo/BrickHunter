@@ -77,6 +77,16 @@ export default {
             });
         },
     },
+    watch: {
+        partLists: {
+            handler(val, oldVal) {
+                val.forEach((item) => {
+                    this.$store.commit('setPartList', item);
+                });
+            },
+            deep: true,
+        },
+    },
     beforeMount() {
         this.loadPartLists();
         this.totalPositions = this.$store.state.totalPositions;

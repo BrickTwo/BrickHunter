@@ -28,10 +28,9 @@
             ><br />
             <span style="display: inline-block;"
                 ><b-form-checkbox
+                    v-model="partList.cart"
                     id="checkbox-1"
                     name="checkbox-1"
-                    value="accepted"
-                    unchecked-value="not_accepted"
                     >Warenkorb</b-form-checkbox
                 ></span
             ></span
@@ -228,6 +227,11 @@ export default {
             this.$nextTick(() => {
                 this.$bvModal.hide('modal-edit-name');
             });
+        },
+    },
+    watch: {
+        'partList.cart': function(val, oldVal) {
+            this.$store.commit('setPartList', this.partList);
         },
     },
     beforeMount() {
