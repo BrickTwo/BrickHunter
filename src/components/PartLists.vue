@@ -34,7 +34,7 @@
                     partList.date | formatDate
                 }}</span
                 ><span style="float: right; margin-right: 20px;"
-                    >{{ partList.positions.length }} {{ positions }}</span
+                    > <b-badge variant="primary" pill>{{ partList.positions.length }}</b-badge></span
                 ></b-list-group-item
             >
         </b-list-group>

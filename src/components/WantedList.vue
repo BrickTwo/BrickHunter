@@ -1,77 +1,112 @@
 <template>
     <div>
-        <h2>
-            <div
-                style="max-width:680px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom"
-            >
-                {{ partList.name }}
-            </div>
-            <b-button
-                variant="primary"
-                v-b-modal.modal-edit-name
-                @click="editName = partList.name"
-                    style="margin-left: 10px"
-            >
-                <b-icon
-                    icon="pencil"
-                    aria-hidden="true"
-                ></b-icon>
-            </b-button>
-        </h2>
+        <b-container class="headerContainer" fluid="lg">
+            <b-row>
+                <b-col cols="7">
+                    <b-container class="headerLeftContainer">
+                        <b-row>
+                            <b-col>
+                                <h2>
+                                    <div
+                                        style="max-width:360px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom"
+                                    >
+                                        {{ partList.name }}
+                                    </div>
+                                    <b-button
+                                        variant="primary"
+                                        v-b-modal.modal-edit-name
+                                        @click="editName = partList.name"
+                                        style="margin-left: 10px"
+                                    >
+                                        <b-icon
+                                            icon="pencil"
+                                            aria-hidden="true"
+                                        ></b-icon>
+                                    </b-button>
+                                </h2>
+                            </b-col>
+                        </b-row>
+                        <b-row>
+                            <b-col>
+                                <b-button
+                                    variant="primary"
+                                    @click="loadPrices"
+                                    :disabled="
+                                        !wantedList ||
+                                            wantedList.length == 0 ||
+                                            loadPercentage < 100
+                                    "
+                                    v-if="!loadWantedList"
+                                    >{{ buttonLoadPrices }}</b-button
+                                ><b-button
+                                    variant="danger"
+                                    @click="cancel"
+                                    :disabled="loadPercentage >= 100"
+                                    style="margin-left: 10px;"
+                                    v-if="!loadWantedList"
+                                    >{{ buttonCancelLoading }}</b-button
+                                >
+                                <b-button
+                                    variant="danger"
+                                    @click="deleteList"
+                                    style="margin-left: 10px;"
+                                    v-if="!loadWantedList"
+                                    >{{ buttonDelete }}</b-button
+                                >
+                                <b-button
+                                    variant="primary"
+                                    @click="print"
+                                    style="margin-left: 10px;"
+                                    :disabled="
+                                        !wantedList || wantedList.length == 0
+                                    "
+                                    v-if="!loadWantedList"
+                                >
+                                    <b-icon
+                                        icon="printer"
+                                        aria-hidden="true"
+                                    ></b-icon>
+                                </b-button>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+                </b-col>
+                <b-col>
+                    <p>{{ lastUpdated }}: {{ partList.date | formatDate }}</p>
+                    <b-container class="bv-example-row">
+                        <b-row>
+                            <b-col>
+                                <p>
+                                    {{ pickABrick }}: {{ totalPickABrickPositions }}
+                                </p>
+                                <p>
+                                    {{ bricksAndPieces }}:
+                                    {{ totalBricksAndPiecesPositions }}
+                                </p>
+                                <p>{{ total }}: {{ totalPositions }}</p>
+                            </b-col>
+                            <b-col>
+                                <p style="display: inline-block;">
+                                    <b-form-checkbox
+                                        v-model="partList.cart"
+                                        id="checkbox-1"
+                                        name="checkbox-1"
+                                    >
+                                        {{ shoppingCart }}
+                                    </b-form-checkbox>
+                                </p>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+                </b-col>
+            </b-row>
+        </b-container>
+
         <b-modal id="modal-edit-name" hide-header @ok="saveName">
             <p class="my-4">
                 <b-form-input v-model="editName"></b-form-input>
             </p>
         </b-modal>
-        <span style=" float: right"
-            ><span>{{ lastUpdated }}: {{ partList.date | formatDate }}</span
-            ><br />
-            <span style="display: inline-block;"
-                ><b-form-checkbox
-                    v-model="partList.cart"
-                    id="checkbox-1"
-                    name="checkbox-1"
-                    >{{ shoppingCart }}</b-form-checkbox
-                ></span
-            ></span
-        >
-        <p>
-            <b-button
-                variant="primary"
-                @click="loadPrices"
-                :disabled="
-                    !wantedList ||
-                        wantedList.length == 0 ||
-                        loadPercentage < 100
-                "
-                style="margin-left: 10px; vertical-align: bottom;"
-                v-if="!loadWantedList"
-                >{{ buttonLoadPrices }}</b-button
-            ><b-button
-                variant="danger"
-                @click="cancel"
-                :disabled="loadPercentage >= 100"
-                style="margin-left: 10px; vertical-align: bottom;"
-                v-if="!loadWantedList"
-                >{{ buttonCancelLoading }}</b-button
-            >
-            <b-button
-                variant="danger"
-                @click="deleteList"
-                style="margin-left: 10px; vertical-align: bottom;"
-                v-if="!loadWantedList"
-                >{{ buttonDelete }}</b-button
-            >
-            <b-button
-                variant="primary"
-                @click="print"
-                style="margin-left: 10px; vertical-align: bottom;"
-                :disabled="!wantedList || wantedList.length == 0"
-                v-if="!loadWantedList"
-            >
-                <b-icon icon="printer" aria-hidden="true"></b-icon>
-            </b-button>
-        </p>
         <span v-if="!loadWantedList">
             <b-progress
                 :value="loadPercentage"
@@ -91,6 +126,17 @@
     </div>
 </template>
 
+<style>
+.col,
+.col-7 {
+    padding: 0;
+}
+p {
+    padding: 0;
+    margin: 0;
+}
+</style>
+
 <script>
 import BrickList from './BrickList';
 import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
@@ -102,7 +148,6 @@ export default {
     data: () => ({
         isChrome: navigator.userAgent.indexOf('Chrome') != -1,
         loadWantedList: false,
-        totalBricks: 0,
         pickABrickBrickCounter: 0,
         bricksAndPiecesBrickCounter: 0,
         loadPercentage: 100,
@@ -111,6 +156,9 @@ export default {
         cancelLoading: false,
         partList: null,
         editName: null,
+        totalPositions: 0,
+        totalPickABrickPositions: 0,
+        totalBricksAndPiecesPositions: 0,
     }),
     components: {
         BrickList,
@@ -133,6 +181,8 @@ export default {
                 this.wantedList[i].pickABrick = null;
                 this.wantedList[i].brickLink = null;
             }
+
+            this.calcTotals();
 
             for (var i = 0; i < this.wantedList.length; i++) {
                 if (this.cancelLoading) {
@@ -185,7 +235,7 @@ export default {
         },
         calcLoad() {
             //console.log("pickABrick: ", this.pickABrickBrickCounter, " bricksAndPieces: ", this.bricksAndPiecesBrickCounter)
-            var one = 100 / this.totalBricks / 2;
+            var one = 100 / this.totalPositions / 2;
 
             this.loadPercentage = Math.round(
                 one * this.pickABrickBrickCounter +
@@ -197,6 +247,7 @@ export default {
                 this.partList.positions = this.wantedList;
                 this.$store.commit('setPartList', this.partList);
             }
+            this.calcTotals();
             //console.log(this.loadPercentage)
         },
         print() {
@@ -205,13 +256,13 @@ export default {
         },
         cancel() {
             this.cancelLoading = true;
-            this.pickABrickBrickCounter = this.totalBricks;
-            this.bricksAndPiecesBrickCounter = this.totalBricks;
+            this.pickABrickBrickCounter = this.totalPositions;
+            this.bricksAndPiecesBrickCounter = this.totalPositions;
             this.calcLoad();
         },
         deleteList() {
             this.$store.commit('deletePartList', this.partList.id);
-            this.$router.push('/partLists').catch(()=>{});
+            this.$router.push('/partLists').catch(() => {});
         },
         saveName(bvModalEvt) {
             // Prevent modal from closing
@@ -229,6 +280,17 @@ export default {
                 this.$bvModal.hide('modal-edit-name');
             });
         },
+        calcTotals() {
+            if (this.wantedList) {
+                this.totalPositions = this.wantedList.length;
+                this.totalPickABrickPositions = this.wantedList.filter(
+                    (position) => position.pickABrick != null
+                ).length;
+                this.totalBricksAndPiecesPositions = this.wantedList.filter(
+                    (position) => position.bricksAndPieces != null
+                ).length;
+            }
+        },
     },
     watch: {
         'partList.cart': function(val, oldVal) {
@@ -240,10 +302,18 @@ export default {
             this.$route.params.id
         );
         this.wantedList = this.partList.positions;
-        this.totalBricks = 0;
-        if (this.wantedList) this.totalBricks = this.wantedList.length;
+        this.calcTotals();
     },
     computed: {
+        pickABrick() {
+            return browser.i18n.getMessage('pickABrick');
+        },
+        bricksAndPieces() {
+            return browser.i18n.getMessage('bricksAndPieces');
+        },
+        total() {
+            return browser.i18n.getMessage('shopping_total');
+        },
         buttonWantedList() {
             return browser.i18n.getMessage('wantedList_buttonWantedList');
         },
