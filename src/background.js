@@ -222,7 +222,7 @@ browser.runtime.onMessage.addListener(function(
                 .then((tabs) => {
                     var tab = tabs[0];
                     browser.tabs.update(tab.id, {
-                        url: `https://track.webgains.com/click.html?wgcampaignid=1351375&wgprogramid=267995&clickref=brickhunter-test&wgtarget=https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
+                        url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
                     });
                 });
             sendResponse(true);
