@@ -76,7 +76,9 @@
 
         <div v-if="page == 'overview'">
             <h2>{{ titleAmountPositions }}</h2>
-            {{ amountWantedList }}: {{ wantedListPositionsMerged }} ({{ wantedListPositions }})<br />
+            {{ amountPartList }}: {{ wantedListPositionsMerged }} ({{
+                wantedListPositions
+            }})<br />
             {{ bricksAndPieces }}: {{ bricksAndPiecesPositions }}<br />
             {{ pickABrick }}: {{ pickABrickPositions }}<br />
             {{ brickLink }}: {{ brickLinkPositions }}<br />
@@ -242,6 +244,24 @@
                 <brick-list :bricklist="brickLinkList"></brick-list>
             </div>
         </div>
+        <b-toast id="partListsToOldWarning" variant="danger" solid>
+            <template #toast-title>
+                <div class="d-flex flex-grow-1 align-items-baseline">
+                    <b-img
+                        blank
+                        blank-color="#ff5555"
+                        class="mr-2"
+                        width="12"
+                        height="12"
+                    ></b-img>
+                    <strong class="mr-auto">Notice!</strong>
+                </div>
+            </template>
+            {{ partListToOldText }}
+            <ul v-for="name in oldPartLists" :key="name" style="margin-top: 10px">
+                <li>{{ name }}</li>
+            </ul>
+        </b-toast>
     </div>
 </template>
 
@@ -268,6 +288,7 @@ export default {
             pickABrickShoppingCartId: null,
             authorization: null,
             loadPABPercentage: 100,
+            oldPartLists: [],
             optionsPrio1: [
                 {
                     value: 'none',
@@ -676,8 +697,6 @@ export default {
             this.$htmlToPaper('brickLinkList');
         },
         loadPartLists() {
-            var countOld = 0;
-
             this.$store.state.partLists.map((partList) => {
                 if (!partList.positions) return;
                 if (!partList.cart) return;
@@ -686,7 +705,7 @@ export default {
                     Date.now() - new Date(partList.date).getTime() >
                     1000 * 60 * 60 * 48
                 ) {
-                    this.countOld++;
+                    this.oldPartLists.push(partList.name);
                     return;
                 }
 
@@ -794,6 +813,9 @@ export default {
             })
             .catch(() => {});
     },
+    mounted() {
+        if (this.oldPartLists.length) this.$bvToast.show('partListsToOldWarning');
+    },
     computed: {
         pickABrick() {
             return browser.i18n.getMessage('pickABrick');
@@ -828,8 +850,8 @@ export default {
         titleAmountPositions() {
             return browser.i18n.getMessage('shopping_titleAmountPositions');
         },
-        amountWantedList() {
-            return browser.i18n.getMessage('shopping_amountWantedList');
+        amountPartList() {
+            return browser.i18n.getMessage('shopping_amountPartList');
         },
         amountTotalFoundLego() {
             return browser.i18n.getMessage('shopping_amountTotalFoundLego');
@@ -877,6 +899,9 @@ export default {
         },
         buttonBrickLinkCopy() {
             return browser.i18n.getMessage('shopping_buttonBrickLinkCopy');
+        },
+        partListToOldText() {
+            return browser.i18n.getMessage('shopping_partListToOldText');
         },
     },
 };

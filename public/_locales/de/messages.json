@@ -374,8 +374,8 @@
     "shopping_titleAmountPositions": {
         "message": "Anzahl Positionen"
     },
-    "shopping_amountWantedList": {
-        "message": "Wanted List"
+    "shopping_amountPartList": {
+        "message": "Teileliste"
     },
     "shopping_amountTotalFoundLego": {
         "message": "Total bei LEGO"
@@ -415,6 +415,9 @@
     },
     "shopping_buttonBrickLinkCopy": {
         "message": "In Zwischenablage kopieren"
+    },
+    "shopping_partListToOldText": {
+        "message": "Teilelisten mit Preisabgleich älter als 48 Stunden werden nicht in den Warenkorb übernommen!"
     },
     "wantedList_buttonWantedList": {
         "message": "WantedList"
