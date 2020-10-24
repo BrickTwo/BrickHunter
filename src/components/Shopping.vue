@@ -76,7 +76,7 @@
 
         <div v-if="page == 'overview'">
             <h2>{{ titleAmountPositions }}</h2>
-            {{ amountWantedList }}: {{ wantedListPositions }}<br />
+            {{ amountWantedList }}: {{ wantedListPositionsMerged }} ({{ wantedListPositions }})<br />
             {{ bricksAndPieces }}: {{ bricksAndPiecesPositions }}<br />
             {{ pickABrick }}: {{ pickABrickPositions }}<br />
             {{ brickLink }}: {{ brickLinkPositions }}<br />
@@ -256,6 +256,7 @@ export default {
             pickABrickList: null,
             brickLinkList: null,
             wantedListPositions: 0,
+            wantedListPositionsMerged: 0,
             bricksAndPiecesPositions: 0,
             pickABrickPositions: 0,
             brickLinkPositions: 0,
@@ -332,7 +333,7 @@ export default {
     methods: {
         showInfo() {
             //console.log('changePage');
-            this.$router.push('/info').catch(()=>{});
+            this.$router.push('/info').catch(() => {});
         },
         pickABrickClearCart() {
             browser.runtime
@@ -683,8 +684,53 @@ export default {
                     return;
                 }
 
-                this.wantedList = [].concat(this.wantedList, partList.positions);
+                this.wantedList = [].concat(
+                    this.wantedList,
+                    partList.positions
+                );
             });
+
+            if (this.wantedList.length)
+                this.wantedListPositions = this.wantedList.length;
+
+            /*this.wantedList.map(part => {
+                part.sortString = part.itemid + "|" + part.color.brickLinkId;
+                part.sortString = part.sortString.toUpperCase();
+            })
+            
+            this.wantedList = this.wantedList.sort((a, b) => {
+                if (a.sortString > b.sortString) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });*/
+
+            var partListMerged = [];
+
+            this.wantedList.map((part) => {
+                var found = partListMerged.find(
+                    (f) =>
+                        f.itemid == part.itemid &&
+                        f.color.brickLinkId == part.color.brickLinkId
+                );
+
+                if (found) {
+                    found.qty = { ...found.qty };
+                    found.qty.min = parseInt(found.qty.min);
+                    found.qty.have = parseInt(found.qty.have);
+                    found.qty.min += parseInt(part.qty.min);
+                    found.qty.have += parseInt(part.qty.have);
+                    found.qty.balance = found.qty.min - found.qty.have;
+                } else {
+                    partListMerged.push({ ...part });
+                }
+            });
+
+            this.wantedList = partListMerged;
+
+            if (this.wantedList.length)
+                this.wantedListPositionsMerged = this.wantedList.length;
         },
     },
     watch: {
@@ -718,8 +764,8 @@ export default {
         );*/
         this.loadPartLists();
 
-        if (this.wantedList.length)
-            this.wantedListPositions = this.wantedList.length;
+        /*if (this.wantedList.length)
+            this.wantedListPositions = this.wantedList.length;*/
 
         this.calcTotalPrice();
 
