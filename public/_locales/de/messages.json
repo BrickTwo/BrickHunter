@@ -16,7 +16,7 @@
         "message": "Import"
     },
     "menu_wantedList": {
-        "message": "Steinelisten"
+        "message": "Teilelisten"
     },
     "menu_shoppingCart": {
         "message": "Warenkorb"
@@ -108,7 +108,7 @@
         "message": "Farbe"
     },
     "brickList_quantity": {
-        "message": "Anzahl"
+        "message": "Anz."
     },
     "brickList_brickLinkPrice": {
         "message": "BrickLink Max Preis"
@@ -272,6 +272,30 @@
     "exportWantedList_copyButton": {
         "message": "In Zwischenablage kopieren"
     },
+    "import_file": {
+        "message": "Datei"
+    },
+    "import_name": {
+        "message": "Name"
+    },
+    "import_shoppingCart": {
+        "message": "Warenkorb"
+    },
+    "import_importButton": {
+        "message": "Importieren"
+    },
+    "import_clearButton": {
+        "message": "Zurücksetzen"
+    },
+    "import_successfullImportBrickLinkTitle": {
+        "message": "BrickLink Import"
+    },
+    "import_successfullImportBrickLinkText": {
+        "message": "Teileliste erfolgreich angelegt."
+    },
+    "import_errorImportBrickLinkTextToManyPositions": {
+        "message": "Total Anzahl der Positionen aller Teileliste kann nicht grösser 2500 sein."
+    },
     "info_disclaimerTitle": {
         "message": "Disclaimer"
     },
@@ -301,6 +325,9 @@
     },
     "info_sourceCodeText2": {
         "message": "."
+    },
+    "partList_positions": {
+        "message": "Positionen"
     },
     "selectCountry_whereDoYouLive": {
         "message": "Wo wohnst du?"
@@ -347,8 +374,8 @@
     "shopping_titleAmountPositions": {
         "message": "Anzahl Positionen"
     },
-    "shopping_amountWantedList": {
-        "message": "Wanted List"
+    "shopping_amountPartList": {
+        "message": "Teileliste"
     },
     "shopping_amountTotalFoundLego": {
         "message": "Total bei LEGO"
@@ -389,6 +416,9 @@
     "shopping_buttonBrickLinkCopy": {
         "message": "In Zwischenablage kopieren"
     },
+    "shopping_partListToOldText": {
+        "message": "Teilelisten mit Preisabgleich älter als 48 Stunden werden nicht in den Warenkorb übernommen!"
+    },
     "wantedList_buttonWantedList": {
         "message": "WantedList"
     },
@@ -398,8 +428,14 @@
     "wantedList_buttonCancelLoading": {
         "message": "Abbrechen"
     },
-    "wantedList_buttonClear": {
-        "message": "Leeren"
+    "wantedList_buttonDelete": {
+        "message": "Löschen"
+    },
+    "wantedList_lastUpdated": {
+        "message": "Zuletzt aktualisiert"
+    },
+    "wantedList_shoppingCart": {
+        "message": "Warenkorb"
     },
     "xmlField_copyWantedList": {
         "message": "Kopiere den Inhalt einer WantedList hier rein"

@@ -1,56 +1,84 @@
 <template>
-    <div>
-        <b-form-group :label="generalGroupTitle">
-            <b-form-checkbox-group
-                id="checkbox-group-1"
-                v-model="selectedOptions"
-                :options="options"
-                name="general"
-                stacked
-            ></b-form-checkbox-group>
-        </b-form-group>
-        <b-form-group :label="colorGroupTitle">
-            <b-form-checkbox-group
-                id="checkbox-group-2"
-                v-model="selectedColorOptions"
-                :options="optionsColor"
-                name="color"
-                stacked
-            ></b-form-checkbox-group>
-        </b-form-group>
-        <b-form-group :label="pickABrickGroupTitle">
-            <b-form-checkbox-group
-                id="checkbox-group-3"
-                v-model="selectedPickABrickOptions"
-                :options="optionsPickABrick"
-                name="pickABrick"
-                stacked
-            ></b-form-checkbox-group>
-        </b-form-group>
-        <b-form-group :label="bricksAndPiecesGroupTitle">
-            <b-form-checkbox-group
-                id="checkbox-group-4"
-                v-model="selectedBricksAndPiecesOptions"
-                :options="optionsBricksAndPieces"
-                name="stonesAndPieces"
-                stacked
-            ></b-form-checkbox-group>
-        </b-form-group>
-
-        <b-button
-            variant="primary"
-            @click="onDownload"
-            :disabled="!wantedList || wantedList.length == 0"
-            >{{ downloadButton }}</b-button
-        >
-    </div>
+    <b-container class="bv-example-row" fluid="lg">
+        <b-row>
+            <b-col>
+                <b-button
+                    variant="primary"
+                    @click="onDownload"
+                    :disabled="!wantedList || wantedList.length == 0"
+                    >{{ downloadButton }}</b-button
+                >
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col>
+                <b-form-group :label="generalGroupTitle" label-for="checkbox-group-1" label-class="label">
+                    <b-form-checkbox-group
+                        id="checkbox-group-1"
+                        v-model="selectedOptions"
+                        :options="options"
+                        name="general"
+                        stacked
+                    ></b-form-checkbox-group>
+                </b-form-group>
+            </b-col>
+            <b-col>
+                <b-form-group :label="colorGroupTitle" label-for="checkbox-group-2" label-class="label">
+                    <b-form-checkbox-group
+                        id="checkbox-group-2"
+                        v-model="selectedColorOptions"
+                        :options="optionsColor"
+                        name="color"
+                        stacked
+                    ></b-form-checkbox-group>
+                </b-form-group>
+            </b-col>
+            <b-col>
+                <b-form-group :label="pickABrickGroupTitle" label-for="checkbox-group-3" label-class="label">
+                    <b-form-checkbox-group
+                        id="checkbox-group-3"
+                        v-model="selectedPickABrickOptions"
+                        :options="optionsPickABrick"
+                        name="pickABrick"
+                        stacked
+                    ></b-form-checkbox-group>
+                </b-form-group>
+            </b-col>
+            <b-col>
+                <b-form-group :label="bricksAndPiecesGroupTitle" label-for="checkbox-group-4" label-class="label">
+                    <b-form-checkbox-group
+                        id="checkbox-group-4"
+                        v-model="selectedBricksAndPiecesOptions"
+                        :options="optionsBricksAndPieces"
+                        name="stonesAndPieces"
+                        stacked
+                    ></b-form-checkbox-group>
+                </b-form-group>
+            </b-col>
+        </b-row>
+    </b-container>
 </template>
+
+<style>
+.row {
+    margin-top: 5px;
+}
+.label {
+    font-weight: bold;
+}
+</style>
 
 <script>
 export default {
+    props: {
+        partListId: {
+            type: String,
+        },
+    },
     data() {
         return {
             wantedList: null,
+            partList: null,
             selectedOptions: [],
             selectedColorOptions: [],
             selectedPickABrickOptions: [],
@@ -534,9 +562,8 @@ export default {
         },
     },
     beforeMount() {
-        this.wantedList = JSON.parse(
-            localStorage.getItem('wantedList') || null
-        );
+        this.partList = this.$store.getters.getPartListsById(this.partListId);
+        this.wantedList = this.partList.positions;
 
         var selection =
             localStorage.getItem('selectedOptions') ||
