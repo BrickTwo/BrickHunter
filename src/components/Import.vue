@@ -30,6 +30,7 @@
                     <b-col sm="9">
                         <xml-field
                             @load="loadXml"
+                            :state="!!wantedList"
                             style="width: 650px"
                         ></xml-field> </b-col
                 ></b-row>

@@ -33,7 +33,7 @@ export default {
         },
     },
     data: () => ({
-        tableHeight: '300px',
+        tableHeight: '290px',
         columns: [
             /*{
                 name: '__sequence',
