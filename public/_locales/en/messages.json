@@ -119,6 +119,15 @@
     "brickList_bricksAndPiecesPrice": {
         "message": "Bricks & Pieces"
     },
+    "itsEmptyHere": {
+        "message": "It's so empty here. "
+    },
+    "import": {
+        "message": "Import"
+    },
+    "aPartList": {
+        "message": " a part list."
+    },
     "exportCsv_generalGroupTitle": {
         "message": "General"
     },
@@ -294,7 +303,7 @@
         "message": "Parts list successfully created."
     },
     "import_errorImportBrickLinkTextToManyPositions": {
-        "message": "Total number of positions of all parts lists cannot be greater than 2500."
+        "message": "Total number of positions of all parts lists cannot be greater than 2000."
     },
     "info_disclaimerTitle": {
         "message": "Disclaimer"

@@ -180,7 +180,7 @@ export default {
             var totalPositionsAfterImport =
                 this.$store.state.totalPositions + this.wantedList.length;
 
-            if (totalPositionsAfterImport > 2500) {
+            if (totalPositionsAfterImport > 2000) {
                 this.$bvToast.toast(
                     this.errorImportBrickLinkTextToManyPositions,
                     {

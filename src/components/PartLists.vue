@@ -1,9 +1,14 @@
 <template>
     <div>
         <span style="float: right"
-            >{{ $store.state.totalPositions }} / 2500 {{ positions }}</span
+            >{{ $store.state.totalPositions }} / 2000 {{ positions }}</span
         >
-        <b-list-group style="clear: both">
+        <span style="clear: both" v-if="!partLists.length">{{ itsEmptyHere }}<b-button
+                            variant="primary"
+                            @click="$router.push('/import').catch(() => {})"
+                            >{{ buttonImport }}</b-button
+                        >{{ aPartList }}</span>
+        <b-list-group style="clear: both" v-if="partLists.length">
             <b-list-group-item
                 v-for="partList in partLists"
                 :key="partList.id"
@@ -94,6 +99,15 @@ export default {
     computed: {
         positions() {
             return browser.i18n.getMessage('partList_Positions');
+        },
+        itsEmptyHere() {
+            return browser.i18n.getMessage('itsEmptyHere');
+        },
+        buttonImport() {
+            return browser.i18n.getMessage('import');
+        },
+        aPartList() {
+            return browser.i18n.getMessage('aPartList');
         },
     },
 };

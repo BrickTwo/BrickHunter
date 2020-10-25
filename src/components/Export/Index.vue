@@ -1,6 +1,14 @@
 <template>
     <div>
-        <b-list-group style="clear: both">
+        <span v-if="!partLists.length"
+            >{{ itsEmptyHere
+            }}<b-button
+                variant="primary"
+                @click="$router.push('/import').catch(() => {})"
+                >{{ buttonImport }}</b-button
+            >{{ aPartList }}</span
+        >
+        <b-list-group>
             <b-list-group-item
                 v-for="partList in partLists"
                 :key="partList.id"
@@ -11,8 +19,10 @@
                 <span
                     style="max-width:640px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom"
                     >{{ partList.name }}</span
-                ><span style="float: right;"
-                    > <b-badge variant="primary" pill>{{ partList.positions.length }}</b-badge></span
+                ><span style="float: right;">
+                    <b-badge variant="primary" pill>{{
+                        partList.positions.length
+                    }}</b-badge></span
                 ></b-list-group-item
             >
         </b-list-group>
@@ -41,6 +51,17 @@ export default {
     },
     beforeMount() {
         this.loadPartLists();
+    },
+    computed: {
+        itsEmptyHere() {
+            return browser.i18n.getMessage('itsEmptyHere');
+        },
+        buttonImport() {
+            return browser.i18n.getMessage('import');
+        },
+        aPartList() {
+            return browser.i18n.getMessage('aPartList');
+        },
     },
 };
 </script>

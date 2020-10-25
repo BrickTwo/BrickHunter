@@ -119,6 +119,15 @@
     "brickList_bricksAndPiecesPrice": {
         "message": "Steine & Teile"
     },
+    "itsEmptyHere": {
+        "message": "Es ist so leer hier. "
+    },
+    "import": {
+        "message": "Importiere"
+    },
+    "aPartList": {
+        "message": " eine Teileliste."
+    },
     "exportCsv_generalGroupTitle": {
         "message": "Allgemein"
     },
@@ -294,7 +303,7 @@
         "message": "Teileliste erfolgreich angelegt."
     },
     "import_errorImportBrickLinkTextToManyPositions": {
-        "message": "Total Anzahl der Positionen aller Teilelisten kann nicht grösser 2500 sein."
+        "message": "Total Anzahl der Positionen aller Teilelisten kann nicht grösser 2000 sein."
     },
     "info_disclaimerTitle": {
         "message": "Disclaimer"
