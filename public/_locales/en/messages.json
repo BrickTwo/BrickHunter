@@ -7,7 +7,7 @@
         "message": "Pick a Brick"
     },
     "bricksAndPieces": {
-        "message": "Steine & Teile"
+        "message": "Bricks & Pieces"
     },
     "brickLink": {
         "message": "BrickLink"
@@ -16,10 +16,10 @@
         "message": "Import"
     },
     "menu_wantedList": {
-        "message": "Teilelisten"
+        "message": "Part lists"
     },
     "menu_shoppingCart": {
-        "message": "Warenkorb"
+        "message": "Shopping cart"
     },
     "menu_export": {
         "message": "Export"
@@ -31,69 +31,69 @@
         "message": "CSV"
     },
     "menu_help": {
-        "message": "Hilfe"
+        "message": "Help"
     },
-    "countryAU": { "message": "Australien" },
-    "countryBE": { "message": "Belgien" },
-    "countryDK": { "message": "Dänemark" },
-    "countryDE": { "message": "Deutschland" },
-    "countryFI": { "message": "Finnland" },
-    "countryFR": { "message": "Frankreich" },
-    "countryGB": { "message": "Großbritannien" },
-    "countryIE": { "message": "Irland" },
-    "countryIT": { "message": "Italien" },
-    "countryCA": { "message": "Kanada" },
-    "countryLU": { "message": "Luxemburg" },
-    "countryNZ": { "message": "Neuseeland" },
-    "countryNL": { "message": "Niederlande" },
-    "countryNO": { "message": "Norwegen" },
-    "countryAT": { "message": "Österreich" },
-    "countryPL": { "message": "Polen" },
+    "countryAU": { "message": "Australia" },
+    "countryBE": { "message": "Belgium" },
+    "countryDK": { "message": "Denmark" },
+    "countryDE": { "message": "Germany" },
+    "countryFI": { "message": "Finland" },
+    "countryFR": { "message": "France" },
+    "countryGB": { "message": "Great Britain" },
+    "countryIE": { "message": "Ireland" },
+    "countryIT": { "message": "Italy" },
+    "countryCA": { "message": "Canada" },
+    "countryLU": { "message": "Luxembourg" },
+    "countryNZ": { "message": "New Zealand" },
+    "countryNL": { "message": "Netherlands" },
+    "countryNO": { "message": "Norway" },
+    "countryAT": { "message": "Austria" },
+    "countryPL": { "message": "Poland" },
     "countryPT": { "message": "Portugal" },
-    "countrySE": { "message": "Schweden" },
-    "countryCH": { "message": "Schweiz" },
-    "countryES": { "message": "Spanien" },
-    "countryCZ": { "message": "Tschechische Republik" },
-    "countryHU": { "message": "Ungarn" },
-    "countryUS": { "message": "Vereinigte Staaten" },
+    "countrySE": { "message": "Sweden" },
+    "countryCH": { "message": "Switzerland" },
+    "countryES": { "message": "Spain" },
+    "countryCZ": { "message": "Czech Republic" },
+    "countryHU": { "message": "Hungary" },
+    "countryUS": { "message": "United States" },
     "languageDE": {
-        "message": "Deutsch"
+        "message": "German"
     },
     "languageEN": {
-        "message": "Englisch"
+        "message": "English"
     },
     "languageFR": {
-        "message": "Französisch"
+        "message": "French"
     },
     "languageNL": {
-        "message": "Niederländisch"
+        "message": "Dutch"
     },
     "languageDA": {
-        "message": "Dänisch"
+        "message": "Danish"
     },
     "languageFI": {
-        "message": "Finisch"
+        "message": "Finnish"
     },
     "languageIT": {
-        "message": "Italienisch"
+        "message": "Italian"
     },
     "languageNO": {
-        "message": "Norwegisch"
+        "message": "Norwegian"
     },
     "languagePL": {
-        "message": "Polnisch"
+        "message": "Polish"
     },
     "languageSV": {
-        "message": "Schwedisch"
+        "message": "Swedish"
     },
     "languageES": {
-        "message": "Spanisch"
+        "message": "Spanish"
     },
     "languageCS": {
-        "message": "Tschechisch"
+        "message": "Czech"
     },
     "languageHU": {
-        "message": "Ungarisch"
+        "message": "Hungarian"
     },
     "brickList_lineNumber": {
         "message": "#"
@@ -102,61 +102,61 @@
         "message": "Id"
     },
     "brickList_brickLinkImage": {
-        "message": "Bild"
+        "message": "Picture"
     },
     "brickList_brickLinkColor": {
-        "message": "Farbe"
+        "message": "Color"
     },
     "brickList_quantity": {
-        "message": "Anz."
+        "message": "Qty."
     },
     "brickList_brickLinkPrice": {
-        "message": "BrickLink Max Preis"
+        "message": "BrickLink Max Price"
     },
     "brickList_pickABrickPrice": {
         "message": "Pick a Brick"
     },
     "brickList_bricksAndPiecesPrice": {
-        "message": "Steine & Teile"
+        "message": "Bricks & Pieces"
     },
     "exportCsv_generalGroupTitle": {
-        "message": "Allgemein"
+        "message": "General"
     },
     "exportCsv_colorGroupTitle": {
-        "message": "Farbe"
+        "message": "Color"
     },
     "exportCsv_pickABrickGroupTitle": {
         "message": "Pick a Brick"
     },
     "exportCsv_bricksAndPiecesGroupTitle": {
-        "message": "Steine & Teile"
+        "message": "Bricks & Pieces"
     },
     "exportCsv_generalOptionBrickLinkId": {
         "message": "Id"
     },
     "exportCsv_generalOptionWant": {
-        "message": "Anzahl Want"
+        "message": "Quantity want"
     },
     "exportCsv_generalOptionAve": {
-        "message": "Anzahl Have"
+        "message": "Quantity have"
     },
     "exportCsv_generalOptionBalance": {
-        "message": "Anzahl Differenz"
+        "message": "Quantity balance"
     },
     "exportCsv_generalOptionLegoDescription": {
-        "message": "LEGO Bezeichnung"
+        "message": "LEGO description"
     },
     "exportCsv_generalOptionBrickLinkMaxPrice": {
-        "message": "BrickLink Max Price"
+        "message": "BrickLink max price"
     },
     "exportCsv_colorOptionBrickLinkId": {
-        "message": "BrickLink Id"
+        "message": "BrickLink id"
     },
     "exportCsv_colorOptionBrickLinkName": {
-        "message": "BrickLink Name"
+        "message": "BrickLink name"
     },
     "exportCsv_colorOptionColorCode": {
-        "message": "RGB Farbcode"
+        "message": "RGB color code"
     },
     "exportCsv_colorOptionLegoId": {
         "message": "Lego Id"
@@ -168,25 +168,25 @@
         "message": "Id"
     },
     "exportCsv_pickABrickOptionDesignNumber": {
-        "message": "Designnummer"
+        "message": "Design number"
     },
     "exportCsv_pickABrickOptionPrice": {
-        "message": "Preis"
+        "message": "Price"
     },
     "exportCsv_pickABrickOptionCurrency": {
-        "message": "Währung"
+        "message": "Currency"
     },
     "exportCsv_bricksAndPiecesOptionId": {
         "message": "Id"
     },
     "exportCsv_bricksAndPiecesOptionDesignNumber": {
-        "message": "Designnummer"
+        "message": "Design number"
     },
     "exportCsv_bricksAndPiecesOptionPrice": {
-        "message": "Preis"
+        "message": "Price"
     },
     "exportCsv_bricksAndPiecesOptionCurrency": {
-        "message": "Währung"
+        "message": "Currency"
     },
     "exportCsv_downloadButton": {
         "message": "Download"
@@ -195,130 +195,130 @@
         "message": "Id"
     },
     "exportCsv_csvHeaderGeneralWant": {
-        "message": "Anzahl Want"
+        "message": "Quantity want"
     },
     "exportCsv_csvHeaderGeneralHave": {
-        "message": "Anzahl Have"
+        "message": "Quantity have"
     },
     "exportCsv_csvHeaderGeneralBalance": {
-        "message": "Anzahl Differenz"
+        "message": "Quantity balance"
     },
     "exportCsv_csvHeaderGeneralLegoDescription": {
-        "message": "LEGO Bezeichnung"
+        "message": "LEGO description"
     },
     "exportCsv_csvHeaderGeneralBrickLinkMaxPrice": {
-        "message": "BrickLink Max Price"
+        "message": "BrickLink max price"
     },
     "exportCsv_csvHeaderColorBrickLinkId": {
-        "message": "BrickLink Farbe Id"
+        "message": "BrickLink color id"
     },
     "exportCsv_csvHeaderColorBrickLinkName": {
-        "message": "BrickLink Farb Name"
+        "message": "BrickLink color name"
     },
     "exportCsv_csvHeaderColorColorCode": {
-        "message": "RGB Farbcode"
+        "message": "RGB color code"
     },
     "exportCsv_csvHeaderColorLegoId": {
-        "message": "LEGO Farb Id"
+        "message": "LEGO color Id"
     },
     "exportCsv_csvHeaderColorLegoName": {
-        "message": "LEGO Farb Name"
+        "message": "LEGO color description"
     },
     "exportCsv_csvHeaderPickABrickId": {
-        "message": "PaB Id"
+        "message": "PaB id"
     },
     "exportCsv_csvHeaderPickABrickDesignNumber": {
-        "message": "PaB Designnummer"
+        "message": "PaB design number"
     },
     "exportCsv_csvHeaderPickABrickPrice": {
-        "message": "PaB Preis"
+        "message": "PaB price"
     },
     "exportCsv_csvHeaderPickABrickCurrency": {
-        "message": "PaB Währung"
+        "message": "PaB currency"
     },
     "exportCsv_csvHeaderBricksAndPiecesId": {
-        "message": "SuT Id"
+        "message": "BaP id"
     },
     "exportCsv_csvHeaderBricksAndPiecesDesignNumber": {
-        "message": "Sut Designnummer"
+        "message": "BaP design number"
     },
     "exportCsv_csvHeaderBricksAndPiecesPrice": {
-        "message": "Sut Preis"
+        "message": "BaP price"
     },
     "exportCsv_csvHeaderBricksAndPiecesCurrency": {
-        "message": "Sut Währung"
+        "message": "BaP currency"
     },
     "exportWantedList_usePickABrickPrices": {
-        "message": "Pick a Brick Preise verwenden"
+        "message": "Use Pick a Brick price"
     },
     "exportWantedList_useBricksAndPiecesPrices": {
-        "message": "Steine & Teile Preise verwenden"
+        "message": "Use Bricks & Pieces price"
     },
     "exportWantedList_writeLegoIdRemark": {
-        "message": "LEGO Id in Remarks vermerken"
+        "message": "Add LEGO id in remarks"
     },
     "exportWantedList_writePriceOriginRemark": {
-        "message": "Ursprung des Preises in Remarks vermerken"
+        "message": "Add origin of price in remarks"
     },
     "exportWantedList_whatShouldBePreferred": {
-        "message": "Was soll bei gleichem Preis bevorzugt werden?"
+        "message": "What should be preferred at equal price?"
     },
     "exportWantedList_increaseHave": {
-        "message": "\"Have\" um anzahl \"Differenz\" erhöhen"
+        "message": "Increase \"Have\" with \"Balance\""
     },
     "exportWantedList_downloadButton": {
         "message": "Download"
     },
     "exportWantedList_copyButton": {
-        "message": "In Zwischenablage kopieren"
+        "message": "Copy to clipboard"
     },
     "import_file": {
-        "message": "Datei"
+        "message": "File"
     },
     "import_name": {
         "message": "Name"
     },
     "import_shoppingCart": {
-        "message": "Warenkorb"
+        "message": "Shopping cart"
     },
     "import_importButton": {
-        "message": "Importieren"
+        "message": "Import"
     },
     "import_clearButton": {
-        "message": "Zurücksetzen"
+        "message": "Clear"
     },
     "import_successfullImportBrickLinkTitle": {
         "message": "BrickLink Import"
     },
     "import_successfullImportBrickLinkText": {
-        "message": "Teileliste erfolgreich angelegt."
+        "message": "Parts list successfully created."
     },
     "import_errorImportBrickLinkTextToManyPositions": {
-        "message": "Total Anzahl der Positionen aller Teilelisten kann nicht grösser 2500 sein."
+        "message": "Total number of positions of all parts lists cannot be greater than 2500."
     },
     "info_disclaimerTitle": {
         "message": "Disclaimer"
     },
     "info_disclaimerText1": {
-        "message": "BrickHunter ist eine nicht durch LEGO autorisierte Browsererweiterung die den Anwender bei einer Pick a Brick oder Steine & Teile Bestellung unterstützt. Für die Durchführung der Bestellung wird keine Haftung übernommen, dies gilt insbesondere für das korrekte auffinden sowie befüllen des Warenkorbes eines gesuchten Teiles in Form, Farbe, Preis oder Anzahl. Der Anwender ist aufgefordert, die Bestellung vor dem Absenden im LEGO Shop nochmals zu prüfen."
+        "message": "BrickHunter is a non LEGO authorized browser extension that assists the user with a Pick a Brick or Bricks & Pieces order. No liability is assumed for the execution of the order, this applies in particular to the correct finding and filling of the shopping cart of a part in shape, color, price or quantity. The user is requested to check the order before sending it to the LEGO Shop."
     },
     "info_disclaimerText2": {
-        "message": "BrickHunter ist darauf programmiert, die automatisch im Hintergrund durchgeführten Interaktionen sowohl mit der LEGO als auch mit der BrickLink Website so gering wie möglich zu halten. Für evtl. durch BrickHunter verursachte Fehler oder Sperrungen auf den genannten Webseiten übernimmt BrickHunter keine Haftung."
+        "message": "BrickHunter is programmed to minimize the amount of automatic background interaction with both the LEGO and the BrickLink website. BrickHunter is not liable for possible errors or blockages caused by BrickHunter on the mentioned websites."
     },
     "info_licenseTitel": {
-        "message": "Lizenz"
+        "message": "License"
     },
     "info_licenseText1": {
-        "message": "BrickHunter steht unter der "
+        "message": "BrickHunter is developed under the "
     },
     "info_licenseLink": {
         "message": "GPL-3.0"
     },
     "info_licenseText2": {
-        "message": " Lizenz."
+        "message": " License."
     },
     "info_sourceCodeText1": {
-        "message": "Source Code verfügbar auf "
+        "message": "Source code available on "
     },
     "info_sourceCodeLink": {
         "message": "GitHub"
@@ -327,28 +327,28 @@
         "message": "."
     },
     "partList_positions": {
-        "message": "Positionen"
+        "message": "Positions"
     },
     "selectCountry_whereDoYouLive": {
-        "message": "Wo wohnst du?"
+        "message": "Where do you live?"
     },
     "selectCountry_country": {
-        "message": "Land"
+        "message": "Country"
     },
     "selectCountry_langaugeOnLegoWebsite": {
-        "message": "Welche Sprache verwendest du im LEGO® Online-Shop?"
+        "message": "What language do you use in the LEGO® Online Store?"
     },
     "selectCountry_language": {
-        "message": "Sprache"
+        "message": "Language"
     },
     "selectCountry_noCountrySelected": {
-        "message": "Bitte ein Land auswählen"
+        "message": "Please select a country"
     },
     "selectCountry_noLanguageSelected": {
-        "message": "Bitte eine Sprache auswählen"
+        "message": "Please select a language"
     },
     "selectCountry_saveButton": {
-        "message": "Speichern"
+        "message": "Save"
     },
     "shopping_priorityOne": {
         "message": "Prio 1"
@@ -360,96 +360,96 @@
         "message": "Prio 3"
     },
     "shopping_optionsNone": {
-        "message": "nicht verwenden"
+        "message": "do not use"
     },
     "shopping_useHave": {
-        "message": "WantedList-Have von Anzahl abziehen"
+        "message": "Subtract WantedList-Have from number"
     },
     "shopping_tabOverview": {
-        "message": "Übersicht"
+        "message": "Overview"
     },
     "shopping_tabSettings": {
-        "message": "Einstellungen"
+        "message": "Settings"
     },
     "shopping_titleAmountPositions": {
-        "message": "Anzahl Positionen"
+        "message": "Number of positions"
     },
     "shopping_amountPartList": {
-        "message": "Teileliste"
+        "message": "Parts List"
     },
     "shopping_amountTotalFoundLego": {
-        "message": "Total bei LEGO"
+        "message": "Total at LEGO"
     },
     "shopping_titlePrice": {
-        "message": "Preis"
+        "message": "Price"
     },
     "shopping_total": {
         "message": "Total"
     },
     "shopping_brickLinkCurrencyInfo": {
-        "message": "Die Währung aus der BrickLink WantedList ist unbekannt, da diese nicht exportiert wird!"
+        "message": "The currency from the BrickLink WantedList is unknown because it is not exported!"
     },
     "shopping_buttonFillBricksAndPiecesCart": {
-        "message": "Warenkorb füllen"
+        "message": "Fill shopping cart"
     },
     "shopping_buttonFillBricksAndPiecesCartInfo": {
-        "message": "Zuvor ausgewählte Steine & Teile werden aus dem Warenkorb entfernt!"
+        "message": "Previously selected stones & parts are removed from the shopping cart!"
     },
     "shopping_buttonClearBricksAndPiecesCart": {
-        "message": "Warenkorb leeren"
+        "message": "Empty shopping cart"
     },
     "shopping_buttonFillPickABrickCart": {
-        "message": "Dem Warenkorb hinzufügen"
+        "message": "Add to shopping cart"
     },
     "shopping_buttonClearPickABrickCart": {
-        "message": "Warenkorb leeren"
+        "message": "Empty shopping cart"
     },
     "shopping_fillCartSuccessfullText": {
-        "message": "Warenkorb erfolgreich befüllt"
+        "message": "Shopping cart successfully filled"
     },
     "shopping_clearCartSuccessfullText": {
-        "message": "Warenkorb erfolgreich geleert"
+        "message": "Shopping cart successfully emptied"
     },
     "shopping_buttonBrickLinkDownload": {
         "message": "Download"
     },
     "shopping_buttonBrickLinkCopy": {
-        "message": "In Zwischenablage kopieren"
+        "message": "Copy to clipboard"
     },
     "shopping_partListToOldText": {
-        "message": "Teilelisten mit Preisabgleich älter als 48 Stunden werden nicht in den Warenkorb übernommen!"
+        "message": "Parts lists with price synchronization older than 48 hours will not be added to the shopping cart!"
     },
     "wantedList_buttonWantedList": {
         "message": "WantedList"
     },
     "wantedList_buttonLoadPrices": {
-        "message": "Lade Preise"
+        "message": "Download prices"
     },
     "wantedList_buttonCancelLoading": {
-        "message": "Abbrechen"
+        "message": "Cancel"
     },
     "wantedList_buttonDelete": {
-        "message": "Löschen"
+        "message": "Delete"
     },
     "wantedList_lastUpdated": {
-        "message": "Zuletzt aktualisiert"
+        "message": "Last updated"
     },
     "wantedList_shoppingCart": {
-        "message": "Warenkorb"
+        "message": "Shopping cart"
     },
     "xmlField_copyWantedList": {
-        "message": "Kopiere den Inhalt einer WantedList hier rein"
+        "message": "Copy the content of a WantedList into this"
     },
     "xmlField_buttonLoadWantedList": {
-        "message": "Lade WantedList"
+        "message": "Load WantedList"
     },
     "xmlField_buttonCancel": {
-        "message": "Abbrechen"
+        "message": "Cancel"
     },
     "xmlReader_chooseFile": {
-        "message": "Datei auswählen oder hier reinziehen..."
+        "message": "Select file or drag here..."
     },
     "xmlReader_dropFile": {
-        "message": "Hier reinziehen..."
+        "message": "Move in here..."
     }
 }

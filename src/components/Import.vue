@@ -24,20 +24,20 @@
             <p style="margin-top: 5px; margin-bottom: 5px;"></p>
             <b-container fluid>
                 <b-row class="my-1" v-if="!isChrome"
-                    ><b-col sm="2">
+                    ><b-col sm="3">
                         <label>{{ fileLabel }}:</label>
                     </b-col>
-                    <b-col sm="10">
+                    <b-col sm="9">
                         <xml-field
                             @load="loadXml"
                             style="width: 650px"
                         ></xml-field> </b-col
                 ></b-row>
                 <b-row class="my-1" v-if="isChrome"
-                    ><b-col sm="2">
+                    ><b-col sm="3">
                         <label>{{ fileLabel }}:</label>
                     </b-col>
-                    <b-col sm="10">
+                    <b-col sm="9">
                         <xml-reader
                             id="uploadXml"
                             @load="loadXml"
@@ -45,10 +45,10 @@
                         ></xml-reader> </b-col
                 ></b-row>
                 <b-row class="my-1">
-                    <b-col sm="2">
+                    <b-col sm="3">
                         <label>{{ nameLabel }}:</label>
                     </b-col>
-                    <b-col sm="10">
+                    <b-col sm="9">
                         <b-form-input
                             v-model="name"
                             :state="name.length > 0"
@@ -56,10 +56,10 @@
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
-                    <b-col sm="2">
+                    <b-col sm="3">
                         <label>{{ shoppingCartLabel }}:</label>
                     </b-col>
-                    <b-col sm="10">
+                    <b-col sm="9">
                         <b-form-checkbox
                             id="checkbox-1"
                             v-model="cart"
@@ -68,8 +68,7 @@
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
-                    <b-col sm="2"> </b-col>
-                    <b-col sm="10">
+                    <b-col sm="9" offset-md="3">
                         <b-button
                             id="btn-pickABrick-add-to-card"
                             variant="primary"
@@ -100,7 +99,7 @@ export default {
     data: () => ({
         page: 'brickLink',
         isChrome: navigator.userAgent.indexOf('Chrome') != -1,
-        wantedList: [],
+        wantedList: null,
         name: '',
         cart: true,
     }),
