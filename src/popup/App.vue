@@ -87,7 +87,7 @@ export default {
         },
     },
     beforeMount() {
-        this.$router.push('/export').catch(()=>{});
+        this.$router.push('/partLists').catch(()=>{});
         this.countrySelected = localStorage.getItem('country') || null;
         this.languageSelected = localStorage.getItem('language') || null;
     },
