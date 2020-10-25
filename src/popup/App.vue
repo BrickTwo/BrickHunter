@@ -15,17 +15,9 @@
                 <b-nav-item @click="showPage('shopping')">{{
                     menuShoppingCart
                 }}</b-nav-item>
-                <b-nav-item-dropdown>
-                    <template v-slot:button-content>
-                        {{ menuExport }}
-                    </template>
-                    <b-dropdown-item @click="showPage('exportWantedList')">{{
-                        menuExportWantedList
-                    }}</b-dropdown-item>
-                    <b-dropdown-item @click="showPage('exportCsv')">{{
-                        menuExportCsv
-                    }}</b-dropdown-item>
-                </b-nav-item-dropdown>
+                <b-nav-item @click="showPage('export')">{{
+                    menuExport
+                }}</b-nav-item>
 
                 <b-nav-item
                     @click="
@@ -95,7 +87,7 @@ export default {
         },
     },
     beforeMount() {
-        this.$router.push('/partLists').catch(()=>{});
+        this.$router.push('/export').catch(()=>{});
         this.countrySelected = localStorage.getItem('country') || null;
         this.languageSelected = localStorage.getItem('language') || null;
     },

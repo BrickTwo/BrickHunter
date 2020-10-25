@@ -13,8 +13,9 @@ import Import from '@/components/Import.vue';
 import PartLists from '@/components/PartLists.vue';
 import WantedList from '@/components/WantedList.vue';
 import Shopping from '@/components/Shopping.vue';
-import ExportWantedList from '@/components/ExportWantedList.vue';
-import ExportCsv from '@/components/ExportCsv.vue';
+import Export from '@/components/Export/Index.vue';
+import Export2 from '@/components/Export/Export.vue';
+
 import Info from '@/components/Info.vue';
 import Settings from '@/components/Settings.vue';
 
@@ -35,8 +36,8 @@ const routes = [
   { path: '/partLists', component: PartLists },
   { path: '/partLists/:id', component: WantedList },
   { path: '/shopping', component: Shopping },
-  { path: '/exportWantedList', component: ExportWantedList },
-  { path: '/exportCsv', component: ExportCsv },
+  { path: '/export', component: Export },
+  { path: '/export/:id', component: Export2 },
   { path: '/info', component: Info },
   { path: '/settings', component: Settings }
 ]
