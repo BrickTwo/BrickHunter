@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_extName__",
   "description": "Upload a WantedList from BrickLink and search automatic for offizial prices on the LEGO page.",
-  "default_locale": "de",
+  "default_locale": "en",
   "permissions": [
     "tabs",
     "<all_urls>",
