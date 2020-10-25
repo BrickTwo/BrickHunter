@@ -52,6 +52,15 @@
     </div>
 </template>
 
+<style>
+    .tabPage {
+        margin-top: 5px;
+    }
+    .button {
+        margin-right: 5px;
+    }
+</style>
+
 <script>
 import SelectCountry from '@/components/SelectCountry.vue';
 import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';

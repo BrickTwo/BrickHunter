@@ -9,7 +9,7 @@ import { ValidationProvider, extend, ValidationObserver } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
 import VueHtmlToPaper from 'vue-html-to-paper';
 
-import Import from '@/components/Import.vue';
+import Import from '@/components/Import/Index.vue';
 import PartLists from '@/components/PartLists.vue';
 import WantedList from '@/components/WantedList.vue';
 import Shopping from '@/components/Shopping.vue';
