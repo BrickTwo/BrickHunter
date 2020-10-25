@@ -180,7 +180,7 @@ export default {
             this.cart = true;
             eventHub.$emit('clearWantedList', '');
         },
-        generateUUID: function() {
+        generateUUID() {
             // Public Domain/MIT
             var d = new Date().getTime();
             if (
