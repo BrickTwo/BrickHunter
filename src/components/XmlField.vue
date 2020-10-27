@@ -6,8 +6,10 @@
             :placeholder="copyWantedList"
             rows="6"
             max-rows="6"
+            @blur.native="loadXml"
+            :state="state"
         ></b-form-textarea>
-        <p style="margin-top: 10px">
+        <!-- <p style="margin-top: 10px">
             <b-button variant="primary" @click="loadXml">{{
                 buttonLoadWantedList
             }}</b-button>
@@ -17,12 +19,17 @@
                 style="margin-left: 10px"
                 >{{ buttonCancel }}</b-button
             >
-        </p>
+        </p> -->
     </span>
 </template>
 
 <script>
 export default {
+    props: {
+        state: {
+            type: Boolean,
+        },
+    },
     data: () => ({ text: '' }),
     methods: {
         loadXml() {

@@ -76,7 +76,9 @@
 
         <div v-if="page == 'overview'">
             <h2>{{ titleAmountPositions }}</h2>
-            {{ amountWantedList }}: {{ wantedListPositions }}<br />
+            {{ amountPartList }}: {{ wantedListPositionsMerged }} ({{
+                wantedListPositions
+            }})<br />
             {{ bricksAndPieces }}: {{ bricksAndPiecesPositions }}<br />
             {{ pickABrick }}: {{ pickABrickPositions }}<br />
             {{ brickLink }}: {{ brickLinkPositions }}<br />
@@ -242,6 +244,24 @@
                 <brick-list :bricklist="brickLinkList"></brick-list>
             </div>
         </div>
+        <b-toast id="partListsToOldWarning" variant="danger" solid>
+            <template #toast-title>
+                <div class="d-flex flex-grow-1 align-items-baseline">
+                    <b-img
+                        blank
+                        blank-color="#ff5555"
+                        class="mr-2"
+                        width="12"
+                        height="12"
+                    ></b-img>
+                    <strong class="mr-auto">Notice!</strong>
+                </div>
+            </template>
+            {{ partListToOldText }}
+            <ul v-for="name in oldPartLists" :key="name" style="margin-top: 10px">
+                <li>{{ name }}</li>
+            </ul>
+        </b-toast>
     </div>
 </template>
 
@@ -251,11 +271,12 @@ export default {
     data() {
         return {
             useHave: null,
-            wantedList: null,
+            wantedList: [],
             bricksAndPiecesList: null,
             pickABrickList: null,
             brickLinkList: null,
             wantedListPositions: 0,
+            wantedListPositionsMerged: 0,
             bricksAndPiecesPositions: 0,
             pickABrickPositions: 0,
             brickLinkPositions: 0,
@@ -267,6 +288,7 @@ export default {
             pickABrickShoppingCartId: null,
             authorization: null,
             loadPABPercentage: 100,
+            oldPartLists: [],
             optionsPrio1: [
                 {
                     value: 'none',
@@ -332,7 +354,7 @@ export default {
     methods: {
         showInfo() {
             //console.log('changePage');
-            this.$emit('changePage', 'info');
+            this.$router.push('/info').catch(() => {});
         },
         pickABrickClearCart() {
             browser.runtime
@@ -349,8 +371,10 @@ export default {
                             var tab = tabs[0];
                             var countrySelected =
                                 localStorage.getItem('country') || null;
+                            var languageSelected =
+                                localStorage.getItem('language') || null;
                             browser.tabs.update(tab.id, {
-                                url: `https://www.lego.com/de-${countrySelected}/page/static/pick-a-brick`,
+                                url: `https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`,
                             });
 
                             this.$bvToast.toast(this.clearCartSuccessfullText, {
@@ -377,8 +401,12 @@ export default {
                     var tab = tabs[0];
                     var countrySelected =
                         localStorage.getItem('country') || null;
+                    var languageSelected =
+                        localStorage.getItem('language') || null;
+
+                    //console.log(`https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`);
                     browser.tabs.update(tab.id, {
-                        url: `https://www.lego.com/de-${countrySelected}/page/static/pick-a-brick`,
+                        url: `https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`,
                     });
 
                     this.$bvToast.toast(this.fillCartSuccessfullText, {
@@ -517,7 +545,11 @@ export default {
                     }
                 });
 
-                if(this.selectedPrio1 != 'brickLink' && this.selectedPrio2 != 'brickLink' && this.selectedPrio3 != 'brickLink') {
+                if (
+                    this.selectedPrio1 != 'brickLink' &&
+                    this.selectedPrio2 != 'brickLink' &&
+                    this.selectedPrio3 != 'brickLink'
+                ) {
                     this.brickLinkPositions = 0;
                     this.brickLinkPrice = 0;
                 }
@@ -532,7 +564,7 @@ export default {
             if (!bricksAndPiecesPrice) bricksAndPiecesPrice = 0;
             if (!pickABrickPrice) pickABrickPrice = 0;
             if (!brickLinkPrice || brickLinkPrice < 0) brickLinkPrice = 0;
-            
+
             var prices = Array();
 
             if (
@@ -568,7 +600,7 @@ export default {
                 prices.push(['brickLink', brickLinkPrice]);
             }
 
-            if (prices.length == 0){
+            if (prices.length == 0) {
                 prices.push(['brickLink', 0]);
             }
 
@@ -664,6 +696,67 @@ export default {
             //console.log('print');
             this.$htmlToPaper('brickLinkList');
         },
+        loadPartLists() {
+            this.$store.state.partLists.map((partList) => {
+                if (!partList.positions) return;
+                if (!partList.cart) return;
+
+                if (
+                    Date.now() - new Date(partList.date).getTime() >
+                    1000 * 60 * 60 * 48
+                ) {
+                    this.oldPartLists.push(partList.name);
+                    return;
+                }
+
+                this.wantedList = [].concat(
+                    this.wantedList,
+                    partList.positions
+                );
+            });
+
+            if (this.wantedList.length)
+                this.wantedListPositions = this.wantedList.length;
+
+            /*this.wantedList.map(part => {
+                part.sortString = part.itemid + "|" + part.color.brickLinkId;
+                part.sortString = part.sortString.toUpperCase();
+            })
+            
+            this.wantedList = this.wantedList.sort((a, b) => {
+                if (a.sortString > b.sortString) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });*/
+
+            var partListMerged = [];
+
+            this.wantedList.map((part) => {
+                var found = partListMerged.find(
+                    (f) =>
+                        f.itemid == part.itemid &&
+                        f.color.brickLinkId == part.color.brickLinkId
+                );
+
+                if (found) {
+                    found.qty = { ...found.qty };
+                    found.qty.min = parseInt(found.qty.min);
+                    found.qty.have = parseInt(found.qty.have);
+                    found.qty.min += parseInt(part.qty.min);
+                    found.qty.have += parseInt(part.qty.have);
+                    found.qty.balance = found.qty.min - found.qty.have;
+                } else {
+                    partListMerged.push({ ...part });
+                }
+            });
+
+            this.wantedList = partListMerged;
+
+            if (this.wantedList.length)
+                this.wantedListPositionsMerged = this.wantedList.length;
+        },
     },
     watch: {
         selectedPrio1: function(val, oldVal) {
@@ -691,11 +784,13 @@ export default {
         this.selectedPrio3 =
             localStorage.getItem('selectedPrio3') || 'brickLink';
         this.useHave = (localStorage.getItem('useHave') || 'true') === 'true';
-        this.wantedList = JSON.parse(
+        /*this.wantedList = JSON.parse(
             localStorage.getItem('wantedList') || null
-        );
-        if (this.wantedList.length)
-            this.wantedListPositions = this.wantedList.length;
+        );*/
+        this.loadPartLists();
+
+        /*if (this.wantedList.length)
+            this.wantedListPositions = this.wantedList.length;*/
 
         this.calcTotalPrice();
 
@@ -717,6 +812,9 @@ export default {
                     .catch(() => {});
             })
             .catch(() => {});
+    },
+    mounted() {
+        if (this.oldPartLists.length) this.$bvToast.show('partListsToOldWarning');
     },
     computed: {
         pickABrick() {
@@ -752,8 +850,8 @@ export default {
         titleAmountPositions() {
             return browser.i18n.getMessage('shopping_titleAmountPositions');
         },
-        amountWantedList() {
-            return browser.i18n.getMessage('shopping_amountWantedList');
+        amountPartList() {
+            return browser.i18n.getMessage('shopping_amountPartList');
         },
         amountTotalFoundLego() {
             return browser.i18n.getMessage('shopping_amountTotalFoundLego');
@@ -801,6 +899,9 @@ export default {
         },
         buttonBrickLinkCopy() {
             return browser.i18n.getMessage('shopping_buttonBrickLinkCopy');
+        },
+        partListToOldText() {
+            return browser.i18n.getMessage('shopping_partListToOldText');
         },
     },
 };
