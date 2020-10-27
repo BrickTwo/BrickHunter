@@ -1,29 +1,24 @@
 <template>
     <div>
-        <b-container class="headerContainer" fluid="lg">
+        <b-container class="px-2" fluid="lg">
             <b-row>
                 <b-col cols="7">
-                    <b-container class="headerLeftContainer">
+                    <b-container>
                         <b-row>
-                            <b-col>
-                                <h2>
-                                    <div
-                                        style="max-width:360px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom"
-                                    >
-                                        {{ partList.name }}
-                                    </div>
-                                    <b-button
-                                        variant="primary"
-                                        v-b-modal.modal-edit-name
-                                        @click="editName = partList.name"
-                                        style="margin-left: 10px"
-                                    >
-                                        <b-icon
-                                            icon="pencil"
-                                            aria-hidden="true"
-                                        ></b-icon>
-                                    </b-button>
+                            <b-col md="auto" id="ddd">
+                                <h2 class="text-overflow-elipsis">
+                                    {{ partList.name }}
                                 </h2>
+                            </b-col>
+                            <b-col cols="12">
+                                <b-button
+                                    variant="primary"
+                                    v-bs-modal.modal-edit-name
+                                    @click="editName = partList.name"
+                                    style="margin-left: 10px"
+                                >
+                                    <b-icon icon="pencil" aria-hidden="true" />
+                                </b-button>
                             </b-col>
                         </b-row>
                         <b-row>
@@ -77,7 +72,8 @@
                         <b-row>
                             <b-col>
                                 <p>
-                                    {{ pickABrick }}: {{ totalPickABrickPositions }}
+                                    {{ pickABrick }}:
+                                    {{ totalPickABrickPositions }}
                                 </p>
                                 <p>
                                     {{ bricksAndPieces }}:
@@ -135,10 +131,13 @@ p {
     padding: 0;
     margin: 0;
 }
+#ddd {
+    width: calc(100% - 70px);
+}
 </style>
 
 <script>
-import BrickList from './BrickList';
+import BrickList from '../BrickList';
 import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
 import { requestsMixin } from '@/mixins/requestsMixin';

@@ -5,7 +5,10 @@
                 <img src="icons/icon_24.png" class="d-inline-block align-top" />
                 {{ extName }}
             </b-navbar-brand>
-            <b-navbar-nav class="ml-auto" v-if="countrySelected && languageSelected">
+            <b-navbar-nav
+                class="ml-auto"
+                v-if="countrySelected && languageSelected"
+            >
                 <b-nav-item @click="showPage('import')">{{
                     menuImport
                 }}</b-nav-item>
@@ -32,17 +35,12 @@
                 <b-nav-item @click="showPage('settings')"
                     ><b-icon icon="gear" aria-hidden="true"></b-icon
                 ></b-nav-item>
-
-                <!--<b-nav-form>
-                    <SelectCountryDropDown
-                        :showFlags="true"
-                        v-if="countrySelected"
-                    />
-                </b-nav-form>-->
             </b-navbar-nav>
         </b-navbar>
         <div class="page">
-            <router-view v-if="countrySelected && languageSelected"></router-view>
+            <router-view
+                v-if="countrySelected && languageSelected"
+            ></router-view>
             <SelectCountry
                 @countrySelected="onCountrySelected"
                 @languageSelected="onLanguageSelected"
@@ -53,12 +51,17 @@
 </template>
 
 <style>
-    .tabPage {
-        margin-top: 5px;
-    }
-    .button {
-        margin-right: 5px;
-    }
+.tabPage {
+    margin-top: 5px;
+}
+.button {
+    margin-right: 5px;
+}
+.text-overflow-elipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 </style>
 
 <script>
@@ -83,7 +86,7 @@ export default {
             this.countrySelected = country;
         },
         showPage(page) {
-            this.$router.push('/' + page).catch(()=>{});
+            this.$router.push('/' + page).catch(() => {});
         },
         link(value) {
             browser.tabs.create({ url: value });
@@ -96,7 +99,7 @@ export default {
         },
     },
     beforeMount() {
-        this.$router.push('/partLists').catch(()=>{});
+        this.$router.push('/partLists').catch(() => {});
         this.countrySelected = localStorage.getItem('country') || null;
         this.languageSelected = localStorage.getItem('language') || null;
     },
