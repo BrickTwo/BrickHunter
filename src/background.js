@@ -15,8 +15,15 @@ browser.runtime.onMessage.addListener(function(
     sendResponse,
     reject
 ) {
+    console.log(
+        'country',
+        localStorage.getItem('country'),
+        localStorage.getItem('language')
+    );
     var localeCountry = localStorage.getItem('country') || 'DE';
-    var localeCountryLanguage = 'de-' + localeCountry.toUpperCase();
+    var localeLanguage = localStorage.getItem('language') || 'DE';
+    var localeCountryLanguage =
+        localeLanguage.toLowerCase() + '-' + localeCountry.toUpperCase();
 
     const timeout = setTimeout(function() {}, 5000);
 
@@ -215,7 +222,7 @@ browser.runtime.onMessage.addListener(function(
                 .then((tabs) => {
                     var tab = tabs[0];
                     browser.tabs.update(tab.id, {
-                        url: `https://www.lego.com/${localeCountryLanguage}/service/replacementparts/sale`,
+                        url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
                     });
                 });
             sendResponse(true);
@@ -233,7 +240,7 @@ browser.runtime.onMessage.addListener(function(
                 .then((tabs) => {
                     var tab = tabs[0];
                     browser.tabs.update(tab.id, {
-                        url: `https://www.lego.com/${localeCountryLanguage}/service/replacementparts/sale`,
+                        url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
                     });
                 });
             sendResponse(true);

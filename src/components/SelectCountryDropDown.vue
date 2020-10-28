@@ -20,35 +20,22 @@
 </template>
 
 <script>
+import { countryMixin } from '@/mixins/countryMixin';
+
 export default {
     props: {
         showFlags: {
             type: Boolean,
         },
     },
+    mixins: [countryMixin],
     data() {
         return {
             selectedCountry: null,
-            options: [
-                {
-                    value: 'de',
-                    text: this.getCountryName('de'),
-                },
-                {
-                    value: 'at',
-                    text: this.getCountryName('at'),
-                },
-                {
-                    value: 'ch',
-                    text: this.getCountryName('ch'),
-                },
-            ],
+            options: [],
         };
     },
     methods: {
-        getCountryName(country) {
-            return browser.i18n.getMessage('country_' + country);
-        },
         changeCountry(value) {
             this.selectedCountry = value;
             localStorage.setItem('country', this.selectedCountry);
@@ -60,6 +47,13 @@ export default {
     },
     beforeMount() {
         this.selectedCountry = localStorage.getItem('country') || null;
+
+        this.COUNTRIES.forEach((country) => {
+            this.options.push({
+                value: country.countryCode,
+                text: country.text,
+            });
+        });
     },
     computed: {
         country() {

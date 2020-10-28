@@ -1,60 +1,112 @@
 <template>
     <div>
-        <p>
-            <xml-reader
-                id="uploadXml"
-                @load="loadXml"
-                style="width: 370px"
-                v-if="isChrome"
-            ></xml-reader>
-            <b-button
-                variant="primary"
-                v-if="!isChrome && !loadWantedList"
-                @click="loadWantedList = true"
-                >{{ buttonWantedList }}</b-button
-            >
-            <xml-field
-                @load="loadXml"
-                @cancel="loadWantedList = false"
-                style="width: 650px"
-                v-if="loadWantedList"
-            ></xml-field>
-            <b-button
-                variant="primary"
-                @click="loadPrices"
-                :disabled="
-                    !wantedList ||
-                        wantedList.length == 0 ||
-                        loadPercentage < 100
-                "
-                style="margin-left: 10px; vertical-align: bottom;"
-                v-if="!loadWantedList"
-                >{{ buttonLoadPrices }}</b-button
-            ><b-button
-                variant="danger"
-                @click="cancel"
-                :disabled="loadPercentage >= 100"
-                style="margin-left: 10px; vertical-align: bottom;"
-                v-if="!loadWantedList"
-                >{{ buttonCancelLoading }}</b-button
-            >
-            <b-button
-                variant="danger"
-                @click="clear"
-                style="margin-left: 10px; vertical-align: bottom;"
-                v-if="!loadWantedList"
-                >{{ buttonClear }}</b-button
-            >
-            <b-button
-                variant="primary"
-                @click="print"
-                style="margin-left: 10px; vertical-align: bottom;"
-                :disabled="!wantedList || wantedList.length == 0"
-                v-if="!loadWantedList"
-            >
-                <b-icon icon="printer" aria-hidden="true"></b-icon>
-            </b-button>
-        </p>
+        <b-container class="headerContainer" fluid="lg">
+            <b-row>
+                <b-col cols="7">
+                    <b-container class="headerLeftContainer">
+                        <b-row>
+                            <b-col>
+                                <h2>
+                                    <div
+                                        style="max-width:360px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom"
+                                    >
+                                        {{ partList.name }}
+                                    </div>
+                                    <b-button
+                                        variant="primary"
+                                        v-b-modal.modal-edit-name
+                                        @click="editName = partList.name"
+                                        style="margin-left: 10px"
+                                    >
+                                        <b-icon
+                                            icon="pencil"
+                                            aria-hidden="true"
+                                        ></b-icon>
+                                    </b-button>
+                                </h2>
+                            </b-col>
+                        </b-row>
+                        <b-row>
+                            <b-col>
+                                <b-button
+                                    variant="primary"
+                                    @click="loadPrices"
+                                    :disabled="
+                                        !wantedList ||
+                                            wantedList.length == 0 ||
+                                            loadPercentage < 100
+                                    "
+                                    v-if="!loadWantedList"
+                                    >{{ buttonLoadPrices }}</b-button
+                                ><b-button
+                                    variant="danger"
+                                    @click="cancel"
+                                    :disabled="loadPercentage >= 100"
+                                    style="margin-left: 10px;"
+                                    v-if="!loadWantedList"
+                                    >{{ buttonCancelLoading }}</b-button
+                                >
+                                <b-button
+                                    variant="danger"
+                                    @click="deleteList"
+                                    style="margin-left: 10px;"
+                                    v-if="!loadWantedList"
+                                    >{{ buttonDelete }}</b-button
+                                >
+                                <b-button
+                                    variant="primary"
+                                    @click="print"
+                                    style="margin-left: 10px;"
+                                    :disabled="
+                                        !wantedList || wantedList.length == 0
+                                    "
+                                    v-if="!loadWantedList"
+                                >
+                                    <b-icon
+                                        icon="printer"
+                                        aria-hidden="true"
+                                    ></b-icon>
+                                </b-button>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+                </b-col>
+                <b-col>
+                    <p>{{ lastUpdated }}: {{ partList.date | formatDate }}</p>
+                    <b-container class="bv-example-row">
+                        <b-row>
+                            <b-col>
+                                <p>
+                                    {{ pickABrick }}: {{ totalPickABrickPositions }}
+                                </p>
+                                <p>
+                                    {{ bricksAndPieces }}:
+                                    {{ totalBricksAndPiecesPositions }}
+                                </p>
+                                <p>{{ total }}: {{ totalPositions }}</p>
+                            </b-col>
+                            <b-col>
+                                <p style="display: inline-block;">
+                                    <b-form-checkbox
+                                        v-model="partList.cart"
+                                        id="checkbox-1"
+                                        name="checkbox-1"
+                                    >
+                                        {{ shoppingCart }}
+                                    </b-form-checkbox>
+                                </p>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+                </b-col>
+            </b-row>
+        </b-container>
+
+        <b-modal id="modal-edit-name" hide-header @ok="saveName">
+            <p class="my-4">
+                <b-form-input v-model="editName"></b-form-input>
+            </p>
+        </b-modal>
         <span v-if="!loadWantedList">
             <b-progress
                 :value="loadPercentage"
@@ -74,9 +126,18 @@
     </div>
 </template>
 
+<style>
+.col,
+.col-7 {
+    padding: 0;
+}
+p {
+    padding: 0;
+    margin: 0;
+}
+</style>
+
 <script>
-import XmlReader from './XmlReader';
-import XmlField from './XmlField';
 import BrickList from './BrickList';
 import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
@@ -87,17 +148,19 @@ export default {
     data: () => ({
         isChrome: navigator.userAgent.indexOf('Chrome') != -1,
         loadWantedList: false,
-        totalBricks: 0,
         pickABrickBrickCounter: 0,
         bricksAndPiecesBrickCounter: 0,
         loadPercentage: 100,
         priceLoaded: true,
         wantedList: [],
         cancelLoading: false,
+        partList: null,
+        editName: null,
+        totalPositions: 0,
+        totalPickABrickPositions: 0,
+        totalBricksAndPiecesPositions: 0,
     }),
     components: {
-        XmlReader,
-        XmlField,
         BrickList,
     },
     mixins: [
@@ -107,69 +170,6 @@ export default {
         brickLinkProcessorMixin,
     ],
     methods: {
-        loadXml(wantedList) {
-            //console.log(wantedList)
-            this.loadWantedList = false;
-            this.priceLoaded = false;
-            this.totalBricks = 0;
-            this.pickABrickBrickCounter = 0;
-            this.bricksAndPiecesBrickCounter = 0;
-
-            wantedList.then((list) => {
-                list[0].map((item) => {
-                    item.itemtype = item.itemtype[0];
-                    item.itemid = item.itemid[0];
-                    //console.log(this.ItemIdToDesignId(item.itemid))
-                    item.searchids = [this.cleanItemId(item.itemid)];
-                    item.designid = '';
-                    if (item.color) {
-                        item.color = item.color[0];
-                        item.color = this.findColor(item.color, this.COLOR);
-                    } else {
-                        item.color = this.findColor(0, this.COLOR);
-                    }
-                    if (item.maxprice) {
-                        item.maxprice = item.maxprice[0];
-                    } else {
-                        item.maxprice = 0;
-                    }
-                    item.qty = {
-                        min: 0,
-                        have: 0,
-                        balance: 0,
-                        order: 0,
-                    };
-                    if (item.minqty) {
-                        item.qty.min = item.minqty[0];
-                    }
-                    if (item.qtyfilled) {
-                        item.qty.have = item.qtyfilled[0];
-                    }
-                    item.qty.balance = item.qty.min - item.qty.have;
-                    if (item.qty.balance < 0) {
-                        item.qty.balance = 0;
-                    }
-                    if (item.condition) {
-                        item.condition = item.condition[0];
-                    } else {
-                        item.condition = null;
-                    }
-                    if (item.notify) {
-                        item.notify = item.notify[0];
-                    } else {
-                        item.notify = null;
-                    }
-                    item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color?.brickLinkId}/${item.itemid}.t1.png`;
-                    item.bricksAndPieces = null;
-                    item.pickABrick = null;
-                    item.brickLink = null;
-                });
-                this.wantedList = [...list[0]];
-                this.totalBricks = this.wantedList.length;
-                this.$store.commit('setWantedList', this.wantedList);
-                return list;
-            });
-        },
         async loadPrices() {
             this.priceLoaded = true;
             this.pickABrickBrickCounter = 0;
@@ -181,6 +181,8 @@ export default {
                 this.wantedList[i].pickABrick = null;
                 this.wantedList[i].brickLink = null;
             }
+
+            this.calcTotals();
 
             for (var i = 0; i < this.wantedList.length; i++) {
                 if (this.cancelLoading) {
@@ -233,7 +235,7 @@ export default {
         },
         calcLoad() {
             //console.log("pickABrick: ", this.pickABrickBrickCounter, " bricksAndPieces: ", this.bricksAndPiecesBrickCounter)
-            var one = 100 / this.totalBricks / 2;
+            var one = 100 / this.totalPositions / 2;
 
             this.loadPercentage = Math.round(
                 one * this.pickABrickBrickCounter +
@@ -241,14 +243,12 @@ export default {
             );
             if (this.loadPercentage >= 100) {
                 //console.log("setWantedList", this.wantedList)
-                this.$store.commit('setWantedList', this.wantedList);
+                this.partList.date = new Date(Date.now());
+                this.partList.positions = this.wantedList;
+                this.$store.commit('setPartList', this.partList);
             }
+            this.calcTotals();
             //console.log(this.loadPercentage)
-        },
-        clear() {
-            this.wantedList = [];
-            this.$store.commit('setWantedList', this.wantedList);
-            eventHub.$emit('clearWantedList', '');
         },
         print() {
             //console.log("print")
@@ -256,19 +256,64 @@ export default {
         },
         cancel() {
             this.cancelLoading = true;
-            this.pickABrickBrickCounter = this.totalBricks;
-            this.bricksAndPiecesBrickCounter = this.totalBricks;
+            this.pickABrickBrickCounter = this.totalPositions;
+            this.bricksAndPiecesBrickCounter = this.totalPositions;
             this.calcLoad();
+        },
+        deleteList() {
+            this.$store.commit('deletePartList', this.partList.id);
+            this.$router.push('/partLists').catch(() => {});
+        },
+        saveName(bvModalEvt) {
+            // Prevent modal from closing
+            bvModalEvt.preventDefault();
+
+            if (!this.editName) {
+                return;
+            }
+
+            this.partList.name = this.editName;
+            console.log(this.partList.name, this.editName);
+            this.$store.commit('setPartList', this.partList);
+
+            this.$nextTick(() => {
+                this.$bvModal.hide('modal-edit-name');
+            });
+        },
+        calcTotals() {
+            if (this.wantedList) {
+                this.totalPositions = this.wantedList.length;
+                this.totalPickABrickPositions = this.wantedList.filter(
+                    (position) => position.pickABrick != null
+                ).length;
+                this.totalBricksAndPiecesPositions = this.wantedList.filter(
+                    (position) => position.bricksAndPieces != null
+                ).length;
+            }
+        },
+    },
+    watch: {
+        'partList.cart': function(val, oldVal) {
+            this.$store.commit('setPartList', this.partList);
         },
     },
     beforeMount() {
-        this.wantedList = JSON.parse(
-            localStorage.getItem('wantedList') || null
+        this.partList = this.$store.getters.getPartListsById(
+            this.$route.params.id
         );
-        this.totalBricks = 0;
-        if (this.wantedList) this.totalBricks = this.wantedList.length;
+        this.wantedList = this.partList.positions;
+        this.calcTotals();
     },
     computed: {
+        pickABrick() {
+            return browser.i18n.getMessage('pickABrick');
+        },
+        bricksAndPieces() {
+            return browser.i18n.getMessage('bricksAndPieces');
+        },
+        total() {
+            return browser.i18n.getMessage('shopping_total');
+        },
         buttonWantedList() {
             return browser.i18n.getMessage('wantedList_buttonWantedList');
         },
@@ -278,8 +323,14 @@ export default {
         buttonCancelLoading() {
             return browser.i18n.getMessage('wantedList_buttonCancelLoading');
         },
-        buttonClear() {
-            return browser.i18n.getMessage('wantedList_buttonClear');
+        buttonDelete() {
+            return browser.i18n.getMessage('wantedList_buttonDelete');
+        },
+        lastUpdated() {
+            return browser.i18n.getMessage('wantedList_lastUpdated');
+        },
+        shoppingCart() {
+            return browser.i18n.getMessage('wantedList_shoppingCart');
         },
     },
 };
