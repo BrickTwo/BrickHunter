@@ -127,6 +127,9 @@ export const brickProcessorMixin = {
             this.bricksAndPiecesBrickCounter++;
             this.calcLoad();
 
+            
+            this.sendPrices(this.prepareSendPrice(item, bricks));
+
             return item;
         },
         async loadPickABrick(item) {
@@ -153,6 +156,32 @@ export const brickProcessorMixin = {
             this.calcLoad();
 
             return item;
+        },
+        prepareSendPrice(item, bricks) {
+            console.log(item);
+            if (!bricks) return null;
+
+            var returnValue = [];
+            var country = localStorage.getItem('country') || null;
+
+            bricks.forEach((value) => {
+                var value = {
+                    designId: value.designId,
+                    itemNumber: value.itemNumber,
+                    brickLinkId: item.itemid,
+                    priceAmount: value.price.amount,
+                    priceCurrency: value.price.currency,
+                    maxAmount: value.maxAmount,
+                    isAvailable: value.isAvailable,
+                    isSoldOut: value.isSoldOut,
+                    country: country,
+                };
+
+                returnValue.push(value);
+            });
+
+            console.log('returnValue', returnValue);
+            return returnValue;
         },
     },
 };

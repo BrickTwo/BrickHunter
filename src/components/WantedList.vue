@@ -77,7 +77,8 @@
                         <b-row>
                             <b-col>
                                 <p>
-                                    {{ pickABrick }}: {{ totalPickABrickPositions }}
+                                    {{ pickABrick }}:
+                                    {{ totalPickABrickPositions }}
                                 </p>
                                 <p>
                                     {{ bricksAndPieces }}:

@@ -258,7 +258,11 @@
                 </div>
             </template>
             {{ partListToOldText }}
-            <ul v-for="name in oldPartLists" :key="name" style="margin-top: 10px">
+            <ul
+                v-for="name in oldPartLists"
+                :key="name"
+                style="margin-top: 10px"
+            >
                 <li>{{ name }}</li>
             </ul>
         </b-toast>
@@ -439,6 +443,12 @@ export default {
                 if (this.bricksAndPiecesList[i].bricksAndPieces) {
                     var qty = this.bricksAndPiecesList[i].qty.order;
                     if (qty > 200) qty = 200; // it's not possible to order more than 200 pieces per brick
+                    if (
+                        qty >
+                        this.bricksAndPiecesList[i].bricksAndPieces.maxAmount
+                    )
+                        qty = this.bricksAndPiecesList[i].bricksAndPieces
+                            .maxAmount;
 
                     var pos = {
                         id: this.bricksAndPiecesList[i].bricksAndPieces
@@ -518,9 +528,24 @@ export default {
 
                         if (price[1]) {
                             if (price[0] == 'bricksAndPieces') {
+                                console.log(
+                                    item.bricksAndPieces.maxAmount,
+                                    item.qty.order
+                                );
+                                if (
+                                    item.bricksAndPieces.maxAmount <
+                                    item.qty.order
+                                ) {
+                                    item.qty.maxAmount =
+                                        item.bricksAndPieces.maxAmount;
+                                    this.bricksAndPiecesPrice +=
+                                        item.qty.maxAmount * price[1];
+                                } else {
+                                    this.bricksAndPiecesPrice +=
+                                        item.qty.order * price[1];
+                                }
+                                console.log(item);
                                 this.bricksAndPiecesPositions++;
-                                this.bricksAndPiecesPrice +=
-                                    item.qty.order * price[1];
                                 this.currency =
                                     item.bricksAndPieces.price.currency;
                                 this.fillBricksAndPiecesList(item);
@@ -814,7 +839,8 @@ export default {
             .catch(() => {});
     },
     mounted() {
-        if (this.oldPartLists.length) this.$bvToast.show('partListsToOldWarning');
+        if (this.oldPartLists.length)
+            this.$bvToast.show('partListsToOldWarning');
     },
     computed: {
         pickABrick() {
