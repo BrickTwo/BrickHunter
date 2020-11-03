@@ -52,15 +52,23 @@
 
 <style>
 .tabPage {
-    margin-top: 5px;
+    margin-top: 5px !important;
 }
 .button {
-    margin-right: 5px;
+    margin-right: 5px !important;
 }
 .text-overflow-elipsis {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.col,
+.col-7 {
+    padding: 0 !important;
+}
+p {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 </style>
 

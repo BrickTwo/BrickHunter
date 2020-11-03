@@ -5,20 +5,23 @@
                 <b-col cols="7">
                     <b-container>
                         <b-row>
-                            <b-col md="auto" id="ddd">
-                                <h2 class="text-overflow-elipsis">
+                            <b-col id="partListTitle">
+                                <h2
+                                    class="text-overflow-elipsis"
+                                    id="partListH2"
+                                >
                                     {{ partList.name }}
                                 </h2>
-                            </b-col>
-                            <b-col cols="12">
-                                <b-button
-                                    variant="primary"
-                                    v-bs-modal.modal-edit-name
-                                    @click="editName = partList.name"
-                                    style="margin-left: 10px"
-                                >
-                                    <b-icon icon="pencil" aria-hidden="true" />
-                                </b-button>
+                                <p class="h2 mb-2">
+                                    <b-icon
+                                        icon="pencil"
+                                        aria-hidden="true"
+                                        v-b-modal.modal-edit-name
+                                        @click="editName = partList.name"
+                                        style="margin-left: 10px; cursor: pointer"
+                                        variant="primary"
+                                    />
+                                </p>
                             </b-col>
                         </b-row>
                         <b-row>
@@ -32,22 +35,26 @@
                                             loadPercentage < 100
                                     "
                                     v-if="!loadWantedList"
-                                    >{{ buttonLoadPrices }}</b-button
-                                ><b-button
+                                >
+                                    {{ buttonLoadPrices }}
+                                </b-button>
+                                <b-button
                                     variant="danger"
                                     @click="cancel"
                                     :disabled="loadPercentage >= 100"
                                     style="margin-left: 10px;"
                                     v-if="!loadWantedList"
-                                    >{{ buttonCancelLoading }}</b-button
                                 >
+                                    {{ buttonCancelLoading }}
+                                </b-button>
                                 <b-button
                                     variant="danger"
                                     @click="deleteList"
                                     style="margin-left: 10px;"
                                     v-if="!loadWantedList"
-                                    >{{ buttonDelete }}</b-button
                                 >
+                                    {{ buttonDelete }}
+                                </b-button>
                                 <b-button
                                     variant="primary"
                                     @click="print"
@@ -57,10 +64,7 @@
                                     "
                                     v-if="!loadWantedList"
                                 >
-                                    <b-icon
-                                        icon="printer"
-                                        aria-hidden="true"
-                                    ></b-icon>
+                                    <b-icon icon="printer" aria-hidden="true" />
                                 </b-button>
                             </b-col>
                         </b-row>
@@ -98,7 +102,7 @@
             </b-row>
         </b-container>
 
-        <b-modal id="modal-edit-name" hide-header @ok="saveName">
+        <b-modal id="modal-edit-name" @ok="saveName" v-bind:title="wantedListName">
             <p class="my-4">
                 <b-form-input v-model="editName"></b-form-input>
             </p>
@@ -122,17 +126,12 @@
     </div>
 </template>
 
-<style>
-.col,
-.col-7 {
-    padding: 0;
+<style scoped>
+#partListTitle {
+    display: inline-flex;
 }
-p {
-    padding: 0;
-    margin: 0;
-}
-#ddd {
-    width: calc(100% - 70px);
+#partListH2 {
+    max-width: calc(100% - 70px);
 }
 </style>
 
@@ -331,6 +330,9 @@ export default {
         shoppingCart() {
             return browser.i18n.getMessage('wantedList_shoppingCart');
         },
+        wantedListName() {
+            return browser.i18n.getMessage('wantedList_name');
+        },        
     },
 };
 </script>
