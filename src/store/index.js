@@ -1,23 +1,22 @@
+import { BreadcrumbPlugin } from 'bootstrap-vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import partList from './modules/partList';
+import shopping from './modules/shopping';
+
 Vue.use(Vuex);
 export default new Vuex.Store({
-    state: {
-        wantedList: '',
-        partLists: [],
-        totalPositions: 0,
+    modules: {
+        shopping,
+        partList,
     },
     mutations: {
         initialiseStore(state) {
-            var i = 0,
-                sKey;
-
-            for (; (sKey = window.localStorage.key(i)); i++) {
-                if (sKey.startsWith('partList_')) {
-                    state.partLists.push(
-                        JSON.parse(window.localStorage.getItem(sKey))
-                    );
-                } else if (
+            var sKey;
+    
+            for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
+                if (
+                    !sKey.startsWith('partList_') &&
                     sKey != 'selectedOptions' &&
                     sKey != 'selectedColorOptions' &&
                     sKey != 'selectedPickABrickOptions' &&
@@ -38,49 +37,27 @@ export default new Vuex.Store({
                     localStorage.removeItem(sKey);
                 }
             }
-
-            state.totalPositions = 0;
-            state.partLists.map((partList) => {
-                state.totalPositions += partList.positions.length;
-            });
         },
-        setPartList(state, payload) {
-            var found = state.partLists.find(
-                (partList) => partList.id === payload.id
-            );
-
-            if (found) {
-                found = payload;
-            } else {
-                state.partLists.push(payload);
+        
+        /*setShoppingProp(state, payload) {
+            switch (payload.prop) {
+                case 'bricksAndPiecesPositions':
+                    state.shopping.bricksAndPiecesPositions = payload.value;
+                    break;
+                case 'pickABrickPositions':
+                    state.shopping.pickABrickPositions = payload.value;
+                    break;
+                case 'brickLinkPositions':
+                    state.shopping.brickLinkPositions = payload.value;
+                    break;
             }
-
-            localStorage.setItem(
-                'partList_' + payload.id,
-                JSON.stringify(payload)
-            );
-
-            state.totalPositions = 0;
-            state.partLists.map((partList) => {
-                state.totalPositions += partList.positions.length;
-            });
-        },
-        deletePartList(state, partListId) {
-            state.partLists = state.partLists.filter(
-                (partList) => partList.id != partListId
-            );
-            localStorage.removeItem('partList_' + partListId);
-
-            state.totalPositions = 0;
-            state.partLists.map((partList) => {
-                state.totalPositions += partList.positions.length;
-            });
-        },
+        }*/
     },
-    getters: {
-        getPartListsById: (state) => (id) => {
-            return state.partLists.find((partList) => partList.id === id);
-        },
+    actions: {
+        initialiseStore({state, commit}){
+            commit('initialiseStore');
+            commit('partList/initialiseStore');
+            commit('shopping/initialiseStore');
+        }
     },
-    actions: {},
 });

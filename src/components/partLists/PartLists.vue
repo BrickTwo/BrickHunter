@@ -2,7 +2,7 @@
     <b-container class="px-2" fluid="lg">
         <b-row>
             <b-col class="text-right">
-                {{ $store.state.totalPositions }} / 2000 {{ labelPositions }}
+                {{ $store.state.partList.totalPositions }} / 2000 {{ labelPositions }}
             </b-col>
             <div class="w-100" />
             <b-col v-if="!partLists.length">
@@ -83,7 +83,7 @@ export default {
             this.loadPartLists();
         },
         loadPartLists() {
-            this.partLists = this.$store.state.partLists.sort((a, b) => {
+            this.partLists = this.$store.state.partList.partLists.sort((a, b) => {
                 if (a.name.toUpperCase() > b.name.toUpperCase()) {
                     return 1;
                 } else {
@@ -96,7 +96,7 @@ export default {
         partLists: {
             handler(val, oldVal) {
                 val.forEach((item) => {
-                    this.$store.commit('setPartList', item);
+                    this.$store.commit('partList/setPartList', item);
                 });
             },
             deep: true,

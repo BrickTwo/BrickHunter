@@ -301,7 +301,7 @@ export default {
             localStorage.getItem('behaviourOnSamePrice') || 'bricksAndPieces';
         this.recalcHave = localStorage.getItem('recalcHave') || true;
 
-        this.partList = this.$store.getters.getPartListsById(this.partListId);
+        this.partList = this.$store.getters['partList/getPartListsById'](this.partListId);
         this.wantedList = this.partList.positions;
     },
     computed: {

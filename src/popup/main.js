@@ -12,10 +12,9 @@ import VueHtmlToPaper from 'vue-html-to-paper';
 import Import from '@/components/import/Index.vue';
 import PartLists from '@/components/partLists/PartLists.vue';
 import PartList from '@/components/partLists/PartList.vue';
-import Shopping from '@/components/Shopping.vue';
+import Shopping from '@/components/shopping/Index.vue';
 import Export from '@/components/export/Index.vue';
 import Export2 from '@/components/export/Export.vue';
-
 import Info from '@/components/Info.vue';
 import Settings from '@/components/Settings.vue';
 
@@ -72,7 +71,7 @@ new Vue({
     store,
     router,
     beforeCreate() {
-        this.$store.commit('initialiseStore');
+        this.$store.dispatch('initialiseStore');
     },
     render: (h) => h(App),
 }).$mount('#app');

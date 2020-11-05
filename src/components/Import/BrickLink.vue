@@ -8,7 +8,7 @@
                 <xml-field
                     @load="loadXml"
                     :state="!!wantedList"
-                    style="width: 650px"
+                    style="width: 100%"
                 />
             </b-col>
         </b-row>
@@ -135,14 +135,16 @@ export default {
                     item.brickLink = null;
                 });
                 this.wantedList = [...list[0]];
-                this.totalBricks = this.wantedList.length;
+                //this.totalBricks = this.wantedList.length;
 
                 return list;
             });
         },
         importList() {
             var totalPositionsAfterImport =
-                this.$store.state.totalPositions + this.wantedList.length;
+                this.$store.state.partList.totalPositions + this.wantedList.length;
+
+            console.log(totalPositionsAfterImport, this.$store.state.partList.totalPositions, this.wantedList.length);
 
             if (totalPositionsAfterImport > 2000) {
                 this.$bvToast.toast(
@@ -164,7 +166,7 @@ export default {
                 positions: this.wantedList,
             };
             //console.log('importList', partList);
-            this.$store.commit('setPartList', partList);
+            this.$store.commit('partList/setPartList', partList);
 
             this.$bvToast.toast(this.labelSuccessfullImportBrickLinkText, {
                 title: this.labelImportBrickLinkTitle,
@@ -205,8 +207,8 @@ export default {
         this.wantedList = JSON.parse(
             localStorage.getItem('wantedList') || null
         );
-        this.totalBricks = 0;
-        if (this.wantedList) this.totalBricks = this.wantedList.length;
+        //this.totalBricks = 0;
+        //if (this.wantedList) this.totalBricks = this.wantedList.length;
     },
     computed: {
         labelFile() {

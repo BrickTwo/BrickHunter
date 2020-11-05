@@ -51,6 +51,10 @@
 </template>
 
 <style>
+.page {
+    padding: 20px;
+    width: 780px; /* max pop with 800px - scrollbar */
+}
 .tabPage {
     margin-top: 5px !important;
 }
@@ -107,7 +111,7 @@ export default {
         },
     },
     beforeMount() {
-        this.$router.push('/partLists').catch(() => {});
+        this.$router.push('/export').catch(() => {});
         this.countrySelected = localStorage.getItem('country') || null;
         this.languageSelected = localStorage.getItem('language') || null;
     },
@@ -139,10 +143,3 @@ export default {
     },
 };
 </script>
-
-<style>
-.page {
-    padding: 20px;
-    width: 780px; /* max pop with 800px - scrollbar */
-}
-</style>

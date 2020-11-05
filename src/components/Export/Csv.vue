@@ -562,7 +562,7 @@ export default {
         },
     },
     beforeMount() {
-        this.partList = this.$store.getters.getPartListsById(this.partListId);
+        this.partList = this.$store.getters['partList/getPartListsById'](this.partListId);
         this.wantedList = this.partList.positions;
 
         var selection =

@@ -243,7 +243,7 @@ export default {
                 //console.log("setWantedList", this.wantedList)
                 this.partList.date = new Date(Date.now());
                 this.partList.positions = this.wantedList;
-                this.$store.commit('setPartList', this.partList);
+                this.$store.commit('partList/setPartList', this.partList);
             }
             this.calcTotals();
             //console.log(this.loadPercentage)
@@ -259,7 +259,7 @@ export default {
             this.calcLoad();
         },
         deleteList() {
-            this.$store.commit('deletePartList', this.partList.id);
+            this.$store.commit('partList/deletePartList', this.partList.id);
             this.$router.push('/partLists').catch(() => {});
         },
         saveName(bvModalEvt) {
@@ -272,7 +272,7 @@ export default {
 
             this.partList.name = this.editName;
             console.log(this.partList.name, this.editName);
-            this.$store.commit('setPartList', this.partList);
+            this.$store.commit('partList/setPartList', this.partList);
 
             this.$nextTick(() => {
                 this.$bvModal.hide('modal-edit-name');
@@ -292,11 +292,11 @@ export default {
     },
     watch: {
         'partList.cart': function(val, oldVal) {
-            this.$store.commit('setPartList', this.partList);
+            this.$store.commit('partList/setPartList', this.partList);
         },
     },
     beforeMount() {
-        this.partList = this.$store.getters.getPartListsById(
+        this.partList = this.$store.getters['partList/getPartListsById'](
             this.$route.params.id
         );
         this.wantedList = this.partList.positions;
