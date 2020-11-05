@@ -3,9 +3,9 @@
         v-model="file"
         :state="Boolean(file)"
         accept="text/xml"
-        :placeholder="chooseFile"
-        :drop-placeholder="dropFile"
-    ></b-form-file>
+        :placeholder="labelChooseFile"
+        :drop-placeholder="labelDropFile"
+    />
 </template>
 
 <script>
@@ -41,10 +41,10 @@ export default {
         },
     },
     computed: {
-        chooseFile() {
+        labelChooseFile() {
             return browser.i18n.getMessage('xmlReader_chooseFile');
         },
-        dropFile() {
+        labelDropFile() {
             return browser.i18n.getMessage('xmlReader_dropFile');
         },
     },

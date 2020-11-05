@@ -9,13 +9,12 @@ import { ValidationProvider, extend, ValidationObserver } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
 import VueHtmlToPaper from 'vue-html-to-paper';
 
-import Import from '@/components/Import.vue';
-import PartLists from '@/components/PartLists.vue';
-import WantedList from '@/components/WantedList.vue';
-import Shopping from '@/components/Shopping.vue';
-import Export from '@/components/Export/Index.vue';
-import Export2 from '@/components/Export/Export.vue';
-
+import Import from '@/components/import/Index.vue';
+import PartLists from '@/components/partLists/PartLists.vue';
+import PartList from '@/components/partLists/PartList.vue';
+import Shopping from '@/components/shopping/Index.vue';
+import Export from '@/components/export/Index.vue';
+import Export2 from '@/components/export/Export.vue';
 import Info from '@/components/Info.vue';
 import Settings from '@/components/Settings.vue';
 
@@ -34,7 +33,7 @@ const options = {
 const routes = [
   { path: '/import', component: Import },
   { path: '/partLists', component: PartLists },
-  { path: '/partLists/:id', component: WantedList },
+  { path: '/partLists/:id', component: PartList },
   { path: '/shopping', component: Shopping },
   { path: '/export', component: Export },
   { path: '/export/:id', component: Export2 },
@@ -72,7 +71,7 @@ new Vue({
     store,
     router,
     beforeCreate() {
-        this.$store.commit('initialiseStore');
+        this.$store.dispatch('initialiseStore');
     },
     render: (h) => h(App),
 }).$mount('#app');

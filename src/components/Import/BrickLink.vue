@@ -1,93 +1,61 @@
 <template>
-    <div>
-        <b-nav tabs>
-            <b-nav-item
-                :active="page == 'brickLink'"
-                @click="page = 'brickLink'"
-                >{{ brickLink }}</b-nav-item
-            >
-            <!--<b-nav-item
-                :active="page == 'bricksAndPieces'"
-                @click="page = 'bricksAndPieces'"
-                >{{ bricksAndPieces }}</b-nav-item
-            >
-            <b-nav-item
-                :active="page == 'pickABrick'"
-                @click="page = 'pickABrick'"
-                >{{ pickABrick }}</b-nav-item
-            >
-            <b-nav-item :active="page == 'legoSet'" @click="page = 'legoSet'"
-                >LEGO Set</b-nav-item
-            >-->
-        </b-nav>
-        <div v-if="page == 'brickLink'">
-            <p style="margin-top: 5px; margin-bottom: 5px;"></p>
-            <b-container fluid>
-                <b-row class="my-1" v-if="!isChrome"
-                    ><b-col sm="3">
-                        <label>{{ fileLabel }}:</label>
-                    </b-col>
-                    <b-col sm="9">
-                        <xml-field
-                            @load="loadXml"
-                            :state="!!wantedList"
-                            style="width: 650px"
-                        ></xml-field> </b-col
-                ></b-row>
-                <b-row class="my-1" v-if="isChrome"
-                    ><b-col sm="3">
-                        <label>{{ fileLabel }}:</label>
-                    </b-col>
-                    <b-col sm="9">
-                        <xml-reader
-                            id="uploadXml"
-                            @load="loadXml"
-                            @fileName="fileName"
-                        ></xml-reader> </b-col
-                ></b-row>
-                <b-row class="my-1">
-                    <b-col sm="3">
-                        <label>{{ nameLabel }}:</label>
-                    </b-col>
-                    <b-col sm="9">
-                        <b-form-input
-                            v-model="name"
-                            :state="name.length > 0"
-                        ></b-form-input>
-                    </b-col>
-                </b-row>
-                <b-row class="my-1">
-                    <b-col sm="3">
-                        <label>{{ shoppingCartLabel }}:</label>
-                    </b-col>
-                    <b-col sm="9">
-                        <b-form-checkbox
-                            id="checkbox-1"
-                            v-model="cart"
-                            name="checkbox-1"
-                        ></b-form-checkbox>
-                    </b-col>
-                </b-row>
-                <b-row class="my-1">
-                    <b-col sm="9" offset-md="3">
-                        <b-button
-                            id="btn-pickABrick-add-to-card"
-                            variant="primary"
-                            @click="importList()"
-                            :disabled="name.length == 0 || !wantedList"
-                            >{{ importButton }}</b-button
-                        >
-                        <b-button
-                            variant="danger"
-                            style="margin-left: 10px;"
-                            @click="clear()"
-                            >{{ clearButton }}</b-button
-                        >
-                    </b-col>
-                </b-row>
-            </b-container>
-        </div>
-    </div>
+    <b-container fluid="lg">
+        <b-row v-if="!isChrome">
+            <b-col sm="3">
+                <label>{{ labelFile }}:</label>
+            </b-col>
+            <b-col sm="9">
+                <xml-field
+                    @load="loadXml"
+                    :state="!!wantedList"
+                    style="width: 100%"
+                />
+            </b-col>
+        </b-row>
+        <b-row v-if="isChrome"
+            ><b-col sm="3">
+                <label>{{ labelFile }}:</label>
+            </b-col>
+            <b-col sm="9">
+                <xml-reader
+                    id="uploadXml"
+                    @load="loadXml"
+                    @fileName="fileName"
+                />
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col sm="3">
+                <label>{{ labelName }}:</label>
+            </b-col>
+            <b-col sm="9">
+                <b-form-input v-model="name" :state="name.length > 0" />
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col sm="3">
+                <label>{{ labelShoppingCart }}:</label>
+            </b-col>
+            <b-col sm="9">
+                <b-form-checkbox v-model="cart" />
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col sm="9" offset-md="3">
+                <b-button
+                    variant="primary"
+                    class="button"
+                    @click="importList()"
+                    :disabled="name.length == 0 || !wantedList"
+                >
+                    {{ labelImport }}
+                </b-button>
+                <b-button variant="danger" class="button" @click="clear()">
+                    {{ labelClear }}
+                </b-button>
+            </b-col>
+        </b-row>
+    </b-container>
 </template>
 
 <script>
@@ -98,7 +66,6 @@ import { brickColorMixin } from '@/mixins/brickColorMixin';
 
 export default {
     data: () => ({
-        page: 'brickLink',
         isChrome: navigator.userAgent.indexOf('Chrome') != -1,
         wantedList: null,
         name: '',
@@ -108,10 +75,7 @@ export default {
         XmlReader,
         XmlField,
     },
-    mixins: [
-        brickProcessorMixin,
-        brickColorMixin,
-    ],
+    mixins: [brickProcessorMixin, brickColorMixin],
     methods: {
         fileName(fileName) {
             this.name = fileName.substring(0, fileName.length - 4);
@@ -171,20 +135,22 @@ export default {
                     item.brickLink = null;
                 });
                 this.wantedList = [...list[0]];
-                this.totalBricks = this.wantedList.length;
+                //this.totalBricks = this.wantedList.length;
 
                 return list;
             });
         },
         importList() {
             var totalPositionsAfterImport =
-                this.$store.state.totalPositions + this.wantedList.length;
+                this.$store.state.partList.totalPositions + this.wantedList.length;
+
+            console.log(totalPositionsAfterImport, this.$store.state.partList.totalPositions, this.wantedList.length);
 
             if (totalPositionsAfterImport > 2000) {
                 this.$bvToast.toast(
-                    this.errorImportBrickLinkTextToManyPositions,
+                    this.labelErrorImportBrickLinkTextToManyPositions,
                     {
-                        title: this.successfullImportBrickLinkTitle,
+                        title: this.labelImportBrickLinkTitle,
                         autoHideDelay: 5000,
                         variant: 'danger',
                     }
@@ -200,10 +166,10 @@ export default {
                 positions: this.wantedList,
             };
             //console.log('importList', partList);
-            this.$store.commit('setPartList', partList);
+            this.$store.commit('partList/setPartList', partList);
 
-            this.$bvToast.toast(this.successfullImportBrickLinkText, {
-                title: this.successfullImportBrickLinkTitle,
+            this.$bvToast.toast(this.labelSuccessfullImportBrickLinkText, {
+                title: this.labelImportBrickLinkTitle,
                 autoHideDelay: 5000,
                 variant: 'success',
             });
@@ -216,7 +182,7 @@ export default {
             this.cart = true;
             eventHub.$emit('clearWantedList', '');
         },
-        generateUUID: function() {
+        generateUUID() {
             // Public Domain/MIT
             var d = new Date().getTime();
             if (
@@ -241,45 +207,36 @@ export default {
         this.wantedList = JSON.parse(
             localStorage.getItem('wantedList') || null
         );
-        this.totalBricks = 0;
-        if (this.wantedList) this.totalBricks = this.wantedList.length;
+        //this.totalBricks = 0;
+        //if (this.wantedList) this.totalBricks = this.wantedList.length;
     },
     computed: {
-        pickABrick() {
-            return browser.i18n.getMessage('pickABrick');
-        },
-        bricksAndPieces() {
-            return browser.i18n.getMessage('bricksAndPieces');
-        },
-        brickLink() {
-            return browser.i18n.getMessage('brickLink');
-        },
-        fileLabel() {
+        labelFile() {
             return browser.i18n.getMessage('import_file');
         },
-        nameLabel() {
+        labelName() {
             return browser.i18n.getMessage('import_name');
         },
-        shoppingCartLabel() {
+        labelShoppingCart() {
             return browser.i18n.getMessage('import_shoppingCart');
         },
-        importButton() {
+        labelImport() {
             return browser.i18n.getMessage('import_importButton');
         },
-        clearButton() {
+        labelClear() {
             return browser.i18n.getMessage('import_clearButton');
         },
-        successfullImportBrickLinkTitle() {
+        labelImportBrickLinkTitle() {
             return browser.i18n.getMessage(
                 'import_successfullImportBrickLinkTitle'
             );
         },
-        successfullImportBrickLinkText() {
+        labelSuccessfullImportBrickLinkText() {
             return browser.i18n.getMessage(
                 'import_successfullImportBrickLinkText'
             );
         },
-        errorImportBrickLinkTextToManyPositions() {
+        labelErrorImportBrickLinkTextToManyPositions() {
             return browser.i18n.getMessage(
                 'import_errorImportBrickLinkTextToManyPositions'
             );

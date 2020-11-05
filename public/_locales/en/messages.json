@@ -446,6 +446,9 @@
     "wantedList_shoppingCart": {
         "message": "Shopping cart"
     },
+    "wantedList_name": {
+        "message": "Part List Name"
+    },
     "xmlField_copyWantedList": {
         "message": "Copy the content of a WantedList into this"
     },

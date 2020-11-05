@@ -443,6 +443,9 @@
     "wantedList_lastUpdated": {
         "message": "Zuletzt aktualisiert"
     },
+    "wantedList_name": {
+        "message": "Teilelistename"
+    },
     "wantedList_shoppingCart": {
         "message": "Warenkorb"
     },

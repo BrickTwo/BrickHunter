@@ -40,7 +40,7 @@ export default {
             //this.$emit('changePage', 'wantedList+' + id);
         },
         loadPartLists() {
-            this.partLists = this.$store.state.partLists.sort((a, b) => {
+            this.partLists = this.$store.state.partList.partLists.sort((a, b) => {
                 if (a.name.toUpperCase() > b.name.toUpperCase()) {
                     return 1;
                 } else {
