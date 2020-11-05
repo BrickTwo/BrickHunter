@@ -125,8 +125,13 @@ export default {
             return value + 1;
         },
         showQty(value) {
-            //console.log(value)
             if (this.limitMaxQty > 0) {
+                if (value.maxAmount) {
+                    if (value.order > value.maxAmount) {
+                        return `<span id="maxqty" style="color: red">${value.maxAmount}</span><br><span style="color: grey; font-size: small;">[${value.order}]</span>`;
+                    }
+                    return value.order;
+                }
                 if (value.order > this.limitMaxQty)
                     return `<span id="maxqty" style="color: red">${this.limitMaxQty}</span><br><span style="color: grey; font-size: small;">[${value.order}]</span>`;
                 if (value.have > 0) return value.order;

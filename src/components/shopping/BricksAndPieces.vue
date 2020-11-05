@@ -70,6 +70,9 @@ export default {
                     var qty = this.brickList[i].qty.order;
                     if (qty > 200) qty = 200; // it's not possible to order more than 200 pieces per brick
 
+                    if (qty > this.brickList[i].bricksAndPieces.maxAmount)
+                        qty = this.brickList[i].bricksAndPieces.maxAmount;
+
                     var pos = {
                         id: this.brickList[i].bricksAndPieces.itemNumber,
                         product: this.brickList[i].bricksAndPieces,

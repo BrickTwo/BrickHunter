@@ -63,18 +63,38 @@ export const shoppingMixin = {
 
                         if (price[1]) {
                             if (price[0] == 'bricksAndPieces') {
+                                /*console.log(
+                                    item.bricksAndPieces.maxAmount,
+                                    item.qty.order
+                                );*/
+                                if (
+                                    item.bricksAndPieces.maxAmount <
+                                    item.qty.order
+                                ) {
+                                    item.qty.maxAmount =
+                                        item.bricksAndPieces.maxAmount;
+                                    this.incrementBricksAndPiecesPrice(
+                                        item.qty.maxAmount * price[1]
+                                    );
+                                } else {
+                                    this.incrementBricksAndPiecesPrice(
+                                        item.qty.order * price[1]
+                                    );
+                                }
+                                //console.log(item);
                                 this.incrementBricksAndPiecesPositions();
-                                this.incrementBricksAndPiecesPrice(
-                                    item.qty.order * price[1]
+                                this.setCurrency(
+                                    item.bricksAndPieces.price.currency
                                 );
-                                this.setCurrency(item.bricksAndPieces.price.currency);
                                 this.fillBricksAndPiecesList(item);
                             } else if (price[0] == 'pickABrick') {
                                 this.incrementPickABrickPositions();
                                 this.incrementPickABrickPrice(
                                     item.qty.order * price[1]
                                 );
-                                this.setCurrency(item.pickABrick.variant.price.currencyCode);
+                                this.setCurrency(
+                                    item.pickABrick.variant.price.currencyCode
+                                );
                                 this.fillPickABrickList(item);
                             } else {
                                 this.incrementBrickLinkPositions();
