@@ -5,8 +5,8 @@
   "default_locale": "en",
   "permissions": [
     "tabs",
-    "<all_urls>",
-    "*://*/*"
+    "https://*.lego.com/*",
+    "http://www.bricklink.com/*"
   ],
   "icons": {
     "16": "icons/icon_16.png",
