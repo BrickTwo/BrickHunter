@@ -202,7 +202,7 @@ export default {
                 var brickLinkHtml = await this.getBricklink(item.itemid);
                 item.brickLink = await this.returnModelsObject(brickLinkHtml);
             } catch (err) {
-                console.log("couldn't find brick on bricklink");
+                //console.log("couldn't find brick on bricklink");
                 this.pickABrickBrickCounter++;
                 this.bricksAndPiecesBrickCounter++;
                 this.calcLoad();
@@ -271,7 +271,7 @@ export default {
             }
 
             this.partList.name = this.editName;
-            console.log(this.partList.name, this.editName);
+            //console.log(this.partList.name, this.editName);
             this.$store.commit('partList/setPartList', this.partList);
 
             this.$nextTick(() => {

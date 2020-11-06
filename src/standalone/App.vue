@@ -35,9 +35,6 @@
                 <b-nav-item @click="showPage('settings')"
                     ><b-icon icon="gear" aria-hidden="true"></b-icon
                 ></b-nav-item>
-                <b-nav-item @click="openInFullscreen()"
-                    ><b-icon icon="arrows-fullscreen" aria-hidden="true"></b-icon
-                ></b-nav-item>
             </b-navbar-nav>
         </b-navbar>
         <div class="page">
@@ -56,7 +53,7 @@
 <style>
 .page {
     padding: 20px;
-    width: 780px; /* max pop with 800px - scrollbar */
+    
 }
 .tabPage {
     margin-top: 5px !important;
@@ -112,12 +109,9 @@ export default {
         onLanguageSelected(language) {
             this.languageSelected = language;
         },
-        openInFullscreen() {
-            browser.tabs.create({ url: chrome.runtime.getURL("index.html#" + this.$router.currentRoute.path) });
-        }
     },
     beforeMount() {
-        this.$router.push('/partLists').catch(() => {});
+        //this.$router.push('/partLists').catch(() => {});
         this.countrySelected = localStorage.getItem('country') || null;
         this.languageSelected = localStorage.getItem('language') || null;
     },

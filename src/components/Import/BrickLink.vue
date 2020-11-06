@@ -144,7 +144,7 @@ export default {
             var totalPositionsAfterImport =
                 this.$store.state.partList.totalPositions + this.wantedList.length;
 
-            console.log(totalPositionsAfterImport, this.$store.state.partList.totalPositions, this.wantedList.length);
+            //console.log(totalPositionsAfterImport, this.$store.state.partList.totalPositions, this.wantedList.length);
 
             if (totalPositionsAfterImport > 2000) {
                 this.$bvToast.toast(

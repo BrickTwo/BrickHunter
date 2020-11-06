@@ -3,7 +3,18 @@ module.exports = {
     popup: {
       template: 'public/browser-extension.html',
       entry: './src/popup/main.js',
-      title: 'Popup'
+      title: 'BrickHunter'
+    },
+    standalone: {
+      template: 'public/browser-extension.html',
+      entry: './src/standalone/main.js',
+      title: 'BrickHunter',
+      filename: 'index.html'
+    },
+    devtools: {
+      template: 'public/browser-extension.html',
+      entry: './src/devtools/main.js',
+      title: 'Devtools'
     }
   },
   pluginOptions: {
@@ -11,14 +22,7 @@ module.exports = {
       componentOptions: {
         background: {
           entry: 'src/background.js'
-        }/*,
-        contentScripts: {
-          entries: {
-            'content-script': [
-              'src/contentScript.js'
-            ]
-          }
-        }*/
+        }
       }
     }
   }

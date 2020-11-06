@@ -158,7 +158,7 @@ export const brickProcessorMixin = {
             return item;
         },
         prepareSendPrice(item, bricks) {
-            console.log(item);
+            //console.log(item);
             if (!bricks) return null;
 
             var returnValue = [];
@@ -180,7 +180,7 @@ export const brickProcessorMixin = {
                 returnValue.push(value);
             });
 
-            console.log('returnValue', returnValue);
+            //console.log('returnValue', returnValue);
             return returnValue;
         },
     },

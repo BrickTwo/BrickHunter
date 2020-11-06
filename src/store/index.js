@@ -7,6 +7,7 @@ import shopping from './modules/shopping';
 Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
+        mode: "",
         shopping,
         partList,
     },
@@ -38,20 +39,9 @@ export default new Vuex.Store({
                 }
             }
         },
-        
-        /*setShoppingProp(state, payload) {
-            switch (payload.prop) {
-                case 'bricksAndPiecesPositions':
-                    state.shopping.bricksAndPiecesPositions = payload.value;
-                    break;
-                case 'pickABrickPositions':
-                    state.shopping.pickABrickPositions = payload.value;
-                    break;
-                case 'brickLinkPositions':
-                    state.shopping.brickLinkPositions = payload.value;
-                    break;
-            }
-        }*/
+        setMode(state, payload) {
+            state.mode = payload;
+        }
     },
     actions: {
         initialiseStore({state, commit}){
