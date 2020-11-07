@@ -79,7 +79,7 @@ export default {
             }
         },
         deleteList(id) {
-            this.$store.commit('deletePartList', id);
+            this.$store.commit('partList/deletePartList', id);
             this.loadPartLists();
         },
         loadPartLists() {
