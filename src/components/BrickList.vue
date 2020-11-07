@@ -148,7 +148,7 @@ export default {
     beforeMount() {
         //console.log(this.$store.state.mode);
         if (this.$store.state.mode == 'standalone') {
-            this.tableHeight = '100%';
+            this.tableHeight = 'calc(100vh - 260px)';
         }
     },
 };

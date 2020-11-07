@@ -1,5 +1,5 @@
 <template>
-    <b-container class="bv-example-row" fluid="lg">
+    <b-container class="bv-example-row" fluid="xl">
         <b-row>
             <b-col>
                 <b-button

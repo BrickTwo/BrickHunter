@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-container class="px-2" fluid="lg">
+        <b-container class="px-2" fluid="xl">
             <b-row>
                 <b-col cols="7">
                     <b-container>

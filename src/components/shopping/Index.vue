@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <b-container fluid="xl">
         <b-nav tabs>
             <b-nav-item :active="page == 'settings'" @click="page = 'settings'">
                 {{ tabSettings }}
@@ -73,7 +73,7 @@
                 <li>{{ name }}</li>
             </ul>
         </b-toast>
-    </div>
+    </b-container>
 </template>
 
 <script>
@@ -127,7 +127,6 @@ export default {
                 );
 
                 if (found) {
-                    console.log(found);
                     found.qty = { ...found.qty };
                     found.qty.min = parseInt(found.qty.min);
                     found.qty.have = parseInt(found.qty.have);
@@ -135,7 +134,6 @@ export default {
                     found.qty.have += parseInt(part.qty.have);
                     found.qty.balance = found.qty.min - found.qty.have;
                 } else {
-                    console.log("not found", part)
                     partListMerged.push({ ...part });
                 }
             });

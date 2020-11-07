@@ -1,12 +1,14 @@
 <template>
-  <hello-world />
+    <BrickHunter />
 </template>
 
 <script>
-/*import HelloWorld from '@/components/HelloWorld.vue'
+import BrickHunter from '@/components/BrickHunter.vue';
+import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
 
 export default {
-  name: 'App',
-  components: { HelloWorld }
-}*/
+    components: {
+        BrickHunter,
+    },
+};
 </script>

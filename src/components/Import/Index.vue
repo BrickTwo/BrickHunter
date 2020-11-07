@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <b-container class="p-0" fluid="xl">
         <b-nav tabs>
             <b-nav-item
                 :active="page == 'brickLink'"
@@ -24,7 +24,7 @@
             </b-nav-item>-->
         </b-nav>
         <ImportBrickLink v-if="page == 'brickLink'" class="tabPage" />
-    </div>
+    </b-container>
 </template>
 
 <script>

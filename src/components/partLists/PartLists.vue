@@ -1,5 +1,5 @@
 <template>
-    <b-container class="px-2" fluid="lg">
+    <b-container class="px-2" fluid="xl">
         <b-row>
             <b-col class="text-right">
                 {{ $store.state.partList.totalPositions }} / 2000 {{ labelPositions }}
@@ -25,7 +25,7 @@
                         :variant="variant(partList.date)"
                     >
                     <b-row>
-                        <b-col md="auto" @click.stop>
+                        <b-col cols="auto" @click.stop>
                             <b-form-checkbox
                                     :id="'cart-' + partList.id"
                                     v-model="partList.cart"
@@ -37,15 +37,15 @@
                         <b-col class="text-overflow-elipsis">
                             {{ partList.name }}
                         </b-col>
-                        <b-col md="auto" class="text-right">
+                        <b-col cols="auto" class="text-right">
                             <b-badge variant="primary" pill>
                                 {{ partList.positions.length }}
                             </b-badge>
                         </b-col>
-                        <b-col md="auto" class="px-0 text-right">
+                        <b-col cols="auto" class="px-0 text-right">
                             {{ partList.date | formatDate }}
                         </b-col>
-                        <b-col md="auto" class="text-right" @click.stop>
+                        <b-col cols="auto" class="text-right" @click.stop>
                             <b-icon
                                 icon="trash"
                                 aria-hidden="true"
