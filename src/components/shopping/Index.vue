@@ -109,8 +109,8 @@ export default {
                     Date.now() - new Date(partList.date).getTime() >
                     1000 * 60 * 60 * 48
                 ) {
-                    //this.oldPartLists.push(partList.name);
-                    //return;
+                    this.oldPartLists.push(partList.name);
+                    return;
                 }
 
                 this.setWantedList(
