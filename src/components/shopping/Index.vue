@@ -101,6 +101,8 @@ export default {
     },
     methods: {
         loadPartLists() {
+            var wantedList = [];
+
             this.$store.state.partList.partLists.map((partList) => {
                 if (!partList.positions) return;
                 if (!partList.cart) return;
@@ -112,18 +114,12 @@ export default {
                     this.oldPartLists.push(partList.name);
                     return;
                 }
-
-                this.setWantedList(
-                    [].concat(
-                        this.$store.state.shopping.wantedList,
-                        partList.positions
-                    )
-                );
+                wantedList = [].concat(wantedList, partList.positions);
             });
 
             var partListMerged = [];
 
-            this.$store.state.shopping.wantedList.map((part) => {
+            wantedList.map((part) => {
                 var found = partListMerged.find(
                     (f) =>
                         f.itemid == part.itemid &&
@@ -131,6 +127,7 @@ export default {
                 );
 
                 if (found) {
+                    console.log(found);
                     found.qty = { ...found.qty };
                     found.qty.min = parseInt(found.qty.min);
                     found.qty.have = parseInt(found.qty.have);
@@ -138,6 +135,7 @@ export default {
                     found.qty.have += parseInt(part.qty.have);
                     found.qty.balance = found.qty.min - found.qty.have;
                 } else {
+                    console.log("not found", part)
                     partListMerged.push({ ...part });
                 }
             });
@@ -145,7 +143,10 @@ export default {
             this.$store.commit('shopping/setWantedList', partListMerged);
 
             if (this.$store.state.shopping.wantedList.length)
-                this.$store.commit('shopping/setwantedListPositionsMerged', this.$store.state.shopping.wantedList.length);
+                this.$store.commit(
+                    'shopping/setwantedListPositionsMerged',
+                    this.$store.state.shopping.wantedList.length
+                );
         },
     },
     beforeMount() {
