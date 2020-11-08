@@ -173,6 +173,7 @@ export default {
             this.pickABrickBrickCounter = 0;
             this.bricksAndPiecesBrickCounter = 0;
             this.loadPercentage = 0;
+            this.cancelLoading = false;
 
             for (var i = 0; i < this.wantedList.length; i++) {
                 this.wantedList[i].bricksAndPieces = null;
@@ -183,8 +184,8 @@ export default {
             this.calcTotals();
 
             for (var i = 0; i < this.wantedList.length; i++) {
+                console.log("cancel", this.cancelLoading);
                 if (this.cancelLoading) {
-                    this.cancelLoading = false;
                     return;
                 }
                 var item = this.wantedList[i];
@@ -210,7 +211,6 @@ export default {
             }
 
             if (this.cancelLoading) {
-                this.cancelLoading = false;
                 item.bricksAndPieces = null;
                 return;
             }
@@ -221,7 +221,6 @@ export default {
 
             item = await this.prepareSearchIds(item);
             if (this.cancelLoading) {
-                this.cancelLoading = false;
                 return;
             }
             item = await this.loadBricksAndPieces(item);
