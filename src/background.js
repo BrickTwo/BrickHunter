@@ -9,7 +9,7 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     }
 });
 
-browser.runtime.onMessage.addListener(function(
+browser.runtime.onMessage.addListener(async function(
     request,
     sender,
     sendResponse,
@@ -245,6 +245,71 @@ browser.runtime.onMessage.addListener(function(
                 });
             sendResponse(true);
             return true;
+        case 'getLegoSet':
+            var query = {
+                from: 0,
+                size: 10,
+                sort: [
+                    {
+                        id: {
+                            order: 'asc',
+                        },
+                    },
+                ],
+                query: {
+                    match: {
+                        product_number: {
+                            query: request.setNumber,
+                        },
+                    },
+                },
+            };
+
+            var url = `https://services.slingshot.lego.com/api/v4/lego_historic_product_read/_search`;
+
+            var response = await fetch(url, {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': 'p0OKLXd8US1YsquudM1Ov9Ja7H91jhamak9EMrRB',
+                },
+                body: JSON.stringify(query),
+            });
+
+            var url2 = `https://bricksandpieces.services.lego.com/api/v1/bricks/product/${encodeURIComponent(
+                request.setNumber
+            )}?country=${localeCountry}&orderType=buy`;
+
+            var response2 = await fetch(url2, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': 'saVSCq0hpuxYV48mrXMGfdKnMY1oUs3s',
+                },
+            });
+            
+            var returnValue = {};
+            var sets = await response.json();
+            var hits = sets.hits.hits;
+            
+            var set = hits.filter(
+                (set) => set._source.product_number == request.setNumber
+            )[0];
+
+            if(!set) return false;
+
+            var bricks = await response2.json();
+            returnValue.set = set._source;
+            returnValue.bricks = bricks.bricks;
+
+            //sendResponse(response);
+            return returnValue; // Will respond asynchronously.
     }
     return true;
 });

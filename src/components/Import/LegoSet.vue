@@ -1,26 +1,14 @@
 <template>
     <b-container class="p-0" fluid="xl">
-        <b-row v-if="!showUploadField">
+        <b-row>
             <b-col cols="3">
-                <label>{{ labelFile }}:</label>
+                <label>Setnummer:</label>
             </b-col>
             <b-col cols="9">
-                <xml-field
-                    @load="loadXml"
-                    :state="!!wantedList"
-                    style="width: 100%"
-                />
-            </b-col>
-        </b-row>
-        <b-row v-if="showUploadField"
-            ><b-col cols="3">
-                <label>{{ labelFile }}:</label>
-            </b-col>
-            <b-col cols="9">
-                <xml-reader
-                    id="uploadXml"
-                    @load="loadXml"
-                    @fileName="fileName"
+                <b-form-input
+                    v-model="setNumber"
+                    @blur.native="loadLegoSet()"
+                    :state="setNumberExist"
                 />
             </b-col>
         </b-row>
@@ -59,89 +47,76 @@
 </template>
 
 <script>
-import XmlReader from './XmlReader';
-import XmlField from './XmlField';
 import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
 
 export default {
     data: () => ({
-        wantedList: null,
+        wantedList: [],
+        setNumber: '',
+        setNumberExist: false,
         name: '',
         cart: true,
     }),
-    components: {
-        XmlReader,
-        XmlField,
-    },
     mixins: [brickProcessorMixin, brickColorMixin],
     methods: {
-        fileName(fileName) {
-            this.name = fileName.substring(0, fileName.length - 4);
-        },
-        loadXml(wantedList) {
-            //console.log(wantedList)
-            this.pickABrickBrickCounter = 0;
-            this.bricksAndPiecesBrickCounter = 0;
-
-            wantedList.then((list) => {
-                list[0].map((item) => {
-                    item.itemtype = item.itemtype[0];
-                    item.itemid = item.itemid[0];
-                    //console.log(this.ItemIdToDesignId(item.itemid))
-                    item.searchids = [this.cleanItemId(item.itemid)];
-                    item.designid = '';
-                    if (item.color) {
-                        item.color = item.color[0];
-                        item.color = this.findColor(item.color, this.COLOR);
-                    } else {
-                        item.color = this.findColor(0, this.COLOR);
-                    }
-                    if (item.maxprice) {
-                        item.maxprice = item.maxprice[0];
-                    } else {
-                        item.maxprice = 0;
-                    }
-                    item.qty = {
-                        min: 0,
-                        have: 0,
-                        balance: 0,
-                        order: 0,
-                    };
-                    if (item.minqty) {
-                        item.qty.min = item.minqty[0];
-                    }
-                    if (item.qtyfilled) {
-                        item.qty.have = item.qtyfilled[0];
-                    }
-                    item.qty.balance = item.qty.min - item.qty.have;
-                    if (item.qty.balance < 0) {
-                        item.qty.balance = 0;
-                    }
-                    if (item.condition) {
-                        item.condition = item.condition[0];
-                    } else {
-                        item.condition = null;
-                    }
-                    if (item.notify) {
-                        item.notify = item.notify[0];
-                    } else {
-                        item.notify = null;
-                    }
-                    item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color?.brickLinkId}/${item.itemid}.t1.png`;
-                    item.bricksAndPieces = null;
-                    item.pickABrick = null;
-                    item.brickLink = null;
+        async loadLegoSet() {
+            //console.log(this.setNumber);
+            if (this.setNumber.length > 0) {
+                var response = await browser.runtime.sendMessage({
+                    contentScriptQuery: 'getLegoSet',
+                    setNumber: this.setNumber,
                 });
-                this.wantedList = [...list[0]];
-                //this.totalBricks = this.wantedList.length;
 
-                return list;
+                if (!response) {
+                    this.setNumberExist = false;
+                    return;
+                }
+
+                //console.log(response);
+                this.setNumberExist = true;
+                this.name = response.set.locale['de-de'].title;
+
+                this.fillPartList(response.bricks);
+            } else {
+                this.setNumberExist = false;
+            }
+        },
+        fillPartList(parts) {
+            //console.log(parts);
+
+            parts.map((item) => {
+                //var newItem = {};
+                item.itemid = item.designId;
+                item.searchids = item.itemid;
+                item.color = this.findLegoColor(
+                    item.colorFamily,
+                    this.COLOR
+                );
+                item.qty = {
+                    min: 0,
+                    have: 0,
+                    balance: 0,
+                    order: 0,
+                };
+                item.have = 0;
+                if (item.itemQuantity) {
+                    item.qty.min = item.itemQuantity;
+                }
+                item.itemtype = 'P';
+                item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color?.brickLinkId}/${item.itemid}.t1.png`;
+                item.bricksAndPieces = null;
+                item.pickABrick = null;
+                item.brickLink = null;
             });
+            this.wantedList = [...parts];
+            console.log(this.wantedList);
+            //this.totalBricks = this.wantedList.length;
         },
         importList() {
             var totalPositionsAfterImport =
-                this.$store.state.partList.totalPositions + this.wantedList.length;
+                this.$store.state.partList.totalPositions +
+                this.wantedList.length;
 
             //console.log(totalPositionsAfterImport, this.$store.state.partList.totalPositions, this.wantedList.length);
 
@@ -176,10 +151,10 @@ export default {
             this.clear();
         },
         clear() {
-            this.wantedList = [];
+            this.setNumber = '';
+            this.setNumberExist = false;
             this.name = '';
             this.cart = true;
-            eventHub.$emit('clearWantedList', '');
         },
         generateUUID() {
             // Public Domain/MIT
@@ -203,14 +178,6 @@ export default {
         },
     },
     computed: {
-        showUploadField() {
-            if(navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
-            if(this.$store.state.mode == 'standalone') return true;
-            return false;
-        },
-        labelFile() {
-            return browser.i18n.getMessage('import_file');
-        },
         labelName() {
             return browser.i18n.getMessage('import_name');
         },
@@ -222,11 +189,6 @@ export default {
         },
         labelClear() {
             return browser.i18n.getMessage('import_clearButton');
-        },
-        labelImportBrickLinkTitle() {
-            return browser.i18n.getMessage(
-                'import_successfullImportBrickLinkTitle'
-            );
         },
         labelSuccessfullImportBrickLinkText() {
             return browser.i18n.getMessage(

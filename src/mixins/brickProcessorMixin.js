@@ -14,6 +14,12 @@ export const brickProcessorMixin = {
             );
             return result[0];
         },
+        findLegoColor(colorFamily, colorList) {
+            var result = colorList.filter(
+                (color) => color.bricksAndPiecesName == colorFamily
+            );
+            return result[0];
+        },
         findBricksAndPiecesBrick(item, bricks) {
             //console.log(item.color.brickLinkName);
             //console.log('satFind', item, bricks);
