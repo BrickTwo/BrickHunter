@@ -1,6 +1,7 @@
 export const brickProcessorMixin = {
     methods: {
         cleanItemId(itemId) {
+            itemId = itemId.toString();
             var lastChar = itemId.substr(-1, 1);
             if (lastChar >= 'a' && lastChar <= 'h') {
                 return itemId.slice(0, -1);

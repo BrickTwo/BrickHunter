@@ -42,7 +42,7 @@ browser.runtime.onMessage.addListener(async function(
 
             var url = 'https://www.lego.com/api/graphql/PickABrickQuery';
 
-            fetch(url, {
+            return await fetch(url, {
                 method: 'POST',
                 cache: 'no-cache',
                 headers: {
@@ -56,15 +56,17 @@ browser.runtime.onMessage.addListener(async function(
                     return response.json();
                 })
                 .catch((err) => {
-                    return sendResponse(null);
+                    return null;
                 })
                 .then((data) => {
                     return data.data.elements.results;
                 })
-                .then((results) => sendResponse(results));
-            return true; // Will respond asynchronously.
+                .then((results) => {
+                    return results;
+                });
+        //return true; // Will respond asynchronously.
         case 'readQAuth':
-            browser.tabs
+            return await browser.tabs
                 .query({ currentWindow: true, active: true })
                 .then((logTabs) => {
                     //console.log('tabs', logTabs);
@@ -74,11 +76,10 @@ browser.runtime.onMessage.addListener(async function(
                         })
                         .then((authorization) => {
                             //console.log('Cookie qauth', authorization);
-                            sendResponse(authorization);
+                            return authorization;
                         })
                         .catch((error) => console.log(error));
                 });
-            return true;
         case 'pickABrickReadCart':
             var PickABrickQuery = {
                 operationName: 'PickABrickQuery',
@@ -93,7 +94,7 @@ browser.runtime.onMessage.addListener(async function(
 
             var url = 'https://www.lego.com/api/graphql/PickABrickQuery';
 
-            fetch(url, {
+            return await fetch(url, {
                 method: 'POST',
                 cache: 'no-cache',
                 headers: {
@@ -108,11 +109,12 @@ browser.runtime.onMessage.addListener(async function(
                     return response.json();
                 })
                 .catch((err) => {
-                    return sendResponse(null);
+                    return null;
                 })
                 .then((data) => data.data.me.pabCart)
-                .then((results) => sendResponse(results));
-            return true; // Will respond asynchronously.
+                .then((results) => {
+                    return results;
+                });
         case 'pickABrickClearCart':
             var PickABrickQuery = {
                 operationName: 'RemoveAllPABLineItems',
@@ -125,7 +127,7 @@ browser.runtime.onMessage.addListener(async function(
 
             var url = 'https://www.lego.com/api/graphql/RemoveAllPABLineItems';
 
-            fetch(url, {
+            return await fetch(url, {
                 method: 'POST',
                 cache: 'no-cache',
                 headers: {
@@ -140,11 +142,12 @@ browser.runtime.onMessage.addListener(async function(
                     return response.json();
                 })
                 .catch((err) => {
-                    return sendResponse(null);
+                    return null;
                 })
                 .then((data) => data)
-                .then((results) => sendResponse(results));
-            return true; // Will respond asynchronously.
+                .then((results) => {
+                    return results;
+                });
         case 'pickABrickAddToCart':
             var PickABrickQuery = {
                 operationName: 'AddToPABCart',
@@ -161,7 +164,7 @@ browser.runtime.onMessage.addListener(async function(
 
             var url = 'https://www.lego.com/api/graphql/AddToPABCart';
 
-            fetch(url, {
+            return await fetch(url, {
                 method: 'POST',
                 cache: 'no-cache',
                 headers: {
@@ -177,17 +180,18 @@ browser.runtime.onMessage.addListener(async function(
                     return response.json();
                 })
                 .catch((err) => {
-                    return sendResponse(null);
+                    return null;
                 })
                 .then((data) => data)
-                .then((results) => sendResponse(results));
-            return true; // Will respond asynchronously.
+                .then((results) => {
+                    return results;
+                });
         case 'getBricksAndPieces':
             var url = `https://bricksandpieces.services.lego.com/api/v1/bricks/items/${encodeURIComponent(
                 request.itemId
             )}?country=${localeCountry}&orderType=buy`;
 
-            fetch(url, {
+            return await fetch(url, {
                 method: 'GET',
                 mode: 'cors',
                 cache: 'no-cache',
@@ -203,10 +207,11 @@ browser.runtime.onMessage.addListener(async function(
                     return response.json();
                 })
                 .catch((err) => {
-                    return sendResponse(null);
+                    return null;
                 })
-                .then((results) => sendResponse(results));
-            return true; // Will respond asynchronously.
+                .then((results) => {
+                    return results;
+                });
         case 'bricksAndPiecesFillCart':
             //console.log("sessionStorage.setItem('b_and_p_buy_" + localeCountry.toUpperCase() + "', '" + JSON.stringify(request.order).replace(/'/g, "\\\'")+ "')")
             chrome.tabs.executeScript({
@@ -225,7 +230,6 @@ browser.runtime.onMessage.addListener(async function(
                         url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
                     });
                 });
-            sendResponse(true);
             return true;
         case 'bricksAndPiecesClearCart':
             //console.log("sessionStorage.setItem('b_and_p_buy_" + localeCountry.toUpperCase() + "', '" + JSON.stringify(request.order)+ "')")
@@ -243,7 +247,6 @@ browser.runtime.onMessage.addListener(async function(
                         url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
                     });
                 });
-            sendResponse(true);
             return true;
         case 'getLegoSet':
             var query = {
@@ -293,16 +296,16 @@ browser.runtime.onMessage.addListener(async function(
                     'x-api-key': 'saVSCq0hpuxYV48mrXMGfdKnMY1oUs3s',
                 },
             });
-            
+
             var returnValue = {};
             var sets = await response.json();
             var hits = sets.hits.hits;
-            
+
             var set = hits.filter(
                 (set) => set._source.product_number == request.setNumber
             )[0];
 
-            if(!set) return false;
+            if (!set) return false;
 
             var bricks = await response2.json();
             returnValue.set = set._source;
