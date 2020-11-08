@@ -184,7 +184,6 @@ export default {
             this.calcTotals();
 
             for (var i = 0; i < this.wantedList.length; i++) {
-                console.log("cancel", this.cancelLoading);
                 if (this.cancelLoading) {
                     return;
                 }
