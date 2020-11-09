@@ -1,9 +1,9 @@
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (tab.url.indexOf('https://www.lego.com') == 0) {
         browser.pageAction.show(tabId);
-        //browser.tabs.executeScript({
-        //  file: 'contentScript.js'
-        //});
+        browser.tabs.executeScript({
+          file: 'js/content-script.js',
+        });
     } else {
         browser.pageAction.hide(tabId);
     }
@@ -68,9 +68,9 @@ browser.runtime.onMessage.addListener(async function(
         case 'readQAuth':
             return await browser.tabs
                 .query({ currentWindow: true, active: true })
-                .then((logTabs) => {
+                .then(async (logTabs) => {
                     //console.log('tabs', logTabs);
-                    browser.tabs
+                    return await browser.tabs
                         .sendMessage(logTabs[0].id, {
                             contentScriptQuery: 'readCookie',
                         })
