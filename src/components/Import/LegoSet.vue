@@ -104,7 +104,7 @@ export default {
                     item.qty.min = item.itemQuantity;
                 }
                 item.itemtype = 'P';
-                item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color?.brickLinkId}/${item.itemid}.t1.png`;
+                item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}N/${item.color?.brickLinkId}/${item.itemid}.png`;
                 item.bricksAndPieces = null;
                 item.pickABrick = null;
                 item.brickLink = null;

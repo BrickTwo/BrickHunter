@@ -30,12 +30,89 @@
                 <b-button class="button" variant="primary" @click="showInfo">
                     <b-icon icon="info-circle" aria-hidden="true" />
                 </b-button>
+                <!--<Affiliate
+                    class="button"
+                    style="display: inline;"
+                    :noAffiliate="true"
+                />-->
                 <b-tooltip
                     target="btn-bricksAndPieces-add-to-card"
                     variant="danger"
                 >
                     {{ buttonFillBricksAndPiecesCartInfo }}
                 </b-tooltip>
+                <b-modal
+                    id="modal-open-lego-clear-cart"
+                    title="Aktion kann nicht durchgeführt werden!"
+                    :header-bg-variant="headerBgVariant"
+                    :header-text-variant="headerTextVariant"
+                    centered
+                    @ok="bricksAndPiecesClearCart()"
+                >
+                    <p class="my-4">
+                        Um diese Aktion durchzuführen muss die LEGO.com Webseite
+                        in einem anderen Tab offen und fertig geladen sein.
+                    </p>
+                    <p>
+                        <b-button
+                            variant="primary"
+                            @click="openInNewTab('https://www.lego.com/')"
+                        >
+                            LEGO.com öffnen
+                        </b-button>
+                    </p>
+                    <template #modal-footer="{ cancel, ok }">
+                        <b-button @click="cancel()">
+                            Abbrechen
+                        </b-button>
+                        <!-- Button with custom close trigger value -->
+                        <b-button @click="ok()">
+                            Nochmals versuchen
+                        </b-button>
+                    </template>
+                </b-modal>
+                <b-modal
+                    id="modal-open-lego-fill-cart"
+                    title="Aktion kann nicht durchgeführt werden!"
+                    :header-bg-variant="headerBgVariant"
+                    :header-text-variant="headerTextVariant"
+                    centered
+                    @ok="bricksAndPiecesFillCart()"
+                >
+                    <p class="my-4">
+                        Um diese Aktion durchzuführen muss die LEGO.com Webseite
+                        in einem anderen Tab offen und fertig geladen sein.
+                    </p>
+                    <p>
+                        <b-button
+                            variant="primary"
+                            @click="openInNewTab('https://www.lego.com/')"
+                        >
+                            LEGO.com öffnen
+                        </b-button>
+                    </p>
+                    <template #modal-footer="{ cancel, ok }">
+                        <b-button @click="cancel()">
+                            Abbrechen
+                        </b-button>
+                        <!-- Button with custom close trigger value -->
+                        <b-button @click="ok()">
+                            Nochmals versuchen
+                        </b-button>
+                    </template>
+                </b-modal>
+                <b-modal
+                    id="modal-use-popup"
+                    title="Aktion kann nicht durchgeführt werden!"
+                    :header-bg-variant="headerBgVariant"
+                    :header-text-variant="headerTextVariant"
+                    centered
+                    @ok="bricksAndPiecesFillCart()"
+                >
+                    <p class="my-4">
+                        Bitte benutze für diese Aktion die Popup variante von BrickHunter.
+                    </p>
+                </b-modal>
             </b-col>
         </b-row>
         <b-row>
@@ -48,21 +125,32 @@
 
 <script>
 import BrickList from '../BrickList';
+import Affiliate from '@/components/Affiliate.vue';
 export default {
     data() {
         return {
             brickList: null,
+            headerBgVariant: 'dark',
+            headerTextVariant: 'light',
         };
     },
     components: {
         BrickList,
+        Affiliate,
     },
     methods: {
         showInfo() {
             //console.log('changePage');
             this.$router.push('/info').catch(() => {});
         },
-        bricksAndPiecesFillCart() {
+        async bricksAndPiecesFillCart() {
+            console.log('fillcart');
+            if(!this.showCartButtons){
+                this.$bvModal.show('modal-use-popup');
+                 return;
+            }
+            var isOpen = await this.checkIfLegoIsOpen('fill');
+            if (!isOpen) return;
             var order = [];
             //console.log("bricksAndPieceslist", this.brickList)
             for (var i = 0; i < this.brickList.length; i++) {
@@ -92,6 +180,7 @@ export default {
                 .sendMessage({
                     contentScriptQuery: 'bricksAndPiecesFillCart',
                     order: order,
+                    mode: this.$store.state.mode,
                 })
                 .then((response) => {
                     //console.log(response)
@@ -102,9 +191,18 @@ export default {
                     });
                 });
         },
-        bricksAndPiecesClearCart() {
+        async bricksAndPiecesClearCart() {
+            if(!this.showCartButtons){
+                this.$bvModal.show('modal-use-popup');
+                 return;
+            }
+            var isOpen = await this.checkIfLegoIsOpen('clear');
+            if (!isOpen) return;
             browser.runtime
-                .sendMessage({ contentScriptQuery: 'bricksAndPiecesClearCart' })
+                .sendMessage({
+                    contentScriptQuery: 'bricksAndPiecesClearCart',
+                    mode: this.$store.state.mode,
+                })
                 .then((response) => {
                     //console.log(response)
                     this.$bvToast.toast(this.clearCartSuccessfullText, {
@@ -118,11 +216,37 @@ export default {
             //console.log('print');
             this.$htmlToPaper('bricksAndPiecesList');
         },
+        async checkIfLegoIsOpen(action) {
+            return await browser.tabs
+                //.query({ currentWindow: true, active: true })
+                .query({ url: '*://*.lego.com/*', status: 'complete' })
+                .then(async (logTabs) => {
+                    //console.log('tabs', logTabs);
+                    if (!logTabs.length) {
+                        if (action == 'fill') {
+                            this.$bvModal.show('modal-open-lego-fill-cart');
+                        } else {
+                            this.$bvModal.show('modal-open-lego-clear-cart');
+                        }
+                        return false;
+                    }
+                    return true;
+                });
+        },
+        openInNewTab(url) {
+            var win = window.open(url, '_blank');
+            //win.focus();
+        },
     },
     beforeMount() {
         this.brickList = this.$store.state.shopping.brickAndPiecesList;
     },
     computed: {
+        showCartButtons(){
+            if(this.$store.state.mode == "popup") return true;
+            if(navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
+            return false;
+        },
         buttonFillBricksAndPiecesCart() {
             return browser.i18n.getMessage(
                 'shopping_buttonFillBricksAndPiecesCart'

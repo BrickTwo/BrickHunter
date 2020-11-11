@@ -18,7 +18,7 @@ export default new Vuex.Store({
             state.version.current = '1.1.7';
             state.version.old = localStorage.getItem('version') || '';
             localStorage.setItem('version', state.version.current);
-            console.log(state.version)
+            //console.log(state.version)
             var sKey;
 
             for (var i = 0; (sKey = window.localStorage.key(i)); i++) {

@@ -93,11 +93,29 @@ export default {
         Vuetable,
     },
     methods: {
+        imageExists(url, callback) {
+            var img = new Image();
+            img.onload = function() {
+                callback(true);
+            };
+            img.onerror = function() {
+                callback(false);
+            };
+            img.src = url;
+        },
         showImage(value) {
             return `<img src="${value}" height="40">`;
+            /*return await this.imageExists(value, function(exists) {
+                console.log('RESULT: url=' + value + ', exists=' + exists);
+                if (exists) {
+                    return `<img src="${value}" height="40">`;
+                } else {
+                    return `<img src="https://www.lego.com/cdn/product-assets/element.img.lod4outline.192x192/234926.jpg" height="40">`;
+                }
+            });*/
         },
         showColor(value) {
-            if(!value) return;
+            if (!value) return;
             return `<span style="display: block"><div style="background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"></div><span>${value.brickLinkName}</span></span><span style="color: grey; font-size: small; margin-left: 20px">[${value.legoName}]</span>`;
         },
         brickLinkPrice(value) {

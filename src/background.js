@@ -2,7 +2,7 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (tab.url.indexOf('https://www.lego.com') == 0) {
         browser.pageAction.show(tabId);
         browser.tabs.executeScript({
-          file: 'js/content-script.js',
+            file: 'js/content-script.js',
         });
     } else {
         browser.pageAction.hide(tabId);
@@ -67,15 +67,20 @@ browser.runtime.onMessage.addListener(async function(
         //return true; // Will respond asynchronously.
         case 'readQAuth':
             return await browser.tabs
-                .query({ currentWindow: true, active: true })
+                //.query({ currentWindow: true, active: true })
+                .query({ url: '*://*.lego.com/*', status: 'complete' })
                 .then(async (logTabs) => {
-                    //console.log('tabs', logTabs);
+                    console.log('tabs', logTabs);
+                    if (!logTabs.length) {
+                        return false;
+                    }
+
                     return await browser.tabs
                         .sendMessage(logTabs[0].id, {
                             contentScriptQuery: 'readCookie',
                         })
                         .then((authorization) => {
-                            //console.log('Cookie qauth', authorization);
+                            console.log('Cookie qauth', authorization);
                             return authorization;
                         })
                         .catch((error) => console.log(error));
@@ -186,6 +191,17 @@ browser.runtime.onMessage.addListener(async function(
                 .then((results) => {
                     return results;
                 });
+        case 'openPickABrick':
+            browser.tabs
+                .query({ url: '*://*.lego.com/*', status: 'complete' })
+                .then(async (tabs) => {
+                    var tab = tabs[0];
+
+                    browser.tabs.update(tab.id, {
+                        url: `https://www.lego.com/${localeCountryLanguage}/page/static/pick-a-brick`,
+                    });
+                });
+            return true;
         case 'getBricksAndPieces':
             var url = `https://bricksandpieces.services.lego.com/api/v1/bricks/items/${encodeURIComponent(
                 request.itemId
@@ -214,18 +230,41 @@ browser.runtime.onMessage.addListener(async function(
                 });
         case 'bricksAndPiecesFillCart':
             //console.log("sessionStorage.setItem('b_and_p_buy_" + localeCountry.toUpperCase() + "', '" + JSON.stringify(request.order).replace(/'/g, "\\\'")+ "')")
-            chrome.tabs.executeScript({
+            /*chrome.tabs.executeScript({
                 code:
                     "sessionStorage.setItem('b_and_p_buy_" +
                     localeCountry.toUpperCase() +
                     "', '" +
                     JSON.stringify(request.order).replace(/'/g, "\\'") +
                     "')",
-            });
-            browser.tabs
-                .query({ currentWindow: true, active: true })
+            });*/
+            //console.log(browser.tabs);
+            await browser.tabs
+                //.query({ currentWindow: true, active: true })
+                .query({ url: '*://*.lego.com/*', status: 'complete' })
+                .then(async (tabs) => {
+                    console.log('tabs', tabs);
+                    if (!tabs.length) {
+                        return false;
+                    }
+
+                    await browser.tabs
+                        .sendMessage(tabs[0].id, {
+                            contentScriptQuery: 'setItem',
+                            country: localeCountry.toUpperCase(),
+                            order: request.order,
+                        })
+                        .then((response) => {
+                            console.log(response);
+                            return response;
+                        })
+                        .catch((error) => console.log(error));
+
+                    return tabs;
+                })
                 .then((tabs) => {
                     var tab = tabs[0];
+
                     browser.tabs.update(tab.id, {
                         url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
                     });
@@ -233,14 +272,30 @@ browser.runtime.onMessage.addListener(async function(
             return true;
         case 'bricksAndPiecesClearCart':
             //console.log("sessionStorage.setItem('b_and_p_buy_" + localeCountry.toUpperCase() + "', '" + JSON.stringify(request.order)+ "')")
-            chrome.tabs.executeScript({
+            /*chrome.tabs.executeScript({
                 code:
                     "sessionStorage.removeItem('b_and_p_buy_" +
                     localeCountry.toUpperCase() +
                     "')",
-            });
-            browser.tabs
-                .query({ currentWindow: true, active: true })
+            });*/
+            await browser.tabs
+                //.query({ currentWindow: true, active: true })
+                .query({ url: '*://*.lego.com/*', status: 'complete' })
+                .then(async (tabs) => {
+                    //console.log('tabs', tabs);
+                    if (!tabs.length) {
+                        return false;
+                    }
+
+                    await browser.tabs
+                        .sendMessage(tabs[0].id, {
+                            contentScriptQuery: 'removeItem',
+                            country: localeCountry.toUpperCase(),
+                        })
+                        .catch((error) => console.log(error));
+
+                    return tabs;
+                })
                 .then((tabs) => {
                     var tab = tabs[0];
                     browser.tabs.update(tab.id, {
@@ -313,6 +368,17 @@ browser.runtime.onMessage.addListener(async function(
 
             //sendResponse(response);
             return returnValue; // Will respond asynchronously.
+        case 'openSite':
+            console.log('openSite');
+            browser.tabs
+                .query({ currentWindow: true })
+                //.query({ url: '*://*.lego.com/*' })
+                .then(async (tabs) => {
+                    console.log(tabs);
+                    browser.tabs.update(tabs[0].id, {
+                        url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
+                    });
+                });
     }
     return true;
 });

@@ -16,12 +16,14 @@
         }}
 
         <h2>{{ titlePrice }}</h2>
-        {{ bricksAndPieces }}: {{ $store.state.shopping.currency }}
-        {{ $store.state.shopping.bricksAndPiecesPrice }}<br />
-        {{ pickABrick }}: {{ $store.state.shopping.currency }}
-        {{ $store.state.shopping.pickABrickPrice }}<br />
+        {{ bricksAndPieces }}:
+        {{ $store.state.shopping.currency }}
+        {{ Math.round($store.state.shopping.bricksAndPiecesPrice * 100) / 100 }}<br />
+        {{ pickABrick }}:
+        {{ $store.state.shopping.currency }}
+        {{ Math.round($store.state.shopping.pickABrickPrice * 100) / 100 }}<br />
         {{ brickLink }}: (<a id="bricklinkCurrency" href="">?</a>)
-        {{ $store.state.shopping.brickLinkPrice }}<br />
+        {{ Math.round($store.state.shopping.brickLinkPrice * 100) / 100 }}<br />
         {{ total }}: {{ $store.state.shopping.currency }}
         {{
             Math.round(
@@ -46,7 +48,7 @@ export default {
     },
     beforeMount() {
         if (this.$store.state.shopping.wantedList.length)
-                this.wantedListPositions = this.$store.state.shopping.wantedList.length;
+            this.wantedListPositions = this.$store.state.shopping.wantedList.length;
     },
     computed: {
         pickABrick() {
