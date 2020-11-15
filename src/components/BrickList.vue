@@ -67,7 +67,7 @@ export default {
                 width: '50px',
             },
             {
-                name: 'maxprice',
+                name: 'brickLink',
                 title: () =>
                     browser.i18n.getMessage('brickList_brickLinkPrice'),
                 callback: 'brickLinkPrice',
@@ -93,34 +93,20 @@ export default {
         Vuetable,
     },
     methods: {
-        imageExists(url, callback) {
-            var img = new Image();
-            img.onload = function() {
-                callback(true);
-            };
-            img.onerror = function() {
-                callback(false);
-            };
-            img.src = url;
-        },
         showImage(value) {
-            return `<img src="${value}" height="40">`;
-            /*return await this.imageExists(value, function(exists) {
-                console.log('RESULT: url=' + value + ', exists=' + exists);
-                if (exists) {
-                    return `<img src="${value}" height="40">`;
-                } else {
-                    return `<img src="https://www.lego.com/cdn/product-assets/element.img.lod4outline.192x192/234926.jpg" height="40">`;
-                }
-            });*/
+            if (value.source == 'brickLink') {
+                return `<img src="${value.rsc}" height="40">`;
+            } else {
+                return `<img src="https://www.lego.com/cdn/product-assets/element.img.lod4outline.192x192/${value.itemId}.jpg" height="40">`;
+            }
         },
         showColor(value) {
             if (!value) return;
             return `<span style="display: block"><div style="background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"></div><span>${value.brickLinkName}</span></span><span style="color: grey; font-size: small; margin-left: 20px">[${value.legoName}]</span>`;
         },
         brickLinkPrice(value) {
-            if (value < 0) return 0;
-            return value;
+            if (value?.wantedList?.maxprice < 0) return 0;
+            return value?.wantedList?.maxprice;
         },
         pickABrickPrice(value) {
             if (!value) return '';
@@ -140,7 +126,6 @@ export default {
             return returnValue;
         },
         lineNumber(value) {
-            //console.log(value)
             return value + 1;
         },
         showQty(value) {

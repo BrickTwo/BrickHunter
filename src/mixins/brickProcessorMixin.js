@@ -100,7 +100,7 @@ export const brickProcessorMixin = {
             return false;
         },
         async loadBricksAndPieces(item) {
-            //console.log('loadBricksAndPieces', item);
+            console.log('loadBricksAndPieces', item);
             if (!item.searchids) {
                 item.bricksAndPieces = null;
                 this.bricksAndPiecesBrickCounter++;

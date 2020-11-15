@@ -34,7 +34,7 @@ import LegoSet from './LegoSet';
 
 export default {
     data: () => ({
-        page: 'legoSet',
+        page: 'brickLink',
     }),
     components: {
         ImportBrickLink,

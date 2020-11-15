@@ -10,10 +10,10 @@ export const requestsMixin = {
         sendPrices(items) {
             if(!items) return;
             
-            return axios.post(
+            /*return axios.post(
                 'https://brickhunter.bricktwo.net/api/userbricks.php',
                 items
-            );
+            );*/
         },
     },
 };

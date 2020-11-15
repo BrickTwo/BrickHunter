@@ -2,7 +2,7 @@
     <b-container class="p-0" fluid="xl">
         <b-row>
             <b-col cols="3">
-                <label>Setnummer:</label>
+                <label>{{ labelSetNumber }}:</label>
             </b-col>
             <b-col cols="9">
                 <b-form-input
@@ -18,6 +18,14 @@
             </b-col>
             <b-col cols="9">
                 <b-form-input v-model="name" :state="name.length > 0" />
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col cols="3">
+                <label>{{ labelUseSetNumberSuffix }}:</label>
+            </b-col>
+            <b-col cols="9">
+                <b-form-checkbox v-model="setNumberSuffix" />
             </b-col>
         </b-row>
         <b-row>
@@ -56,6 +64,8 @@ export default {
         setNumber: '',
         setNumberExist: false,
         name: '',
+        setName: '',
+        setNumberSuffix: true,
         cart: true,
     }),
     mixins: [brickProcessorMixin, brickColorMixin],
@@ -73,9 +83,13 @@ export default {
                     return;
                 }
 
-                //console.log(response);
+                console.log(response);
                 this.setNumberExist = true;
                 this.name = response.set.locale['de-de'].title;
+                this.setName = this.name;
+                if (this.setNumberSuffix) {
+                    this.name = this.setNumber + ' - ' + this.name;
+                }
 
                 this.fillPartList(response.bricks);
             } else {
@@ -84,33 +98,39 @@ export default {
         },
         fillPartList(parts) {
             //console.log(parts);
+            var partList = [];
 
             parts.map((item) => {
+                var part = {};
                 //var newItem = {};
-                item.itemid = item.designId;
-                item.searchids = item.itemid;
-                item.color = this.findLegoColor(
-                    item.colorFamily,
-                    this.COLOR
-                );
-                item.qty = {
+                part.source = 'lego';
+                part.itemid = item.itemNumber;
+                part.searchids = [part.itemid];
+                part.color = this.findLegoColor(item.colorFamily, this.COLOR);
+                part.qty = {
                     min: 0,
                     have: 0,
                     balance: 0,
                     order: 0,
                 };
-                item.have = 0;
                 if (item.itemQuantity) {
-                    item.qty.min = item.itemQuantity;
+                    part.qty.min = item.itemQuantity;
                 }
-                item.itemtype = 'P';
-                item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}N/${item.color?.brickLinkId}/${item.itemid}.png`;
-                item.bricksAndPieces = null;
-                item.pickABrick = null;
-                item.brickLink = null;
+                if (item.itemQuantity) {
+                    part.qty.balance = item.itemQuantity;
+                }
+                part.image = {
+                    source: 'lego',
+                    itemId: `${part.itemid}`,
+                };
+                part.bricksAndPieces = null;
+                part.pickABrick = null;
+                part.brickLink = null;
+                partList.push(part);
             });
-            this.wantedList = [...parts];
-            console.log(this.wantedList);
+
+            this.wantedList = [...partList];
+            //console.log(this.wantedList);
             //this.totalBricks = this.wantedList.length;
         },
         importList() {
@@ -177,9 +197,24 @@ export default {
             return newGuid;
         },
     },
+    watch: {
+        setNumberSuffix: function(val) {
+            if (val) {
+                this.name = this.setNumber + ' - ' + this.name;
+                return;
+            }
+            this.name = this.setName;
+        },
+    },
     computed: {
+        labelSetNumber() {
+            return browser.i18n.getMessage('import_setNumber');
+        },
         labelName() {
             return browser.i18n.getMessage('import_name');
+        },
+        labelUseSetNumberSuffix() {
+            return browser.i18n.getMessage('import_useSetNumberSuffix');
         },
         labelShoppingCart() {
             return browser.i18n.getMessage('import_shoppingCart');

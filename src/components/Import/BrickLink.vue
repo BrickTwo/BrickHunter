@@ -84,56 +84,65 @@ export default {
             this.pickABrickBrickCounter = 0;
             this.bricksAndPiecesBrickCounter = 0;
 
+            var partList = [];
+
             wantedList.then((list) => {
                 list[0].map((item) => {
-                    item.itemtype = item.itemtype[0];
-                    item.itemid = item.itemid[0];
-                    //console.log(this.ItemIdToDesignId(item.itemid))
-                    item.searchids = [this.cleanItemId(item.itemid)];
-                    item.designid = '';
+                    var part = {};
+
+                    part.source = 'brickLink';
+                    part.itemid = item.itemid[0];
+                    part.searchids = [this.cleanItemId(item.itemid)];
                     if (item.color) {
-                        item.color = item.color[0];
-                        item.color = this.findColor(item.color, this.COLOR);
+                        part.color = this.findColor(item.color[0], this.COLOR);
                     } else {
-                        item.color = this.findColor(0, this.COLOR);
+                        part.color = this.findColor(0, this.COLOR);
                     }
-                    if (item.maxprice) {
-                        item.maxprice = item.maxprice[0];
-                    } else {
-                        item.maxprice = 0;
-                    }
-                    item.qty = {
+                    part.qty = {
                         min: 0,
                         have: 0,
                         balance: 0,
                         order: 0,
                     };
                     if (item.minqty) {
-                        item.qty.min = item.minqty[0];
+                        part.qty.min = item.minqty[0];
                     }
                     if (item.qtyfilled) {
-                        item.qty.have = item.qtyfilled[0];
+                        part.qty.have = item.qtyfilled[0];
                     }
-                    item.qty.balance = item.qty.min - item.qty.have;
-                    if (item.qty.balance < 0) {
-                        item.qty.balance = 0;
+                    part.qty.balance = part.qty.min - part.qty.have;
+                    if (part.qty.balance < 0) {
+                        part.qty.balance = 0;
+                    }
+                    part.bricksAndPieces = null;
+                    part.pickABrick = null;
+                    part.brickLink = {};
+                    part.brickLink.wantedList = {};
+                    part.brickLink.wantedList.itemtype = item.itemtype[0];
+                    if (item.maxprice) {
+                        part.brickLink.wantedList.maxprice = item.maxprice[0];
+                    } else {
+                        part.brickLink.wantedList.maxprice = 0;
                     }
                     if (item.condition) {
-                        item.condition = item.condition[0];
+                        part.brickLink.wantedList.condition = item.condition[0];
                     } else {
-                        item.condition = null;
+                        part.brickLink.wantedList.condition = null;
                     }
                     if (item.notify) {
-                        item.notify = item.notify[0];
+                        part.brickLink.wantedList.notify = item.notify[0];
                     } else {
-                        item.notify = null;
+                        part.brickLink.wantedList.notify = null;
                     }
-                    item.image = `https://img.bricklink.com/ItemImage/${item.itemtype}T/${item.color?.brickLinkId}/${item.itemid}.t1.png`;
-                    item.bricksAndPieces = null;
-                    item.pickABrick = null;
-                    item.brickLink = null;
+
+                    part.image = {
+                        source: 'brickLink',
+                        rsc: `https://img.bricklink.com/ItemImage/${part.brickLink.wantedList.itemtype}T/${part.color?.brickLinkId}/${part.itemid}.t1.png`,
+                    };
+
+                    partList.push(part);
                 });
-                this.wantedList = [...list[0]];
+                this.wantedList = [...partList];
                 //this.totalBricks = this.wantedList.length;
 
                 return list;
@@ -141,7 +150,8 @@ export default {
         },
         importList() {
             var totalPositionsAfterImport =
-                this.$store.state.partList.totalPositions + this.wantedList.length;
+                this.$store.state.partList.totalPositions +
+                this.wantedList.length;
 
             //console.log(totalPositionsAfterImport, this.$store.state.partList.totalPositions, this.wantedList.length);
 
@@ -204,8 +214,8 @@ export default {
     },
     computed: {
         showUploadField() {
-            if(navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
-            if(this.$store.state.mode == 'standalone') return true;
+            if (navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
+            if (this.$store.state.mode == 'standalone') return true;
             return false;
         },
         labelFile() {

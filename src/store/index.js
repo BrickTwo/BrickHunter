@@ -15,8 +15,8 @@ export default new Vuex.Store({
     },
     mutations: {
         initialiseStore(state) {
-            state.version.current = '1.1.7';
             state.version.old = localStorage.getItem('version') || '';
+            state.version.current = '1.1.8';            
             localStorage.setItem('version', state.version.current);
             //console.log(state.version)
             var sKey;
@@ -53,7 +53,7 @@ export default new Vuex.Store({
     actions: {
         initialiseStore({ state, commit }) {
             commit('initialiseStore');
-            commit('partList/initialiseStore');
+            commit('partList/initialiseStore', state.version.old);
             commit('shopping/initialiseStore');
         },
     },

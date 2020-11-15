@@ -244,7 +244,7 @@ export default {
                     }
                 }
                 if (this.selectedOptions.includes('blMaxPrice')) {
-                    csvLine = this.addToCSVLine(csvLine, element.maxprice);
+                    csvLine = this.addToCSVLine(csvLine, element.brickLink?.wantedList?.maxprice);
                 }
 
                 // color options

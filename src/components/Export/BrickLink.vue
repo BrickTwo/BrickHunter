@@ -148,25 +148,17 @@ export default {
                 var bricksAndPiecesPrice = 0;
                 var pickABrickPrice = 0;
 
-                if (
-                    this.wantedList[i].bricksAndPieces &&
-                    this.wantedList[i].bricksAndPieces.price &&
-                    this.wantedList[i].bricksAndPieces.price.amount
-                )
-                    bricksAndPiecesPrice =
-                        this.wantedList[i].bricksAndPieces.price.amount;
-                if (
-                    this.wantedList[i].pickABrick &&
-                    this.wantedList[i].pickABrick.variant &&
-                    this.wantedList[i].pickABrick.variant.price &&
-                    this.wantedList[i].pickABrick.variant.price.centAmount
-                )
+                if (this.wantedList[i].bricksAndPieces?.price?.amount)
+                    bricksAndPiecesPrice = this.wantedList[i].bricksAndPieces
+                        .price.amount;
+                if (this.wantedList[i].pickABrick?.variant?.price?.centAmount)
                     pickABrickPrice =
-                        this.wantedList[i].pickABrick.variant.price.centAmount / 100;
+                        this.wantedList[i].pickABrick.variant.price.centAmount /
+                        100;
                 var price = this.calculatePrice(
                     pickABrickPrice,
                     bricksAndPiecesPrice,
-                    this.wantedList[i].maxprice
+                    this.wantedList[i].brickLink?.wantedList?.maxprice
                 );
 
                 var remarks = '';
@@ -177,9 +169,8 @@ export default {
                 ) {
                     remarks = 'LEGO Id: ';
                     if (price[0] === 'pickABrick')
-                        remarks +=
-                            this.wantedList[i].pickABrick.variant.attributes
-                                .designNumber;
+                        remarks += this.wantedList[i].pickABrick.variant
+                            .attributes.designNumber;
                     if (price[0] === 'bricksAndPieces')
                         remarks += this.wantedList[i].bricksAndPieces.designId;
                 }
@@ -204,14 +195,14 @@ export default {
 
                 var item = {
                     ITEM: {
-                        ITEMTYPE: this.wantedList[i].itemtype,
+                        ITEMTYPE: this.wantedList[i].brickLink?.wantedList?.itemtype,
                         ITEMID: this.wantedList[i].itemid,
                         COLOR: this.wantedList[i].color.brickLinkId,
                         MAXPRICE: price[1],
                         MINQTY: this.wantedList[i].qty.min,
                         QTYFILLED: have,
-                        CONDITION: this.wantedList[i].condition,
-                        NOTIFY: this.wantedList[i].notify,
+                        CONDITION: this.wantedList[i].brickLink?.wantedList?.condition,
+                        NOTIFY: this.wantedList[i].brickLink?.wantedList?.notify,
                         REMARKS: remarks,
                     },
                 };
@@ -301,7 +292,9 @@ export default {
             localStorage.getItem('behaviourOnSamePrice') || 'bricksAndPieces';
         this.recalcHave = localStorage.getItem('recalcHave') || true;
 
-        this.partList = this.$store.getters['partList/getPartListsById'](this.partListId);
+        this.partList = this.$store.getters['partList/getPartListsById'](
+            this.partListId
+        );
         this.wantedList = this.partList.positions;
     },
     computed: {

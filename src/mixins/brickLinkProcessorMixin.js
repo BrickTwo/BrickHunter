@@ -7,11 +7,11 @@ export const brickLinkProcessorMixin = {
         },
         findColorCodes(item) {
             //console.log("FindColorCodes", item)
-            if(!item.brickLink.mapPCCs) return null;
+            if (!item.brickLink.mapPCCs) return null;
 
             var colorCodesArray = item.brickLink.mapPCCs;
 
-            if(!colorCodesArray[item.color.brickLinkId]) return null;
+            if (!colorCodesArray[item.color.brickLinkId]) return null;
             //console.log(colorCodesArray, item.color.brickLinkId)
             var colorCodes = colorCodesArray[item.color.brickLinkId].split(',');
             //console.log("FindColorCodes", colorCodes)
@@ -33,6 +33,8 @@ export const brickLinkProcessorMixin = {
             return returnModel;
         },
         async prepareSearchIds(item) {
+            if (item.source != 'brickLink') return item;
+
             if (this.isSpecialBrick(item)) {
                 //console.log("special brick")
                 var desingIds = await this.findColorCodes(item);
@@ -46,6 +48,6 @@ export const brickLinkProcessorMixin = {
             }
             //console.log("searchIds", item.searchids)
             return item;
-        }
+        },
     },
 };

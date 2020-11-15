@@ -37,14 +37,16 @@ export const shoppingMixin = {
             this.clearBricksAndPiecesList();
             this.clearPickABrickList();
             this.clearBrickLinkList();
-
+            
             if (this.$store.state.shopping.wantedList) {
                 this.$store.state.shopping.wantedList.forEach((item) => {
+                    
                     if (this.$store.state.shopping.useHave) {
                         item.qty.order = item.qty.balance;
                     } else {
                         item.qty.order = item.qty.min;
                     }
+                    
                     if (item.qty.order > 0) {
                         var bricksAndPiecesPrice = 0;
                         var pickABrickPrice = 0;
@@ -58,7 +60,7 @@ export const shoppingMixin = {
                         var price = this.getPrice(
                             bricksAndPiecesPrice,
                             pickABrickPrice,
-                            item.maxprice
+                            item.brickLink?.wantedList?.maxprice
                         );
 
                         if (price[1]) {
@@ -81,6 +83,9 @@ export const shoppingMixin = {
                                         item.qty.order * price[1]
                                     );
                                 }
+                                if(item.qty.order > 200){
+                                    item.qty.order = 200;
+                                }
                                 //console.log(item);
                                 this.incrementBricksAndPiecesPositions();
                                 this.setCurrency(
@@ -89,6 +94,10 @@ export const shoppingMixin = {
                                 this.fillBricksAndPiecesList(item);
                             } else if (price[0] == 'pickABrick') {
                                 this.incrementPickABrickPositions();
+                                if(item.qty.order > 999){
+                                    item.qty.order = 999;
+                                }
+
                                 this.incrementPickABrickPrice(
                                     item.qty.order * price[1]
                                 );
@@ -197,12 +206,15 @@ export const shoppingMixin = {
             return prices[0];
         },
         fillBricksAndPiecesList(pos) {
+            //console.log("fillBricksAndPiecesList",pos)
             this.addToBricksAndPiecesList(pos);
         },
         fillPickABrickList(pos) {
+            //console("fillPickABrickList",pos)
             this.addToPickABrickList(pos);
         },
         fillBrickLinkList(pos) {
+            //console("fillPickABrickList",pos)
             this.addToBrickLinkList(pos);
         },
     },
