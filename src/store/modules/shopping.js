@@ -36,7 +36,7 @@ const mutations = {
         state.useHave = (localStorage.getItem('useHave') || 'true') === 'true';
     },
     setwantedListPositionsMerged(state, payload) {
-        console.log(payload)
+        //console.log(payload)
         state.wantedListPositionsMerged = payload;
     },
     incrementBricksAndPiecesPositions(state) {

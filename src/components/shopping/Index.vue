@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <b-container fluid="xl">
         <b-nav tabs>
             <b-nav-item :active="page == 'settings'" @click="page = 'settings'">
                 {{ tabSettings }}
@@ -73,7 +73,7 @@
                 <li>{{ name }}</li>
             </ul>
         </b-toast>
-    </div>
+    </b-container>
 </template>
 
 <script>
@@ -101,6 +101,8 @@ export default {
     },
     methods: {
         loadPartLists() {
+            var wantedList = [];
+
             this.$store.state.partList.partLists.map((partList) => {
                 if (!partList.positions) return;
                 if (!partList.cart) return;
@@ -109,21 +111,15 @@ export default {
                     Date.now() - new Date(partList.date).getTime() >
                     1000 * 60 * 60 * 48
                 ) {
-                    //this.oldPartLists.push(partList.name);
-                    //return;
+                    this.oldPartLists.push(partList.name);
+                    return;
                 }
-
-                this.setWantedList(
-                    [].concat(
-                        this.$store.state.shopping.wantedList,
-                        partList.positions
-                    )
-                );
+                wantedList = [].concat(wantedList, partList.positions);
             });
 
             var partListMerged = [];
 
-            this.$store.state.shopping.wantedList.map((part) => {
+            wantedList.map((part) => {
                 var found = partListMerged.find(
                     (f) =>
                         f.itemid == part.itemid &&
@@ -145,7 +141,10 @@ export default {
             this.$store.commit('shopping/setWantedList', partListMerged);
 
             if (this.$store.state.shopping.wantedList.length)
-                this.$store.commit('shopping/setwantedListPositionsMerged', this.$store.state.shopping.wantedList.length);
+                this.$store.commit(
+                    'shopping/setwantedListPositionsMerged',
+                    this.$store.state.shopping.wantedList.length
+                );
         },
     },
     beforeMount() {

@@ -1,10 +1,10 @@
 <template>
-    <b-container fluid="lg">
-        <b-row v-if="!isChrome">
-            <b-col sm="3">
+    <b-container class="p-0" fluid="xl">
+        <b-row v-if="!showUploadField">
+            <b-col cols="3">
                 <label>{{ labelFile }}:</label>
             </b-col>
-            <b-col sm="9">
+            <b-col cols="9">
                 <xml-field
                     @load="loadXml"
                     :state="!!wantedList"
@@ -12,11 +12,11 @@
                 />
             </b-col>
         </b-row>
-        <b-row v-if="isChrome"
-            ><b-col sm="3">
+        <b-row v-if="showUploadField"
+            ><b-col cols="3">
                 <label>{{ labelFile }}:</label>
             </b-col>
-            <b-col sm="9">
+            <b-col cols="9">
                 <xml-reader
                     id="uploadXml"
                     @load="loadXml"
@@ -25,23 +25,23 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col sm="3">
+            <b-col cols="3">
                 <label>{{ labelName }}:</label>
             </b-col>
-            <b-col sm="9">
+            <b-col cols="9">
                 <b-form-input v-model="name" :state="name.length > 0" />
             </b-col>
         </b-row>
         <b-row>
-            <b-col sm="3">
+            <b-col cols="3">
                 <label>{{ labelShoppingCart }}:</label>
             </b-col>
-            <b-col sm="9">
+            <b-col cols="9">
                 <b-form-checkbox v-model="cart" />
             </b-col>
         </b-row>
         <b-row>
-            <b-col sm="9" offset-md="3">
+            <b-col cols="9" offset="3">
                 <b-button
                     variant="primary"
                     class="button"
@@ -66,7 +66,6 @@ import { brickColorMixin } from '@/mixins/brickColorMixin';
 
 export default {
     data: () => ({
-        isChrome: navigator.userAgent.indexOf('Chrome') != -1,
         wantedList: null,
         name: '',
         cart: true,
@@ -144,7 +143,7 @@ export default {
             var totalPositionsAfterImport =
                 this.$store.state.partList.totalPositions + this.wantedList.length;
 
-            console.log(totalPositionsAfterImport, this.$store.state.partList.totalPositions, this.wantedList.length);
+            //console.log(totalPositionsAfterImport, this.$store.state.partList.totalPositions, this.wantedList.length);
 
             if (totalPositionsAfterImport > 2000) {
                 this.$bvToast.toast(
@@ -211,6 +210,11 @@ export default {
         //if (this.wantedList) this.totalBricks = this.wantedList.length;
     },
     computed: {
+        showUploadField() {
+            if(navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
+            if(this.$store.state.mode == 'standalone') return true;
+            return false;
+        },
         labelFile() {
             return browser.i18n.getMessage('import_file');
         },

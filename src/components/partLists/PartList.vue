@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-container class="px-2" fluid="lg">
+        <b-container class="px-2" fluid="xl">
             <b-row>
                 <b-col cols="7">
                     <b-container>
@@ -173,6 +173,7 @@ export default {
             this.pickABrickBrickCounter = 0;
             this.bricksAndPiecesBrickCounter = 0;
             this.loadPercentage = 0;
+            this.cancelLoading = false;
 
             for (var i = 0; i < this.wantedList.length; i++) {
                 this.wantedList[i].bricksAndPieces = null;
@@ -184,7 +185,6 @@ export default {
 
             for (var i = 0; i < this.wantedList.length; i++) {
                 if (this.cancelLoading) {
-                    this.cancelLoading = false;
                     return;
                 }
                 var item = this.wantedList[i];
@@ -202,7 +202,7 @@ export default {
                 var brickLinkHtml = await this.getBricklink(item.itemid);
                 item.brickLink = await this.returnModelsObject(brickLinkHtml);
             } catch (err) {
-                console.log("couldn't find brick on bricklink");
+                //console.log("couldn't find brick on bricklink");
                 this.pickABrickBrickCounter++;
                 this.bricksAndPiecesBrickCounter++;
                 this.calcLoad();
@@ -210,7 +210,6 @@ export default {
             }
 
             if (this.cancelLoading) {
-                this.cancelLoading = false;
                 item.bricksAndPieces = null;
                 return;
             }
@@ -221,7 +220,6 @@ export default {
 
             item = await this.prepareSearchIds(item);
             if (this.cancelLoading) {
-                this.cancelLoading = false;
                 return;
             }
             item = await this.loadBricksAndPieces(item);
@@ -271,7 +269,7 @@ export default {
             }
 
             this.partList.name = this.editName;
-            console.log(this.partList.name, this.editName);
+            //console.log(this.partList.name, this.editName);
             this.$store.commit('partList/setPartList', this.partList);
 
             this.$nextTick(() => {

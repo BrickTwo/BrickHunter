@@ -6,6 +6,7 @@
   "permissions": [
     "tabs",
     "https://*.lego.com/*",
+    "https://www.bricklink.com/*",
     "http://www.bricklink.com/*"
   ],
   "icons": {
@@ -16,8 +17,10 @@
   "background": {
     "scripts": [
       "js/background.js"
-    ]
+    ],
+    "persistent": false
   },
+  "devtools_page": "devtools.html",
   "page_action": {
     "show_matches": ["https://*.lego.com/*"],
     "default_popup": "popup.html",
@@ -27,9 +30,5 @@
       "24": "icons/icon_24.png",
       "32": "icons/icon_32.png"
     }
-  },
-  "content_scripts": [{
-    "matches": ["https://*.lego.com/*"],
-    "js": ["contentScript.js"]
-  }]
+  }
 }

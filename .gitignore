@@ -9,3 +9,9 @@ public/icons/icon_24.png
 public/icons/icon_32.png
 public/icons/icon_48.png
 public/icons/icon_96.png
+
+# Vue Browser Extension Output
+*.pem
+*.pub
+*.zip
+/artifacts

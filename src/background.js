@@ -15,11 +15,11 @@ browser.runtime.onMessage.addListener(function(
     sendResponse,
     reject
 ) {
-    console.log(
+    /*console.log(
         'country',
         localStorage.getItem('country'),
         localStorage.getItem('language')
-    );
+    );*/
     var localeCountry = localStorage.getItem('country') || 'DE';
     var localeLanguage = localStorage.getItem('language') || 'DE';
     var localeCountryLanguage =

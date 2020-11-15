@@ -1,10 +1,10 @@
 <template>
-    <b-container fluid="lg">
+    <b-container class="p-0" fluid="xl">
         <b-row>
-            <b-col sm="2">
+            <b-col cols="2">
                 <label>{{ priorityOne }}:</label>
             </b-col>
-            <b-col sm="10">
+            <b-col cols="10">
                 <b-form-select
                     v-model="selectedPrio1"
                     :options="optionsPrio1"
@@ -12,10 +12,10 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col sm="2">
+            <b-col cols="2">
                 <label>{{ priorityTwo }}:</label>
             </b-col>
-            <b-col sm="10">
+            <b-col cols="10">
                 <b-form-select
                     v-model="selectedPrio2"
                     :options="optionsPrio2"
@@ -23,10 +23,10 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col sm="2">
+            <b-col cols="2">
                 <label>{{ priorityThree }}:</label>
             </b-col>
-            <b-col sm="10">
+            <b-col cols="10">
                 <b-form-select
                     v-model="selectedPrio3"
                     :options="optionsPrio3"
@@ -34,7 +34,7 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col offset="2" sm="10">
+            <b-col offset="2" cols="10">
                 <b-form-checkbox id="useHave" v-model="useHave">{{
                     useHaveText
                 }}</b-form-checkbox>
