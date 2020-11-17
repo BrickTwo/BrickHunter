@@ -70,7 +70,7 @@ browser.runtime.onMessage.addListener(async function(
                 //.query({ currentWindow: true, active: true })
                 .query({ url: '*://*.lego.com/*', status: 'complete' })
                 .then(async (logTabs) => {
-                    console.log('tabs', logTabs);
+                    //console.log('tabs', logTabs);
                     if (!logTabs.length) {
                         return false;
                     }
@@ -80,7 +80,7 @@ browser.runtime.onMessage.addListener(async function(
                             contentScriptQuery: 'readCookie',
                         })
                         .then((authorization) => {
-                            console.log('Cookie qauth', authorization);
+                            //console.log('Cookie qauth', authorization);
                             return authorization;
                         })
                         .catch((error) => console.log(error));
@@ -243,7 +243,7 @@ browser.runtime.onMessage.addListener(async function(
                 //.query({ currentWindow: true, active: true })
                 .query({ url: '*://*.lego.com/*', status: 'complete' })
                 .then(async (tabs) => {
-                    console.log('tabs', tabs);
+                    //console.log('tabs', tabs);
                     if (!tabs.length) {
                         return false;
                     }
@@ -255,7 +255,7 @@ browser.runtime.onMessage.addListener(async function(
                             order: request.order,
                         })
                         .then((response) => {
-                            console.log(response);
+                            //console.log(response);
                             return response;
                         })
                         .catch((error) => console.log(error));
@@ -339,7 +339,7 @@ browser.runtime.onMessage.addListener(async function(
 
             var url2 = `https://bricksandpieces.services.lego.com/api/v1/bricks/product/${encodeURIComponent(
                 request.setNumber
-            )}?country=${localeCountry}&orderType=buy`;
+            )}?country=${localeCountry}&orderType=missing`;
 
             var response2 = await fetch(url2, {
                 method: 'GET',
@@ -369,12 +369,12 @@ browser.runtime.onMessage.addListener(async function(
             //sendResponse(response);
             return returnValue; // Will respond asynchronously.
         case 'openSite':
-            console.log('openSite');
+            //console.log('openSite');
             browser.tabs
                 .query({ currentWindow: true })
                 //.query({ url: '*://*.lego.com/*' })
                 .then(async (tabs) => {
-                    console.log(tabs);
+                    //console.log(tabs);
                     browser.tabs.update(tabs[0].id, {
                         url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
                     });

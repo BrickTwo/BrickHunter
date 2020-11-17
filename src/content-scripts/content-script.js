@@ -5,7 +5,6 @@ chrome.runtime.onMessage.addListener(async function(
 ) {
     if (request.contentScriptQuery == 'readCookie') {
         var cookie = getCookie('gqauth');
-        console.log('cookie', cookie);
         if (navigator.userAgent.indexOf('Chrome') != -1) {
             return sendResponse(cookie);
         }
@@ -13,10 +12,6 @@ chrome.runtime.onMessage.addListener(async function(
     }
 
     if (request.contentScriptQuery == 'setItem') {
-        console.log(
-            'setItem',
-            JSON.stringify(request.order).replace(/'/g, "\\'")
-        );
         return await asyncSessionStorage
             .setItem(
                 'b_and_p_buy_' + request.country,
@@ -27,7 +22,6 @@ chrome.runtime.onMessage.addListener(async function(
                     .query({ currentWindow: true })
                     //.query({ url: '*://*.lego.com/*' })
                     .then(async (tabs) => {
-                        console.log(tabs);
                         browser.tabs.update(tabs[0].id, {
                             url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
                         });
@@ -38,7 +32,6 @@ chrome.runtime.onMessage.addListener(async function(
     }
 
     if (request.contentScriptQuery == 'removeItem') {
-        //console.log("seremoveItemtItem", JSON.stringify(request.order));
         return await asyncSessionStorage
             .removeItem('b_and_p_buy_' + request.country)
             .then(function() {

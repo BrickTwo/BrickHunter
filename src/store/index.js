@@ -16,7 +16,7 @@ export default new Vuex.Store({
     mutations: {
         initialiseStore(state) {
             state.version.old = localStorage.getItem('version') || '';
-            state.version.current = '1.1.8';            
+            state.version.current = '1.1.12';            
             localStorage.setItem('version', state.version.current);
             //console.log(state.version)
             var sKey;

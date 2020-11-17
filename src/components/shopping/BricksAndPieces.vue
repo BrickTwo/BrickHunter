@@ -140,11 +140,9 @@ export default {
     },
     methods: {
         showInfo() {
-            //console.log('changePage');
             this.$router.push('/info').catch(() => {});
         },
         async bricksAndPiecesFillCart() {
-            console.log('fillcart');
             if(!this.showCartButtons){
                 this.$bvModal.show('modal-use-popup');
                  return;
@@ -152,7 +150,7 @@ export default {
             var isOpen = await this.checkIfLegoIsOpen('fill');
             if (!isOpen) return;
             var order = [];
-            //console.log("bricksAndPieceslist", this.brickList)
+            
             for (var i = 0; i < this.brickList.length; i++) {
                 if (this.brickList[i].bricksAndPieces) {
                     var qty = this.brickList[i].qty.order;
@@ -171,7 +169,7 @@ export default {
                         /[\""]/g,
                         '\\"'
                     ); // escape quotes in description
-                    //console.log(pos.product.description)
+                    
                     order.push(pos);
                 }
             }
@@ -183,7 +181,6 @@ export default {
                     mode: this.$store.state.mode,
                 })
                 .then((response) => {
-                    //console.log(response)
                     this.$bvToast.toast(this.fillCartSuccessfullText, {
                         title: this.bricksAndPieces,
                         autoHideDelay: 5000,
@@ -204,7 +201,6 @@ export default {
                     mode: this.$store.state.mode,
                 })
                 .then((response) => {
-                    //console.log(response)
                     this.$bvToast.toast(this.clearCartSuccessfullText, {
                         title: this.bricksAndPieces,
                         autoHideDelay: 5000,
@@ -213,15 +209,12 @@ export default {
                 });
         },
         printBricksAndPieces() {
-            //console.log('print');
             this.$htmlToPaper('bricksAndPiecesList');
         },
         async checkIfLegoIsOpen(action) {
             return await browser.tabs
-                //.query({ currentWindow: true, active: true })
                 .query({ url: '*://*.lego.com/*', status: 'complete' })
                 .then(async (logTabs) => {
-                    //console.log('tabs', logTabs);
                     if (!logTabs.length) {
                         if (action == 'fill') {
                             this.$bvModal.show('modal-open-lego-fill-cart');

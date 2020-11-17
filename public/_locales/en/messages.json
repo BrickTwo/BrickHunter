@@ -386,6 +386,9 @@
     "shopping_tabSettings": {
         "message": "Settings"
     },
+    "shopping_notAllocated": {
+        "message": "Not allocated"
+    },
     "shopping_titleAmountPositions": {
         "message": "Number of positions"
     },

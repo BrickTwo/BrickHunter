@@ -9,6 +9,7 @@
         {{ $store.state.shopping.bricksAndPiecesPositions }}<br />
         {{ pickABrick }}: {{ $store.state.shopping.pickABrickPositions }}<br />
         {{ brickLink }}: {{ $store.state.shopping.brickLinkPositions }}<br />
+        {{ notAllocated }}: {{ $store.state.shopping.notAllocatedPositions }}<br />
         {{ amountTotalFoundLego }}:
         {{
             $store.state.shopping.bricksAndPiecesPositions +
@@ -59,6 +60,9 @@ export default {
         },
         brickLink() {
             return browser.i18n.getMessage('brickLink');
+        },
+        notAllocated() {
+            return browser.i18n.getMessage('shopping_notAllocated');
         },
         titleAmountPositions() {
             return browser.i18n.getMessage('shopping_titleAmountPositions');

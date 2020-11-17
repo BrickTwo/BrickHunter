@@ -1,13 +1,21 @@
 <template>
-    <b-container fluid="xl">
+    <b-container class="p-0" fluid="xl">
         <b-nav tabs>
-            <b-nav-item :active="page == 'settings'" @click="page = 'settings'">
+            <b-nav-item
+                :active="page == 'settings'"
+                @click="page = 'settings'"
+            >
                 {{ tabSettings }}
             </b-nav-item>
-            <b-nav-item :active="page == 'overview'" @click="page = 'overview'">
+            <b-nav-item
+                class="p-0"
+                :active="page == 'overview'"
+                @click="page = 'overview'"
+            >
                 {{ tabOverview }}
             </b-nav-item>
             <b-nav-item
+                class="p-0"
                 :active="page == 'bricksAndPieces'"
                 @click="page = 'bricksAndPieces'"
                 v-if="
@@ -22,6 +30,7 @@
                 }})
             </b-nav-item>
             <b-nav-item
+                class="p-0"
                 :active="page == 'pickABrick'"
                 @click="page = 'pickABrick'"
                 v-if="
@@ -35,6 +44,7 @@
                 }})
             </b-nav-item>
             <b-nav-item
+                class="p-0"
                 :active="page == 'brickLink'"
                 @click="page = 'brickLink'"
                 v-if="
@@ -45,12 +55,23 @@
             >
                 {{ brickLink }} ({{ $store.state.shopping.brickLinkPositions }})
             </b-nav-item>
+            <b-nav-item
+                class="p-0"
+                :active="page == 'notAllocated'"
+                @click="page = 'notAllocated'"
+                v-if="$store.state.shopping.notAllocatedPositions > 0"
+            >
+                {{ notAllocated }} ({{
+                    $store.state.shopping.notAllocatedPositions
+                }})
+            </b-nav-item>
         </b-nav>
         <Settings v-if="page == 'settings'" class="tabPage" />
         <Overview v-if="page == 'overview'" class="tabPage" />
         <BricksAndPieces v-if="page == 'bricksAndPieces'" class="tabPage" />
         <PickABrick v-if="page == 'pickABrick'" class="tabPage" />
         <BrickLink v-if="page == 'brickLink'" class="tabPage" />
+        <NotAllocated v-if="page == 'notAllocated'" class="tabPage" />
         <b-toast id="partListsToOldWarning" variant="danger" solid>
             <template #toast-title>
                 <div class="d-flex flex-grow-1 align-items-baseline">
@@ -76,12 +97,19 @@
     </b-container>
 </template>
 
+<style scoped>
+.nav-link{
+    padding: 0.5rem 0.6rem;
+}
+</style>
+
 <script>
 import Settings from './Settings';
 import Overview from './Overview';
 import BricksAndPieces from './BricksAndPieces';
 import PickABrick from './PickABrick';
 import BrickLink from './BrickLink';
+import NotAllocated from './NotAllocated';
 import { shoppingMixin } from '@/mixins/shoppingMixin';
 
 export default {
@@ -98,6 +126,7 @@ export default {
         BricksAndPieces,
         PickABrick,
         BrickLink,
+        NotAllocated,
     },
     methods: {
         loadPartLists() {
@@ -114,10 +143,10 @@ export default {
                     this.oldPartLists.push(partList.name);
                     return;
                 }
-                wantedList = [].concat(wantedList, partList.positions);
+                wantedList = [].concat(wantedList, ...partList.positions);
             });
 
-            var partListMerged = [];
+            /*var partListMerged = [];
 
             wantedList.map((part) => {
                 var found = partListMerged.find(
@@ -144,7 +173,9 @@ export default {
                 this.$store.commit(
                     'shopping/setwantedListPositionsMerged',
                     this.$store.state.shopping.wantedList.length
-                );
+                );*/
+
+            this.$store.commit('shopping/setWantedList', wantedList);
         },
     },
     beforeMount() {
@@ -170,6 +201,9 @@ export default {
         },
         tabOverview() {
             return browser.i18n.getMessage('shopping_tabOverview');
+        },
+        notAllocated() {
+            return browser.i18n.getMessage('shopping_notAllocated');
         },
         partListToOldText() {
             return browser.i18n.getMessage('shopping_partListToOldText');

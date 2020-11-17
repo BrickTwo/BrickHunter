@@ -6,12 +6,6 @@ export const shoppingMixin = {
     }),
     methods: {
         ...mapMutations('shopping', [
-            'incrementBricksAndPiecesPositions',
-            'incrementPickABrickPositions',
-            'incrementBrickLinkPositions',
-            'resetBricksAndPiecesPositions',
-            'resetPickABrickPositions',
-            'resetBrickLinkPositions',
             'setWantedList',
             'addToBricksAndPiecesList',
             'clearBricksAndPiecesList',
@@ -19,34 +13,23 @@ export const shoppingMixin = {
             'clearPickABrickList',
             'addToBrickLinkList',
             'clearBrickLinkList',
-            'setBricksAndPiecesPrice',
-            'setPickABrickPrice',
-            'setbrickLinkPrice',
-            'incrementBricksAndPiecesPrice',
-            'incrementPickABrickPrice',
-            'incrementbrickLinkPrice',
-            'setCurrency',
+            'addToNotAllocatedList',
+            'clearNotallocatedList',
         ]),
         calcTotalPrice() {
-            this.resetBricksAndPiecesPositions();
-            this.resetPickABrickPositions();
-            this.resetBrickLinkPositions();
-            this.setBricksAndPiecesPrice(0);
-            this.setPickABrickPrice(0);
-            this.setbrickLinkPrice(0);
             this.clearBricksAndPiecesList();
             this.clearPickABrickList();
             this.clearBrickLinkList();
-            
+            this.clearNotallocatedList();
+
             if (this.$store.state.shopping.wantedList) {
                 this.$store.state.shopping.wantedList.forEach((item) => {
-                    
                     if (this.$store.state.shopping.useHave) {
                         item.qty.order = item.qty.balance;
                     } else {
                         item.qty.order = item.qty.min;
                     }
-                    
+
                     if (item.qty.order > 0) {
                         var bricksAndPiecesPrice = 0;
                         var pickABrickPrice = 0;
@@ -65,59 +48,20 @@ export const shoppingMixin = {
 
                         if (price[1]) {
                             if (price[0] == 'bricksAndPieces') {
-                                /*console.log(
-                                    item.bricksAndPieces.maxAmount,
-                                    item.qty.order
-                                );*/
-                                if (
-                                    item.bricksAndPieces.maxAmount <
-                                    item.qty.order
-                                ) {
-                                    item.qty.maxAmount =
-                                        item.bricksAndPieces.maxAmount;
-                                    this.incrementBricksAndPiecesPrice(
-                                        item.qty.maxAmount * price[1]
-                                    );
-                                } else {
-                                    this.incrementBricksAndPiecesPrice(
-                                        item.qty.order * price[1]
-                                    );
-                                }
-                                if(item.qty.order > 200){
-                                    item.qty.order = 200;
-                                }
-                                //console.log(item);
-                                this.incrementBricksAndPiecesPositions();
-                                this.setCurrency(
-                                    item.bricksAndPieces.price.currency
-                                );
-                                this.fillBricksAndPiecesList(item);
+                                this.addToBricksAndPiecesList(item);
                             } else if (price[0] == 'pickABrick') {
-                                this.incrementPickABrickPositions();
-                                if(item.qty.order > 999){
-                                    item.qty.order = 999;
-                                }
-
-                                this.incrementPickABrickPrice(
-                                    item.qty.order * price[1]
-                                );
-                                this.setCurrency(
-                                    item.pickABrick.variant.price.currencyCode
-                                );
-                                this.fillPickABrickList(item);
+                                this.addToPickABrickList(item);
+                            } else if (price[0] == 'brickLink' || item.source == 'brickLink') {
+                                this.addToBrickLinkList(item);
                             } else {
-                                this.incrementBrickLinkPositions();
-                                this.incrementbrickLinkPrice(
-                                    item.qty.order * price[1]
-                                );
-                                this.fillBrickLinkList(item);
+                                this.addToNotAllocatedList(item);
                             }
                         } else {
-                            this.incrementBrickLinkPositions();
-                            this.incrementbrickLinkPrice(
-                                item.qty.order * price[1]
-                            );
-                            this.fillBrickLinkList(item);
+                            if (price[0] == 'brickLink' || item.source == 'brickLink') {
+                                this.addToBrickLinkList(item);
+                            } else {
+                                this.addToNotAllocatedList(item);
+                            }
                         }
                     }
                 });
@@ -127,8 +71,7 @@ export const shoppingMixin = {
                     this.$store.state.shopping.selectedPrio2 != 'brickLink' &&
                     this.$store.state.shopping.selectedPrio3 != 'brickLink'
                 ) {
-                    this.resetBrickLinkPositions();
-                    this.brickLinkPrice = 0;
+                    this.clearBrickLinkList();
                 }
             }
 
@@ -196,7 +139,8 @@ export const shoppingMixin = {
             }
 
             if (prices.length == 0) {
-                prices.push(['brickLink', 0]);
+                prices.push(['notAllocated', 0]);
+                console.log("ff");
             }
 
             prices = prices.sort(function(a, b) {
@@ -204,18 +148,6 @@ export const shoppingMixin = {
             });
 
             return prices[0];
-        },
-        fillBricksAndPiecesList(pos) {
-            //console.log("fillBricksAndPiecesList",pos)
-            this.addToBricksAndPiecesList(pos);
-        },
-        fillPickABrickList(pos) {
-            //console("fillPickABrickList",pos)
-            this.addToPickABrickList(pos);
-        },
-        fillBrickLinkList(pos) {
-            //console("fillPickABrickList",pos)
-            this.addToBrickLinkList(pos);
         },
     },
 };

@@ -105,10 +105,7 @@ export default {
                 var bricksAndPiecesPrice = 0;
                 var pickABrickPrice = 0;
 
-                var have = parseInt(this.brickList[i].qty.have);
-                if (this.recalcHave) {
-                    have += parseInt(this.brickList[i].qty.balance);
-                }
+                var have = parseInt();
 
                 var item = {
                     ITEM: {
@@ -117,14 +114,11 @@ export default {
                         COLOR: this.brickList[i].color.brickLinkId,
                         MAXPRICE: this.brickList[i].brickLink?.wantedList?.maxprice,
                         MINQTY: this.brickList[i].qty.min,
+                        QTYFILLED: this.brickList[i].qty.have,
                         CONDITION: this.brickList[i].brickLink?.wantedList?.condition,
                         NOTIFY: this.brickList[i].brickLink?.wantedList?.notify,
                     },
                 };
-
-                if (!this.recalcHave) {
-                    item.QTYFILLED = have;
-                }
 
                 brickLink.INVENTORY.push(item);
             }

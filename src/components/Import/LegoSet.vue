@@ -71,7 +71,6 @@ export default {
     mixins: [brickProcessorMixin, brickColorMixin],
     methods: {
         async loadLegoSet() {
-            //console.log(this.setNumber);
             if (this.setNumber.length > 0) {
                 var response = await browser.runtime.sendMessage({
                     contentScriptQuery: 'getLegoSet',
@@ -83,7 +82,6 @@ export default {
                     return;
                 }
 
-                console.log(response);
                 this.setNumberExist = true;
                 this.name = response.set.locale['de-de'].title;
                 this.setName = this.name;
@@ -97,16 +95,18 @@ export default {
             }
         },
         fillPartList(parts) {
-            //console.log(parts);
             var partList = [];
 
             parts.map((item) => {
                 var part = {};
-                //var newItem = {};
+
                 part.source = 'lego';
                 part.itemid = item.itemNumber;
                 part.searchids = [part.itemid];
                 part.color = this.findLegoColor(item.colorFamily, this.COLOR);
+                if(!part.color){
+                    console.log(item);
+                }
                 part.qty = {
                     min: 0,
                     have: 0,
@@ -130,15 +130,11 @@ export default {
             });
 
             this.wantedList = [...partList];
-            //console.log(this.wantedList);
-            //this.totalBricks = this.wantedList.length;
         },
         importList() {
             var totalPositionsAfterImport =
                 this.$store.state.partList.totalPositions +
                 this.wantedList.length;
-
-            //console.log(totalPositionsAfterImport, this.$store.state.partList.totalPositions, this.wantedList.length);
 
             if (totalPositionsAfterImport > 2000) {
                 this.$bvToast.toast(
@@ -159,7 +155,7 @@ export default {
                 date: new Date(0, 0, 0, 0, 0, 0, 0),
                 positions: this.wantedList,
             };
-            //console.log('importList', partList);
+            
             this.$store.commit('partList/setPartList', partList);
 
             this.$bvToast.toast(this.labelSuccessfullImportBrickLinkText, {
