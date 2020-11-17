@@ -172,6 +172,7 @@ export default {
                 name: this.name,
                 cart: this.cart,
                 date: new Date(0, 0, 0, 0, 0, 0, 0),
+                source: 'brickLink',
                 positions: this.wantedList,
             };
             //console.log('importList', partList);

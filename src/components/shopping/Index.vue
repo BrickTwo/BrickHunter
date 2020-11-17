@@ -99,7 +99,7 @@
 
 <style scoped>
 .nav-link{
-    padding: 0.5rem 0.6rem;
+    padding: 0.5rem 0.5rem;
 }
 </style>
 

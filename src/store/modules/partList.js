@@ -64,6 +64,15 @@ const mutations = {
             });
         }
 
+        oldVersionCheck = "1.1.13".split('.').map(Number);
+
+        if (oldVersion[0] < oldVersionCheck[0] || oldVersion[1] < oldVersionCheck[1] || oldVersion[2] < oldVersionCheck[2]) {
+            state.partLists.map((partList) => {
+                partList.source = partList.positions[0].source;
+                localStorage.setItem('partList_' + partList.id, JSON.stringify(partList));
+            });
+        }
+
         state.totalPositions = 0;
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;

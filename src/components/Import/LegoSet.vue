@@ -153,6 +153,7 @@ export default {
                 name: this.name,
                 cart: this.cart,
                 date: new Date(0, 0, 0, 0, 0, 0, 0),
+                source: 'lego',
                 positions: this.wantedList,
             };
             

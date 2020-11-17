@@ -1,87 +1,97 @@
 <template>
     <b-container class="bv-example-row" fluid="xl">
-        <b-row>
-            <b-col>
-                <b-button
-                    variant="primary"
-                    @click="onDownload"
-                    :disabled="!wantedList || wantedList.length == 0"
-                >
-                    {{ downloadButton }}
-                </b-button>
-                <b-button
-                    variant="primary"
-                    @click="onCopy"
-                    :disabled="!wantedList || wantedList.length == 0"
-                    style="margin-left: 5px"
-                >
-                    {{ copyButton }}
-                </b-button>
-
-                <!-- <input type="text" value="" id="wantedList" style="position:absolute; top: 5000px"> -->
-                <textarea
-                    id="wantedList"
-                    style="position:absolute; top: -500px; height: 0; width: 0; z-index: -5 "
-                >
-                </textarea>
-            </b-col>
-        </b-row>
-        <b-row>
-            <b-col>
-                <b-form-checkbox
-                    id="exportPickaBrickPrices"
-                    v-model="exportPickaBrickPrices"
-                >
-                    {{ usePickABrickPrices }}
-                </b-form-checkbox>
-                <b-form-checkbox
-                    id="exportStonesAndPiecesPrices"
-                    v-model="exportStonesAndPiecesPrices"
-                >
-                    {{ useBricksAndPiecesPrices }}
-                </b-form-checkbox>
-                <b-form-checkbox
-                    id="writeLegoIdInRemark"
-                    v-model="writeLegoIdInRemark"
-                >
-                    {{ writeLegoIdRemark }}
-                </b-form-checkbox>
-                <b-form-checkbox
-                    id="writeSourceOfPriceInRemark"
-                    v-model="writeSourceOfPriceInRemark"
-                >
-                    {{ writePriceOriginRemark }}
-                </b-form-checkbox>
-
-                <b-form-group
-                    :label="whatShouldBePreferred"
-                    style="margin-top: 10px"
-                >
-                    <b-form-radio-group
-                        v-model="behaviourOnSamePrice"
-                        name="behaviourOnSamePrice"
+        <div v-if="partList.source != 'brickLink'">
+            <b-row>
+                <b-col>
+                    Diese Liste kann aktuell nicht nach BrickLink exportiert
+                    werden!
+                </b-col>
+            </b-row>
+        </div>
+        <div v-if="partList.source == 'brickLink'">
+            <b-row v-if="partList.source == 'brickLink'">
+                <b-col>
+                    <b-button
+                        variant="primary"
+                        @click="onDownload"
+                        :disabled="!wantedList || wantedList.length == 0"
                     >
-                        <b-form-radio
-                            value="pickABrick"
-                            :disabled="!exportPickaBrickPrices"
-                            >{{ pickABrick }}</b-form-radio
-                        >
-                        <b-form-radio
-                            value="bricksAndPieces"
-                            :disabled="!exportStonesAndPiecesPrices"
-                            >{{ bricksAndPieces }}</b-form-radio
-                        >
-                        <b-form-radio value="brickLink">{{
-                            brickLink
-                        }}</b-form-radio>
-                    </b-form-radio-group>
-                </b-form-group>
+                        {{ downloadButton }}
+                    </b-button>
+                    <b-button
+                        variant="primary"
+                        @click="onCopy"
+                        :disabled="!wantedList || wantedList.length == 0"
+                        style="margin-left: 5px"
+                    >
+                        {{ copyButton }}
+                    </b-button>
 
-                <b-form-checkbox id="recalcHave" v-model="recalcHave">
-                    {{ increaseHave }}
-                </b-form-checkbox>
-            </b-col>
-        </b-row>
+                    <!-- <input type="text" value="" id="wantedList" style="position:absolute; top: 5000px"> -->
+                    <textarea
+                        id="wantedList"
+                        style="position:absolute; top: -500px; height: 0; width: 0; z-index: -5 "
+                    >
+                    </textarea>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col>
+                    <b-form-checkbox
+                        id="exportPickaBrickPrices"
+                        v-model="exportPickaBrickPrices"
+                    >
+                        {{ usePickABrickPrices }}
+                    </b-form-checkbox>
+                    <b-form-checkbox
+                        id="exportStonesAndPiecesPrices"
+                        v-model="exportStonesAndPiecesPrices"
+                    >
+                        {{ useBricksAndPiecesPrices }}
+                    </b-form-checkbox>
+                    <b-form-checkbox
+                        id="writeLegoIdInRemark"
+                        v-model="writeLegoIdInRemark"
+                    >
+                        {{ writeLegoIdRemark }}
+                    </b-form-checkbox>
+                    <b-form-checkbox
+                        id="writeSourceOfPriceInRemark"
+                        v-model="writeSourceOfPriceInRemark"
+                    >
+                        {{ writePriceOriginRemark }}
+                    </b-form-checkbox>
+
+                    <b-form-group
+                        :label="whatShouldBePreferred"
+                        style="margin-top: 10px"
+                    >
+                        <b-form-radio-group
+                            v-model="behaviourOnSamePrice"
+                            name="behaviourOnSamePrice"
+                        >
+                            <b-form-radio
+                                value="pickABrick"
+                                :disabled="!exportPickaBrickPrices"
+                                >{{ pickABrick }}</b-form-radio
+                            >
+                            <b-form-radio
+                                value="bricksAndPieces"
+                                :disabled="!exportStonesAndPiecesPrices"
+                                >{{ bricksAndPieces }}</b-form-radio
+                            >
+                            <b-form-radio value="brickLink">{{
+                                brickLink
+                            }}</b-form-radio>
+                        </b-form-radio-group>
+                    </b-form-group>
+
+                    <b-form-checkbox id="recalcHave" v-model="recalcHave">
+                        {{ increaseHave }}
+                    </b-form-checkbox>
+                </b-col>
+            </b-row>
+        </div>
     </b-container>
 </template>
 
@@ -195,14 +205,17 @@ export default {
 
                 var item = {
                     ITEM: {
-                        ITEMTYPE: this.wantedList[i].brickLink?.wantedList?.itemtype,
+                        ITEMTYPE: this.wantedList[i].brickLink?.wantedList
+                            ?.itemtype,
                         ITEMID: this.wantedList[i].itemid,
                         COLOR: this.wantedList[i].color.brickLinkId,
                         MAXPRICE: price[1],
                         MINQTY: this.wantedList[i].qty.min,
                         QTYFILLED: have,
-                        CONDITION: this.wantedList[i].brickLink?.wantedList?.condition,
-                        NOTIFY: this.wantedList[i].brickLink?.wantedList?.notify,
+                        CONDITION: this.wantedList[i].brickLink?.wantedList
+                            ?.condition,
+                        NOTIFY: this.wantedList[i].brickLink?.wantedList
+                            ?.notify,
                         REMARKS: remarks,
                     },
                 };
@@ -296,6 +309,8 @@ export default {
             this.partListId
         );
         this.wantedList = this.partList.positions;
+
+        console.log(this.partList);
     },
     computed: {
         pickABrick() {
