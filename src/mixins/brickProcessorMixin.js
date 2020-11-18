@@ -168,7 +168,7 @@ export const brickProcessorMixin = {
             if (!bricks) return null;
 
             var returnValue = [];
-            var country = localStorage.getItem('country') || null;
+            var country = this.$store.state.country;
 
             bricks.forEach((value) => {
                 var value = {

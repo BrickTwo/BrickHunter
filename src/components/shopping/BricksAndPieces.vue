@@ -19,6 +19,11 @@
                 >
                     {{ buttonClearBricksAndPiecesCart }}
                 </b-button>
+                <Affiliate
+                    class="button"
+                    style="display: inline;"
+                    :noAffiliate="true"
+                />
                 <b-button
                     class="button"
                     variant="primary"
@@ -30,11 +35,6 @@
                 <b-button class="button" variant="primary" @click="showInfo">
                     <b-icon icon="info-circle" aria-hidden="true" />
                 </b-button>
-                <!--<Affiliate
-                    class="button"
-                    style="display: inline;"
-                    :noAffiliate="true"
-                />-->
                 <b-tooltip
                     target="btn-bricksAndPieces-add-to-card"
                     variant="danger"
@@ -179,6 +179,7 @@ export default {
                     contentScriptQuery: 'bricksAndPiecesFillCart',
                     order: order,
                     mode: this.$store.state.mode,
+                    affiliate: this.$store.state.affiliate,
                 })
                 .then((response) => {
                     this.$bvToast.toast(this.fillCartSuccessfullText, {

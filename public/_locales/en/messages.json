@@ -119,6 +119,9 @@
     "brickList_bricksAndPiecesPrice": {
         "message": "Bricks & Pieces"
     },
+    "affiliate_noAffiliate": {
+        "message": "Ohne Affiliate"
+    },
     "itsEmptyHere": {
         "message": "It's so empty here. "
     },

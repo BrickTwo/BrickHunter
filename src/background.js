@@ -197,8 +197,15 @@ browser.runtime.onMessage.addListener(async function(
                 .then(async (tabs) => {
                     var tab = tabs[0];
 
+                    var url = `https://www.lego.com/${localeCountryLanguage}/page/static/pick-a-brick`;
+                    if(request.affiliate){
+                        if(request.affiliate.linkType == 'webgains') {
+                            url = `https://track.webgains.com/click.html?wgcampaignid=${request.affiliate.wgcampaignid}&wgprogramid=${request.affiliate.wgprogramid}&clickref=${request.affiliate.clickref}&wgtarget=` + url;
+                        }
+                    }
+
                     browser.tabs.update(tab.id, {
-                        url: `https://www.lego.com/${localeCountryLanguage}/page/static/pick-a-brick`,
+                        url: url,
                     });
                 });
             return true;
@@ -265,8 +272,14 @@ browser.runtime.onMessage.addListener(async function(
                 .then((tabs) => {
                     var tab = tabs[0];
 
+                    var url = `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`;
+                    if(request.affiliate){
+                        if(request.affiliate.linkType == 'webgains') {
+                            url = `https://track.webgains.com/click.html?wgcampaignid=${request.affiliate.wgcampaignid}&wgprogramid=${request.affiliate.wgprogramid}&clickref=${request.affiliate.clickref}&wgtarget=` + url;
+                        }
+                    }
                     browser.tabs.update(tab.id, {
-                        url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
+                        url: url,
                     });
                 });
             return true;

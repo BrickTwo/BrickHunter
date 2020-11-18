@@ -12,11 +12,18 @@ export default new Vuex.Store({
     },
     state: {
         version: {},
+        country: '',
+        language: '',
+        affiliate: {},
     },
     mutations: {
         initialiseStore(state) {
             state.version.old = localStorage.getItem('version') || '1.0.0';
-            state.version.current = '1.1.13';            
+            state.version.current = '1.1.13';
+
+            state.country = localStorage.getItem('country') || null;
+            state.language = localStorage.getItem('language') || null;
+
             localStorage.setItem('version', state.version.current);
             //console.log(state.version)
             var sKey;
@@ -48,6 +55,18 @@ export default new Vuex.Store({
         },
         setMode(state, payload) {
             state.mode = payload;
+        },
+        setCountry(state, payload) {
+            state.country = payload;
+            localStorage.setItem('country', state.mode);
+        },
+        setLanguage(state, payload) {
+            state.language = payload;
+            localStorage.setItem('language', state.language);
+        },
+        setAffiliate(state, payload) {
+            state.affiliate = payload;
+            localStorage.setItem('affiliate', JSON.stringify(state.affiliate));
         },
     },
     actions: {
