@@ -102,7 +102,11 @@
             </b-row>
         </b-container>
 
-        <b-modal id="modal-edit-name" @ok="saveName" v-bind:title="wantedListName">
+        <b-modal
+            id="modal-edit-name"
+            @ok="saveName"
+            v-bind:title="wantedListName"
+        >
             <p class="my-4">
                 <b-form-input v-model="editName"></b-form-input>
             </p>
@@ -178,7 +182,10 @@ export default {
             for (var i = 0; i < this.wantedList.length; i++) {
                 this.wantedList[i].bricksAndPieces = null;
                 this.wantedList[i].pickABrick = null;
-                this.wantedList[i].brickLink = null;
+                if (this.wantedList[i].source == 'brickLink') {
+                    this.wantedList[i].brickLink.strAltNo = null;
+                    this.wantedList[i].brickLink.mapPCCs = null;
+                }
             }
 
             this.calcTotals();
@@ -199,8 +206,14 @@ export default {
         async loadPrice(item) {
             try {
                 item.bricksAndPieces = { isLoading: true };
-                var brickLinkHtml = await this.getBricklink(item.itemid);
-                item.brickLink = await this.returnModelsObject(brickLinkHtml);
+                if (item.source == 'brickLink') {
+                    var brickLinkHtml = await this.getBricklink(item.itemid);
+                    var returnObject = await this.returnModelsObject(
+                        brickLinkHtml
+                    );
+                    item.brickLink.strAltNo = returnObject.strAltNo;
+                    item.brickLink.mapPCCs = returnObject.mapPCCs;
+                }
             } catch (err) {
                 //console.log("couldn't find brick on bricklink");
                 this.pickABrickBrickCounter++;
@@ -213,11 +226,11 @@ export default {
                 item.bricksAndPieces = null;
                 return;
             }
-            if (!item.brickLink) {
+            if (item.source == 'brickLink' && !item.brickLink) {
                 item.bricksAndPieces = null;
                 return;
             }
-
+            
             item = await this.prepareSearchIds(item);
             if (this.cancelLoading) {
                 return;
@@ -330,7 +343,7 @@ export default {
         },
         wantedListName() {
             return browser.i18n.getMessage('wantedList_name');
-        },        
+        },
     },
 };
 </script>

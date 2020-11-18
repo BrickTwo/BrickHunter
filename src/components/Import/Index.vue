@@ -18,17 +18,19 @@
                 @click="page = 'pickABrick'"
             >
                 {{ labelPickABrick }}
-            </b-nav-item>
+            </b-nav-item>-->
             <b-nav-item :active="page == 'legoSet'" @click="page = 'legoSet'">
                 LEGO Set
-            </b-nav-item>-->
+            </b-nav-item>
         </b-nav>
         <ImportBrickLink v-if="page == 'brickLink'" class="tabPage" />
+        <LegoSet v-if="page == 'legoSet'" class="tabPage" />
     </b-container>
 </template>
 
 <script>
 import ImportBrickLink from './BrickLink';
+import LegoSet from './LegoSet';
 
 export default {
     data: () => ({
@@ -36,6 +38,7 @@ export default {
     }),
     components: {
         ImportBrickLink,
+        LegoSet,
     },
     computed: {
         labelPickABrick() {

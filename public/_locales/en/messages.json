@@ -284,8 +284,14 @@
     "import_file": {
         "message": "File"
     },
+    "import_setNumber": {
+        "message": "Set Number"
+    },
     "import_name": {
         "message": "Name"
+    },
+    "import_useSetNumberSuffix": {
+        "message": "Use Set Number as suffix"
     },
     "import_shoppingCart": {
         "message": "Shopping cart"
@@ -379,6 +385,9 @@
     },
     "shopping_tabSettings": {
         "message": "Settings"
+    },
+    "shopping_notAllocated": {
+        "message": "Not allocated"
     },
     "shopping_titleAmountPositions": {
         "message": "Number of positions"

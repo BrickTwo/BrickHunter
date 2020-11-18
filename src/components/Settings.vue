@@ -16,6 +16,9 @@
                     {{ noLanguageSelected }}
                 </p>
             </b-form-group>
+            <!--<b-form-group label="Affiliate Link" label-for="affiliate">
+                <Affiliate />
+            </b-form-group>-->
         </b-form>
     </div>
 </template>
@@ -23,10 +26,12 @@
 <script>
 import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
 import SelectLanguageDropDown from '@/components/SelectLanguageDropDown.vue';
+import Affiliate from '@/components/Affiliate.vue';
 export default {
     components: {
         SelectCountryDropDown,
         SelectLanguageDropDown,
+        Affiliate,
     },
     data() {
         return {

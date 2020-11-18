@@ -1,4 +1,3 @@
-import { BreadcrumbPlugin } from 'bootstrap-vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import partList from './modules/partList';
@@ -7,14 +6,21 @@ import shopping from './modules/shopping';
 Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
-        mode: "",
+        mode: '',
         shopping,
         partList,
     },
+    state: {
+        version: {},
+    },
     mutations: {
         initialiseStore(state) {
+            state.version.old = localStorage.getItem('version') || '1.0.0';
+            state.version.current = '1.1.13';            
+            localStorage.setItem('version', state.version.current);
+            //console.log(state.version)
             var sKey;
-    
+
             for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
                 if (
                     !sKey.startsWith('partList_') &&
@@ -33,7 +39,8 @@ export default new Vuex.Store({
                     sKey != 'selectedPrio1' &&
                     sKey != 'selectedPrio2' &&
                     sKey != 'selectedPrio3' &&
-                    sKey != 'useHave'
+                    sKey != 'useHave' &&
+                    sKey != 'version'
                 ) {
                     localStorage.removeItem(sKey);
                 }
@@ -41,13 +48,13 @@ export default new Vuex.Store({
         },
         setMode(state, payload) {
             state.mode = payload;
-        }
+        },
     },
     actions: {
-        initialiseStore({state, commit}){
+        initialiseStore({ state, commit }) {
             commit('initialiseStore');
-            commit('partList/initialiseStore');
+            commit('partList/initialiseStore', state.version.old);
             commit('shopping/initialiseStore');
-        }
+        },
     },
 });

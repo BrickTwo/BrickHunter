@@ -16,7 +16,7 @@ const actions = {};
 
 // mutations
 const mutations = {
-    initialiseStore(state) {
+    initialiseStore(state, oldVersion) {
         var sKey;
 
         for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
@@ -25,6 +25,52 @@ const mutations = {
                     JSON.parse(window.localStorage.getItem(sKey))
                 );
             }
+        }
+
+        var oldVersion = oldVersion.split('.').map(Number);
+        var oldVersionCheck = "1.1.9".split('.').map(Number);
+
+        if (oldVersion[0] < oldVersionCheck[0] || oldVersion[1] < oldVersionCheck[1] || oldVersion[2] < oldVersionCheck[2]) {
+            state.partLists.map((partList) => {
+                var positions = [];
+                partList.positions.map((item) => {
+                    var part = {};
+
+                    part.source = 'brickLink';
+                    part.itemid = item.itemid;
+                    part.searchids = item.searchids;
+                    part.color = item.color;
+                    part.qty = item.qty;
+                    part.bricksAndPieces = item.bricksAndPieces;
+                    part.pickABrick = item.pickABrick;
+                    part.brickLink = {};
+                    part.brickLink.strAltNo = item.brickLink?.strAltNo;
+                    part.brickLink.mapPCCs = item.brickLink?.mapPCCs;
+                    part.brickLink.wantedList = {};
+                    part.brickLink.wantedList.itemtype = item.itemtype;
+                    part.brickLink.wantedList.maxprice = item.maxprice;
+                    part.brickLink.wantedList.condition = item.condition;
+                    part.brickLink.wantedList.notify = item.notify;
+
+                    part.image = {
+                        source: 'brickLink',
+                        rsc: item.image,
+                    };
+
+                    positions.push(part);
+                });
+                partList.positions = positions;
+                localStorage.setItem('partList_' + partList.id, JSON.stringify(partList));
+            });
+        }
+
+        oldVersionCheck = "1.1.13".split('.').map(Number);
+
+        if (oldVersion[0] < oldVersionCheck[0] || oldVersion[1] < oldVersionCheck[1] || oldVersion[2] < oldVersionCheck[2]) {
+            state.partLists.map((partList) => {
+                partList.source = partList.positions[0].source;
+                localStorage.setItem('partList_' + partList.id, JSON.stringify(partList));
+            });
         }
 
         state.totalPositions = 0;
