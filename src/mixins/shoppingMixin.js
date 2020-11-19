@@ -140,7 +140,6 @@ export const shoppingMixin = {
 
             if (prices.length == 0) {
                 prices.push(['notAllocated', 0]);
-                console.log("ff");
             }
 
             prices = prices.sort(function(a, b) {

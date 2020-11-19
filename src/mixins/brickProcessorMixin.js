@@ -88,7 +88,6 @@ export const brickProcessorMixin = {
             return result[0];
         },
         isSpecialBrick(item) {
-            console.log(item);
             if (
                 isNaN(this.cleanItemId(item.itemid)) ||
                 item.color.brickLinkId == 65 || // metallic gold
@@ -168,7 +167,7 @@ export const brickProcessorMixin = {
             if (!bricks) return null;
 
             var returnValue = [];
-            var country = localStorage.getItem('country') || null;
+            var country = this.$store.state.country;
 
             bricks.forEach((value) => {
                 var value = {

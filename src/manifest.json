@@ -7,7 +7,10 @@
     "tabs",
     "https://*.lego.com/*",
     "https://www.bricklink.com/*",
-    "http://www.bricklink.com/*"
+    "http://www.bricklink.com/*",
+    "https://www.paypal.com/*",
+    "https://www.paypalobjects.com/*",
+    "http://www.paypalobjects.com/*"
   ],
   "icons": {
     "16": "icons/icon_16.png",

@@ -130,8 +130,8 @@ export default {
     beforeMount() {
         if (this.$store.state.mode == 'popup')
             this.$router.push('/partLists').catch(() => {});
-        this.countrySelected = localStorage.getItem('country') || null;
-        this.languageSelected = localStorage.getItem('language') || null;
+        this.countrySelected = this.$store.state.country;
+        this.languageSelected = this.$store.state.language;
     },
     computed: {
         extName() {

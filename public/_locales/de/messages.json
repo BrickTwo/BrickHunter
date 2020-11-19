@@ -119,6 +119,9 @@
     "brickList_bricksAndPiecesPrice": {
         "message": "Steine & Teile"
     },
+    "affiliate_noAffiliate": {
+        "message": "Ohne Affiliate"
+    },
     "itsEmptyHere": {
         "message": "Es ist so leer hier. "
     },
@@ -340,6 +343,18 @@
     },
     "info_sourceCodeText2": {
         "message": "."
+    },
+    "info_affiliateTitel": {
+        "message": "Affiliate Links"
+    },
+    "info_affiliateText": {
+        "message": "Sofern für dein Land verfügbar, werden Bestellvorgänge die mit BrickHunter ausgeführt werden mit einem AffiliateLink ausgeführt. Dir entstehen dabei keine Mehrkosten, du unterstützt dabei aber, dass BrickHunter auch weiterhin in der Form angeboten werden kann. Du kannst aber vor der Übergabe an LEGO die Verwendung eines Affiliate Links ausschalten."
+    },
+    "info_donateTitel": {
+        "message": "Spenden"
+    },
+    "info_donateText": {
+        "message": "Falls du BrickHunter einsetzt würde ich mich über eine freiwillige Spende freuen."
     },
     "partList_positions": {
         "message": "Positionen"

@@ -19,6 +19,11 @@
                 >
                     {{ buttonClearPickABrickCart }}
                 </b-button>
+                <Affiliate
+                    class="button"
+                    style="display: inline;"
+                    :noAffiliate="true"
+                />
                 <b-button
                     class="button"
                     variant="primary"
@@ -30,11 +35,6 @@
                 <b-button class="button" variant="primary" @click="showInfo">
                     <b-icon icon="info-circle" aria-hidden="true" />
                 </b-button>
-                <!--<Affiliate
-                    class="button"
-                    style="display: inline;"
-                    :noAffiliate="true"
-                />-->
                 <span>
                     <b-progress
                         :value="loadPABPercentage"
@@ -114,7 +114,8 @@
                     @ok="bricksAndPiecesFillCart()"
                 >
                     <p class="my-4">
-                        Bitte benutze für diese Aktion die Popup variante von BrickHunter.
+                        Bitte benutze für diese Aktion die Popup variante von
+                        BrickHunter.
                     </p>
                 </b-modal>
             </b-col>
@@ -151,9 +152,9 @@ export default {
             this.$router.push('/info').catch(() => {});
         },
         async pickABrickClearCart() {
-            if(!this.showCartButtons){
+            if (!this.showCartButtons) {
                 this.$bvModal.show('modal-use-popup');
-                 return;
+                return;
             }
             var cartId = await this.getShoppingCartId('clear');
             if (!cartId) return;
@@ -169,10 +170,8 @@ export default {
                         .query({ currentWindow: true, active: true })
                         .then((tabs) => {
                             var tab = tabs[0];
-                            var countrySelected =
-                                localStorage.getItem('country') || null;
-                            var languageSelected =
-                                localStorage.getItem('language') || null;
+                            var countrySelected = this.$store.state.country;
+                            var languageSelected = this.$store.state.language;
 
                             browser.runtime.sendMessage({
                                 contentScriptQuery: 'openPickABrick',
@@ -197,9 +196,9 @@ export default {
                 .catch(() => {});
         },
         async pickABrickFillCart() {
-            if(!this.showCartButtons){
+            if (!this.showCartButtons) {
                 this.$bvModal.show('modal-use-popup');
-                 return;
+                return;
             }
             var cartId = await this.getShoppingCartId('fill');
             if (!cartId) return;
@@ -215,13 +214,12 @@ export default {
                 .query({ currentWindow: true, active: true })
                 .then((tabs) => {
                     var tab = tabs[0];
-                    var countrySelected =
-                        localStorage.getItem('country') || null;
-                    var languageSelected =
-                        localStorage.getItem('language') || null;
+                    var countrySelected = this.$store.state.country;
+                    var languageSelected = this.$store.state.language;
 
                     browser.runtime.sendMessage({
                         contentScriptQuery: 'openPickABrick',
+                        affiliate: this.$store.state.affiliate,
                     });
 
                     //console.log(`https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`);
@@ -305,9 +303,9 @@ export default {
         //this.getShoppingCartId();
     },
     computed: {
-        showCartButtons(){
-            if(this.$store.state.mode == "popup") return true;
-            if(navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
+        showCartButtons() {
+            if (this.$store.state.mode == 'popup') return true;
+            if (navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
             return false;
         },
         buttonFillPickABrickCart() {

@@ -38,7 +38,7 @@ export default {
     methods: {
         changeCountry(value) {
             this.selectedCountry = value;
-            localStorage.setItem('country', this.selectedCountry);
+            this.$store.commit('setCountry', this.selectedCountry);
             this.$emit('countrySelected', this.selectedCountry);
         },
         getImgUrl(value) {
@@ -46,7 +46,7 @@ export default {
         },
     },
     beforeMount() {
-        this.selectedCountry = localStorage.getItem('country') || null;
+        this.selectedCountry = this.$store.state.country;
 
         this.COUNTRIES.forEach((country) => {
             this.options.push({
