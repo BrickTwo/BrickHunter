@@ -94,7 +94,7 @@ const mutations = {
             if (payload.bricksAndPieces.maxAmount < payload.qty.order) {
                 payload.qty.maxAmount = payload.bricksAndPieces.maxAmount;
             }
-            state.brickAndPiecesList.push(payload);
+            state.brickAndPiecesList.push(JSON.parse(JSON.stringify(payload)));
             state.bricksAndPiecesPositions++;
             state.wantedListPositionsMerged++;
 
@@ -145,7 +145,7 @@ const mutations = {
             }
             qtyForPrice -= orderSizeBeforeCalculation;
         } else {
-            state.pickABrickList.push({ ...payload });
+            state.pickABrickList.push(JSON.parse(JSON.stringify(payload)));
             state.pickABrickPositions++;
             state.wantedListPositionsMerged++;
 
@@ -185,7 +185,7 @@ const mutations = {
             found.qty.order += parseInt(payload.qty.order);
             found.qty.balance = found.qty.min - found.qty.have;
         } else {
-            state.brickLinkList.push(payload);
+            state.brickLinkList.push(JSON.parse(JSON.stringify(payload)));
             state.brickLinkPositions++;
             state.wantedListPositionsMerged++;
         }
@@ -222,7 +222,7 @@ const mutations = {
             found.qty.order += parseInt(payload.qty.order);
             found.qty.balance = found.qty.min - found.qty.have;
         } else {
-            state.notAllocatedList.push(payload);
+            state.notAllocatedList.push(JSON.parse(JSON.stringify(payload)));
             state.notAllocatedPositions++;
             state.wantedListPositionsMerged++;
         }

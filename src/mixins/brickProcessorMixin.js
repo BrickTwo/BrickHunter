@@ -88,7 +88,6 @@ export const brickProcessorMixin = {
             return result[0];
         },
         isSpecialBrick(item) {
-            console.log(item);
             if (
                 isNaN(this.cleanItemId(item.itemid)) ||
                 item.color.brickLinkId == 65 || // metallic gold

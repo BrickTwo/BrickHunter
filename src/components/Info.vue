@@ -3,7 +3,7 @@
         <h1>{{ disclaimerTitle }}</h1>
         <p>{{ disclaimerText1 }}</p>
         <p>{{ disclaimerText2 }}</p>
-        <h1>{{ licenseTitel }}</h1>
+        <h1>{{ licenseTitle }}</h1>
         <p>
             {{ licenseText1
             }}<a
@@ -24,6 +24,17 @@
                 >{{ sourceCodeLink }}</a
             >{{ sourceCodeText2 }}
         </p>
+        <h1>{{ affiliateTitle }}</h1>
+        <p>{{ affiliateText }}</p>
+        <h1>{{ donateTitle }}</h1>
+        <p>{{ donateText }}</p>
+        <img
+            alt=""
+            border="0"
+            src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
+            @click="donate('https://github.com/BrickTwo/BrickHunter')"
+            style="cursor: pointer"
+        />
     </div>
 </template>
 
@@ -32,6 +43,11 @@ export default {
     methods: {
         link(value) {
             browser.tabs.create({ url: value });
+        },
+        donate() {
+            browser.runtime.sendMessage({
+                contentScriptQuery: 'donate',
+            });
         },
     },
     computed: {
@@ -44,7 +60,7 @@ export default {
         disclaimerText2() {
             return browser.i18n.getMessage('info_disclaimerText2');
         },
-        licenseTitel() {
+        licenseTitle() {
             return browser.i18n.getMessage('info_licenseTitel');
         },
         licenseText1() {
@@ -64,6 +80,18 @@ export default {
         },
         sourceCodeText2() {
             return browser.i18n.getMessage('info_sourceCodeText2');
+        },
+        affiliateTitle() {
+            return browser.i18n.getMessage('info_affiliateTitel');
+        },
+        affiliateText() {
+            return browser.i18n.getMessage('info_affiliateText');
+        },
+        donateTitle() {
+            return browser.i18n.getMessage('info_donateTitel');
+        },
+        donateText() {
+            return browser.i18n.getMessage('info_donateText');
         },
     },
 };

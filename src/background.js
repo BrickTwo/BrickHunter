@@ -198,9 +198,11 @@ browser.runtime.onMessage.addListener(async function(
                     var tab = tabs[0];
 
                     var url = `https://www.lego.com/${localeCountryLanguage}/page/static/pick-a-brick`;
-                    if(request.affiliate){
-                        if(request.affiliate.linkType == 'webgains') {
-                            url = `https://track.webgains.com/click.html?wgcampaignid=${request.affiliate.wgcampaignid}&wgprogramid=${request.affiliate.wgprogramid}&clickref=${request.affiliate.clickref}&wgtarget=` + url;
+                    if (request.affiliate) {
+                        if (request.affiliate.linkType == 'webgains') {
+                            url =
+                                `https://track.webgains.com/click.html?wgcampaignid=${request.affiliate.wgcampaignid}&wgprogramid=${request.affiliate.wgprogramid}&clickref=${request.affiliate.clickref}&wgtarget=` +
+                                url;
                         }
                     }
 
@@ -273,9 +275,11 @@ browser.runtime.onMessage.addListener(async function(
                     var tab = tabs[0];
 
                     var url = `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`;
-                    if(request.affiliate){
-                        if(request.affiliate.linkType == 'webgains') {
-                            url = `https://track.webgains.com/click.html?wgcampaignid=${request.affiliate.wgcampaignid}&wgprogramid=${request.affiliate.wgprogramid}&clickref=${request.affiliate.clickref}&wgtarget=` + url;
+                    if (request.affiliate) {
+                        if (request.affiliate.linkType == 'webgains') {
+                            url =
+                                `https://track.webgains.com/click.html?wgcampaignid=${request.affiliate.wgcampaignid}&wgprogramid=${request.affiliate.wgprogramid}&clickref=${request.affiliate.clickref}&wgtarget=` +
+                                url;
                         }
                     }
                     browser.tabs.update(tab.id, {
@@ -390,6 +394,15 @@ browser.runtime.onMessage.addListener(async function(
                     //console.log(tabs);
                     browser.tabs.update(tabs[0].id, {
                         url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
+                    });
+                });
+        case 'donate':
+            browser.tabs
+                .query({ currentWindow: true, active: true })
+                .then(async (tabs) => {
+                    //console.log(tabs);
+                    browser.tabs.update(tabs[0].id, {
+                        url: `https://www.paypal.com/donate?hosted_button_id=MPV9V9JUKRD6N`,
                     });
                 });
     }

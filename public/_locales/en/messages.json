@@ -344,6 +344,18 @@
     "info_sourceCodeText2": {
         "message": "."
     },
+    "info_affiliateTitel": {
+        "message": "Affiliate Links"
+    },
+    "info_affiliateText": {
+        "message": "If available for your country, orders placed with BrickHunter will be processed with an affiliate link. There are no additional costs for you, but you support that BrickHunter can still be offered in this form. However, you can switch off the use of an affiliate link before you hand it over to LEGO."
+    },
+    "info_donateTitel": {
+        "message": "Donation"
+    },
+    "info_donateText": {
+        "message": "If you use BrickHunter I would appreciate a voluntary donation."
+    },
     "partList_positions": {
         "message": "Positions"
     },
