@@ -2,13 +2,7 @@ package-lock.json
 artifacts/
 dist/
 node_modules/
-public/icons/icon.png
-public/icons/icon_128.png
-public/icons/icon_16.png
-public/icons/icon_24.png
-public/icons/icon_32.png
-public/icons/icon_48.png
-public/icons/icon_96.png
+public/icons/
 
 # Vue Browser Extension Output
 *.pem
