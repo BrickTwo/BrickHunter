@@ -10,7 +10,8 @@
     "http://www.bricklink.com/*",
     "https://www.paypal.com/*",
     "https://www.paypalobjects.com/*",
-    "http://www.paypalobjects.com/*"
+    "http://www.paypalobjects.com/*",
+    "https://brickhunter.bricktwo.net/*"
   ],
   "icons": {
     "16": "icons/icon_16.png",

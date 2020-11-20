@@ -58,7 +58,7 @@ export default new Vuex.Store({
         },
         setCountry(state, payload) {
             state.country = payload;
-            localStorage.setItem('country', state.mode);
+            localStorage.setItem('country', state.country);
         },
         setLanguage(state, payload) {
             state.language = payload;
