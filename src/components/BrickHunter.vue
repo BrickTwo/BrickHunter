@@ -2,47 +2,50 @@
     <div>
         <b-navbar type="dark" variant="dark">
             <b-container class="p-0" fluid="xl">
-            <b-navbar-brand>
-                <img src="icons/icon_24.png" class="d-inline-block align-top" />
-                {{ extName }}
-            </b-navbar-brand>
-            <b-navbar-nav
-                class="ml-auto"
-                v-if="countrySelected && languageSelected"
-            >
-                <b-nav-item @click="showPage('import')">{{
-                    menuImport
-                }}</b-nav-item>
-                <b-nav-item @click="showPage('partLists')">{{
-                    menuWantedList
-                }}</b-nav-item>
-                <b-nav-item @click="showPage('shopping')">{{
-                    menuShoppingCart
-                }}</b-nav-item>
-                <b-nav-item @click="showPage('export')">{{
-                    menuExport
-                }}</b-nav-item>
-
-                <b-nav-item
-                    @click="
-                        link('https://github.com/BrickTwo/BrickHunter/wiki')
-                    "
-                    >{{ menuHelp }}</b-nav-item
+                <b-navbar-brand>
+                    <img
+                        src="icons/icon_24.png"
+                        class="d-inline-block align-top"
+                    />
+                    {{ extName }}
+                </b-navbar-brand>
+                <b-navbar-nav
+                    class="ml-auto"
+                    v-if="countrySelected && languageSelected"
                 >
+                    <b-nav-item @click="showPage('import')">{{
+                        menuImport
+                    }}</b-nav-item>
+                    <b-nav-item @click="showPage('partLists')">{{
+                        menuWantedList
+                    }}</b-nav-item>
+                    <b-nav-item @click="showPage('shopping')">{{
+                        menuShoppingCart
+                    }}</b-nav-item>
+                    <b-nav-item @click="showPage('export')">{{
+                        menuExport
+                    }}</b-nav-item>
 
-                <b-nav-item @click="showPage('info')">
-                    <b-icon icon="info-circle" aria-hidden="true" />
-                </b-nav-item>
-                <b-nav-item @click="showPage('settings')">
-                    <b-icon icon="gear" aria-hidden="true" />
-                </b-nav-item>
-                <b-nav-item
-                    @click="openInFullscreen()"
-                    v-if="this.$store.state.mode == 'popup'"
-                >
-                    <b-icon icon="arrows-fullscreen" aria-hidden="true" />
-                </b-nav-item>
-            </b-navbar-nav>
+                    <b-nav-item
+                        @click="
+                            link('https://github.com/BrickTwo/BrickHunter/wiki')
+                        "
+                        >{{ menuHelp }}</b-nav-item
+                    >
+
+                    <b-nav-item @click="showPage('info')">
+                        <b-icon icon="info-circle" aria-hidden="true" />
+                    </b-nav-item>
+                    <b-nav-item @click="showPage('settings')">
+                        <b-icon icon="gear" aria-hidden="true" />
+                    </b-nav-item>
+                    <b-nav-item
+                        @click="openInFullscreen()"
+                        v-if="this.$store.state.mode == 'popup'"
+                    >
+                        <b-icon icon="arrows-fullscreen" aria-hidden="true" />
+                    </b-nav-item>
+                </b-navbar-nav>
             </b-container>
         </b-navbar>
         <b-container class="pt-1 pb-3 page" fluid="xl">
@@ -136,6 +139,9 @@ export default {
     computed: {
         extName() {
             return browser.i18n.getMessage('extName');
+        },
+        bricksAndPieces() {
+            return browser.i18n.getMessage('bricksAndPieces');
         },
         menuImport() {
             return browser.i18n.getMessage('menu_import');

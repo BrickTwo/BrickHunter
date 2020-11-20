@@ -8,12 +8,18 @@ export const requestsMixin = {
             );
         },
         sendPrices(items) {
-            if(!items) return;
-            
+            if (!items) return;
+
             return axios.post(
                 'https://brickhunter.bricktwo.net/api/updatebricks.php',
                 items
             );
+        },
+        async getCategoriesAsync(country) {
+            var response = await axios.get(
+                `https://brickhunter.bricktwo.net/api/categories/read.php?country=${country}`
+            );
+            return response.data;
         },
     },
 };
