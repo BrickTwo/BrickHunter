@@ -47,75 +47,72 @@
                 </span>
                 <b-modal
                     id="modal-open-lego-clear-cart"
-                    title="Aktion kann nicht durchgeführt werden!"
+                    :title="actionCannotPerform"
                     :header-bg-variant="headerBgVariant"
                     :header-text-variant="headerTextVariant"
                     centered
                     @ok="pickABrickClearCart()"
                 >
                     <p class="my-4">
-                        Um diese Aktion durchzuführen muss die LEGO.com Webseite
-                        in einem anderen Tab offen und fertig geladen sein.
+                        {{ openLegoWebsiteText }}
                     </p>
                     <p>
                         <b-button
                             variant="primary"
                             @click="openInNewTab('https://www.lego.com/')"
                         >
-                            LEGO.com öffnen
+                            {{ openLegoWebsite }}
                         </b-button>
                     </p>
                     <template #modal-footer="{ cancel, ok }">
                         <b-button @click="cancel()">
-                            Abbrechen
+                            {{ labelCancel }}
                         </b-button>
                         <!-- Button with custom close trigger value -->
                         <b-button @click="ok()">
-                            Nochmals versuchen
+                            {{ tryAgain }}
                         </b-button>
                     </template>
                 </b-modal>
                 <b-modal
                     id="modal-open-lego-fill-cart"
-                    title="Aktion kann nicht durchgeführt werden!"
+                    :title="actionCannotPerform"
                     :header-bg-variant="headerBgVariant"
                     :header-text-variant="headerTextVariant"
                     centered
                     @ok="pickABrickFillCart()"
                 >
                     <p class="my-4">
-                        Um diese Aktion durchzuführen muss die LEGO.com Webseite
-                        in einem anderen Tab offen und fertig geladen sein.
+                        {{ openLegoWebsiteText }}
                     </p>
                     <p>
                         <b-button
                             variant="primary"
                             @click="openInNewTab('https://www.lego.com/')"
                         >
-                            LEGO.com öffnen
+                            {{ openLegoWebsite }}
                         </b-button>
                     </p>
                     <template #modal-footer="{ cancel, ok }">
                         <b-button @click="cancel()">
-                            Abbrechen
+                            {{ labelCancel }}
                         </b-button>
                         <!-- Button with custom close trigger value -->
                         <b-button @click="ok()">
-                            Nochmals versuchen
+                            {{ tryAgain }}
                         </b-button>
                     </template>
                 </b-modal>
                 <b-modal
                     id="modal-use-popup"
-                    title="Aktion kann nicht durchgeführt werden!"
+                    :title="actionCannotPerform"
                     :header-bg-variant="headerBgVariant"
                     :header-text-variant="headerTextVariant"
                     centered
                     @ok="bricksAndPiecesFillCart()"
                 >
                     <p class="my-4">
-                        Bitte benutze für diese Aktion die Popup variante von
-                        BrickHunter.
+                        {{ pleaseUsePopup }}
                     </p>
                 </b-modal>
             </b-col>
@@ -321,6 +318,24 @@ export default {
         },
         clearCartSuccessfullText() {
             return browser.i18n.getMessage('shopping_clearCartSuccessfullText');
+        },
+        actionCannotPerform() {
+            return browser.i18n.getMessage('shopping_actionCannotPerform');
+        },
+        openLegoWebsiteText() {
+            return browser.i18n.getMessage('shopping_openLegoWebsiteText');
+        },
+        openLegoWebsite() {
+            return browser.i18n.getMessage('shopping_openLegoWebsite');
+        },
+        labelCancel() {
+            return browser.i18n.getMessage('shopping_cancel');
+        },
+        tryAgain() {
+            return browser.i18n.getMessage('shopping_tryAgain');
+        },
+        pleaseUsePopup() {
+            return browser.i18n.getMessage('shopping_pleaseUsePopup');
         },
     },
 };
