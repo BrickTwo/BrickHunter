@@ -23,7 +23,7 @@
                 LEGO Set
             </b-nav-item>
             <b-nav-item :active="page == 'selection'" @click="page = 'selection'">
-                Selection
+                Einzelteile
             </b-nav-item>
         </b-nav>
         <ImportBrickLink v-if="page == 'brickLink'" class="tabPage" />

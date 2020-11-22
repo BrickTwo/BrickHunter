@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid="xl" class="categories">
+    <b-container fluid="xl">
         <b-row v-for="category in categories" :key="category.id">
             <b-col>
                 <b-link @click="selectCategorie(category.id)">
@@ -10,13 +10,6 @@
         </b-row>
     </b-container>
 </template>
-
-<style scoped>
-.categories {
-    max-height: 100%;
-    overflow: scroll;
-}
-</style>
 
 <script>
 import { requestsMixin } from '@/mixins/requestsMixin';
@@ -33,6 +26,14 @@ export default {
     },
     async beforeMount() {
         this.categories = await this.getCategoriesAsync(this.$store.state.country);
+
+        var category = {
+            id: 0,
+            name: "all",
+            quantity: this.categories.reduce((a, b) => a + (parseInt(b['quantity']) || 0), 0)
+        };
+
+        this.categories.unshift(category);
     },
 };
 </script>

@@ -21,5 +21,11 @@ export const requestsMixin = {
             );
             return response.data;
         },
+        async getBricksAsync(categoryId) {
+            var response = await axios.get(
+                `https://brickhunter.bricktwo.net/api/bricks/read.php?category=${categoryId}`
+            );
+            return response.data;
+        },
     },
 };
