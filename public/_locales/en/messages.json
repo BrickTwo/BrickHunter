@@ -119,6 +119,9 @@
     "brickList_bricksAndPiecesPrice": {
         "message": "Bricks & Pieces"
     },
+    "affiliate_noAffiliate": {
+        "message": "Ohne Affiliate"
+    },
     "itsEmptyHere": {
         "message": "It's so empty here. "
     },
@@ -284,8 +287,14 @@
     "import_file": {
         "message": "File"
     },
+    "import_setNumber": {
+        "message": "Set Number"
+    },
     "import_name": {
         "message": "Name"
+    },
+    "import_useSetNumberSuffix": {
+        "message": "Use Set Number as suffix"
     },
     "import_shoppingCart": {
         "message": "Shopping cart"
@@ -335,6 +344,18 @@
     "info_sourceCodeText2": {
         "message": "."
     },
+    "info_affiliateTitel": {
+        "message": "Affiliate Links"
+    },
+    "info_affiliateText": {
+        "message": "If available for your country, orders placed with BrickHunter will be processed with an affiliate link. There are no additional costs for you, but you support that BrickHunter can still be offered in this form. However, you can switch off the use of an affiliate link before you hand it over to LEGO."
+    },
+    "info_donateTitel": {
+        "message": "Donation"
+    },
+    "info_donateText": {
+        "message": "If you use BrickHunter I would appreciate a voluntary donation."
+    },
     "partList_positions": {
         "message": "Positions"
     },
@@ -379,6 +400,9 @@
     },
     "shopping_tabSettings": {
         "message": "Settings"
+    },
+    "shopping_notAllocated": {
+        "message": "Not allocated"
     },
     "shopping_titleAmountPositions": {
         "message": "Number of positions"
@@ -445,6 +469,9 @@
     },
     "wantedList_shoppingCart": {
         "message": "Shopping cart"
+    },
+    "wantedList_name": {
+        "message": "Part List Name"
     },
     "xmlField_copyWantedList": {
         "message": "Copy the content of a WantedList into this"

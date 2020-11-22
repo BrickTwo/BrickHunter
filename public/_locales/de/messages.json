@@ -119,6 +119,9 @@
     "brickList_bricksAndPiecesPrice": {
         "message": "Steine & Teile"
     },
+    "affiliate_noAffiliate": {
+        "message": "Ohne Affiliate"
+    },
     "itsEmptyHere": {
         "message": "Es ist so leer hier. "
     },
@@ -284,8 +287,14 @@
     "import_file": {
         "message": "Datei"
     },
+    "import_setNumber": {
+        "message": "Set Number"
+    },
     "import_name": {
         "message": "Name"
+    },
+    "import_useSetNumberSuffix": {
+        "message": "Use Set Number as suffix"
     },
     "import_shoppingCart": {
         "message": "Warenkorb"
@@ -335,6 +344,18 @@
     "info_sourceCodeText2": {
         "message": "."
     },
+    "info_affiliateTitel": {
+        "message": "Affiliate Links"
+    },
+    "info_affiliateText": {
+        "message": "Sofern für dein Land verfügbar, werden Bestellvorgänge die mit BrickHunter ausgeführt werden mit einem AffiliateLink ausgeführt. Dir entstehen dabei keine Mehrkosten, du unterstützt dabei aber, dass BrickHunter auch weiterhin in der Form angeboten werden kann. Du kannst aber vor der Übergabe an LEGO die Verwendung eines Affiliate Links ausschalten."
+    },
+    "info_donateTitel": {
+        "message": "Spenden"
+    },
+    "info_donateText": {
+        "message": "Falls du BrickHunter einsetzt würde ich mich über eine freiwillige Spende freuen."
+    },
     "partList_positions": {
         "message": "Positionen"
     },
@@ -369,7 +390,7 @@
         "message": "Prio 3"
     },
     "shopping_optionsNone": {
-        "message": "nicht verwenden"
+        "message": "Nicht verwenden"
     },
     "shopping_useHave": {
         "message": "WantedList-Have von Anzahl abziehen"
@@ -379,6 +400,9 @@
     },
     "shopping_tabSettings": {
         "message": "Einstellungen"
+    },
+    "shopping_notAllocated": {
+        "message": "nicht zugeteilt"
     },
     "shopping_titleAmountPositions": {
         "message": "Anzahl Positionen"
@@ -442,6 +466,9 @@
     },
     "wantedList_lastUpdated": {
         "message": "Zuletzt aktualisiert"
+    },
+    "wantedList_name": {
+        "message": "Teilelistename"
     },
     "wantedList_shoppingCart": {
         "message": "Warenkorb"

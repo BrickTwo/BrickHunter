@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import ExportWantedList from '@/components/Export/BrickLink.vue';
-import ExportCsv from '@/components/Export/Csv.vue';
+import ExportWantedList from './BrickLink';
+import ExportCsv from './Csv';
 
 export default {
     data: () => ({

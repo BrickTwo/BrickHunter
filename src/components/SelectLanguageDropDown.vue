@@ -43,7 +43,7 @@ export default {
     methods: {
         changeLanguage(value) {
             this.selectedLanguage = value;
-            localStorage.setItem('language', this.selectedLanguage);
+            this.$store.commit('setLanguage', this.selectedLanguage);
             this.$emit('languageSelected', this.selectedLanguage);
         },
         getImgUrl(value) {
@@ -62,12 +62,12 @@ export default {
                 });
             });
             this.selectedLanguage = this.options[0].value;
-            localStorage.setItem('language', this.selectedLanguage);
+            this.$store.commit('language', this.selectedLanguage);
             this.$emit('languageSelected', this.selectedLanguage);
         },
     },
     beforeMount() {
-        this.selectedLanguage = localStorage.getItem('language') || null;
+        this.selectedLanguage = this.$store.state.language;
 
         if (this.countrySelected) {
             //console.log(this.countrySelected);

@@ -1,6 +1,7 @@
 export const brickProcessorMixin = {
     methods: {
         cleanItemId(itemId) {
+            itemId = itemId.toString();
             var lastChar = itemId.substr(-1, 1);
             if (lastChar >= 'a' && lastChar <= 'h') {
                 return itemId.slice(0, -1);
@@ -14,9 +15,24 @@ export const brickProcessorMixin = {
             );
             return result[0];
         },
+        findLegoColor(colorFamily, colorList) {
+            var result = colorList.filter(
+                (color) => color.bricksAndPiecesName == colorFamily
+            );
+            console.log(result);
+            if(!result.length){
+                console.log(222);
+                result = colorList.filter(
+                    (color) => color.brickLinkId == 0
+                );
+                result[0].legoName = colorFamily;
+                result[0].bricksAndPiecesName = colorFamily;
+                result[0].pickABrickName = colorFamily;
+                console.log(result);
+            }
+            return result[0];
+        },
         findBricksAndPiecesBrick(item, bricks) {
-            //console.log(item.color.brickLinkName);
-            //console.log('satFind', item, bricks);
             if (!bricks) return null;
             bricks = bricks.filter((brick) => !brick.isSoldOut);
             var result = bricks.filter(
@@ -24,7 +40,6 @@ export const brickProcessorMixin = {
                     brick.colorFamily == item.color.bricksAndPiecesName &&
                     !brick.isSoldOut
             );
-            //console.log("result", result);
 
             if (this.isSpecialBrick(item)) {
                 if (item.brickLink.mapPCCs) {
@@ -36,7 +51,6 @@ export const brickProcessorMixin = {
                     result = bricks.filter(function(brick) {
                         return this.indexOf(brick.itemNumber) < 0;
                     }, colorCodes);
-                    //console.log("result 2", result);
                 }
             }
 
@@ -48,11 +62,9 @@ export const brickProcessorMixin = {
                 }
             });
 
-            //console.log("resultSorted", result);
             return result[0];
         },
         findPickABrickBrick(item, bricks) {
-            //console.log('pickABrickFind', item, bricks);
             if (!bricks) return null;
 
             var result = bricks.filter(
@@ -66,12 +78,10 @@ export const brickProcessorMixin = {
                     var colorCodes = colorCodesArray[
                         item.color.brickLinkId
                     ].split(',');
-                    //console.log("result", result);
 
                     result = bricks.filter(function(brick) {
                         return this.indexOf(brick.itemNumber) < 0;
                     }, colorCodes);
-                    //console.log("result 2", result);
                 }
             }
 
@@ -93,7 +103,6 @@ export const brickProcessorMixin = {
             return false;
         },
         async loadBricksAndPieces(item) {
-            //console.log('loadBricksAndPieces', item);
             if (!item.searchids) {
                 item.bricksAndPieces = null;
                 this.bricksAndPiecesBrickCounter++;
@@ -109,16 +118,14 @@ export const brickProcessorMixin = {
                         contentScriptQuery: 'getBricksAndPieces',
                         itemId: item.searchids[j],
                     });
-                    //console.log('response', item.searchids[j], response);
                     if (response?.bricks) {
                         bricks = bricks.concat(response.bricks);
                     }
                 }
             }
 
-            //console.log("getBricksAndPieces", item.itemid, bricks)
             var foundBrick = this.findBricksAndPiecesBrick(item, bricks);
-            //console.log(foundBrick)
+            
             if (foundBrick) {
                 item.bricksAndPieces = foundBrick;
             } else {
@@ -133,7 +140,6 @@ export const brickProcessorMixin = {
             return item;
         },
         async loadPickABrick(item) {
-            //console.log("PickABrick", item, item.searchids.join('-'))
             if (!item.searchids) {
                 item.pickABrick = null;
                 this.pickABrickBrickCounter++;
@@ -158,11 +164,10 @@ export const brickProcessorMixin = {
             return item;
         },
         prepareSendPrice(item, bricks) {
-            console.log(item);
             if (!bricks) return null;
 
             var returnValue = [];
-            var country = localStorage.getItem('country') || null;
+            var country = this.$store.state.country;
 
             bricks.forEach((value) => {
                 var value = {
@@ -180,7 +185,6 @@ export const brickProcessorMixin = {
                 returnValue.push(value);
             });
 
-            console.log('returnValue', returnValue);
             return returnValue;
         },
     },

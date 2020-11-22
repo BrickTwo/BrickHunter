@@ -67,7 +67,7 @@ export default {
                 width: '50px',
             },
             {
-                name: 'maxprice',
+                name: 'brickLink',
                 title: () =>
                     browser.i18n.getMessage('brickList_brickLinkPrice'),
                 callback: 'brickLinkPrice',
@@ -94,14 +94,19 @@ export default {
     },
     methods: {
         showImage(value) {
-            return `<img src="${value}" height="40">`;
+            if (value.source == 'brickLink') {
+                return `<img src="${value.rsc}" height="40">`;
+            } else {
+                return `<img src="https://www.lego.com/cdn/product-assets/element.img.lod4outline.192x192/${value.itemId}.jpg" height="40">`;
+            }
         },
         showColor(value) {
+            if (!value) return;
             return `<span style="display: block"><div style="background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"></div><span>${value.brickLinkName}</span></span><span style="color: grey; font-size: small; margin-left: 20px">[${value.legoName}]</span>`;
         },
         brickLinkPrice(value) {
-            if (value < 0) return 0;
-            return value;
+            if (value?.wantedList?.maxprice < 0) return;
+            return value?.wantedList?.maxprice;
         },
         pickABrickPrice(value) {
             if (!value) return '';
@@ -121,7 +126,6 @@ export default {
             return returnValue;
         },
         lineNumber(value) {
-            //console.log(value)
             return value + 1;
         },
         showQty(value) {
@@ -144,6 +148,11 @@ export default {
         spinner() {
             return '<svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="arrow clockwise" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-arrow-clockwise b-icon bi b-icon-animation-spin" style="font-size: 150%;"><g><path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"></path><path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"></path></g></svg>';
         },
+    },
+    beforeMount() {
+        if (this.$store.state.mode == 'standalone') {
+            this.tableHeight = 'calc(100vh - 260px)';
+        }
     },
 };
 </script>

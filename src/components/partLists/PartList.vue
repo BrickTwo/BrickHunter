@@ -1,29 +1,27 @@
 <template>
     <div>
-        <b-container class="headerContainer" fluid="lg">
+        <b-container class="px-2" fluid="xl">
             <b-row>
                 <b-col cols="7">
-                    <b-container class="headerLeftContainer">
+                    <b-container>
                         <b-row>
-                            <b-col>
-                                <h2>
-                                    <div
-                                        style="max-width:360px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom"
-                                    >
-                                        {{ partList.name }}
-                                    </div>
-                                    <b-button
-                                        variant="primary"
+                            <b-col id="partListTitle">
+                                <h2
+                                    class="text-overflow-elipsis"
+                                    id="partListH2"
+                                >
+                                    {{ partList.name }}
+                                </h2>
+                                <p class="h2 mb-2">
+                                    <b-icon
+                                        icon="pencil"
+                                        aria-hidden="true"
                                         v-b-modal.modal-edit-name
                                         @click="editName = partList.name"
-                                        style="margin-left: 10px"
-                                    >
-                                        <b-icon
-                                            icon="pencil"
-                                            aria-hidden="true"
-                                        ></b-icon>
-                                    </b-button>
-                                </h2>
+                                        style="margin-left: 10px; cursor: pointer"
+                                        variant="primary"
+                                    />
+                                </p>
                             </b-col>
                         </b-row>
                         <b-row>
@@ -37,22 +35,26 @@
                                             loadPercentage < 100
                                     "
                                     v-if="!loadWantedList"
-                                    >{{ buttonLoadPrices }}</b-button
-                                ><b-button
+                                >
+                                    {{ buttonLoadPrices }}
+                                </b-button>
+                                <b-button
                                     variant="danger"
                                     @click="cancel"
                                     :disabled="loadPercentage >= 100"
                                     style="margin-left: 10px;"
                                     v-if="!loadWantedList"
-                                    >{{ buttonCancelLoading }}</b-button
                                 >
+                                    {{ buttonCancelLoading }}
+                                </b-button>
                                 <b-button
                                     variant="danger"
                                     @click="deleteList"
                                     style="margin-left: 10px;"
                                     v-if="!loadWantedList"
-                                    >{{ buttonDelete }}</b-button
                                 >
+                                    {{ buttonDelete }}
+                                </b-button>
                                 <b-button
                                     variant="primary"
                                     @click="print"
@@ -62,10 +64,7 @@
                                     "
                                     v-if="!loadWantedList"
                                 >
-                                    <b-icon
-                                        icon="printer"
-                                        aria-hidden="true"
-                                    ></b-icon>
+                                    <b-icon icon="printer" aria-hidden="true" />
                                 </b-button>
                             </b-col>
                         </b-row>
@@ -103,7 +102,11 @@
             </b-row>
         </b-container>
 
-        <b-modal id="modal-edit-name" hide-header @ok="saveName">
+        <b-modal
+            id="modal-edit-name"
+            @ok="saveName"
+            v-bind:title="wantedListName"
+        >
             <p class="my-4">
                 <b-form-input v-model="editName"></b-form-input>
             </p>
@@ -127,19 +130,17 @@
     </div>
 </template>
 
-<style>
-.col,
-.col-7 {
-    padding: 0;
+<style scoped>
+#partListTitle {
+    display: inline-flex;
 }
-p {
-    padding: 0;
-    margin: 0;
+#partListH2 {
+    max-width: calc(100% - 70px);
 }
 </style>
 
 <script>
-import BrickList from './BrickList';
+import BrickList from '../BrickList';
 import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
 import { requestsMixin } from '@/mixins/requestsMixin';
@@ -176,18 +177,21 @@ export default {
             this.pickABrickBrickCounter = 0;
             this.bricksAndPiecesBrickCounter = 0;
             this.loadPercentage = 0;
+            this.cancelLoading = false;
 
             for (var i = 0; i < this.wantedList.length; i++) {
                 this.wantedList[i].bricksAndPieces = null;
                 this.wantedList[i].pickABrick = null;
-                this.wantedList[i].brickLink = null;
+                if (this.wantedList[i].source == 'brickLink') {
+                    this.wantedList[i].brickLink.strAltNo = null;
+                    this.wantedList[i].brickLink.mapPCCs = null;
+                }
             }
 
             this.calcTotals();
 
             for (var i = 0; i < this.wantedList.length; i++) {
                 if (this.cancelLoading) {
-                    this.cancelLoading = false;
                     return;
                 }
                 var item = this.wantedList[i];
@@ -202,10 +206,16 @@ export default {
         async loadPrice(item) {
             try {
                 item.bricksAndPieces = { isLoading: true };
-                var brickLinkHtml = await this.getBricklink(item.itemid);
-                item.brickLink = await this.returnModelsObject(brickLinkHtml);
+                if (item.source == 'brickLink') {
+                    var brickLinkHtml = await this.getBricklink(item.itemid);
+                    var returnObject = await this.returnModelsObject(
+                        brickLinkHtml
+                    );
+                    item.brickLink.strAltNo = returnObject.strAltNo;
+                    item.brickLink.mapPCCs = returnObject.mapPCCs;
+                }
             } catch (err) {
-                console.log("couldn't find brick on bricklink");
+                //console.log("couldn't find brick on bricklink");
                 this.pickABrickBrickCounter++;
                 this.bricksAndPiecesBrickCounter++;
                 this.calcLoad();
@@ -213,18 +223,16 @@ export default {
             }
 
             if (this.cancelLoading) {
-                this.cancelLoading = false;
                 item.bricksAndPieces = null;
                 return;
             }
-            if (!item.brickLink) {
+            if (item.source == 'brickLink' && !item.brickLink) {
                 item.bricksAndPieces = null;
                 return;
             }
-
+            
             item = await this.prepareSearchIds(item);
             if (this.cancelLoading) {
-                this.cancelLoading = false;
                 return;
             }
             item = await this.loadBricksAndPieces(item);
@@ -246,7 +254,7 @@ export default {
                 //console.log("setWantedList", this.wantedList)
                 this.partList.date = new Date(Date.now());
                 this.partList.positions = this.wantedList;
-                this.$store.commit('setPartList', this.partList);
+                this.$store.commit('partList/setPartList', this.partList);
             }
             this.calcTotals();
             //console.log(this.loadPercentage)
@@ -262,7 +270,7 @@ export default {
             this.calcLoad();
         },
         deleteList() {
-            this.$store.commit('deletePartList', this.partList.id);
+            this.$store.commit('partList/deletePartList', this.partList.id);
             this.$router.push('/partLists').catch(() => {});
         },
         saveName(bvModalEvt) {
@@ -274,8 +282,8 @@ export default {
             }
 
             this.partList.name = this.editName;
-            console.log(this.partList.name, this.editName);
-            this.$store.commit('setPartList', this.partList);
+            //console.log(this.partList.name, this.editName);
+            this.$store.commit('partList/setPartList', this.partList);
 
             this.$nextTick(() => {
                 this.$bvModal.hide('modal-edit-name');
@@ -295,11 +303,11 @@ export default {
     },
     watch: {
         'partList.cart': function(val, oldVal) {
-            this.$store.commit('setPartList', this.partList);
+            this.$store.commit('partList/setPartList', this.partList);
         },
     },
     beforeMount() {
-        this.partList = this.$store.getters.getPartListsById(
+        this.partList = this.$store.getters['partList/getPartListsById'](
             this.$route.params.id
         );
         this.wantedList = this.partList.positions;
@@ -332,6 +340,9 @@ export default {
         },
         shoppingCart() {
             return browser.i18n.getMessage('wantedList_shoppingCart');
+        },
+        wantedListName() {
+            return browser.i18n.getMessage('wantedList_name');
         },
     },
 };

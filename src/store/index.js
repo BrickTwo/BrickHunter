@@ -1,23 +1,36 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import partList from './modules/partList';
+import shopping from './modules/shopping';
+
 Vue.use(Vuex);
 export default new Vuex.Store({
+    modules: {
+        mode: '',
+        shopping,
+        partList,
+    },
     state: {
-        wantedList: '',
-        partLists: [],
-        totalPositions: 0,
+        version: {},
+        country: '',
+        language: '',
+        affiliate: {},
     },
     mutations: {
         initialiseStore(state) {
-            var i = 0,
-                sKey;
+            state.version.old = localStorage.getItem('version') || '1.0.0';
+            state.version.current = '1.1.13';
 
-            for (; (sKey = window.localStorage.key(i)); i++) {
-                if (sKey.startsWith('partList_')) {
-                    state.partLists.push(
-                        JSON.parse(window.localStorage.getItem(sKey))
-                    );
-                } else if (
+            state.country = localStorage.getItem('country') || null;
+            state.language = localStorage.getItem('language') || null;
+
+            localStorage.setItem('version', state.version.current);
+            //console.log(state.version)
+            var sKey;
+
+            for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
+                if (
+                    !sKey.startsWith('partList_') &&
                     sKey != 'selectedOptions' &&
                     sKey != 'selectedColorOptions' &&
                     sKey != 'selectedPickABrickOptions' &&
@@ -33,54 +46,34 @@ export default new Vuex.Store({
                     sKey != 'selectedPrio1' &&
                     sKey != 'selectedPrio2' &&
                     sKey != 'selectedPrio3' &&
-                    sKey != 'useHave'
+                    sKey != 'useHave' &&
+                    sKey != 'version'
                 ) {
                     localStorage.removeItem(sKey);
                 }
             }
-
-            state.totalPositions = 0;
-            state.partLists.map((partList) => {
-                state.totalPositions += partList.positions.length;
-            });
         },
-        setPartList(state, payload) {
-            var found = state.partLists.find(
-                (partList) => partList.id === payload.id
-            );
-
-            if (found) {
-                found = payload;
-            } else {
-                state.partLists.push(payload);
-            }
-
-            localStorage.setItem(
-                'partList_' + payload.id,
-                JSON.stringify(payload)
-            );
-
-            state.totalPositions = 0;
-            state.partLists.map((partList) => {
-                state.totalPositions += partList.positions.length;
-            });
+        setMode(state, payload) {
+            state.mode = payload;
         },
-        deletePartList(state, partListId) {
-            state.partLists = state.partLists.filter(
-                (partList) => partList.id != partListId
-            );
-            localStorage.removeItem('partList_' + partListId);
-
-            state.totalPositions = 0;
-            state.partLists.map((partList) => {
-                state.totalPositions += partList.positions.length;
-            });
+        setCountry(state, payload) {
+            state.country = payload;
+            localStorage.setItem('country', state.country);
+        },
+        setLanguage(state, payload) {
+            state.language = payload;
+            localStorage.setItem('language', state.language);
+        },
+        setAffiliate(state, payload) {
+            state.affiliate = payload;
+            localStorage.setItem('affiliate', JSON.stringify(state.affiliate));
         },
     },
-    getters: {
-        getPartListsById: (state) => (id) => {
-            return state.partLists.find((partList) => partList.id === id);
+    actions: {
+        initialiseStore({ state, commit }) {
+            commit('initialiseStore');
+            commit('partList/initialiseStore', state.version.old);
+            commit('shopping/initialiseStore');
         },
     },
-    actions: {},
 });

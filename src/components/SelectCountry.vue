@@ -62,7 +62,7 @@ export default {
         },
     },
     beforeMount() {
-        this.form_country = localStorage.getItem('country') || null;
+        this.form_country = this.$store.state.country;
     },
     computed: {
         whereDoYouLive() {

@@ -72,7 +72,7 @@ new Vue({
     router,
     beforeCreate() {
         this.$store.dispatch('initialiseStore');
-        this.$store.commit('setMode', 'popup');
+        this.$store.commit('setMode', 'standalone');
     },
     render: (h) => h(App),
 }).$mount('#app');

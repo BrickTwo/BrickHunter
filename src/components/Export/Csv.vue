@@ -1,5 +1,5 @@
 <template>
-    <b-container class="bv-example-row" fluid="lg">
+    <b-container class="bv-example-row" fluid="xl">
         <b-row>
             <b-col>
                 <b-button
@@ -244,7 +244,7 @@ export default {
                     }
                 }
                 if (this.selectedOptions.includes('blMaxPrice')) {
-                    csvLine = this.addToCSVLine(csvLine, element.maxprice);
+                    csvLine = this.addToCSVLine(csvLine, element.brickLink?.wantedList?.maxprice);
                 }
 
                 // color options
@@ -562,7 +562,7 @@ export default {
         },
     },
     beforeMount() {
-        this.partList = this.$store.getters.getPartListsById(this.partListId);
+        this.partList = this.$store.getters['partList/getPartListsById'](this.partListId);
         this.wantedList = this.partList.positions;
 
         var selection =

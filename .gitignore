@@ -2,3 +2,10 @@ package-lock.json
 artifacts/
 dist/
 node_modules/
+public/icons/
+
+# Vue Browser Extension Output
+*.pem
+*.pub
+*.zip
+/artifacts
