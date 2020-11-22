@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener(async function(
         return await asyncSessionStorage
             .setItem(
                 'b_and_p_buy_' + request.country,
-                JSON.stringify(request.order).replace(/'/g, "\\'")
+                JSON.stringify(request.order)
             )
             .then(function() {
                 browser.tabs

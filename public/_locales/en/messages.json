@@ -452,6 +452,24 @@
     "shopping_partListToOldText": {
         "message": "Parts lists with price synchronization older than 48 hours will not be added to the shopping cart!"
     },
+    "shopping_actionCannotPerform": {
+        "message": "Action cannot be performed!"
+    },
+    "shopping_openLegoWebsiteText": {
+        "message": "To perform this action, the LEGO.com website must be open and fully loaded in another tab."
+    },
+    "shopping_openLegoWebsite": {
+        "message": "open LEGO.com"
+    },
+    "shopping_cancel": {
+        "message": "Cancel"
+    },
+    "shopping_tryAgain": {
+        "message": "Try again"
+    },
+    "shopping_pleaseUsePopup": {
+        "message": "Please use the popup mode of BrickHunter for this action."
+    },
     "wantedList_buttonWantedList": {
         "message": "WantedList"
     },

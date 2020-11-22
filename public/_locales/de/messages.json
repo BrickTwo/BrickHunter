@@ -452,6 +452,24 @@
     "shopping_partListToOldText": {
         "message": "Teilelisten mit Preisabgleich älter als 48 Stunden werden nicht in den Warenkorb übernommen!"
     },
+    "shopping_actionCannotPerform": {
+        "message": "Aktion kann nicht durchgeführt werden!"
+    },
+    "shopping_openLegoWebsiteText": {
+        "message": "Um diese Aktion durchzuführen muss die LEGO.com Webseite in einem anderen Tab offen und fertig geladen sein."
+    },
+    "shopping_openLegoWebsite": {
+        "message": "LEGO.com öffnen"
+    },
+    "shopping_cancel": {
+        "message": "Abbrechen"
+    },
+    "shopping_tryAgain": {
+        "message": "Nochmals versuchen"
+    },
+    "shopping_pleaseUsePopup": {
+        "message": "Bitte benutze für diese Aktion die Popup variante von BrickHunter."
+    },
     "wantedList_buttonWantedList": {
         "message": "WantedList"
     },

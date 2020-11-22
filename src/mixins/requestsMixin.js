@@ -11,7 +11,7 @@ export const requestsMixin = {
             if (!items) return;
 
             return axios.post(
-                'https://brickhunter.bricktwo.net/api/updatebricks.php',
+                'https://brickhunter.bricktwo.net/api/bricksandpieces/update.php',
                 items
             );
         },

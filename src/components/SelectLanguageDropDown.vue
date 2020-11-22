@@ -43,7 +43,7 @@ export default {
     methods: {
         changeLanguage(value) {
             this.selectedLanguage = value;
-            this.$store.commit('language', this.selectedLanguage);
+            this.$store.commit('setLanguage', this.selectedLanguage);
             this.$emit('languageSelected', this.selectedLanguage);
         },
         getImgUrl(value) {
