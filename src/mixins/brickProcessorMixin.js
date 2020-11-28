@@ -173,12 +173,18 @@ export const brickProcessorMixin = {
                 var value = {
                     designId: value.designId,
                     itemNumber: value.itemNumber,
-                    brickLinkId: item.itemid,
                     priceAmount: value.price.amount,
                     priceCurrency: value.price.currency,
                     maxAmount: value.maxAmount,
                     isAvailable: value.isAvailable,
                     isSoldOut: value.isSoldOut,
+                    isIPElement: value.isIPElement,
+                    color: value.color,
+                    colorFamily: value.colorFamily,
+                    description: value.description,
+                    imageUrl: value.imageUrl,
+                    category: value.category,
+                    materialType: value.materialType,
                     country: country,
                 };
 
