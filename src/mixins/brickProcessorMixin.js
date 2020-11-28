@@ -1,3 +1,5 @@
+import { validate } from "vee-validate";
+
 export const brickProcessorMixin = {
     methods: {
         cleanItemId(itemId) {
@@ -21,14 +23,12 @@ export const brickProcessorMixin = {
             );
             console.log(result);
             if(!result.length){
-                console.log(222);
                 result = colorList.filter(
                     (color) => color.brickLinkId == 0
                 );
                 result[0].legoName = colorFamily;
                 result[0].bricksAndPiecesName = colorFamily;
                 result[0].pickABrickName = colorFamily;
-                console.log(result);
             }
             return result[0];
         },
@@ -173,12 +173,18 @@ export const brickProcessorMixin = {
                 var value = {
                     designId: value.designId,
                     itemNumber: value.itemNumber,
-                    brickLinkId: item.itemid,
                     priceAmount: value.price.amount,
                     priceCurrency: value.price.currency,
                     maxAmount: value.maxAmount,
                     isAvailable: value.isAvailable,
                     isSoldOut: value.isSoldOut,
+                    isIPElement: value.isIPElement,
+                    color: value.color,
+                    colorFamily: value.colorFamily,
+                    description: value.description,
+                    imageUrl: value.imageUrl,
+                    category: value.category,
+                    materialType: value.materialType,
                     country: country,
                 };
 

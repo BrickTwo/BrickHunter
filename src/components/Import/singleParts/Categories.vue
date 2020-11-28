@@ -17,20 +17,24 @@ import { requestsMixin } from '@/mixins/requestsMixin';
 export default {
     data: () => ({
         categories: [],
+        selectCategory: 9999999,
     }),
     mixins: [requestsMixin],
     methods: {
         selectCategorie(id) {
-            console.log(id);
+            this.$emit('categorySelected', id);
         },
     },
     async beforeMount() {
-        this.categories = await this.getCategoriesAsync(this.$store.state.country);
+        this.categories = await this.getCategoriesAsync();
 
         var category = {
-            id: 0,
-            name: "all",
-            quantity: this.categories.reduce((a, b) => a + (parseInt(b['quantity']) || 0), 0)
+            id: 9999999,
+            name: 'all',
+            quantity: this.categories.reduce(
+                (a, b) => a + (parseInt(b['quantity']) || 0),
+                0
+            ),
         };
 
         this.categories.unshift(category);

@@ -8,6 +8,7 @@ export const requestsMixin = {
             );
         },
         sendPrices(items) {
+            console.log("send", items);
             if (!items) return;
 
             return axios.post(
@@ -15,15 +16,28 @@ export const requestsMixin = {
                 items
             );
         },
-        async getCategoriesAsync(country) {
+        async getCategoriesAsync() {
             var response = await axios.get(
-                `https://brickhunter.bricktwo.net/api/categories/read.php?country=${country}`
+                `https://brickhunter.bricktwo.net/api/categories/read.php?country=${this.$store.state.country}`
             );
             return response.data;
         },
-        async getBricksAsync(categoryId) {
+        async getBricksAsync($page, $limit, categoryId, colorId, keyword, sortField, sortDirection) {
+            if(!keyword){
+                keyword = '';
+            }
+            if(categoryId == 9999999){
+                categoryId = '';
+            }
+
             var response = await axios.get(
-                `https://brickhunter.bricktwo.net/api/bricks/read.php?category=${categoryId}`
+                `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${$page}&limit=${$limit}&country=${this.$store.state.country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}`
+            );
+            return response.data;
+        },
+        async getColorsAsync() {
+            var response = await axios.get(
+                `https://brickhunter.bricktwo.net/api/colors/read.php`
             );
             return response.data;
         },
