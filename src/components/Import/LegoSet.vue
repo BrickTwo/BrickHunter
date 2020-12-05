@@ -104,9 +104,6 @@ export default {
                 part.itemid = item.itemNumber;
                 part.searchids = [part.itemid];
                 part.color = this.findLegoColor(item.colorFamily, this.COLOR);
-                if(!part.color){
-                    console.log(item);
-                }
                 part.qty = {
                     min: 0,
                     have: 0,

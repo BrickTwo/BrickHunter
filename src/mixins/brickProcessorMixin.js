@@ -21,7 +21,7 @@ export const brickProcessorMixin = {
             var result = colorList.filter(
                 (color) => color.bricksAndPiecesName == colorFamily
             );
-            console.log(result);
+            
             if(!result.length){
                 result = colorList.filter(
                     (color) => color.brickLinkId == 0
@@ -135,7 +135,7 @@ export const brickProcessorMixin = {
             this.calcLoad();
 
             
-            this.sendPrices(this.prepareSendPrice(item, bricks));
+            this.sendPrices(this.prepareSendPrice(bricks));
 
             return item;
         },
@@ -163,7 +163,7 @@ export const brickProcessorMixin = {
 
             return item;
         },
-        prepareSendPrice(item, bricks) {
+        prepareSendPrice(bricks) {
             if (!bricks) return null;
 
             var returnValue = [];

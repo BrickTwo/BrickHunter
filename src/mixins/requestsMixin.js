@@ -8,7 +8,6 @@ export const requestsMixin = {
             );
         },
         sendPrices(items) {
-            console.log("send", items);
             if (!items) return;
 
             return axios.post(

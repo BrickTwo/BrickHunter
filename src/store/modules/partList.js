@@ -9,6 +9,9 @@ const getters = {
     getPartListsById: (state) => (id) => {
         return state.partLists.find((partList) => partList.id === id);
     },
+    getPartListsBySource: (state) => (source) => {
+        return state.partLists.filter((partList) => partList.source === source);
+    },
 };
 
 // actions
@@ -28,9 +31,13 @@ const mutations = {
         }
 
         var oldVersion = oldVersion.split('.').map(Number);
-        var oldVersionCheck = "1.1.9".split('.').map(Number);
+        var oldVersionCheck = '1.1.9'.split('.').map(Number);
 
-        if (oldVersion[0] < oldVersionCheck[0] || oldVersion[1] < oldVersionCheck[1] || oldVersion[2] < oldVersionCheck[2]) {
+        if (
+            oldVersion[0] < oldVersionCheck[0] ||
+            oldVersion[1] < oldVersionCheck[1] ||
+            oldVersion[2] < oldVersionCheck[2]
+        ) {
             state.partLists.map((partList) => {
                 var positions = [];
                 partList.positions.map((item) => {
@@ -60,16 +67,26 @@ const mutations = {
                     positions.push(part);
                 });
                 partList.positions = positions;
-                localStorage.setItem('partList_' + partList.id, JSON.stringify(partList));
+                localStorage.setItem(
+                    'partList_' + partList.id,
+                    JSON.stringify(partList)
+                );
             });
         }
 
-        oldVersionCheck = "1.1.13".split('.').map(Number);
+        oldVersionCheck = '1.1.13'.split('.').map(Number);
 
-        if (oldVersion[0] < oldVersionCheck[0] || oldVersion[1] < oldVersionCheck[1] || oldVersion[2] < oldVersionCheck[2]) {
+        if (
+            oldVersion[0] < oldVersionCheck[0] ||
+            oldVersion[1] < oldVersionCheck[1] ||
+            oldVersion[2] < oldVersionCheck[2]
+        ) {
             state.partLists.map((partList) => {
                 partList.source = partList.positions[0].source;
-                localStorage.setItem('partList_' + partList.id, JSON.stringify(partList));
+                localStorage.setItem(
+                    'partList_' + partList.id,
+                    JSON.stringify(partList)
+                );
             });
         }
 
@@ -107,6 +124,22 @@ const mutations = {
             state.totalPositions += partList.positions.length;
         });
     },
+    addToPartList(state, payload) {
+        var found = state.partLists.find(
+            (partList) => partList.id === payload.partListId
+        );
+
+        if (found) {
+            found.positions.push(payload.part);
+        }
+
+        localStorage.setItem('partList_' + payload.id, JSON.stringify(payload));
+
+        state.totalPositions = 0;
+        state.partLists.map((partList) => {
+            state.totalPositions += partList.positions.length;
+        });
+    }
 };
 
 export default {

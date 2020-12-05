@@ -11,30 +11,48 @@
             <b-row class="text-center">
                 <img :src="image" width="120px" />
             </b-row>
-            <b-row>
-                Beschreibung {{ brick.description }}
-            </b-row>
+            <b-row> Beschreibung {{ brick.description }} </b-row>
             <b-row>Element: {{ brick.itemNumber }}</b-row>
             <b-row>Designnummer: {{ brick.designId }}</b-row>
-            <b-row>{{ brick.priceAmount }} {{ brick.priceCurrency }}</b-row>
             <b-row>
-                Farbe BrickLink: <span style="display: block"
+                <img :src="getFlagImgUrl(brick.country)" width="20px" height="15px" />
+                {{ brick.priceAmount }} {{ brick.priceCurrency }}
+            </b-row>
+            <b-row v-if="brick.localPrice">
+                <img :src="getFlagImgUrl($store.state.country)" width="20px" height="15px" />
+                {{ brick.localPrice.priceAmount }} {{ brick.localPrice.priceCurrency }}
+            </b-row>
+            <b-row>
+                Farbe BrickLink:
+                <span style="display: block"
                     ><div :style="colorCode"></div>
                     <span>{{ color.brickLinkName }}</span></span
                 >
             </b-row>
             <b-row>
-                Farbe LEGO: <span style="display: block"
+                Farbe LEGO:
+                <span style="display: block"
                     ><div :style="colorCode"></div>
                     <span>{{ color.legoName }}</span></span
                 >
             </b-row>
             <b-row>Max Bestellmeng: {{ brick.maxAmount }}</b-row>
-            <b-row>Erstmalig Verfügbar: {{ brick.firstSeen }}</b-row>
-            <b-row>Letztmalig Verfügbar: {{ brick.lastSeen }}</b-row>
-            <b-row>Aktualisiert: {{ brick.lastUpdate }}</b-row>
+            <b-row
+                >Erstmalig Verfügbar:
+                {{ new Date(brick.firstSeen + ' UTC') | formatDate }}</b-row
+            >
+            <b-row
+                >Letztmalig Verfügbar:
+                {{ new Date(brick.lastSeen + ' UTC') | formatDate }}</b-row
+            >
+            <b-row
+                >Aktualisiert:
+                {{ new Date(brick.lastUpdate + ' UTC') | formatDate }}</b-row
+            >
             <b-row>Category: {{ brick.categoryId }}</b-row>
-            <b-row>Verfügabr: {{ brick.isAvailable }}</b-row>
+            <b-row v-if="brick.maxAmount <= 0">
+                AUSVERKAUFT!
+            </b-row>
         </b-container>
         <template #modal-footer="{ cancel, ok }">
             <b-button @click="cancel()">
@@ -74,6 +92,9 @@ export default {
         bricksAndPiecesFillCart() {},
         cancel() {},
         ok() {},
+        getFlagImgUrl(value) {
+            return 'flags/' + value + '.png';
+        },
     },
     beforeMount() {
         this.color = this.COLOR.find(

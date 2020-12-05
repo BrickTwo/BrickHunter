@@ -95,9 +95,9 @@ export default {
     methods: {
         showImage(value) {
             if (value.source == 'brickLink') {
-                return `<img src="${value.rsc}" height="40">`;
+                return `<img src="${value.rsc}" style="max-height:50px; max-width:60px;">`;
             } else {
-                return `<img src="https://www.lego.com/cdn/product-assets/element.img.lod4outline.192x192/${value.itemId}.jpg" height="40">`;
+                return `<img src="https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${value.itemId}.jpg" style="max-height:50px; max-width:60px;">`;
             }
         },
         showColor(value) {

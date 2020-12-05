@@ -92,6 +92,8 @@ p {
 <script>
 import SelectCountry from '@/components/SelectCountry.vue';
 import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
+import Vue from 'vue';
+export const bus = new Vue();
 
 export default {
     components: {
