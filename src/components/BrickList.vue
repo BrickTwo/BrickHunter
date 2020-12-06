@@ -3,9 +3,59 @@
         ref="vuetable"
         :api-mode="false"
         :data="bricklist"
-        :fields="columns"
+        :fields="fields"
         :table-height="tableHeight"
     >
+        <template slot="quantity" scope="props">
+            <b-form-input v-if="edit" v-model="props.rowData.qty.min" type="number" />
+            <div v-if="limitMaxQty > 0 && !edit">
+                <div v-if="props.rowData.qty.maxAmount">
+                    <div
+                        v-if="
+                            props.rowData.qty.order >
+                                props.rowData.qty.maxAmount
+                        "
+                    >
+                        <span id="maxqty" style="color: red">
+                            {{ props.rowData.qty.maxAmount }}
+                        </span>
+                        <br />
+                        <span style="color: grey; font-size: small;">
+                            [{{ props.rowData.qty.order }}]
+                        </span>
+                    </div>
+                    <div v-else>
+                        {{ props.rowData.qty.order }}
+                    </div>
+                </div>
+                <div v-if="props.rowData.qty.order > limitMaxQty">
+                    <span id="maxqty" style="color: red">
+                        {{ limitMaxQty }}
+                    </span>
+                    <br />
+                    <span style="color: grey; font-size: small;">
+                        [{{ props.rowData.qty.order }}]
+                    </span>
+                </div>
+                <div v-if="props.rowData.qty.have > 0">
+                    {{ props.rowData.qty.order }}
+                </div>
+            </div>
+            <div v-else-if="!edit">
+                <span id="maxqty">
+                    {{ props.rowData.qty.min }}
+                </span>
+                <div v-if="props.rowData.qty.have > 0">
+                    <br />
+                    <span style="color: grey; font-size: small;">
+                        ({{ props.rowData.qty.have }})
+                    </span>
+                </div>
+            </div>
+        </template>
+        <template slot="actions" scope="props">
+            <b-icon v-if="edit" icon="trash" aria-hidden="true" @click="deletePosition(props.rowData)" />
+        </template>
     </vuetable>
 </template>
 
@@ -31,16 +81,14 @@ export default {
             type: Number,
             default: 0,
         },
+        edit: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: () => ({
         tableHeight: '290px',
-        columns: [
-            /*{
-                name: '__sequence',
-                title: () => browser.i18n.getMessage('brickList_lineNumber'),
-                callback: 'lineNumber',
-                width: '4.5%',
-            },*/
+        fields: [
             {
                 name: 'itemid',
                 title: () => browser.i18n.getMessage('brickList_itemId'),
@@ -60,18 +108,23 @@ export default {
                 callback: 'showColor',
                 width: '200px',
             },
-            {
+            /*{
                 name: 'qty',
                 title: () => browser.i18n.getMessage('brickList_quantity'),
                 callback: 'showQty',
                 width: '50px',
+            },*/
+            {
+                name: '__slot:quantity',
+                title: () => browser.i18n.getMessage('brickList_quantity'),
+                width: '70px',
             },
             {
                 name: 'brickLink',
                 title: () =>
                     browser.i18n.getMessage('brickList_brickLinkPrice'),
                 callback: 'brickLinkPrice',
-                width: '100px',
+                width: '90px',
             },
             {
                 name: 'pickABrick',
@@ -85,7 +138,12 @@ export default {
                 title: () =>
                     browser.i18n.getMessage('brickList_bricksAndPiecesPrice'),
                 callback: 'bricksAndPiecesPrice',
-                width: '130px',
+                width: '120px',
+            },
+            {
+                name: '__slot:actions',
+                title: '',
+                width: '25px',
             },
         ],
     }),
@@ -148,6 +206,9 @@ export default {
         spinner() {
             return '<svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="arrow clockwise" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-arrow-clockwise b-icon bi b-icon-animation-spin" style="font-size: 150%;"><g><path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"></path><path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"></path></g></svg>';
         },
+        deletePosition(position){
+            this.$emit('itemDeleted', position);
+        }
     },
     beforeMount() {
         if (this.$store.state.mode == 'standalone') {

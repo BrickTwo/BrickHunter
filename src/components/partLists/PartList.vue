@@ -125,6 +125,8 @@
             <brick-list
                 v-if="!loadWantedList"
                 :bricklist="wantedList"
+                :edit="true"
+                @itemDeleted="onItemDeleted"
             ></brick-list>
         </div>
     </div>
@@ -230,7 +232,7 @@ export default {
                 item.bricksAndPieces = null;
                 return;
             }
-            
+
             item = await this.prepareSearchIds(item);
             if (this.cancelLoading) {
                 return;
@@ -300,10 +302,22 @@ export default {
                 ).length;
             }
         },
+        onItemDeleted(item) {
+            this.wantedList = this.wantedList.filter(pos => {
+                return pos.itemid != item.itemid || pos.color.brickLinkId != item.color.brickLinkId
+            });
+            this.partList.positions = this.wantedList;
+        },
     },
     watch: {
-        'partList.cart': function(val, oldVal) {
+        /*'partList.cart': function(val, oldVal) {
             this.$store.commit('partList/setPartList', this.partList);
+        },*/
+        partList: {
+            handler(val, oldVal) {
+                this.$store.commit('partList/setPartList', this.partList);
+            },
+            deep: true,
         },
     },
     beforeMount() {
