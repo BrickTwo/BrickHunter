@@ -72,6 +72,7 @@
                 v-for="brick in search.bricks"
                 :key="brick.itemNumber"
                 :brick="brick"
+                @addToPartList="addToPartList"
             />
         </b-row>
         <b-row>
@@ -129,10 +130,10 @@ export default {
         },
     },
     data: () => ({
-        perPage: 25,
+        perPage: 24,
         perPageOptions: [
-            { value: 25, text: '25' },
-            { value: 50, text: '50' },
+            { value: 24, text: '24' },
+            { value: 48, text: '48' },
             { value: 100, text: '100' },
         ],
         currentPage: 1,

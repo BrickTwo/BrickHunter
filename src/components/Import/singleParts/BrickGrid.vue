@@ -8,8 +8,13 @@
             >
                 <!--<b-img-lazy center :src="image" style="max-height: 120px; max-width: 175px" />-->
                 <div :style="bgimage" />
+                <b-icon
+                            icon="box-arrow-up-left"
+                            aria-hidden="true"
+                            style="position: absolute; top: 110px; right: 10px;"
+                        />
             </b-row>
-            <b-row style="height: 48px; overflow: hidden">
+            <b-row style="height: 48px; overflow: hidden;">
                 {{ brick.description }}
             </b-row>
             <b-row>
@@ -23,9 +28,8 @@
             <b-overlay
                 id="overlay-background"
                 :show="brick.update"
-                :opacity="opacity"
-                :blur="blur"
                 rounded="sm"
+                style="margin: 0 -5px; padding: 0 5px;"
             >
                 <b-row v-if="brick.isAvailable">
                     <b-col cols="10" class="p-0">Max. Menge:</b-col>
@@ -37,7 +41,7 @@
                     v-if="!brick.isAvailable"
                     style="background-color: #dc3545; color: white; border-radius: 0.25rem; margin: 0 -5px; padding: 0 5px;"
                 >
-                    AUSVERKAUFT!
+                    Nicht auf Lager
                 </b-row>
                 <b-row>
                     <b-col>
@@ -76,7 +80,7 @@
             class="w-100"
             style="margin-top: -5px"
         >
-            Hinzufügen
+            <b-icon icon="plus-circle" aria-hidden="true" /> Hinzufügen
         </b-button>
         <BrickModal :brick="brick" />
     </b-col>

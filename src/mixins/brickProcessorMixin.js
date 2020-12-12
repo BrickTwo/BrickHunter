@@ -1,4 +1,4 @@
-import { validate } from "vee-validate";
+import { validate } from 'vee-validate';
 
 export const brickProcessorMixin = {
     methods: {
@@ -21,11 +21,9 @@ export const brickProcessorMixin = {
             var result = colorList.filter(
                 (color) => color.bricksAndPiecesName == colorFamily
             );
-            
-            if(!result.length){
-                result = colorList.filter(
-                    (color) => color.brickLinkId == 0
-                );
+
+            if (!result.length) {
+                result = colorList.filter((color) => color.brickLinkId == 0);
                 result[0].legoName = colorFamily;
                 result[0].bricksAndPiecesName = colorFamily;
                 result[0].pickABrickName = colorFamily;
@@ -35,6 +33,15 @@ export const brickProcessorMixin = {
         findBricksAndPiecesBrick(item, bricks) {
             if (!bricks) return null;
             bricks = bricks.filter((brick) => !brick.isSoldOut);
+
+            if ((item.source == 'lego')) {
+                var result = bricks.filter((brick) =>
+                    brick.itemNumber == item.itemid
+                );
+
+                return result[0];
+            }
+
             var result = bricks.filter(
                 (brick) =>
                     brick.colorFamily == item.color.bricksAndPiecesName &&
@@ -66,6 +73,13 @@ export const brickProcessorMixin = {
         },
         findPickABrickBrick(item, bricks) {
             if (!bricks) return null;
+
+            if ((item.source = 'lego')) {
+                var result = bricks.filter(
+                    (brick) => brick.itemNumber == item.itemid
+                );
+                return result[0];
+            }
 
             var result = bricks.filter(
                 (brick) =>
@@ -123,9 +137,9 @@ export const brickProcessorMixin = {
                     }
                 }
             }
-
+            console.log(item.itemid, bricks);
             var foundBrick = this.findBricksAndPiecesBrick(item, bricks);
-            
+
             if (foundBrick) {
                 item.bricksAndPieces = foundBrick;
             } else {
@@ -134,7 +148,6 @@ export const brickProcessorMixin = {
             this.bricksAndPiecesBrickCounter++;
             this.calcLoad();
 
-            
             this.sendPrices(this.prepareSendPrice(bricks));
 
             return item;
