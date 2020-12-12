@@ -147,7 +147,7 @@ export default {
             { value: 'MAXAMOUNT', text: 'Max Bestellmenge' },
             { value: 'FIRSTSEEN', text: 'Zuerst Verfügbar' },
             { value: 'LASTSEEN', text: 'Zuletzt Verfügbar' },
-            { value: 'LASTUPDATE', text: 'Letzte Aktualisierung' },
+            { value: 'LASTUPDATECOUNTRY', text: 'Letzte Aktualisierung' },
         ],
         selectedSort: 'DESCRIPTION',
         sortDirection: 'ASC',
@@ -168,9 +168,11 @@ export default {
         addToPartList(item) {
             var partList = this.loadPartList();
 
-            var foundPart = partList.positions.find(pos => pos.itemid == item.itemNumber);
-            if(foundPart){
-                foundPart.qty.min = foundPart.qty.min +1;
+            var foundPart = partList.positions.find(
+                (pos) => pos.itemid == item.itemNumber
+            );
+            if (foundPart) {
+                foundPart.qty.min = foundPart.qty.min + 1;
                 this.$store.commit('partList/setPartList', partList);
                 return;
             }
@@ -221,9 +223,9 @@ export default {
             };
 
             this.$store.commit('partList/setPartList', newPartList);
-            
+
             bus.$emit('newSinglePartList', true);
-            
+
             return newPartList;
         },
         generateUUID() {
@@ -286,33 +288,44 @@ export default {
                     itemId: designId,
                 });
 
-                response.bricks.map((brick) => {
-                    var found = this.search.bricks.find(
-                        (b) => b.itemNumber == brick.itemNumber
+                if (!response) {
+                    var found = this.search.bricks.filter(
+                        (b) => b.designId == designId
                     );
 
-                    if (found) {
-                        found.itemNumber = brick.itemNumber;
-                        found.color = brick.color;
-                        found.colorFamily = brick.colorFamily;
-                        found.description = brick.description;
-                        found.designId = brick.designId;
-                        found.imageUrl = brick.imageUrl;
-                        if (found.country == this.$store.state.country) {
-                            found.priceAmount = brick.price.amount;
-                            found.priceCurrency = brick.price.currency;
-                        } else {
-                            found.localPrice.priceAmount = brick.price.amount;
-                            found.localPrice.priceCurrency =
-                                brick.price.currency;
+                    found.map((brick) => {
+                        brick.update = false;
+                    });
+                } else {
+                    response.bricks.map((brick) => {
+                        var found = this.search.bricks.find(
+                            (b) => b.itemNumber == brick.itemNumber
+                        );
+
+                        if (found) {
+                            found.itemNumber = brick.itemNumber;
+                            found.color = brick.color;
+                            found.colorFamily = brick.colorFamily;
+                            found.description = brick.description;
+                            found.designId = brick.designId;
+                            found.imageUrl = brick.imageUrl;
+                            if (found.country == this.$store.state.country) {
+                                found.priceAmount = brick.price.amount;
+                                found.priceCurrency = brick.price.currency;
+                            } else {
+                                found.localPrice.priceAmount =
+                                    brick.price.amount;
+                                found.localPrice.priceCurrency =
+                                    brick.price.currency;
+                            }
+
+                            found.maxAmount = brick.maxAmount;
+                            found.update = false;
                         }
+                    });
 
-                        found.maxAmount = brick.maxAmount;
-                        found.update = false;
-                    }
-                });
-
-                this.sendPrices(this.prepareSendPrice(response.bricks));
+                    this.sendPrices(this.prepareSendPrice(response.bricks));
+                }
             }
         },
         sleep(ms) {

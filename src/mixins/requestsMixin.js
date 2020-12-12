@@ -34,6 +34,12 @@ export const requestsMixin = {
             );
             return response.data;
         },
+        async getBrickAsync($itemNumber) {
+            var response = await axios.get(
+                `https://brickhunter.bricktwo.net/api/bricks/single/read.php?itemnumber=${$itemNumber}&country=${this.$store.state.country}`
+            );
+            return response.data;
+        },
         async getColorsAsync() {
             var response = await axios.get(
                 `https://brickhunter.bricktwo.net/api/colors/read.php`

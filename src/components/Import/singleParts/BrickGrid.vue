@@ -1,77 +1,83 @@
 <template>
-    <b-col cols="3">
-        <b-container @click="openBrick()" class="brick">
-            <b-row class="text-center">
-                <b-img-lazy center :src="image" width="120px" alt="Center image" />
+    <b-col cols="3" class="p-1 h-100">
+        <b-container class="brick p-2">
+            <b-row
+                class="text-center"
+                style="min-height: 120px; cursor: pointer;"
+                @click="openBrick()"
+            >
+                <!--<b-img-lazy center :src="image" style="max-height: 120px; max-width: 175px" />-->
+                <div :style="bgimage" />
             </b-row>
-            <b-row>
+            <b-row style="height: 48px; overflow: hidden">
                 {{ brick.description }}
             </b-row>
-            <b-row>Element: {{ brick.itemNumber }}</b-row>
-            <b-row>Designnummer: {{ brick.designId }}</b-row>
             <b-row>
-                <b-col cols="2" class="p-0" >
-                    <img :src="getFlagImgUrl(brick.country)" width="20px" />
-                </b-col>
-                <b-col cols="6" class="p-0" >
-                    {{ brick.priceAmount }} {{ brick.priceCurrency }}
-                </b-col>
-                <b-col  cols="4" class="p-0 text-right">
-                    {{ brick.maxAmount }}
-                </b-col>
-            </b-row>
-            <b-row v-if="brick.localPrice">
-                <b-col cols="2" class="p-0" >
-                    <img :src="getFlagImgUrl($store.state.country)" width="20px" />
-                </b-col>
-                <b-col cols="6" class="p-0" >
-                    {{ brick.localPrice.priceAmount }}
-                    {{ brick.localPrice.priceCurrency }}
-                </b-col>
-                <b-col  cols="4" class="p-0 text-right">
-                    {{ brick.maxAmount }}
-                </b-col>
+                <b-col>Element:</b-col>
+                <b-col class="text-right">{{ brick.itemNumber }}</b-col>
             </b-row>
             <b-row>
-                <span style="display: block"
-                    ><div :style="colorCode"></div>
-                    <span>{{ color.brickLinkName }}</span></span
+                <b-col>Designnummer:</b-col>
+                <b-col class="text-right">{{ brick.designId }}</b-col>
+            </b-row>
+            <b-overlay
+                id="overlay-background"
+                :show="brick.update"
+                :opacity="opacity"
+                :blur="blur"
+                rounded="sm"
+            >
+                <b-row v-if="brick.isAvailable">
+                    <b-col cols="10" class="p-0">Max. Menge:</b-col>
+                    <b-col cols="2" class="p-0 text-right">{{
+                        brick.maxAmount
+                    }}</b-col>
+                </b-row>
+                <b-row
+                    v-if="!brick.isAvailable"
+                    style="background-color: #dc3545; color: white; border-radius: 0.25rem; margin: 0 -5px; padding: 0 5px;"
                 >
-            </b-row>
-            <b-row v-if="brick.maxAmount <= 0">
-                AUSVERKAUFT!
-            </b-row>
-            <b-row v-if="brick.update">
-                <svg
-                    viewBox="0 0 16 16"
-                    width="1em"
-                    height="1em"
-                    focusable="false"
-                    role="img"
-                    aria-label="arrow clockwise"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    class="bi-arrow-clockwise b-icon bi b-icon-animation-spin"
-                    style="font-size: 150%;"
-                >
-                    <g>
-                        <path
-                            fill-rule="evenodd"
-                            d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"
-                        ></path>
-                        <path
-                            fill-rule="evenodd"
-                            d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"
-                        ></path>
-                    </g>
-                </svg>
-            </b-row>
-            <b-row @click.stop>
-                <b-button @click="addToPartList()">
-                Hinzufügen
-                </b-button>
+                    AUSVERKAUFT!
+                </b-row>
+                <b-row>
+                    <b-col>
+                        <b-img
+                            :src="getFlagImgUrl(brick.country)"
+                            width="20px"
+                        />
+                    </b-col>
+                    <b-col class="text-right">
+                        {{ brick.priceAmount }} {{ brick.priceCurrency }}
+                    </b-col>
+                </b-row>
+                <b-row v-if="brick.localPrice">
+                    <b-col>
+                        <b-img
+                            :src="getFlagImgUrl($store.state.country)"
+                            width="20px"
+                        />
+                    </b-col>
+                    <b-col class="text-right">
+                        {{ brick.localPrice.priceAmount }}
+                        {{ brick.localPrice.priceCurrency }}
+                    </b-col>
+                </b-row>
+            </b-overlay>
+            <b-row style="display: block;oveflow: hidden;white-space: nowrap;">
+                <div :style="colorCode"></div>
+                <span style="white-space: nowrap;">{{
+                    color.brickLinkName
+                }}</span>
             </b-row>
         </b-container>
+        <b-button
+            @click="addToPartList()"
+            variant="primary"
+            class="w-100"
+            style="margin-top: -5px"
+        >
+            Hinzufügen
+        </b-button>
         <BrickModal :brick="brick" />
     </b-col>
 </template>
@@ -79,6 +85,10 @@
 <style scoped>
 .brick {
     border: 1px solid gray;
+    border-radius: 0.25rem;
+}
+.row {
+    margin: 0;
 }
 </style>
 
@@ -109,7 +119,7 @@ export default {
         },
         addToPartList() {
             this.$emit('addToPartList', this.brick);
-        }
+        },
     },
     beforeMount() {
         this.color = this.COLOR.find(
@@ -126,6 +136,9 @@ export default {
         image() {
             //return `https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${this.brick.itemNumber}.jpg`;
             return this.brick.imageUrl;
+        },
+        bgimage() {
+            return `background-image: url(${this.brick.imageUrl}), url('placeholder.jpg'); width: 100%; background-repeat: no-repeat; background-size: contain; background-position: center;`;
         },
         colorCode() {
             return `background-color: ${this.color.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
