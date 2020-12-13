@@ -1,20 +1,28 @@
 <template>
-    <b-container fluid="xl">
-        <b-row>
-            <b-col cols="6"
-                ><b-form-input
-                    v-model="keyword"
-                    @keyup.enter="loadBricks(true)"
-                    placeholder="Find parts by keyword"
-                ></b-form-input
-            ></b-col>
-            <b-col cols="1" class="text-right">
-                <b-button class="button" variant="primary" @click="sort()">
-                    <b-icon :icon="sortIcon" aria-hidden="true" />
-                </b-button>
+    <b-container fluid="xl" class="bricksContainer">
+        <b-row class="p-1">
+            <b-col class="mr-1">
+                <b-input-group variant="primary" >
+                    <b-input-group-prepend is-text>
+                        <b-icon icon="search" />
+                    </b-input-group-prepend>
+                    <b-form-input
+                        v-model="keyword"
+                        @keyup.enter="loadBricks(true)"
+                        type="search"
+                        debounce="500"
+                        placeholder="Find parts by keyword"
+                    >
+                    </b-form-input>
+                </b-input-group>
             </b-col>
-            <b-col cols="5">
+            <b-col class="ml-1">
+                 <b-input-group>
+                    <b-input-group-prepend is-text>
+                        <b-icon :icon="sortIcon" @click="sort()" />
+                    </b-input-group-prepend>
                 <b-form-select v-model="selectedSort" :options="sortOptions" />
+                </b-input-group>
             </b-col>
         </b-row>
         <b-row>
@@ -183,7 +191,7 @@
                 ></b-form-select
             ></b-col>
         </b-row>-->
-        <b-row>
+        <b-row class="p-1">
             <b-col>
                 <b-form-select
                     style="width:75px"
@@ -240,7 +248,7 @@
                 />
             </b-row>
         </b-overlay>
-        <b-row>
+        <b-row class="p-1">
             <b-col>
                 <b-form-select
                     style="width:75px"
@@ -459,6 +467,7 @@ export default {
             return newGuid;
         },
         async loadBricks(resetPage) {
+            this.$scrollTo('.bricksContainer', 100, {container: ".bricksContainer"})
             this.listUpdate = true;
             if (resetPage) {
                 this.currentPage = 1;
@@ -608,6 +617,9 @@ export default {
             this.selectedColor = value;
             this.loadBricks(true);
         },
+        alert() {
+            console.log("sdfsdf");
+        }
     },
     watch: {
         categoryId: function() {
@@ -625,6 +637,9 @@ export default {
         selectedSort: function() {
             this.loadBricks(true);
         },
+        keyword: function() {
+            this.loadBricks(true);
+        }
     },
     async beforeMount() {
         this.loadBricks(true);

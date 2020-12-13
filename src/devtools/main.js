@@ -8,6 +8,7 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import { ValidationProvider, extend, ValidationObserver } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
 import VueHtmlToPaper from 'vue-html-to-paper';
+import VueScrollTo from 'vue-scrollto';
 
 import Import from '@/components/import/Index.vue';
 import PartLists from '@/components/partLists/PartLists.vue';
@@ -52,6 +53,7 @@ Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 Vue.use(VueHtmlToPaper, options);
+Vue.use(VueScrollTo);
 Vue.config.productionTip = false;
 Vue.filter('formatDate', function(value) {
     if (value) {
