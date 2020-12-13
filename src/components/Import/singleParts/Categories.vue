@@ -30,7 +30,7 @@ export default {
 
         var category = {
             id: 9999999,
-            name: 'all',
+            name: 'All',
             quantity: this.categories.reduce(
                 (a, b) => a + (parseInt(b['quantity']) || 0),
                 0

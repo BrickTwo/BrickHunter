@@ -18,13 +18,171 @@
             </b-col>
         </b-row>
         <b-row>
+            <b-col>
+                <div class="w-100 h-100 p-1">
+                    <b-button
+                        id="dropdown-left"
+                        class="w-100 h-100"
+                        style="border: 0"
+                        @click="selectColor('all')"
+                        >All</b-button
+                    >
+                </div>
+            </b-col>
+            <b-col>
+                <b-dropdown
+                    id="dropdown-left"
+                    class="w-100 h-100 p-1"
+                    text="Trans"
+                    variant="white"
+                    no-caret
+                >
+                    <b-dropdown-item
+                        v-for="option in colorTrans"
+                        :key="option.id"
+                        @click="selectColor(option.id)"
+                        ><div :style="backgroundColorCode(option.colorCode)" />
+                        {{ option.brickLinkName }}</b-dropdown-item
+                    >
+                </b-dropdown>
+            </b-col>
+            <b-col>
+                <b-dropdown
+                    id="dropdown-left"
+                    class="w-100 h-100 p-1"
+                    variant="black"
+                    no-caret
+                >
+                    <b-dropdown-item
+                        v-for="option in colorBlack"
+                        :key="option.id"
+                        @click="selectColor(option.id)"
+                        ><div :style="backgroundColorCode(option.colorCode)" />
+                        {{ option.brickLinkName }}</b-dropdown-item
+                    >
+                </b-dropdown>
+            </b-col>
+            <b-col>
+                <b-dropdown
+                    id="dropdown-left"
+                    class="w-100 h-100 p-1"
+                    variant="brown"
+                    no-caret
+                >
+                    <b-dropdown-item
+                        v-for="option in colorBrown"
+                        :key="option.id"
+                        @click="selectColor(option.id)"
+                        ><div :style="backgroundColorCode(option.colorCode)" />
+                        {{ option.brickLinkName }}</b-dropdown-item
+                    >
+                </b-dropdown>
+            </b-col>
+            <b-col>
+                <b-dropdown
+                    id="dropdown-left"
+                    class="w-100 h-100 p-1"
+                    variant="red"
+                    no-caret
+                >
+                    <b-dropdown-item
+                        v-for="option in colorRed"
+                        :key="option.id"
+                        @click="selectColor(option.id)"
+                        ><div :style="backgroundColorCode(option.colorCode)" />
+                        {{ option.brickLinkName }}</b-dropdown-item
+                    >
+                </b-dropdown>
+            </b-col>
+            <b-col>
+                <b-dropdown
+                    id="dropdown-left"
+                    class="w-100 h-100 p-1"
+                    variant="orange"
+                    no-caret
+                >
+                    <b-dropdown-item
+                        v-for="option in colorOrange"
+                        :key="option.id"
+                        @click="selectColor(option.id)"
+                        ><div :style="backgroundColorCode(option.colorCode)" />
+                        {{ option.brickLinkName }}</b-dropdown-item
+                    >
+                </b-dropdown>
+            </b-col>
+            <b-col>
+                <b-dropdown
+                    id="dropdown-left"
+                    class="w-100 h-100 p-1"
+                    variant="yellow"
+                    no-caret
+                >
+                    <b-dropdown-item
+                        v-for="option in colorYellow"
+                        :key="option.id"
+                        @click="selectColor(option.id)"
+                        ><div :style="backgroundColorCode(option.colorCode)" />
+                        {{ option.brickLinkName }}</b-dropdown-item
+                    >
+                </b-dropdown>
+            </b-col>
+            <b-col>
+                <b-dropdown
+                    id="dropdown-left"
+                    class="w-100 h-100 p-1"
+                    variant="green"
+                    no-caret
+                >
+                    <b-dropdown-item
+                        v-for="option in colorGreen"
+                        :key="option.id"
+                        @click="selectColor(option.id)"
+                        ><div :style="backgroundColorCode(option.colorCode)" />
+                        {{ option.brickLinkName }}</b-dropdown-item
+                    >
+                </b-dropdown>
+            </b-col>
+            <b-col>
+                <b-dropdown
+                    id="dropdown-left"
+                    class="w-100 h-100 p-1"
+                    variant="blue"
+                    no-caret
+                >
+                    <b-dropdown-item
+                        v-for="option in colorBlue"
+                        :key="option.id"
+                        @click="selectColor(option.id)"
+                        ><div :style="backgroundColorCode(option.colorCode)" />
+                        {{ option.brickLinkName }}</b-dropdown-item
+                    >
+                </b-dropdown>
+            </b-col>
+            <b-col>
+                <b-dropdown
+                    id="dropdown-left"
+                    class="w-100 h-100 p-1"
+                    variant="purple"
+                    no-caret
+                >
+                    <b-dropdown-item
+                        v-for="option in colorPurple"
+                        :key="option.id"
+                        @click="selectColor(option.id)"
+                        ><div :style="backgroundColorCode(option.colorCode)" />
+                        {{ option.brickLinkName }}</b-dropdown-item
+                    >
+                </b-dropdown>
+            </b-col>
+        </b-row>
+        <!--<b-row>
             <b-col offset="7" cols="5"
                 ><b-form-select
                     v-model="selectedColor"
                     :options="colorOptions"
                 ></b-form-select
             ></b-col>
-        </b-row>
+        </b-row>-->
         <b-row>
             <b-col>
                 <b-form-select
@@ -59,22 +217,29 @@
                 </b-button>
             </b-col>
         </b-row>
-        <b-row v-if="showAs == 'grid'" cols="12">
-            <BrickGrid
-                v-for="brick in search.bricks"
-                :key="brick.itemNumber"
-                :brick="brick"
-                @addToPartList="addToPartList"
-            />
-        </b-row>
-        <b-row v-if="showAs == 'list'" cols="12">
-            <BrickList
-                v-for="brick in search.bricks"
-                :key="brick.itemNumber"
-                :brick="brick"
-                @addToPartList="addToPartList"
-            />
-        </b-row>
+        <b-overlay
+            id="overlay-background"
+            :show="listUpdate"
+            rounded="sm"
+            style="margin: 0 -15px; padding: 0 15px;"
+        >
+            <b-row v-if="showAs == 'grid'" cols="12" style="min-height: 50px;">
+                <BrickGrid
+                    v-for="brick in search.bricks"
+                    :key="brick.itemNumber"
+                    :brick="brick"
+                    @addToPartList="addToPartList"
+                />
+            </b-row>
+            <b-row v-if="showAs == 'list'" cols="12">
+                <BrickList
+                    v-for="brick in search.bricks"
+                    :key="brick.itemNumber"
+                    :brick="brick"
+                    @addToPartList="addToPartList"
+                />
+            </b-row>
+        </b-overlay>
         <b-row>
             <b-col>
                 <b-form-select
@@ -111,6 +276,40 @@
         </b-row>
     </b-container>
 </template>
+
+<style lang="scss">
+@import '../../../../node_modules/bootstrap/scss/bootstrap';
+.btn-grey {
+    background-color: $gray-300;
+}
+.btn-white {
+    background-color: $light;
+}
+.btn-black {
+    background-color: $dark;
+}
+.btn-brown {
+    background-color: #7f1e06;
+}
+.btn-red {
+    background-color: $red;
+}
+.btn-orange {
+    background-color: $orange;
+}
+.btn-yellow {
+    background-color: $yellow;
+}
+.btn-green {
+    background-color: $green;
+}
+.btn-blue {
+    background-color: $blue;
+}
+.btn-purple {
+    background-color: $purple;
+}
+</style>
 
 <script>
 import { requestsMixin } from '@/mixins/requestsMixin';
@@ -159,6 +358,16 @@ export default {
         selectedNew: 'all',
         search: [],
         showAs: 'grid',
+        colorTrans: [],
+        colorBlack: [],
+        colorBrown: [],
+        colorRed: [],
+        colorOrange: [],
+        colorYellow: [],
+        colorGreen: [],
+        colorBlue: [],
+        colorPurple: [],
+        listUpdate: true,
     }),
     components: {
         BrickGrid,
@@ -250,6 +459,7 @@ export default {
             return newGuid;
         },
         async loadBricks(resetPage) {
+            this.listUpdate = true;
             if (resetPage) {
                 this.currentPage = 1;
             }
@@ -264,9 +474,17 @@ export default {
                 this.sortDirection
             );
 
+            if (!this.search) {
+                this.totalRows = 0;
+                this.currentPage = 1;
+                this.listUpdate = false;
+                return;
+            }
+
             this.totalRows = this.search.page.total;
 
             this.loadPrices();
+            this.listUpdate = false;
         },
         async loadPrices() {
             var designIds = [];
@@ -343,6 +561,34 @@ export default {
 
                 this.colorOptions.push(color);
             });
+
+            this.colorTrans = colors.filter((color) =>
+                color.group.find((group) => group === 'Trans')
+            );
+            this.colorBlack = colors.filter((color) =>
+                color.group.find((group) => group === 'Black')
+            );
+            this.colorBrown = colors.filter((color) =>
+                color.group.find((group) => group === 'Brown')
+            );
+            this.colorRed = colors.filter((color) =>
+                color.group.find((group) => group === 'Red')
+            );
+            this.colorOrange = colors.filter((color) =>
+                color.group.find((group) => group === 'Orange')
+            );
+            this.colorYellow = colors.filter((color) =>
+                color.group.find((group) => group === 'Yellow')
+            );
+            this.colorGreen = colors.filter((color) =>
+                color.group.find((group) => group === 'Green')
+            );
+            this.colorBlue = colors.filter((color) =>
+                color.group.find((group) => group === 'Blue')
+            );
+            this.colorPurple = colors.filter((color) =>
+                color.group.find((group) => group === 'Purple')
+            );
         },
         sort() {
             if (this.sortDirection == 'ASC') {
@@ -355,14 +601,21 @@ export default {
 
             this.loadBricks(false);
         },
+        backgroundColorCode(value) {
+            return `background-color: ${value}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
+        },
+        selectColor(value) {
+            this.selectedColor = value;
+            this.loadBricks(true);
+        },
     },
     watch: {
         categoryId: function() {
             this.loadBricks(true);
         },
-        selectedColor: function() {
+        /*selectedColor: function() {
             this.loadBricks(true);
-        },
+        },*/
         currentPage: function() {
             this.loadBricks(false);
         },

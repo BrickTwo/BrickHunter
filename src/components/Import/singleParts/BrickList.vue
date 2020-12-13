@@ -1,5 +1,5 @@
 <template>
-    <b-col cols="12">
+    <b-col cols="12" class="p-1">
         <b-container class="brick p-2">
             <b-row>
                 <b-col cols="2" @click="openBrick()" style="cursor: pointer;">
@@ -89,7 +89,6 @@
 .brick {
     border: 1px solid gray;
     border-radius: 0.25rem;
-    margin: 2.5px 0;
 }
 .row {
     margin: 0;

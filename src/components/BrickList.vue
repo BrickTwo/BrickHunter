@@ -6,7 +6,7 @@
         :fields="fields"
         :table-height="tableHeight"
     >
-        <template slot="quantity" scope="props">
+        <template slot="quantity" slot-scope="props">
             <b-form-input v-if="edit" v-model="props.rowData.qty.min" type="number" />
             <div v-if="limitMaxQty > 0 && !edit">
                 <div v-if="props.rowData.qty.maxAmount">
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </template>
-        <template slot="actions" scope="props">
+        <template slot="actions" slot-scope="props">
             <b-icon v-if="edit" icon="trash" aria-hidden="true" @click="deletePosition(props.rowData)" />
         </template>
     </vuetable>
