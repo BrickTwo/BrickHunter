@@ -3,6 +3,7 @@ export const brickColorMixin = {
         return {
             COLOR: [
                 {
+                    id: 1,
                     brickLinkId: 0,
                     brickLinkName: 'Not defined!',
                     legoId: 9999,
@@ -12,6 +13,7 @@ export const brickColorMixin = {
                     colorCode: '#FFFFFF',
                 },
                 {
+                    id: 2,
                     brickLinkId: 1,
                     brickLinkName: 'White',
                     legoId: 1,
@@ -21,6 +23,7 @@ export const brickColorMixin = {
                     colorCode: '#F4F4F4',
                 },
                 {
+                    id: 3,
                     brickLinkId: 2,
                     brickLinkName: 'Tan',
                     legoId: 5,
@@ -30,6 +33,7 @@ export const brickColorMixin = {
                     colorCode: '#B0A06F',
                 },
                 {
+                    id: 4,
                     brickLinkId: 3,
                     brickLinkName: 'Yellow',
                     legoId: 24,
@@ -39,6 +43,7 @@ export const brickColorMixin = {
                     colorCode: '#FAC80A',
                 },
                 {
+                    id: 5,
                     brickLinkId: 4,
                     brickLinkName: 'Orange',
                     legoId: 106,
@@ -48,6 +53,7 @@ export const brickColorMixin = {
                     colorCode: '#D67923',
                 },
                 {
+                    id: 6,
                     brickLinkId: 5,
                     brickLinkName: 'Red',
                     legoId: 21,
@@ -57,6 +63,7 @@ export const brickColorMixin = {
                     colorCode: '#B40000',
                 },
                 {
+                    id: 7,
                     brickLinkId: 6,
                     brickLinkName: 'Green',
                     legoId: 28,
@@ -66,6 +73,7 @@ export const brickColorMixin = {
                     colorCode: '#00852B',
                 },
                 {
+                    id: 8,
                     brickLinkId: 7,
                     brickLinkName: 'Blue',
                     legoId: 23,
@@ -75,6 +83,7 @@ export const brickColorMixin = {
                     colorCode: '#1E5AA8',
                 },
                 {
+                    id: 9,
                     brickLinkId: 8,
                     brickLinkName: 'Brown',
                     legoId: 25,
@@ -84,6 +93,8 @@ export const brickColorMixin = {
                     colorCode: '#543324',
                 },
                 {
+                    
+                    id: 10,
                     brickLinkId: 9,
                     brickLinkName: 'Light Gray',
                     legoId: 2,
@@ -93,6 +104,8 @@ export const brickColorMixin = {
                     colorCode: '#8A928D',
                 },
                 {
+                    
+                    id: 11,
                     brickLinkId: 10,
                     brickLinkName: 'Dark Gray',
                     legoId: 27,
@@ -102,6 +115,8 @@ export const brickColorMixin = {
                     colorCode: '#545955',
                 },
                 {
+                    
+                    id: 12,
                     brickLinkId: 11,
                     brickLinkName: 'Black',
                     legoId: 26,
@@ -111,6 +126,8 @@ export const brickColorMixin = {
                     colorCode: '#1B2A34',
                 },
                 {
+                    
+                    id: 13,
                     brickLinkId: 12,
                     brickLinkName: 'Trans-Clear',
                     legoId: 40,
@@ -120,6 +137,8 @@ export const brickColorMixin = {
                     colorCode: '#EEEEEE',
                 },
                 {
+                    
+                    id: 14,
                     brickLinkId: 13,
                     brickLinkName: 'Trans-Black',
                     legoId: 111,
@@ -129,6 +148,8 @@ export const brickColorMixin = {
                     colorCode: '#BBB29E',
                 },
                 {
+                    
+                    id: 15,
                     brickLinkId: 14,
                     brickLinkName: 'Trans-Dark Blue',
                     legoId: 43,
@@ -138,6 +159,8 @@ export const brickColorMixin = {
                     colorCode: '#77B7CC',
                 },
                 {
+                    
+                    id: 16,
                     brickLinkId: 15,
                     brickLinkName: 'Trans-Light Blue',
                     legoId: 42,
@@ -147,6 +170,8 @@ export const brickColorMixin = {
                     colorCode: '#ADDDED',
                 },
                 {
+                    
+                    id: 17,
                     brickLinkId: 16,
                     brickLinkName: 'Trans-Neon Green',
                     legoId: 49,
@@ -156,6 +181,8 @@ export const brickColorMixin = {
                     colorCode: '#FAF15B',
                 },
                 {
+                    
+                    id: 18,
                     brickLinkId: 17,
                     brickLinkName: 'Trans-Red',
                     legoId: 41,
@@ -165,6 +192,8 @@ export const brickColorMixin = {
                     colorCode: '#B82700',
                 },
                 {
+                    
+                    id: 19,
                     brickLinkId: 18,
                     brickLinkName: 'Trans-Neon Orange',
                     legoId: 47,
@@ -174,6 +203,8 @@ export const brickColorMixin = {
                     colorCode: '#D06D4F',
                 },
                 {
+                    
+                    id: 20,
                     brickLinkId: 19,
                     brickLinkName: 'Trans-Yellow',
                     legoId: 44,
@@ -183,6 +214,8 @@ export const brickColorMixin = {
                     colorCode: '#FAF15D',
                 },
                 {
+                    
+                    id: 21,
                     brickLinkId: 20,
                     brickLinkName: 'Trans-Green',
                     legoId: 48,
@@ -192,6 +225,8 @@ export const brickColorMixin = {
                     colorCode: '#73B464',
                 },
                 {
+                    
+                    id: 22,
                     brickLinkId: 21,
                     brickLinkName: 'Chrome Gold',
                     legoId: 310,
@@ -201,6 +236,8 @@ export const brickColorMixin = {
                     colorCode: '#DFC176',
                 },
                 {
+                    
+                    id: 23,
                     brickLinkId: 22,
                     brickLinkName: 'Chrome Silver',
                     legoId: 309,
@@ -210,6 +247,8 @@ export const brickColorMixin = {
                     colorCode: '#CECECE',
                 },
                 {
+                    
+                    id: 24,
                     brickLinkId: 23,
                     brickLinkName: 'Pink',
                     legoId: 9,
@@ -219,6 +258,8 @@ export const brickColorMixin = {
                     colorCode: '#F6A9BB',
                 },
                 {
+                    
+                    id: 25,
                     brickLinkId: 24,
                     brickLinkName: 'Purple',
                     legoId: 104,
@@ -228,6 +269,8 @@ export const brickColorMixin = {
                     colorCode: '#671FA1',
                 },
                 {
+                    
+                    id: 26,
                     brickLinkId: 25,
                     brickLinkName: 'Salmon',
                     legoId: 101,
@@ -237,6 +280,8 @@ export const brickColorMixin = {
                     colorCode: '#F06D61',
                 },
                 {
+                    
+                    id: 27,
                     brickLinkId: 26,
                     brickLinkName: 'Light Salmon',
                     legoId: 100,
@@ -246,6 +291,8 @@ export const brickColorMixin = {
                     colorCode: '#F9B7A5',
                 },
                 {
+                    
+                    id: 28,
                     brickLinkId: 28,
                     brickLinkName: 'Nougat',
                     legoId: 18,
@@ -255,6 +302,8 @@ export const brickColorMixin = {
                     colorCode: '#BB805A',
                 },
                 {
+                    
+                    id: 29,
                     brickLinkId: 29,
                     brickLinkName: 'Earth Orange',
                     legoId: 12,
@@ -264,6 +313,8 @@ export const brickColorMixin = {
                     colorCode: '#FF8300',
                 },
                 {
+                    
+                    id: 30,
                     brickLinkId: 31,
                     brickLinkName: 'Medium Orange',
                     legoId: 105,
@@ -273,6 +324,8 @@ export const brickColorMixin = {
                     colorCode: '#F58624',
                 },
                 {
+                    
+                    id: 31,
                     brickLinkId: 32,
                     brickLinkName: 'Light Orange',
                     legoId: 121,
@@ -282,6 +335,8 @@ export const brickColorMixin = {
                     colorCode: '#F89A39',
                 },
                 {
+                    
+                    id: 32,
                     brickLinkId: 33,
                     brickLinkName: 'Light Yellow',
                     legoId: 3,
@@ -291,6 +346,8 @@ export const brickColorMixin = {
                     colorCode: '#FFD67F',
                 },
                 {
+                    
+                    id: 33,
                     brickLinkId: 34,
                     brickLinkName: 'Lime',
                     legoId: 119,
@@ -300,6 +357,8 @@ export const brickColorMixin = {
                     colorCode: '#A5CA18',
                 },
                 {
+                    
+                    id: 34,
                     brickLinkId: 35,
                     brickLinkName: 'Light Lime',
                     legoId: 120,
@@ -309,6 +368,8 @@ export const brickColorMixin = {
                     colorCode: '#DEEA92',
                 },
                 {
+                    
+                    id: 35,
                     brickLinkId: 36,
                     brickLinkName: 'Bright Green',
                     legoId: 37,
@@ -318,6 +379,8 @@ export const brickColorMixin = {
                     colorCode: '#10CB31',
                 },
                 {
+                    
+                    id: 36,
                     brickLinkId: 37,
                     brickLinkName: 'Medium Green',
                     legoId: 29,
@@ -327,6 +390,8 @@ export const brickColorMixin = {
                     colorCode: '#7FC475',
                 },
                 {
+                    
+                    id: 37,
                     brickLinkId: 38,
                     brickLinkName: 'Light Green',
                     legoId: 6,
@@ -336,6 +401,8 @@ export const brickColorMixin = {
                     colorCode: '#ADD9A8',
                 },
                 {
+                    
+                    id: 38,
                     brickLinkId: 39,
                     brickLinkName: 'Dark Turquoise',
                     legoId: 107,
@@ -345,6 +412,8 @@ export const brickColorMixin = {
                     colorCode: '#069D9F',
                 },
                 {
+                    
+                    id: 39,
                     brickLinkId: 40,
                     brickLinkName: 'Light Turquoise',
                     legoId: 116,
@@ -354,6 +423,8 @@ export const brickColorMixin = {
                     colorCode: '#00AAA4',
                 },
                 {
+                    
+                    id: 40,
                     brickLinkId: 41,
                     brickLinkName: 'Aqua',
                     legoId: 118,
@@ -363,6 +434,8 @@ export const brickColorMixin = {
                     colorCode: '#9CD6CC',
                 },
                 {
+                    
+                    id: 41,
                     brickLinkId: 42,
                     brickLinkName: 'Medium Blue',
                     legoId: 102,
@@ -372,6 +445,8 @@ export const brickColorMixin = {
                     colorCode: '#7396C8',
                 },
                 {
+                    
+                    id: 42,
                     brickLinkId: 43,
                     brickLinkName: 'Violet',
                     legoId: 110,
@@ -381,6 +456,8 @@ export const brickColorMixin = {
                     colorCode: '#26469A',
                 },
                 {
+                    
+                    id: 43,
                     brickLinkId: 44,
                     brickLinkName: 'Light Violet',
                     legoId: 39,
@@ -390,6 +467,8 @@ export const brickColorMixin = {
                     colorCode: '#FFD500',
                 },
                 {
+                    
+                    id: 44,
                     brickLinkId: 46,
                     brickLinkName: 'Glow In Dark Opaque',
                     legoId: 50,
@@ -399,6 +478,8 @@ export const brickColorMixin = {
                     colorCode: '#E5DFD3',
                 },
                 {
+                    
+                    id: 45,
                     brickLinkId: 47,
                     brickLinkName: 'Dark Pink',
                     legoId: 221,
@@ -408,6 +489,8 @@ export const brickColorMixin = {
                     colorCode: '#D3359D',
                 },
                 {
+                    
+                    id: 46,
                     brickLinkId: 48,
                     brickLinkName: 'Sand Green',
                     legoId: 151,
@@ -417,6 +500,8 @@ export const brickColorMixin = {
                     colorCode: '#708E7C',
                 },
                 {
+                    
+                    id: 47,
                     brickLinkId: 49,
                     brickLinkName: 'Very Light Gray',
                     legoId: 103,
@@ -426,6 +511,8 @@ export const brickColorMixin = {
                     colorCode: '#BCB4A5',
                 },
                 {
+                    
+                    id: 48,
                     brickLinkId: 50,
                     brickLinkName: 'Trans-Dark Pink',
                     legoId: 113,
@@ -435,6 +522,8 @@ export const brickColorMixin = {
                     colorCode: '#FD8ECF',
                 },
                 {
+                    
+                    id: 49,
                     brickLinkId: 51,
                     brickLinkName: 'Trans-Purple',
                     legoId: 126,
@@ -444,6 +533,8 @@ export const brickColorMixin = {
                     colorCode: '#9C95C7',
                 },
                 {
+                    
+                    id: 50,
                     brickLinkId: 52,
                     brickLinkName: 'Chrome Blue',
                     legoId: 9999,
@@ -453,6 +544,8 @@ export const brickColorMixin = {
                     colorCode: '#FFFFFF',
                 },
                 {
+                    
+                    id: 51,
                     brickLinkId: 54,
                     brickLinkName: 'Sand Purple',
                     legoId: 136,
@@ -462,6 +555,8 @@ export const brickColorMixin = {
                     colorCode: '#75657D',
                 },
                 {
+                    
+                    id: 52,
                     brickLinkId: 55,
                     brickLinkName: 'Sand Blue',
                     legoId: 135,
@@ -471,6 +566,8 @@ export const brickColorMixin = {
                     colorCode: '#70819A',
                 },
                 {
+                    
+                    id: 53,
                     brickLinkId: 57,
                     brickLinkName: 'Chrome Antique Brass',
                     legoId: 9999,
@@ -480,6 +577,8 @@ export const brickColorMixin = {
                     colorCode: '#645A4C',
                 },
                 {
+                    
+                    id: 54,
                     brickLinkId: 58,
                     brickLinkName: 'Sand Red',
                     legoId: 153,
@@ -489,6 +588,8 @@ export const brickColorMixin = {
                     colorCode: '#88605E',
                 },
                 {
+                    
+                    id: 55,
                     brickLinkId: 59,
                     brickLinkName: 'Dark Red',
                     legoId: 154,
@@ -498,6 +599,8 @@ export const brickColorMixin = {
                     colorCode: '#720012',
                 },
                 {
+                    
+                    id: 56,
                     brickLinkId: 60,
                     brickLinkName: 'Milky White',
                     legoId: 20,
@@ -507,6 +610,8 @@ export const brickColorMixin = {
                     colorCode: '#E9E9E9',
                 },
                 {
+                    
+                    id: 57,
                     brickLinkId: 61,
                     brickLinkName: 'Pearl Light Gold',
                     legoId: 127,
@@ -516,6 +621,8 @@ export const brickColorMixin = {
                     colorCode: '#DEAC66',
                 },
                 {
+                    
+                    id: 58,
                     brickLinkId: 62,
                     brickLinkName: 'Light Blue',
                     legoId: 45,
@@ -525,6 +632,8 @@ export const brickColorMixin = {
                     colorCode: '#97CBD9',
                 },
                 {
+                    
+                    id: 59,
                     brickLinkId: 63,
                     brickLinkName: 'Dark Blue',
                     legoId: 140,
@@ -534,6 +643,8 @@ export const brickColorMixin = {
                     colorCode: '#19325A',
                 },
                 {
+                    
+                    id: 60,
                     brickLinkId: 64,
                     brickLinkName: 'Chrome Green',
                     legoId: 9999,
@@ -543,6 +654,8 @@ export const brickColorMixin = {
                     colorCode: '#FFFFFF',
                 },
                 {
+                    
+                    id: 61,
                     brickLinkId: 65,
                     brickLinkName: 'Metallic Gold',
                     legoId: 299,
@@ -553,6 +666,8 @@ export const brickColorMixin = {
                     colorCode: '#DEB060',
                 },
                 {
+                    
+                    id: 62,
                     brickLinkId: 66,
                     brickLinkName: 'Pearl Light Gray',
                     legoId: 131,
@@ -562,6 +677,8 @@ export const brickColorMixin = {
                     colorCode: '#A0A0A0',
                 },
                 {
+                    
+                    id: 63,
                     brickLinkId: 66,
                     brickLinkName: 'Pearl Light Gray',
                     legoId: 296,
@@ -571,6 +688,8 @@ export const brickColorMixin = {
                     colorCode: '#ADADAD',
                 },
                 {
+                    
+                    id: 64,
                     brickLinkId: 67,
                     brickLinkName: 'Metallic Silver',
                     legoId: 298,
@@ -580,6 +699,8 @@ export const brickColorMixin = {
                     colorCode: '#767676',
                 },
                 {
+                    
+                    id: 65,
                     brickLinkId: 68,
                     brickLinkName: 'Dark Orange',
                     legoId: 38,
@@ -589,6 +710,8 @@ export const brickColorMixin = {
                     colorCode: '#b35408',
                 },
                 {
+                    
+                    id: 66,
                     brickLinkId: 69,
                     brickLinkName: 'Dark Tan',
                     legoId: 138,
@@ -598,6 +721,8 @@ export const brickColorMixin = {
                     colorCode: '#897D62',
                 },
                 {
+                    
+                    id: 67,
                     brickLinkId: 70,
                     brickLinkName: 'Metallic Green',
                     legoId: 200,
@@ -607,6 +732,8 @@ export const brickColorMixin = {
                     colorCode: '#6A7944',
                 },
                 {
+                    
+                    id: 68,
                     brickLinkId: 71,
                     brickLinkName: 'Magenta',
                     legoId: 124,
@@ -616,6 +743,8 @@ export const brickColorMixin = {
                     colorCode: '#901F76',
                 },
                 {
+                    
+                    id: 69,
                     brickLinkId: 72,
                     brickLinkName: 'Maersk Blue',
                     legoId: 11,
@@ -625,6 +754,7 @@ export const brickColorMixin = {
                     colorCode: '#ABD9FF',
                 },
                 {
+                    id: 70,
                     brickLinkId: 73,
                     brickLinkName: 'Medium Violet',
                     legoId: 112,
@@ -634,6 +764,7 @@ export const brickColorMixin = {
                     colorCode: '#4861AC',
                 },
                 {
+                    id: 71,
                     brickLinkId: 73,
                     brickLinkName: 'Medium Violet',
                     legoId: 219,
@@ -643,6 +774,7 @@ export const brickColorMixin = {
                     colorCode: '#564E9D',
                 },
                 {
+                    id: 72,
                     brickLinkId: 74,
                     brickLinkName: 'Trans-Medium Blue',
                     legoId: 143,
@@ -652,6 +784,7 @@ export const brickColorMixin = {
                     colorCode: '#D0E5FF',
                 },
                 {
+                    id: 73,
                     brickLinkId: 76,
                     brickLinkName: 'Medium Lime',
                     legoId: 115,
@@ -661,6 +794,7 @@ export const brickColorMixin = {
                     colorCode: '#B7D425',
                 },
                 {
+                    id: 74,
                     brickLinkId: 77,
                     brickLinkName: 'Pearl Dark Gray',
                     legoId: 316,
@@ -670,6 +804,7 @@ export const brickColorMixin = {
                     colorCode: '#3E3C39',
                 },
                 {
+                    id: 75,
                     brickLinkId: 78,
                     brickLinkName: 'Metal Blue',
                     legoId: 145,
@@ -679,6 +814,7 @@ export const brickColorMixin = {
                     colorCode: '#5B7590',
                 },
                 {
+                    id: 76,
                     brickLinkId: 80,
                     brickLinkName: 'Dark Green',
                     legoId: 141,
@@ -688,6 +824,7 @@ export const brickColorMixin = {
                     colorCode: '#00451A',
                 },
                 {
+                    id: 77,
                     brickLinkId: 81,
                     brickLinkName: 'Flat Dark Gold',
                     legoId: 147,
@@ -697,6 +834,7 @@ export const brickColorMixin = {
                     colorCode: '#83724F',
                 },
                 {
+                    id: 78,
                     brickLinkId: 82,
                     brickLinkName: 'Chrome Pink',
                     legoId: 9999,
@@ -706,6 +844,7 @@ export const brickColorMixin = {
                     colorCode: '#FFFFFF',
                 },
                 {
+                    id: 79,
                     brickLinkId: 83,
                     brickLinkName: 'Pearl White',
                     legoId: 183,
@@ -715,6 +854,7 @@ export const brickColorMixin = {
                     colorCode: '#F6F2DF',
                 },
                 {
+                    id: 80,
                     brickLinkId: 84,
                     brickLinkName: 'Copper',
                     legoId: 139,
@@ -724,6 +864,7 @@ export const brickColorMixin = {
                     colorCode: '#764D3B',
                 },
                 {
+                    id: 81,
                     brickLinkId: 85,
                     brickLinkName: 'Dark Bluish Gray',
                     legoId: 199,
@@ -733,6 +874,7 @@ export const brickColorMixin = {
                     colorCode: '#646464',
                 },
                 {
+                    id: 82,
                     brickLinkId: 86,
                     brickLinkName: 'Light Bluish Gray',
                     legoId: 194,
@@ -742,6 +884,7 @@ export const brickColorMixin = {
                     colorCode: '#969696',
                 },
                 {
+                    id: 83,
                     brickLinkId: 87,
                     brickLinkName: 'Sky Blue',
                     legoId: 232,
@@ -751,6 +894,7 @@ export const brickColorMixin = {
                     colorCode: '#77C9D8',
                 },
                 {
+                    id: 84,
                     brickLinkId: 88,
                     brickLinkName: 'Reddish Brown',
                     legoId: 192,
@@ -760,6 +904,7 @@ export const brickColorMixin = {
                     colorCode: '#5F3109',
                 },
                 {
+                    id: 85,
                     brickLinkId: 89,
                     brickLinkName: 'Dark Purple',
                     legoId: 268,
@@ -769,6 +914,7 @@ export const brickColorMixin = {
                     colorCode: '#441A91',
                 },
                 {
+                    id: 86,
                     brickLinkId: 90,
                     brickLinkName: 'Light Nougat',
                     legoId: 283,
@@ -778,6 +924,7 @@ export const brickColorMixin = {
                     colorCode: '#FFC995',
                 },
                 {
+                    id: 87,
                     brickLinkId: 91,
                     brickLinkName: 'Medium Brown',
                     legoId: 217,
@@ -787,6 +934,7 @@ export const brickColorMixin = {
                     colorCode: '#7B5D41',
                 },
                 {
+                    id: 88,
                     brickLinkId: 93,
                     brickLinkName: 'Light Purple',
                     legoId: 198,
@@ -796,6 +944,7 @@ export const brickColorMixin = {
                     colorCode: '#8A12A8',
                 },
                 {
+                    id: 89,
                     brickLinkId: 94,
                     brickLinkName: 'Medium Dark Pink',
                     legoId: 22,
@@ -805,6 +954,7 @@ export const brickColorMixin = {
                     colorCode: '#FF879C',
                 },
                 {
+                    id: 90,
                     brickLinkId: 95,
                     brickLinkName: 'Flat Silver',
                     legoId: 315,
@@ -814,6 +964,7 @@ export const brickColorMixin = {
                     colorCode: '#8C8C8C',
                 },
                 {
+                    id: 91,
                     brickLinkId: 96,
                     brickLinkName: 'Very Light Orange',
                     legoId: 36,
@@ -823,6 +974,7 @@ export const brickColorMixin = {
                     colorCode: '#FDC383',
                 },
                 {
+                    id: 92,
                     brickLinkId: 97,
                     brickLinkName: 'Blue-Violet',
                     legoId: 195,
@@ -832,6 +984,7 @@ export const brickColorMixin = {
                     colorCode: '#1C58A7',
                 },
                 {
+                    id: 93,
                     brickLinkId: 98,
                     brickLinkName: 'Trans-Orange',
                     legoId: 182,
@@ -841,6 +994,7 @@ export const brickColorMixin = {
                     colorCode: '#E18D0A',
                 },
                 {
+                    id: 94,
                     brickLinkId: 99,
                     brickLinkName: 'Very Light Bluish Gray',
                     legoId: 208,
@@ -850,6 +1004,7 @@ export const brickColorMixin = {
                     colorCode: '#C8C8C8',
                 },
                 {
+                    id: 95,
                     brickLinkId: 100,
                     brickLinkName: 'Glitter Trans-Dark Pink',
                     legoId: 114,
@@ -860,6 +1015,7 @@ export const brickColorMixin = {
                     colorCode: '#FE00FE',
                 },
                 {
+                    id: 96,
                     brickLinkId: 101,
                     brickLinkName: 'Glitter Trans-Clear',
                     legoId: 117,
@@ -869,6 +1025,7 @@ export const brickColorMixin = {
                     colorCode: '#F7F7F7',
                 },
                 {
+                    id: 97,
                     brickLinkId: 102,
                     brickLinkName: 'Glitter Trans-Purple',
                     legoId: 129,
@@ -878,6 +1035,7 @@ export const brickColorMixin = {
                     colorCode: '#435493',
                 },
                 {
+                    id: 98,
                     brickLinkId: 103,
                     brickLinkName: 'Bright Light Yellow',
                     legoId: 226,
@@ -887,6 +1045,7 @@ export const brickColorMixin = {
                     colorCode: '#FFEC6C',
                 },
                 {
+                    id: 99,
                     brickLinkId: 104,
                     brickLinkName: 'Bright Pink',
                     legoId: 222,
@@ -896,6 +1055,7 @@ export const brickColorMixin = {
                     colorCode: '#FF9ECD',
                 },
                 {
+                    id: 100,
                     brickLinkId: 105,
                     brickLinkName: 'Bright Light Blue',
                     legoId: 212,
@@ -905,6 +1065,7 @@ export const brickColorMixin = {
                     colorCode: '#9DC3F7',
                 },
                 {
+                    id: 101,
                     brickLinkId: 106,
                     brickLinkName: 'Fabuland Brown',
                     legoId: 4,
@@ -914,6 +1075,7 @@ export const brickColorMixin = {
                     colorCode: '#F2705E',
                 },
                 {
+                    id: 102,
                     brickLinkId: 107,
                     brickLinkName: 'Trans-Pink',
                     legoId: 230,
@@ -923,6 +1085,7 @@ export const brickColorMixin = {
                     colorCode: '#ECA3C9',
                 },
                 {
+                    id: 103,
                     brickLinkId: 108,
                     brickLinkName: 'Trans-Bright Green',
                     legoId: 311,
@@ -932,6 +1095,7 @@ export const brickColorMixin = {
                     colorCode: '#AFD246',
                 },
                 {
+                    id: 104,
                     brickLinkId: 109,
                     brickLinkName: 'Dark Blue-Violet',
                     legoId: 196,
@@ -941,6 +1105,7 @@ export const brickColorMixin = {
                     colorCode: '#0E3E9A',
                 },
                 {
+                    id: 105,
                     brickLinkId: 110,
                     brickLinkName: 'Bright Light Orange',
                     legoId: 191,
@@ -950,6 +1115,7 @@ export const brickColorMixin = {
                     colorCode: '#FCAC00',
                 },
                 {
+                    id: 106,
                     brickLinkId: 111,
                     brickLinkName: 'Speckle Black-Silver',
                     legoId: 304,
@@ -959,6 +1125,7 @@ export const brickColorMixin = {
                     colorCode: '#DFDAD1',
                 },
                 {
+                    id: 107,
                     brickLinkId: 113,
                     brickLinkName: 'Trans-Aqua',
                     legoId: 229,
@@ -968,6 +1135,7 @@ export const brickColorMixin = {
                     colorCode: '#ACD4DE',
                 },
                 {
+                    id: 108,
                     brickLinkId: 114,
                     brickLinkName: 'Trans-Light Purple',
                     legoId: 284,
@@ -977,6 +1145,7 @@ export const brickColorMixin = {
                     colorCode: '#E0D0E5',
                 },
                 {
+                    id: 109,
                     brickLinkId: 115,
                     brickLinkName: 'Pearl Gold',
                     legoId: 297,
@@ -986,6 +1155,7 @@ export const brickColorMixin = {
                     colorCode: '#AA7F2E',
                 },
                 {
+                    id: 110,
                     brickLinkId: 116,
                     brickLinkName: 'Speckle Black-Copper',
                     legoId: 306,
@@ -995,6 +1165,7 @@ export const brickColorMixin = {
                     colorCode: '#AE9A91',
                 },
                 {
+                    id: 111,
                     brickLinkId: 118,
                     brickLinkName: 'Glow In Dark Trans',
                     legoId: 294,
@@ -1004,6 +1175,7 @@ export const brickColorMixin = {
                     colorCode: '#D5DC8A',
                 },
                 {
+                    id: 112,
                     brickLinkId: 119,
                     brickLinkName: 'Pearl Very Light Gray',
                     legoId: 150,
@@ -1013,6 +1185,7 @@ export const brickColorMixin = {
                     colorCode: '#989B99',
                 },
                 {
+                    id: 113,
                     brickLinkId: 120,
                     brickLinkName: 'Dark Brown',
                     legoId: 308,
@@ -1022,6 +1195,7 @@ export const brickColorMixin = {
                     colorCode: '#372100',
                 },
                 {
+                    id: 114,
                     brickLinkId: 121,
                     brickLinkName: 'Trans-Neon Yellow',
                     legoId: 157,
@@ -1031,6 +1205,7 @@ export const brickColorMixin = {
                     colorCode: '#FFF65C',
                 },
                 {
+                    id: 115,
                     brickLinkId: 122,
                     brickLinkName: 'Chrome Black',
                     legoId: 9999,
@@ -1040,6 +1215,7 @@ export const brickColorMixin = {
                     colorCode: '#FFFFFF',
                 },
                 {
+                    id: 116,
                     brickLinkId: 123,
                     brickLinkName: 'Mx White',
                     legoId: 1,
@@ -1049,6 +1225,7 @@ export const brickColorMixin = {
                     colorCode: '#F4F4F4',
                 },
                 {
+                    id: 117,
                     brickLinkId: 124,
                     brickLinkName: 'Mx Light Bluish Gray',
                     legoId: 32,
@@ -1058,6 +1235,7 @@ export const brickColorMixin = {
                     colorCode: '#D2D5E4',
                 },
                 {
+                    id: 118,
                     brickLinkId: 125,
                     brickLinkName: 'Mx Light Gray',
                     legoId: 2,
@@ -1067,6 +1245,7 @@ export const brickColorMixin = {
                     colorCode: '#CACFD0',
                 },
                 {
+                    id: 119,
                     brickLinkId: 126,
                     brickLinkName: 'Mx Charcoal Gray',
                     legoId: 40,
@@ -1076,6 +1255,7 @@ export const brickColorMixin = {
                     colorCode: '#696C7A',
                 },
                 {
+                    id: 120,
                     brickLinkId: 127,
                     brickLinkName: 'Mx Tile Gray',
                     legoId: 9999,
@@ -1085,6 +1265,7 @@ export const brickColorMixin = {
                     colorCode: '#FFFFFF',
                 },
                 {
+                    id: 121,
                     brickLinkId: 128,
                     brickLinkName: 'Mx Black',
                     legoId: 3,
@@ -1094,6 +1275,7 @@ export const brickColorMixin = {
                     colorCode: '#4D4C52',
                 },
                 {
+                    id: 122,
                     brickLinkId: 129,
                     brickLinkName: 'Mx Red',
                     legoId: 13,
@@ -1103,6 +1285,7 @@ export const brickColorMixin = {
                     colorCode: '#FF442B',
                 },
                 {
+                    id: 123,
                     brickLinkId: 130,
                     brickLinkName: 'Mx Pink Red',
                     legoId: 33,
@@ -1112,6 +1295,7 @@ export const brickColorMixin = {
                     colorCode: '#FF9BBA',
                 },
                 {
+                    id: 124,
                     brickLinkId: 131,
                     brickLinkName: 'Mx Tile Brown',
                     legoId: 9999,
@@ -1121,6 +1305,7 @@ export const brickColorMixin = {
                     colorCode: '#FFFFFF',
                 },
                 {
+                    id: 125,
                     brickLinkId: 132,
                     brickLinkName: 'Mx Brown',
                     legoId: 9,
@@ -1130,6 +1315,7 @@ export const brickColorMixin = {
                     colorCode: '#A97953',
                 },
                 {
+                    id: 126,
                     brickLinkId: 133,
                     brickLinkName: 'Mx Buff',
                     legoId: 5,
@@ -1139,6 +1325,7 @@ export const brickColorMixin = {
                     colorCode: '#FDDFB4',
                 },
                 {
+                    id: 127,
                     brickLinkId: 134,
                     brickLinkName: 'Mx Terracotta',
                     legoId: 4,
@@ -1148,6 +1335,7 @@ export const brickColorMixin = {
                     colorCode: '#E17E4F',
                 },
                 {
+                    id: 128,
                     brickLinkId: 135,
                     brickLinkName: 'Mx Orange',
                     legoId: 12,
@@ -1157,6 +1345,7 @@ export const brickColorMixin = {
                     colorCode: '#D86D2C',
                 },
                 {
+                    id: 129,
                     brickLinkId: 136,
                     brickLinkName: 'Mx Light Orange',
                     legoId: 39,
@@ -1166,6 +1355,7 @@ export const brickColorMixin = {
                     colorCode: '#AFBED6',
                 },
                 {
+                    id: 130,
                     brickLinkId: 137,
                     brickLinkName: 'Mx Light Yellow',
                     legoId: 35,
@@ -1175,6 +1365,7 @@ export const brickColorMixin = {
                     colorCode: '#FFF787',
                 },
                 {
+                    id: 131,
                     brickLinkId: 138,
                     brickLinkName: 'Mx Ochre Yellow',
                     legoId: 6,
@@ -1184,6 +1375,7 @@ export const brickColorMixin = {
                     colorCode: '#FFDA32',
                 },
                 {
+                    id: 132,
                     brickLinkId: 139,
                     brickLinkName: 'Mx Lemon',
                     legoId: 15,
@@ -1193,6 +1385,7 @@ export const brickColorMixin = {
                     colorCode: '#FFF400',
                 },
                 {
+                    id: 133,
                     brickLinkId: 140,
                     brickLinkName: 'Mx Olive Green',
                     legoId: 7,
@@ -1202,6 +1395,7 @@ export const brickColorMixin = {
                     colorCode: '#91B264',
                 },
                 {
+                    id: 134,
                     brickLinkId: 141,
                     brickLinkName: 'Mx Pastel Green',
                     legoId: 14,
@@ -1211,6 +1405,7 @@ export const brickColorMixin = {
                     colorCode: '#90E600',
                 },
                 {
+                    id: 135,
                     brickLinkId: 142,
                     brickLinkName: 'Mx Aqua Green',
                     legoId: 34,
@@ -1220,6 +1415,7 @@ export const brickColorMixin = {
                     colorCode: '#56F3E4',
                 },
                 {
+                    id: 136,
                     brickLinkId: 143,
                     brickLinkName: 'Mx Tile Blue',
                     legoId: 9999,
@@ -1229,6 +1425,7 @@ export const brickColorMixin = {
                     colorCode: '#FFFFFF',
                 },
                 {
+                    id: 137,
                     brickLinkId: 144,
                     brickLinkName: 'Mx Medium Blue',
                     legoId: 38,
@@ -1238,6 +1435,7 @@ export const brickColorMixin = {
                     colorCode: '#61AFFF',
                 },
                 {
+                    id: 138,
                     brickLinkId: 145,
                     brickLinkName: 'Mx Pastel Blue',
                     legoId: 11,
@@ -1247,6 +1445,7 @@ export const brickColorMixin = {
                     colorCode: '#5DC6EB',
                 },
                 {
+                    id: 139,
                     brickLinkId: 146,
                     brickLinkName: 'Mx Teal Blue',
                     legoId: 8,
@@ -1256,6 +1455,7 @@ export const brickColorMixin = {
                     colorCode: '#389EBC',
                 },
                 {
+                    id: 140,
                     brickLinkId: 147,
                     brickLinkName: 'Mx Violet',
                     legoId: 37,
@@ -1265,6 +1465,7 @@ export const brickColorMixin = {
                     colorCode: '#58AB41',
                 },
                 {
+                    id: 141,
                     brickLinkId: 148,
                     brickLinkName: 'Mx Pink',
                     legoId: 16,
@@ -1274,6 +1475,7 @@ export const brickColorMixin = {
                     colorCode: '#FCABCB',
                 },
                 {
+                    id: 142,
                     brickLinkId: 149,
                     brickLinkName: 'Mx Clear',
                     legoId: 0,
@@ -1283,6 +1485,7 @@ export const brickColorMixin = {
                     colorCode: '#FFFFFF',
                 },
                 {
+                    id: 143,
                     brickLinkId: 150,
                     brickLinkName: 'Medium Nougat',
                     legoId: 312,
@@ -1292,6 +1495,7 @@ export const brickColorMixin = {
                     colorCode: '#AA7D55',
                 },
                 {
+                    id: 144,
                     brickLinkId: 151,
                     brickLinkName: 'Speckle Black-Gold',
                     legoId: 9999,
@@ -1301,6 +1505,7 @@ export const brickColorMixin = {
                     colorCode: '#FFFFFF',
                 },
                 {
+                    id: 145,
                     brickLinkId: 152,
                     brickLinkName: 'Light Aqua',
                     legoId: 323,
@@ -1310,6 +1515,7 @@ export const brickColorMixin = {
                     colorCode: '#D3F2EA',
                 },
                 {
+                    id: 146,
                     brickLinkId: 153,
                     brickLinkName: 'Dark Azure',
                     legoId: 321,
@@ -1319,6 +1525,7 @@ export const brickColorMixin = {
                     colorCode: '#469BC3',
                 },
                 {
+                    id: 147,
                     brickLinkId: 154,
                     brickLinkName: 'Lavender',
                     legoId: 325,
@@ -1328,6 +1535,7 @@ export const brickColorMixin = {
                     colorCode: '#CDA4DE',
                 },
                 {
+                    id: 148,
                     brickLinkId: 155,
                     brickLinkName: 'Olive Green',
                     legoId: 330,
@@ -1337,6 +1545,7 @@ export const brickColorMixin = {
                     colorCode: '#77774E',
                 },
                 {
+                    id: 149,
                     brickLinkId: 156,
                     brickLinkName: 'Medium Azure',
                     legoId: 322,
@@ -1346,6 +1555,7 @@ export const brickColorMixin = {
                     colorCode: '#68C3E2',
                 },
                 {
+                    id: 150,
                     brickLinkId: 157,
                     brickLinkName: 'Medium Lavender',
                     legoId: 324,
@@ -1355,6 +1565,7 @@ export const brickColorMixin = {
                     colorCode: '#A06EB9',
                 },
                 {
+                    id: 151,
                     brickLinkId: 158,
                     brickLinkName: 'Yellowish Green',
                     legoId: 326,
@@ -1364,6 +1575,7 @@ export const brickColorMixin = {
                     colorCode: '#E2F99A',
                 },
                 {
+                    id: 152,
                     brickLinkId: 159,
                     brickLinkName: 'Glow In Dark White',
                     legoId: 329,
@@ -1373,6 +1585,7 @@ export const brickColorMixin = {
                     colorCode: '#F5F3D7',
                 },
                 {
+                    id: 153,
                     brickLinkId: 160,
                     brickLinkName: 'Fabuland Orange',
                     legoId: 19,
@@ -1382,6 +1595,7 @@ export const brickColorMixin = {
                     colorCode: '#CF8A47',
                 },
                 {
+                    id: 154,
                     brickLinkId: 161,
                     brickLinkName: 'Dark Yellow',
                     legoId: 180,
@@ -1391,6 +1605,7 @@ export const brickColorMixin = {
                     colorCode: '#DD982E',
                 },
                 {
+                    id: 155,
                     brickLinkId: 162,
                     brickLinkName: 'Glitter Trans-Light Blue',
                     legoId: 302,
@@ -1400,6 +1615,7 @@ export const brickColorMixin = {
                     colorCode: '#00BAD2',
                 },
                 {
+                    id: 156,
                     brickLinkId: 163,
                     brickLinkName: 'Glitter Trans-Neon Green',
                     legoId: 339,
@@ -1409,6 +1625,7 @@ export const brickColorMixin = {
                     colorCode: '#F0FC00',
                 },
                 {
+                    id: 157,
                     brickLinkId: 164,
                     brickLinkName: 'Trans-Light Orange',
                     legoId: 231,
@@ -1418,6 +1635,7 @@ export const brickColorMixin = {
                     colorCode: '#FCB76D',
                 },
                 {
+                    id: 158,
                     brickLinkId: 165,
                     brickLinkName: 'Neon Orange',
                     legoId: 133,
@@ -1427,6 +1645,7 @@ export const brickColorMixin = {
                     colorCode: '#EF5828',
                 },
                 {
+                    id: 159,
                     brickLinkId: 166,
                     brickLinkName: 'Neon Green',
                     legoId: 134,
@@ -1436,6 +1655,7 @@ export const brickColorMixin = {
                     colorCode: '#CDDD34',
                 },
                 {
+                    id: 160,
                     brickLinkId: 220,
                     brickLinkName: 'Coral',
                     legoId: 353,
@@ -1445,6 +1665,7 @@ export const brickColorMixin = {
                     colorCode: '#FF6D77',
                 },
                 {
+                    id: 161,
                     brickLinkId: 221,
                     brickLinkName: 'Trans-Light Green',
                     legoId: 285,
@@ -1454,6 +1675,7 @@ export const brickColorMixin = {
                     colorCode: '#E4D6DA',
                 },
                 {
+                    id: 162,
                     brickLinkId: 222,
                     brickLinkName: 'Glitter Trans-Orange',
                     legoId: 341,
@@ -1463,6 +1685,7 @@ export const brickColorMixin = {
                     colorCode: '#D04010',
                 },
                 {
+                    id: 163,
                     brickLinkId: 223,
                     brickLinkName: 'Satin Trans-Light Blue',
                     legoId: 362,
@@ -1472,6 +1695,7 @@ export const brickColorMixin = {
                     colorCode: '#68BCC5',
                 },
                 {
+                    id: 164,
                     brickLinkId: 224,
                     brickLinkName: 'Satin Trans-Dark Pink',
                     legoId: 364,
@@ -1481,6 +1705,7 @@ export const brickColorMixin = {
                     colorCode: '#CE1D9B',
                 },
                 {
+                    id: 165,
                     brickLinkId: 225,
                     brickLinkName: 'Dark Nougat',
                     legoId: 128,
@@ -1490,6 +1715,7 @@ export const brickColorMixin = {
                     colorCode: '#AD6140',
                 },
                 {
+                    id: 166,
                     brickLinkId: 226,
                     brickLinkName: 'Trans-Light Bright Green',
                     legoId: 227,
@@ -1499,6 +1725,7 @@ export const brickColorMixin = {
                     colorCode: '#C9E788',
                 },
                 {
+                    id: 167,
                     brickLinkId: 227,
                     brickLinkName: 'Clikits Lavender',
                     legoId: 218,
@@ -1508,6 +1735,7 @@ export const brickColorMixin = {
                     colorCode: '#8E5597',
                 },
                 {
+                    id: 168,
                     brickLinkId: 228,
                     brickLinkName: 'Satin White',
                     legoId: 0,
@@ -1517,6 +1745,7 @@ export const brickColorMixin = {
                     colorCode: '#FFFFFF',
                 },
                 {
+                    id: 169,
                     brickLinkId: 229,
                     brickLinkName: 'Satin Trans-Black',
                     legoId: 0,
@@ -1526,6 +1755,7 @@ export const brickColorMixin = {
                     colorCode: '#939484',
                 },
                 {
+                    id: 170,
                     brickLinkId: 230,
                     brickLinkName: 'Satin Trans-Light Blue ',
                     legoId: 0,

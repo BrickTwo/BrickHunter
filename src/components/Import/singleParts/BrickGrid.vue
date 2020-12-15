@@ -9,21 +9,31 @@
                 <!--<b-img-lazy center :src="image" style="max-height: 120px; max-width: 175px" />-->
                 <div :style="bgimage" />
                 <b-icon
-                            icon="box-arrow-up-left"
-                            aria-hidden="true"
-                            style="position: absolute; top: 110px; right: 10px;"
-                        />
+                    icon="box-arrow-up-left"
+                    aria-hidden="true"
+                    style="position: absolute; top: 110px; right: 10px;"
+                />
             </b-row>
             <b-row style="height: 48px; overflow: hidden;">
                 {{ brick.description }}
             </b-row>
             <b-row>
                 <b-col>Element:</b-col>
-                <b-col class="text-right">{{ brick.itemNumber }}</b-col>
+                <b-col
+                    class="text-right"
+                    style="cursor: pointer"
+                    @click="setKeyword(brick.itemNumber)"
+                    >{{ brick.itemNumber }}</b-col
+                >
             </b-row>
             <b-row>
                 <b-col>Designnummer:</b-col>
-                <b-col class="text-right">{{ brick.designId }}</b-col>
+                <b-col
+                    class="text-right"
+                    style="cursor: pointer"
+                    @click="setKeyword(brick.designId)"
+                    >{{ brick.designId }}</b-col
+                >
             </b-row>
             <b-overlay
                 id="overlay-background"
@@ -67,7 +77,8 @@
                     </b-col>
                 </b-row>
             </b-overlay>
-            <b-row style="display: block;oveflow: hidden;white-space: nowrap;">
+            <b-row style="display: block;oveflow: hidden;white-space: nowrap; cursor: pointer"
+                    @click="setColor()">
                 <div :style="colorCode"></div>
                 <span style="white-space: nowrap;">{{
                     color.brickLinkName
@@ -123,6 +134,12 @@ export default {
         },
         addToPartList() {
             this.$emit('addToPartList', this.brick);
+        },
+        setKeyword(value) {
+            this.$emit('setKeyword', value);
+        },
+        setColor() {
+            this.$emit('setColor', this.color.id);
         },
     },
     beforeMount() {

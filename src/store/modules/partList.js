@@ -94,6 +94,27 @@ const mutations = {
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;
         });
+
+        oldVersionCheck = '1.3.7'.split('.').map(Number);
+
+        if (
+            oldVersion[0] < oldVersionCheck[0] ||
+            oldVersion[1] < oldVersionCheck[1] ||
+            oldVersion[2] < oldVersionCheck[2]
+        ) {
+            state.partLists.map((partList) => {
+                if(partList.source == 'singleParts') {
+                    partList.positions.map((item) => {
+                        item.qty.order = item.qty.min;
+                        item.qty.balance = item.qty.min;
+                    })
+                }
+                localStorage.setItem(
+                    'partList_' + partList.id,
+                    JSON.stringify(partList)
+                );
+            });
+        }
     },
     setPartList(state, payload) {
         var found = state.partLists.find(

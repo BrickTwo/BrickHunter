@@ -29,7 +29,7 @@ export const shoppingMixin = {
                     } else {
                         item.qty.order = item.qty.min;
                     }
-
+                    
                     if (item.qty.order > 0) {
                         var bricksAndPiecesPrice = 0;
                         var pickABrickPrice = 0;
@@ -45,7 +45,6 @@ export const shoppingMixin = {
                             pickABrickPrice,
                             item.brickLink?.wantedList?.maxprice
                         );
-
                         if (price[1]) {
                             if (price[0] == 'bricksAndPieces') {
                                 this.addToBricksAndPiecesList(item);

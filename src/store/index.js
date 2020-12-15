@@ -19,7 +19,7 @@ export default new Vuex.Store({
     mutations: {
         initialiseStore(state) {
             state.version.old = localStorage.getItem('version') || '1.0.0';
-            state.version.current = '1.1.13';
+            state.version.current = '1.3.7';
 
             state.country = localStorage.getItem('country') || null;
             state.language = localStorage.getItem('language') || null;

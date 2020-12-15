@@ -6,6 +6,8 @@
         :header-text-variant="headerTextVariant"
         centered
         @ok="bricksAndPiecesFillCart()"
+        @shown="onShown()"
+        @hidden="onHidden()"
     >
         <b-nav tabs>
             <b-nav-item :active="page == 'data'" @click="page = 'data'">
@@ -230,7 +232,7 @@ export default {
             };*/
             this.chartoptions.animation = {
                 duration: 0,
-            }
+            };
 
             this.chartoptions.scales = {
                 xAxes: [
@@ -266,13 +268,13 @@ export default {
                             display: true,
                             labelString: 'Max Amount',
                         },
-                        
+
                         ticks: {
                             suggestedMin: 0,
                             suggestedMax: 200,
-							// forces step size to be 5 units
-							stepSize: 20
-						}
+                            // forces step size to be 5 units
+                            stepSize: 20,
+                        },
                     },
                     {
                         id: 'yPrice',
@@ -290,15 +292,21 @@ export default {
                         },
                         ticks: {
                             min: 0,
-							// forces step size to be 5 units
-							stepSize: 20
-						}
+                            // forces step size to be 5 units
+                            stepSize: 20,
+                        },
                     },
                 ],
             };
 
             this.chartLoaded = true;
         },
+        onShown() {
+            this.loadBrick();
+        },
+        onHidden() {
+            this.page = 'data';
+        }
     },
     beforeMount() {
         this.color = this.COLOR.find(
@@ -310,9 +318,6 @@ export default {
             this.color.bricksAndPiecesName = this.brick.colorFamily;
             this.color.pickABrickName = this.brick.colorFamily;
         }
-    },
-    mounted() {
-        this.loadBrick();
     },
     computed: {
         id() {

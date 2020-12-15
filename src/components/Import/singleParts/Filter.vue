@@ -2,7 +2,7 @@
     <b-container fluid="xl" class="bricksContainer">
         <b-row class="p-1">
             <b-col class="mr-1">
-                <b-input-group variant="primary" >
+                <b-input-group variant="primary">
                     <b-input-group-prepend is-text>
                         <b-icon icon="search" />
                     </b-input-group-prepend>
@@ -17,11 +17,14 @@
                 </b-input-group>
             </b-col>
             <b-col class="ml-1">
-                 <b-input-group>
+                <b-input-group>
                     <b-input-group-prepend is-text>
                         <b-icon :icon="sortIcon" @click="sort()" />
                     </b-input-group-prepend>
-                <b-form-select v-model="selectedSort" :options="sortOptions" />
+                    <b-form-select
+                        v-model="selectedSort"
+                        :options="sortOptions"
+                    />
                 </b-input-group>
             </b-col>
         </b-row>
@@ -183,14 +186,6 @@
                 </b-dropdown>
             </b-col>
         </b-row>
-        <!--<b-row>
-            <b-col offset="7" cols="5"
-                ><b-form-select
-                    v-model="selectedColor"
-                    :options="colorOptions"
-                ></b-form-select
-            ></b-col>
-        </b-row>-->
         <b-row class="p-1">
             <b-col>
                 <b-form-select
@@ -237,6 +232,8 @@
                     :key="brick.itemNumber"
                     :brick="brick"
                     @addToPartList="addToPartList"
+                    @setKeyword="setKeyword"
+                    @setColor="setColor"
                 />
             </b-row>
             <b-row v-if="showAs == 'list'" cols="12">
@@ -245,6 +242,8 @@
                     :key="brick.itemNumber"
                     :brick="brick"
                     @addToPartList="addToPartList"
+                    @setKeyword="setKeyword"
+                    @setColor="setColor"
                 />
             </b-row>
         </b-overlay>
@@ -403,8 +402,8 @@ export default {
             part.qty = {
                 min: 1,
                 have: 0,
-                balance: 0,
-                order: 0,
+                balance: 1,
+                order: 1,
             };
             if (item.itemQuantity) {
                 part.qty.min = item.itemQuantity;
@@ -467,7 +466,9 @@ export default {
             return newGuid;
         },
         async loadBricks(resetPage) {
-            this.$scrollTo('.bricksContainer', 100, {container: ".bricksContainer"})
+            this.$scrollTo('.bricksContainer', 100, {
+                container: '.bricksContainer',
+            });
             this.listUpdate = true;
             if (resetPage) {
                 this.currentPage = 1;
@@ -617,9 +618,16 @@ export default {
             this.selectedColor = value;
             this.loadBricks(true);
         },
-        alert() {
-            console.log("sdfsdf");
-        }
+        setKeyword(value) {
+            this.selectedColor = 'all';
+            this.keyword = value;
+        },
+        setColor(value) {
+            this.keyword = '';
+            console.log(value);
+            this.selectedColor = value;
+            this.loadBricks(true);
+        },
     },
     watch: {
         categoryId: function() {
@@ -639,7 +647,7 @@ export default {
         },
         keyword: function() {
             this.loadBricks(true);
-        }
+        },
     },
     async beforeMount() {
         this.loadBricks(true);

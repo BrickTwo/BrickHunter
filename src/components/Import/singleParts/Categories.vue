@@ -1,11 +1,17 @@
 <template>
     <b-container fluid="xl">
         <b-row v-for="category in categories" :key="category.id">
-            <b-col>
-                <b-link @click="selectCategorie(category.id)">
-                    {{ category.name }}
-                </b-link>
-                ({{ category.quantity }})
+            <b-col v-if="category.id == selectCategory" style="font-weight: bold">
+                    <b-link @click="selectCategorie(category.id)">
+                        {{ category.name }}
+                    </b-link>
+                    ({{ category.quantity }})
+            </b-col>
+            <b-col v-else>
+                    <b-link @click="selectCategorie(category.id)">
+                        {{ category.name }}
+                    </b-link>
+                    ({{ category.quantity }})
             </b-col>
         </b-row>
     </b-container>
@@ -22,6 +28,7 @@ export default {
     mixins: [requestsMixin],
     methods: {
         selectCategorie(id) {
+            this.selectCategory = id;
             this.$emit('categorySelected', id);
         },
     },

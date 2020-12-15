@@ -5,10 +5,10 @@
                 <b-col cols="2" @click="openBrick()" style="cursor: pointer;">
                     <div :style="bgimage" />
                     <b-icon
-                            icon="box-arrow-up-left"
-                            aria-hidden="true"
-                            style="position: absolute; bottom: 0; right: 0;"
-                        />
+                        icon="box-arrow-up-left"
+                        aria-hidden="true"
+                        style="position: absolute; bottom: 0; right: 0;"
+                    />
                 </b-col>
                 <b-col cols="5">
                     <b-row style="overflow: hidden; white-space: nowrap;">
@@ -16,15 +16,21 @@
                     </b-row>
                     <b-row
                         ><b-col>Element:</b-col>
-                        <b-col class="text-right">{{
-                            brick.itemNumber
-                        }}</b-col></b-row
+                        <b-col
+                            class="text-right"
+                            style="cursor: pointer"
+                            @click="setKeyword(brick.itemNumber)"
+                            >{{ brick.itemNumber }}</b-col
+                        ></b-row
                     >
                     <b-row
                         ><b-col>Designnummer:</b-col>
-                        <b-col class="text-right">{{
-                            brick.designId
-                        }}</b-col></b-row
+                        <b-col
+                            class="text-right"
+                            style="cursor: pointer"
+                            @click="setKeyword(brick.designId)"
+                            >{{ brick.designId }}</b-col
+                        ></b-row
                     >
                 </b-col>
                 <b-col cols="4">
@@ -60,8 +66,9 @@
                         </b-row>
                     </b-overlay>
                     <b-row>
-                        <span style="display: block"
-                            ><div :style="colorCode"></div>
+                        <span style="display: block; cursor: pointer"
+                        @click="setColor()">
+                            <div :style="colorCode"></div>
                             <span>{{ color.brickLinkName }}</span></span
                         >
                     </b-row>
@@ -122,6 +129,12 @@ export default {
         },
         addToPartList() {
             this.$emit('addToPartList', this.brick);
+        },
+        setKeyword(value) {
+            this.$emit('setKeyword', value);
+        },
+        setColor() {
+            this.$emit('setColor', this.color.id);
         },
     },
     beforeMount() {
