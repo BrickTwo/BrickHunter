@@ -53,7 +53,7 @@
                 >
                     Nicht auf Lager
                 </b-row>
-                <b-row>
+                <b-row v-if="!brick.localPrice">
                     <b-col>
                         <b-img
                             :src="getFlagImgUrl(brick.country)"
@@ -64,7 +64,7 @@
                         {{ brick.priceAmount }} {{ brick.priceCurrency }}
                     </b-col>
                 </b-row>
-                <b-row v-if="brick.localPrice">
+                <b-row v-else>
                     <b-col>
                         <b-img
                             :src="getFlagImgUrl($store.state.country)"

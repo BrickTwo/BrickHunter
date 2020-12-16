@@ -6,102 +6,103 @@
         :header-text-variant="headerTextVariant"
         centered
         @ok="bricksAndPiecesFillCart()"
-        @shown="onShown()"
+        @show="onShow()"
         @hidden="onHidden()"
     >
         <b-nav tabs>
             <b-nav-item :active="page == 'data'" @click="page = 'data'">
                 Daten
             </b-nav-item>
-            <!--<b-nav-item
-                :active="page == 'bricksAndPieces'"
-                @click="page = 'bricksAndPieces'"
-            >
-                {{ labelBricksAndPieces }}
-            </b-nav-item>
-            <b-nav-item
-                :active="page == 'pickABrick'"
-                @click="page = 'pickABrick'"
-            >
-                {{ labelPickABrick }}
-            </b-nav-item>-->
             <b-nav-item :active="page == 'chart'" @click="page = 'chart'">
                 Chart
             </b-nav-item>
         </b-nav>
-        <b-container @click="openBrick()" v-if="page == 'data'">
-            <b-row>
-                <img :src="image" width="120px" />
+        <b-container v-if="page == 'data'">
+            <b-row style="min-height: 192px;">
+                <div :style="bgimage" />
             </b-row>
-            <b-row>Beschreibung {{ brick.description }}</b-row>
-            <b-row>Element: {{ brick.itemNumber }}</b-row>
-            <b-row>Designnummer: {{ brick.designId }}</b-row>
-            <b-row>
-                <b-col cols="1" class="p-0">
-                    <img
-                        :src="getFlagImgUrl(brick.country)"
-                        width="20px"
-                        height="15px"
-                    />
+            <b-row class="p-1 mt-0 stripe">
+                <b-col cols="4" class="p-0">Category:</b-col>
+                <b-col cols="8" class="p-0 text-right">
+                    {{ category.name }}
                 </b-col>
-                <b-col cols="4">
+            </b-row>
+            <b-row class="p-1">
+                <b-col cols="4" class="p-0">Element:</b-col>
+                <b-col cols="8" class="p-0 text-right">
+                    {{ brick.itemNumber }}
+                </b-col>
+            </b-row>
+            <b-row class="p-1 mt-0 stripe">
+                <b-col cols="4" class="p-0">Designnummer:</b-col>
+                <b-col cols="8" class="p-0 text-right">
+                    {{ brick.designId }}
+                </b-col>
+            </b-row>
+            <b-row class="p-1 mt-0" v-if="!brick.localPrice">
+                <b-col cols="4" class="p-0">Preis:</b-col>
+                <b-col cols="4" class="p-0 text-right">
                     {{ brick.priceAmount }} {{ brick.priceCurrency }}
                 </b-col>
-                <b-col cols="5" v-if="!brick.localPrice">
+                <b-col cols="4" class="p-0 text-right">
                     {{
                         new Date(brick.lastUpdateCountry + ' UTC') | formatDate
                     }}
                 </b-col>
             </b-row>
-            <b-row v-if="brick.localPrice">
-                <b-col cols="1" class="p-0">
-                    <img
-                        :src="getFlagImgUrl($store.state.country)"
-                        width="20px"
-                        height="15px"
-                    />
-                </b-col>
-                <b-col cols="4">
+            <b-row class="p-1 mt-0" v-else>
+                <b-col cols="4" class="p-0">Preis:</b-col>
+                <b-col cols="4" class="p-0 text-right">
                     {{ brick.localPrice.priceAmount }}
                     {{ brick.localPrice.priceCurrency }}
                 </b-col>
-                <b-col cols="5">
+                <b-col cols="4" class="p-0 text-right">
                     {{
                         new Date(brick.lastUpdateCountry + ' UTC') | formatDate
                     }}
                 </b-col>
             </b-row>
-            <b-row>
-                Farbe BrickLink:
-                <span style="display: block"
-                    ><div :style="colorCode"></div>
-                    <span>{{ color.brickLinkName }}</span></span
-                >
+            <b-row class="p-1 mt-0 stripe">
+                <b-col cols="4" class="p-0">Farbe BrickLink:</b-col>
+                <b-col cols="8" class="p-0 text-right">
+                    <span style="display: block">
+                        <div :style="colorCode"></div>
+                        <span>{{ color.brickLinkName }}</span>
+                    </span>
+                </b-col>
             </b-row>
-            <b-row>
-                Farbe LEGO:
-                <span style="display: block"
-                    ><div :style="colorCode"></div>
-                    <span>{{ color.legoName }}</span></span
-                >
+            <b-row class="p-1 mt-0">
+                <b-col cols="4" class="p-0">Farbe LEGO:</b-col>
+                <b-col cols="8" class="p-0 text-right">
+                    <span style="display: block">
+                        <div :style="colorCode"></div>
+                        <span>{{ color.legoName }}</span>
+                    </span>
+                </b-col>
             </b-row>
-            <b-row>
-                <b-col cols="5" class="p-0"
-                    >Max Bestellmenge: {{ brick.maxAmount }}</b-col
-                >
-                <b-col cols="5">
+            <b-row class="p-1 mt-0 stripe">
+                <b-col cols="5" class="p-0">
+                    Max Bestellmenge:
+                </b-col>
+                <b-col cols="3" class="p-0 text-right">
+                    {{ brick.maxAmount }}
+                </b-col>
+                <b-col cols="4" class="p-0 text-right">
                     {{ new Date(brick.updateDateBrick + ' UTC') | formatDate }}
                 </b-col>
             </b-row>
-            <b-row
-                >Erstmalig Verfügbar:
-                {{ new Date(brick.firstSeen + ' UTC') | formatDate }}</b-row
-            >
-            <b-row
-                >Letztmalig Verfügbar:
-                {{ new Date(brick.lastSeen + ' UTC') | formatDate }}</b-row
-            >
-            <b-row>Category: {{ brick.categoryId }}</b-row>
+            <b-row class="p-1 mt-0">
+                <b-col cols="5" class="p-0">Erstmalig Verfügbar:</b-col>
+                <b-col cols="7" class="p-0 text-right">
+                    {{ new Date(brick.firstSeen + ' UTC') | formatDate }}
+                </b-col>
+            </b-row>
+            <b-row class="p-1 mt-0 stripe">
+                <b-col cols="5" class="p-0">Letztmalig Verfügbar:</b-col>
+                <b-col cols="7" class="p-0 text-right">
+                    {{ new Date(brick.lastSeen + ' UTC') | formatDate }}
+                </b-col>
+            </b-row>
             <b-row v-if="brick.maxAmount <= 0">
                 AUSVERKAUFT!
             </b-row>
@@ -123,6 +124,13 @@
     </b-modal>
 </template>
 
+<style lang="scss">
+@import '../../../../node_modules/bootstrap/scss/bootstrap';
+.stripe {
+    background-color: $gray-200;
+}
+</style>
+
 <script>
 import { brickColorMixin } from '@/mixins/brickColorMixin';
 import { requestsMixin } from '@/mixins/requestsMixin';
@@ -143,6 +151,7 @@ export default {
         chartoptions: {},
         chartLoaded: false,
         page: 'data',
+        category: '',
     }),
     components: {
         BrickModal,
@@ -301,12 +310,15 @@ export default {
 
             this.chartLoaded = true;
         },
-        onShown() {
+        onShow() {
             this.loadBrick();
+            this.category = this.$store.getters['singleParts/getCategoryById'](
+                this.brick.categoryId
+            );
         },
         onHidden() {
             this.page = 'data';
-        }
+        },
     },
     beforeMount() {
         this.color = this.COLOR.find(
@@ -326,6 +338,9 @@ export default {
         image() {
             //return `https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${this.brick.itemNumber}.jpg`;
             return this.brick.imageUrl;
+        },
+        bgimage() {
+            return `background-image: url(${this.brick.imageUrl}), url('placeholder.jpg'); width: 100%; background-repeat: no-repeat; background-size: contain; background-position: center;`;
         },
         colorCode() {
             return `background-color: ${this.color.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;

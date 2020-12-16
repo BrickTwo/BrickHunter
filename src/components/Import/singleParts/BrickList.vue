@@ -52,7 +52,7 @@
                         >
                             Nicht auf Lager
                         </b-row>
-                        <b-row>
+                        <b-row v-if="!brick.localPrice">
                             <b-col>
                                 <b-img
                                     :src="getFlagImgUrl(brick.country)"
@@ -64,10 +64,24 @@
                                 {{ brick.priceCurrency }}
                             </b-col>
                         </b-row>
+                        <b-row v-else>
+                            <b-col>
+                                <b-img
+                                    :src="getFlagImgUrl($store.state.country)"
+                                    width="20px"
+                                />
+                            </b-col>
+                            <b-col class="text-right">
+                                {{ brick.localPrice.priceAmount }}
+                                {{ brick.localPrice.priceCurrency }}
+                            </b-col>
+                        </b-row>
                     </b-overlay>
                     <b-row>
-                        <span style="display: block; cursor: pointer"
-                        @click="setColor()">
+                        <span
+                            style="display: block; cursor: pointer"
+                            @click="setColor()"
+                        >
                             <div :style="colorCode"></div>
                             <span>{{ color.brickLinkName }}</span></span
                         >

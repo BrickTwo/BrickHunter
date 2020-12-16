@@ -1,17 +1,20 @@
 <template>
     <b-container fluid="xl">
         <b-row v-for="category in categories" :key="category.id">
-            <b-col v-if="category.id == selectCategory" style="font-weight: bold">
-                    <b-link @click="selectCategorie(category.id)">
-                        {{ category.name }}
-                    </b-link>
-                    ({{ category.quantity }})
+            <b-col
+                v-if="category.id == selectCategory"
+                style="font-weight: bold"
+            >
+                <b-link @click="selectCategorie(category.id)">
+                    {{ category.name }}
+                </b-link>
+                ({{ category.quantity }})
             </b-col>
             <b-col v-else>
-                    <b-link @click="selectCategorie(category.id)">
-                        {{ category.name }}
-                    </b-link>
-                    ({{ category.quantity }})
+                <b-link @click="selectCategorie(category.id)">
+                    {{ category.name }}
+                </b-link>
+                ({{ category.quantity }})
             </b-col>
         </b-row>
     </b-container>
@@ -19,6 +22,7 @@
 
 <script>
 import { requestsMixin } from '@/mixins/requestsMixin';
+import { bus } from '@/components/BrickHunter';
 
 export default {
     data: () => ({
@@ -31,20 +35,21 @@ export default {
             this.selectCategory = id;
             this.$emit('categorySelected', id);
         },
+        async loadCategories() {
+            this.$store.commit(
+                'singleParts/setCategories',
+                this.getCategoriesAsync()
+            );
+        },
     },
-    async beforeMount() {
-        this.categories = await this.getCategoriesAsync();
-
-        var category = {
-            id: 9999999,
-            name: 'All',
-            quantity: this.categories.reduce(
-                (a, b) => a + (parseInt(b['quantity']) || 0),
-                0
-            ),
-        };
-
-        this.categories.unshift(category);
+    beforeMount() {
+        this.loadCategories();
+        this.categories = this.$store.state.singleParts.categoriesFiltered;
+    },
+    created() {
+        bus.$on('CategoriesFiltered', (data) => {
+            this.categories = data;
+        });
     },
 };
 </script>

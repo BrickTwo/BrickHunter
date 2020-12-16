@@ -488,8 +488,16 @@ export default {
                 this.totalRows = 0;
                 this.currentPage = 1;
                 this.listUpdate = false;
+                this.$store.commit('singleParts/setCategoriesFiltered', null);
+                bus.$emit('CategoriesFiltered', null);
                 return;
             }
+
+            this.$store.commit(
+                'singleParts/setCategoriesFiltered',
+                this.search.categories
+            );
+            bus.$emit('CategoriesFiltered', this.search.categories);
 
             this.totalRows = this.search.page.total;
 
@@ -624,7 +632,6 @@ export default {
         },
         setColor(value) {
             this.keyword = '';
-            console.log(value);
             this.selectedColor = value;
             this.loadBricks(true);
         },
@@ -649,13 +656,15 @@ export default {
             this.loadBricks(true);
         },
     },
-    async beforeMount() {
-        this.loadBricks(true);
+    beforeMount() {
         this.fillColors();
 
         if (this.$store.state.mode == 'standalone') {
             this.perPageOptions.unshift({ value: 8, text: '8' });
         }
+    },
+    mounted() {
+        this.loadBricks(true);
     },
 };
 </script>

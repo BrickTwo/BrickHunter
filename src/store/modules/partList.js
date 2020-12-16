@@ -34,8 +34,8 @@ const mutations = {
         var oldVersionCheck = '1.1.9'.split('.').map(Number);
 
         if (
-            oldVersion[0] < oldVersionCheck[0] ||
-            oldVersion[1] < oldVersionCheck[1] ||
+            oldVersion[0] < oldVersionCheck[0] &&
+            oldVersion[1] < oldVersionCheck[1] &&
             oldVersion[2] < oldVersionCheck[2]
         ) {
             state.partLists.map((partList) => {
@@ -77,8 +77,8 @@ const mutations = {
         oldVersionCheck = '1.1.13'.split('.').map(Number);
 
         if (
-            oldVersion[0] < oldVersionCheck[0] ||
-            oldVersion[1] < oldVersionCheck[1] ||
+            oldVersion[0] < oldVersionCheck[0] &&
+            oldVersion[1] < oldVersionCheck[1] &&
             oldVersion[2] < oldVersionCheck[2]
         ) {
             state.partLists.map((partList) => {
@@ -98,8 +98,8 @@ const mutations = {
         oldVersionCheck = '1.3.7'.split('.').map(Number);
 
         if (
-            oldVersion[0] < oldVersionCheck[0] ||
-            oldVersion[1] < oldVersionCheck[1] ||
+            oldVersion[0] < oldVersionCheck[0] &&
+            oldVersion[1] < oldVersionCheck[1] &&
             oldVersion[2] < oldVersionCheck[2]
         ) {
             state.partLists.map((partList) => {
