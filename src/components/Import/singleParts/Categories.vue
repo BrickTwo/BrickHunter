@@ -38,7 +38,7 @@ export default {
         async loadCategories() {
             this.$store.commit(
                 'singleParts/setCategories',
-                this.getCategoriesAsync()
+                await this.getCategoriesAsync()
             );
         },
     },

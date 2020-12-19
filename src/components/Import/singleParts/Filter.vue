@@ -234,6 +234,7 @@
                     @addToPartList="addToPartList"
                     @setKeyword="setKeyword"
                     @setColor="setColor"
+                    @setOrderQuantity="setOrderQuantity"
                 />
             </b-row>
             <b-row v-if="showAs == 'list'" cols="12">
@@ -244,6 +245,7 @@
                     @addToPartList="addToPartList"
                     @setKeyword="setKeyword"
                     @setColor="setColor"
+                    @setOrderQuantity="setOrderQuantity"
                 />
             </b-row>
         </b-overlay>
@@ -382,6 +384,25 @@ export default {
     },
     mixins: [requestsMixin, brickProcessorMixin, brickColorMixin],
     methods: {
+        setOrderQuantity(item) {
+            var partList = this.loadPartList();
+
+            var foundPart = partList.positions.find(
+                (pos) => pos.itemid == item.itemNumber
+            );
+            if (foundPart) {
+                foundPart.qty.min = item.order;
+                foundPart.qty.order = item.order;
+
+                if (item.order == 0) {
+                    partList.positions = partList.positions.filter(
+                        (pos) => pos.itemid != item.itemNumber
+                    );
+                }
+                this.$store.commit('partList/setPartList', partList);
+                return;
+            }
+        },
         addToPartList(item) {
             var partList = this.loadPartList();
 
@@ -390,6 +411,7 @@ export default {
             );
             if (foundPart) {
                 foundPart.qty.min = foundPart.qty.min + 1;
+                foundPart.qty.order = foundPart.qty.min;
                 this.$store.commit('partList/setPartList', partList);
                 return;
             }
@@ -500,6 +522,18 @@ export default {
             bus.$emit('CategoriesFiltered', this.search.categories);
 
             this.totalRows = this.search.page.total;
+
+            var selectedPartList = this.loadPartList();
+            if (selectedPartList) {
+                this.search.bricks.map((brick) => {
+                    var foundPos = selectedPartList.positions.find(
+                        (pos) => pos.itemid == brick.itemNumber
+                    );
+                    if (foundPos) {
+                        brick.order = foundPos.qty.min;
+                    }
+                });
+            }
 
             this.loadPrices();
             this.listUpdate = false;

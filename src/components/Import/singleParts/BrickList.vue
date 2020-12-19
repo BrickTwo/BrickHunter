@@ -89,9 +89,11 @@
                 </b-col>
                 <b-col cols="1" class="p-0" style="margin: -9px; right: -18px;">
                     <b-button
+                        v-if="order <= 0"
                         @click="addToPartList()"
                         variant="primary"
                         class="w-100 h-100"
+                        style="border-radius: 0 0.25rem 0.25rem 0"
                     >
                         <b-icon
                             icon="plus-circle"
@@ -99,6 +101,53 @@
                             aria-hidden="true"
                         />
                     </b-button>
+                    <b-container v-else class=" p-0 w-100 h-100 pos">
+                        <b-row class="pl-1 pr-1" style="height: 33%">
+                            <b-col
+                                class="m-0 p-0 text-center"
+                            >
+                                <b-icon
+                                    icon="dash-circle"
+                                    style="cursor: pointer"
+                                    aria-hidden="true"
+                                    @click="editQuantity(-1)"
+                                />
+                            </b-col>
+                            <b-col
+                                class="m-0 p-0 text-center"
+                            >
+                                <b-icon
+                                    icon="plus-circle"
+                                    style="cursor: pointer"
+                                    aria-hidden="true"
+                                    @click="editQuantity(1)"
+                                />
+                            </b-col> </b-row
+                        ><b-row class="pl-1 pr-1" style="height: 33%">
+                            <b-col
+                                class="m-0 p-0 text-center"
+                            >
+                                <b-form-input
+                                    style="height: 24px"
+                                    class="m-0 p-0 w-100 text-right"
+                                    type="number"
+                                    v-model="order"
+                                />
+                            </b-col> </b-row
+                        ><b-row class="pl-1 pr-1" style="height: 33%">
+                            <b-col
+                                class="m-0 p-0 text-center"
+                                style="color:#dc3545"
+                            >
+                                <b-icon
+                                    icon="trash"
+                                    style="cursor: pointer"
+                                    aria-hidden="true"
+                                    @click="removeFromPartList()"
+                                />
+                            </b-col>
+                        </b-row>
+                    </b-container>
                 </b-col>
             </b-row>
         </b-container>
@@ -110,6 +159,12 @@
 .brick {
     border: 1px solid gray;
     border-radius: 0.25rem;
+}
+.pos {
+    border: 1px solid #ffc107;
+    border-radius: 0 0.25rem 0.25rem 0;
+    background-color: #ffc107;
+    padding: 6px 0.5rem;
 }
 .row {
     margin: 0;
@@ -129,6 +184,7 @@ export default {
     data: () => ({
         color: null,
         showModal: false,
+        order: 0,
     }),
     components: {
         BrickModal,
@@ -142,6 +198,7 @@ export default {
             return 'flags/' + value + '.png';
         },
         addToPartList() {
+            this.order = 1;
             this.$emit('addToPartList', this.brick);
         },
         setKeyword(value) {
@@ -149,6 +206,12 @@ export default {
         },
         setColor() {
             this.$emit('setColor', this.color.id);
+        },
+        editQuantity(value) {
+            this.order = parseInt(this.order) + parseInt(value);
+        },
+        removeFromPartList() {
+            this.order = 0;
         },
     },
     beforeMount() {
@@ -161,6 +224,10 @@ export default {
             this.color.bricksAndPiecesName = this.brick.colorFamily;
             this.color.pickABrickName = this.brick.colorFamily;
         }
+
+        if (this.brick.order) {
+            this.order = this.brick.order;
+        }
     },
     computed: {
         image() {
@@ -172,6 +239,15 @@ export default {
         },
         colorCode() {
             return `background-color: ${this.color.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
+        },
+    },
+    watch: {
+        order: function() {
+            if (this.order < 0) {
+                this.order = 0;
+            }
+            this.brick.order = this.order;
+            this.$emit('setOrderQuantity', this.brick);
         },
     },
 };
