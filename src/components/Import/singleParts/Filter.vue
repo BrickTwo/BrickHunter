@@ -419,7 +419,7 @@ export default {
             var part = {};
             part.source = 'lego';
             part.itemid = item.itemNumber;
-            part.searchids = [part.itemid];
+            part.searchids = [item.designId];
             part.color = this.findLegoColor(item.colorFamily, this.COLOR);
             part.qty = {
                 min: 1,
@@ -593,6 +593,14 @@ export default {
                             found.maxAmount = brick.maxAmount;
                             found.update = false;
                         }
+                    });
+
+                    var found = this.search.bricks.filter(
+                        (b) => b.designId == designId
+                    );
+
+                    found.map((brick) => {
+                        brick.update = false;
                     });
 
                     this.sendPrices(this.prepareSendPrice(response.bricks));

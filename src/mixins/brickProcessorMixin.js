@@ -34,21 +34,19 @@ export const brickProcessorMixin = {
             if (!bricks) return null;
             bricks = bricks.filter((brick) => !brick.isSoldOut);
 
-            if ((item.source == 'lego')) {
+            if (item.source == 'lego') {
                 var result = bricks.filter((brick) =>
                     brick.itemNumber == item.itemid
                 );
-
-                return result[0];
+                if(result[0]) return result[0];
             }
 
             var result = bricks.filter(
                 (brick) =>
-                    brick.colorFamily == item.color.bricksAndPiecesName &&
-                    !brick.isSoldOut
+                    brick.colorFamily == item.color.bricksAndPiecesName
             );
-
-            if (this.isSpecialBrick(item)) {
+            
+            if (this.isSpecialBrick(item) && item.source == 'brickLink') {
                 if (item.brickLink.mapPCCs) {
                     var colorCodesArray = item.brickLink.mapPCCs;
                     var colorCodes = colorCodesArray[
@@ -69,16 +67,17 @@ export const brickProcessorMixin = {
                 }
             });
 
+            console.log(result[0])
             return result[0];
         },
         findPickABrickBrick(item, bricks) {
             if (!bricks) return null;
 
-            if ((item.source = 'lego')) {
+            if (item.source == 'lego') {
                 var result = bricks.filter(
                     (brick) => brick.itemNumber == item.itemid
                 );
-                return result[0];
+                if(result[0]) return result[0];
             }
 
             var result = bricks.filter(
@@ -86,7 +85,7 @@ export const brickProcessorMixin = {
                     brick.variant.attributes.colour == item.color.pickABrickName
             );
 
-            if (this.isSpecialBrick(item)) {
+            if (this.isSpecialBrick(item) && item.source == 'brickLink') {
                 if (!result.length && item.brickLink.mapPCCs) {
                     var colorCodesArray = item.brickLink.mapPCCs;
                     var colorCodes = colorCodesArray[
@@ -137,7 +136,7 @@ export const brickProcessorMixin = {
                     }
                 }
             }
-            console.log(item.itemid, bricks);
+            
             var foundBrick = this.findBricksAndPiecesBrick(item, bricks);
 
             if (foundBrick) {
