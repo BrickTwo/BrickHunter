@@ -41,14 +41,22 @@
                 rounded="sm"
                 style="margin: 0 -5px; padding: 0 5px;"
             >
-                <b-row v-if="brick.isAvailable">
+                <b-row v-if="
+                        brick.maxAmount > 0 &&
+                            !!parseInt(brick.isAvailable) &&
+                            !parseInt(brick.isSoldOut)
+                    ">
                     <b-col cols="10" class="p-0">Max. Menge:</b-col>
                     <b-col cols="2" class="p-0 text-right">{{
                         brick.maxAmount
                     }}</b-col>
                 </b-row>
                 <b-row
-                    v-if="!brick.isAvailable"
+                    v-if="
+                        brick.maxAmount <= 0 ||
+                            !parseInt(brick.isAvailable) ||
+                            !!parseInt(brick.isSoldOut)
+                    "
                     style="background-color: #dc3545; color: white; border-radius: 0.25rem; margin: 0 -5px; padding: 0 5px;"
                 >
                     Nicht auf Lager
@@ -235,7 +243,7 @@ export default {
     },
     watch: {
         order: function() {
-            if(this.order < 0){
+            if (this.order < 0) {
                 this.order = 0;
             }
             this.brick.order = this.order;

@@ -580,6 +580,16 @@ export default {
                             found.description = brick.description;
                             found.designId = brick.designId;
                             found.imageUrl = brick.imageUrl;
+                            if (brick.isAvailable) {
+                                found.isAvailable = 1;
+                            } else {
+                                found.isAvailable = 0;
+                            }
+                            if (brick.isSoldOut) {
+                                found.isSoldOut = 1;
+                            } else {
+                                found.isSoldOut = 0;
+                            }
                             if (found.country == this.$store.state.country) {
                                 found.priceAmount = brick.price.amount;
                                 found.priceCurrency = brick.price.currency;
@@ -589,7 +599,6 @@ export default {
                                 found.localPrice.priceCurrency =
                                     brick.price.currency;
                             }
-
                             found.maxAmount = brick.maxAmount;
                             found.update = false;
                         }

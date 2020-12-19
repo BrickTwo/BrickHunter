@@ -39,22 +39,10 @@
                     {{ brick.designId }}
                 </b-col>
             </b-row>
-            <b-row class="p-1 mt-0" v-if="!brick.localPrice">
+            <b-row class="p-1 mt-0">
                 <b-col cols="4" class="p-0">Preis:</b-col>
                 <b-col cols="4" class="p-0 text-right">
                     {{ brick.priceAmount }} {{ brick.priceCurrency }}
-                </b-col>
-                <b-col cols="4" class="p-0 text-right">
-                    {{
-                        new Date(brick.lastUpdateCountry + ' UTC') | formatDate
-                    }}
-                </b-col>
-            </b-row>
-            <b-row class="p-1 mt-0" v-else>
-                <b-col cols="4" class="p-0">Preis:</b-col>
-                <b-col cols="4" class="p-0 text-right">
-                    {{ brick.localPrice.priceAmount }}
-                    {{ brick.localPrice.priceCurrency }}
                 </b-col>
                 <b-col cols="4" class="p-0 text-right">
                     {{
@@ -80,15 +68,43 @@
                     </span>
                 </b-col>
             </b-row>
-            <b-row class="p-1 mt-0 stripe">
+            <b-row class="p-1 mt-0 stripe" align-h="between">
                 <b-col cols="5" class="p-0">
                     Max Bestellmenge:
                 </b-col>
-                <b-col cols="3" class="p-0 text-right">
+                <b-col
+                    cols="3"
+                    class="p-0 text-right"
+                    v-if="
+                        brick.maxAmount > 0 &&
+                            !!parseInt(brick.isAvailable) &&
+                            !parseInt(brick.isSoldOut)
+                    "
+                >
                     {{ brick.maxAmount }}
                 </b-col>
-                <b-col cols="4" class="p-0 text-right">
+                <b-col
+                    cols="4"
+                    class="p-0 text-right"
+                    v-if="
+                        brick.maxAmount > 0 &&
+                            !!parseInt(brick.isAvailable) &&
+                            !parseInt(brick.isSoldOut)
+                    "
+                >
                     {{ new Date(brick.updateDateBrick + ' UTC') | formatDate }}
+                </b-col>
+                <b-col
+                    cols="7"
+                    class="text-right"
+                    v-if="
+                                brick.maxAmount <= 0 ||
+                                    !parseInt(brick.isAvailable) ||
+                                    !!parseInt(brick.isSoldOut)
+                            "
+                    style="background-color: #dc3545; color: white; border-radius: 0.25rem; margin: 0 -5px; padding: 0 5px !important;"
+                >
+                    Nicht auf Lager
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0">
@@ -102,9 +118,6 @@
                 <b-col cols="7" class="p-0 text-right">
                     {{ new Date(brick.lastSeen + ' UTC') | formatDate }}
                 </b-col>
-            </b-row>
-            <b-row v-if="brick.maxAmount <= 0">
-                AUSVERKAUFT!
             </b-row>
         </b-container>
         <Chart

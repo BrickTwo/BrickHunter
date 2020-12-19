@@ -40,14 +40,24 @@
                         rounded="sm"
                         style="margin: 0 -5px; padding: 0 5px;"
                     >
-                        <b-row v-if="brick.isAvailable">
+                        <b-row
+                            v-if="
+                                brick.maxAmount > 0 &&
+                                    !!parseInt(brick.isAvailable) &&
+                                    !parseInt(brick.isSoldOut)
+                            "
+                        >
                             <b-col cols="10" class="p-0">Max. Menge:</b-col>
                             <b-col cols="2" class="p-0 text-right">{{
                                 brick.maxAmount
                             }}</b-col>
                         </b-row>
                         <b-row
-                            v-if="!brick.isAvailable"
+                            v-if="
+                                brick.maxAmount <= 0 ||
+                                    !parseInt(brick.isAvailable) ||
+                                    !!parseInt(brick.isSoldOut)
+                            "
                             style="background-color: #dc3545; color: white; border-radius: 0.25rem; margin: 0 -5px; padding: 0 5px;"
                         >
                             Nicht auf Lager
@@ -103,9 +113,7 @@
                     </b-button>
                     <b-container v-else class=" p-0 w-100 h-100 pos">
                         <b-row class="pl-1 pr-1" style="height: 33%">
-                            <b-col
-                                class="m-0 p-0 text-center"
-                            >
+                            <b-col class="m-0 p-0 text-center">
                                 <b-icon
                                     icon="dash-circle"
                                     style="cursor: pointer"
@@ -113,9 +121,7 @@
                                     @click="editQuantity(-1)"
                                 />
                             </b-col>
-                            <b-col
-                                class="m-0 p-0 text-center"
-                            >
+                            <b-col class="m-0 p-0 text-center">
                                 <b-icon
                                     icon="plus-circle"
                                     style="cursor: pointer"
@@ -124,9 +130,7 @@
                                 />
                             </b-col> </b-row
                         ><b-row class="pl-1 pr-1" style="height: 33%">
-                            <b-col
-                                class="m-0 p-0 text-center"
-                            >
+                            <b-col class="m-0 p-0 text-center">
                                 <b-form-input
                                     style="height: 24px"
                                     class="m-0 p-0 w-100 text-right"
