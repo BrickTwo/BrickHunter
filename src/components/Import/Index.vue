@@ -3,7 +3,7 @@
         <b-nav tabs>
             <b-nav-item
                 :active="page == 'brickLink'"
-                @click="page = 'brickLink'"
+                @click="changePage('brickLink')"
             >
                 {{ labelBrickLink }}
             </b-nav-item>
@@ -19,10 +19,16 @@
             >
                 {{ labelPickABrick }}
             </b-nav-item>-->
-            <b-nav-item :active="page == 'legoSet'" @click="page = 'legoSet'">
+            <b-nav-item
+                :active="page == 'legoSet'"
+                @click="changePage('legoSet')"
+            >
                 LEGO Set
             </b-nav-item>
-            <b-nav-item :active="page == 'singleParts'" @click="page = 'singleParts'">
+            <b-nav-item
+                :active="page == 'singleParts'"
+                @click="changePage('singleParts')"
+            >
                 Einzelteile
             </b-nav-item>
         </b-nav>
@@ -39,13 +45,22 @@ import SingleParts from './SingleParts';
 
 export default {
     data: () => ({
-        page: 'singleParts',
+        page: 'brickLink',
     }),
     components: {
         ImportBrickLink,
         LegoSet,
         SingleParts,
     },
+    methods: {
+        changePage(value) {
+            this.page = value;
+            //this.$router.push(`/import/${value}`).catch(() => {});
+        },
+    },
+    /*beforeMount() {
+        this.$router.push(`/import/${this.page}`).catch(() => {});
+    },*/
     computed: {
         labelPickABrick() {
             return browser.i18n.getMessage('pickABrick');
