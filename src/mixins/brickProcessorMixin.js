@@ -34,7 +34,7 @@ export const brickProcessorMixin = {
         },
         findBricksAndPiecesBrick(item, bricks) {
             if (!bricks) return null;
-            bricks = bricks.filter((brick) => !brick.isSoldOut);
+            bricks = bricks.filter((brick) => !brick.isSoldOut && brick.isAvailable);
             var result = bricks.filter(
                 (brick) =>
                     brick.colorFamily == item.color.bricksAndPiecesName &&
