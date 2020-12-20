@@ -502,6 +502,12 @@ export default {
                 this.currentPage = 1;
             }
 
+            /*this.$router
+                .push(
+                    `/import/singleParts/${this.categoryId}/${this.selectedSort}/${this.sortDirection}/${this.keyword}/${this.selectedColor}/${this.currentPage}`
+                )
+                .catch(() => {});*/
+
             this.search = await this.getBricksAsync(
                 this.currentPage,
                 this.perPage,
@@ -609,16 +615,27 @@ export default {
                                 found.isSoldOut = 0;
                             }
                             if (found.country == this.$store.state.country) {
-                                found.priceAmount = brick.price.amount;
+                                found.priceAmount = brick.price.amount.toFixed(
+                                    2
+                                );
                                 found.priceCurrency = brick.price.currency;
                             } else {
-                                found.localPrice.priceAmount =
-                                    brick.price.amount;
+                                found.localPrice.priceAmount = brick.price.amount.toFixed(
+                                    2
+                                );
                                 found.localPrice.priceCurrency =
                                     brick.price.currency;
                             }
                             found.maxAmount = brick.maxAmount;
                             found.update = false;
+                            if (
+                                found.maxAmount > 0 &&
+                                found.isAvailable &&
+                                !found.isSoldOut
+                            ) {
+                                found.lastSeen = new Date(Date.now()).toUTCString();
+                            }
+                            found.lastUpdateCountry = new Date(Date.now()).toUTCString();
                         }
                     });
 
