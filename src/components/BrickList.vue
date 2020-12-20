@@ -28,6 +28,9 @@
                         {{ props.rowData.qty.order }}
                     </div>
                 </div>
+                <div v-else>
+                    {{ props.rowData.qty.min }}
+                </div>
                 <div v-if="props.rowData.qty.order > limitMaxQty">
                     <span id="maxqty" style="color: red">
                         {{ limitMaxQty }}
@@ -214,6 +217,7 @@ export default {
         if (this.$store.state.mode == 'standalone') {
             this.tableHeight = 'calc(100vh - 260px)';
         }
+        console.log(this.bricklist);
     },
 };
 </script>
