@@ -226,7 +226,12 @@
             rounded="sm"
             style="margin: 0 -15px; padding: 0 15px;"
         >
-            <b-row v-if="showAs == 'grid'" cols="12" style="min-height: 50px;">
+            <b-row
+                v-if="showAs == 'grid'"
+                cols="12"
+                style="min-height: 50px;"
+                :key="componentKey"
+            >
                 <BrickGrid
                     v-for="brick in search.bricks"
                     :key="brick.itemNumber"
@@ -237,7 +242,7 @@
                     @setOrderQuantity="setOrderQuantity"
                 />
             </b-row>
-            <b-row v-if="showAs == 'list'" cols="12">
+            <b-row v-if="showAs == 'list'" cols="12" :key="componentKey">
                 <BrickList
                     v-for="brick in search.bricks"
                     :key="brick.itemNumber"
@@ -377,6 +382,7 @@ export default {
         colorBlue: [],
         colorPurple: [],
         listUpdate: true,
+        componentKey: 0,
     }),
     components: {
         BrickGrid,
@@ -515,6 +521,10 @@ export default {
                 return;
             }
 
+            this.search.bricks.map((brick) => {
+                brick.key = this.componentKey++;
+            });
+
             this.$store.commit(
                 'singleParts/setCategoriesFiltered',
                 this.search.categories
@@ -523,20 +533,28 @@ export default {
 
             this.totalRows = this.search.page.total;
 
+            this.selectPart();
+
+            this.loadPrices();
+            this.listUpdate = false;
+        },
+        selectPart() {
             var selectedPartList = this.loadPartList();
             if (selectedPartList) {
+                if (!this.search || !this.search.bricks) return;
                 this.search.bricks.map((brick) => {
                     var foundPos = selectedPartList.positions.find(
                         (pos) => pos.itemid == brick.itemNumber
                     );
                     if (foundPos) {
                         brick.order = foundPos.qty.min;
+                    } else {
+                        brick.order = 0;
                     }
                 });
             }
 
-            this.loadPrices();
-            this.listUpdate = false;
+            this.componentKey++;
         },
         async loadPrices() {
             var designIds = [];
@@ -705,6 +723,9 @@ export default {
         },
         keyword: function() {
             this.loadBricks(true);
+        },
+        partListId: function() {
+            this.selectPart();
         },
     },
     beforeMount() {
