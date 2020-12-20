@@ -32,7 +32,7 @@ export const brickProcessorMixin = {
         },
         findBricksAndPiecesBrick(item, bricks) {
             if (!bricks) return null;
-            bricks = bricks.filter((brick) => !brick.isSoldOut);
+            bricks = bricks.filter((brick) => !brick.isSoldOut && brick.isAvailable);
 
             if (item.source == 'lego') {
                 var result = bricks.filter((brick) =>
