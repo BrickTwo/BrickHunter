@@ -1,11 +1,12 @@
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    browser.pageAction.show(tabId);
     if (tab.url.indexOf('https://www.lego.com') == 0) {
         browser.pageAction.show(tabId);
         browser.tabs.executeScript({
             file: 'js/content-script.js',
         });
     } else {
-        browser.pageAction.hide(tabId);
+        //browser.pageAction.hide(tabId);
     }
 });
 

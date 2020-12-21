@@ -210,7 +210,7 @@ export default {
     },
     beforeMount() {
         this.color = this.COLOR.find(
-            (c) => c.bricksAndPiecesName == this.brick.colorFamily
+            (c) => c.bricksAndPiecesName.toUpperCase() == this.brick.colorFamily.toUpperCase()
         );
         if (!this.color) {
             this.color = this.COLOR.find((c) => c.brickLinkId == 0);

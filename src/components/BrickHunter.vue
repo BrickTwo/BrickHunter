@@ -61,8 +61,6 @@
     </div>
 </template>
 
-
-
 <style>
 .page {
     padding: 20px;
@@ -115,6 +113,13 @@ export default {
             this.countrySelected = country;
         },
         showPage(page) {
+            if (
+                this.$store.state.mode == 'popup' &&
+                (page == 'import' || page == 'partLists' || page == 'export')
+            ) {
+                this.openInFullscreen(page);
+                return;
+            }
             this.$router.push('/' + page).catch(() => {});
         },
         link(value) {
@@ -126,7 +131,13 @@ export default {
         onLanguageSelected(language) {
             this.languageSelected = language;
         },
-        openInFullscreen() {
+        openInFullscreen(page) {
+            if (page) {
+                browser.tabs.create({
+                    url: chrome.runtime.getURL('index.html#' + page),
+                });
+                return;
+            }
             browser.tabs.create({
                 url: chrome.runtime.getURL(
                     'index.html#' + this.$router.currentRoute.path
@@ -136,7 +147,7 @@ export default {
     },
     beforeMount() {
         if (this.$store.state.mode == 'popup')
-            this.$router.push('/partLists').catch(() => {});
+            this.$router.push('/shopping').catch(() => {});
         this.countrySelected = this.$store.state.country;
         this.languageSelected = this.$store.state.language;
     },

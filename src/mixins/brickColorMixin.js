@@ -1764,6 +1764,17 @@ export const brickColorMixin = {
                     pickABrickName: '',
                     colorCode: '#68BCC5',
                 },
+                {
+                    
+                    id: 171,
+                    brickLinkId: 67,
+                    brickLinkName: 'Metallic Silver',
+                    legoId: 336,
+                    legoName: 'Silver Ink',
+                    bricksAndPiecesName: 'Silver ink',
+                    pickABrickName: 'N/A',
+                    colorCode: '#767676',
+                },
             ],
         };
     },

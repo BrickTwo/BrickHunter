@@ -27,7 +27,7 @@
   },
   "devtools_page": "devtools.html",
   "page_action": {
-    "show_matches": ["https://*.lego.com/*"],
+    "show_matches": ["*"],
     "default_popup": "popup.html",
     "default_title": "__MSG_extName__",
     "default_icon": {
