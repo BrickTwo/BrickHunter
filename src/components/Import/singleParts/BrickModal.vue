@@ -76,33 +76,21 @@
                 <b-col
                     cols="3"
                     class="p-0 text-right"
-                    v-if="
-                        brick.maxAmount > 0 &&
-                            !!parseInt(brick.isAvailable) &&
-                            !parseInt(brick.isSoldOut)
-                    "
+                    v-if="isAvailable"
                 >
                     {{ brick.maxAmount }}
                 </b-col>
                 <b-col
                     cols="4"
                     class="p-0 text-right"
-                    v-if="
-                        brick.maxAmount > 0 &&
-                            !!parseInt(brick.isAvailable) &&
-                            !parseInt(brick.isSoldOut)
-                    "
+                    v-if="isAvailable"
                 >
                     {{ new Date(brick.updateDateBrick + ' UTC') | formatDate }}
                 </b-col>
                 <b-col
                     cols="7"
                     class="text-right"
-                    v-if="
-                                brick.maxAmount <= 0 ||
-                                    !parseInt(brick.isAvailable) ||
-                                    !!parseInt(brick.isSoldOut)
-                            "
+                    v-if="!isAvailable"
                     style="background-color: #dc3545; color: white; border-radius: 0.25rem; margin: 0 -5px; padding: 0 5px !important;"
                 >
                     {{ labelNotInStock }}
@@ -387,6 +375,13 @@ export default {
         },
         labelDate() {
             return browser.i18n.getMessage('import_sp_date');
+        },
+        isAvailable() {
+            if (!parseInt(this.brick.isAvailable)) return false;
+            if (!!parseInt(this.brick.isSoldOut)) return false;
+            if (this.brick.maxAmount <= 0) return false;
+            if (this.brick.priceAmount <= 0) return false;
+            return true;
         },
     },
 };

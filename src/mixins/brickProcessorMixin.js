@@ -66,8 +66,7 @@ export const brickProcessorMixin = {
                     return -1;
                 }
             });
-
-            console.log(result[0])
+            
             return result[0];
         },
         findPickABrickBrick(item, bricks) {

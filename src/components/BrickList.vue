@@ -217,7 +217,6 @@ export default {
         if (this.$store.state.mode == 'standalone') {
             this.tableHeight = 'calc(100vh - 260px)';
         }
-        console.log(this.bricklist);
     },
 };
 </script>

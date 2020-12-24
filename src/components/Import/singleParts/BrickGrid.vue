@@ -41,22 +41,14 @@
                 rounded="sm"
                 style="margin: 0 -5px; padding: 0 5px;"
             >
-                <b-row v-if="
-                        brick.maxAmount > 0 &&
-                            !!parseInt(brick.isAvailable) &&
-                            !parseInt(brick.isSoldOut)
-                    ">
+                <b-row v-if="isAvailable">
                     <b-col cols="10" class="p-0">{{ labelMaxAmount }}:</b-col>
                     <b-col cols="2" class="p-0 text-right">{{
                         brick.maxAmount
                     }}</b-col>
                 </b-row>
                 <b-row
-                    v-if="
-                        brick.maxAmount <= 0 ||
-                            !parseInt(brick.isAvailable) ||
-                            !!parseInt(brick.isSoldOut)
-                    "
+                    v-if="!isAvailable"
                     style="background-color: #dc3545; color: white; border-radius: 0.25rem; margin: 0 -5px; padding: 0 5px;"
                 >
                     {{ labelNotInStock }}
@@ -198,7 +190,9 @@ export default {
     },
     beforeMount() {
         this.color = this.COLOR.find(
-            (c) => c.bricksAndPiecesName.toUpperCase() == this.brick.colorFamily.toUpperCase()
+            (c) =>
+                c.bricksAndPiecesName.toUpperCase() ==
+                this.brick.colorFamily.toUpperCase()
         );
         if (!this.color) {
             this.color = this.COLOR.find((c) => c.brickLinkId == 0);
@@ -242,6 +236,13 @@ export default {
         },
         labelAdd() {
             return browser.i18n.getMessage('import_sp_add');
+        },
+        isAvailable() {
+            if (!parseInt(this.brick.isAvailable)) return false;
+            if (!!parseInt(this.brick.isSoldOut)) return false;
+            if (this.brick.maxAmount <= 0) return false;
+            if (this.brick.priceAmount <= 0) return false;
+            return true;
         },
     },
     watch: {
