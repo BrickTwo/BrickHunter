@@ -380,6 +380,9 @@
     "import_sp_date": {
         "message": "Datum/Zeit"
     },
+    "import_sp_add": {
+        "message": "Hinzufügen"
+    },
     "info_disclaimerTitle": {
         "message": "Disclaimer"
     },

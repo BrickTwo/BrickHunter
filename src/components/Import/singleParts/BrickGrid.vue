@@ -90,7 +90,7 @@
             class="w-100"
             style="margin-top: -5px; border-radius: 0 0 0.25rem 0.25rem"
         >
-            <b-icon icon="plus-circle" aria-hidden="true" /> Hinzufügen
+            <b-icon icon="plus-circle" aria-hidden="true" /> {{ labelAdd }}
         </b-button>
         <b-container v-else class="pos" style="margin-top: -5px;">
             <b-row>
@@ -239,6 +239,9 @@ export default {
         },
         labelNotInStock() {
             return browser.i18n.getMessage('import_sp_notInStock');
+        },
+        labelAdd() {
+            return browser.i18n.getMessage('import_sp_add');
         },
     },
     watch: {

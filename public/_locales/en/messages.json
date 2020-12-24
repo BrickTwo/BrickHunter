@@ -383,6 +383,9 @@
     "import_sp_date": {
         "message": "Date/Time"
     },
+    "import_sp_add": {
+        "message": "Add"
+    },
     "info_disclaimerTitle": {
         "message": "Disclaimer"
     },
