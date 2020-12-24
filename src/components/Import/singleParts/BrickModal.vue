@@ -5,16 +5,17 @@
         :header-bg-variant="headerBgVariant"
         :header-text-variant="headerTextVariant"
         centered
+        hide-footer
         @ok="bricksAndPiecesFillCart()"
         @show="onShow()"
         @hidden="onHidden()"
     >
         <b-nav tabs>
             <b-nav-item :active="page == 'data'" @click="page = 'data'">
-                Daten
+                {{ labelData }}
             </b-nav-item>
             <b-nav-item :active="page == 'chart'" @click="page = 'chart'">
-                Chart
+                {{ labelData }}
             </b-nav-item>
         </b-nav>
         <b-container v-if="page == 'data'">
@@ -22,25 +23,25 @@
                 <div :style="bgimage" />
             </b-row>
             <b-row class="p-1 mt-0 stripe">
-                <b-col cols="4" class="p-0">Category:</b-col>
+                <b-col cols="4" class="p-0">{{ labelCategory }}:</b-col>
                 <b-col cols="8" class="p-0 text-right">
                     {{ category.name }}
                 </b-col>
             </b-row>
             <b-row class="p-1">
-                <b-col cols="4" class="p-0">Element:</b-col>
+                <b-col cols="4" class="p-0">{{ labelElement }}:</b-col>
                 <b-col cols="8" class="p-0 text-right">
                     {{ brick.itemNumber }}
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0 stripe">
-                <b-col cols="4" class="p-0">Designnummer:</b-col>
+                <b-col cols="4" class="p-0">{{ labelDesignNumber }}:</b-col>
                 <b-col cols="8" class="p-0 text-right">
                     {{ brick.designId }}
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0">
-                <b-col cols="4" class="p-0">Preis:</b-col>
+                <b-col cols="4" class="p-0">{{ labelPrice }}:</b-col>
                 <b-col cols="4" class="p-0 text-right">
                     {{ brick.priceAmount }} {{ brick.priceCurrency }}
                 </b-col>
@@ -51,7 +52,7 @@
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0 stripe">
-                <b-col cols="4" class="p-0">Farbe BrickLink:</b-col>
+                <b-col cols="4" class="p-0">{{ labelColorBrickLink }}:</b-col>
                 <b-col cols="8" class="p-0 text-right">
                     <span style="display: block">
                         <div :style="colorCode"></div>
@@ -60,7 +61,7 @@
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0">
-                <b-col cols="4" class="p-0">Farbe LEGO:</b-col>
+                <b-col cols="4" class="p-0">{{ labelColorLego }}:</b-col>
                 <b-col cols="8" class="p-0 text-right">
                     <span style="display: block">
                         <div :style="colorCode"></div>
@@ -70,7 +71,7 @@
             </b-row>
             <b-row class="p-1 mt-0 stripe" align-h="between">
                 <b-col cols="5" class="p-0">
-                    Max Bestellmenge:
+                    {{ labelMaxAmount }}:
                 </b-col>
                 <b-col
                     cols="3"
@@ -104,17 +105,17 @@
                             "
                     style="background-color: #dc3545; color: white; border-radius: 0.25rem; margin: 0 -5px; padding: 0 5px !important;"
                 >
-                    Nicht auf Lager
+                    {{ labelNotInStock }}
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0">
-                <b-col cols="5" class="p-0">Erstmalig Verfügbar:</b-col>
+                <b-col cols="5" class="p-0">{{ labelFirstAvailability }}:</b-col>
                 <b-col cols="7" class="p-0 text-right">
                     {{ new Date(brick.firstSeen + ' UTC') | formatDate }}
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0 stripe">
-                <b-col cols="5" class="p-0">Letztmalig Verfügbar:</b-col>
+                <b-col cols="5" class="p-0">{{ labelLastAvailability }}:</b-col>
                 <b-col cols="7" class="p-0 text-right">
                     {{ new Date(brick.lastSeen + ' UTC') | formatDate }}
                 </b-col>
@@ -125,15 +126,6 @@
             :chartdata="chartdata"
             :options="chartoptions"
         />
-        <template #modal-footer="{ cancel, ok }">
-            <b-button @click="cancel()">
-                cancel
-            </b-button>
-            <!-- Button with custom close trigger value -->
-            <b-button @click="ok()">
-                ok
-            </b-button>
-        </template>
     </b-modal>
 </template>
 
@@ -229,7 +221,7 @@ export default {
 
             this.chartdata.datasets = [
                 {
-                    label: 'Max Amount',
+                    label: this.labelMaxAmount,
                     borderColor: 'rgb(255, 0, 0)',
                     lineTension: 0,
                     fill: false,
@@ -237,7 +229,7 @@ export default {
                     yAxisID: 'yMaxAmount',
                 },
                 {
-                    label: 'Price',
+                    label: this.labelPrice,
                     borderColor: 'rgb(0, 0, 255)',
                     lineTension: 0,
                     fill: false,
@@ -263,7 +255,7 @@ export default {
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'Date',
+                            labelString: this.labelDate,
                         },
                         ticks: {
                             major: {
@@ -288,7 +280,7 @@ export default {
                         position: 'left',
                         scaleLabel: {
                             display: true,
-                            labelString: 'Max Amount',
+                            labelString: this.labelMaxAmount,
                         },
 
                         ticks: {
@@ -310,12 +302,11 @@ export default {
                         },
                         scaleLabel: {
                             display: true,
-                            labelString: 'Price CHF',
+                            labelString: this.labelPrice + ' ' + this.brick.priceCurrency,
                         },
                         ticks: {
-                            min: 0,
-                            // forces step size to be 5 units
-                            stepSize: 20,
+                            suggestedMin: 0,
+                            suggestedMax: this.brick.priceAmount * 2,
                         },
                     },
                 ],
@@ -357,6 +348,45 @@ export default {
         },
         colorCode() {
             return `background-color: ${this.color.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
+        },
+        labelData() {
+            return browser.i18n.getMessage('import_sp_data');
+        },
+        labelChart() {
+            return browser.i18n.getMessage('import_sp_chart');
+        },
+        labelCategory() {
+            return browser.i18n.getMessage('import_sp_category');
+        },
+        labelElement() {
+            return browser.i18n.getMessage('import_sp_element');
+        },
+        labelDesignNumber() {
+            return browser.i18n.getMessage('import_sp_designNumber');
+        },
+        labelPrice() {
+            return browser.i18n.getMessage('import_sp_price');
+        },
+        labelColorBrickLink() {
+            return browser.i18n.getMessage('import_sp_colorBrickLink');
+        },
+        labelColorLego() {
+            return browser.i18n.getMessage('import_sp_colorLego');
+        },
+        labelMaxAmount() {
+            return browser.i18n.getMessage('import_sp_maxAmount');
+        },
+        labelFirstAvailability() {
+            return browser.i18n.getMessage('import_sp_firstAvailability');
+        },
+        labelLastAvailability() {
+            return browser.i18n.getMessage('import_sp_lastAvailability');
+        },
+        labelNotInStock() {
+            return browser.i18n.getMessage('import_sp_notInStock');
+        },
+        labelDate() {
+            return browser.i18n.getMessage('import_sp_date');
         },
     },
 };

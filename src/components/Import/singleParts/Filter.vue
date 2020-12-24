@@ -11,7 +11,7 @@
                         @keyup.enter="loadBricks(true)"
                         type="search"
                         debounce="500"
-                        placeholder="Find parts by keyword"
+                        :placeholder="labelFindPartsByKeyword"
                     >
                     </b-form-input>
                 </b-input-group>
@@ -36,7 +36,7 @@
                         class="w-100 h-100"
                         style="border: 0"
                         @click="selectColor('all')"
-                        >All</b-button
+                        >{{ labelAllColor }}</b-button
                     >
                 </div>
             </b-col>
@@ -44,7 +44,7 @@
                 <b-dropdown
                     id="dropdown-left"
                     class="w-100 h-100 p-1"
-                    text="Trans"
+                    :text="labelTransColor"
                     variant="white"
                     no-caret
                 >
@@ -354,22 +354,37 @@ export default {
         group: false,
         keyword: null,
         sortOptions: [
-            { value: 'DESCRIPTION', text: 'Beschreibung' },
-            { value: 'ITEMNUMBER', text: 'Element' },
-            { value: 'DESIGNID', text: 'Designnummer' },
-            { value: 'PRICEAMOUNT', text: 'Preis' },
-            { value: 'MAXAMOUNT', text: 'Max Bestellmenge' },
-            { value: 'FIRSTSEEN', text: 'Zuerst Verfügbar' },
-            { value: 'LASTSEEN', text: 'Zuletzt Verfügbar' },
-            { value: 'LASTUPDATECOUNTRY', text: 'Letzte Aktualisierung' },
+            {
+                value: 'DESCRIPTION',
+                text: browser.i18n.getMessage('import_sp_description'),
+            },
+            {
+                value: 'ITEMNUMBER',
+                text: browser.i18n.getMessage('import_sp_element'),
+            },
+            {
+                value: 'DESIGNID',
+                text: browser.i18n.getMessage('import_sp_designNumber'),
+            },
+            {
+                value: 'PRICEAMOUNT',
+                text: browser.i18n.getMessage('import_sp_price'),
+            },
+            {
+                value: 'MAXAMOUNT',
+                text: browser.i18n.getMessage('import_sp_maxAmount'),
+            },
+            {
+                value: 'FIRSTSEEN',
+                text: browser.i18n.getMessage('import_sp_firstAvailability'),
+            },
+            //{ value: 'LASTSEEN', text: 'Zuletzt Verfügbar' },
+            //{ value: 'LASTUPDATECOUNTRY', text: 'Letzte Aktualisierung' },
         ],
         selectedSort: 'DESCRIPTION',
         sortDirection: 'ASC',
         sortIcon: 'sort-alpha-down',
-        colorOptions: [{ value: 'all', text: 'Alle Farben' }],
         selectedColor: 'all',
-        newOptions: [{ value: 'all', text: 'Neu hinzugekommen - ' }],
-        selectedNew: 'all',
         search: [],
         showAs: 'grid',
         colorTrans: [],
@@ -460,7 +475,7 @@ export default {
 
             var newPartList = {
                 id: this.generateUUID(),
-                name: 'Einzelteilliste',
+                name: this.labelSinglePartList,
                 cart: true,
                 date: new Date(0, 0, 0, 0, 0, 0, 0),
                 source: 'singleParts',
@@ -594,11 +609,15 @@ export default {
                 } else {
                     response.bricks.map((brick) => {
                         var found = this.search.bricks.find(
-                            (b) => b.itemNumber == brick.itemNumber
+                            (b) =>
+                                b.itemNumber == brick.itemNumber ||
+                                b.alternativeItemNumbers.includes(
+                                    `|${brick.itemNumber}|`
+                                )
                         );
 
                         if (found) {
-                            found.itemNumber = brick.itemNumber;
+                            //found.itemNumber = brick.itemNumber;
                             found.color = brick.color;
                             found.colorFamily = brick.colorFamily;
                             found.description = brick.description;
@@ -614,18 +633,8 @@ export default {
                             } else {
                                 found.isSoldOut = 0;
                             }
-                            if (found.country == this.$store.state.country) {
-                                found.priceAmount = brick.price.amount.toFixed(
-                                    2
-                                );
-                                found.priceCurrency = brick.price.currency;
-                            } else {
-                                found.localPrice.priceAmount = brick.price.amount.toFixed(
-                                    2
-                                );
-                                found.localPrice.priceCurrency =
-                                    brick.price.currency;
-                            }
+                            found.priceAmount = brick.price.amount.toFixed(2);
+                            found.priceCurrency = brick.price.currency;
                             found.maxAmount = brick.maxAmount;
                             found.update = false;
                             if (
@@ -633,9 +642,13 @@ export default {
                                 found.isAvailable &&
                                 !found.isSoldOut
                             ) {
-                                found.lastSeen = new Date(Date.now()).toUTCString();
+                                found.lastSeen = new Date(
+                                    Date.now()
+                                ).toUTCString();
                             }
-                            found.lastUpdateCountry = new Date(Date.now()).toUTCString();
+                            found.lastUpdateCountry = new Date(
+                                Date.now()
+                            ).toUTCString();
                         }
                     });
 
@@ -656,15 +669,6 @@ export default {
         },
         async fillColors() {
             var colors = await this.getColorsAsync();
-
-            colors.forEach((item) => {
-                var color = {
-                    value: item.id,
-                    text: item.brickLinkName,
-                };
-
-                this.colorOptions.push(color);
-            });
 
             this.colorTrans = colors.filter((color) =>
                 color.group.find((group) => group === 'Trans')
@@ -754,6 +758,38 @@ export default {
     },
     mounted() {
         this.loadBricks(true);
+    },
+    computed: {
+        labelFindPartsByKeyword() {
+            return browser.i18n.getMessage('import_sp_findPartsByKeyword');
+        },
+        labelDescription() {
+            return browser.i18n.getMessage('import_sp_description');
+        },
+        labelElement() {
+            return browser.i18n.getMessage('import_sp_element');
+        },
+        labelDesignNumber() {
+            return browser.i18n.getMessage('import_sp_designNumber');
+        },
+        labelPrice() {
+            return browser.i18n.getMessage('import_sp_price');
+        },
+        labelMaxAmount() {
+            return browser.i18n.getMessage('import_sp_maxAmount');
+        },
+        labelFirstAvailability() {
+            return browser.i18n.getMessage('import_sp_firstAvailability');
+        },
+        labelAllColor() {
+            return browser.i18n.getMessage('import_sp_allColor');
+        },
+        labelTransColor() {
+            return browser.i18n.getMessage('import_sp_transColor');
+        },
+        labelSinglePartList() {
+            return browser.i18n.getMessage('import_sp_singlePartList');
+        },
     },
 };
 </script>

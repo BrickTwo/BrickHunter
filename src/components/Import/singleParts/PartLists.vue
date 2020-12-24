@@ -7,7 +7,7 @@
                     variant="primary"
                     @click="createNewPartList()"
                 >
-                    Neue Teileliste
+                    {{ labelNewPartLists }}
                 </b-button>
             </b-col>
         </b-row>
@@ -48,7 +48,7 @@ export default {
 
             var newPartList = {
                 id: this.generateUUID(),
-                name: 'Einzelteilliste',
+                name: this.labelSinglePartList,
                 cart: true,
                 date: new Date(0, 0, 0, 0, 0, 0, 0),
                 source: 'singleParts',
@@ -111,6 +111,14 @@ export default {
     watch: {
         selectedId: function() {
             this.$emit('partListSelected', this.selectedId);
+        },
+    },
+    computed: {
+        labelNewPartLists() {
+            return browser.i18n.getMessage('import_sp_newPartList');
+        },
+        labelSinglePartList() {
+            return browser.i18n.getMessage('import_sp_singlePartList');
         },
     },
 };

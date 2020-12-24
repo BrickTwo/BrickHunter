@@ -284,6 +284,12 @@
     "exportWantedList_copyButton": {
         "message": "Copy to clipboard"
     },
+    "import_legoSet": {
+        "message": "LEGO Set"
+    },
+    "import_singleParts": {
+        "message": "Single Parts"
+    },
     "import_file": {
         "message": "File"
     },
@@ -313,6 +319,69 @@
     },
     "import_errorImportBrickLinkTextToManyPositions": {
         "message": "Total number of positions of all parts lists cannot be greater than 2000."
+    },
+    "import_sp_partLists": {
+        "message": "Part lists"
+    },
+    "import_sp_categories": {
+        "message": "Categories"
+    },
+    "import_sp_newPartList": {
+        "message": "New part list"
+    },
+    "import_sp_singlePartList": {
+        "message": "Single part list"
+    },
+    "import_sp_findPartsByKeyword": {
+        "message": "Find parts by keyword"
+    },
+    "import_sp_description": {
+        "message": "Description"
+    },
+    "import_sp_element": {
+        "message": "Element"
+    },
+    "import_sp_designNumber": {
+        "message": "Design Number"
+    },
+    "import_sp_price": {
+        "message": "Price"
+    },
+    "import_sp_maxAmount": {
+        "message": "Max Amount"
+    },
+    "import_sp_firstAvailability": {
+        "message": "First Availability"
+    },
+    "import_sp_lastAvailability": {
+        "message": "Last Availability"
+    },
+    "import_sp_allColor": {
+        "message": "All"
+    },
+    "import_sp_transColor": {
+        "message": "Trans"
+    },
+    "import_sp_data": {
+        "message": "Data"
+    },
+    "import_sp_chart": {
+        "message": "Chart"
+    },
+    "import_sp_category": {
+        "message": "Category"
+    },
+    "import_sp_colorBrickLink": {
+        "message": "Color BrickLink"
+    },
+    "import_sp_colorLego": {
+        "message": "Color LEGO"
+    },
+    "import_sp_notInStock": {
+        "message": "Out of Stock"
+    },
+    "import_sp_date": {
+        "message": "Date/Time"
     },
     "info_disclaimerTitle": {
         "message": "Disclaimer"

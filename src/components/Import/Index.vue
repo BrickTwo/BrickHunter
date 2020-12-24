@@ -23,13 +23,13 @@
                 :active="page == 'legoSet'"
                 @click="changePage('legoSet')"
             >
-                LEGO Set
+                {{ labelLegoSet }}
             </b-nav-item>
             <b-nav-item
                 :active="page == 'singleParts'"
                 @click="changePage('singleParts')"
             >
-                Einzelteile
+                {{ labelSinglePart }} <span style="color: red">*beta*</span>
             </b-nav-item>
         </b-nav>
         <ImportBrickLink v-if="page == 'brickLink'" class="tabPage" />
@@ -70,6 +70,12 @@ export default {
         },
         labelBrickLink() {
             return browser.i18n.getMessage('brickLink');
+        },
+        labelLegoSet() {
+            return browser.i18n.getMessage('import_legoSet');
+        },
+        labelSinglePart() {
+            return browser.i18n.getMessage('import_singleParts');
         },
     },
 };

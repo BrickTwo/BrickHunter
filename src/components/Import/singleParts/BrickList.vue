@@ -15,7 +15,7 @@
                         {{ brick.description }}
                     </b-row>
                     <b-row
-                        ><b-col>Element:</b-col>
+                        ><b-col>{{ labelElement }}:</b-col>
                         <b-col
                             class="text-right"
                             style="cursor: pointer"
@@ -24,7 +24,7 @@
                         ></b-row
                     >
                     <b-row
-                        ><b-col>Designnummer:</b-col>
+                        ><b-col>{{ labelDesignNumber }}:</b-col>
                         <b-col
                             class="text-right"
                             style="cursor: pointer"
@@ -47,7 +47,7 @@
                                     !parseInt(brick.isSoldOut)
                             "
                         >
-                            <b-col cols="10" class="p-0">Max. Menge:</b-col>
+                            <b-col cols="10" class="p-0">{{ labelMaxAmount }}:</b-col>
                             <b-col cols="2" class="p-0 text-right">{{
                                 brick.maxAmount
                             }}</b-col>
@@ -60,9 +60,9 @@
                             "
                             style="background-color: #dc3545; color: white; border-radius: 0.25rem; margin: 0 -5px; padding: 0 5px;"
                         >
-                            Nicht auf Lager
+                            {{ labelNotInStock }}
                         </b-row>
-                        <b-row v-if="!brick.localPrice">
+                        <b-row>
                             <b-col>
                                 <b-img
                                     :src="getFlagImgUrl(brick.country)"
@@ -72,18 +72,6 @@
                             <b-col class="text-right">
                                 {{ brick.priceAmount }}
                                 {{ brick.priceCurrency }}
-                            </b-col>
-                        </b-row>
-                        <b-row v-else>
-                            <b-col>
-                                <b-img
-                                    :src="getFlagImgUrl($store.state.country)"
-                                    width="20px"
-                                />
-                            </b-col>
-                            <b-col class="text-right">
-                                {{ brick.localPrice.priceAmount }}
-                                {{ brick.localPrice.priceCurrency }}
                             </b-col>
                         </b-row>
                     </b-overlay>
@@ -243,6 +231,18 @@ export default {
         },
         colorCode() {
             return `background-color: ${this.color.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
+        },
+        labelElement() {
+            return browser.i18n.getMessage('import_sp_element');
+        },
+        labelDesignNumber() {
+            return browser.i18n.getMessage('import_sp_designNumber');
+        },
+        labelMaxAmount() {
+            return browser.i18n.getMessage('import_sp_maxAmount');
+        },
+        labelNotInStock() {
+            return browser.i18n.getMessage('import_sp_notInStock');
         },
     },
     watch: {
