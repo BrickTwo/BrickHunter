@@ -437,6 +437,18 @@ export default {
                 return;
             }
 
+            if (this.$store.state.partList.totalPositions >= 2000) {
+                this.$bvToast.toast(
+                    this.labelErrorImportBrickLinkTextToManyPositions,
+                    {
+                        title: this.labelImportBrickLinkTitle,
+                        autoHideDelay: 5000,
+                        variant: 'danger',
+                    }
+                );
+                return;
+            }
+
             var part = {};
             part.source = 'lego';
             part.itemid = item.itemNumber;
@@ -462,9 +474,9 @@ export default {
             part.pickABrick = null;
             part.brickLink = null;
 
-            partList.positions.push(part);
-            partList.date = new Date(0, 0, 0, 0, 0, 0, 0);
-            this.$store.commit('partList/setPartList', partList);
+            //partList.positions.push(part);
+            //partList.date = new Date(0, 0, 0, 0, 0, 0, 0);
+            this.$store.commit('partList/addToPartList', { id: this.partListId, part: part});
         },
         loadPartList() {
             if (this.partListId) {
@@ -790,6 +802,9 @@ export default {
         labelSinglePartList() {
             return browser.i18n.getMessage('import_sp_singlePartList');
         },
+        labelErrorImportBrickLinkTextToManyPositions() {
+            return browser.i18n.getMessage('import_errorImportBrickLinkTextToManyPositions');
+        }
     },
 };
 </script>

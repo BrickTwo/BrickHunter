@@ -117,6 +117,7 @@ const mutations = {
         state.partLists = state.partLists.filter(
             (partList) => partList.id != partListId
         );
+
         localStorage.removeItem('partList_' + partListId);
 
         state.totalPositions = 0;
@@ -126,11 +127,12 @@ const mutations = {
     },
     addToPartList(state, payload) {
         var found = state.partLists.find(
-            (partList) => partList.id === payload.partListId
+            (partList) => partList.id === payload.id
         );
 
         if (found) {
             found.positions.push(payload.part);
+            found.date = new Date(0, 0, 0, 0, 0, 0, 0);
         }
 
         localStorage.setItem('partList_' + payload.id, JSON.stringify(payload));

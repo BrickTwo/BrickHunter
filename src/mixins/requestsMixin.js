@@ -1,4 +1,3 @@
-const APIURL = 'http://api.openweathermap.org';
 const axios = require('axios');
 export const requestsMixin = {
     methods: {
