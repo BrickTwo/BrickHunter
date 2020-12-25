@@ -35,13 +35,6 @@
                 <b-button class="button" variant="primary" @click="showInfo">
                     <b-icon icon="info-circle" aria-hidden="true" />
                 </b-button>
-                <img
-                    alt=""
-                    border="0"
-                    src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
-                    @click="donate()"
-                    style="cursor: pointer"
-                />
                 <span>
                     <b-progress
                         :value="loadPABPercentage"
@@ -300,11 +293,6 @@ export default {
         openInNewTab(url) {
             var win = window.open(url, '_blank');
             //win.focus();
-        },
-        donate() {
-            browser.runtime.sendMessage({
-                contentScriptQuery: 'donate',
-            });
         },
     },
     beforeMount() {
