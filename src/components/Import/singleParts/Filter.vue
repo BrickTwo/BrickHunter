@@ -17,15 +17,10 @@
                 </b-input-group>
             </b-col>
             <b-col class="ml-1">
-                <b-input-group>
-                    <b-input-group-prepend is-text>
-                        <b-icon :icon="sortIcon" @click="sort()" />
-                    </b-input-group-prepend>
-                    <b-form-select
-                        v-model="selectedSort"
-                        :options="sortOptions"
-                    />
-                </b-input-group>
+                <SortFilter
+                    @selectSortBy="selectSortBy"
+                    @selectSortDirection="selectSortDirection"
+                />
             </b-col>
         </b-row>
         <b-row>
@@ -142,7 +137,8 @@ import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
 import BrickGrid from './BrickGrid';
 import BrickList from './BrickList';
-import ColorPicker from './ColorPicker';
+import ColorPicker from './filter/ColorPicker';
+import SortFilter from './filter/Sort';
 import { bus } from '@/components/BrickHunter';
 
 export default {
@@ -165,37 +161,8 @@ export default {
         totalRows: 5000,
         group: false,
         keyword: null,
-        sortOptions: [
-            {
-                value: 'DESCRIPTION',
-                text: browser.i18n.getMessage('import_sp_description'),
-            },
-            {
-                value: 'ITEMNUMBER',
-                text: browser.i18n.getMessage('import_sp_element'),
-            },
-            {
-                value: 'DESIGNID',
-                text: browser.i18n.getMessage('import_sp_designNumber'),
-            },
-            {
-                value: 'PRICEAMOUNT',
-                text: browser.i18n.getMessage('import_sp_price'),
-            },
-            {
-                value: 'MAXAMOUNT',
-                text: browser.i18n.getMessage('import_sp_maxAmount'),
-            },
-            {
-                value: 'FIRSTSEEN',
-                text: browser.i18n.getMessage('import_sp_firstAvailability'),
-            },
-            //{ value: 'LASTSEEN', text: 'Zuletzt Verfügbar' },
-            //{ value: 'LASTUPDATECOUNTRY', text: 'Letzte Aktualisierung' },
-        ],
         selectedSort: 'DESCRIPTION',
         sortDirection: 'ASC',
-        sortIcon: 'sort-alpha-down',
         selectedColor: 'all',
         search: [],
         showAs: 'grid',
@@ -206,6 +173,7 @@ export default {
         BrickGrid,
         BrickList,
         ColorPicker,
+        SortFilter,
     },
     mixins: [requestsMixin, brickProcessorMixin, brickColorMixin],
     methods: {
@@ -486,13 +454,15 @@ export default {
         sleep(ms) {
             return new Promise((resolve) => setTimeout(resolve, ms));
         },
-        sort() {
+        selectSortBy(value) {
+            this.selectedSort = value;
+            this.loadBricks(true);
+        },
+        selectSortDirection() {
             if (this.sortDirection == 'ASC') {
                 this.sortDirection = 'DESC';
-                this.sortIcon = 'sort-alpha-up';
             } else {
                 this.sortDirection = 'ASC';
-                this.sortIcon = 'sort-alpha-down';
             }
 
             this.loadBricks(false);
@@ -522,9 +492,6 @@ export default {
             this.loadBricks(false);
         },
         perPage: function() {
-            this.loadBricks(true);
-        },
-        selectedSort: function() {
             this.loadBricks(true);
         },
         keyword: function() {

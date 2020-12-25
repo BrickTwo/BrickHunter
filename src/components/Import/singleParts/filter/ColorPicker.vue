@@ -162,7 +162,7 @@
 </template>
 
 <style lang="scss">
-@import '../../../../node_modules/bootstrap/scss/bootstrap';
+@import '../../../../../node_modules/bootstrap/scss/bootstrap';
 .btn-grey {
     background-color: $gray-300;
 }
