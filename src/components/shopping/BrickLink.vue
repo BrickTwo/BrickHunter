@@ -29,6 +29,13 @@
                 <b-button class="button" variant="primary" @click="showInfo">
                     <b-icon icon="info-circle" aria-hidden="true" />
                 </b-button>
+                <img
+                    alt=""
+                    border="0"
+                    src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
+                    @click="donate()"
+                    style="cursor: pointer"
+                />
                 <textarea id="tempFieldForCopy" />
             </b-col>
         </b-row>
@@ -128,6 +135,11 @@ export default {
         printBrickLink() {
             //console.log('print');
             this.$htmlToPaper('brickLinkList');
+        },
+        donate() {
+            browser.runtime.sendMessage({
+                contentScriptQuery: 'donate',
+            });
         },
     },
     beforeMount() {

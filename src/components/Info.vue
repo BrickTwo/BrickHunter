@@ -32,7 +32,7 @@
             alt=""
             border="0"
             src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
-            @click="donate('https://github.com/BrickTwo/BrickHunter')"
+            @click="donate()"
             style="cursor: pointer"
         />
     </div>
