@@ -1,7 +1,7 @@
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    browser.pageAction.show(tabId);
+    //browser.pageAction.show(tabId);
     if (tab.url.indexOf('https://www.lego.com') == 0) {
-        browser.pageAction.show(tabId);
+        //browser.pageAction.show(tabId);
         browser.tabs.executeScript({
             file: 'js/content-script.js',
         });

@@ -1,5 +1,14 @@
 <template>
     <div>
+        <h1>{{ donateTitle }}</h1>
+        <p>{{ donateText }}</p>
+        <img
+            alt=""
+            border="0"
+            src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
+            @click="donate()"
+            style="cursor: pointer"
+        />
         <h1>{{ disclaimerTitle }}</h1>
         <p>{{ disclaimerText1 }}</p>
         <p>{{ disclaimerText2 }}</p>
@@ -26,15 +35,6 @@
         </p>
         <h1>{{ affiliateTitle }}</h1>
         <p>{{ affiliateText }}</p>
-        <h1>{{ donateTitle }}</h1>
-        <p>{{ donateText }}</p>
-        <img
-            alt=""
-            border="0"
-            src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
-            @click="donate()"
-            style="cursor: pointer"
-        />
     </div>
 </template>
 

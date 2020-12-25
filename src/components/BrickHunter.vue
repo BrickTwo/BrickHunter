@@ -136,6 +136,7 @@ export default {
                 browser.tabs.create({
                     url: chrome.runtime.getURL('index.html#' + page),
                 });
+                window.close();
                 return;
             }
             browser.tabs.create({
@@ -143,6 +144,7 @@ export default {
                     'index.html#' + this.$router.currentRoute.path
                 ),
             });
+            window.close();
         },
     },
     beforeMount() {

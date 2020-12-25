@@ -28,6 +28,7 @@ export default {
                     browser.tabs.create({
                         url: chrome.runtime.getURL('index.html#/partLists'),
                     });
+                    window.close();
                 }
             });
     },
