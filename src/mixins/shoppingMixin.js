@@ -24,7 +24,7 @@ export const shoppingMixin = {
 
             if (this.$store.state.shopping.wantedList) {
                 this.$store.state.shopping.wantedList.forEach((item) => {
-                    if (this.$store.state.shopping.useHave) {
+                    if (this.$store.state.shopping.useHave && item.source == 'brickLink') {
                         item.qty.order = item.qty.balance;
                     } else {
                         item.qty.order = item.qty.min;
