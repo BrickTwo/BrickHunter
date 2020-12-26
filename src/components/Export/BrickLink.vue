@@ -309,8 +309,6 @@ export default {
             this.partListId
         );
         this.wantedList = this.partList.positions;
-
-        console.log(this.partList);
     },
     computed: {
         pickABrick() {

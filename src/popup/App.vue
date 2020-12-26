@@ -16,5 +16,21 @@ export default {
     components: {
         BrickHunter,
     },
+    beforeMount() {
+        browser.tabs
+            .query({
+                url: '*://*.lego.com/*',
+                currentWindow: true,
+                active: true,
+            })
+            .then(async (logTabs) => {
+                if (!logTabs.length) {
+                    browser.tabs.create({
+                        url: chrome.runtime.getURL('index.html#/partLists'),
+                    });
+                    window.close();
+                }
+            });
+    },
 };
 </script>

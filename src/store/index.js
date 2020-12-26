@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import partList from './modules/partList';
 import shopping from './modules/shopping';
+import singleParts from './modules/singleParts';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -9,6 +10,7 @@ export default new Vuex.Store({
         mode: '',
         shopping,
         partList,
+        singleParts,
     },
     state: {
         version: {},
@@ -19,7 +21,7 @@ export default new Vuex.Store({
     mutations: {
         initialiseStore(state) {
             state.version.old = localStorage.getItem('version') || '1.0.0';
-            state.version.current = '1.1.13';
+            state.version.current = '1.3.7';
 
             state.country = localStorage.getItem('country') || null;
             state.language = localStorage.getItem('language') || null;
@@ -74,6 +76,7 @@ export default new Vuex.Store({
             commit('initialiseStore');
             commit('partList/initialiseStore', state.version.old);
             commit('shopping/initialiseStore');
+            commit('singleParts/initialiseStore');
         },
     },
 });

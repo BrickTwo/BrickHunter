@@ -62,7 +62,7 @@ export default {
                 });
             });
             this.selectedLanguage = this.options[0].value;
-            this.$store.commit('language', this.selectedLanguage);
+            this.$store.commit('setLanguage', this.selectedLanguage);
             this.$emit('languageSelected', this.selectedLanguage);
         },
     },

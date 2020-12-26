@@ -1,3 +1,5 @@
+import { validate } from 'vee-validate';
+
 export const brickProcessorMixin = {
     methods: {
         cleanItemId(itemId) {
@@ -19,29 +21,32 @@ export const brickProcessorMixin = {
             var result = colorList.filter(
                 (color) => color.bricksAndPiecesName == colorFamily
             );
-            console.log(result);
-            if(!result.length){
-                console.log(222);
-                result = colorList.filter(
-                    (color) => color.brickLinkId == 0
-                );
+
+            if (!result.length) {
+                result = colorList.filter((color) => color.brickLinkId == 0);
                 result[0].legoName = colorFamily;
                 result[0].bricksAndPiecesName = colorFamily;
                 result[0].pickABrickName = colorFamily;
-                console.log(result);
             }
             return result[0];
         },
         findBricksAndPiecesBrick(item, bricks) {
             if (!bricks) return null;
-            bricks = bricks.filter((brick) => !brick.isSoldOut);
+            bricks = bricks.filter((brick) => !brick.isSoldOut && brick.isAvailable);
+
+            if (item.source == 'lego') {
+                var result = bricks.filter((brick) =>
+                    brick.itemNumber == item.itemid
+                );
+                if(result[0]) return result[0];
+            }
+
             var result = bricks.filter(
                 (brick) =>
-                    brick.colorFamily == item.color.bricksAndPiecesName &&
-                    !brick.isSoldOut
+                    brick.colorFamily == item.color.bricksAndPiecesName
             );
-
-            if (this.isSpecialBrick(item)) {
+            
+            if (this.isSpecialBrick(item) && item.source == 'brickLink') {
                 if (item.brickLink.mapPCCs) {
                     var colorCodesArray = item.brickLink.mapPCCs;
                     var colorCodes = colorCodesArray[
@@ -61,18 +66,25 @@ export const brickProcessorMixin = {
                     return -1;
                 }
             });
-
+            
             return result[0];
         },
         findPickABrickBrick(item, bricks) {
             if (!bricks) return null;
+
+            if (item.source == 'lego') {
+                var result = bricks.filter(
+                    (brick) => brick.itemNumber == item.itemid
+                );
+                if(result[0]) return result[0];
+            }
 
             var result = bricks.filter(
                 (brick) =>
                     brick.variant.attributes.colour == item.color.pickABrickName
             );
 
-            if (this.isSpecialBrick(item)) {
+            if (this.isSpecialBrick(item) && item.source == 'brickLink') {
                 if (!result.length && item.brickLink.mapPCCs) {
                     var colorCodesArray = item.brickLink.mapPCCs;
                     var colorCodes = colorCodesArray[
@@ -123,9 +135,9 @@ export const brickProcessorMixin = {
                     }
                 }
             }
-
-            var foundBrick = this.findBricksAndPiecesBrick(item, bricks);
             
+            var foundBrick = this.findBricksAndPiecesBrick(item, bricks);
+
             if (foundBrick) {
                 item.bricksAndPieces = foundBrick;
             } else {
@@ -134,8 +146,7 @@ export const brickProcessorMixin = {
             this.bricksAndPiecesBrickCounter++;
             this.calcLoad();
 
-            
-            this.sendPrices(this.prepareSendPrice(item, bricks));
+            this.sendPrices(this.prepareSendPrice(bricks));
 
             return item;
         },
@@ -163,7 +174,7 @@ export const brickProcessorMixin = {
 
             return item;
         },
-        prepareSendPrice(item, bricks) {
+        prepareSendPrice(bricks) {
             if (!bricks) return null;
 
             var returnValue = [];
@@ -173,12 +184,18 @@ export const brickProcessorMixin = {
                 var value = {
                     designId: value.designId,
                     itemNumber: value.itemNumber,
-                    brickLinkId: item.itemid,
                     priceAmount: value.price.amount,
                     priceCurrency: value.price.currency,
                     maxAmount: value.maxAmount,
                     isAvailable: value.isAvailable,
                     isSoldOut: value.isSoldOut,
+                    isIPElement: value.isIPElement,
+                    color: value.color,
+                    colorFamily: value.colorFamily,
+                    description: value.description,
+                    imageUrl: value.imageUrl,
+                    category: value.category,
+                    materialType: value.materialType,
                     country: country,
                 };
 

@@ -133,6 +133,7 @@ export default {
             var wantedList = [];
 
             this.$store.state.partList.partLists.map((partList) => {
+                
                 if (!partList.positions) return;
                 if (!partList.cart) return;
 
@@ -145,7 +146,6 @@ export default {
                 }
                 wantedList = [].concat(wantedList, ...partList.positions);
             });
-
             /*var partListMerged = [];
 
             wantedList.map((part) => {
