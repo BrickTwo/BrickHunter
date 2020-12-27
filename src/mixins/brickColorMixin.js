@@ -1757,12 +1757,12 @@ export const brickColorMixin = {
                 {
                     id: 170,
                     brickLinkId: 230,
-                    brickLinkName: 'Satin Trans-Light Blue ',
+                    brickLinkName: 'Satin Trans-Purple',
                     legoId: 0,
                     legoName: 'Transparent Violet Opal',
                     bricksAndPiecesName: 'Tr.Violet Opal',
                     pickABrickName: '',
-                    colorCode: '#68BCC5',
+                    colorCode: '#8320B7',
                 },
                 {
                     
