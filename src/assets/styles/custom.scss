@@ -1,0 +1,29 @@
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+.btn-grey {
+  background-color: grey;
+}
+.btn-white {
+  background-color: white;
+}
+.btn-black {
+  background-color: black;
+}
+.btn-red {
+  background-color: color("red");
+}
+.btn-orange {
+  background-color: orange;
+}
+.btn-yellow {
+  background-color: yellow;
+}
+.btn-green {
+  background-color: green;
+}
+.btn-blue {
+  background-color: blue;
+}
+.btn-purple {
+  background-color: $purple;
+}

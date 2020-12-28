@@ -25,70 +25,147 @@ export const affiliateMixin = {
                             linkType: "webgains",
                             wgcampaignid: 1491765,
                             wgprogramid: 268015,
-                            clickref: "BrickHunter"
+                            clickref: "BrickHunterCH"
                         },
                         {
                             country: "de",
                             linkType: "webgains",
                             wgcampaignid: 1491765,
                             wgprogramid: 267995,
-                            clickref: "BrickHunter"
+                            clickref: "BrickHunterDE"
                         },
                         {
                             country: "dk",
                             linkType: "webgains",
                             wgcampaignid: 1491765,
                             wgprogramid: 274925,
-                            clickref: "BrickHunter"
+                            clickref: "BrickHunterDK"
                         },
                         {
                             country: "es",
                             linkType: "webgains",
                             wgcampaignid: 1491765,
                             wgprogramid: 274875,
-                            clickref: "BrickHunter"
+                            clickref: "BrickHunterES"
                         },
                         {
                             country: "fi",
                             linkType: "webgains",
                             wgcampaignid: 1491765,
                             wgprogramid: 274915,
-                            clickref: "BrickHunter"
+                            clickref: "BrickHunterFI"
                         },
                         {
                             country: "fr",
                             linkType: "webgains",
                             wgcampaignid: 1491765,
                             wgprogramid: 268085,
-                            clickref: "BrickHunter"
+                            clickref: "BrickHunterFR"
                         },
                         {
                             country: "it",
                             linkType: "webgains",
                             wgcampaignid: 1491765,
                             wgprogramid: 274895,
-                            clickref: "BrickHunter"
+                            clickref: "BrickHunterIT"
                         },
                         {
                             country: "nl",
                             linkType: "webgains",
                             wgcampaignid: 1491765,
                             wgprogramid: 270975,
-                            clickref: "BrickHunter"
+                            clickref: "BrickHunterNL"
                         },
                         {
                             country: "no",
                             linkType: "webgains",
                             wgcampaignid: 1491765,
                             wgprogramid: 274935,
-                            clickref: "BrickHunter"
+                            clickref: "BrickHunterNO"
                         },
                         {
                             country: "se",
                             linkType: "webgains",
                             wgcampaignid: 1491765,
                             wgprogramid: 274905,
-                            clickref: "BrickHunter"
+                            clickref: "BrickHunterSE"
+                        },
+                        {
+                            country: "au",
+                            linkType: "webgains",
+                            wgcampaignid: 1491765,
+                            wgprogramid: 267995,
+                            clickref: "BrickHunterAU"
+                        },
+                        {
+                            country: "gb",
+                            linkType: "webgains",
+                            wgcampaignid: 1491765,
+                            wgprogramid: 267995,
+                            clickref: "BrickHunterGB"
+                        },
+                        {
+                            country: "ie",
+                            linkType: "webgains",
+                            wgcampaignid: 1491765,
+                            wgprogramid: 267995,
+                            clickref: "BrickHunterIE"
+                        },
+                        {
+                            country: "ca",
+                            linkType: "webgains",
+                            wgcampaignid: 1491765,
+                            wgprogramid: 267995,
+                            clickref: "BrickHunterCA"
+                        },
+                        {
+                            country: "lu",
+                            linkType: "webgains",
+                            wgcampaignid: 1491765,
+                            wgprogramid: 267995,
+                            clickref: "BrickHunterLU"
+                        },
+                        {
+                            country: "nz",
+                            linkType: "webgains",
+                            wgcampaignid: 1491765,
+                            wgprogramid: 267995,
+                            clickref: "BrickHunterNZ"
+                        },
+                        {
+                            country: "pl",
+                            linkType: "webgains",
+                            wgcampaignid: 1491765,
+                            wgprogramid: 267995,
+                            clickref: "BrickHunterPL"
+                        },
+                        {
+                            country: "pt",
+                            linkType: "webgains",
+                            wgcampaignid: 1491765,
+                            wgprogramid: 267995,
+                            clickref: "BrickHunterPT"
+                        },
+                        {
+                            country: "cz",
+                            linkType: "webgains",
+                            wgcampaignid: 1491765,
+                            wgprogramid: 267995,
+                            clickref: "BrickHunterCZ"
+                        },
+                        {
+                            country: "hu",
+                            linkType: "webgains",
+                            wgcampaignid: 1491765,
+                            wgprogramid: 267995,
+                            clickref: "BrickHunterHU"
+                        },
+                        {
+                            country: "us",
+                            linkType: "webgains",
+                            wgcampaignid: 1491765,
+                            wgprogramid: 267995,
+                            clickref: "BrickHunterUS"
                         },
                     ]
                 },

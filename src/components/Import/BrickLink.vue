@@ -1,10 +1,21 @@
 <template>
     <b-container class="p-0" fluid="xl">
-        <b-row v-if="!showUploadField">
+        <b-row>
             <b-col cols="3">
                 <label>{{ labelFile }}:</label>
             </b-col>
             <b-col cols="9">
+                    <b-form-radio-group
+                        v-model="showUploadField"
+                        name="radio-sub-component"
+                    >
+                        <b-form-radio value="filePicker">Dateiupload</b-form-radio>
+                        <b-form-radio value="textArea">Textfeld</b-form-radio>
+                    </b-form-radio-group>
+            </b-col>
+        </b-row>
+        <b-row v-if="showUploadField == 'textArea'">
+            <b-col offset="3" cols="9">
                 <xml-field
                     @load="loadXml"
                     :state="!!wantedList"
@@ -12,11 +23,8 @@
                 />
             </b-col>
         </b-row>
-        <b-row v-if="showUploadField"
-            ><b-col cols="3">
-                <label>{{ labelFile }}:</label>
-            </b-col>
-            <b-col cols="9">
+        <b-row v-if="showUploadField == 'filePicker'">
+            <b-col offset="3" cols="9">
                 <xml-reader
                     id="uploadXml"
                     @load="loadXml"
@@ -69,6 +77,7 @@ export default {
         wantedList: null,
         name: '',
         cart: true,
+        showUploadField: 'filePicker',
     }),
     components: {
         XmlReader,
@@ -214,11 +223,11 @@ export default {
         },
     },
     computed: {
-        showUploadField() {
+        /*showUploadField() {
             if (navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
             if (this.$store.state.mode == 'standalone') return true;
             return false;
-        },
+        },*/
         labelFile() {
             return browser.i18n.getMessage('import_file');
         },

@@ -284,6 +284,12 @@
     "exportWantedList_copyButton": {
         "message": "In Zwischenablage kopieren"
     },
+    "import_legoSet": {
+        "message": "LEGO Set"
+    },
+    "import_singleParts": {
+        "message": "Einzelteile"
+    },
     "import_file": {
         "message": "Datei"
     },
@@ -313,6 +319,69 @@
     },
     "import_errorImportBrickLinkTextToManyPositions": {
         "message": "Total Anzahl der Positionen aller Teilelisten kann nicht grösser 2000 sein."
+    },
+    "import_sp_partLists": {
+        "message": "Teilelisten"
+    },
+    "import_sp_categories": {
+        "message": "Kategorien"
+    },
+    "import_sp_newPartList": {
+        "message": "Neue Teileliste"
+    },
+    "import_sp_singlePartList": {
+        "message": "Single part list"
+    },
+    "import_sp_findPartsByKeyword": {
+        "message": "Finde Teile mit einem Suchbegriff"
+    },
+    "import_sp_description": {
+        "message": "Beschreibung"
+    },
+    "import_sp_element": {
+        "message": "Element"
+    },
+    "import_sp_designNumber": {
+        "message": "Designnummer"
+    },
+    "import_sp_price": {
+        "message": "Preis"
+    },
+    "import_sp_maxAmount": {
+        "message": "Max Bestellmenge"
+    },
+    "import_sp_firstAvailability": {
+        "message": "Erstmalig Verfügbar"
+    },
+    "import_sp_lastAvailability": {
+        "message": "Letzmalig Verfügbar"
+    },
+    "import_sp_allColor": {
+        "message": "Alle"
+    },
+    "import_sp_transColor": {
+        "message": "Trans"
+    },
+    "import_sp_data": {
+        "message": "Daten"
+    },
+    "import_sp_category": {
+        "message": "Kategorie"
+    },
+    "import_sp_colorBrickLink": {
+        "message": "Farbe BrickLink"
+    },
+    "import_sp_colorLego": {
+        "message": "Farbe LEGO"
+    },
+    "import_sp_notInStock": {
+        "message": "Nicht auf Lager"
+    },
+    "import_sp_date": {
+        "message": "Datum/Zeit"
+    },
+    "import_sp_add": {
+        "message": "Hinzufügen"
     },
     "info_disclaimerTitle": {
         "message": "Disclaimer"

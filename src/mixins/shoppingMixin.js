@@ -24,12 +24,12 @@ export const shoppingMixin = {
 
             if (this.$store.state.shopping.wantedList) {
                 this.$store.state.shopping.wantedList.forEach((item) => {
-                    if (this.$store.state.shopping.useHave) {
+                    if (this.$store.state.shopping.useHave && item.source == 'brickLink') {
                         item.qty.order = item.qty.balance;
                     } else {
                         item.qty.order = item.qty.min;
                     }
-
+                    
                     if (item.qty.order > 0) {
                         var bricksAndPiecesPrice = 0;
                         var pickABrickPrice = 0;
@@ -45,7 +45,6 @@ export const shoppingMixin = {
                             pickABrickPrice,
                             item.brickLink?.wantedList?.maxprice
                         );
-
                         if (price[1]) {
                             if (price[0] == 'bricksAndPieces') {
                                 this.addToBricksAndPiecesList(item);

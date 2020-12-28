@@ -18,6 +18,11 @@ module.exports = {
     }
   },
   pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'scss',
+      // load which style file you want to import globally
+      patterns: ['scss/custom.scss'],
+    },
     browserExtension: {
       componentOptions: {
         background: {
