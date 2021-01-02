@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import partList from './modules/partList';
 import shopping from './modules/shopping';
 import singleParts from './modules/singleParts';
+import { version } from '../../package';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -21,7 +22,7 @@ export default new Vuex.Store({
     mutations: {
         initialiseStore(state) {
             state.version.old = localStorage.getItem('version') || '1.0.0';
-            state.version.current = '1.3.13';
+            state.version.current = version;
 
             state.country = localStorage.getItem('country') || null;
             state.language = localStorage.getItem('language') || null;
