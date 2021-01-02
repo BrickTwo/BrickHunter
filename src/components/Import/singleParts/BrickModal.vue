@@ -15,7 +15,7 @@
                 {{ labelData }}
             </b-nav-item>
             <b-nav-item :active="page == 'chart'" @click="page = 'chart'">
-                {{ labelData }}
+                {{ labelChart }}
             </b-nav-item>
         </b-nav>
         <b-container v-if="page == 'data'">
