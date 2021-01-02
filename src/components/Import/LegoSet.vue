@@ -83,7 +83,6 @@ export default {
                 }
 
                 this.setNumberExist = true;
-                console.log(response.set)
                 this.name = response.set.locale['de-de']?.title;
                 if(!this.name) {
                     this.name = response.set.locale['en-us']?.title;
