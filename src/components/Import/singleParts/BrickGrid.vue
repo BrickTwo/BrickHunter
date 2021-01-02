@@ -27,7 +27,7 @@
                 >
             </b-row>
             <b-row>
-                <b-col>{{ labelDesignNumber }}:</b-col>
+                <b-col md="auto" class="p-0">{{ labelDesignNumber }}:</b-col>
                 <b-col
                     class="text-right"
                     style="cursor: pointer"
