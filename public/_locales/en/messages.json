@@ -16,7 +16,7 @@
         "message": "Import"
     },
     "menu_wantedList": {
-        "message": "Part lists"
+        "message": "Parts Lists"
     },
     "menu_shoppingCart": {
         "message": "Shopping cart"
@@ -129,7 +129,7 @@
         "message": "Import"
     },
     "aPartList": {
-        "message": " a part list."
+        "message": " a parts list."
     },
     "exportCsv_generalGroupTitle": {
         "message": "General"
@@ -321,16 +321,16 @@
         "message": "Total number of positions of all parts lists cannot be greater than 2000."
     },
     "import_sp_partLists": {
-        "message": "Part lists"
+        "message": "Parts Lists"
     },
     "import_sp_categories": {
         "message": "Categories"
     },
     "import_sp_newPartList": {
-        "message": "New part list"
+        "message": "New parts list"
     },
     "import_sp_singlePartList": {
-        "message": "Single part list"
+        "message": "Single parts list"
     },
     "import_sp_findPartsByKeyword": {
         "message": "Find parts by keyword"
@@ -561,7 +561,7 @@
         "message": "Shopping cart"
     },
     "wantedList_name": {
-        "message": "Part List Name"
+        "message": "Parts List Name"
     },
     "xmlField_copyWantedList": {
         "message": "Copy the content of a WantedList into this"
