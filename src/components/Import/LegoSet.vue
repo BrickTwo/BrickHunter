@@ -83,7 +83,10 @@ export default {
                 }
 
                 this.setNumberExist = true;
-                this.name = response.set.locale['de-de'].title;
+                this.name = response.set.locale['de-de']?.title;
+                if(!this.name) {
+                    this.name = response.set.locale['en-us']?.title;
+                }
                 this.setName = this.name;
                 if (this.setNumberSuffix) {
                     this.name = this.setNumber + ' - ' + this.name;

@@ -35,6 +35,8 @@
         </p>
         <h1>{{ affiliateTitle }}</h1>
         <p>{{ affiliateText }}</p>
+        <h1>BrickHunter Version</h1>
+        <p>{{ $store.state.version.current }}</p>
     </div>
 </template>
 

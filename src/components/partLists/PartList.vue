@@ -129,6 +129,14 @@
                 @itemDeleted="onItemDeleted"
             ></brick-list>
         </div>
+        <div id="wantedListPrint" style="display: none">
+            <brick-list
+                v-if="!loadWantedList"
+                :bricklist="wantedList"
+                :edit="false"
+                @itemDeleted="onItemDeleted"
+            ></brick-list>
+        </div>
     </div>
 </template>
 
@@ -263,7 +271,7 @@ export default {
         },
         print() {
             //console.log("print")
-            this.$htmlToPaper('wantedList');
+            this.$htmlToPaper('wantedListPrint');
         },
         cancel() {
             this.cancelLoading = true;
