@@ -19,7 +19,7 @@ export const brickProcessorMixin = {
         },
         findLegoColor(colorFamily, colorList) {
             var result = colorList.filter(
-                (color) => color.bricksAndPiecesName == colorFamily
+                (color) => color.bricksAndPiecesName.toUpperCase() == colorFamily.toUpperCase()
             );
 
             if (!result.length) {
