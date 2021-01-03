@@ -53,8 +53,6 @@ async function getLegoTab() {
         return false;
     }
 
-    console.log(tabs);
-
     return tabs[0].id;
 }
 
@@ -168,10 +166,7 @@ async function pickABrick(request) {
                 clearTimeout(timeout);
                 return response.json();
             })
-            .catch((err) => {
-                console.log(err);
-                return null;
-            });
+            .catch((error) => console.log(error));
 
         return response.data.me.pabCart;
     }
@@ -431,8 +426,8 @@ async function bricksAndPieces(request) {
         browser.tabs.update(tabId, {
             url: url,
             active: true,
-        })
-        
+        });
+
         return true;
     }
 }

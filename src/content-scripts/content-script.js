@@ -1,5 +1,3 @@
-console.log("hi")
-
 chrome.runtime.onMessage.addListener(async function(
     request,
     sender,
