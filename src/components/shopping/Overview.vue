@@ -76,7 +76,7 @@ export default {
     methods: {
         donate() {
             browser.runtime.sendMessage({
-                contentScriptQuery: 'donate',
+                action: 'donate',
             });
         },
     },

@@ -73,7 +73,8 @@ export default {
         async loadLegoSet() {
             if (this.setNumber.length > 0) {
                 var response = await browser.runtime.sendMessage({
-                    contentScriptQuery: 'getLegoSet',
+                    service: 'bricksAndPieces',
+                    action: 'findSet',
                     setNumber: this.setNumber,
                 });
 

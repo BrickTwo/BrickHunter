@@ -174,7 +174,8 @@ export default {
 
             browser.runtime
                 .sendMessage({
-                    contentScriptQuery: 'bricksAndPiecesFillCart',
+                    service: 'bricksAndPieces',
+                    action: 'fillCart',
                     order: order,
                     mode: this.$store.state.mode,
                     affiliate: this.$store.state.affiliate,
@@ -196,7 +197,8 @@ export default {
             if (!isOpen) return;
             browser.runtime
                 .sendMessage({
-                    contentScriptQuery: 'bricksAndPiecesClearCart',
+                    service: 'bricksAndPieces',
+                    action: 'clearCart',
                     mode: this.$store.state.mode,
                 })
                 .then((response) => {
@@ -235,6 +237,7 @@ export default {
     },
     computed: {
         showCartButtons() {
+            return true;
             if (this.$store.state.mode == 'popup') return true;
             if (navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
             return false;

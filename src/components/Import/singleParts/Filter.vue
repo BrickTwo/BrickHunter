@@ -381,7 +381,8 @@ export default {
                 await this.sleep(200); //200ms timout to prevent to be blocked on the website
 
                 var response = await browser.runtime.sendMessage({
-                    contentScriptQuery: 'getBricksAndPieces',
+                    service: 'bricksAndPieces',
+                    action: 'findBrick',
                     itemId: designId,
                 });
 

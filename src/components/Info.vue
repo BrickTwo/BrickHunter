@@ -48,7 +48,7 @@ export default {
         },
         donate() {
             browser.runtime.sendMessage({
-                contentScriptQuery: 'donate',
+                action: 'donate',
             });
         },
     },
