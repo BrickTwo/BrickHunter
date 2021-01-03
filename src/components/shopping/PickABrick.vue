@@ -157,7 +157,8 @@ export default {
             if (!cartId) return;
             browser.runtime
                 .sendMessage({
-                    contentScriptQuery: 'pickABrickClearCart',
+                    service: 'pickABrick',
+                    action: 'clearCart',
                     authorization: this.authorization,
                     PABCartId: this.pickABrickShoppingCartId,
                 })
@@ -171,7 +172,8 @@ export default {
                             var languageSelected = this.$store.state.language;
 
                             browser.runtime.sendMessage({
-                                contentScriptQuery: 'openPickABrick',
+                                service: 'pickABrick',
+                                action: 'open',
                             });
                             /*if (this.$store.state.mode == 'popup') {
                                 browser.tabs.update(tab.id, {
@@ -215,7 +217,8 @@ export default {
                     var languageSelected = this.$store.state.language;
 
                     browser.runtime.sendMessage({
-                        contentScriptQuery: 'openPickABrick',
+                        service: 'pickABrick',
+                        action: 'open',
                         affiliate: this.$store.state.affiliate,
                     });
 
@@ -245,7 +248,8 @@ export default {
                 var partId = item.pickABrick.variant.id;
 
                 var response = await browser.runtime.sendMessage({
-                    contentScriptQuery: 'pickABrickAddToCart',
+                    service: 'pickABrick',
+                    action: 'addToCart',
                     authorization: this.authorization,
                     PABCartId: this.pickABrickShoppingCartId,
                     qty: qty,
@@ -259,7 +263,7 @@ export default {
         },
         async getShoppingCartId(action) {
             return await browser.runtime
-                .sendMessage({ contentScriptQuery: 'readQAuth' })
+                .sendMessage({ service: 'pickABrick', action: 'readQAuth' })
                 .then((response) => {
                     //console.log('response', response);
                     if (!response) {
@@ -277,7 +281,8 @@ export default {
                     //console.log("authorization", this.authorization);
                     return browser.runtime
                         .sendMessage({
-                            contentScriptQuery: 'pickABrickReadCart',
+                            service: 'pickABrick',
+                            action: 'readCart',
                             authorization: this.authorization,
                         })
                         .then((response) => {
@@ -301,6 +306,7 @@ export default {
     },
     computed: {
         showCartButtons() {
+            return true;
             if (this.$store.state.mode == 'popup') return true;
             if (navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
             return false;

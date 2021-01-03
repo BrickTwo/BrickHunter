@@ -127,7 +127,8 @@ export const brickProcessorMixin = {
             for (var j = 0; j < item.searchids.length; j++) {
                 if (item.searchids[j]) {
                     var response = await browser.runtime.sendMessage({
-                        contentScriptQuery: 'getBricksAndPieces',
+                        service: 'bricksAndPieces',
+                        action: 'findBrick',
                         itemId: item.searchids[j],
                     });
                     if (response?.bricks) {
@@ -159,7 +160,8 @@ export const brickProcessorMixin = {
             }
 
             var response = await browser.runtime.sendMessage({
-                contentScriptQuery: 'getPickABrick',
+                service: 'pickABrick',
+                action: 'findBrick',
                 itemId: item.searchids.join('-'),
             });
 

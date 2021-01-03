@@ -1,3 +1,5 @@
+console.log("hi")
+
 chrome.runtime.onMessage.addListener(async function(
     request,
     sender,
@@ -20,12 +22,11 @@ chrome.runtime.onMessage.addListener(async function(
             .then(function() {
                 browser.tabs
                     .query({ currentWindow: true })
-                    //.query({ url: '*://*.lego.com/*' })
                     .then(async (tabs) => {
                         browser.tabs.update(tabs[0].id, {
                             url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
                         });
-                    });
+                    }).catch((error) => console.log(error));
 
                 return true;
             });
@@ -35,13 +36,9 @@ chrome.runtime.onMessage.addListener(async function(
         return await asyncSessionStorage
             .removeItem('b_and_p_buy_' + request.country)
             .then(function() {
-                /*browser.runtime
-                .sendMessage({
-                    contentScriptQuery: 'openSite',
-                })*/
 
                 return true;
-            });
+            }).catch((error) => console.log(error));
     }
 });
 
@@ -75,8 +72,3 @@ const asyncSessionStorage = {
         return sessionStorage.removeItem(key);
     },
 };
-
-async function asyncGetCookie(cname) {
-    await null;
-    return getCookie(cname);
-}
