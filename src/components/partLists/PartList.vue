@@ -126,6 +126,7 @@
                 v-if="!loadWantedList"
                 :bricklist="wantedList"
                 :edit="true"
+                :showSort="showSort"
                 @itemDeleted="onItemDeleted"
             ></brick-list>
         </div>
@@ -171,6 +172,7 @@ export default {
         totalPositions: 0,
         totalPickABrickPositions: 0,
         totalBricksAndPiecesPositions: 0,
+        showSort: true,
     }),
     components: {
         BrickList,
@@ -207,13 +209,10 @@ export default {
                 var item = this.wantedList[i];
                 await this.sleep(200); //200ms timout to prevent to be blocked on the website
                 this.loadPrice(item);
-
-                //console.log(item);
             }
-
-            //console.log(this.wantedList);
         },
         async loadPrice(item) {
+            this.showSort = false;
             try {
                 item.bricksAndPieces = { isLoading: true };
                 if (item.source == 'brickLink') {
@@ -225,7 +224,6 @@ export default {
                     item.brickLink.mapPCCs = returnObject.mapPCCs;
                 }
             } catch (err) {
-                //console.log("couldn't find brick on bricklink");
                 this.pickABrickBrickCounter++;
                 this.bricksAndPiecesBrickCounter++;
                 this.calcLoad();
@@ -253,7 +251,6 @@ export default {
             return new Promise((resolve) => setTimeout(resolve, ms));
         },
         calcLoad() {
-            //console.log("pickABrick: ", this.pickABrickBrickCounter, " bricksAndPieces: ", this.bricksAndPiecesBrickCounter)
             var one = 100 / this.totalPositions / 2;
 
             this.loadPercentage = Math.round(
@@ -261,16 +258,14 @@ export default {
                     one * this.bricksAndPiecesBrickCounter
             );
             if (this.loadPercentage >= 100) {
-                //console.log("setWantedList", this.wantedList)
                 this.partList.date = new Date(Date.now());
                 this.partList.positions = this.wantedList;
                 this.$store.commit('partList/setPartList', this.partList);
+                this.showSort = true;
             }
             this.calcTotals();
-            //console.log(this.loadPercentage)
         },
         print() {
-            //console.log("print")
             this.$htmlToPaper('wantedListPrint');
         },
         cancel() {
@@ -292,7 +287,6 @@ export default {
             }
 
             this.partList.name = this.editName;
-            //console.log(this.partList.name, this.editName);
             this.$store.commit('partList/setPartList', this.partList);
 
             this.$nextTick(() => {
@@ -318,9 +312,6 @@ export default {
         },
     },
     watch: {
-        /*'partList.cart': function(val, oldVal) {
-            this.$store.commit('partList/setPartList', this.partList);
-        },*/
         partList: {
             handler(val, oldVal) {
                 this.$store.commit('partList/setPartList', this.partList);

@@ -119,7 +119,7 @@
         </b-row>
         <b-row>
             <b-col id="pickABrickList">
-                <brick-list :bricklist="brickList" :limitMaxQty="999" />
+                <brick-list :bricklist="brickList" :limitMaxQty="999" :showSort="showSort" />
             </b-col>
         </b-row>
     </b-container>
@@ -137,6 +137,7 @@ export default {
             loadPABPercentage: 100,
             headerBgVariant: 'dark',
             headerTextVariant: 'light',
+            showSort: true,
         };
     },
     components: {
@@ -199,6 +200,7 @@ export default {
                 this.$bvModal.show('modal-use-popup');
                 return;
             }
+            this.showSort = false;
             var cartId = await this.getShoppingCartId('fill');
             if (!cartId) return;
             var percentageSingle = 100 / this.brickList.length;
@@ -239,6 +241,7 @@ export default {
                         variant: 'success',
                     });
                 });
+            this.showSort = true;
         },
         async pickABrickAddToCart(item) {
             if (item.pickABrick) {
