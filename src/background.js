@@ -341,7 +341,7 @@ browser.runtime.onMessage.addListener(async function(
                 },
             };
 
-            var url = `https://services.slingshot.lego.com/api/v4/lego_historic_product_read/_search`;
+            var url = `https://services.slingshot.lego.com/api/v4/lego_historic_product_read/_search?useragent=brickhunter`;
 
             var response = await fetch(url, {
                 method: 'POST',
