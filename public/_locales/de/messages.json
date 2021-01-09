@@ -330,7 +330,7 @@
         "message": "Neue Teileliste"
     },
     "import_sp_singlePartList": {
-        "message": "Single part list"
+        "message": "Einzelteileliste"
     },
     "import_sp_findPartsByKeyword": {
         "message": "Finde Teile mit einem Suchbegriff"
