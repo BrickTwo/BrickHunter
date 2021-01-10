@@ -328,7 +328,7 @@ async function bricksAndPieces(request) {
             },
         };
 
-        var urlSearch = `https://services.slingshot.lego.com/api/v4/lego_historic_product_read/_search`;
+        var urlSearch = `https://services.slingshot.lego.com/api/v4/lego_historic_product_read/_search?useragent=brickhunter`;
 
         var responseSearch = await fetch(urlSearch, {
             method: 'POST',
