@@ -70,6 +70,7 @@
                 icon="trash"
                 aria-hidden="true"
                 @click="deletePosition(props.rowData)"
+                style="cursor: pointer"
             />
         </template>
     </vuetable>
