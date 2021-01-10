@@ -24,7 +24,7 @@ export const shoppingMixin = {
 
             if (this.$store.state.shopping.wantedList) {
                 this.$store.state.shopping.wantedList.forEach((item) => {
-                    if (this.$store.state.shopping.useHave && item.source == 'brickLink') {
+                    if (this.$store.state.shopping.settings.useHave && item.source == 'brickLink') {
                         item.qty.order = item.qty.balance;
                     } else {
                         item.qty.order = item.qty.min;
@@ -66,9 +66,9 @@ export const shoppingMixin = {
                 });
 
                 if (
-                    this.$store.state.shopping.selectedPrio1 != 'brickLink' &&
-                    this.$store.state.shopping.selectedPrio2 != 'brickLink' &&
-                    this.$store.state.shopping.selectedPrio3 != 'brickLink'
+                    this.$store.state.shopping.settings.selectedPrio1 != 'brickLink' &&
+                    this.$store.state.shopping.settings.selectedPrio2 != 'brickLink' &&
+                    this.$store.state.shopping.settings.selectedPrio3 != 'brickLink'
                 ) {
                     this.clearBrickLinkList();
                 }
@@ -83,55 +83,56 @@ export const shoppingMixin = {
             if (!bricksAndPiecesPrice) bricksAndPiecesPrice = 0;
             if (!pickABrickPrice) pickABrickPrice = 0;
             if (!brickLinkPrice || brickLinkPrice < 0) brickLinkPrice = 0;
+            if (this.$store.state.shopping.settings.ignoreBrickLinkPrice) brickLinkPrice = 0;
 
             var prices = Array();
 
             if (
-                this.$store.state.shopping.selectedPrio1 == 'bricksAndPieces' &&
+                this.$store.state.shopping.settings.selectedPrio1 == 'bricksAndPieces' &&
                 bricksAndPiecesPrice
             ) {
                 prices.push(['bricksAndPieces', bricksAndPiecesPrice]);
             } else if (
-                this.$store.state.shopping.selectedPrio1 == 'pickABrick' &&
+                this.$store.state.shopping.settings.selectedPrio1 == 'pickABrick' &&
                 pickABrickPrice
             ) {
                 prices.push(['pickABrick', pickABrickPrice]);
             } else if (
-                this.$store.state.shopping.selectedPrio1 == 'brickLink' &&
+                this.$store.state.shopping.settings.selectedPrio1 == 'brickLink' &&
                 brickLinkPrice
             ) {
                 prices.push(['brickLink', brickLinkPrice]);
             }
 
             if (
-                this.$store.state.shopping.selectedPrio2 == 'bricksAndPieces' &&
+                this.$store.state.shopping.settings.selectedPrio2 == 'bricksAndPieces' &&
                 bricksAndPiecesPrice
             ) {
                 prices.push(['bricksAndPieces', bricksAndPiecesPrice]);
             } else if (
-                this.$store.state.shopping.selectedPrio2 == 'pickABrick' &&
+                this.$store.state.shopping.settings.selectedPrio2 == 'pickABrick' &&
                 pickABrickPrice
             ) {
                 prices.push(['pickABrick', pickABrickPrice]);
             } else if (
-                this.$store.state.shopping.selectedPrio2 == 'brickLink' &&
+                this.$store.state.shopping.settings.selectedPrio2 == 'brickLink' &&
                 brickLinkPrice
             ) {
                 prices.push(['brickLink', brickLinkPrice]);
             }
 
             if (
-                this.$store.state.shopping.selectedPrio3 == 'bricksAndPieces' &&
+                this.$store.state.shopping.settings.selectedPrio3 == 'bricksAndPieces' &&
                 bricksAndPiecesPrice
             ) {
                 prices.push(['bricksAndPieces', bricksAndPiecesPrice]);
             } else if (
-                this.$store.state.shopping.selectedPrio3 == 'pickABrick' &&
+                this.$store.state.shopping.settings.selectedPrio3 == 'pickABrick' &&
                 pickABrickPrice
             ) {
                 prices.push(['pickABrick', pickABrickPrice]);
             } else if (
-                this.$store.state.shopping.selectedPrio3 == 'brickLink' &&
+                this.$store.state.shopping.settings.selectedPrio3 == 'brickLink' &&
                 brickLinkPrice
             ) {
                 prices.push(['brickLink', brickLinkPrice]);

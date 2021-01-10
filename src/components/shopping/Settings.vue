@@ -2,7 +2,7 @@
     <b-container class="p-0" fluid="xl">
         <b-row>
             <b-col cols="2">
-                <label>{{ priorityOne }}:</label>
+                <label>{{ labelPriorityOne }}:</label>
             </b-col>
             <b-col cols="10">
                 <b-form-select
@@ -13,7 +13,7 @@
         </b-row>
         <b-row>
             <b-col cols="2">
-                <label>{{ priorityTwo }}:</label>
+                <label>{{ labelPriorityTwo }}:</label>
             </b-col>
             <b-col cols="10">
                 <b-form-select
@@ -24,7 +24,7 @@
         </b-row>
         <b-row>
             <b-col cols="2">
-                <label>{{ priorityThree }}:</label>
+                <label>{{ labelPriorityThree }}:</label>
             </b-col>
             <b-col cols="10">
                 <b-form-select
@@ -36,7 +36,14 @@
         <b-row>
             <b-col offset="2" cols="10">
                 <b-form-checkbox id="useHave" v-model="useHave">{{
-                    useHaveText
+                    labelUseHaveText
+                }}</b-form-checkbox>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col offset="2" cols="10">
+                <b-form-checkbox id="ignoreBrickLinkPrice" v-model="ignoreBrickLinkPrice">{{
+                    labelIgnoreBrickLinkPrice
                 }}</b-form-checkbox>
             </b-col>
         </b-row>
@@ -103,10 +110,11 @@ export default {
                     text: browser.i18n.getMessage('brickLink'),
                 },
             ],
-            selectedPrio1: this.$store.state.shopping.selectedPrio1,
-            selectedPrio2: this.$store.state.shopping.selectedPrio2,
-            selectedPrio3: this.$store.state.shopping.selectedPrio3,
-            useHave: this.$store.state.shopping.useHave,
+            selectedPrio1: this.$store.state.shopping.settings.selectedPrio1,
+            selectedPrio2: this.$store.state.shopping.settings.selectedPrio2,
+            selectedPrio3: this.$store.state.shopping.settings.selectedPrio3,
+            useHave: this.$store.state.shopping.settings.useHave,
+            ignoreBrickLinkPrice: this.$store.state.shopping.settings.ignoreBrickLinkPrice
         };
     },
     mixins: [shoppingMixin],
@@ -127,20 +135,27 @@ export default {
             this.$store.commit('shopping/setUseHave', val);
             this.calcTotalPrice();
         },
+        ignoreBrickLinkPrice: function(val) {
+            this.$store.commit('shopping/setIgnoreBrickLinkPrice', val);
+            this.calcTotalPrice();
+        },
     },
     computed: {
-        priorityOne() {
+        labelPriorityOne() {
             return browser.i18n.getMessage('shopping_priorityOne');
         },
-        priorityTwo() {
+        labelPriorityTwo() {
             return browser.i18n.getMessage('shopping_priorityTwo');
         },
-        priorityThree() {
+        labelPriorityThree() {
             return browser.i18n.getMessage('shopping_priorityThree');
         },
-        useHaveText() {
+        labelUseHaveText() {
             return browser.i18n.getMessage('shopping_useHave');
         },
-    },
+        labelIgnoreBrickLinkPrice() {
+            return browser.i18n.getMessage('shopping_ignoreBrickLinkPrice');
+        }
+    }
 };
 </script>

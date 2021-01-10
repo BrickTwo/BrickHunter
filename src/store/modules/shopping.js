@@ -6,10 +6,6 @@ const state = () => ({
     brickLinkPositions: 0,
     notAllocatedPositions: 0,
     wantedList: [],
-    selectedPrio1: null,
-    selectedPrio2: null,
-    selectedPrio3: null,
-    useHave: null,
     brickAndPiecesList: {},
     pickABrickList: {},
     brickLinkList: {},
@@ -18,6 +14,13 @@ const state = () => ({
     pickABrickPrice: 0,
     brickLinkPrice: 0,
     currency: '',
+    settings: {
+        selectedPrio1: null,
+        selectedPrio2: null,
+        selectedPrio3: null,
+        useHave: null,
+        ignoreBrickLinkPrice: null,
+    },
 });
 
 // getters
@@ -28,14 +31,30 @@ const actions = {};
 
 // mutations
 const mutations = {
-    initialiseStore(state) {
-        state.selectedPrio1 =
-            localStorage.getItem('selectedPrio1') || 'bricksAndPieces';
-        state.selectedPrio2 =
-            localStorage.getItem('selectedPrio2') || 'pickABrick';
-        state.selectedPrio3 =
-            localStorage.getItem('selectedPrio3') || 'brickLink';
-        state.useHave = (localStorage.getItem('useHave') || 'true') === 'true';
+    initialiseStore(state, oldVersion) {
+        var oldVersion = oldVersion.split('.').map(Number);
+
+        if (oldVersion[0] <= 1 && oldVersion[1] <= 4 && oldVersion[2] < 2) {
+            state.settings.selectedPrio1 =
+                localStorage.getItem('selectedPrio1') || 'bricksAndPieces';
+            state.settings.selectedPrio2 =
+                localStorage.getItem('selectedPrio2') || 'pickABrick';
+            state.settings.selectedPrio3 =
+                localStorage.getItem('selectedPrio3') || 'brickLink';
+            state.settings.useHave =
+                (localStorage.getItem('useHave') || 'true') === 'true';
+            state.settings.setwantedListPositionsMerged = false;
+
+            localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+        }
+
+        state.settings = JSON.parse(localStorage.getItem('settingsShopping')) || {
+            selectedPrio1: 'bricksAndPieces',
+            selectedPrio2: 'pickABrick',
+            selectedPrio3: 'brickLink',
+            useHave: true,
+            ignoreBrickLinkPrice: false,
+        };
     },
     setwantedListPositionsMerged(state, payload) {
         //console.log(payload)
@@ -45,20 +64,24 @@ const mutations = {
         state.wantedList = payload;
     },
     setSelectedPrio1(state, payload) {
-        state.selectedPrio1 = payload;
-        localStorage.setItem('selectedPrio1', payload);
+        state.settings.selectedPrio1 = payload;
+        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
     },
     setSelectedPrio2(state, payload) {
-        state.selectedPrio2 = payload;
-        localStorage.setItem('selectedPrio2', payload);
+        state.settings.selectedPrio2 = payload;
+        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
     },
     setSelectedPrio3(state, payload) {
-        state.selectedPrio3 = payload;
-        localStorage.setItem('selectedPrio3', payload);
+        state.settings.selectedPrio3 = payload;
+        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
     },
     setUseHave(state, payload) {
-        state.useHave = payload;
-        localStorage.setItem('useHave', payload);
+        state.settings.useHave = payload;
+        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+    },
+    setIgnoreBrickLinkPrice(state, payload) {
+        state.settings.ignoreBrickLinkPrice = payload;
+        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
     },
     addToBricksAndPiecesList(state, payload) {
         var found = state.brickAndPiecesList.find(

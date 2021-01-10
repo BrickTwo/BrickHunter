@@ -46,10 +46,7 @@ export default new Vuex.Store({
                     sKey != 'recalcHave' &&
                     sKey != 'country' &&
                     sKey != 'language' &&
-                    sKey != 'selectedPrio1' &&
-                    sKey != 'selectedPrio2' &&
-                    sKey != 'selectedPrio3' &&
-                    sKey != 'useHave' &&
+                    sKey != 'settingsShopping' &&
                     sKey != 'version'
                 ) {
                     localStorage.removeItem(sKey);
@@ -76,7 +73,7 @@ export default new Vuex.Store({
         initialiseStore({ state, commit }) {
             commit('initialiseStore');
             commit('partList/initialiseStore', state.version.old);
-            commit('shopping/initialiseStore');
+            commit('shopping/initialiseStore', state.version.old);
             commit('singleParts/initialiseStore');
         },
     },
