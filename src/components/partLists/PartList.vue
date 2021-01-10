@@ -127,6 +127,7 @@
                 :bricklist="wantedList"
                 :edit="true"
                 :showSort="showSort"
+                :key="brickListKey"
                 @itemDeleted="onItemDeleted"
             ></brick-list>
         </div>
@@ -135,6 +136,7 @@
                 v-if="!loadWantedList"
                 :bricklist="wantedList"
                 :edit="false"
+                :key="brickListKey"
                 @itemDeleted="onItemDeleted"
             ></brick-list>
         </div>
@@ -173,6 +175,7 @@ export default {
         totalPickABrickPositions: 0,
         totalBricksAndPiecesPositions: 0,
         showSort: true,
+        brickListKey: 0,
     }),
     components: {
         BrickList,
@@ -309,6 +312,7 @@ export default {
                 return pos.itemid != item.itemid || pos.color.brickLinkId != item.color.brickLinkId
             });
             this.partList.positions = this.wantedList;
+            this.brickListKey++; // redraw brickList
         },
     },
     watch: {
