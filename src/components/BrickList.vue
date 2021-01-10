@@ -64,6 +64,23 @@
                 </div>
             </div>
         </template>
+        <template slot="brickLinkPrice" slot-scope="props">
+            <b-form-input
+                v-if="edit"
+                v-model="props.rowData.brickLink.wantedList.maxprice"
+                type="number"
+            />
+            <div
+                v-if="
+                    props.rowData.brickLink &&
+                        props.rowData.brickLink.wantedList &&
+                        props.rowData.brickLink.wantedList.maxprice > 0 &&
+                        !edit
+                "
+            >
+                {{ props.rowData.brickLink.wantedList.maxprice }}
+            </div>
+        </template>
         <template slot="actions" slot-scope="props">
             <b-icon
                 v-if="edit"
@@ -201,7 +218,8 @@ export default {
                 width: '70px',
             },
             {
-                name: 'brickLink',
+                name: '__slot:brickLinkPrice',
+                sortField: 'brickLink.wantedList.maxprice',
                 title: () =>
                     browser.i18n.getMessage('brickList_brickLinkPrice'),
                 callback: 'brickLinkPrice',
@@ -345,10 +363,27 @@ export default {
         if (this.$store.state.mode == 'standalone') {
             this.tableHeight = 'calc(100vh - 260px)';
         }
+        if (
+            this.bricklist.filter((p) => p.brickLink?.wantedList?.maxprice > 0)
+                .length == 0
+        ) {
+            
+            this.fields = this.fields.filter(
+                (field) => field.name != '__slot:brickLinkPrice'
+            );
+        }
+        this.bricklist.map((pos) => {
+            if (pos.brickLink?.wantedList?.maxprice) {
+                if (pos.brickLink.wantedList.maxprice <= 0)
+                    pos.brickLink.wantedList.maxprice = 0;
+                pos.brickLink.wantedList.maxprice = parseFloat(
+                    pos.brickLink.wantedList.maxprice
+                );
+            }
+        });
     },
     watch: {
         showSort: async function(val) {
-            console.log(val)
             if (val) {
                 this.fields.find((field) => field.name === 'itemid').sortField =
                     'itemid';
@@ -357,6 +392,9 @@ export default {
                 this.fields.find(
                     (field) => field.name === '__slot:quantity'
                 ).sortField = 'qty.min';
+                this.fields.find(
+                    (field) => field.name === '__slot:brickLinkPrice'
+                ).sortField = 'brickLink.wantedList.maxprice';
                 this.fields.find(
                     (field) => field.name === 'pickABrick'
                 ).sortField = 'pickABrick.variant.price.centAmount';
@@ -370,6 +408,8 @@ export default {
             delete this.fields.find((field) => field.name === 'color')
                 .sortField;
             delete this.fields.find((field) => field.name === '__slot:quantity')
+                .sortField;
+            delete this.fields.find((field) => field.name === '__slot:brickLinkPrice')
                 .sortField;
             delete this.fields.find((field) => field.name === 'pickABrick')
                 .sortField;
