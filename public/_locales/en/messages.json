@@ -468,7 +468,13 @@
         "message": "Subtract WantedList-Have from number"
     },
     "shopping_ignoreBrickLinkPrice": {
-        "message": "BrickLink prices do not take into account"
+        "message": "Do not take BrickLink prices into account"
+    },
+    "shopping_subtractBrickLinkPirceBefore": {
+        "message": "Only add to BrickLink if price is"
+    },
+    "shopping_subtractBrickLinkPirceAfter": {
+        "message": "cheaper."
     },
     "shopping_tabOverview": {
         "message": "Overview"

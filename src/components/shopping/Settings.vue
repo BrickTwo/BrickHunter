@@ -42,9 +42,31 @@
         </b-row>
         <b-row>
             <b-col offset="2" cols="10">
-                <b-form-checkbox id="ignoreBrickLinkPrice" v-model="ignoreBrickLinkPrice">{{
-                    labelIgnoreBrickLinkPrice
-                }}</b-form-checkbox>
+                <b-form-checkbox
+                    id="ignoreBrickLinkPrice"
+                    v-model="ignoreBrickLinkPrice"
+                    >{{ labelIgnoreBrickLinkPrice }}
+                </b-form-checkbox>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col offset="2" cols="10" style="display: flex">
+                <b-form-checkbox
+                    id="subtractBrickLinkPrice"
+                    v-model="subtractBrickLinkPrice"
+                />
+                <span>{{ labelSubtractBrickLinkPirceBefore }}</span>
+                <b-form-input
+                    type="number"
+                    v-model="subtractBrickLinkPriceAmount"
+                    style="width: 85px; margin: 0 5px; height: 25px"
+                />
+                <b-form-select
+                    v-model="subtractBrickLinkPriceUnit"
+                    :options="optionsSubtractBrickLinkPriceUnit"
+                    style="width: 85px; margin-right: 5px; height: 25px; padding: 0 5px"
+                />
+                <span>{{ labelSubtractBrickLinkPirceAfter }}</span>
             </b-col>
         </b-row>
     </b-container>
@@ -52,6 +74,7 @@
 
 <script>
 import { shoppingMixin } from '@/mixins/shoppingMixin';
+import { countryMixin } from '@/mixins/countryMixin';
 
 export default {
     data() {
@@ -110,14 +133,40 @@ export default {
                     text: browser.i18n.getMessage('brickLink'),
                 },
             ],
+            optionsSubtractBrickLinkPriceUnit: [
+                {
+                    value: 'absolute',
+                    text: 'Currency',
+                },
+                {
+                    value: 'percentage',
+                    text: '%',
+                },
+            ],
             selectedPrio1: this.$store.state.shopping.settings.selectedPrio1,
             selectedPrio2: this.$store.state.shopping.settings.selectedPrio2,
             selectedPrio3: this.$store.state.shopping.settings.selectedPrio3,
             useHave: this.$store.state.shopping.settings.useHave,
-            ignoreBrickLinkPrice: this.$store.state.shopping.settings.ignoreBrickLinkPrice
+            ignoreBrickLinkPrice: this.$store.state.shopping.settings
+                .ignoreBrickLinkPrice,
+            subtractBrickLinkPrice: this.$store.state.shopping.settings
+                .subtractBrickLinkPrice,
+            subtractBrickLinkPriceAmount: this.$store.state.shopping.settings
+                .subtractBrickLinkPriceAmount,
+            subtractBrickLinkPriceUnit: this.$store.state.shopping.settings
+                .subtractBrickLinkPriceUnit,
         };
     },
-    mixins: [shoppingMixin],
+    mixins: [shoppingMixin, countryMixin],
+    beforeMount() {
+        var country = this.COUNTRIES.find(
+            (country) => country.countryCode == this.$store.state.country
+        );
+
+        this.optionsSubtractBrickLinkPriceUnit.find(
+            (option) => (option.value = 'absolute')
+        ).text = country.currency;
+    },
     watch: {
         selectedPrio1: function(val) {
             this.$store.commit('shopping/setSelectedPrio1', val);
@@ -139,6 +188,23 @@ export default {
             this.$store.commit('shopping/setIgnoreBrickLinkPrice', val);
             this.calcTotalPrice();
         },
+        subtractBrickLinkPrice: function(val) {
+            this.$store.commit('shopping/setSubtractBrickLinkPrice', val);
+            this.calcTotalPrice();
+        },
+        subtractBrickLinkPriceAmount: function(val) {
+            if (this.subtractBrickLinkPriceUnit === 'percentage' && val < 0)
+                this.subtractBrickLinkPriceAmount = 0;
+            val = this.subtractBrickLinkPriceAmount;
+            this.$store.commit('shopping/setSubtractBrickLinkPriceAmount', val);
+            this.calcTotalPrice();
+        },
+        subtractBrickLinkPriceUnit: function(val) {
+            if (val === 'percentage' && this.subtractBrickLinkPriceAmount < 0)
+                this.subtractBrickLinkPriceAmount = 0;
+            this.$store.commit('shopping/setSubtractBrickLinkPriceUnit', val);
+            this.calcTotalPrice();
+        },
     },
     computed: {
         labelPriorityOne() {
@@ -155,7 +221,17 @@ export default {
         },
         labelIgnoreBrickLinkPrice() {
             return browser.i18n.getMessage('shopping_ignoreBrickLinkPrice');
-        }
-    }
+        },
+        labelSubtractBrickLinkPirceBefore() {
+            return browser.i18n.getMessage(
+                'shopping_subtractBrickLinkPirceBefore'
+            );
+        },
+        labelSubtractBrickLinkPirceAfter() {
+            return browser.i18n.getMessage(
+                'shopping_subtractBrickLinkPirceAfter'
+            );
+        },
+    },
 };
 </script>

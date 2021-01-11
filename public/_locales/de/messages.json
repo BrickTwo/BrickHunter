@@ -467,6 +467,12 @@
     "shopping_ignoreBrickLinkPrice": {
         "message": "BrickLink Preise nicht berücksichtigen"
     },
+    "shopping_subtractBrickLinkPirceBefore": {
+        "message": "Nur zu BrickLink hinzufügen sofern der Preis"
+    },
+    "shopping_subtractBrickLinkPirceAfter": {
+        "message": "billiger ist."
+    },
     "shopping_tabOverview": {
         "message": "Übersicht"
     },

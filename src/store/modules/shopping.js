@@ -14,13 +14,7 @@ const state = () => ({
     pickABrickPrice: 0,
     brickLinkPrice: 0,
     currency: '',
-    settings: {
-        selectedPrio1: null,
-        selectedPrio2: null,
-        selectedPrio3: null,
-        useHave: null,
-        ignoreBrickLinkPrice: null,
-    },
+    settings: {},
 });
 
 // getters
@@ -54,7 +48,19 @@ const mutations = {
             selectedPrio3: 'brickLink',
             useHave: true,
             ignoreBrickLinkPrice: false,
+            subtractBrickLinkPrice: false,
+            subtractBrickLinkPriceAmount: 0.0,
+            subtractBrickLinkPriceUnit: 'absolute',
         };
+
+        if(!state.settings.selectedPrio1) state.settings.selectedPrio1 = 'bricksAndPieces';
+        if(!state.settings.selectedPrio2) state.settings.selectedPrio2 = 'pickABrick';
+        if(!state.settings.selectedPrio3) state.settings.selectedPrio3 = 'brickLink';
+        if(!state.settings.useHave) state.settings.useHave = true;
+        if(!state.settings.ignoreBrickLinkPrice) state.settings.ignoreBrickLinkPrice = false;
+        if(!state.settings.subtractBrickLinkPrice) state.settings.subtractBrickLinkPrice = false;
+        if(!state.settings.subtractBrickLinkPriceAmount) state.settings.subtractBrickLinkPriceAmount = 0.0;
+        if(!state.settings.subtractBrickLinkPriceUnit) state.settings.subtractBrickLinkPriceUnit = 'absolute';
     },
     setwantedListPositionsMerged(state, payload) {
         //console.log(payload)
@@ -81,6 +87,18 @@ const mutations = {
     },
     setIgnoreBrickLinkPrice(state, payload) {
         state.settings.ignoreBrickLinkPrice = payload;
+        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+    },
+    setSubtractBrickLinkPrice(state, payload) {
+        state.settings.subtractBrickLinkPrice = payload;
+        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+    },
+    setSubtractBrickLinkPriceAmount(state, payload) {
+        state.settings.subtractBrickLinkPriceAmount = payload;
+        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+    },
+    setSubtractBrickLinkPriceUnit(state, payload) {
+        state.settings.subtractBrickLinkPriceUnit = payload;
         localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
     },
     addToBricksAndPiecesList(state, payload) {
