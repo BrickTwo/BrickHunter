@@ -127,7 +127,6 @@
                 :bricklist="wantedList"
                 :edit="true"
                 :showSort="showSort"
-                :key="brickListKey"
                 @itemDeleted="onItemDeleted"
             ></brick-list>
         </div>

@@ -8,7 +8,7 @@
         :showSortIcons="showSort"
         :sortOrder="sortOrder"
         :css="css.table"
-        :key="showSort"
+        :key="key"
     >
         <template slot="quantity" slot-scope="props">
             <b-form-input
@@ -159,6 +159,7 @@ export default {
         },
     },
     data: () => ({
+        key: 0,
         tableHeight: '290px',
         sortOrder: [
             {
@@ -355,8 +356,15 @@ export default {
         spinner() {
             return '<svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="arrow clockwise" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-arrow-clockwise b-icon bi b-icon-animation-spin" style="font-size: 150%;"><g><path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"></path><path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"></path></g></svg>';
         },
-        deletePosition(position) {
-            this.$emit('itemDeleted', position);
+        deletePosition(item) {
+            this.bricklist = this.bricklist.filter((pos) => {
+                return (
+                    pos.itemid != item.itemid ||
+                    pos.color.brickLinkId != item.color.brickLinkId
+                );
+            });
+            this.$emit('itemDeleted', item);
+            this.key++;
         },
     },
     beforeMount() {
@@ -367,7 +375,6 @@ export default {
             this.bricklist.filter((p) => p.brickLink?.wantedList?.maxprice > 0)
                 .length == 0
         ) {
-            
             this.fields = this.fields.filter(
                 (field) => field.name != '__slot:brickLinkPrice'
             );
@@ -401,6 +408,7 @@ export default {
                 this.fields.find(
                     (field) => field.name === 'bricksAndPieces'
                 ).sortField = 'bricksAndPieces.price.amount';
+                this.key++;
                 return;
             }
             delete this.fields.find((field) => field.name === 'itemid')
@@ -409,12 +417,14 @@ export default {
                 .sortField;
             delete this.fields.find((field) => field.name === '__slot:quantity')
                 .sortField;
-            delete this.fields.find((field) => field.name === '__slot:brickLinkPrice')
-                .sortField;
+            delete this.fields.find(
+                (field) => field.name === '__slot:brickLinkPrice'
+            ).sortField;
             delete this.fields.find((field) => field.name === 'pickABrick')
                 .sortField;
             delete this.fields.find((field) => field.name === 'bricksAndPieces')
                 .sortField;
+            this.key++;
         },
     },
 };
