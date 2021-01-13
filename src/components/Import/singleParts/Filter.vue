@@ -180,9 +180,23 @@ export default {
         setOrderQuantity(item) {
             var partList = this.loadPartList();
 
-            var foundPart = partList.positions.find(
-                (pos) => pos.itemid == item.itemNumber
-            );
+            console.log('partList', partList);
+
+            var foundPart = partList.positions.find((pos) => {
+                console.log(
+                    pos.itemid,
+                    item.designId,
+                    pos.color.bricksAndPiecesName,
+                    item.colorFamily,
+                    pos,
+                    item
+                );
+                return (
+                    pos.itemid == item.designId &&
+                    pos.color.bricksAndPiecesName == item.colorFamily
+                );
+            });
+            console.log(foundPart);
             if (foundPart) {
                 foundPart.qty.min = item.order;
                 foundPart.qty.order = item.order;
@@ -200,8 +214,13 @@ export default {
             var partList = this.loadPartList();
 
             var foundPart = partList.positions.find(
-                (pos) => pos.itemid == item.itemNumber
+                (pos) =>
+                    pos.itemid == item.designId &&
+                    pos.color.bricksAndPiecesName == item.colorFamily
             );
+
+            console.log(foundPart, item);
+
             if (foundPart) {
                 foundPart.qty.min = foundPart.qty.min + 1;
                 foundPart.qty.order = foundPart.qty.min;
@@ -223,7 +242,7 @@ export default {
 
             var part = {};
             part.source = 'lego';
-            part.itemid = item.itemNumber;
+            part.itemid = item.designId;
             part.searchids = [item.designId];
             part.color = this.findLegoColor(item.colorFamily, this.COLOR);
             part.qty = {
@@ -240,7 +259,7 @@ export default {
             }
             part.image = {
                 source: 'lego',
-                itemId: `${part.itemid}`,
+                rsc: item.imageUrl,
             };
             part.bricksAndPieces = null;
             part.pickABrick = null;
@@ -252,6 +271,8 @@ export default {
                 id: this.partListId,
                 part: part,
             });
+
+            console.log(this.partListId, part);
         },
         loadPartList() {
             if (this.partListId) {
@@ -352,7 +373,9 @@ export default {
                 if (!this.search || !this.search.bricks) return;
                 this.search.bricks.map((brick) => {
                     var foundPos = selectedPartList.positions.find(
-                        (pos) => pos.itemid == brick.itemNumber
+                        (pos) =>
+                            pos.itemid == brick.designId &&
+                            pos.color.bricksAndPiecesName == brick.colorFamily
                     );
                     if (foundPos) {
                         brick.order = foundPos.qty.min;

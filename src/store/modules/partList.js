@@ -32,11 +32,7 @@ const mutations = {
 
         var oldVersion = oldVersion.split('.').map(Number);
 
-        if (
-            oldVersion[0] <= 1 &&
-            oldVersion[1] <= 1 &&
-            oldVersion[2] < 9
-        ) {
+        if (oldVersion[0] <= 1 && oldVersion[1] <= 1 && oldVersion[2] < 9) {
             state.partLists.map((partList) => {
                 var positions = [];
                 partList.positions.map((item) => {
@@ -73,12 +69,23 @@ const mutations = {
             });
         }
 
-        if (
-            oldVersion[0] <= 1 &&
-            oldVersion[1] <= 1 &&
-            oldVersion[2] < 13
-        ) {
+        if (oldVersion[0] <= 1 && oldVersion[1] <= 1 && oldVersion[2] < 13) {
             state.partLists.map((partList) => {
+                partList.source = partList.positions[0].source;
+                localStorage.setItem(
+                    'partList_' + partList.id,
+                    JSON.stringify(partList)
+                );
+            });
+        }
+
+        if (oldVersion[0] <= 1 && oldVersion[1] <= 4 && oldVersion[2] < 4) {
+            state.partLists.map((partList) => {
+                if (partList.source == 'singleParts') {
+                    partList.positions.map((pos) => {
+                        pos.itemid = pos.searchids[0];
+                    });
+                }
                 partList.source = partList.positions[0].source;
                 localStorage.setItem(
                     'partList_' + partList.id,
@@ -126,19 +133,18 @@ const mutations = {
         var found = state.partLists.find(
             (partList) => partList.id === payload.id
         );
+        if (!found) return;
 
-        if (found) {
-            found.positions.push(payload.part);
-            found.date = new Date(0, 0, 0, 0, 0, 0, 0);
-        }
+        found.positions.push(payload.part);
+        found.date = new Date(0, 0, 0, 0, 0, 0, 0);
 
-        localStorage.setItem('partList_' + payload.id, JSON.stringify(payload));
+        localStorage.setItem('partList_' + payload.id, JSON.stringify(found));
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;
         });
-    }
+    },
 };
 
 export default {

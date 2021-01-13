@@ -302,7 +302,7 @@ export default {
             };
         },
         showImage(value) {
-            if (value.source == 'brickLink') {
+            if (value.rsc) {
                 return `<img src="${value.rsc}" style="max-height:50px; max-width:60px;">`;
             } else {
                 return `<img src="https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${value.itemId}.jpg" style="max-height:50px; max-width:60px;">`;

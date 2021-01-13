@@ -85,7 +85,7 @@ export default {
 
                 this.setNumberExist = true;
                 this.name = response.set.locale['de-de']?.title;
-                if(!this.name) {
+                if (!this.name) {
                     this.name = response.set.locale['en-us']?.title;
                 }
                 this.setName = this.name;
@@ -105,8 +105,8 @@ export default {
                 var part = {};
 
                 part.source = 'lego';
-                part.itemid = item.itemNumber;
-                part.searchids = [part.itemid];
+                part.itemid = item.designId;
+                part.searchids = [item.designId];
                 part.color = this.findLegoColor(item.colorFamily, this.COLOR);
                 part.qty = {
                     min: 0,
@@ -122,7 +122,7 @@ export default {
                 }
                 part.image = {
                     source: 'lego',
-                    itemId: `${part.itemid}`,
+                    rsc: item.imageUrl,
                 };
                 part.bricksAndPieces = null;
                 part.pickABrick = null;
@@ -157,7 +157,7 @@ export default {
                 source: 'lego',
                 positions: this.wantedList,
             };
-            
+
             this.$store.commit('partList/setPartList', partList);
 
             this.$bvToast.toast(this.labelSuccessfullImportBrickLinkText, {
