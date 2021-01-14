@@ -180,30 +180,22 @@ export default {
         setOrderQuantity(item) {
             var partList = this.loadPartList();
 
-            console.log('partList', partList);
-
             var foundPart = partList.positions.find((pos) => {
-                console.log(
-                    pos.itemid,
-                    item.designId,
-                    pos.color.bricksAndPiecesName,
-                    item.colorFamily,
-                    pos,
-                    item
-                );
                 return (
                     pos.itemid == item.designId &&
                     pos.color.bricksAndPiecesName == item.colorFamily
                 );
             });
-            console.log(foundPart);
+
             if (foundPart) {
                 foundPart.qty.min = item.order;
                 foundPart.qty.order = item.order;
 
                 if (item.order == 0) {
                     partList.positions = partList.positions.filter(
-                        (pos) => pos.itemid != item.itemNumber
+                        (pos) =>
+                            pos.itemid != item.designId ||
+                            pos.color.bricksAndPiecesName != item.colorFamily
                     );
                 }
                 this.$store.commit('partList/setPartList', partList);
@@ -218,8 +210,6 @@ export default {
                     pos.itemid == item.designId &&
                     pos.color.bricksAndPiecesName == item.colorFamily
             );
-
-            console.log(foundPart, item);
 
             if (foundPart) {
                 foundPart.qty.min = foundPart.qty.min + 1;
@@ -271,8 +261,6 @@ export default {
                 id: this.partListId,
                 part: part,
             });
-
-            console.log(this.partListId, part);
         },
         loadPartList() {
             if (this.partListId) {
