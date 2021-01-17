@@ -357,12 +357,21 @@ export default {
             return '<svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="arrow clockwise" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-arrow-clockwise b-icon bi b-icon-animation-spin" style="font-size: 150%;"><g><path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"></path><path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"></path></g></svg>';
         },
         deletePosition(item) {
-            this.bricklist = this.bricklist.filter((pos) => {
-                return (
-                    pos.itemid != item.itemid ||
-                    pos.color.brickLinkId != item.color.brickLinkId
-                );
-            });
+            if (item.color.id == 1) {
+                this.bricklist = this.bricklist.filter((pos) => {
+                    return (
+                        pos.itemid != item.itemid ||
+                        pos.color.legoName != item.color.legoName
+                    );
+                });
+            } else {
+                this.bricklist = this.bricklist.filter((pos) => {
+                    return (
+                        pos.itemid != item.itemid ||
+                        pos.color.brickLinkId != item.color.brickLinkId
+                    );
+                });
+            }
             this.$emit('itemDeleted', item);
             this.key++;
         },

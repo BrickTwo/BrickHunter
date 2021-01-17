@@ -39,10 +39,15 @@ const mutations = {
                 (localStorage.getItem('useHave') || 'true') === 'true';
             state.settings.setwantedListPositionsMerged = false;
 
-            localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+            localStorage.setItem(
+                'settingsShopping',
+                JSON.stringify(state.settings)
+            );
         }
 
-        state.settings = JSON.parse(localStorage.getItem('settingsShopping')) || {
+        state.settings = JSON.parse(
+            localStorage.getItem('settingsShopping')
+        ) || {
             selectedPrio1: 'bricksAndPieces',
             selectedPrio2: 'pickABrick',
             selectedPrio3: 'brickLink',
@@ -53,14 +58,21 @@ const mutations = {
             subtractBrickLinkPriceUnit: 'absolute',
         };
 
-        if(!state.settings.selectedPrio1) state.settings.selectedPrio1 = 'bricksAndPieces';
-        if(!state.settings.selectedPrio2) state.settings.selectedPrio2 = 'pickABrick';
-        if(!state.settings.selectedPrio3) state.settings.selectedPrio3 = 'brickLink';
-        if(!state.settings.useHave) state.settings.useHave = true;
-        if(!state.settings.ignoreBrickLinkPrice) state.settings.ignoreBrickLinkPrice = false;
-        if(!state.settings.subtractBrickLinkPrice) state.settings.subtractBrickLinkPrice = false;
-        if(!state.settings.subtractBrickLinkPriceAmount) state.settings.subtractBrickLinkPriceAmount = 0.0;
-        if(!state.settings.subtractBrickLinkPriceUnit) state.settings.subtractBrickLinkPriceUnit = 'absolute';
+        if (!state.settings.selectedPrio1)
+            state.settings.selectedPrio1 = 'bricksAndPieces';
+        if (!state.settings.selectedPrio2)
+            state.settings.selectedPrio2 = 'pickABrick';
+        if (!state.settings.selectedPrio3)
+            state.settings.selectedPrio3 = 'brickLink';
+        if (!state.settings.useHave) state.settings.useHave = true;
+        if (!state.settings.ignoreBrickLinkPrice)
+            state.settings.ignoreBrickLinkPrice = false;
+        if (!state.settings.subtractBrickLinkPrice)
+            state.settings.subtractBrickLinkPrice = false;
+        if (!state.settings.subtractBrickLinkPriceAmount)
+            state.settings.subtractBrickLinkPriceAmount = 0.0;
+        if (!state.settings.subtractBrickLinkPriceUnit)
+            state.settings.subtractBrickLinkPriceUnit = 'absolute';
     },
     setwantedListPositionsMerged(state, payload) {
         //console.log(payload)
@@ -71,35 +83,59 @@ const mutations = {
     },
     setSelectedPrio1(state, payload) {
         state.settings.selectedPrio1 = payload;
-        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+        localStorage.setItem(
+            'settingsShopping',
+            JSON.stringify(state.settings)
+        );
     },
     setSelectedPrio2(state, payload) {
         state.settings.selectedPrio2 = payload;
-        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+        localStorage.setItem(
+            'settingsShopping',
+            JSON.stringify(state.settings)
+        );
     },
     setSelectedPrio3(state, payload) {
         state.settings.selectedPrio3 = payload;
-        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+        localStorage.setItem(
+            'settingsShopping',
+            JSON.stringify(state.settings)
+        );
     },
     setUseHave(state, payload) {
         state.settings.useHave = payload;
-        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+        localStorage.setItem(
+            'settingsShopping',
+            JSON.stringify(state.settings)
+        );
     },
     setIgnoreBrickLinkPrice(state, payload) {
         state.settings.ignoreBrickLinkPrice = payload;
-        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+        localStorage.setItem(
+            'settingsShopping',
+            JSON.stringify(state.settings)
+        );
     },
     setSubtractBrickLinkPrice(state, payload) {
         state.settings.subtractBrickLinkPrice = payload;
-        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+        localStorage.setItem(
+            'settingsShopping',
+            JSON.stringify(state.settings)
+        );
     },
     setSubtractBrickLinkPriceAmount(state, payload) {
         state.settings.subtractBrickLinkPriceAmount = payload;
-        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+        localStorage.setItem(
+            'settingsShopping',
+            JSON.stringify(state.settings)
+        );
     },
     setSubtractBrickLinkPriceUnit(state, payload) {
         state.settings.subtractBrickLinkPriceUnit = payload;
-        localStorage.setItem('settingsShopping', JSON.stringify(state.settings));
+        localStorage.setItem(
+            'settingsShopping',
+            JSON.stringify(state.settings)
+        );
     },
     addToBricksAndPiecesList(state, payload) {
         var found = state.brickAndPiecesList.find(
@@ -107,7 +143,6 @@ const mutations = {
                 f.bricksAndPieces.itemNumber ==
                 payload.bricksAndPieces.itemNumber
         );
-
         var qtyForPrice = 0;
 
         if (found) {
@@ -210,11 +245,19 @@ const mutations = {
             state.notAllocatedPositions;
     },
     addToBrickLinkList(state, payload) {
-        var found = state.brickLinkList.find(
-            (f) =>
-                f.itemid == payload.itemid &&
-                f.color.brickLinkId == payload.color.brickLinkId
-        );
+        var found = state.brickLinkList.find((f) => {
+            if (payload.color.id == 1) {
+                return (
+                    f.itemid == payload.itemid &&
+                    f.color.legoName == payload.color.legoName
+                );
+            } else {
+                return (
+                    f.itemid == payload.itemid &&
+                    f.color.brickLinkId == payload.color.brickLinkId
+                );
+            }
+        });
 
         if (found) {
             found.qty = { ...found.qty };
@@ -247,11 +290,19 @@ const mutations = {
             state.notAllocatedPositions;
     },
     addToNotAllocatedList(state, payload) {
-        var found = state.notAllocatedList.find(
-            (f) =>
-                f.itemid == payload.itemid &&
-                f.color.brickLinkId == payload.color.brickLinkId
-        );
+        var found = state.notAllocatedList.find((f) => {
+            if (payload.color.id == 1) {
+                return (
+                    f.itemid == payload.itemid &&
+                    f.color.legoName == payload.color.legoName
+                );
+            } else {
+                return (
+                    f.itemid == payload.itemid &&
+                    f.color.brickLinkId == payload.color.brickLinkId
+                );
+            }
+        });
 
         if (found) {
             found.qty = { ...found.qty };

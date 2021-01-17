@@ -307,9 +307,22 @@ export default {
             }
         },
         onItemDeleted(item) {
-            this.wantedList = this.wantedList.filter(pos => {
-                return pos.itemid != item.itemid || pos.color.brickLinkId != item.color.brickLinkId
-            });
+            if (item.color.id == 1) {
+                this.wantedList = this.wantedList.filter((pos) => {
+                    return (
+                        pos.itemid != item.itemid ||
+                        pos.color.legoName != item.color.legoName
+                    );
+                });
+            } else {
+                this.wantedList = this.wantedList.filter((pos) => {
+                    return (
+                        pos.itemid != item.itemid ||
+                        pos.color.brickLinkId != item.color.brickLinkId
+                    );
+                });
+            }
+
             this.partList.positions = this.wantedList;
             this.brickListKey++; // redraw brickList
         },

@@ -233,8 +233,8 @@ export default {
             var part = {};
             part.source = 'lego';
             part.itemid = item.designId;
-            part.searchids = [item.designId];
             part.color = this.findLegoColor(item.colorFamily, this.COLOR);
+            part.searchids = [item.designId];
             part.qty = {
                 min: 1,
                 have: 0,

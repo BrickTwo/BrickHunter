@@ -19,33 +19,38 @@ export const brickProcessorMixin = {
         },
         findLegoColor(colorFamily, colorList) {
             var result = colorList.filter(
-                (color) => color.bricksAndPiecesName.toUpperCase() == colorFamily.toUpperCase()
+                (color) =>
+                    color.bricksAndPiecesName.toUpperCase() ==
+                    colorFamily.toUpperCase()
             );
 
-            if (!result.length) {
-                result = colorList.filter((color) => color.brickLinkId == 0);
-                result[0].legoName = colorFamily;
-                result[0].bricksAndPiecesName = colorFamily;
-                result[0].pickABrickName = colorFamily;
+            if (result.length) {
+                return result[0];
             }
-            return result[0];
+
+            var color = {...colorList.filter((color) => color.brickLinkId == 0)[0]};
+            color.legoName = colorFamily;
+            color.bricksAndPiecesName = colorFamily;
+            color.pickABrickName = colorFamily;
+            return color;
         },
         findBricksAndPiecesBrick(item, bricks) {
             if (!bricks) return null;
-            bricks = bricks.filter((brick) => !brick.isSoldOut && brick.isAvailable);
+            bricks = bricks.filter(
+                (brick) => !brick.isSoldOut && brick.isAvailable
+            );
 
             if (item.source == 'lego') {
-                var result = bricks.filter((brick) =>
-                    brick.itemNumber == item.itemid
+                var result = bricks.filter(
+                    (brick) => brick.itemNumber == item.itemid
                 );
-                if(result[0]) return result[0];
+                if (result[0]) return result[0];
             }
 
             var result = bricks.filter(
-                (brick) =>
-                    brick.colorFamily == item.color.bricksAndPiecesName
+                (brick) => brick.colorFamily == item.color.bricksAndPiecesName
             );
-            
+
             if (this.isSpecialBrick(item) && item.source == 'brickLink') {
                 if (item.brickLink.mapPCCs) {
                     var colorCodesArray = item.brickLink.mapPCCs;
@@ -66,7 +71,7 @@ export const brickProcessorMixin = {
                     return -1;
                 }
             });
-            
+
             return result[0];
         },
         findPickABrickBrick(item, bricks) {
@@ -76,7 +81,7 @@ export const brickProcessorMixin = {
                 var result = bricks.filter(
                     (brick) => brick.itemNumber == item.itemid
                 );
-                if(result[0]) return result[0];
+                if (result[0]) return result[0];
             }
 
             var result = bricks.filter(
@@ -136,7 +141,7 @@ export const brickProcessorMixin = {
                     }
                 }
             }
-            
+
             var foundBrick = this.findBricksAndPiecesBrick(item, bricks);
 
             if (foundBrick) {
