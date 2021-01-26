@@ -278,7 +278,7 @@ const mutations = {
         if (payload.brickLink?.wantedList?.maxprice)
             price = payload.brickLink?.wantedList?.maxprice;
         if (price < 0) price = 0;
-        state.brickLinkPrice = payload.qty.order * price;
+        state.brickLinkPrice += payload.qty.order * price;
     },
     clearBrickLinkList(state) {
         state.brickLinkList = [];
