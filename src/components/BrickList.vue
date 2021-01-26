@@ -10,6 +10,7 @@
         :css="css.table"
         :key="key"
     >
+        
         <template slot="quantity" slot-scope="props">
             <b-form-input
                 v-if="edit"
@@ -159,6 +160,7 @@ export default {
         },
     },
     data: () => ({
+        list: null,
         key: 0,
         tableHeight: '290px',
         sortOrder: [
@@ -255,7 +257,7 @@ export default {
     methods: {
         dataManager(sortOrder, pagination) {
             if (sortOrder.length) {
-                this.bricklist.sort(
+                this.list.sort(
                     this.compareValues(
                         sortOrder[0].sortField,
                         sortOrder[0].direction
@@ -263,7 +265,7 @@ export default {
                 );
             }
 
-            return this.bricklist;
+            return this.list;
         },
         compareValues(key, order = 'asc') {
             var keys = key.split('.');
@@ -358,14 +360,14 @@ export default {
         },
         deletePosition(item) {
             if (item.color.id == 1) {
-                this.bricklist = this.bricklist.filter((pos) => {
+                this.list = this.list.filter((pos) => {
                     return (
                         pos.itemid != item.itemid ||
                         pos.color.legoName != item.color.legoName
                     );
                 });
             } else {
-                this.bricklist = this.bricklist.filter((pos) => {
+                this.list = this.list.filter((pos) => {
                     return (
                         pos.itemid != item.itemid ||
                         pos.color.brickLinkId != item.color.brickLinkId
@@ -377,18 +379,19 @@ export default {
         },
     },
     beforeMount() {
+        this.list = this.bricklist;
         if (this.$store.state.mode == 'standalone') {
             this.tableHeight = 'calc(100vh - 260px)';
         }
         if (
-            this.bricklist.filter((p) => p.brickLink?.wantedList?.maxprice > 0)
+            this.list.filter((p) => p.brickLink?.wantedList?.maxprice > 0)
                 .length == 0
         ) {
             this.fields = this.fields.filter(
                 (field) => field.name != '__slot:brickLinkPrice'
             );
         }
-        this.bricklist.map((pos) => {
+        this.list.map((pos) => {
             if (pos.brickLink?.wantedList?.maxprice) {
                 if (pos.brickLink.wantedList.maxprice <= 0)
                     pos.brickLink.wantedList.maxprice = 0;
