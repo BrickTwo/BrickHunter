@@ -100,8 +100,8 @@ export default {
                     var part = {};
 
                     part.source = 'brickLink';
-                    part.itemid = item.itemid[0];
-                    part.searchids = [this.cleanItemId(item.itemid)];
+                    part.designId = item.itemid[0];
+                    part.searchids = [this.cleanDesignId(part.designId)];
                     if (item.color) {
                         part.color = this.findColor(item.color[0], this.COLOR);
                     } else {
@@ -146,7 +146,7 @@ export default {
 
                     part.image = {
                         source: 'brickLink',
-                        rsc: `https://img.bricklink.com/ItemImage/${part.brickLink.wantedList.itemtype}T/${part.color?.brickLinkId}/${part.itemid}.t1.png`,
+                        rsc: `https://img.bricklink.com/ItemImage/${part.brickLink.wantedList.itemtype}T/${part.color?.brickLinkId}/${part.designId}.t1.png`,
                     };
 
                     partList.push(part);

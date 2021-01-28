@@ -1,14 +1,12 @@
-import { validate } from 'vee-validate';
-
 export const brickProcessorMixin = {
     methods: {
-        cleanItemId(itemId) {
-            itemId = itemId.toString();
-            var lastChar = itemId.substr(-1, 1);
+        cleanDesignId(designId) {
+            designId = designId.toString();
+            var lastChar = designId.substr(-1, 1);
             if (lastChar >= 'a' && lastChar <= 'h') {
-                return itemId.slice(0, -1);
+                return designId.slice(0, -1);
             } else {
-                return itemId;
+                return designId;
             }
         },
         findColor(brickLinkColorId, colorList) {
@@ -28,23 +26,42 @@ export const brickProcessorMixin = {
                 return result[0];
             }
 
-            var color = {...colorList.filter((color) => color.brickLinkId == 0)[0]};
+            var color = {
+                ...colorList.filter((color) => color.brickLinkId == 0)[0],
+            };
             color.legoName = colorFamily;
             color.bricksAndPiecesName = colorFamily;
             color.pickABrickName = colorFamily;
             return color;
         },
-        findBricksAndPiecesBrick(item, bricks) {
+        async findBricksAndPiecesBrick(item, bricks) {
             if (!bricks) return null;
             bricks = bricks.filter(
                 (brick) => !brick.isSoldOut && brick.isAvailable
             );
 
-            if (item.source == 'lego') {
+            if (item.source == 'lego' || item.source == 'singleParts') {
                 var result = bricks.filter(
-                    (brick) => brick.itemNumber == item.itemid
+                    (brick) => brick.itemNumber == item.itemNumber
                 );
                 if (result[0]) return result[0];
+
+                var resp = await this.getBrickAsync(item.itemNumber);
+                console.log(resp, resp.alternativeItemNumbers);
+                if (resp?.brick?.alternativeItemNumbers) {
+
+                    var altItemNumbers = resp.brick.alternativeItemNumbers.split('|');
+
+                    for(var i = 1; i < altItemNumbers.length -1; i++ ){
+                        var result = bricks.filter(
+                            (brick) => brick.itemNumber == altItemNumbers[i]
+                        );
+                        console.log(result[0]);
+                        if (result[0]) return result[0];
+                    }
+
+                    console.log("dsfdsf", result);
+                }
             }
 
             var result = bricks.filter(
@@ -77,9 +94,9 @@ export const brickProcessorMixin = {
         findPickABrickBrick(item, bricks) {
             if (!bricks) return null;
 
-            if (item.source == 'lego') {
+            if (item.source == 'lego' || item.source == 'singleParts') {
                 var result = bricks.filter(
-                    (brick) => brick.itemNumber == item.itemid
+                    (brick) => brick.itemNumber == item.itemNumber
                 );
                 if (result[0]) return result[0];
             }
@@ -106,14 +123,14 @@ export const brickProcessorMixin = {
         },
         isSpecialBrick(item) {
             if (
-                isNaN(this.cleanItemId(item.itemid)) ||
+                isNaN(this.cleanDesignId(item.designId)) ||
                 item.color.brickLinkId == 65 || // metallic gold
                 item.color.brickLinkId == 67 || // metallic silver
-                item.itemid == '90398' ||
-                item.itemid == '67583' ||
-                item.itemid == '27328' ||
-                item.itemid == '21699' ||
-                item.itemid == '38547'
+                item.designId == '90398' ||
+                item.designId == '67583' ||
+                item.designId == '27328' ||
+                item.designId == '21699' ||
+                item.designId == '38547'
             ) {
                 return true;
             }
@@ -134,7 +151,7 @@ export const brickProcessorMixin = {
                     var response = await browser.runtime.sendMessage({
                         service: 'bricksAndPieces',
                         action: 'findBrick',
-                        itemId: item.searchids[j],
+                        designId: item.searchids[j],
                     });
                     if (response?.bricks) {
                         bricks = bricks.concat(response.bricks);
@@ -142,7 +159,7 @@ export const brickProcessorMixin = {
                 }
             }
 
-            var foundBrick = this.findBricksAndPiecesBrick(item, bricks);
+            var foundBrick = await this.findBricksAndPiecesBrick(item, bricks);
 
             if (foundBrick) {
                 item.bricksAndPieces = foundBrick;
@@ -167,7 +184,7 @@ export const brickProcessorMixin = {
             var response = await browser.runtime.sendMessage({
                 service: 'pickABrick',
                 action: 'findBrick',
-                itemId: item.searchids.join('-'),
+                designId: item.searchids.join('-'),
             });
 
             var foundBrick = this.findPickABrickBrick(item, response);

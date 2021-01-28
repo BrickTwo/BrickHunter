@@ -151,7 +151,7 @@ export default {
             wantedList.map((part) => {
                 var found = partListMerged.find(
                     (f) =>
-                        f.itemid == part.itemid &&
+                        f.designId == part.designId &&
                         f.color.brickLinkId == part.color.brickLinkId
                 );
 

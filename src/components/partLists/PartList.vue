@@ -218,7 +218,7 @@ export default {
             try {
                 item.bricksAndPieces = { isLoading: true };
                 if (item.source == 'brickLink') {
-                    var brickLinkHtml = await this.getBricklink(item.itemid);
+                    var brickLinkHtml = await this.getBricklink(item.designId);
                     var returnObject = await this.returnModelsObject(
                         brickLinkHtml
                     );
@@ -310,14 +310,14 @@ export default {
             if (item.color.id == 1) {
                 this.wantedList = this.wantedList.filter((pos) => {
                     return (
-                        pos.itemid != item.itemid ||
+                        pos.designId != item.designId ||
                         pos.color.legoName != item.color.legoName
                     );
                 });
             } else {
                 this.wantedList = this.wantedList.filter((pos) => {
                     return (
-                        pos.itemid != item.itemid ||
+                        pos.designId != item.designId ||
                         pos.color.brickLinkId != item.color.brickLinkId
                     );
                 });

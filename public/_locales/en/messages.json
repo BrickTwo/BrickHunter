@@ -98,8 +98,11 @@
     "brickList_lineNumber": {
         "message": "#"
     },
-    "brickList_itemId": {
+    "brickList_designId": {
         "message": "Id"
+    },
+    "brickList_ItemNumber": {
+        "message": "Element"
     },
     "brickList_brickLinkImage": {
         "message": "Picture"

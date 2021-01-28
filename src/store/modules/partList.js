@@ -39,7 +39,7 @@ const mutations = {
                     var part = {};
 
                     part.source = 'brickLink';
-                    part.itemid = item.itemid;
+                    part.designId = item.designId;
                     part.searchids = item.searchids;
                     part.color = item.color;
                     part.qty = item.qty;
@@ -79,14 +79,36 @@ const mutations = {
             });
         }
 
-        if (oldVersion[0] <= 1 && oldVersion[1] <= 4 && oldVersion[2] < 4) {
+        if (oldVersion[0] == 1 && oldVersion[1] == 4 && oldVersion[2] == 4) {
             state.partLists.map((partList) => {
                 if (partList.source == 'singleParts') {
                     partList.positions.map((pos) => {
-                        pos.itemid = pos.searchids[0];
+                        if (pos.image.itemId) {
+                            pos.itemid = pos.image.itemId;
+                        }
                     });
                 }
-                partList.source = partList.positions[0].source;
+                localStorage.setItem(
+                    'partList_' + partList.id,
+                    JSON.stringify(partList)
+                );
+            });
+        }
+
+        if (oldVersion[0] <= 1 && oldVersion[1] <= 4 && oldVersion[2] < 5) {
+            state.partLists.map((partList) => {
+                if (partList.source == 'singleParts') {
+                    partList.positions.map((pos) => {
+                        pos.itemNumber = pos.itemid;
+                        pos.designId = pos.searchids[0];
+                        delete pos.itemid;
+                    });
+                } else {
+                    partList.positions.map((pos) => {
+                        pos.designId = pos.itemid;
+                        delete pos.itemid;
+                    });
+                }
                 localStorage.setItem(
                     'partList_' + partList.id,
                     JSON.stringify(partList)

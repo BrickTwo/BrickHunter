@@ -181,10 +181,7 @@ export default {
             var partList = this.loadPartList();
 
             var foundPart = partList.positions.find((pos) => {
-                return (
-                    pos.itemid == item.designId &&
-                    pos.color.bricksAndPiecesName == item.colorFamily
-                );
+                return pos.itemNumber == item.itemNumber;
             });
 
             if (foundPart) {
@@ -193,9 +190,7 @@ export default {
 
                 if (item.order == 0) {
                     partList.positions = partList.positions.filter(
-                        (pos) =>
-                            pos.itemid != item.designId ||
-                            pos.color.bricksAndPiecesName != item.colorFamily
+                        (pos) => pos.itemNumber != item.itemNumber
                     );
                 }
                 this.$store.commit('partList/setPartList', partList);
@@ -206,9 +201,7 @@ export default {
             var partList = this.loadPartList();
 
             var foundPart = partList.positions.find(
-                (pos) =>
-                    pos.itemid == item.designId &&
-                    pos.color.bricksAndPiecesName == item.colorFamily
+                (pos) => pos.itemNumber == item.itemNumber
             );
 
             if (foundPart) {
@@ -232,7 +225,8 @@ export default {
 
             var part = {};
             part.source = 'lego';
-            part.itemid = item.designId;
+            part.designId = item.designId;
+            part.itemNumber = item.itemNumber;
             part.color = this.findLegoColor(item.colorFamily, this.COLOR);
             part.searchids = [item.designId];
             part.qty = {
@@ -362,7 +356,7 @@ export default {
                 this.search.bricks.map((brick) => {
                     var foundPos = selectedPartList.positions.find(
                         (pos) =>
-                            pos.itemid == brick.designId &&
+                            pos.designId == brick.designId &&
                             pos.color.bricksAndPiecesName == brick.colorFamily
                     );
                     if (foundPos) {
@@ -394,7 +388,7 @@ export default {
                 var response = await browser.runtime.sendMessage({
                     service: 'bricksAndPieces',
                     action: 'findBrick',
-                    itemId: designId,
+                    designId: designId,
                 });
 
                 if (!response) {

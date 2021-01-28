@@ -29,7 +29,7 @@ export const requestsMixin = {
             }
 
             var response = await axios.get(
-                `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${$page}&limit=${$limit}&country=${this.$store.state.country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}&mode=1`
+                `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${$page}&limit=${$limit}&country=${this.$store.state.country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}`
             );
             return response.data;
         },

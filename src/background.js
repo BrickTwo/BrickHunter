@@ -65,7 +65,7 @@ function addContentScript(tabId) {
 async function pickABrick(request) {
     switch (request.action) {
         case 'findBrick':
-            return await findBrick(request.itemId);
+            return await findBrick(request.designId);
         case 'readQAuth':
             return await readQAuth();
         case 'readCart':
@@ -90,13 +90,13 @@ async function pickABrick(request) {
     pickABrick.addToCart = addToCart;
     pickABrick.open = open;
 
-    async function findBrick(itemId) {
+    async function findBrick(designId) {
         var PickABrickQuery = {
             operationName: 'PickABrickQuery',
             variables: {
                 page: 1,
                 perPage: 200,
-                query: encodeURIComponent(itemId),
+                query: encodeURIComponent(designId),
             },
             query:
                 'query PickABrickQuery($query: String, $page: Int, $perPage: Int, $filters: [Filter!]) {\n  elements(query: $query, page: $page, perPage: $perPage, filters: $filters) {\n    count\n    facets {\n      ...FacetData\n      __typename\n    }\n    results {\n      ...ElementLeafData\n      __typename\n    }\n    total\n    __typename\n  }\n  me {\n    ... on LegoUser {\n      ...UserData\n      pabCart {\n        PABLineItems {\n          ...PABLineItemData\n          __typename\n        }\n        taxedPrice {\n          totalGross {\n            currencyCode\n            formattedAmount\n            formattedValue\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment FacetData on Facet {\n  id\n  key\n  name\n  labels {\n    count\n    key\n    name\n    ... on FacetValue {\n      value\n      __typename\n    }\n    ... on FacetRange {\n      from\n      to\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ElementLeafData on Element {\n  id\n  name\n  primaryImageUrl\n  spinset {\n    frames {\n      url\n      __typename\n    }\n    __typename\n  }\n  ... on SingleVariantElement {\n    variant {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  ... on MultiVariantElement {\n    variants {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ElementLeafVariant on ElementVariant {\n  id\n  price {\n    currencyCode\n    centAmount\n    formattedAmount\n    __typename\n  }\n  attributes {\n    availabilityStatus\n    canAddToBag\n    colour\n    colourFamily\n    designNumber\n    mainGroup\n    materialGroup\n    materialType\n    maxOrderQuantity\n    showInListing\n    __typename\n  }\n  __typename\n}\n\nfragment UserData on LegoUser {\n  pabCart {\n    id\n    PABLineItems {\n      id\n      quantity\n      element {\n        id\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment PABLineItemData on PABCartLineItem {\n  id\n  quantity\n  element {\n    id\n    name\n    primaryImageUrl\n    __typename\n  }\n  price {\n    centAmount\n    currencyCode\n    __typename\n  }\n  elementVariant {\n    id\n    attributes {\n      designNumber\n      __typename\n    }\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    __typename\n  }\n  __typename\n}\n',
@@ -266,7 +266,7 @@ async function pickABrick(request) {
 async function bricksAndPieces(request) {
     switch (request.action) {
         case 'findBrick':
-            return await findBrick(request.itemId);
+            return await findBrick(request.designId);
         case 'findSet':
             return await findSet(request.setNumber);
         case 'fillCart':
@@ -282,9 +282,9 @@ async function bricksAndPieces(request) {
     bricksAndPieces.clearCart = clearCart;
     bricksAndPieces.open = open;
 
-    async function findBrick(itemId) {
+    async function findBrick(designId) {
         var url = `https://bricksandpieces.services.lego.com/api/v1/bricks/items/${encodeURIComponent(
-            itemId
+            designId
         )}?country=${localeCountry}&orderType=buy`;
 
         var response = await fetch(url, {

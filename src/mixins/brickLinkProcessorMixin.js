@@ -41,7 +41,7 @@ export const brickLinkProcessorMixin = {
                 item.searchids = desingIds;
             } else {
                 //console.log("normal brick")
-                item.searchids = [this.cleanItemId(item.itemid)];
+                item.searchids = [this.cleanDesignId(item.designId)];
                 item.searchids = item.searchids.concat(
                     await this.findAlternateItemNumbers(item)
                 );

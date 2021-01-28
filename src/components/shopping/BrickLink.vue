@@ -110,7 +110,7 @@ export default {
                 var item = {
                     ITEM: {
                         ITEMTYPE: this.brickList[i].brickLink?.wantedList?.itemtype,
-                        ITEMID: this.brickList[i].itemid,
+                        ITEMID: this.brickList[i].designId,
                         COLOR: this.brickList[i].color.brickLinkId,
                         MAXPRICE: this.brickList[i].brickLink?.wantedList?.maxprice,
                         MINQTY: this.brickList[i].qty.min,

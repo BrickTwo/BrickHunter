@@ -10,7 +10,6 @@
         :css="css.table"
         :key="key"
     >
-        
         <template slot="quantity" slot-scope="props">
             <b-form-input
                 v-if="edit"
@@ -165,7 +164,7 @@ export default {
         tableHeight: '290px',
         sortOrder: [
             {
-                field: 'itemid',
+                field: 'designId',
                 direction: 'asc',
             },
         ],
@@ -188,9 +187,15 @@ export default {
         },
         fields: [
             {
-                name: 'itemid',
-                sortField: 'itemid',
-                title: () => browser.i18n.getMessage('brickList_itemId'),
+                name: 'designId',
+                sortField: 'designId',
+                title: () => browser.i18n.getMessage('brickList_designId'),
+                width: '90px',
+            },
+            {
+                name: 'itemNumber',
+                sortField: 'itemNumber',
+                title: () => browser.i18n.getMessage('brickList_itemNumber'),
                 width: '90px',
             },
             {
@@ -362,14 +367,14 @@ export default {
             if (item.color.id == 1) {
                 this.list = this.list.filter((pos) => {
                     return (
-                        pos.itemid != item.itemid ||
+                        pos.designId != item.designId ||
                         pos.color.legoName != item.color.legoName
                     );
                 });
             } else {
                 this.list = this.list.filter((pos) => {
                     return (
-                        pos.itemid != item.itemid ||
+                        pos.designId != item.designId ||
                         pos.color.brickLinkId != item.color.brickLinkId
                     );
                 });
@@ -391,6 +396,13 @@ export default {
                 (field) => field.name != '__slot:brickLinkPrice'
             );
         }
+
+        if (this.list.filter((p) => p.itemNumber).length == 0) {
+            this.fields = this.fields.filter(
+                (field) => field.name != 'itemNumber'
+            );
+        }
+
         this.list.map((pos) => {
             if (pos.brickLink?.wantedList?.maxprice) {
                 if (pos.brickLink.wantedList.maxprice <= 0)
@@ -403,35 +415,50 @@ export default {
     },
     watch: {
         showSort: async function(val) {
+            var findItemNumber = this.fields.find(
+                (field) => field.name === 'itemNumber'
+            );
+            var findBrickLinkPrice = this.fields.find(
+                (field) => field.name === '__slot:brickLinkPrice'
+            );
+
             if (val) {
-                this.fields.find((field) => field.name === 'itemid').sortField =
-                    'itemid';
+                this.fields.find(
+                    (field) => field.name === 'designId'
+                ).sortField = 'designId';
+
+                if (findItemNumber) findItemNumber.sortField = 'itemNumber';
+
                 this.fields.find((field) => field.name === 'color').sortField =
                     'color.brickLinkName';
+
                 this.fields.find(
                     (field) => field.name === '__slot:quantity'
                 ).sortField = 'qty.min';
-                this.fields.find(
-                    (field) => field.name === '__slot:brickLinkPrice'
-                ).sortField = 'brickLink.wantedList.maxprice';
+
+                if (findBrickLinkPrice)
+                    findBrickLinkPrice.sortField =
+                        'brickLink.wantedList.maxprice';
+
                 this.fields.find(
                     (field) => field.name === 'pickABrick'
                 ).sortField = 'pickABrick.variant.price.centAmount';
+
                 this.fields.find(
                     (field) => field.name === 'bricksAndPieces'
                 ).sortField = 'bricksAndPieces.price.amount';
+
                 this.key++;
                 return;
             }
-            delete this.fields.find((field) => field.name === 'itemid')
+            delete this.fields.find((field) => field.name === 'designId')
                 .sortField;
+            if (findItemNumber) delete findItemNumber.sortField;
             delete this.fields.find((field) => field.name === 'color')
                 .sortField;
             delete this.fields.find((field) => field.name === '__slot:quantity')
                 .sortField;
-            delete this.fields.find(
-                (field) => field.name === '__slot:brickLinkPrice'
-            ).sortField;
+            if (findBrickLinkPrice) delete findBrickLinkPrice.sortField;
             delete this.fields.find((field) => field.name === 'pickABrick')
                 .sortField;
             delete this.fields.find((field) => field.name === 'bricksAndPieces')
