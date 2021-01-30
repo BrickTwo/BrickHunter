@@ -24,7 +24,7 @@
             </b-col>
         </b-row>
         <b-row>
-            <ColorPicker @selectColor="selectColor" />
+            <ColorPicker @selectColor="selectColor" :colorList="colorList" />
         </b-row>
         <b-row class="p-1">
             <b-col>
@@ -168,6 +168,7 @@ export default {
         showAs: 'grid',
         listUpdate: true,
         componentKey: 0,
+        colorList: [],
     }),
     components: {
         BrickGrid,
@@ -342,6 +343,7 @@ export default {
             );
             bus.$emit('CategoriesFiltered', this.search.categories);
 
+            this.colorList = this.search.colors;
             this.totalRows = this.search.page.total;
 
             this.selectPart();
