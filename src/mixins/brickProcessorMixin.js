@@ -19,7 +19,9 @@ export const brickProcessorMixin = {
         },
         findLegoColor(colorFamily, colorList) {
             var result = colorList.filter(
-                (color) => color.bricksAndPiecesName.toUpperCase() == colorFamily.toUpperCase()
+                (color) =>
+                    color.bricksAndPiecesName.toUpperCase() ==
+                    colorFamily.toUpperCase()
             );
 
             if (!result.length) {
@@ -32,20 +34,21 @@ export const brickProcessorMixin = {
         },
         findBricksAndPiecesBrick(item, bricks) {
             if (!bricks) return null;
-            bricks = bricks.filter((brick) => !brick.isSoldOut && brick.isAvailable);
+            bricks = bricks.filter(
+                (brick) => !brick.isSoldOut && brick.isAvailable
+            );
 
             if (item.source == 'lego') {
-                var result = bricks.filter((brick) =>
-                    brick.itemNumber == item.itemid
+                var result = bricks.filter(
+                    (brick) => brick.itemNumber == item.itemid
                 );
-                if(result[0]) return result[0];
+                if (result[0]) return result[0];
             }
 
             var result = bricks.filter(
-                (brick) =>
-                    brick.colorFamily == item.color.bricksAndPiecesName
+                (brick) => brick.colorFamily == item.color.bricksAndPiecesName
             );
-            
+
             if (this.isSpecialBrick(item) && item.source == 'brickLink') {
                 if (item.brickLink.mapPCCs) {
                     var colorCodesArray = item.brickLink.mapPCCs;
@@ -66,7 +69,7 @@ export const brickProcessorMixin = {
                     return -1;
                 }
             });
-            
+
             return result[0];
         },
         findPickABrickBrick(item, bricks) {
@@ -76,7 +79,7 @@ export const brickProcessorMixin = {
                 var result = bricks.filter(
                     (brick) => brick.itemNumber == item.itemid
                 );
-                if(result[0]) return result[0];
+                if (result[0]) return result[0];
             }
 
             var result = bricks.filter(
@@ -114,11 +117,11 @@ export const brickProcessorMixin = {
             }
             return false;
         },
-        async loadBricksAndPieces(item) {
+        async loadBricksAndPieces(item, single = false) {
             if (!item.searchids) {
                 item.bricksAndPieces = null;
-                this.bricksAndPiecesBrickCounter++;
-                this.calcLoad();
+                if(!single) this.bricksAndPiecesBrickCounter++;
+                if(!single) this.calcLoad();
                 return item;
             }
 
@@ -130,12 +133,19 @@ export const brickProcessorMixin = {
                         contentScriptQuery: 'getBricksAndPieces',
                         itemId: item.searchids[j],
                     });
+                    if (response?.status) {
+                        item.bricksAndPieces = { error: response.status };
+                        if(!single) this.bricksAndPiecesBrickCounter++;
+                        if(!single) this.calcLoad();
+                        return item;
+                    }
+
                     if (response?.bricks) {
                         bricks = bricks.concat(response.bricks);
                     }
                 }
             }
-            
+
             var foundBrick = this.findBricksAndPiecesBrick(item, bricks);
 
             if (foundBrick) {
@@ -143,8 +153,8 @@ export const brickProcessorMixin = {
             } else {
                 item.bricksAndPieces = null;
             }
-            this.bricksAndPiecesBrickCounter++;
-            this.calcLoad();
+            if(!single) this.bricksAndPiecesBrickCounter++;
+            if(!single) this.calcLoad();
 
             this.sendPrices(this.prepareSendPrice(bricks));
 

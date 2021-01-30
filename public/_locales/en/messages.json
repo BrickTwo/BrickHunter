@@ -119,6 +119,9 @@
     "brickList_bricksAndPiecesPrice": {
         "message": "Bricks & Pieces"
     },
+    "brickList_reload": {
+        "message": "Reload"
+    },
     "affiliate_noAffiliate": {
         "message": "Ohne Affiliate"
     },

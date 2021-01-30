@@ -7,7 +7,11 @@
         :table-height="tableHeight"
     >
         <template slot="quantity" slot-scope="props">
-            <b-form-input v-if="edit" v-model="props.rowData.qty.min" type="number" />
+            <b-form-input
+                v-if="edit"
+                v-model="props.rowData.qty.min"
+                type="number"
+            />
             <div v-if="limitMaxQty > 0 && !edit">
                 <div v-if="props.rowData.qty.maxAmount">
                     <div
@@ -56,8 +60,99 @@
                 </div>
             </div>
         </template>
+        <template slot="bricksAndPieces" slot-scope="props">
+            <div v-if="!props.rowData.bricksAndPieces" />
+            <div v-else-if="props.rowData.bricksAndPieces.isLoading">
+                <svg
+                    viewBox="0 0 16 16"
+                    width="1em"
+                    height="1em"
+                    focusable="false"
+                    role="img"
+                    aria-label="arrow clockwise"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    class="bi-arrow-clockwise b-icon bi b-icon-animation-spin"
+                    style="font-size: 150%;"
+                >
+                    <g>
+                        <path
+                            fill-rule="evenodd"
+                            d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"
+                        ></path>
+                        <path
+                            fill-rule="evenodd"
+                            d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"
+                        ></path>
+                    </g>
+                </svg>
+            </div>
+            <div v-else-if="props.rowData.bricksAndPieces.error && edit" style="cursor: pointer;" @click="reloadPosition(props.rowData)">
+                <span style="display: block">
+                    <svg
+                        style="color: #dc3545"
+                        data-v-41be6633=""
+                        viewBox="0 0 16 16"
+                        width="1em"
+                        height="1em"
+                        focusable="false"
+                        role="img"
+                        aria-label="exclamation triangle fill"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        class="bi-exclamation-triangle-fill mx-auto b-icon bi"
+                    >
+                        <g data-v-41be6633="">
+                            <path
+                                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                            ></path>
+                        </g>
+                    </svg> <span style="color: grey; font-size: small;">Error: {{ props.rowData.bricksAndPieces.error }}</span>
+                </span>
+                <span style="color: #007bff;">
+                    {{ label_reload }}
+                </span>
+            </div>
+            <div v-else-if="props.rowData.bricksAndPieces.error">
+                <span style="display: block">
+                    <svg
+                        style="color: #dc3545"
+                        data-v-41be6633=""
+                        viewBox="0 0 16 16"
+                        width="1em"
+                        height="1em"
+                        focusable="false"
+                        role="img"
+                        aria-label="exclamation triangle fill"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        class="bi-exclamation-triangle-fill mx-auto b-icon bi"
+                    >
+                        <g data-v-41be6633="">
+                            <path
+                                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                            ></path>
+                        </g>
+                    </svg> <span style="color: grey; font-size: small;">Error: {{ props.rowData.bricksAndPieces.error }}</span>
+                </span>
+            </div>
+            <div v-else>
+                {{ props.rowData.bricksAndPieces.price.currency }}
+                {{ props.rowData.bricksAndPieces.price.amount }}<br />
+                <span style="color: grey; font-size: small;">
+                    [{{ props.rowData.bricksAndPieces.designId }}/{{
+                        props.rowData.bricksAndPieces.itemNumber
+                    }}]
+                </span>
+            </div>
+        </template>
         <template slot="actions" slot-scope="props">
-            <b-icon v-if="edit" icon="trash" aria-hidden="true" @click="deletePosition(props.rowData)" />
+            <b-icon
+                v-if="edit"
+                icon="trash"
+                aria-hidden="true"
+                @click="deletePosition(props.rowData)"
+            />
         </template>
     </vuetable>
 </template>
@@ -137,10 +232,10 @@ export default {
                 width: '110px',
             },
             {
-                name: 'bricksAndPieces',
+                name: '__slot:bricksAndPieces',
                 title: () =>
                     browser.i18n.getMessage('brickList_bricksAndPiecesPrice'),
-                callback: 'bricksAndPiecesPrice',
+                //callback: 'bricksAndPiecesPrice',
                 width: '120px',
             },
             {
@@ -183,6 +278,8 @@ export default {
         bricksAndPiecesPrice(value) {
             if (!value) return '';
             if (value.isLoading) return this.spinner();
+            if (value.error)
+                return `<span style="display: block"><svg style="color: #dc3545" data-v-41be6633="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="exclamation triangle fill" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-exclamation-triangle-fill mx-auto b-icon bi"><g data-v-41be6633=""><path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path></g></svg></span><span style="color: grey; font-size: small;">Error: ${value.error}</span>`;
             var returnValue = `${value.price.currency} ${value.price.amount}<br><span style="color: grey; font-size: small;">[${value.designId}/${value.itemNumber}]</span>`;
             return returnValue;
         },
@@ -209,8 +306,11 @@ export default {
         spinner() {
             return '<svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="arrow clockwise" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-arrow-clockwise b-icon bi b-icon-animation-spin" style="font-size: 150%;"><g><path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"></path><path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"></path></g></svg>';
         },
-        deletePosition(position){
+        deletePosition(position) {
             this.$emit('itemDeleted', position);
+        },
+        reloadPosition(position){
+            this.$emit('reloadItem', position);
         }
     },
     beforeMount() {
@@ -218,5 +318,10 @@ export default {
             this.tableHeight = 'calc(100vh - 260px)';
         }
     },
+    computed: {
+        label_reload() {
+            return browser.i18n.getMessage('brickList_reload');
+        },
+    }
 };
 </script>

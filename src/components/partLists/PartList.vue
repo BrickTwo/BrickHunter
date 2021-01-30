@@ -127,6 +127,7 @@
                 :bricklist="wantedList"
                 :edit="true"
                 @itemDeleted="onItemDeleted"
+                @reloadItem="onReloadItem"
             ></brick-list>
         </div>
         <div id="wantedListPrint" style="display: none">
@@ -316,6 +317,30 @@ export default {
             });
             this.partList.positions = this.wantedList;
         },
+        async onReloadItem(item) {
+            try {
+                item.bricksAndPieces = { isLoading: true };
+                if (item.source == 'brickLink') {
+                    var brickLinkHtml = await this.getBricklink(item.itemid);
+                    var returnObject = await this.returnModelsObject(
+                        brickLinkHtml
+                    );
+                    item.brickLink.strAltNo = returnObject.strAltNo;
+                    item.brickLink.mapPCCs = returnObject.mapPCCs;
+                }
+            } catch (err) {
+                //console.log("couldn't find brick on bricklink");
+                item.bricksAndPieces = null;
+            }
+
+            if (item.source == 'brickLink' && !item.brickLink) {
+                item.bricksAndPieces = null;
+                return;
+            }
+
+            item = await this.prepareSearchIds(item);
+            item = await this.loadBricksAndPieces(item, true);
+        }
     },
     watch: {
         /*'partList.cart': function(val, oldVal) {
