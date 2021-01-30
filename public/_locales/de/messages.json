@@ -122,6 +122,9 @@
     "brickList_bricksAndPiecesPrice": {
         "message": "Steine & Teile"
     },
+    "brickList_reload": {
+        "message": "Neu laden"
+    },
     "affiliate_noAffiliate": {
         "message": "Ohne Affiliate"
     },

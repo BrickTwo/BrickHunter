@@ -47,20 +47,19 @@ export const brickProcessorMixin = {
                 if (result[0]) return result[0];
 
                 var resp = await this.getBrickAsync(item.itemNumber);
-                console.log(resp, resp.alternativeItemNumbers);
+
                 if (resp?.brick?.alternativeItemNumbers) {
+                    var altItemNumbers = resp.brick.alternativeItemNumbers.split(
+                        '|'
+                    );
 
-                    var altItemNumbers = resp.brick.alternativeItemNumbers.split('|');
-
-                    for(var i = 1; i < altItemNumbers.length -1; i++ ){
+                    for (var i = 1; i < altItemNumbers.length - 1; i++) {
                         var result = bricks.filter(
                             (brick) => brick.itemNumber == altItemNumbers[i]
                         );
-                        console.log(result[0]);
+
                         if (result[0]) return result[0];
                     }
-
-                    console.log("dsfdsf", result);
                 }
             }
 
@@ -136,11 +135,11 @@ export const brickProcessorMixin = {
             }
             return false;
         },
-        async loadBricksAndPieces(item) {
+        async loadBricksAndPieces(item, single = false) {
             if (!item.searchids) {
                 item.bricksAndPieces = null;
-                this.bricksAndPiecesBrickCounter++;
-                this.calcLoad();
+                if (!single) this.bricksAndPiecesBrickCounter++;
+                if (!single) this.calcLoad();
                 return item;
             }
 
@@ -153,6 +152,12 @@ export const brickProcessorMixin = {
                         action: 'findBrick',
                         designId: item.searchids[j],
                     });
+                    if (response?.status) {
+                        item.bricksAndPieces = { error: response.status };
+                        if (!single) this.bricksAndPiecesBrickCounter++;
+                        if (!single) this.calcLoad();
+                        return item;
+                    }
                     if (response?.bricks) {
                         bricks = bricks.concat(response.bricks);
                     }

@@ -81,6 +81,52 @@
                 {{ props.rowData.brickLink.wantedList.maxprice }}
             </div>
         </template>
+        <template slot="bricksAndPieces" slot-scope="props">
+            <div v-if="!props.rowData.bricksAndPieces" />
+            <div v-else-if="props.rowData.bricksAndPieces.isLoading">
+                <b-icon icon="arrow-clockwise" animation="spin" font-scale="1.5"/>
+            </div>
+            <div
+                v-else-if="props.rowData.bricksAndPieces.error && edit"
+                style="cursor: pointer;"
+                @click="reloadPosition(props.rowData)"
+            >
+                <span style="display: block">
+                    <b-icon
+                        icon="exclamation-triangle-fill"
+                        style="margin-right: 5px;"
+                        variant="danger"
+                    />
+                    <span style="color: grey; font-size: small;"
+                        >Error: {{ props.rowData.bricksAndPieces.error }}</span
+                    >
+                </span>
+                <span style="color: #007bff;">
+                    {{ label_reload }}
+                </span>
+            </div>
+            <div v-else-if="props.rowData.bricksAndPieces.error">
+                <span style="display: block">
+                    <b-icon
+                        icon="exclamation-triangle-fill"
+                        style="margin-right: 5px;"
+                        variant="danger"
+                    />
+                    <span style="color: grey; font-size: small;"
+                        >Error: {{ props.rowData.bricksAndPieces.error }}</span
+                    >
+                </span>
+            </div>
+            <div v-else>
+                {{ props.rowData.bricksAndPieces.price.currency }}
+                {{ props.rowData.bricksAndPieces.price.amount }}<br />
+                <span style="color: grey; font-size: small;">
+                    [{{ props.rowData.bricksAndPieces.designId }}/{{
+                        props.rowData.bricksAndPieces.itemNumber
+                    }}]
+                </span>
+            </div>
+        </template>
         <template slot="actions" slot-scope="props">
             <b-icon
                 v-if="edit"
@@ -242,11 +288,11 @@ export default {
                 width: '110px',
             },
             {
-                name: 'bricksAndPieces',
+                name: '__slot:bricksAndPieces',
                 sortField: 'bricksAndPieces.price.amount',
                 title: () =>
                     browser.i18n.getMessage('brickList_bricksAndPiecesPrice'),
-                callback: 'bricksAndPiecesPrice',
+                //callback: 'bricksAndPiecesPrice',
                 width: '120px',
             },
             {
@@ -382,6 +428,9 @@ export default {
             this.$emit('itemDeleted', item);
             this.key++;
         },
+        reloadPosition(position) {
+            this.$emit('reloadItem', position);
+        },
     },
     beforeMount() {
         this.list = this.bricklist;
@@ -445,7 +494,7 @@ export default {
                 ).sortField = 'pickABrick.variant.price.centAmount';
 
                 this.fields.find(
-                    (field) => field.name === 'bricksAndPieces'
+                    (field) => field.name === '__slot:bricksAndPieces'
                 ).sortField = 'bricksAndPieces.price.amount';
 
                 this.key++;
@@ -461,9 +510,15 @@ export default {
             if (findBrickLinkPrice) delete findBrickLinkPrice.sortField;
             delete this.fields.find((field) => field.name === 'pickABrick')
                 .sortField;
-            delete this.fields.find((field) => field.name === 'bricksAndPieces')
-                .sortField;
+            delete this.fields.find(
+                (field) => field.name === '__slot:bricksAndPieces'
+            ).sortField;
             this.key++;
+        },
+    },
+    computed: {
+        label_reload() {
+            return browser.i18n.getMessage('brickList_reload');
         },
     },
 };
