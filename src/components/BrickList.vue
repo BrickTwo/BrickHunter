@@ -81,15 +81,71 @@
                 {{ props.rowData.brickLink.wantedList.maxprice }}
             </div>
         </template>
+        <template slot="pickABrick" slot-scope="props">
+            <div v-if="!props.rowData.pickABrick" />
+            <div v-else-if="props.rowData.pickABrick.isLoading">
+                <b-icon
+                    icon="arrow-clockwise"
+                    animation="spin"
+                    font-scale="1.5"
+                />
+            </div>
+            <div
+                v-else-if="props.rowData.pickABrick.error && edit"
+                style="cursor: pointer;"
+                @click="reloadPickABrickPosition(props.rowData)"
+            >
+                <span style="display: block">
+                    <b-icon
+                        icon="exclamation-triangle-fill"
+                        style="margin-right: 5px;"
+                        variant="danger"
+                    />
+                    <span style="color: grey; font-size: small;"
+                        >Error: {{ props.rowData.pickABrick.error }}</span
+                    >
+                </span>
+                <span style="color: #007bff;">
+                    {{ label_reload }}
+                </span>
+            </div>
+            <div v-else-if="props.rowData.pickABrick.error">
+                <span style="display: block">
+                    <b-icon
+                        icon="exclamation-triangle-fill"
+                        style="margin-right: 5px;"
+                        variant="danger"
+                    />
+                    <span style="color: grey; font-size: small;"
+                        >Error: {{ props.rowData.pickABrick.error }}</span
+                    >
+                </span>
+            </div>
+            <div v-else>
+                {{ props.rowData.pickABrick.variant.price.currencyCode }}
+                {{ props.rowData.pickABrick.variant.price.centAmount / 100
+                }}<br />
+                <span style="color: grey; font-size: small;">
+                    [{{
+                        props.rowData.pickABrick.variant.attributes
+                            .designNumber
+                    }}/{{ props.rowData.pickABrick.variant.id }}]
+                </span>
+            </div>
+        </template>
         <template slot="bricksAndPieces" slot-scope="props">
             <div v-if="!props.rowData.bricksAndPieces" />
             <div v-else-if="props.rowData.bricksAndPieces.isLoading">
-                <b-icon icon="arrow-clockwise" animation="spin" font-scale="1.5"/>
+                <b-icon
+                    icon="arrow-clockwise"
+                    animation="spin"
+                    font-scale="1.5"
+                />
             </div>
             <div
                 v-else-if="props.rowData.bricksAndPieces.error && edit"
                 style="cursor: pointer;"
-                @click="reloadPosition(props.rowData)"
+                @click="reloadBricksAndPiecesPosition(props.rowData)"
             >
                 <span style="display: block">
                     <b-icon
@@ -259,12 +315,6 @@ export default {
                 callback: 'showColor',
                 width: '200px',
             },
-            /*{
-                name: 'qty',
-                title: () => browser.i18n.getMessage('brickList_quantity'),
-                callback: 'showQty',
-                width: '50px',
-            },*/
             {
                 name: '__slot:quantity',
                 sortField: 'qty.min',
@@ -280,11 +330,11 @@ export default {
                 width: '90px',
             },
             {
-                name: 'pickABrick',
+                name: '__slot:pickABrick',
                 sortField: 'pickABrick.variant.price.centAmount',
                 title: () =>
                     browser.i18n.getMessage('brickList_pickABrickPrice'),
-                callback: 'pickABrickPrice',
+                //callback: 'pickABrickPrice',
                 width: '110px',
             },
             {
@@ -365,50 +415,6 @@ export default {
             if (!value) return;
             return `<span style="display: block"><div style="background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"></div><span>${value.brickLinkName}</span></span><span style="color: grey; font-size: small; margin-left: 20px">[${value.legoName}]</span>`;
         },
-        brickLinkPrice(value) {
-            if (value?.wantedList?.maxprice < 0) return;
-            return value?.wantedList?.maxprice;
-        },
-        pickABrickPrice(value) {
-            if (!value) return '';
-            if (value.isLoading) return this.spinner();
-
-            var returnValue = `${value.variant.price.currencyCode} ${value
-                .variant.price.centAmount /
-                100}<br><span style="color: grey; font-size: small;">[${
-                value.variant.attributes.designNumber
-            }/${value.variant.id}]</span>`;
-            return returnValue;
-        },
-        bricksAndPiecesPrice(value) {
-            if (!value) return '';
-            if (value.isLoading) return this.spinner();
-            var returnValue = `${value.price.currency} ${value.price.amount}<br><span style="color: grey; font-size: small;">[${value.designId}/${value.itemNumber}]</span>`;
-            return returnValue;
-        },
-        lineNumber(value) {
-            return value + 1;
-        },
-        showQty(value) {
-            if (this.limitMaxQty > 0) {
-                if (value.maxAmount) {
-                    if (value.order > value.maxAmount) {
-                        return `<span id="maxqty" style="color: red">${value.maxAmount}</span><br><span style="color: grey; font-size: small;">[${value.order}]</span>`;
-                    }
-                    return value.order;
-                }
-                if (value.order > this.limitMaxQty)
-                    return `<span id="maxqty" style="color: red">${this.limitMaxQty}</span><br><span style="color: grey; font-size: small;">[${value.order}]</span>`;
-                if (value.have > 0) return value.order;
-            } else {
-                if (value.have > 0)
-                    return `<span id="maxqty">${value.min}</span><br><span style="color: grey; font-size: small;">(${value.have})</span>`;
-            }
-            return value.min;
-        },
-        spinner() {
-            return '<svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="arrow clockwise" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-arrow-clockwise b-icon bi b-icon-animation-spin" style="font-size: 150%;"><g><path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"></path><path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"></path></g></svg>';
-        },
         deletePosition(item) {
             if (item.color.id == 1) {
                 this.list = this.list.filter((pos) => {
@@ -428,8 +434,11 @@ export default {
             this.$emit('itemDeleted', item);
             this.key++;
         },
-        reloadPosition(position) {
-            this.$emit('reloadItem', position);
+        reloadPickABrickPosition(position) {
+            this.$emit('reloadPickABrickPosition', position);
+        },
+        reloadBricksAndPiecesPosition(position) {
+            this.$emit('reloadBricksAndPiecesPosition', position);
         },
     },
     beforeMount() {
@@ -490,7 +499,7 @@ export default {
                         'brickLink.wantedList.maxprice';
 
                 this.fields.find(
-                    (field) => field.name === 'pickABrick'
+                    (field) => field.name === '__slot:pickABrick'
                 ).sortField = 'pickABrick.variant.price.centAmount';
 
                 this.fields.find(
@@ -508,8 +517,9 @@ export default {
             delete this.fields.find((field) => field.name === '__slot:quantity')
                 .sortField;
             if (findBrickLinkPrice) delete findBrickLinkPrice.sortField;
-            delete this.fields.find((field) => field.name === 'pickABrick')
-                .sortField;
+            delete this.fields.find(
+                (field) => field.name === '__slot:pickABrick'
+            ).sortField;
             delete this.fields.find(
                 (field) => field.name === '__slot:bricksAndPieces'
             ).sortField;

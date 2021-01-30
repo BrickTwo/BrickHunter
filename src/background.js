@@ -115,12 +115,18 @@ async function pickABrick(request) {
         })
             .then((response) => {
                 clearTimeout(timeout);
+                if (response.status < 200 || response.status >= 300)
+                    return {
+                        status: response.status,
+                        message: response.json(),
+                    };
                 return response.json();
             })
             .catch((err) => {
                 return null;
             });
 
+        if (response.status) return response;
         return response.data.elements.results;
     }
 
@@ -164,10 +170,16 @@ async function pickABrick(request) {
         })
             .then((response) => {
                 clearTimeout(timeout);
+                if (response.status < 200 || response.status >= 300)
+                    return {
+                        status: response.status,
+                        message: response.json(),
+                    };
                 return response.json();
             })
             .catch((error) => console.log(error));
 
+        if (response.status) return response;
         return response.data.me.pabCart;
     }
 
@@ -195,6 +207,11 @@ async function pickABrick(request) {
         })
             .then((response) => {
                 clearTimeout(timeout);
+                if (response.status < 200 || response.status >= 300)
+                    return {
+                        status: response.status,
+                        message: response.json(),
+                    };
                 return response.json();
             })
             .catch((err) => {
@@ -230,6 +247,11 @@ async function pickABrick(request) {
         })
             .then((response) => {
                 clearTimeout(timeout);
+                if (response.status < 200 || response.status >= 300)
+                    return {
+                        status: response.status,
+                        message: response.json(),
+                    };
                 return response.json();
             })
             .catch((err) => {
@@ -347,6 +369,12 @@ async function bricksAndPieces(request) {
             body: JSON.stringify(query),
         });
 
+        if (responseSearch.status < 200 || responseSearch.status >= 300)
+            return {
+                status: responseSearch.status,
+                message: responseSearch.json(),
+            };
+
         var urlProduct = `https://bricksandpieces.services.lego.com/api/v1/bricks/product/${encodeURIComponent(
             setNumber
         )}?country=${localeCountry}&orderType=missing`;
@@ -361,6 +389,12 @@ async function bricksAndPieces(request) {
                 'x-api-key': 'saVSCq0hpuxYV48mrXMGfdKnMY1oUs3s',
             },
         });
+
+        if (responseProduct.status < 200 || responseProduct.status >= 300)
+            return {
+                status: responseProduct.status,
+                message: responseProduct.json(),
+            };
 
         var returnValue = {};
         var sets = await responseSearch.json();

@@ -137,6 +137,9 @@
     "aPartList": {
         "message": " eine Teileliste."
     },
+    "error_tryAgain": {
+        "message": "Bitte versuche es später nochmals!"
+    },
     "exportCsv_generalGroupTitle": {
         "message": "Allgemein"
     },

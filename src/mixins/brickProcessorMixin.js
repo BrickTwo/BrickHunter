@@ -171,18 +171,18 @@ export const brickProcessorMixin = {
             } else {
                 item.bricksAndPieces = null;
             }
-            this.bricksAndPiecesBrickCounter++;
-            this.calcLoad();
+            if (!single) this.bricksAndPiecesBrickCounter++;
+            if (!single) this.calcLoad();
 
             this.sendPrices(this.prepareSendPrice(bricks));
 
             return item;
         },
-        async loadPickABrick(item) {
+        async loadPickABrick(item, single = false) {
             if (!item.searchids) {
                 item.pickABrick = null;
-                this.pickABrickBrickCounter++;
-                this.calcLoad();
+                if (!single) this.pickABrickBrickCounter++;
+                if (!single) this.calcLoad();
                 return item;
             }
 
@@ -192,14 +192,21 @@ export const brickProcessorMixin = {
                 designId: item.searchids.join('-'),
             });
 
+            if (response?.status) {
+                item.pickABrick = { error: response.status };
+                if (!single) this.pickABrickBrickCounter++;
+                if (!single) this.calcLoad();
+                return item;
+            }
+
             var foundBrick = this.findPickABrickBrick(item, response);
             if (foundBrick) {
                 item.pickABrick = foundBrick;
             } else {
                 item.pickABrick = null;
             }
-            this.pickABrickBrickCounter++;
-            this.calcLoad();
+            if (!single) this.pickABrickBrickCounter++;
+            if (!single) this.calcLoad();
 
             return item;
         },

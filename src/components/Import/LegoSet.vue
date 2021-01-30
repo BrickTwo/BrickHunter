@@ -12,6 +12,16 @@
                 />
             </b-col>
         </b-row>
+        <b-row v-if="errorCode">
+            <b-col offset="3" cols="9">
+                <b-icon
+                    icon="exclamation-triangle-fill"
+                    style="margin-right: 5px;"
+                    variant="danger"
+                />
+                Error: {{ errorCode }} - {{ labelErrorTryAgain }}
+            </b-col>
+        </b-row>
         <b-row>
             <b-col cols="3">
                 <label>{{ labelName }}:</label>
@@ -67,16 +77,23 @@ export default {
         setName: '',
         setNumberSuffix: true,
         cart: true,
+        errorCode: null,
     }),
     mixins: [brickProcessorMixin, brickColorMixin],
     methods: {
         async loadLegoSet() {
+            this.errorCode = null;
             if (this.setNumber.length > 0) {
                 var response = await browser.runtime.sendMessage({
                     service: 'bricksAndPieces',
                     action: 'findSet',
                     setNumber: this.setNumber,
                 });
+
+                if (response?.status) {
+                    this.errorCode = response.status;
+                    return;
+                }
 
                 if (!response) {
                     this.setNumberExist = false;
@@ -233,6 +250,9 @@ export default {
             return browser.i18n.getMessage(
                 'import_errorImportBrickLinkTextToManyPositions'
             );
+        },
+        labelErrorTryAgain() {
+            return browser.i18n.getMessage('error_tryAgain');
         },
     },
 };

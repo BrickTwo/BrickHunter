@@ -128,7 +128,8 @@
                 :edit="true"
                 :showSort="showSort"
                 @itemDeleted="onItemDeleted"
-                @reloadItem="onReloadItem"
+                @reloadPickABrickPosition="onReloadPickABrickPosition"
+                @reloadBricksAndPiecesPosition="onReloadBricksAndPiecesPosition"
             ></brick-list>
         </div>
         <div id="wantedListPrint" style="display: none">
@@ -216,21 +217,20 @@ export default {
         },
         async loadPrice(item) {
             this.showSort = false;
-            try {
-                item.bricksAndPieces = { isLoading: true };
-                if (item.source == 'brickLink') {
-                    var brickLinkHtml = await this.getBricklink(item.designId);
-                    var returnObject = await this.returnModelsObject(
-                        brickLinkHtml
-                    );
-                    item.brickLink.strAltNo = returnObject.strAltNo;
-                    item.brickLink.mapPCCs = returnObject.mapPCCs;
+
+            item.bricksAndPieces = { isLoading: true };
+            if (item.source == 'brickLink') {
+                var brickLinkHtml = await this.getBricklink(item.designId);
+                if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
+                    this.pickABrickBrickCounter++;
+                    this.bricksAndPiecesBrickCounter++;
+                    this.calcLoad();
+                    item.bricksAndPieces = { error: brickLinkHtml.status };
+                    return;
                 }
-            } catch (err) {
-                this.pickABrickBrickCounter++;
-                this.bricksAndPiecesBrickCounter++;
-                this.calcLoad();
-                item.bricksAndPieces = null;
+                var returnObject = await this.returnModelsObject(brickLinkHtml);
+                item.brickLink.strAltNo = returnObject.strAltNo;
+                item.brickLink.mapPCCs = returnObject.mapPCCs;
             }
 
             if (this.cancelLoading) {
@@ -327,20 +327,38 @@ export default {
             this.partList.positions = this.wantedList;
             this.brickListKey++; // redraw brickList
         },
-        async onReloadItem(item) {
-            try {
-                item.bricksAndPieces = { isLoading: true };
-                if (item.source == 'brickLink') {
-                    var brickLinkHtml = await this.getBricklink(item.itemid);
-                    var returnObject = await this.returnModelsObject(
-                        brickLinkHtml
-                    );
-                    item.brickLink.strAltNo = returnObject.strAltNo;
-                    item.brickLink.mapPCCs = returnObject.mapPCCs;
+        async onReloadPickABrickPosition(item) {
+            item.pickABrick = { isLoading: true };
+            if (item.source == 'brickLink') {
+                var brickLinkHtml = await this.getBricklink(item.designId);
+                if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
+                    item.pickABrick = { error: brickLinkHtml.status };
+                    return;
                 }
-            } catch (err) {
-                //console.log("couldn't find brick on bricklink");
+                var returnObject = await this.returnModelsObject(brickLinkHtml);
+                item.brickLink.strAltNo = returnObject.strAltNo;
+                item.brickLink.mapPCCs = returnObject.mapPCCs;
+            }
+
+            if (item.source == 'brickLink' && !item.brickLink) {
                 item.bricksAndPieces = null;
+                return;
+            }
+
+            item = await this.prepareSearchIds(item);
+            item = await this.loadPickABrick(item, true);
+        },
+        async onReloadBricksAndPiecesPosition(item) {
+            item.bricksAndPieces = { isLoading: true };
+            if (item.source == 'brickLink') {
+                var brickLinkHtml = await this.getBricklink(item.designId);
+                if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
+                    item.bricksAndPieces = { error: brickLinkHtml.status };
+                    return;
+                }
+                var returnObject = await this.returnModelsObject(brickLinkHtml);
+                item.brickLink.strAltNo = returnObject.strAltNo;
+                item.brickLink.mapPCCs = returnObject.mapPCCs;
             }
 
             if (item.source == 'brickLink' && !item.brickLink) {
