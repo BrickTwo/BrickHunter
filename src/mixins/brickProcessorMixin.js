@@ -61,6 +61,8 @@ export const brickProcessorMixin = {
                         if (result[0]) return result[0];
                     }
                 }
+
+                return result[0];
             }
 
             var result = bricks.filter(
@@ -90,7 +92,7 @@ export const brickProcessorMixin = {
 
             return result[0];
         },
-        findPickABrickBrick(item, bricks) {
+        async findPickABrickBrick(item, bricks) {
             if (!bricks) return null;
 
             if (item.source == 'lego' || item.source == 'singleParts') {
@@ -98,6 +100,24 @@ export const brickProcessorMixin = {
                     (brick) => brick.itemNumber == item.itemNumber
                 );
                 if (result[0]) return result[0];
+
+                var resp = await this.getBrickAsync(item.itemNumber);
+
+                if (resp?.brick?.alternativeItemNumbers) {
+                    var altItemNumbers = resp.brick.alternativeItemNumbers.split(
+                        '|'
+                    );
+
+                    for (var i = 1; i < altItemNumbers.length - 1; i++) {
+                        var result = bricks.filter(
+                            (brick) => brick.itemNumber == altItemNumbers[i]
+                        );
+
+                        if (result[0]) return result[0];
+                    }
+                }
+
+                return result[0];
             }
 
             var result = bricks.filter(
@@ -199,7 +219,7 @@ export const brickProcessorMixin = {
                 return item;
             }
 
-            var foundBrick = this.findPickABrickBrick(item, response);
+            var foundBrick = await this.findPickABrickBrick(item, response);
             if (foundBrick) {
                 item.pickABrick = foundBrick;
             } else {
