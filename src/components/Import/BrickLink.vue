@@ -223,11 +223,6 @@ export default {
         },
     },
     computed: {
-        /*showUploadField() {
-            if (navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
-            if (this.$store.state.mode == 'standalone') return true;
-            return false;
-        },*/
         labelFile() {
             return browser.i18n.getMessage('import_file');
         },

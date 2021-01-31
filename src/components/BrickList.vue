@@ -263,7 +263,7 @@ export default {
     data: () => ({
         list: null,
         key: 0,
-        tableHeight: '290px',
+        tableHeight: 'calc(100vh - 260px)',
         sortOrder: [
             {
                 field: 'designId',
@@ -443,9 +443,6 @@ export default {
     },
     beforeMount() {
         this.list = this.bricklist;
-        if (this.$store.state.mode == 'standalone') {
-            this.tableHeight = 'calc(100vh - 260px)';
-        }
         if (
             this.list.filter((p) => p.brickLink?.wantedList?.maxprice > 0)
                 .length == 0

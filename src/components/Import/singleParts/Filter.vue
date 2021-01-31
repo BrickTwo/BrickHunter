@@ -153,6 +153,7 @@ export default {
     data: () => ({
         perPage: 24,
         perPageOptions: [
+            { value: 8, text: '8' },
             { value: 24, text: '24' },
             { value: 48, text: '48' },
             { value: 100, text: '100' },
@@ -508,11 +509,6 @@ export default {
         partListId: function() {
             this.selectPart();
         },
-    },
-    beforeMount() {
-        if (this.$store.state.mode == 'standalone') {
-            this.perPageOptions.unshift({ value: 8, text: '8' });
-        }
     },
     mounted() {
         this.loadBricks(true);
