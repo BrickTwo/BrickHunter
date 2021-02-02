@@ -578,6 +578,12 @@
     "wantedList_shoppingCart": {
         "message": "Warenkorb"
     },
+    "wantedList_removeSelection": {
+        "message": "Auswhal aufheben"
+    },
+    "wantedList_removePositions": {
+        "message": "Positionen entfernen"
+    },
     "xmlField_copyWantedList": {
         "message": "Kopiere den Inhalt einer WantedList hier rein"
     },

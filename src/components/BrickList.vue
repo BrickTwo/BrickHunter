@@ -10,6 +10,12 @@
         :css="css.table"
         :key="key"
     >
+        <template slot="selection" slot-scope="props">
+            <b-form-checkbox
+                :id="props.rowData.rowNumber"
+                v-model="props.rowData.selected"
+            />
+        </template>
         <template slot="quantity" slot-scope="props">
             <b-form-input
                 v-if="edit"
@@ -289,6 +295,11 @@ export default {
         },
         fields: [
             {
+                name: '__slot:selection',
+                title: '',
+                width: '25px',
+            },
+            {
                 name: 'designId',
                 sortField: 'designId',
                 title: () => browser.i18n.getMessage('brickList_designId'),
@@ -416,23 +427,7 @@ export default {
             return `<span style="display: block"><div style="background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"></div><span>${value.brickLinkName}</span></span><span style="color: grey; font-size: small; margin-left: 20px">[${value.legoName}]</span>`;
         },
         deletePosition(item) {
-            if (item.color.id == 1) {
-                this.list = this.list.filter((pos) => {
-                    return (
-                        pos.designId != item.designId ||
-                        pos.color.legoName != item.color.legoName
-                    );
-                });
-            } else {
-                this.list = this.list.filter((pos) => {
-                    return (
-                        pos.designId != item.designId ||
-                        pos.color.brickLinkId != item.color.brickLinkId
-                    );
-                });
-            }
             this.$emit('itemDeleted', item);
-            this.key++;
         },
         reloadPickABrickPosition(position) {
             this.$emit('reloadPickABrickPosition', position);
@@ -458,7 +453,17 @@ export default {
             );
         }
 
+        if(!this.edit) {
+            this.fields = this.fields.filter(
+                (field) => field.name != '__slot:selection'
+            );
+        }
+
+        var i = 1;
         this.list.map((pos) => {
+            pos.rowNumber = i.toString();
+            pos.selected = false;
+            i++;
             if (pos.brickLink?.wantedList?.maxprice) {
                 if (pos.brickLink.wantedList.maxprice <= 0)
                     pos.brickLink.wantedList.maxprice = 0;

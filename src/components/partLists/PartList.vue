@@ -25,7 +25,7 @@
                             </b-col>
                         </b-row>
                         <b-row>
-                            <b-col>
+                            <b-col v-if="!multiSelect">
                                 <b-button
                                     variant="primary"
                                     @click="loadPrices"
@@ -65,6 +65,21 @@
                                     v-if="!loadWantedList"
                                 >
                                     <b-icon icon="printer" aria-hidden="true" />
+                                </b-button>
+                            </b-col>
+                            <b-col v-if="multiSelect">
+                                <b-button
+                                    variant="primary"
+                                    @click="removeSelection"
+                                >
+                                    {{ labelRemoveSelection }}
+                                </b-button>
+                                <b-button
+                                    variant="danger"
+                                    @click="removePositions"
+                                    style="margin-left: 10px;"
+                                >
+                                    {{ labelRemovePositions }}
                                 </b-button>
                             </b-col>
                         </b-row>
@@ -132,13 +147,12 @@
                 @reloadBricksAndPiecesPosition="onReloadBricksAndPiecesPosition"
             ></brick-list>
         </div>
+
         <div id="wantedListPrint" style="display: none">
             <brick-list
                 v-if="!loadWantedList"
                 :bricklist="wantedList"
                 :edit="false"
-                :key="brickListKey"
-                @itemDeleted="onItemDeleted"
             ></brick-list>
         </div>
     </div>
@@ -176,7 +190,7 @@ export default {
         totalPickABrickPositions: 0,
         totalBricksAndPiecesPositions: 0,
         showSort: true,
-        brickListKey: 0,
+        multiSelect: false,
     }),
     components: {
         BrickList,
@@ -308,24 +322,31 @@ export default {
             }
         },
         onItemDeleted(item) {
-            if (item.color.id == 1) {
-                this.wantedList = this.wantedList.filter((pos) => {
+            var index = this.wantedList.findIndex((pos) => {
+                if (item.source === 'lego') {
                     return (
-                        pos.designId != item.designId ||
-                        pos.color.legoName != item.color.legoName
+                        pos.designId == item.designId &&
+                        pos.itemNumber == item.itemNumber
                     );
-                });
-            } else {
-                this.wantedList = this.wantedList.filter((pos) => {
-                    return (
-                        pos.designId != item.designId ||
-                        pos.color.brickLinkId != item.color.brickLinkId
-                    );
-                });
-            }
+                } else {
+                    if (item.color.id == 1) {
+                        return (
+                            pos.designId == item.designId &&
+                            pos.color.legoName == item.color.legoName
+                        );
+                    } else {
+                        return (
+                            pos.designId == item.designId &&
+                            pos.color.brickLinkId == item.color.brickLinkId
+                        );
+                    }
+                }
+            });
+
+            this.wantedList.splice(index, 1);
+            this.totalPositions = this.wantedList.length;
 
             this.partList.positions = this.wantedList;
-            this.brickListKey++; // redraw brickList
         },
         async onReloadPickABrickPosition(item) {
             item.pickABrick = { isLoading: true };
@@ -369,11 +390,26 @@ export default {
             item = await this.prepareSearchIds(item);
             item = await this.loadBricksAndPieces(item, true);
         },
+        removeSelection() {
+            this.wantedList.map((pos) => (pos.selected = false));
+        },
+        removePositions() {
+            for (var i = this.wantedList.length-1; i >= 0; i--) {
+                if (this.wantedList[i].selected) {
+                    console.log(i);
+                    this.wantedList.splice(i, 1);
+                }
+            }
+        },
     },
     watch: {
         partList: {
             handler(val, oldVal) {
                 this.$store.commit('partList/setPartList', this.partList);
+                this.multiSelect = false;
+                this.wantedList.map((pos) => {
+                    if (pos.selected) this.multiSelect = true;
+                });
             },
             deep: true,
         },
@@ -416,6 +452,12 @@ export default {
         wantedListName() {
             return browser.i18n.getMessage('wantedList_name');
         },
+        labelRemoveSelection() {
+            return browser.i18n.getMessage('wantedList_removeSelection');
+        },
+        labelRemovePositions() {
+            return browser.i18n.getMessage('wantedList_removePositions');
+        }
     },
 };
 </script>

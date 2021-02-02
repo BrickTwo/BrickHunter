@@ -35,7 +35,8 @@ export const brickProcessorMixin = {
             return color;
         },
         async findBricksAndPiecesBrick(item, bricks) {
-            if (!bricks) return null;
+            console.log(item.itemNumber, item, bricks);
+            if (!bricks || !bricks.length) return null;
             bricks = bricks.filter(
                 (brick) => !brick.isSoldOut && brick.isAvailable
             );
@@ -93,7 +94,7 @@ export const brickProcessorMixin = {
             return result[0];
         },
         async findPickABrickBrick(item, bricks) {
-            if (!bricks) return null;
+            if (!bricks || !bricks.length) return null;
 
             if (item.source == 'lego' || item.source == 'singleParts') {
                 var result = bricks.filter(

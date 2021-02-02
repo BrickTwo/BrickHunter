@@ -581,6 +581,12 @@
     "wantedList_name": {
         "message": "Parts List Name"
     },
+    "wantedList_removeSelection": {
+        "message": "Remove Selection"
+    },
+    "wantedList_removePositions": {
+        "message": "Delete Positions"
+    },
     "xmlField_copyWantedList": {
         "message": "Copy the content of a WantedList into this"
     },
