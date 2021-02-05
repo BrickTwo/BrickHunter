@@ -145,6 +145,7 @@
                 @itemDeleted="onItemDeleted"
                 @reloadPickABrickPosition="onReloadPickABrickPosition"
                 @reloadBricksAndPiecesPosition="onReloadBricksAndPiecesPosition"
+                @selectionChanged="onSelectionChange"
             ></brick-list>
         </div>
 
@@ -394,11 +395,17 @@ export default {
             this.wantedList.map((pos) => (pos.selected = false));
         },
         removePositions() {
-            for (var i = this.wantedList.length-1; i >= 0; i--) {
+            for (var i = this.wantedList.length - 1; i >= 0; i--) {
                 if (this.wantedList[i].selected) {
                     console.log(i);
                     this.wantedList.splice(i, 1);
                 }
+            }
+        },
+        onSelectionChange(counter) {
+            this.multiSelect = false;
+            if (counter) {
+                this.multiSelect = true;
             }
         },
     },
@@ -406,10 +413,6 @@ export default {
         partList: {
             handler(val, oldVal) {
                 this.$store.commit('partList/setPartList', this.partList);
-                this.multiSelect = false;
-                this.wantedList.map((pos) => {
-                    if (pos.selected) this.multiSelect = true;
-                });
             },
             deep: true,
         },
@@ -457,7 +460,7 @@ export default {
         },
         labelRemovePositions() {
             return browser.i18n.getMessage('wantedList_removePositions');
-        }
+        },
     },
 };
 </script>

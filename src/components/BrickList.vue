@@ -14,6 +14,7 @@
             <b-form-checkbox
                 :id="props.rowData.rowNumber"
                 v-model="props.rowData.selected"
+                @change="select"
             />
         </template>
         <template slot="quantity" slot-scope="props">
@@ -345,7 +346,6 @@ export default {
                 sortField: 'pickABrick.variant.price.centAmount',
                 title: () =>
                     browser.i18n.getMessage('brickList_pickABrickPrice'),
-                //callback: 'pickABrickPrice',
                 width: '110px',
             },
             {
@@ -353,7 +353,6 @@ export default {
                 sortField: 'bricksAndPieces.price.amount',
                 title: () =>
                     browser.i18n.getMessage('brickList_bricksAndPiecesPrice'),
-                //callback: 'bricksAndPiecesPrice',
                 width: '120px',
             },
             {
@@ -362,6 +361,7 @@ export default {
                 width: '25px',
             },
         ],
+        selectedCounter: 0,
     }),
     components: {
         Vuetable,
@@ -435,6 +435,14 @@ export default {
         reloadBricksAndPiecesPosition(position) {
             this.$emit('reloadBricksAndPiecesPosition', position);
         },
+        select(val) {
+            if (val) {
+                this.selectedCounter++;
+            } else {
+                this.selectedCounter--;
+            }
+            this.$emit('selectionChanged', this.selectedCounter);
+        },
     },
     beforeMount() {
         this.list = this.bricklist;
@@ -453,7 +461,7 @@ export default {
             );
         }
 
-        if(!this.edit) {
+        if (!this.edit) {
             this.fields = this.fields.filter(
                 (field) => field.name != '__slot:selection'
             );
