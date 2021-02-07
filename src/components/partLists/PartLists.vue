@@ -35,6 +35,17 @@
                                     <b-icon icon="cart4" aria-hidden="true" />
                                 </b-form-checkbox>
                             </b-col>
+                            <b-col cols="2" class="text-left">
+                                <span v-if="partList.source == 'brickLink'">
+                                    {{ labelBrickLink }}
+                                </span>
+                                <span v-if="partList.source == 'lego'">
+                                    {{ labelLegoSet }}
+                                </span>
+                                <span v-if="partList.source == 'singleParts'">
+                                    {{ labelSinglePart }}
+                                </span>
+                            </b-col>
                             <b-col class="text-overflow-elipsis">
                                 {{ partList.name }}
                             </b-col>
@@ -43,7 +54,7 @@
                                     {{ partList.positions.length }}
                                 </b-badge>
                             </b-col>
-                            <b-col cols="auto" class="px-0 text-right">
+                            <b-col cols="2" class="px-0 text-right">
                                 {{ partList.date | formatDate }}
                             </b-col>
                             <b-col cols="auto" class="text-right" @click.stop>
@@ -102,7 +113,7 @@ export default {
                 return 'warning';
             }
         },
-        onDeleteList(id){
+        onDeleteList(id) {
             this.deleteListId = id;
             this.$bvModal.show('askDeletePartList');
         },
@@ -162,6 +173,15 @@ export default {
         },
         labelAskDeletePartListBody() {
             return browser.i18n.getMessage('wantedList_askDeletePartListBody');
+        },
+        labelBrickLink() {
+            return browser.i18n.getMessage('brickLink');
+        },
+        labelLegoSet() {
+            return browser.i18n.getMessage('import_legoSet');
+        },
+        labelSinglePart() {
+            return browser.i18n.getMessage('import_singleParts');
         },
     },
 };
