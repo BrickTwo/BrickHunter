@@ -4,7 +4,7 @@
             <b-container class="p-0" fluid="xl">
                 <b-navbar-brand>
                     <img
-                        src="icons/icon_24.png"
+                        src="icons/icon_trans_32.png"
                         class="d-inline-block align-top"
                     />
                     {{ extName }}

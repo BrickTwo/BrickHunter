@@ -25,7 +25,7 @@
                             </b-col>
                         </b-row>
                         <b-row>
-                            <b-col v-if="!multiSelect">
+                            <b-col v-if="!selectedItems.length">
                                 <b-button
                                     variant="primary"
                                     @click="loadPrices"
@@ -67,16 +67,10 @@
                                     <b-icon icon="printer" aria-hidden="true" />
                                 </b-button>
                             </b-col>
-                            <b-col v-if="multiSelect">
-                                <b-button
-                                    variant="primary"
-                                    @click="removeSelection"
-                                >
-                                    {{ labelRemoveSelection }}
-                                </b-button>
+                            <b-col v-if="selectedItems.length">
                                 <b-button
                                     variant="danger"
-                                    @click="removePositions"
+                                    @click="$bvModal.show('askDeletePositions')"
                                     style="margin-left: 10px;"
                                 >
                                     {{ labelRemovePositions }}
@@ -141,7 +135,7 @@
                 v-if="!loadWantedList"
                 :bricklist="wantedList"
                 :edit="true"
-                :showSort="showSort"
+                :isBusy="!showSort"
                 @itemDeleted="onItemDeleted"
                 @reloadPickABrickPosition="onReloadPickABrickPosition"
                 @reloadBricksAndPiecesPosition="onReloadBricksAndPiecesPosition"
@@ -156,6 +150,27 @@
                 :edit="false"
             ></brick-list>
         </div>
+        <b-modal
+            id="askDeletePositions"
+            :title="labelAskDeletePositionHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            @ok="removePositions()"
+        >
+            <p class="my-4">
+                {{ labelAskDeletePositionBody }}
+            </p>
+            <template #modal-footer="{ cancel, ok }">
+                <b-button @click="cancel()">
+                    {{ labelAskNo }}
+                </b-button>
+                <!-- Button with custom close trigger value -->
+                <b-button @click="ok()">
+                    {{ labelAskYes }}
+                </b-button>
+            </template>
+        </b-modal>
     </div>
 </template>
 
@@ -191,7 +206,9 @@ export default {
         totalPickABrickPositions: 0,
         totalBricksAndPiecesPositions: 0,
         showSort: true,
-        multiSelect: false,
+        selectedItems: [],
+        headerBgVariant: 'dark',
+        headerTextVariant: 'light',
     }),
     components: {
         BrickList,
@@ -391,22 +408,18 @@ export default {
             item = await this.prepareSearchIds(item);
             item = await this.loadBricksAndPieces(item, true);
         },
-        removeSelection() {
-            this.wantedList.map((pos) => (pos.selected = false));
-        },
         removePositions() {
             for (var i = this.wantedList.length - 1; i >= 0; i--) {
-                if (this.wantedList[i].selected) {
-                    console.log(i);
-                    this.wantedList.splice(i, 1);
-                }
+                this.selectedItems.map((item) => {
+                    if (item.rowNumber == this.wantedList[i].rowNumber) {
+                        console.log(i);
+                        this.wantedList.splice(i, 1);
+                    }
+                });
             }
         },
-        onSelectionChange(counter) {
-            this.multiSelect = false;
-            if (counter) {
-                this.multiSelect = true;
-            }
+        onSelectionChange(selecteItems) {
+            this.selectedItems = selecteItems;
         },
     },
     watch: {
@@ -460,6 +473,20 @@ export default {
         },
         labelRemovePositions() {
             return browser.i18n.getMessage('wantedList_removePositions');
+        },
+        labelAskDeletePositionHeader() {
+            return browser.i18n.getMessage(
+                'wantedList_askDeletePositionHeader'
+            );
+        },
+        labelAskDeletePositionBody() {
+            return browser.i18n.getMessage('wantedList_askDeletePositionBody');
+        },
+        labelAskYes() {
+            return browser.i18n.getMessage('wantedList_askYes');
+        },
+        labelAskNo() {
+            return browser.i18n.getMessage('wantedList_askNo');
         },
     },
 };

@@ -1,96 +1,129 @@
 <template>
-    <vuetable
-        ref="vuetable"
-        :dataManager="dataManager"
-        :api-mode="false"
+    <b-table
+        hover
+        small
+        responsive
+        no-border-collapse
+        select-mode="multi"
+        :sticky-header="tableHeight"
+        :items="list"
+        :primary-key="list.rowNumber"
         :fields="fields"
-        :table-height="tableHeight"
-        :showSortIcons="showSort"
-        :sortOrder="sortOrder"
-        :css="css.table"
-        :key="key"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        :selectable="edit"
+        :busy="isBusy"
+        @row-selected="onRowSelection"
+        ref="selectableTable"
+        class="m-0"
     >
-        <template slot="selection" slot-scope="props">
-            <b-form-checkbox
-                :id="props.rowData.rowNumber"
-                v-model="props.rowData.selected"
-                @change="select"
+        <template #table-colgroup="scope">
+            <col
+                v-for="field in scope.fields"
+                :key="field.key"
+                :style="{ width: field.width }"
             />
         </template>
-        <template slot="quantity" slot-scope="props">
-            <b-form-input
-                v-if="edit"
-                v-model="props.rowData.qty.min"
-                type="number"
+        <template #head(selected)>
+            <b-form-checkbox :v-model="selectAll" @change="onAllSelection" />
+        </template>
+        <template #cell(selected)="data">
+            <b-form-checkbox
+                :checked="data.rowSelected"
+                @change="selectRow(data.index, !data.rowSelected)"
             />
+        </template>
+        <template #cell(image)="data">
+            <img
+                v-if="data.value.rsc"
+                :src="data.value.rsc"
+                style="max-height:50px; max-width:60px;"
+            />
+            <img
+                v-else
+                :src="calcImage(data.value)"
+                style="max-height:50px; max-width:60px;"
+            />
+        </template>
+        <template #cell(color)="data">
+            <div v-if="data.value">
+                <span style="display: block">
+                    <div :style="calcColor(data.value)" />
+                    <span>{{ data.value.brickLinkName }}</span>
+                </span>
+                <span
+                    v-if="data.value.legoName"
+                    style="color: grey; font-size: small; margin-left: 20px"
+                >
+                    [{{ data.value.legoName }}]
+                </span>
+            </div>
+        </template>
+        <template #cell(qty)="data">
+            <b-form-input v-if="edit" v-model="data.value.min" type="number" />
             <div v-if="limitMaxQty > 0 && !edit">
-                <div v-if="props.rowData.qty.maxAmount">
-                    <div
-                        v-if="
-                            props.rowData.qty.order >
-                                props.rowData.qty.maxAmount
-                        "
-                    >
+                <div v-if="data.value.maxAmount">
+                    <div v-if="data.value.order > data.value.maxAmount">
                         <span id="maxqty" style="color: red">
-                            {{ props.rowData.qty.maxAmount }}
+                            {{ data.value.maxAmount }}
                         </span>
                         <br />
                         <span style="color: grey; font-size: small;">
-                            [{{ props.rowData.qty.order }}]
+                            [{{ data.value.order }}]
                         </span>
                     </div>
                     <div v-else>
-                        {{ props.rowData.qty.order }}
+                        {{ data.value.order }}
                     </div>
                 </div>
                 <div v-else>
-                    {{ props.rowData.qty.min }}
+                    {{ data.value.min }}
                 </div>
-                <div v-if="props.rowData.qty.order > limitMaxQty">
+                <div v-if="data.value.order > limitMaxQty">
                     <span id="maxqty" style="color: red">
                         {{ limitMaxQty }}
                     </span>
                     <br />
                     <span style="color: grey; font-size: small;">
-                        [{{ props.rowData.qty.order }}]
+                        [{{ data.value.order }}]
                     </span>
                 </div>
-                <div v-if="props.rowData.qty.have > 0">
-                    {{ props.rowData.qty.order }}
+                <div v-if="data.value.have > 0">
+                    {{ data.value.order }}
                 </div>
             </div>
             <div v-else-if="!edit">
                 <span id="maxqty">
-                    {{ props.rowData.qty.min }}
+                    {{ data.value.min }}
                 </span>
-                <div v-if="props.rowData.qty.have > 0">
+                <div v-if="data.value.have > 0">
                     <br />
                     <span style="color: grey; font-size: small;">
-                        ({{ props.rowData.qty.have }})
+                        ({{ data.value.have }})
                     </span>
                 </div>
             </div>
         </template>
-        <template slot="brickLinkPrice" slot-scope="props">
+        <template #cell(brickLink)="data">
             <b-form-input
-                v-if="edit"
-                v-model="props.rowData.brickLink.wantedList.maxprice"
+                v-if="data.value && data.value.wantedList && edit"
+                v-model="data.value.wantedList.maxprice"
                 type="number"
             />
             <div
                 v-if="
-                    props.rowData.brickLink &&
-                        props.rowData.brickLink.wantedList &&
-                        props.rowData.brickLink.wantedList.maxprice > 0 &&
+                    data.value &&
+                        data.value.wantedList &&
+                        data.value.wantedList.maxprice > 0 &&
                         !edit
                 "
             >
-                {{ props.rowData.brickLink.wantedList.maxprice }}
+                {{ data.value.wantedList.maxprice }}
             </div>
         </template>
-        <template slot="pickABrick" slot-scope="props">
-            <div v-if="!props.rowData.pickABrick" />
-            <div v-else-if="props.rowData.pickABrick.isLoading">
+        <template #cell(pickABrick)="data">
+            <div v-if="!data.value" />
+            <div v-else-if="data.value.isLoading">
                 <b-icon
                     icon="arrow-clockwise"
                     animation="spin"
@@ -98,9 +131,9 @@
                 />
             </div>
             <div
-                v-else-if="props.rowData.pickABrick.error && edit"
+                v-else-if="data.value.error && edit"
                 style="cursor: pointer;"
-                @click="reloadPickABrickPosition(props.rowData)"
+                @click="reloadPickABrickPosition(data.item)"
             >
                 <span style="display: block">
                     <b-icon
@@ -109,14 +142,14 @@
                         variant="danger"
                     />
                     <span style="color: grey; font-size: small;"
-                        >Error: {{ props.rowData.pickABrick.error }}</span
+                        >Error: {{ data.value.error }}</span
                     >
                 </span>
                 <span style="color: #007bff;">
                     {{ label_reload }}
                 </span>
             </div>
-            <div v-else-if="props.rowData.pickABrick.error">
+            <div v-else-if="data.value.error">
                 <span style="display: block">
                     <b-icon
                         icon="exclamation-triangle-fill"
@@ -124,125 +157,85 @@
                         variant="danger"
                     />
                     <span style="color: grey; font-size: small;"
-                        >Error: {{ props.rowData.pickABrick.error }}</span
+                        >Error: {{ data.value.error }}</span
                     >
                 </span>
             </div>
             <div v-else>
-                {{ props.rowData.pickABrick.variant.price.currencyCode }}
-                {{ props.rowData.pickABrick.variant.price.centAmount / 100
-                }}<br />
+                {{ data.value.variant.price.currencyCode }}
+                {{ data.value.variant.price.centAmount / 100 }}<br />
                 <span style="color: grey; font-size: small;">
-                    [{{
-                        props.rowData.pickABrick.variant.attributes
-                            .designNumber
-                    }}/{{ props.rowData.pickABrick.variant.id }}]
-                </span>
-            </div>
-        </template>
-        <template slot="bricksAndPieces" slot-scope="props">
-            <div v-if="!props.rowData.bricksAndPieces" />
-            <div v-else-if="props.rowData.bricksAndPieces.isLoading">
-                <b-icon
-                    icon="arrow-clockwise"
-                    animation="spin"
-                    font-scale="1.5"
-                />
-            </div>
-            <div
-                v-else-if="props.rowData.bricksAndPieces.error && edit"
-                style="cursor: pointer;"
-                @click="reloadBricksAndPiecesPosition(props.rowData)"
-            >
-                <span style="display: block">
-                    <b-icon
-                        icon="exclamation-triangle-fill"
-                        style="margin-right: 5px;"
-                        variant="danger"
-                    />
-                    <span style="color: grey; font-size: small;"
-                        >Error: {{ props.rowData.bricksAndPieces.error }}</span
-                    >
-                </span>
-                <span style="color: #007bff;">
-                    {{ label_reload }}
-                </span>
-            </div>
-            <div v-else-if="props.rowData.bricksAndPieces.error">
-                <span style="display: block">
-                    <b-icon
-                        icon="exclamation-triangle-fill"
-                        style="margin-right: 5px;"
-                        variant="danger"
-                    />
-                    <span style="color: grey; font-size: small;"
-                        >Error: {{ props.rowData.bricksAndPieces.error }}</span
-                    >
-                </span>
-            </div>
-            <div v-else>
-                {{ props.rowData.bricksAndPieces.price.currency }}
-                {{ props.rowData.bricksAndPieces.price.amount }}<br />
-                <span style="color: grey; font-size: small;">
-                    [{{ props.rowData.bricksAndPieces.designId }}/{{
-                        props.rowData.bricksAndPieces.itemNumber
+                    [{{ data.value.variant.attributes.designNumber }}/{{
+                        data.value.variant.id
                     }}]
                 </span>
             </div>
         </template>
-        <template slot="actions" slot-scope="props">
-            <b-icon
-                v-if="edit"
-                icon="trash"
-                aria-hidden="true"
-                @click="deletePosition(props.rowData)"
-                style="cursor: pointer"
-            />
+        <template #cell(bricksAndPieces)="data">
+            <div v-if="!data.value" />
+            <div v-else-if="data.value.isLoading">
+                <b-icon
+                    icon="arrow-clockwise"
+                    animation="spin"
+                    font-scale="1.5"
+                />
+            </div>
+            <div
+                v-else-if="data.value.error && edit"
+                style="cursor: pointer;"
+                @click="reloadBricksAndPiecesPosition(data.item)"
+            >
+                <span style="display: block">
+                    <b-icon
+                        icon="exclamation-triangle-fill"
+                        style="margin-right: 5px;"
+                        variant="danger"
+                    />
+                    <span style="color: grey; font-size: small;"
+                        >Error: {{ data.value.error }}</span
+                    >
+                </span>
+                <span style="color: #007bff;">
+                    {{ label_reload }}
+                </span>
+            </div>
+            <div v-else-if="data.value.error">
+                <span style="display: block">
+                    <b-icon
+                        icon="exclamation-triangle-fill"
+                        style="margin-right: 5px;"
+                        variant="danger"
+                    />
+                    <span style="color: grey; font-size: small;"
+                        >Error: {{ data.value.error }}</span
+                    >
+                </span>
+            </div>
+            <div v-else>
+                {{ data.value.price.currency }}
+                {{ data.value.price.amount }}<br />
+                <span style="color: grey; font-size: small;">
+                    [{{ data.value.designId }}/{{ data.value.itemNumber }}]
+                </span>
+            </div>
         </template>
-    </vuetable>
+        <template #cell(actions)="data">
+            <div @click.stop>
+                <b-icon
+                    v-if="edit"
+                    icon="trash"
+                    aria-hidden="true"
+                    @click="deletePosition(data.item)"
+                    style="cursor: pointer"
+                />
+            </div>
+        </template>
+    </b-table>
 </template>
 
 <style>
-.table {
-    margin-bottom: 0px;
-}
-
-.vuetable-body-wrapper {
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
-
-i.icon.sort:before {
-    content: '\f0dc';
-}
-
-@font-face {
-    font-family: Icons;
-    src: url(/fonts/fa-solid-900.eot?#iefix) format('embedded-opentype'),
-        url(/fonts/fa-solid-900.woff2) format('woff2'),
-        url(/fonts/fa-solid-900.woff) format('woff'),
-        url(/fonts/fa-solid-900.ttf) format('truetype'),
-        url(/fonts/fa-solid-900.svg#icons) format('svg');
-    font-style: normal;
-    font-weight: 400;
-    font-variant: normal;
-    text-decoration: inherit;
-    text-transform: none;
-}
-
-i.icon {
-    font-family: Icons;
-    font-style: normal;
-    float: none !important;
-    margin-left: 5px;
-}
-
-i.icon.chevron.up:before {
-    content: '\f0de';
-}
-
-i.icon.chevron.down:before {
-    content: '\f0dd';
+.table-b-table-default {
+    vertical-align: inherit !important;
 }
 </style>
 
@@ -262,169 +255,96 @@ export default {
             type: Boolean,
             default: false,
         },
-        showSort: {
+        isBusy: {
             type: Boolean,
-            default: true,
+            default: false,
         },
     },
     data: () => ({
+        sortBy: 'designId',
+        sortDesc: false,
+        selectAll: false,
         list: null,
-        key: 0,
-        tableHeight: 'calc(100vh - 260px)',
-        sortOrder: [
-            {
-                field: 'designId',
-                direction: 'asc',
-            },
-        ],
-        css: {
-            table: {
-                tableClass:
-                    'ui blue selectable celled stackable attached table',
-                loadingClass: 'loading',
-                ascendingIcon: 'blue chevron up icon',
-                descendingIcon: 'blue chevron down icon',
-                ascendingClass: 'sorted-asc',
-                descendingClass: 'sorted-desc',
-                sortableIcon: 'blue chevron sort icon',
-                detailRowClass: 'vuetable-detail-row',
-                handleIcon: 'grey sidebar icon',
-                tableBodyClass:
-                    'vuetable-semantic-no-top vuetable-fixed-layout',
-                tableHeaderClass: 'vuetable-fixed-layout',
-            },
-        },
+        tableHeight: 'calc(100vh - 200px)',
+        selected: [],
         fields: [
             {
-                name: '__slot:selection',
-                title: '',
+                key: 'selected',
+                label: '',
+                sortable: false,
                 width: '25px',
             },
             {
-                name: 'designId',
-                sortField: 'designId',
-                title: () => browser.i18n.getMessage('brickList_designId'),
+                key: 'designId',
+                label: browser.i18n.getMessage('brickList_designId'),
+                sortable: true,
                 width: '90px',
             },
             {
-                name: 'itemNumber',
-                sortField: 'itemNumber',
-                title: () => browser.i18n.getMessage('brickList_itemNumber'),
+                key: 'itemNumber',
+                label: browser.i18n.getMessage('brickList_itemNumber'),
+                sortable: true,
                 width: '90px',
             },
             {
-                name: 'image',
-                title: () =>
-                    browser.i18n.getMessage('brickList_brickLinkImage'),
-                callback: 'showImage',
+                key: 'image',
+                label: browser.i18n.getMessage('brickList_brickLinkImage'),
+                sortable: false,
                 width: '60px',
             },
             {
-                name: 'color',
-                sortField: 'color.brickLinkName',
-                title: () =>
-                    browser.i18n.getMessage('brickList_brickLinkColor'),
-                callback: 'showColor',
+                key: 'color',
+                label: browser.i18n.getMessage('brickList_brickLinkColor'),
+                sortable: true,
+                sortKey: 'color.brickLinkName',
                 width: '200px',
             },
             {
-                name: '__slot:quantity',
-                sortField: 'qty.min',
-                title: () => browser.i18n.getMessage('brickList_quantity'),
+                key: 'qty',
+                label: browser.i18n.getMessage('brickList_itemNumber'),
+                sortable: true,
+                sortKey: 'qty.min',
                 width: '70px',
             },
             {
-                name: '__slot:brickLinkPrice',
-                sortField: 'brickLink.wantedList.maxprice',
-                title: () =>
-                    browser.i18n.getMessage('brickList_brickLinkPrice'),
-                callback: 'brickLinkPrice',
+                key: 'brickLink',
+                label: browser.i18n.getMessage('brickList_brickLinkPrice'),
+                sortable: true,
+                sortKey: 'brickLink.wantedList.maxprice',
                 width: '90px',
             },
             {
-                name: '__slot:pickABrick',
-                sortField: 'pickABrick.variant.price.centAmount',
-                title: () =>
-                    browser.i18n.getMessage('brickList_pickABrickPrice'),
+                key: 'pickABrick',
+                label: browser.i18n.getMessage('brickList_pickABrickPrice'),
+                sortable: true,
+                sortKey: 'pickABrick.variant.price.centAmount',
                 width: '110px',
             },
             {
-                name: '__slot:bricksAndPieces',
-                sortField: 'bricksAndPieces.price.amount',
-                title: () =>
-                    browser.i18n.getMessage('brickList_bricksAndPiecesPrice'),
+                key: 'bricksAndPieces',
+                label: browser.i18n.getMessage(
+                    'brickList_bricksAndPiecesPrice'
+                ),
+                sortable: true,
+                sortKey: 'bricksAndPieces.price.amount',
                 width: '120px',
             },
             {
-                name: '__slot:actions',
-                title: '',
+                key: 'actions',
+                label: '',
                 width: '25px',
             },
         ],
-        selectedCounter: 0,
     }),
     components: {
         Vuetable,
     },
     methods: {
-        dataManager(sortOrder, pagination) {
-            if (sortOrder.length) {
-                this.list.sort(
-                    this.compareValues(
-                        sortOrder[0].sortField,
-                        sortOrder[0].direction
-                    )
-                );
-            }
-
-            return this.list;
+        calcImage(value) {
+            return `https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${value.itemId}.jpg`;
         },
-        compareValues(key, order = 'asc') {
-            var keys = key.split('.');
-            return function innerSort(a, b) {
-                var varA = a;
-                var varB = b;
-
-                keys.forEach((key) => {
-                    if (!varA || !varA.hasOwnProperty(key)) {
-                        // property doesn't exist on either object
-                        varA = '';
-                    } else {
-                        varA =
-                            typeof varA[key] === 'string'
-                                ? varA[key].toUpperCase()
-                                : varA[key];
-                    }
-                    if (!varB || !varB.hasOwnProperty(key)) {
-                        // property doesn't exist on either object
-                        varB = '';
-                    } else {
-                        varB =
-                            typeof varB[key] === 'string'
-                                ? varB[key].toUpperCase()
-                                : varB[key];
-                    }
-                });
-
-                let comparison = 0;
-                if (varA > varB) {
-                    comparison = 1;
-                } else if (varA < varB) {
-                    comparison = -1;
-                }
-                return order === 'desc' ? comparison * -1 : comparison;
-            };
-        },
-        showImage(value) {
-            if (value.rsc) {
-                return `<img src="${value.rsc}" style="max-height:50px; max-width:60px;">`;
-            } else {
-                return `<img src="https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${value.itemId}.jpg" style="max-height:50px; max-width:60px;">`;
-            }
-        },
-        showColor(value) {
-            if (!value) return;
-            return `<span style="display: block"><div style="background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"></div><span>${value.brickLinkName}</span></span><span style="color: grey; font-size: small; margin-left: 20px">[${value.legoName}]</span>`;
+        calcColor(value) {
+            return `background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
         },
         deletePosition(item) {
             this.$emit('itemDeleted', item);
@@ -435,13 +355,19 @@ export default {
         reloadBricksAndPiecesPosition(position) {
             this.$emit('reloadBricksAndPiecesPosition', position);
         },
-        select(val) {
-            if (val) {
-                this.selectedCounter++;
+        onRowSelection(selectedItems) {
+            this.$emit('selectionChanged', selectedItems);
+        },
+        onAllSelection(selected) {
+            if (selected) {
+                this.$refs.selectableTable.selectAllRows();
             } else {
-                this.selectedCounter--;
+                this.$refs.selectableTable.clearSelected();
             }
-            this.$emit('selectionChanged', this.selectedCounter);
+        },
+        selectRow(index, selected) {
+            if(selected) this.$refs.selectableTable.selectRow(index);
+            if(!selected) this.$refs.selectableTable.unselectRow(index);
         },
     },
     beforeMount() {
@@ -451,19 +377,19 @@ export default {
                 .length == 0
         ) {
             this.fields = this.fields.filter(
-                (field) => field.name != '__slot:brickLinkPrice'
+                (field) => field.key != 'brickLink'
             );
         }
 
         if (this.list.filter((p) => p.itemNumber).length == 0) {
             this.fields = this.fields.filter(
-                (field) => field.name != 'itemNumber'
+                (field) => field.key != 'itemNumber'
             );
         }
 
         if (!this.edit) {
             this.fields = this.fields.filter(
-                (field) => field.name != '__slot:selection'
+                (field) => field.key != 'selected'
             );
         }
 
@@ -482,58 +408,34 @@ export default {
         });
     },
     watch: {
-        showSort: async function(val) {
+        isBusy: async function(val) {
+            if (val) this.tableHeight = 'calc(100vh - 215px)';
+            if (!val) this.tableHeight = 'calc(100vh - 200px)';
+            /*var findDesignId = this.fields.find(
+                (field) => field.key === 'designId'
+            );
             var findItemNumber = this.fields.find(
-                (field) => field.name === 'itemNumber'
+                (field) => field.key === 'itemNumber'
             );
+            var findColor = this.fields.find((field) => field.key === 'color');
+            var findQty = this.fields.find((field) => field.key === 'qty');
             var findBrickLinkPrice = this.fields.find(
-                (field) => field.name === '__slot:brickLinkPrice'
+                (field) => field.key === 'brickLink'
+            );
+            var findPickABrick = this.fields.find(
+                (field) => field.key === 'pickABrick'
+            );
+            var findBricksAndPieces = this.fields.find(
+                (field) => field.key === 'bricksAndPieces'
             );
 
-            if (val) {
-                this.fields.find(
-                    (field) => field.name === 'designId'
-                ).sortField = 'designId';
-
-                if (findItemNumber) findItemNumber.sortField = 'itemNumber';
-
-                this.fields.find((field) => field.name === 'color').sortField =
-                    'color.brickLinkName';
-
-                this.fields.find(
-                    (field) => field.name === '__slot:quantity'
-                ).sortField = 'qty.min';
-
-                if (findBrickLinkPrice)
-                    findBrickLinkPrice.sortField =
-                        'brickLink.wantedList.maxprice';
-
-                this.fields.find(
-                    (field) => field.name === '__slot:pickABrick'
-                ).sortField = 'pickABrick.variant.price.centAmount';
-
-                this.fields.find(
-                    (field) => field.name === '__slot:bricksAndPieces'
-                ).sortField = 'bricksAndPieces.price.amount';
-
-                this.key++;
-                return;
-            }
-            delete this.fields.find((field) => field.name === 'designId')
-                .sortField;
-            if (findItemNumber) delete findItemNumber.sortField;
-            delete this.fields.find((field) => field.name === 'color')
-                .sortField;
-            delete this.fields.find((field) => field.name === '__slot:quantity')
-                .sortField;
-            if (findBrickLinkPrice) delete findBrickLinkPrice.sortField;
-            delete this.fields.find(
-                (field) => field.name === '__slot:pickABrick'
-            ).sortField;
-            delete this.fields.find(
-                (field) => field.name === '__slot:bricksAndPieces'
-            ).sortField;
-            this.key++;
+            if (findDesignId) findDesignId.sortable = val;
+            if (findItemNumber) findItemNumber.sortable = val;
+            if (findColor) findColor.sortable = val;
+            if (findQty) findQty.sortable = val;
+            if (findBrickLinkPrice) findBrickLinkPrice.sortable = val;
+            if (findPickABrick) findPickABrick.sortable = val;
+            if (findBricksAndPieces) findBricksAndPieces.sortable = val;*/
         },
     },
     computed: {

@@ -35,7 +35,6 @@ export const brickProcessorMixin = {
             return color;
         },
         async findBricksAndPiecesBrick(item, bricks) {
-            console.log(item.itemNumber, item, bricks);
             if (!bricks || !bricks.length) return null;
             bricks = bricks.filter(
                 (brick) => !brick.isSoldOut && brick.isAvailable

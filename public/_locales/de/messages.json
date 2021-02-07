@@ -584,6 +584,18 @@
     "wantedList_removePositions": {
         "message": "Positionen entfernen"
     },
+    "wantedList_askDeletePositionHeader": {
+        "message": "Löschen"
+    },
+    "wantedList_askDeletePositionBody": {
+        "message": "Selektierte Positionen wirklich löschen?"
+    },
+    "wantedList_askYes": {
+        "message": "Ja"
+    },
+    "wantedList_askNo": {
+        "message": "Nein"
+    },
     "xmlField_copyWantedList": {
         "message": "Kopiere den Inhalt einer WantedList hier rein"
     },

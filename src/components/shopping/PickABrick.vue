@@ -119,7 +119,7 @@
         </b-row>
         <b-row>
             <b-col id="pickABrickList">
-                <brick-list :bricklist="brickList" :limitMaxQty="999" :showSort="showSort" />
+                <brick-list :bricklist="brickList" :limitMaxQty="999" :isBusy="!showSort" />
             </b-col>
         </b-row>
     </b-container>
