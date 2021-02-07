@@ -599,6 +599,12 @@
     "wantedList_askNo": {
         "message": "No"
     },
+    "wantedList_askDeletePartListHeader": {
+        "message": "Delete"
+    },
+    "wantedList_askDeletePartListBody": {
+        "message": "Do you really want to delete this part list?"
+    },
     "xmlField_copyWantedList": {
         "message": "Copy the content of a WantedList into this"
     },

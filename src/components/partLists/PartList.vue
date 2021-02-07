@@ -49,7 +49,7 @@
                                 </b-button>
                                 <b-button
                                     variant="danger"
-                                    @click="deleteList"
+                                    @click="$bvModal.show('askDeletePartList')"
                                     style="margin-left: 10px;"
                                     v-if="!loadWantedList"
                                 >
@@ -150,6 +150,27 @@
                 :edit="false"
             ></brick-list>
         </div>
+        <b-modal
+            id="askDeletePartList"
+            :title="labelAskDeletePartListHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            @ok="deleteList()"
+        >
+            <p class="my-4">
+                {{ labelAskDeletePartListBody }}
+            </p>
+            <template #modal-footer="{ cancel, ok }">
+                <b-button @click="cancel()">
+                    {{ labelAskNo }}
+                </b-button>
+                <!-- Button with custom close trigger value -->
+                <b-button @click="ok()">
+                    {{ labelAskYes }}
+                </b-button>
+            </template>
+        </b-modal>
         <b-modal
             id="askDeletePositions"
             :title="labelAskDeletePositionHeader"
@@ -487,6 +508,14 @@ export default {
         },
         labelAskNo() {
             return browser.i18n.getMessage('wantedList_askNo');
+        },
+        labelAskDeletePartListHeader() {
+            return browser.i18n.getMessage(
+                'wantedList_askDeletePartListHeader'
+            );
+        },
+        labelAskDeletePartListBody() {
+            return browser.i18n.getMessage('wantedList_askDeletePartListBody');
         },
     },
 };
