@@ -48,7 +48,7 @@
                 </b-navbar-nav>
             </b-container>
         </b-navbar>
-        <b-container class="pt-1 pb-3 page" fluid="xl">
+        <b-container class="pt-1 pb-3 pl-0 pr-0 page" fluid="xl">
             <router-view
                 v-if="countrySelected && languageSelected"
             ></router-view>

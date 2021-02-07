@@ -202,6 +202,13 @@
 #partListH2 {
     max-width: calc(100% - 70px);
 }
+.row {
+    margin-left: 0;
+}
+.container {
+    margin-left: 0;
+    padding-left: 0;
+}
 </style>
 
 <script>
