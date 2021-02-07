@@ -2,12 +2,14 @@
     <div>
         <b-navbar type="dark" variant="dark">
             <b-container class="p-0" fluid="xl">
-                <b-navbar-brand>
+                <b-navbar-brand class="p-0" style="margin-top: -10px; margin-bottom: -10px; margin-right: 5px">
                     <img
-                        src="icons/icon_trans_32.png"
+                        src="icons/icon_trans_48.png"
                         class="d-inline-block align-top"
                     />
-                    {{ extName }}
+                </b-navbar-brand>
+                <b-navbar-brand class="p-0" style="font-size: 1.7rem;">
+                    <span>{{ extName }}</span>
                 </b-navbar-brand>
                 <b-navbar-nav
                     class="ml-auto"
