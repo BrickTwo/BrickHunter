@@ -2,7 +2,10 @@
     <div>
         <b-navbar type="dark" variant="dark">
             <b-container class="p-0" fluid="xl">
-                <b-navbar-brand class="p-0" style="margin-top: -10px; margin-bottom: -10px; margin-right: 5px">
+                <b-navbar-brand
+                    class="p-0"
+                    style="margin-top: -10px; margin-bottom: -10px; margin-right: 5px"
+                >
                     <img
                         src="icons/icon_trans_48.png"
                         class="d-inline-block align-top"
@@ -51,6 +54,9 @@
             </b-container>
         </b-navbar>
         <b-container class="pt-1 pb-3 pl-0 pr-0 page" fluid="xl">
+            <b-alert show v-if="newVersionAvailable" variant="warning" dismissible>
+                Neue Version {{ newVersionAvailable }} Verfügbar!
+            </b-alert>
             <router-view
                 v-if="countrySelected && languageSelected"
             ></router-view>
@@ -60,6 +66,16 @@
                 v-if="!countrySelected || !languageSelected"
             />
         </b-container>
+        <b-modal
+            id="notificationMessage"
+            :title="labelNotificationHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            hide-footer
+        >
+            <p class="my-4" v-html="notification" />
+        </b-modal>
     </div>
 </template>
 
@@ -92,10 +108,12 @@ p {
 </style>
 
 <script>
-import SelectCountry from '@/components/SelectCountry.vue';
-import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
 import Vue from 'vue';
 export const bus = new Vue();
+
+import SelectCountry from '@/components/SelectCountry.vue';
+import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
+import { requestsMixin } from '@/mixins/requestsMixin';
 
 export default {
     components: {
@@ -108,21 +126,20 @@ export default {
             countrySelected: null,
             languageSelected: null,
             partListId: null,
+            newVersionAvailable: null,
+            headerBgVariant: 'dark',
+            headerTextVariant: 'light',
+            notification: null,
         };
     },
+    mixins: [requestsMixin],
     methods: {
         onCountrySelected(country) {
             this.countrySelected = country;
         },
         showPage(page) {
-            if (
-                this.$store.state.mode == 'popup' &&
-                (page == 'import' || page == 'partLists' || page == 'export')
-            ) {
-                this.openInFullscreen(page);
-                return;
-            }
             this.$router.push('/' + page).catch(() => {});
+            this.cloudSync();
         },
         link(value) {
             browser.tabs.create({ url: value });
@@ -148,12 +165,42 @@ export default {
             });
             window.close();
         },
+        async cloudSync() {
+            var checkDate = new Date(this.$store.state.syncDate);
+            checkDate.setHours(checkDate.getHours() + 1);
+            if (checkDate < new Date(Date.now())) {
+                var cloudData = await this.getSyncAsync();
+                this.$store.commit('setSyncDate', new Date(Date.now()));
+
+                if (cloudData.version) {
+                    var currentVersion = this.$store.state.version.current
+                        .split('.')
+                        .map(Number);
+                    var cloudVersion = cloudData.version.split('.').map(Number);
+
+                    if (
+                        currentVersion[0] <= cloudVersion[0] &&
+                        currentVersion[1] <= cloudVersion[1] &&
+                        currentVersion[2] < cloudVersion[2]
+                    ) {
+                        console.log(cloudVersion);
+                        this.newVersionAvailable = cloudData.version;
+                    }
+                }
+
+                if (cloudData.notification) {
+                    this.notification = cloudData.notification.messageDe;
+                    this.$bvModal.show('notificationMessage');
+                }
+            }
+        },
     },
     beforeMount() {
         if (this.$store.state.mode == 'popup')
             this.$router.push('/shopping').catch(() => {});
         this.countrySelected = this.$store.state.country;
         this.languageSelected = this.$store.state.language;
+        this.cloudSync();
     },
     computed: {
         extName() {
@@ -182,6 +229,9 @@ export default {
         },
         menuHelp() {
             return browser.i18n.getMessage('menu_help');
+        },
+        labelNotificationHeader() {
+            return browser.i18n.getMessage('notification_header');
         },
     },
 };

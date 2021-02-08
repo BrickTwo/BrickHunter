@@ -45,5 +45,11 @@ export const requestsMixin = {
             );
             return response.data;
         },
+        async getSyncAsync() {
+            var response = await axios.get(
+                `https://brickhunter.bricktwo.net/api/sync/read.php`
+            );
+            return response.data;
+        },
     },
 };

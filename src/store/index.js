@@ -18,6 +18,7 @@ export default new Vuex.Store({
         country: '',
         language: '',
         affiliate: {},
+        syncDate: null,
     },
     mutations: {
         initialiseStore(state) {
@@ -26,6 +27,7 @@ export default new Vuex.Store({
 
             state.country = localStorage.getItem('country') || null;
             state.language = localStorage.getItem('language') || null;
+            state.syncDate = localStorage.getItem('syncDate') || new Date(Date.now() - 1000*60*60*2 );
 
             localStorage.setItem('version', state.version.current);
             //console.log(state.version)
@@ -47,7 +49,8 @@ export default new Vuex.Store({
                     sKey != 'country' &&
                     sKey != 'language' &&
                     sKey != 'settingsShopping' &&
-                    sKey != 'version'
+                    sKey != 'version' &&
+                    sKey != 'syncDate'
                 ) {
                     localStorage.removeItem(sKey);
                 }
@@ -67,6 +70,10 @@ export default new Vuex.Store({
         setAffiliate(state, payload) {
             state.affiliate = payload;
             localStorage.setItem('affiliate', JSON.stringify(state.affiliate));
+        },
+        setSyncDate(state, payload) {
+            state.syncDate = payload;
+            localStorage.setItem('syncDate', state.syncDate);
         },
     },
     actions: {

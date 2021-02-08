@@ -293,6 +293,9 @@
     "exportWantedList_copyButton": {
         "message": "In Zwischenablage kopieren"
     },
+    "notification_header": {
+        "message": "Wichtige Info!"
+    },
     "import_legoSet": {
         "message": "LEGO Set"
     },

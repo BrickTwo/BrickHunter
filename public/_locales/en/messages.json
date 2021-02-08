@@ -293,6 +293,9 @@
     "exportWantedList_copyButton": {
         "message": "Copy to clipboard"
     },
+    "notification_header": {
+        "message": "Important Info!"
+    },
     "import_legoSet": {
         "message": "LEGO Set"
     },
