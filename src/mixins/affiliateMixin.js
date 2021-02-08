@@ -90,7 +90,7 @@ export const affiliateMixin = {
                             wgprogramid: 274905,
                             clickref: "BrickHunterSE"
                         },
-                        {
+                        /*{
                             country: "au",
                             linkType: "webgains",
                             wgcampaignid: 1491765,
@@ -166,7 +166,7 @@ export const affiliateMixin = {
                             wgcampaignid: 1491765,
                             wgprogramid: 267995,
                             clickref: "BrickHunterUS"
-                        },
+                        },*/
                     ]
                 },
                 {
