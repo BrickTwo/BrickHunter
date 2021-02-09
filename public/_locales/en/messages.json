@@ -591,7 +591,7 @@
         "message": "Delete Positions"
     },
     "wantedList_askDeletePositionHeader": {
-        "message": "Delete"
+        "message": "Delete positions"
     },
     "wantedList_askDeletePositionBody": {
         "message": "Do you really want to delete the selected items?"
@@ -603,7 +603,7 @@
         "message": "No"
     },
     "wantedList_askDeletePartListHeader": {
-        "message": "Delete"
+        "message": "Delete part list"
     },
     "wantedList_askDeletePartListBody": {
         "message": "Do you really want to delete this part list?"

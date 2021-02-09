@@ -588,7 +588,7 @@
         "message": "Positionen entfernen"
     },
     "wantedList_askDeletePositionHeader": {
-        "message": "Löschen"
+        "message": "Positionen löschen"
     },
     "wantedList_askDeletePositionBody": {
         "message": "Selektierte Positionen wirklich löschen?"
@@ -600,7 +600,7 @@
         "message": "Nein"
     },
     "wantedList_askDeletePartListHeader": {
-        "message": "Löschen"
+        "message": "Teileliste löschen"
     },
     "wantedList_askDeletePartListBody": {
         "message": "Soll diese Teileliste wirklich gelöscht werden?"
