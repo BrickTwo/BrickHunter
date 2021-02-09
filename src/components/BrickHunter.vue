@@ -18,21 +18,21 @@
                     class="ml-auto"
                     v-if="countrySelected && languageSelected"
                 >
-                    <b-nav-item @click="showPage('singleParts')">{{
-                        menuSingleParts
-                    }}</b-nav-item>
-                    <b-nav-item @click="showPage('import')">{{
-                        menuImport
-                    }}</b-nav-item>
-                    <b-nav-item @click="showPage('partLists')">{{
-                        menuWantedList
-                    }}</b-nav-item>
-                    <b-nav-item @click="showPage('shopping')">{{
-                        menuShoppingCart
-                    }}</b-nav-item>
-                    <b-nav-item @click="showPage('export')">{{
-                        menuExport
-                    }}</b-nav-item>
+                    <b-nav-item @click="showPage('singleParts')">
+                        {{ menuSingleParts }} <b-badge variant="danger">Beta</b-badge>
+                    </b-nav-item>
+                    <b-nav-item @click="showPage('import')">
+                        {{ menuImport }}
+                    </b-nav-item>
+                    <b-nav-item @click="showPage('partLists')">
+                        {{ menuWantedList }}
+                    </b-nav-item>
+                    <b-nav-item @click="showPage('shopping')">
+                        {{ menuShoppingCart }}
+                    </b-nav-item>
+                    <b-nav-item @click="showPage('export')">
+                        {{ menuExport }}
+                    </b-nav-item>
 
                     <b-nav-item
                         @click="
@@ -57,7 +57,12 @@
             </b-container>
         </b-navbar>
         <b-container class="pt-1 pb-3 pl-0 pr-0 page" fluid="xl">
-            <b-alert show v-if="newVersionAvailable" variant="warning" dismissible>
+            <b-alert
+                show
+                v-if="newVersionAvailable"
+                variant="warning"
+                dismissible
+            >
                 Neue Version {{ newVersionAvailable }} Verfügbar!
             </b-alert>
             <router-view
