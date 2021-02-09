@@ -608,6 +608,9 @@
     "wantedList_askDeletePartListBody": {
         "message": "Do you really want to delete this part list?"
     },
+    "wantedList_splitPartList": {
+        "message": "Split part list"
+    },
     "xmlField_copyWantedList": {
         "message": "Copy the content of a WantedList into this"
     },

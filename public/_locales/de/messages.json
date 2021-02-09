@@ -605,6 +605,9 @@
     "wantedList_askDeletePartListBody": {
         "message": "Soll diese Teileliste wirklich gelöscht werden?"
     },
+    "wantedList_splitPartList": {
+        "message": "Teilelisten teilen"
+    },
     "xmlField_copyWantedList": {
         "message": "Kopiere den Inhalt einer WantedList hier rein"
     },

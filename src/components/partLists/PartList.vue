@@ -71,9 +71,15 @@
                                 <b-button
                                     variant="danger"
                                     @click="$bvModal.show('askDeletePositions')"
-                                    style="margin-left: 10px;"
                                 >
                                     {{ labelRemovePositions }}
+                                </b-button>
+                                <b-button
+                                    variant="primary"
+                                    style="margin-left: 10px;"
+                                    @click="splitPartList()"
+                                >
+                                    {{ labelSplitPartList }}
                                 </b-button>
                             </b-col>
                         </b-row>
@@ -369,24 +375,7 @@ export default {
         },
         onItemDeleted(item) {
             var index = this.wantedList.findIndex((pos) => {
-                if (item.source === 'lego') {
-                    return (
-                        pos.designId == item.designId &&
-                        pos.itemNumber == item.itemNumber
-                    );
-                } else {
-                    if (item.color.id == 1) {
-                        return (
-                            pos.designId == item.designId &&
-                            pos.color.legoName == item.color.legoName
-                        );
-                    } else {
-                        return (
-                            pos.designId == item.designId &&
-                            pos.color.brickLinkId == item.color.brickLinkId
-                        );
-                    }
-                }
+                return pos.rowNumber == item.rowNumber;
             });
 
             this.wantedList.splice(index, 1);
@@ -440,7 +429,6 @@ export default {
             for (var i = this.wantedList.length - 1; i >= 0; i--) {
                 this.selectedItems.map((item) => {
                     if (item.rowNumber == this.wantedList[i].rowNumber) {
-                        console.log(i);
                         this.wantedList.splice(i, 1);
                     }
                 });
@@ -448,6 +436,40 @@ export default {
         },
         onSelectionChange(selecteItems) {
             this.selectedItems = selecteItems;
+        },
+        splitPartList() {
+            var newPartList = {
+                id: this.generateUUID(),
+                name: this.partList.name + ' 2',
+                cart: this.partList.cart,
+                date: this.partList.date,
+                source: this.partList.source,
+                positions: [...this.selectedItems],
+            };
+
+            this.$store.commit('partList/setPartList', newPartList);
+
+            this.removePositions();
+        },
+        generateUUID() {
+            // Public Domain/MIT
+            var d = new Date().getTime();
+            if (
+                typeof performance !== 'undefined' &&
+                typeof performance.now === 'function'
+            ) {
+                d += performance.now(); //use high-precision timer if available
+            }
+            var newGuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+                /[xy]/g,
+                function(c) {
+                    var r = (d + Math.random() * 16) % 16 | 0;
+                    d = Math.floor(d / 16);
+                    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+                }
+            );
+
+            return newGuid;
         },
     },
     watch: {
@@ -524,6 +546,9 @@ export default {
         labelAskDeletePartListBody() {
             return browser.i18n.getMessage('wantedList_askDeletePartListBody');
         },
+        labelSplitPartList() {
+            return browser.i18n.getMessage('wantedList_splitPartList');
+        }
     },
 };
 </script>
