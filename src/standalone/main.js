@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 import App from './App.vue';
 import store from '../store';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -10,6 +10,7 @@ import { required } from 'vee-validate/dist/rules';
 import VueHtmlToPaper from 'vue-html-to-paper';
 import VueScrollTo from 'vue-scrollto';
 
+import SingleParts from '@/components/singleParts/Index.vue';
 import Import from '@/components/import/Index.vue';
 import PartLists from '@/components/partLists/PartLists.vue';
 import PartList from '@/components/partLists/PartList.vue';
@@ -32,19 +33,20 @@ const options = {
 };
 
 const routes = [
-  { path: '/import', component: Import },
-  { path: '/partLists', component: PartLists },
-  { path: '/partLists/:id', component: PartList },
-  { path: '/shopping', component: Shopping },
-  { path: '/export', component: Export },
-  { path: '/export/:id', component: Export2 },
-  { path: '/info', component: Info },
-  { path: '/settings', component: Settings }
-]
+    { path: '/singleParts', component: SingleParts },
+    { path: '/import', component: Import },
+    { path: '/partLists', component: PartLists },
+    { path: '/partLists/:id', component: PartList },
+    { path: '/shopping', component: Shopping },
+    { path: '/export', component: Export },
+    { path: '/export/:id', component: Export2 },
+    { path: '/info', component: Info },
+    { path: '/settings', component: Settings },
+];
 
 const router = new VueRouter({
-  routes // short for `routes: routes`
-})
+    routes, // short for `routes: routes`
+});
 
 window.eventHub = new Vue();
 Vue.component('ValidationProvider', ValidationProvider);

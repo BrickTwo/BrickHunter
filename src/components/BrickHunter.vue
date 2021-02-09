@@ -18,6 +18,9 @@
                     class="ml-auto"
                     v-if="countrySelected && languageSelected"
                 >
+                    <b-nav-item @click="showPage('singleParts')">{{
+                        menuSingleParts
+                    }}</b-nav-item>
                     <b-nav-item @click="showPage('import')">{{
                         menuImport
                     }}</b-nav-item>
@@ -208,6 +211,9 @@ export default {
         },
         bricksAndPieces() {
             return browser.i18n.getMessage('bricksAndPieces');
+        },
+        menuSingleParts() {
+            return browser.i18n.getMessage('import_singleParts');
         },
         menuImport() {
             return browser.i18n.getMessage('menu_import');
