@@ -81,6 +81,13 @@
                                 >
                                     {{ labelSplitPartList }}
                                 </b-button>
+                                <b-button
+                                    variant="primary"
+                                    style="margin-left: 10px;"
+                                    @click="$bvModal.show('copyToPartList')"
+                                >
+                                    {{ labelCopyToPartList }}
+                                </b-button>
                             </b-col>
                         </b-row>
                     </b-container>
@@ -198,6 +205,33 @@
                 </b-button>
             </template>
         </b-modal>
+        <b-modal
+            id="copyToPartList"
+            :title="labelCopyToPartListHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            @ok="copyToPartList()"
+        >
+            <p class="my-4">
+                {{ labelCopyToPartListBody }}
+            </p>
+            <p class="my-4">
+                <b-form-select
+                    v-model="selectedPartList"
+                    :options="copyToPartLists"
+                />
+            </p>
+            <template #modal-footer="{ cancel, ok }">
+                <b-button @click="cancel()">
+                    {{ buttonCancelLoading }}
+                </b-button>
+                <!-- Button with custom close trigger value -->
+                <b-button @click="ok()">
+                    {{ labelCopyToPartList }}
+                </b-button>
+            </template>
+        </b-modal>
     </div>
 </template>
 
@@ -243,6 +277,8 @@ export default {
         selectedItems: [],
         headerBgVariant: 'dark',
         headerTextVariant: 'light',
+        selectedPartList: null,
+        copyToPartLists: [],
     }),
     components: {
         BrickList,
@@ -471,6 +507,53 @@ export default {
 
             return newGuid;
         },
+        copyToPartList() {
+            var destinationPartList = this.$store.getters[
+                'partList/getPartListsById'
+            ](this.selectedPartList);
+            this.selectedPartList = null;
+            if (!destinationPartList) return;
+
+            this.selectedItems.map((item) => {
+                var foundItem = null;
+                if (item.source == 'lego' && item.itemNumber) {
+                    foundItem = destinationPartList.positions.find((f) => {
+                        return focus.itemNumber == item.itemNumber;
+                    });
+                } else if (item.source == 'brickLink') {
+                    foundItem = destinationPartList.positions.find((f) => {
+                        if (item.color.id == 1) {
+                            return (
+                                f.designId == item.designId &&
+                                f.color.legoName == item.color.legoName
+                            );
+                        } else {
+                            return (
+                                f.designId == item.designId &&
+                                f.color.brickLinkId == item.color.brickLinkId
+                            );
+                        }
+                    });
+                }
+                if (foundItem) {
+                    foundItem.qty = { ...foundItem.qty };
+                    foundItem.qty.min = parseInt(foundItem.qty.min);
+                    foundItem.qty.have = parseInt(foundItem.qty.have);
+                    foundItem.qty.order = parseInt(foundItem.qty.order);
+                    foundItem.qty.min += parseInt(item.qty.min);
+                    foundItem.qty.have += parseInt(item.qty.have);
+                    foundItem.qty.order += parseInt(item.qty.order);
+                    foundItem.qty.balance +=
+                        foundItem.qty.min - foundItem.qty.have;
+                } else {
+                    destinationPartList.positions.push(
+                        JSON.parse(JSON.stringify(item))
+                    ); // push a copy ot the item
+                }
+            });
+
+            this.$store.commit('partList/setPartList', destinationPartList);
+        },
     },
     watch: {
         partList: {
@@ -486,6 +569,25 @@ export default {
         );
         this.wantedList = this.partList.positions;
         this.calcTotals();
+
+        var partListBySource = this.$store.getters[
+            'partList/getPartListsBySource'
+        ](this.partList.source);
+
+        this.copyToPartLists = partListBySource
+            .filter((list) => {
+                return list.id != this.partList.id;
+            })
+            .map((list) => {
+                return { value: list.id, text: list.name };
+            })
+            .sort(function(a, b) {
+                if (a.text.toUpperCase() > b.text.toUpperCase()) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
     },
     computed: {
         pickABrick() {
@@ -548,7 +650,16 @@ export default {
         },
         labelSplitPartList() {
             return browser.i18n.getMessage('wantedList_splitPartList');
-        }
+        },
+        labelCopyToPartList() {
+            return browser.i18n.getMessage('wantedList_copy');
+        },
+        labelCopyToPartListHeader() {
+            return browser.i18n.getMessage('wantedList_copyHeader');
+        },
+        labelCopyToPartListBody() {
+            return browser.i18n.getMessage('wantedList_copyBody');
+        },
     },
 };
 </script>

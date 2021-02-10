@@ -608,6 +608,15 @@
     "wantedList_splitPartList": {
         "message": "Teilelisten teilen"
     },
+    "wantedList_copy": {
+        "message": "Kopieren"
+    },
+    "wantedList_copyHeader": {
+        "message": "Selektierte kopieren"
+    },
+    "wantedList_copyBody": {
+        "message": "Teile können nur innerhalb vom gleichen Listentyp kopiert werden."
+    },
     "xmlField_copyWantedList": {
         "message": "Kopiere den Inhalt einer WantedList hier rein"
     },

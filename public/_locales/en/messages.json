@@ -611,6 +611,15 @@
     "wantedList_splitPartList": {
         "message": "Split part list"
     },
+    "wantedList_copy": {
+        "message": "Copy"
+    },
+    "wantedList_copyHeader": {
+        "message": "Copy selected items"
+    },
+    "wantedList_copyBody": {
+        "message": "Parts can only be copied within the same list type."
+    },
     "xmlField_copyWantedList": {
         "message": "Copy the content of a WantedList into this"
     },
