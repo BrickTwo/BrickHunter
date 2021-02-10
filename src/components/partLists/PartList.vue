@@ -462,13 +462,15 @@ export default {
             item = await this.loadBricksAndPieces(item, true);
         },
         removePositions() {
-            for (var i = this.wantedList.length - 1; i >= 0; i--) {
-                this.selectedItems.map((item) => {
-                    if (item.rowNumber == this.wantedList[i].rowNumber) {
-                        this.wantedList.splice(i, 1);
+            this.selectedItems.map((item) => {
+                    var index = this.wantedList.findIndex(f => {
+                        return f.rowNumber == item.rowNumber
+                    });
+                    if (index>=0) {
+                        this.wantedList.splice(index, 1);
                     }
                 });
-            }
+            this.totalPositions = this.wantedList.length;
         },
         onSelectionChange(selecteItems) {
             this.selectedItems = selecteItems;
