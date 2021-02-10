@@ -191,7 +191,6 @@ export default {
                         currentVersion[1] <= cloudVersion[1] &&
                         currentVersion[2] < cloudVersion[2]
                     ) {
-                        console.log(cloudVersion);
                         this.newVersionAvailable = cloudData.version;
                     }
                 }
