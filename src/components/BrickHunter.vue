@@ -19,7 +19,8 @@
                     v-if="countrySelected && languageSelected"
                 >
                     <b-nav-item @click="showPage('singleParts')">
-                        {{ menuSingleParts }} <b-badge variant="danger">Beta</b-badge>
+                        {{ menuSingleParts }}
+                        <b-badge variant="danger">Beta</b-badge>
                     </b-nav-item>
                     <b-nav-item @click="showPage('import')">
                         {{ menuImport }}
@@ -196,7 +197,13 @@ export default {
                 }
 
                 if (cloudData.notification) {
-                    this.notification = cloudData.notification.messageDe;
+                    var language = await browser.i18n.getUILanguage();
+                    if (language.startsWith('de')) {
+                        this.notification = cloudData.notification.messageDe;
+                    } else {
+                        this.notification = cloudData.notification.messageEn;
+                    }
+
                     this.$bvModal.show('notificationMessage');
                 }
             }
