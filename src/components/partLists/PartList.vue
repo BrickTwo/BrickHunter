@@ -520,8 +520,9 @@ export default {
                 var foundItem = null;
                 if (item.source == 'lego' && item.itemNumber) {
                     foundItem = destinationPartList.positions.find((f) => {
-                        return focus.itemNumber == item.itemNumber;
+                        return f.itemNumber == item.itemNumber;
                     });
+                    console.log(foundItem)
                 } else if (item.source == 'brickLink') {
                     foundItem = destinationPartList.positions.find((f) => {
                         if (item.color.id == 1) {
