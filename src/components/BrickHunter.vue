@@ -18,20 +18,35 @@
                     class="ml-auto"
                     v-if="countrySelected && languageSelected"
                 >
-                    <b-nav-item @click="showPage('singleParts')">
+                    <b-nav-item
+                        @click="showPage('singleParts')"
+                        :active="$router.currentRoute.path == '/singleParts'"
+                    >
                         {{ menuSingleParts }}
                         <b-badge variant="danger">Beta</b-badge>
                     </b-nav-item>
-                    <b-nav-item @click="showPage('import')">
+                    <b-nav-item
+                        @click="showPage('import')"
+                        :active="$router.currentRoute.path == '/import'"
+                    >
                         {{ menuImport }}
                     </b-nav-item>
-                    <b-nav-item @click="showPage('partLists')">
+                    <b-nav-item
+                        @click="showPage('partLists')"
+                        :active="$router.currentRoute.path.startsWith('/partList')"
+                    >
                         {{ menuWantedList }}
                     </b-nav-item>
-                    <b-nav-item @click="showPage('shopping')">
+                    <b-nav-item
+                        @click="showPage('shopping')"
+                        :active="$router.currentRoute.path == '/shopping'"
+                    >
                         {{ menuShoppingCart }}
                     </b-nav-item>
-                    <b-nav-item @click="showPage('export')">
+                    <b-nav-item
+                        @click="showPage('export')"
+                        :active="$router.currentRoute.path.startsWith('/export')"
+                    >
                         {{ menuExport }}
                     </b-nav-item>
 
@@ -42,10 +57,16 @@
                         >{{ menuHelp }}</b-nav-item
                     >
 
-                    <b-nav-item @click="showPage('info')">
+                    <b-nav-item
+                        @click="showPage('info')"
+                        :active="$router.currentRoute.path == '/info'"
+                    >
                         <b-icon icon="info-circle" aria-hidden="true" />
                     </b-nav-item>
-                    <b-nav-item @click="showPage('settings')">
+                    <b-nav-item
+                        @click="showPage('settings')"
+                        :active="$router.currentRoute.path == '/settings'"
+                    >
                         <b-icon icon="gear" aria-hidden="true" />
                     </b-nav-item>
                     <b-nav-item
@@ -66,9 +87,7 @@
             >
                 Neue Version {{ newVersionAvailable }} Verfügbar!
             </b-alert>
-            <router-view
-                v-if="countrySelected && languageSelected"
-            ></router-view>
+            <router-view v-if="countrySelected && languageSelected" />
             <SelectCountry
                 @countrySelected="onCountrySelected"
                 @languageSelected="onLanguageSelected"
@@ -139,6 +158,7 @@ export default {
             headerBgVariant: 'dark',
             headerTextVariant: 'light',
             notification: null,
+            page: null,
         };
     },
     mixins: [requestsMixin],
@@ -147,6 +167,7 @@ export default {
             this.countrySelected = country;
         },
         showPage(page) {
+            this.page = page;
             this.$router.push('/' + page).catch(() => {});
             this.cloudSync();
         },
@@ -215,6 +236,7 @@ export default {
         this.countrySelected = this.$store.state.country;
         this.languageSelected = this.$store.state.language;
         this.cloudSync();
+        console.log(this.$router.currentRoute)
     },
     computed: {
         extName() {
