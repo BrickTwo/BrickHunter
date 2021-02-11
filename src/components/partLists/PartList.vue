@@ -174,6 +174,9 @@
             <p class="my-4">
                 {{ labelAskDeletePartListBody }}
             </p>
+            <p class="my-4">
+                <b>{{ partList.name }}</b>
+            </p>
             <template #modal-footer="{ cancel, ok }">
                 <b-button @click="cancel()">
                     {{ labelAskNo }}
@@ -522,7 +525,6 @@ export default {
                     foundItem = destinationPartList.positions.find((f) => {
                         return f.itemNumber == item.itemNumber;
                     });
-                    console.log(foundItem)
                 } else if (item.source == 'brickLink') {
                     foundItem = destinationPartList.positions.find((f) => {
                         if (item.color.id == 1) {

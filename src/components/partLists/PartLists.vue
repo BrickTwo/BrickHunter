@@ -61,7 +61,7 @@
                                 <b-icon
                                     icon="trash"
                                     aria-hidden="true"
-                                    @click="onDeleteList(partList.id)"
+                                    @click="onDeleteList(partList.id, partList.name)"
                                 />
                             </b-col>
                         </b-row>
@@ -79,6 +79,9 @@
         >
             <p class="my-4">
                 {{ labelAskDeletePartListBody }}
+            </p>
+            <p class="my-4">
+                <b>{{ deleteListName }}</b>
             </p>
             <template #modal-footer="{ cancel, ok }">
                 <b-button @click="cancel()">
@@ -98,6 +101,7 @@ export default {
     data: () => ({
         partLists: null,
         deleteListId: null,
+        deleteListName: null,
         headerBgVariant: 'dark',
         headerTextVariant: 'light',
     }),
@@ -113,8 +117,9 @@ export default {
                 return 'warning';
             }
         },
-        onDeleteList(id) {
+        onDeleteList(id, name) {
             this.deleteListId = id;
+            this.deleteListName = name;
             this.$bvModal.show('askDeletePartList');
         },
         deleteList() {
