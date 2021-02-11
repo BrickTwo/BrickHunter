@@ -366,8 +366,47 @@ export default {
             }
         },
         selectRow(index, selected) {
-            if(selected) this.$refs.selectableTable.selectRow(index);
-            if(!selected) this.$refs.selectableTable.unselectRow(index);
+            if (selected) this.$refs.selectableTable.selectRow(index);
+            if (!selected) this.$refs.selectableTable.unselectRow(index);
+        },
+        sortList() {
+            var key = this.fields.find((f) => f.key == this.sortBy).sortKey;
+            if(!key) key = this.sortBy;
+            var order = this.sortDesc ? 'desc' : 'asc';
+
+            var keys = key.split('.');
+
+            this.bricklist.sort(function innerSort(a, b) {
+                var varA = a;
+                var varB = b;
+                keys.forEach((key) => {
+                    if (!varA || !varA.hasOwnProperty(key)) {
+                        // property doesn't exist on either object
+                        varA = '';
+                    } else {
+                        varA =
+                            typeof varA[key] === 'string'
+                                ? varA[key].toUpperCase()
+                                : varA[key];
+                    }
+                    if (!varB || !varB.hasOwnProperty(key)) {
+                        // property doesn't exist on either object
+                        varB = '';
+                    } else {
+                        varB =
+                            typeof varB[key] === 'string'
+                                ? varB[key].toUpperCase()
+                                : varB[key];
+                    }
+                });
+                let comparison = 0;
+                if (varA > varB) {
+                    comparison = 1;
+                } else if (varA < varB) {
+                    comparison = -1;
+                }
+                return order === 'desc' ? comparison * -1 : comparison;
+            });
         },
     },
     beforeMount() {
@@ -406,11 +445,15 @@ export default {
                 );
             }
         });
+        this.sortList();
     },
     watch: {
         isBusy: async function(val) {
             if (val) this.tableHeight = 'calc(100vh - 215px)';
-            if (!val) this.tableHeight = 'calc(100vh - 200px)';
+            if (!val) {
+                this.tableHeight = 'calc(100vh - 200px)';
+                this.sortList();
+            }
             /*var findDesignId = this.fields.find(
                 (field) => field.key === 'designId'
             );
@@ -436,6 +479,12 @@ export default {
             if (findBrickLinkPrice) findBrickLinkPrice.sortable = val;
             if (findPickABrick) findPickABrick.sortable = val;
             if (findBricksAndPieces) findBricksAndPieces.sortable = val;*/
+        },
+        sortBy: async function() {
+            this.sortList();
+        },
+        sortDesc: async function() {
+            this.sortList();
         },
     },
     computed: {
