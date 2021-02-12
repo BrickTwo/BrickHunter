@@ -123,7 +123,10 @@ async function pickABrick(request) {
                 return response.json();
             })
             .catch((err) => {
-                return null;
+                return {
+                    status: response.error,
+                    message: '',
+                };
             });
 
         if (response.status) return response;
@@ -215,7 +218,10 @@ async function pickABrick(request) {
                 return response.json();
             })
             .catch((err) => {
-                return null;
+                return {
+                    status: response.error,
+                    message: '',
+                };
             });
 
         return response;
@@ -329,7 +335,10 @@ async function bricksAndPieces(request) {
                 return response.json();
             })
             .catch((err) => {
-                return null;
+                return {
+                    status: response.error,
+                    message: '',
+                };
             });
 
         return response;

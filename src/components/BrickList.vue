@@ -301,7 +301,7 @@ export default {
             },
             {
                 key: 'qty',
-                label: browser.i18n.getMessage('brickList_itemNumber'),
+                label: browser.i18n.getMessage('brickList_quantity'),
                 sortable: true,
                 sortKey: 'qty.min',
                 width: '70px',

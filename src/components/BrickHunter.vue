@@ -236,7 +236,6 @@ export default {
         this.countrySelected = this.$store.state.country;
         this.languageSelected = this.$store.state.language;
         this.cloudSync();
-        console.log(this.$router.currentRoute)
     },
     computed: {
         extName() {
