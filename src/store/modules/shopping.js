@@ -1,3 +1,5 @@
+import version from '../../function/version.js'
+
 // initial state
 const state = () => ({
     wantedListPositionsMerged: 0,
@@ -26,9 +28,7 @@ const actions = {};
 // mutations
 const mutations = {
     initialiseStore(state, oldVersion) {
-        var oldVersion = oldVersion.split('.').map(Number);
-
-        if (oldVersion[0] <= 1 && oldVersion[1] <= 4 && oldVersion[2] < 2) {
+        if (version.isSmaller(oldVersion, '1.4.2')) {
             state.settings.selectedPrio1 =
                 localStorage.getItem('selectedPrio1') || 'bricksAndPieces';
             state.settings.selectedPrio2 =

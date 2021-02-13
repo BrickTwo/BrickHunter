@@ -1,3 +1,5 @@
+import version from '../../function/version.js'
+
 // initial state
 const state = () => ({
     partLists: [],
@@ -30,9 +32,7 @@ const mutations = {
             }
         }
 
-        var oldVersion = oldVersion.split('.').map(Number);
-
-        if (oldVersion[0] <= 1 && oldVersion[1] <= 1 && oldVersion[2] < 9) {
+        if (version.isSmaller(oldVersion, '1.1.9')) {
             state.partLists.map((partList) => {
                 var positions = [];
                 partList.positions.map((item) => {
@@ -69,7 +69,7 @@ const mutations = {
             });
         }
 
-        if (oldVersion[0] <= 1 && oldVersion[1] <= 1 && oldVersion[2] < 13) {
+        if (version.isSmaller(oldVersion, '1.1.13')) {
             state.partLists.map((partList) => {
                 partList.source = partList.positions[0].source;
                 localStorage.setItem(
@@ -79,23 +79,8 @@ const mutations = {
             });
         }
 
-        if (oldVersion[0] == 1 && oldVersion[1] == 4 && oldVersion[2] == 4) {
-            state.partLists.map((partList) => {
-                if (partList.source == 'singleParts') {
-                    partList.positions.map((pos) => {
-                        if (pos.image.itemId) {
-                            pos.itemid = pos.image.itemId;
-                        }
-                    });
-                }
-                localStorage.setItem(
-                    'partList_' + partList.id,
-                    JSON.stringify(partList)
-                );
-            });
-        }
-
-        if (oldVersion[0] <= 1 && oldVersion[1] <= 4 && oldVersion[2] < 5) {
+        if (version.isSmaller(oldVersion, '1.4.5')) {
+            console.log(222);
             state.partLists.map((partList) => {
                 if (partList.source == 'singleParts') {
                     partList.positions.map((pos) => {

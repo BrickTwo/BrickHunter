@@ -46,23 +46,25 @@ export const brickProcessorMixin = {
                 );
                 if (result[0]) return result[0];
 
-                var resp = await this.getBrickAsync(item.itemNumber);
+                if (item.itemNumber) {
+                    var resp = await this.getBrickAsync(item.itemNumber);
 
-                if (resp?.brick?.alternativeItemNumbers) {
-                    var altItemNumbers = resp.brick.alternativeItemNumbers.split(
-                        '|'
-                    );
-
-                    for (var i = 1; i < altItemNumbers.length - 1; i++) {
-                        var result = bricks.filter(
-                            (brick) => brick.itemNumber == altItemNumbers[i]
+                    if (resp?.brick?.alternativeItemNumbers) {
+                        var altItemNumbers = resp.brick.alternativeItemNumbers.split(
+                            '|'
                         );
 
-                        if (result[0]) return result[0];
-                    }
-                }
+                        for (var i = 1; i < altItemNumbers.length - 1; i++) {
+                            var result = bricks.filter(
+                                (brick) => brick.itemNumber == altItemNumbers[i]
+                            );
 
-                return result[0];
+                            if (result[0]) return result[0];
+                        }
+                    }
+
+                    return result[0];
+                }
             }
 
             var result = bricks.filter(
@@ -101,25 +103,25 @@ export const brickProcessorMixin = {
                 );
                 if (result[0]) return result[0];
 
-                var resp = await this.getBrickAsync(item.itemNumber);
-                
-                if (resp?.brick?.alternativeItemNumbers) {
-                    var altItemNumbers = resp.brick.alternativeItemNumbers.split(
-                        '|'
-                    );
+                if (item.itemNumber) {
+                    var resp = await this.getBrickAsync(item.itemNumber);
 
-                    
-                    for (var i = 1; i < altItemNumbers.length - 1; i++) {
-                        
-                        var result = bricks.filter(
-                            (brick) => brick.itemNumber == altItemNumbers[i]
+                    if (resp?.brick?.alternativeItemNumbers) {
+                        var altItemNumbers = resp.brick.alternativeItemNumbers.split(
+                            '|'
                         );
-                        
-                        if (result[0]) return result[0];
-                    }
-                }
 
-                return result[0];
+                        for (var i = 1; i < altItemNumbers.length - 1; i++) {
+                            var result = bricks.filter(
+                                (brick) => brick.itemNumber == altItemNumbers[i]
+                            );
+
+                            if (result[0]) return result[0];
+                        }
+                    }
+
+                    return result[0];
+                }
             }
 
             var result = bricks.filter(
@@ -185,8 +187,7 @@ export const brickProcessorMixin = {
                         if (response?.bricks) {
                             bricks = bricks.concat(response.bricks);
                         }
-                    } catch (error) {
-                    }
+                    } catch (error) {}
                 }
             }
 
@@ -224,7 +225,7 @@ export const brickProcessorMixin = {
                     if (!single) this.calcLoad();
                     return item;
                 }
-                
+
                 var foundBrick = await this.findPickABrickBrick(item, response);
                 if (foundBrick) {
                     item.pickABrick = foundBrick;
@@ -233,8 +234,7 @@ export const brickProcessorMixin = {
                 }
                 if (!single) this.pickABrickBrickCounter++;
                 if (!single) this.calcLoad();
-            } catch (error) {
-            }
+            } catch (error) {}
             return item;
         },
         prepareSendPrice(bricks) {
