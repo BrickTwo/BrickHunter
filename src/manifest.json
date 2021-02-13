@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extName__",
-  "description": "Upload a WantedList from BrickLink and search automatic for offizial prices on the LEGO page.",
+  "description": "Browse the complete LEGO Shop bricks and pieces catalog, import BrickLink Wanted lists and auto fill the LEGO Shop shopping cart",
   "default_locale": "en",
   "permissions": [
     "tabs",
