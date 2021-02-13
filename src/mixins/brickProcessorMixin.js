@@ -97,22 +97,24 @@ export const brickProcessorMixin = {
 
             if (item.source == 'lego' || item.source == 'singleParts') {
                 var result = bricks.filter(
-                    (brick) => brick.itemNumber == item.itemNumber
+                    (brick) => brick.variant.id == item.itemNumber
                 );
                 if (result[0]) return result[0];
 
                 var resp = await this.getBrickAsync(item.itemNumber);
-
+                
                 if (resp?.brick?.alternativeItemNumbers) {
                     var altItemNumbers = resp.brick.alternativeItemNumbers.split(
                         '|'
                     );
 
+                    
                     for (var i = 1; i < altItemNumbers.length - 1; i++) {
+                        
                         var result = bricks.filter(
                             (brick) => brick.itemNumber == altItemNumbers[i]
                         );
-
+                        
                         if (result[0]) return result[0];
                     }
                 }
@@ -174,7 +176,6 @@ export const brickProcessorMixin = {
                             designId: item.searchids[j],
                         });
 
-                        console.log(response);
                         if (response?.status) {
                             item.bricksAndPieces = { error: response.status };
                             if (!single) this.bricksAndPiecesBrickCounter++;
@@ -185,7 +186,6 @@ export const brickProcessorMixin = {
                             bricks = bricks.concat(response.bricks);
                         }
                     } catch (error) {
-                        //console.log('err', item, error);
                     }
                 }
             }
@@ -218,15 +218,13 @@ export const brickProcessorMixin = {
                     designId: item.searchids.join('-'),
                 });
 
-                console.log(response);
-
                 if (response?.status) {
                     item.pickABrick = { error: response.status };
                     if (!single) this.pickABrickBrickCounter++;
                     if (!single) this.calcLoad();
                     return item;
                 }
-
+                
                 var foundBrick = await this.findPickABrickBrick(item, response);
                 if (foundBrick) {
                     item.pickABrick = foundBrick;
@@ -236,9 +234,7 @@ export const brickProcessorMixin = {
                 if (!single) this.pickABrickBrickCounter++;
                 if (!single) this.calcLoad();
             } catch (error) {
-                //console.log('err', item, error);
             }
-
             return item;
         },
         prepareSendPrice(bricks) {
