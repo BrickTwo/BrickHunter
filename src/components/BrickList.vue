@@ -6,13 +6,14 @@
         no-border-collapse
         select-mode="multi"
         :sticky-header="tableHeight"
-        :items="list"
-        :primary-key="list.rowNumber"
+        :items="bricklist"
+        :primary-key="bricklist.rowNumber"
         :fields="fields"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
         :selectable="edit"
         :busy="isBusy"
+        :sortCompare="sortCompare"
         @row-selected="onRowSelection"
         ref="selectableTable"
         class="m-0"
@@ -264,7 +265,6 @@ export default {
         sortBy: 'designId',
         sortDesc: false,
         selectAll: false,
-        list: null,
         tableHeight: 'calc(100vh - 200px)',
         selected: [],
         fields: [
@@ -369,9 +369,52 @@ export default {
             if (selected) this.$refs.selectableTable.selectRow(index);
             if (!selected) this.$refs.selectableTable.unselectRow(index);
         },
+        sortCompare(
+            aRow,
+            bRow,
+            key,
+            sortDesc,
+            formatter,
+            compareOptions,
+            compareLocale
+        ) {
+            var keyVal = this.fields.find((f) => f.key == key).sortKey;
+            if (keyVal) key = keyVal;
+            var keys = key.split('.');
+
+            var varA = aRow;
+            var varB = bRow;
+            keys.forEach((key) => {
+                if (!varA || !varA.hasOwnProperty(key)) {
+                    // property doesn't exist on either object
+                    varA = '';
+                } else {
+                    varA =
+                        typeof varA[key] === 'string'
+                            ? varA[key].toUpperCase()
+                            : varA[key];
+                }
+                if (!varB || !varB.hasOwnProperty(key)) {
+                    // property doesn't exist on either object
+                    varB = '';
+                } else {
+                    varB =
+                        typeof varB[key] === 'string'
+                            ? varB[key].toUpperCase()
+                            : varB[key];
+                }
+            });
+            let comparison = 0;
+            if (varA > varB) {
+                comparison = 1;
+            } else if (varA < varB) {
+                comparison = -1;
+            }
+            return comparison;
+        },
         sortList() {
             var key = this.fields.find((f) => f.key == this.sortBy).sortKey;
-            if(!key) key = this.sortBy;
+            if (!key) key = this.sortBy;
             var order = this.sortDesc ? 'desc' : 'asc';
 
             var keys = key.split('.');
@@ -410,9 +453,8 @@ export default {
         },
     },
     beforeMount() {
-        this.list = this.bricklist;
         if (
-            this.list.filter((p) => p.brickLink?.wantedList?.maxprice > 0)
+            this.bricklist.filter((p) => p.brickLink?.wantedList?.maxprice > 0)
                 .length == 0
         ) {
             this.fields = this.fields.filter(
@@ -420,7 +462,7 @@ export default {
             );
         }
 
-        if (this.list.filter((p) => p.itemNumber).length == 0) {
+        if (this.bricklist.filter((p) => p.itemNumber).length == 0) {
             this.fields = this.fields.filter(
                 (field) => field.key != 'itemNumber'
             );
@@ -432,11 +474,17 @@ export default {
             );
         }
 
-        var i = 1;
-        this.list.map((pos) => {
+        var i = 0;
+        this.bricklist.map((pos) => {
+            i++;
             pos.rowNumber = i.toString();
             pos.selected = false;
-            i++;
+
+            pos.qty.min = parseInt(pos.qty.min);
+            pos.qty.have = parseInt(pos.qty.have);
+            pos.qty.order = parseInt(pos.qty.order);
+            pos.qty.balance = pos.qty.min - pos.qty.have;
+
             if (pos.brickLink?.wantedList?.maxprice) {
                 if (pos.brickLink.wantedList.maxprice <= 0)
                     pos.brickLink.wantedList.maxprice = 0;
@@ -486,6 +534,12 @@ export default {
         sortDesc: async function() {
             this.sortList();
         },
+        /*bricklist: {
+            handler(val, oldVal) {
+                console.log(val, oldVal)
+            },
+            deep: true,
+        },*/
     },
     computed: {
         label_reload() {
