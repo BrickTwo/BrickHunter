@@ -5,6 +5,7 @@
         responsive
         no-border-collapse
         select-mode="multi"
+        no-local-sorting
         :sticky-header="tableHeight"
         :items="bricklist"
         :primary-key="bricklist.rowNumber"
@@ -13,7 +14,6 @@
         :sort-desc.sync="sortDesc"
         :selectable="edit"
         :busy="isBusy"
-        :sortCompare="sortCompare"
         @row-selected="onRowSelection"
         ref="selectableTable"
         class="m-0"
@@ -61,7 +61,11 @@
             </div>
         </template>
         <template #cell(qty)="data">
-            <b-form-input v-if="edit" v-model="data.value.min" type="number" />
+            <b-form-input
+                v-if="edit"
+                v-model="data.value.min"
+                type="number"
+            />
             <div v-if="limitMaxQty > 0 && !edit">
                 <div v-if="data.value.maxAmount">
                     <div v-if="data.value.order > data.value.maxAmount">
@@ -296,28 +300,28 @@ export default {
                 key: 'color',
                 label: browser.i18n.getMessage('brickList_brickLinkColor'),
                 sortable: true,
-                sortKey: 'color.brickLinkName',
+                sortBy: 'color.brickLinkName',
                 width: '200px',
             },
             {
                 key: 'qty',
                 label: browser.i18n.getMessage('brickList_quantity'),
                 sortable: true,
-                sortKey: 'qty.min',
+                sortBy: 'qty.min',
                 width: '70px',
             },
             {
                 key: 'brickLink',
                 label: browser.i18n.getMessage('brickList_brickLinkPrice'),
                 sortable: true,
-                sortKey: 'brickLink.wantedList.maxprice',
+                sortBy: 'brickLink.wantedList.maxprice',
                 width: '90px',
             },
             {
                 key: 'pickABrick',
                 label: browser.i18n.getMessage('brickList_pickABrickPrice'),
                 sortable: true,
-                sortKey: 'pickABrick.variant.price.centAmount',
+                sortBy: 'pickABrick.variant.price.centAmount',
                 width: '110px',
             },
             {
@@ -326,7 +330,7 @@ export default {
                     'brickList_bricksAndPiecesPrice'
                 ),
                 sortable: true,
-                sortKey: 'bricksAndPieces.price.amount',
+                sortBy: 'bricksAndPieces.price.amount',
                 width: '120px',
             },
             {
@@ -335,6 +339,7 @@ export default {
                 width: '25px',
             },
         ],
+        doNotSort: false,
     }),
     components: {
         Vuetable,
@@ -369,51 +374,8 @@ export default {
             if (selected) this.$refs.selectableTable.selectRow(index);
             if (!selected) this.$refs.selectableTable.unselectRow(index);
         },
-        sortCompare(
-            aRow,
-            bRow,
-            key,
-            sortDesc,
-            formatter,
-            compareOptions,
-            compareLocale
-        ) {
-            var keyVal = this.fields.find((f) => f.key == key).sortKey;
-            if (keyVal) key = keyVal;
-            var keys = key.split('.');
-
-            var varA = aRow;
-            var varB = bRow;
-            keys.forEach((key) => {
-                if (!varA || !varA.hasOwnProperty(key)) {
-                    // property doesn't exist on either object
-                    varA = '';
-                } else {
-                    varA =
-                        typeof varA[key] === 'string'
-                            ? varA[key].toUpperCase()
-                            : varA[key];
-                }
-                if (!varB || !varB.hasOwnProperty(key)) {
-                    // property doesn't exist on either object
-                    varB = '';
-                } else {
-                    varB =
-                        typeof varB[key] === 'string'
-                            ? varB[key].toUpperCase()
-                            : varB[key];
-                }
-            });
-            let comparison = 0;
-            if (varA > varB) {
-                comparison = 1;
-            } else if (varA < varB) {
-                comparison = -1;
-            }
-            return comparison;
-        },
         sortList() {
-            var key = this.fields.find((f) => f.key == this.sortBy).sortKey;
+            var key = this.fields.find((f) => f.key == this.sortBy).sortBy;
             if (!key) key = this.sortBy;
             var order = this.sortDesc ? 'desc' : 'asc';
 

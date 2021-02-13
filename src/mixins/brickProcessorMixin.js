@@ -167,19 +167,25 @@ export const brickProcessorMixin = {
 
             for (var j = 0; j < item.searchids.length; j++) {
                 if (item.searchids[j]) {
-                    var response = await browser.runtime.sendMessage({
-                        service: 'bricksAndPieces',
-                        action: 'findBrick',
-                        designId: item.searchids[j],
-                    });
-                    if (response?.status) {
-                        item.bricksAndPieces = { error: response.status };
-                        if (!single) this.bricksAndPiecesBrickCounter++;
-                        if (!single) this.calcLoad();
-                        return item;
-                    }
-                    if (response?.bricks) {
-                        bricks = bricks.concat(response.bricks);
+                    try {
+                        var response = await browser.runtime.sendMessage({
+                            service: 'bricksAndPieces',
+                            action: 'findBrick',
+                            designId: item.searchids[j],
+                        });
+
+                        console.log(response);
+                        if (response?.status) {
+                            item.bricksAndPieces = { error: response.status };
+                            if (!single) this.bricksAndPiecesBrickCounter++;
+                            if (!single) this.calcLoad();
+                            return item;
+                        }
+                        if (response?.bricks) {
+                            bricks = bricks.concat(response.bricks);
+                        }
+                    } catch (error) {
+                        //console.log('err', item, error);
                     }
                 }
             }
@@ -205,28 +211,33 @@ export const brickProcessorMixin = {
                 if (!single) this.calcLoad();
                 return item;
             }
+            try {
+                var response = await browser.runtime.sendMessage({
+                    service: 'pickABrick',
+                    action: 'findBrick',
+                    designId: item.searchids.join('-'),
+                });
 
-            var response = await browser.runtime.sendMessage({
-                service: 'pickABrick',
-                action: 'findBrick',
-                designId: item.searchids.join('-'),
-            });
+                console.log(response);
 
-            if (response?.status) {
-                item.pickABrick = { error: response.status };
+                if (response?.status) {
+                    item.pickABrick = { error: response.status };
+                    if (!single) this.pickABrickBrickCounter++;
+                    if (!single) this.calcLoad();
+                    return item;
+                }
+
+                var foundBrick = await this.findPickABrickBrick(item, response);
+                if (foundBrick) {
+                    item.pickABrick = foundBrick;
+                } else {
+                    item.pickABrick = null;
+                }
                 if (!single) this.pickABrickBrickCounter++;
                 if (!single) this.calcLoad();
-                return item;
+            } catch (error) {
+                //console.log('err', item, error);
             }
-
-            var foundBrick = await this.findPickABrickBrick(item, response);
-            if (foundBrick) {
-                item.pickABrick = foundBrick;
-            } else {
-                item.pickABrick = null;
-            }
-            if (!single) this.pickABrickBrickCounter++;
-            if (!single) this.calcLoad();
 
             return item;
         },

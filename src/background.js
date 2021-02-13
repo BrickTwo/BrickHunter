@@ -327,11 +327,13 @@ async function bricksAndPieces(request) {
         })
             .then((response) => {
                 clearTimeout(timeout);
+                
                 if (response.status < 200 || response.status >= 300)
                     return {
                         status: response.status,
                         message: response.json(),
                     };
+
                 return response.json();
             })
             .catch((err) => {
