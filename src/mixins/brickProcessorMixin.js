@@ -1,14 +1,12 @@
-import { validate } from 'vee-validate';
-
 export const brickProcessorMixin = {
     methods: {
-        cleanItemId(itemId) {
-            itemId = itemId.toString();
-            var lastChar = itemId.substr(-1, 1);
+        cleanDesignId(designId) {
+            designId = designId.toString();
+            var lastChar = designId.substr(-1, 1);
             if (lastChar >= 'a' && lastChar <= 'h') {
-                return itemId.slice(0, -1);
+                return designId.slice(0, -1);
             } else {
-                return itemId;
+                return designId;
             }
         },
         findColor(brickLinkColorId, colorList) {
@@ -24,25 +22,49 @@ export const brickProcessorMixin = {
                     colorFamily.toUpperCase()
             );
 
-            if (!result.length) {
-                result = colorList.filter((color) => color.brickLinkId == 0);
-                result[0].legoName = colorFamily;
-                result[0].bricksAndPiecesName = colorFamily;
-                result[0].pickABrickName = colorFamily;
+            if (result.length) {
+                return result[0];
             }
-            return result[0];
+
+            var color = {
+                ...colorList.filter((color) => color.brickLinkId == 0)[0],
+            };
+            color.legoName = colorFamily;
+            color.bricksAndPiecesName = colorFamily;
+            color.pickABrickName = colorFamily;
+            return color;
         },
-        findBricksAndPiecesBrick(item, bricks) {
-            if (!bricks) return null;
+        async findBricksAndPiecesBrick(item, bricks) {
+            if (!bricks || !bricks.length) return null;
             bricks = bricks.filter(
                 (brick) => !brick.isSoldOut && brick.isAvailable
             );
 
-            if (item.source == 'lego') {
+            if (item.source == 'lego' || item.source == 'singleParts') {
                 var result = bricks.filter(
-                    (brick) => brick.itemNumber == item.itemid
+                    (brick) => brick.itemNumber == item.itemNumber
                 );
                 if (result[0]) return result[0];
+
+                if (item.itemNumber) {
+                    var resp = await this.getBrickAsync(item.itemNumber);
+
+                    if (resp?.brick?.alternativeItemNumbers) {
+                        var altItemNumbers = resp.brick.alternativeItemNumbers.split(
+                            '|'
+                        );
+
+                        for (var i = 1; i < altItemNumbers.length - 1; i++) {
+                            var result = bricks.filter(
+                                (brick) => brick.itemNumber == altItemNumbers[i]
+                            );
+
+                            if (result[0]) return result[0];
+                        }
+                    }
+
+                    return result[0];
+                }
             }
 
             var result = bricks.filter(
@@ -72,14 +94,34 @@ export const brickProcessorMixin = {
 
             return result[0];
         },
-        findPickABrickBrick(item, bricks) {
-            if (!bricks) return null;
+        async findPickABrickBrick(item, bricks) {
+            if (!bricks || !bricks.length) return null;
 
-            if (item.source == 'lego') {
+            if (item.source == 'lego' || item.source == 'singleParts') {
                 var result = bricks.filter(
-                    (brick) => brick.itemNumber == item.itemid
+                    (brick) => brick.variant.id == item.itemNumber
                 );
                 if (result[0]) return result[0];
+                        
+                if (item.itemNumber) {
+                    var resp = await this.getBrickAsync(item.itemNumber);
+
+                    if (resp?.brick?.alternativeItemNumbers) {
+                        var altItemNumbers = resp.brick.alternativeItemNumbers.split(
+                            '|'
+                        );
+
+                        for (var i = 1; i < altItemNumbers.length - 1; i++) {
+                            var result = bricks.filter(
+                                (brick) => brick.itemNumber == altItemNumbers[i]
+                            );
+
+                            if (result[0]) return result[0];
+                        }
+                    }
+
+                    return result[0];
+                }
             }
 
             var result = bricks.filter(
@@ -104,14 +146,14 @@ export const brickProcessorMixin = {
         },
         isSpecialBrick(item) {
             if (
-                isNaN(this.cleanItemId(item.itemid)) ||
+                isNaN(this.cleanDesignId(item.designId)) ||
                 item.color.brickLinkId == 65 || // metallic gold
                 item.color.brickLinkId == 67 || // metallic silver
-                item.itemid == '90398' ||
-                item.itemid == '67583' ||
-                item.itemid == '27328' ||
-                item.itemid == '21699' ||
-                item.itemid == '38547'
+                item.designId == '90398' ||
+                item.designId == '67583' ||
+                item.designId == '27328' ||
+                item.designId == '21699' ||
+                item.designId == '38547'
             ) {
                 return true;
             }
@@ -120,8 +162,8 @@ export const brickProcessorMixin = {
         async loadBricksAndPieces(item, single = false) {
             if (!item.searchids) {
                 item.bricksAndPieces = null;
-                if(!single) this.bricksAndPiecesBrickCounter++;
-                if(!single) this.calcLoad();
+                if (!single) this.bricksAndPiecesBrickCounter++;
+                if (!single) this.calcLoad();
                 return item;
             }
 
@@ -129,59 +171,70 @@ export const brickProcessorMixin = {
 
             for (var j = 0; j < item.searchids.length; j++) {
                 if (item.searchids[j]) {
-                    var response = await browser.runtime.sendMessage({
-                        contentScriptQuery: 'getBricksAndPieces',
-                        itemId: item.searchids[j],
-                    });
-                    if (response?.status) {
-                        item.bricksAndPieces = { error: response.status };
-                        if(!single) this.bricksAndPiecesBrickCounter++;
-                        if(!single) this.calcLoad();
-                        return item;
-                    }
+                    try {
+                        var response = await browser.runtime.sendMessage({
+                            service: 'bricksAndPieces',
+                            action: 'findBrick',
+                            designId: item.searchids[j],
+                        });
 
-                    if (response?.bricks) {
-                        bricks = bricks.concat(response.bricks);
-                    }
+                        if (response?.status) {
+                            item.bricksAndPieces = { error: response.status };
+                            if (!single) this.bricksAndPiecesBrickCounter++;
+                            if (!single) this.calcLoad();
+                            return item;
+                        }
+                        if (response?.bricks) {
+                            bricks = bricks.concat(response.bricks);
+                        }
+                    } catch (error) {}
                 }
             }
 
-            var foundBrick = this.findBricksAndPiecesBrick(item, bricks);
+            var foundBrick = await this.findBricksAndPiecesBrick(item, bricks);
 
             if (foundBrick) {
                 item.bricksAndPieces = foundBrick;
             } else {
                 item.bricksAndPieces = null;
             }
-            if(!single) this.bricksAndPiecesBrickCounter++;
-            if(!single) this.calcLoad();
+            if (!single) this.bricksAndPiecesBrickCounter++;
+            if (!single) this.calcLoad();
 
             this.sendPrices(this.prepareSendPrice(bricks));
 
             return item;
         },
-        async loadPickABrick(item) {
+        async loadPickABrick(item, single = false) {
             if (!item.searchids) {
                 item.pickABrick = null;
-                this.pickABrickBrickCounter++;
-                this.calcLoad();
+                if (!single) this.pickABrickBrickCounter++;
+                if (!single) this.calcLoad();
                 return item;
             }
+            try {
+                var response = await browser.runtime.sendMessage({
+                    service: 'pickABrick',
+                    action: 'findBrick',
+                    designId: item.searchids.join('-'),
+                });
 
-            var response = await browser.runtime.sendMessage({
-                contentScriptQuery: 'getPickABrick',
-                itemId: item.searchids.join('-'),
-            });
+                if (response?.status) {
+                    item.pickABrick = { error: response.status };
+                    if (!single) this.pickABrickBrickCounter++;
+                    if (!single) this.calcLoad();
+                    return item;
+                }
 
-            var foundBrick = this.findPickABrickBrick(item, response);
-            if (foundBrick) {
-                item.pickABrick = foundBrick;
-            } else {
-                item.pickABrick = null;
-            }
-            this.pickABrickBrickCounter++;
-            this.calcLoad();
-
+                var foundBrick = await this.findPickABrickBrick(item, response);
+                if (foundBrick) {
+                    item.pickABrick = foundBrick;
+                } else {
+                    item.pickABrick = null;
+                }
+                if (!single) this.pickABrickBrickCounter++;
+                if (!single) this.calcLoad();
+            } catch (error) {}
             return item;
         },
         prepareSendPrice(bricks) {

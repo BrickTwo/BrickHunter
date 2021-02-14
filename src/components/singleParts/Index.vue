@@ -21,7 +21,7 @@
 
 <style scoped>
 .cat {
-    height: calc(100vh - 130px);
+    height: calc(100vh - 85px);
     min-height: 475px;
     overflow: scroll;
     overflow-x: hidden;
@@ -29,10 +29,10 @@
 </style>
 
 <script>
-import Sidemenu from './singleParts/Sidemenu';
-import BrickFilter from './singleParts/Filter';
+import Sidemenu from './Sidemenu';
+import BrickFilter from './Filter';
 import { requestsMixin } from '@/mixins/requestsMixin';
-import Chart from './singleParts/Chart';
+import Chart from './Chart';
 
 export default {
     data: () => ({

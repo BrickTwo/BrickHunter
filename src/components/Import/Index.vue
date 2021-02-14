@@ -7,29 +7,11 @@
             >
                 {{ labelBrickLink }}
             </b-nav-item>
-            <!--<b-nav-item
-                :active="page == 'bricksAndPieces'"
-                @click="page = 'bricksAndPieces'"
-            >
-                {{ labelBricksAndPieces }}
-            </b-nav-item>
-            <b-nav-item
-                :active="page == 'pickABrick'"
-                @click="page = 'pickABrick'"
-            >
-                {{ labelPickABrick }}
-            </b-nav-item>-->
             <b-nav-item
                 :active="page == 'legoSet'"
                 @click="changePage('legoSet')"
             >
                 {{ labelLegoSet }}
-            </b-nav-item>
-            <b-nav-item
-                :active="page == 'singleParts'"
-                @click="changePage('singleParts')"
-            >
-                {{ labelSinglePart }} <span style="color: red">*beta*</span>
             </b-nav-item>
         </b-nav>
         <ImportBrickLink v-if="page == 'brickLink'" class="tabPage" />
@@ -41,7 +23,6 @@
 <script>
 import ImportBrickLink from './BrickLink';
 import LegoSet from './LegoSet';
-import SingleParts from './SingleParts';
 
 export default {
     data: () => ({
@@ -50,17 +31,12 @@ export default {
     components: {
         ImportBrickLink,
         LegoSet,
-        SingleParts,
     },
     methods: {
         changePage(value) {
             this.page = value;
-            //this.$router.push(`/import/${value}`).catch(() => {});
         },
     },
-    /*beforeMount() {
-        this.$router.push(`/import/${this.page}`).catch(() => {});
-    },*/
     computed: {
         labelPickABrick() {
             return browser.i18n.getMessage('pickABrick');
@@ -73,9 +49,6 @@ export default {
         },
         labelLegoSet() {
             return browser.i18n.getMessage('import_legoSet');
-        },
-        labelSinglePart() {
-            return browser.i18n.getMessage('import_singleParts');
         },
     },
 };

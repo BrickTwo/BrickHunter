@@ -207,7 +207,7 @@ export default {
                     ITEM: {
                         ITEMTYPE: this.wantedList[i].brickLink?.wantedList
                             ?.itemtype,
-                        ITEMID: this.wantedList[i].itemid,
+                        ITEMID: this.wantedList[i].designId,
                         COLOR: this.wantedList[i].color.brickLinkId,
                         MAXPRICE: price[1],
                         MINQTY: this.wantedList[i].qty.min,

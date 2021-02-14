@@ -19,10 +19,10 @@
                 :active="page == 'bricksAndPieces'"
                 @click="page = 'bricksAndPieces'"
                 v-if="
-                    $store.state.shopping.selectedPrio1 == 'bricksAndPieces' ||
-                        $store.state.shopping.selectedPrio2 ==
+                    $store.state.shopping.settings.selectedPrio1 == 'bricksAndPieces' ||
+                        $store.state.shopping.settings.selectedPrio2 ==
                             'bricksAndPieces' ||
-                        $store.state.shopping.selectedPrio3 == 'bricksAndPieces'
+                        $store.state.shopping.settings.selectedPrio3 == 'bricksAndPieces'
                 "
             >
                 {{ bricksAndPieces }} ({{
@@ -34,9 +34,9 @@
                 :active="page == 'pickABrick'"
                 @click="page = 'pickABrick'"
                 v-if="
-                    $store.state.shopping.selectedPrio1 == 'pickABrick' ||
-                        $store.state.shopping.selectedPrio2 == 'pickABrick' ||
-                        $store.state.shopping.selectedPrio3 == 'pickABrick'
+                    $store.state.shopping.settings.selectedPrio1 == 'pickABrick' ||
+                        $store.state.shopping.settings.selectedPrio2 == 'pickABrick' ||
+                        $store.state.shopping.settings.selectedPrio3 == 'pickABrick'
                 "
             >
                 {{ pickABrick }} ({{
@@ -48,9 +48,9 @@
                 :active="page == 'brickLink'"
                 @click="page = 'brickLink'"
                 v-if="
-                    $store.state.shopping.selectedPrio1 == 'brickLink' ||
-                        $store.state.shopping.selectedPrio2 == 'brickLink' ||
-                        $store.state.shopping.selectedPrio3 == 'brickLink'
+                    $store.state.shopping.settings.selectedPrio1 == 'brickLink' ||
+                        $store.state.shopping.settings.selectedPrio2 == 'brickLink' ||
+                        $store.state.shopping.settings.selectedPrio3 == 'brickLink'
                 "
             >
                 {{ brickLink }} ({{ $store.state.shopping.brickLinkPositions }})
@@ -151,7 +151,7 @@ export default {
             wantedList.map((part) => {
                 var found = partListMerged.find(
                     (f) =>
-                        f.itemid == part.itemid &&
+                        f.designId == part.designId &&
                         f.color.brickLinkId == part.color.brickLinkId
                 );
 

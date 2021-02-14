@@ -1,175 +1,252 @@
 <template>
-    <vuetable
-        ref="vuetable"
-        :api-mode="false"
-        :data="bricklist"
+    <b-table
+        hover
+        small
+        responsive
+        no-border-collapse
+        select-mode="multi"
+        no-local-sorting
+        :sticky-header="tableHeight"
+        :items="bricklist"
+        :primary-key="bricklist.rowNumber"
         :fields="fields"
-        :table-height="tableHeight"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        :selectable="edit"
+        :busy="isBusy"
+        @row-selected="onRowSelection"
+        ref="selectableTable"
+        class="m-0"
     >
-        <template slot="quantity" slot-scope="props">
+        <template #table-colgroup="scope">
+            <col
+                v-for="field in scope.fields"
+                :key="field.key"
+                :style="{ width: field.width }"
+            />
+        </template>
+        <template #head(selected)>
+            <b-form-checkbox :v-model="selectAll" @change="onAllSelection" />
+        </template>
+        <template #cell(selected)="data">
+            <b-form-checkbox
+                :checked="data.rowSelected"
+                @change="selectRow(data.index, !data.rowSelected)"
+            />
+        </template>
+        <template #cell(image)="data">
+            <img
+                v-if="data.value.rsc"
+                :src="data.value.rsc"
+                style="max-height:50px; max-width:60px;"
+            />
+            <img
+                v-else
+                :src="calcImage(data.value)"
+                style="max-height:50px; max-width:60px;"
+            />
+        </template>
+        <template #cell(color)="data">
+            <div v-if="data.value">
+                <span style="display: block">
+                    <div :style="calcColor(data.value)" />
+                    <span>{{ data.value.brickLinkName }}</span>
+                </span>
+                <span
+                    v-if="data.value.legoName"
+                    style="color: grey; font-size: small; margin-left: 20px"
+                >
+                    [{{ data.value.legoName }}]
+                </span>
+            </div>
+        </template>
+        <template #cell(qty)="data">
             <b-form-input
                 v-if="edit"
-                v-model="props.rowData.qty.min"
+                v-model="data.value.min"
                 type="number"
             />
             <div v-if="limitMaxQty > 0 && !edit">
-                <div v-if="props.rowData.qty.maxAmount">
-                    <div
-                        v-if="
-                            props.rowData.qty.order >
-                                props.rowData.qty.maxAmount
-                        "
-                    >
+                <div v-if="data.value.maxAmount">
+                    <div v-if="data.value.order > data.value.maxAmount">
                         <span id="maxqty" style="color: red">
-                            {{ props.rowData.qty.maxAmount }}
+                            {{ data.value.maxAmount }}
                         </span>
                         <br />
                         <span style="color: grey; font-size: small;">
-                            [{{ props.rowData.qty.order }}]
+                            [{{ data.value.order }}]
                         </span>
                     </div>
                     <div v-else>
-                        {{ props.rowData.qty.order }}
+                        {{ data.value.order }}
                     </div>
                 </div>
                 <div v-else>
-                    {{ props.rowData.qty.min }}
+                    {{ data.value.min }}
                 </div>
-                <div v-if="props.rowData.qty.order > limitMaxQty">
+                <div v-if="data.value.order > limitMaxQty">
                     <span id="maxqty" style="color: red">
                         {{ limitMaxQty }}
                     </span>
                     <br />
                     <span style="color: grey; font-size: small;">
-                        [{{ props.rowData.qty.order }}]
+                        [{{ data.value.order }}]
                     </span>
                 </div>
-                <div v-if="props.rowData.qty.have > 0">
-                    {{ props.rowData.qty.order }}
+                <div v-if="data.value.have > 0">
+                    {{ data.value.order }}
                 </div>
             </div>
             <div v-else-if="!edit">
                 <span id="maxqty">
-                    {{ props.rowData.qty.min }}
+                    {{ data.value.min }}
                 </span>
-                <div v-if="props.rowData.qty.have > 0">
+                <div v-if="data.value.have > 0">
                     <br />
                     <span style="color: grey; font-size: small;">
-                        ({{ props.rowData.qty.have }})
+                        ({{ data.value.have }})
                     </span>
                 </div>
             </div>
         </template>
-        <template slot="bricksAndPieces" slot-scope="props">
-            <div v-if="!props.rowData.bricksAndPieces" />
-            <div v-else-if="props.rowData.bricksAndPieces.isLoading">
-                <svg
-                    viewBox="0 0 16 16"
-                    width="1em"
-                    height="1em"
-                    focusable="false"
-                    role="img"
-                    aria-label="arrow clockwise"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    class="bi-arrow-clockwise b-icon bi b-icon-animation-spin"
-                    style="font-size: 150%;"
-                >
-                    <g>
-                        <path
-                            fill-rule="evenodd"
-                            d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"
-                        ></path>
-                        <path
-                            fill-rule="evenodd"
-                            d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"
-                        ></path>
-                    </g>
-                </svg>
+        <template #cell(brickLink)="data">
+            <b-form-input
+                v-if="data.value && data.value.wantedList && edit"
+                v-model="data.value.wantedList.maxprice"
+                type="number"
+            />
+            <div
+                v-if="
+                    data.value &&
+                        data.value.wantedList &&
+                        data.value.wantedList.maxprice > 0 &&
+                        !edit
+                "
+            >
+                {{ data.value.wantedList.maxprice }}
             </div>
-            <div v-else-if="props.rowData.bricksAndPieces.error && edit" style="cursor: pointer;" @click="reloadPosition(props.rowData)">
+        </template>
+        <template #cell(pickABrick)="data">
+            <div v-if="!data.value" />
+            <div v-else-if="data.value.isLoading">
+                <b-icon
+                    icon="arrow-clockwise"
+                    animation="spin"
+                    font-scale="1.5"
+                />
+            </div>
+            <div
+                v-else-if="data.value.error && edit"
+                style="cursor: pointer;"
+                @click="reloadPickABrickPosition(data.item)"
+            >
                 <span style="display: block">
-                    <svg
-                        style="color: #dc3545"
-                        data-v-41be6633=""
-                        viewBox="0 0 16 16"
-                        width="1em"
-                        height="1em"
-                        focusable="false"
-                        role="img"
-                        aria-label="exclamation triangle fill"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        class="bi-exclamation-triangle-fill mx-auto b-icon bi"
+                    <b-icon
+                        icon="exclamation-triangle-fill"
+                        style="margin-right: 5px;"
+                        variant="danger"
+                    />
+                    <span style="color: grey; font-size: small;"
+                        >Error: {{ data.value.error }}</span
                     >
-                        <g data-v-41be6633="">
-                            <path
-                                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-                            ></path>
-                        </g>
-                    </svg> <span style="color: grey; font-size: small;">Error: {{ props.rowData.bricksAndPieces.error }}</span>
                 </span>
                 <span style="color: #007bff;">
                     {{ label_reload }}
                 </span>
             </div>
-            <div v-else-if="props.rowData.bricksAndPieces.error">
+            <div v-else-if="data.value.error">
                 <span style="display: block">
-                    <svg
-                        style="color: #dc3545"
-                        data-v-41be6633=""
-                        viewBox="0 0 16 16"
-                        width="1em"
-                        height="1em"
-                        focusable="false"
-                        role="img"
-                        aria-label="exclamation triangle fill"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        class="bi-exclamation-triangle-fill mx-auto b-icon bi"
+                    <b-icon
+                        icon="exclamation-triangle-fill"
+                        style="margin-right: 5px;"
+                        variant="danger"
+                    />
+                    <span style="color: grey; font-size: small;"
+                        >Error: {{ data.value.error }}</span
                     >
-                        <g data-v-41be6633="">
-                            <path
-                                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-                            ></path>
-                        </g>
-                    </svg> <span style="color: grey; font-size: small;">Error: {{ props.rowData.bricksAndPieces.error }}</span>
                 </span>
             </div>
             <div v-else>
-                {{ props.rowData.bricksAndPieces.price.currency }}
-                {{ props.rowData.bricksAndPieces.price.amount }}<br />
+                {{ data.value.variant.price.currencyCode }}
+                {{ data.value.variant.price.centAmount / 100 }}<br />
                 <span style="color: grey; font-size: small;">
-                    [{{ props.rowData.bricksAndPieces.designId }}/{{
-                        props.rowData.bricksAndPieces.itemNumber
+                    [{{ data.value.variant.attributes.designNumber }}/{{
+                        data.value.variant.id
                     }}]
                 </span>
             </div>
         </template>
-        <template slot="actions" slot-scope="props">
-            <b-icon
-                v-if="edit"
-                icon="trash"
-                aria-hidden="true"
-                @click="deletePosition(props.rowData)"
-            />
+        <template #cell(bricksAndPieces)="data">
+            <div v-if="!data.value" />
+            <div v-else-if="data.value.isLoading">
+                <b-icon
+                    icon="arrow-clockwise"
+                    animation="spin"
+                    font-scale="1.5"
+                />
+            </div>
+            <div
+                v-else-if="data.value.error && edit"
+                style="cursor: pointer;"
+                @click="reloadBricksAndPiecesPosition(data.item)"
+            >
+                <span style="display: block">
+                    <b-icon
+                        icon="exclamation-triangle-fill"
+                        style="margin-right: 5px;"
+                        variant="danger"
+                    />
+                    <span style="color: grey; font-size: small;"
+                        >Error: {{ data.value.error }}</span
+                    >
+                </span>
+                <span style="color: #007bff;">
+                    {{ label_reload }}
+                </span>
+            </div>
+            <div v-else-if="data.value.error">
+                <span style="display: block">
+                    <b-icon
+                        icon="exclamation-triangle-fill"
+                        style="margin-right: 5px;"
+                        variant="danger"
+                    />
+                    <span style="color: grey; font-size: small;"
+                        >Error: {{ data.value.error }}</span
+                    >
+                </span>
+            </div>
+            <div v-else>
+                {{ data.value.price.currency }}
+                {{ data.value.price.amount }}<br />
+                <span style="color: grey; font-size: small;">
+                    [{{ data.value.designId }}/{{ data.value.itemNumber }}]
+                </span>
+            </div>
         </template>
-    </vuetable>
+        <template #cell(actions)="data">
+            <div @click.stop>
+                <b-icon
+                    v-if="edit"
+                    icon="trash"
+                    aria-hidden="true"
+                    @click="deletePosition(data.item)"
+                    style="cursor: pointer"
+                />
+            </div>
+        </template>
+    </b-table>
 </template>
 
 <style>
-.table {
-    margin-bottom: 0px;
-}
-
-.vuetable-body-wrapper {
-    overflow-x: hidden;
-    overflow-y: hidden;
+.table-b-table-default {
+    vertical-align: inherit !important;
 }
 </style>
 
 <script>
 import Vuetable from 'vuetable-2/src/components/Vuetable';
+
 export default {
     props: {
         bricklist: {
@@ -183,140 +260,253 @@ export default {
             type: Boolean,
             default: false,
         },
+        isBusy: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: () => ({
-        tableHeight: '290px',
+        sortBy: 'designId',
+        sortDesc: false,
+        selectAll: false,
+        tableHeight: 'calc(100vh - 200px)',
+        selected: [],
         fields: [
             {
-                name: 'itemid',
-                title: () => browser.i18n.getMessage('brickList_itemId'),
+                key: 'selected',
+                label: '',
+                sortable: false,
+                width: '25px',
+            },
+            {
+                key: 'designId',
+                label: browser.i18n.getMessage('brickList_designId'),
+                sortable: true,
                 width: '90px',
             },
             {
-                name: 'image',
-                title: () =>
-                    browser.i18n.getMessage('brickList_brickLinkImage'),
-                callback: 'showImage',
+                key: 'itemNumber',
+                label: browser.i18n.getMessage('brickList_itemNumber'),
+                sortable: true,
+                width: '90px',
+            },
+            {
+                key: 'image',
+                label: browser.i18n.getMessage('brickList_brickLinkImage'),
+                sortable: false,
                 width: '60px',
             },
             {
-                name: 'color',
-                title: () =>
-                    browser.i18n.getMessage('brickList_brickLinkColor'),
-                callback: 'showColor',
+                key: 'color',
+                label: browser.i18n.getMessage('brickList_brickLinkColor'),
+                sortable: true,
+                sortBy: 'color.brickLinkName',
                 width: '200px',
             },
-            /*{
-                name: 'qty',
-                title: () => browser.i18n.getMessage('brickList_quantity'),
-                callback: 'showQty',
-                width: '50px',
-            },*/
             {
-                name: '__slot:quantity',
-                title: () => browser.i18n.getMessage('brickList_quantity'),
+                key: 'qty',
+                label: browser.i18n.getMessage('brickList_quantity'),
+                sortable: true,
+                sortBy: 'qty.min',
                 width: '70px',
             },
             {
-                name: 'brickLink',
-                title: () =>
-                    browser.i18n.getMessage('brickList_brickLinkPrice'),
-                callback: 'brickLinkPrice',
+                key: 'brickLink',
+                label: browser.i18n.getMessage('brickList_brickLinkPrice'),
+                sortable: true,
+                sortBy: 'brickLink.wantedList.maxprice',
                 width: '90px',
             },
             {
-                name: 'pickABrick',
-                title: () =>
-                    browser.i18n.getMessage('brickList_pickABrickPrice'),
-                callback: 'pickABrickPrice',
+                key: 'pickABrick',
+                label: browser.i18n.getMessage('brickList_pickABrickPrice'),
+                sortable: true,
+                sortBy: 'pickABrick.variant.price.centAmount',
                 width: '110px',
             },
             {
-                name: '__slot:bricksAndPieces',
-                title: () =>
-                    browser.i18n.getMessage('brickList_bricksAndPiecesPrice'),
-                //callback: 'bricksAndPiecesPrice',
+                key: 'bricksAndPieces',
+                label: browser.i18n.getMessage(
+                    'brickList_bricksAndPiecesPrice'
+                ),
+                sortable: true,
+                sortBy: 'bricksAndPieces.price.amount',
                 width: '120px',
             },
             {
-                name: '__slot:actions',
-                title: '',
+                key: 'actions',
+                label: '',
                 width: '25px',
             },
         ],
+        doNotSort: false,
     }),
     components: {
         Vuetable,
     },
     methods: {
-        showImage(value) {
-            if (value.source == 'brickLink') {
-                return `<img src="${value.rsc}" style="max-height:50px; max-width:60px;">`;
+        calcImage(value) {
+            return `https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${value.itemId}.jpg`;
+        },
+        calcColor(value) {
+            return `background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
+        },
+        deletePosition(item) {
+            this.$emit('itemDeleted', item);
+        },
+        reloadPickABrickPosition(position) {
+            this.$emit('reloadPickABrickPosition', position);
+        },
+        reloadBricksAndPiecesPosition(position) {
+            this.$emit('reloadBricksAndPiecesPosition', position);
+        },
+        onRowSelection(selectedItems) {
+            this.$emit('selectionChanged', selectedItems);
+        },
+        onAllSelection(selected) {
+            if (selected) {
+                this.$refs.selectableTable.selectAllRows();
             } else {
-                return `<img src="https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${value.itemId}.jpg" style="max-height:50px; max-width:60px;">`;
+                this.$refs.selectableTable.clearSelected();
             }
         },
-        showColor(value) {
-            if (!value) return;
-            return `<span style="display: block"><div style="background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"></div><span>${value.brickLinkName}</span></span><span style="color: grey; font-size: small; margin-left: 20px">[${value.legoName}]</span>`;
+        selectRow(index, selected) {
+            if (selected) this.$refs.selectableTable.selectRow(index);
+            if (!selected) this.$refs.selectableTable.unselectRow(index);
         },
-        brickLinkPrice(value) {
-            if (value?.wantedList?.maxprice < 0) return;
-            return value?.wantedList?.maxprice;
-        },
-        pickABrickPrice(value) {
-            if (!value) return '';
-            if (value.isLoading) return this.spinner();
+        sortList() {
+            var key = this.fields.find((f) => f.key == this.sortBy).sortBy;
+            if (!key) key = this.sortBy;
+            var order = this.sortDesc ? 'desc' : 'asc';
 
-            var returnValue = `${value.variant.price.currencyCode} ${value
-                .variant.price.centAmount /
-                100}<br><span style="color: grey; font-size: small;">[${
-                value.variant.attributes.designNumber
-            }/${value.variant.id}]</span>`;
-            return returnValue;
-        },
-        bricksAndPiecesPrice(value) {
-            if (!value) return '';
-            if (value.isLoading) return this.spinner();
-            if (value.error)
-                return `<span style="display: block"><svg style="color: #dc3545" data-v-41be6633="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="exclamation triangle fill" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-exclamation-triangle-fill mx-auto b-icon bi"><g data-v-41be6633=""><path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path></g></svg></span><span style="color: grey; font-size: small;">Error: ${value.error}</span>`;
-            var returnValue = `${value.price.currency} ${value.price.amount}<br><span style="color: grey; font-size: small;">[${value.designId}/${value.itemNumber}]</span>`;
-            return returnValue;
-        },
-        lineNumber(value) {
-            return value + 1;
-        },
-        showQty(value) {
-            if (this.limitMaxQty > 0) {
-                if (value.maxAmount) {
-                    if (value.order > value.maxAmount) {
-                        return `<span id="maxqty" style="color: red">${value.maxAmount}</span><br><span style="color: grey; font-size: small;">[${value.order}]</span>`;
+            var keys = key.split('.');
+
+            this.bricklist.sort(function innerSort(a, b) {
+                var varA = a;
+                var varB = b;
+                keys.forEach((key) => {
+                    if (!varA || !varA.hasOwnProperty(key)) {
+                        // property doesn't exist on either object
+                        varA = '';
+                    } else {
+                        varA =
+                            typeof varA[key] === 'string'
+                                ? varA[key].toUpperCase()
+                                : varA[key];
                     }
-                    return value.order;
+                    if (!varB || !varB.hasOwnProperty(key)) {
+                        // property doesn't exist on either object
+                        varB = '';
+                    } else {
+                        varB =
+                            typeof varB[key] === 'string'
+                                ? varB[key].toUpperCase()
+                                : varB[key];
+                    }
+                });
+                let comparison = 0;
+                if (varA > varB) {
+                    comparison = 1;
+                } else if (varA < varB) {
+                    comparison = -1;
                 }
-                if (value.order > this.limitMaxQty)
-                    return `<span id="maxqty" style="color: red">${this.limitMaxQty}</span><br><span style="color: grey; font-size: small;">[${value.order}]</span>`;
-                if (value.have > 0) return value.order;
-            } else {
-                if (value.have > 0)
-                    return `<span id="maxqty">${value.min}</span><br><span style="color: grey; font-size: small;">(${value.have})</span>`;
-            }
-            return value.min;
+                return order === 'desc' ? comparison * -1 : comparison;
+            });
         },
-        spinner() {
-            return '<svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="arrow clockwise" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-arrow-clockwise b-icon bi b-icon-animation-spin" style="font-size: 150%;"><g><path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"></path><path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"></path></g></svg>';
-        },
-        deletePosition(position) {
-            this.$emit('itemDeleted', position);
-        },
-        reloadPosition(position){
-            this.$emit('reloadItem', position);
-        }
     },
     beforeMount() {
-        if (this.$store.state.mode == 'standalone') {
-            this.tableHeight = 'calc(100vh - 260px)';
+        if (
+            this.bricklist.filter((p) => p.brickLink?.wantedList?.maxprice > 0)
+                .length == 0
+        ) {
+            this.fields = this.fields.filter(
+                (field) => field.key != 'brickLink'
+            );
         }
+
+        if (this.bricklist.filter((p) => p.itemNumber).length == 0) {
+            this.fields = this.fields.filter(
+                (field) => field.key != 'itemNumber'
+            );
+        }
+
+        if (!this.edit) {
+            this.fields = this.fields.filter(
+                (field) => field.key != 'selected'
+            );
+        }
+
+        var i = 0;
+        this.bricklist.map((pos) => {
+            i++;
+            pos.rowNumber = i.toString();
+            pos.selected = false;
+
+            pos.qty.min = parseInt(pos.qty.min);
+            pos.qty.have = parseInt(pos.qty.have);
+            pos.qty.order = parseInt(pos.qty.order);
+            pos.qty.balance = pos.qty.min - pos.qty.have;
+
+            if (pos.brickLink?.wantedList?.maxprice) {
+                if (pos.brickLink.wantedList.maxprice <= 0)
+                    pos.brickLink.wantedList.maxprice = 0;
+                pos.brickLink.wantedList.maxprice = parseFloat(
+                    pos.brickLink.wantedList.maxprice
+                );
+            }
+        });
+        this.sortList();
+    },
+    watch: {
+        isBusy: async function(val) {
+            if (val) this.tableHeight = 'calc(100vh - 215px)';
+            if (!val) {
+                this.tableHeight = 'calc(100vh - 200px)';
+                this.sortList();
+            }
+            /*var findDesignId = this.fields.find(
+                (field) => field.key === 'designId'
+            );
+            var findItemNumber = this.fields.find(
+                (field) => field.key === 'itemNumber'
+            );
+            var findColor = this.fields.find((field) => field.key === 'color');
+            var findQty = this.fields.find((field) => field.key === 'qty');
+            var findBrickLinkPrice = this.fields.find(
+                (field) => field.key === 'brickLink'
+            );
+            var findPickABrick = this.fields.find(
+                (field) => field.key === 'pickABrick'
+            );
+            var findBricksAndPieces = this.fields.find(
+                (field) => field.key === 'bricksAndPieces'
+            );
+
+            if (findDesignId) findDesignId.sortable = val;
+            if (findItemNumber) findItemNumber.sortable = val;
+            if (findColor) findColor.sortable = val;
+            if (findQty) findQty.sortable = val;
+            if (findBrickLinkPrice) findBrickLinkPrice.sortable = val;
+            if (findPickABrick) findPickABrick.sortable = val;
+            if (findBricksAndPieces) findBricksAndPieces.sortable = val;*/
+        },
+        sortBy: async function() {
+            this.sortList();
+        },
+        sortDesc: async function() {
+            this.sortList();
+        },
+        /*bricklist: {
+            handler(val, oldVal) {
+                console.log(val, oldVal)
+            },
+            deep: true,
+        },*/
+    },
+    computed: {
+        label_reload() {
+            return browser.i18n.getMessage('brickList_reload');
+        },
     },
     computed: {
         label_reload() {

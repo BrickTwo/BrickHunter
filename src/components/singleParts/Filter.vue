@@ -24,7 +24,7 @@
             </b-col>
         </b-row>
         <b-row>
-            <ColorPicker @selectColor="selectColor" />
+            <ColorPicker @selectColor="selectColor" :colorList="colorList" />
         </b-row>
         <b-row class="p-1">
             <b-col>
@@ -153,6 +153,7 @@ export default {
     data: () => ({
         perPage: 24,
         perPageOptions: [
+            { value: 8, text: '8' },
             { value: 24, text: '24' },
             { value: 48, text: '48' },
             { value: 100, text: '100' },
@@ -168,6 +169,7 @@ export default {
         showAs: 'grid',
         listUpdate: true,
         componentKey: 0,
+        colorList: [],
     }),
     components: {
         BrickGrid,
@@ -180,16 +182,17 @@ export default {
         setOrderQuantity(item) {
             var partList = this.loadPartList();
 
-            var foundPart = partList.positions.find(
-                (pos) => pos.itemid == item.itemNumber
-            );
+            var foundPart = partList.positions.find((pos) => {
+                return pos.itemNumber == item.itemNumber;
+            });
+
             if (foundPart) {
                 foundPart.qty.min = item.order;
                 foundPart.qty.order = item.order;
 
                 if (item.order == 0) {
                     partList.positions = partList.positions.filter(
-                        (pos) => pos.itemid != item.itemNumber
+                        (pos) => pos.itemNumber != item.itemNumber
                     );
                 }
                 this.$store.commit('partList/setPartList', partList);
@@ -200,8 +203,9 @@ export default {
             var partList = this.loadPartList();
 
             var foundPart = partList.positions.find(
-                (pos) => pos.itemid == item.itemNumber
+                (pos) => pos.itemNumber == item.itemNumber
             );
+
             if (foundPart) {
                 foundPart.qty.min = foundPart.qty.min + 1;
                 foundPart.qty.order = foundPart.qty.min;
@@ -223,9 +227,10 @@ export default {
 
             var part = {};
             part.source = 'lego';
-            part.itemid = item.itemNumber;
-            part.searchids = [item.designId];
+            part.designId = item.designId;
+            part.itemNumber = item.itemNumber;
             part.color = this.findLegoColor(item.colorFamily, this.COLOR);
+            part.searchids = [item.designId];
             part.qty = {
                 min: 1,
                 have: 0,
@@ -240,7 +245,7 @@ export default {
             }
             part.image = {
                 source: 'lego',
-                itemId: `${part.itemid}`,
+                rsc: item.imageUrl,
             };
             part.bricksAndPieces = null;
             part.pickABrick = null;
@@ -339,6 +344,7 @@ export default {
             );
             bus.$emit('CategoriesFiltered', this.search.categories);
 
+            this.colorList = this.search.colors;
             this.totalRows = this.search.page.total;
 
             this.selectPart();
@@ -352,7 +358,9 @@ export default {
                 if (!this.search || !this.search.bricks) return;
                 this.search.bricks.map((brick) => {
                     var foundPos = selectedPartList.positions.find(
-                        (pos) => pos.itemid == brick.itemNumber
+                        (pos) =>
+                            pos.designId == brick.designId &&
+                            pos.color.bricksAndPiecesName == brick.colorFamily
                     );
                     if (foundPos) {
                         brick.order = foundPos.qty.min;
@@ -381,8 +389,9 @@ export default {
                 await this.sleep(200); //200ms timout to prevent to be blocked on the website
 
                 var response = await browser.runtime.sendMessage({
-                    contentScriptQuery: 'getBricksAndPieces',
-                    itemId: designId,
+                    service: 'bricksAndPieces',
+                    action: 'findBrick',
+                    designId: designId,
                 });
 
                 if (!response) {
@@ -500,11 +509,6 @@ export default {
         partListId: function() {
             this.selectPart();
         },
-    },
-    beforeMount() {
-        if (this.$store.state.mode == 'standalone') {
-            this.perPageOptions.unshift({ value: 8, text: '8' });
-        }
     },
     mounted() {
         this.loadBricks(true);

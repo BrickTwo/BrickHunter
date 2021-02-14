@@ -119,7 +119,7 @@
         </b-row>
         <b-row>
             <b-col id="pickABrickList">
-                <brick-list :bricklist="brickList" :limitMaxQty="999" />
+                <brick-list :bricklist="brickList" :limitMaxQty="999" :isBusy="!showSort" />
             </b-col>
         </b-row>
     </b-container>
@@ -137,6 +137,7 @@ export default {
             loadPABPercentage: 100,
             headerBgVariant: 'dark',
             headerTextVariant: 'light',
+            showSort: true,
         };
     },
     components: {
@@ -157,12 +158,12 @@ export default {
             if (!cartId) return;
             browser.runtime
                 .sendMessage({
-                    contentScriptQuery: 'pickABrickClearCart',
+                    service: 'pickABrick',
+                    action: 'clearCart',
                     authorization: this.authorization,
                     PABCartId: this.pickABrickShoppingCartId,
                 })
                 .then((response) => {
-                    //console.log("PickABrickClearCart", response);
                     browser.tabs
                         .query({ currentWindow: true, active: true })
                         .then((tabs) => {
@@ -171,17 +172,9 @@ export default {
                             var languageSelected = this.$store.state.language;
 
                             browser.runtime.sendMessage({
-                                contentScriptQuery: 'openPickABrick',
+                                service: 'pickABrick',
+                                action: 'open',
                             });
-                            /*if (this.$store.state.mode == 'popup') {
-                                browser.tabs.update(tab.id, {
-                                    url: `https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`,
-                                });
-                            } else {
-                                this.openInNewTab(
-                                    `https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`
-                                );
-                            }*/
 
                             this.$bvToast.toast(this.clearCartSuccessfullText, {
                                 title: this.pickABrick,
@@ -197,13 +190,13 @@ export default {
                 this.$bvModal.show('modal-use-popup');
                 return;
             }
+            this.showSort = false;
             var cartId = await this.getShoppingCartId('fill');
             if (!cartId) return;
             var percentageSingle = 100 / this.brickList.length;
             this.loadPABPercentage = 0;
             for (var i = 0; i < this.brickList.length; i++) {
                 this.loadPABPercentage += percentageSingle;
-                //console.log(this.brickList[i])
                 await this.pickABrickAddToCart(this.brickList[i]);
             }
             this.loadPABPercentage = 100;
@@ -215,20 +208,10 @@ export default {
                     var languageSelected = this.$store.state.language;
 
                     browser.runtime.sendMessage({
-                        contentScriptQuery: 'openPickABrick',
+                        service: 'pickABrick',
+                        action: 'open',
                         affiliate: this.$store.state.affiliate,
                     });
-
-                    //console.log(`https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`);
-                    /*if (this.$store.state.mode == 'popup') {
-                        browser.tabs.update(tab.id, {
-                            url: `https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`,
-                        });
-                    } else {
-                        this.openInNewTab(
-                            `https://www.lego.com/${languageSelected}-${countrySelected}/page/static/pick-a-brick`
-                        );
-                    }*/
 
                     this.$bvToast.toast(this.fillCartSuccessfullText, {
                         title: this.pickABrick,
@@ -236,6 +219,7 @@ export default {
                         variant: 'success',
                     });
                 });
+            this.showSort = true;
         },
         async pickABrickAddToCart(item) {
             if (item.pickABrick) {
@@ -245,7 +229,8 @@ export default {
                 var partId = item.pickABrick.variant.id;
 
                 var response = await browser.runtime.sendMessage({
-                    contentScriptQuery: 'pickABrickAddToCart',
+                    service: 'pickABrick',
+                    action: 'addToCart',
                     authorization: this.authorization,
                     PABCartId: this.pickABrickShoppingCartId,
                     qty: qty,
@@ -254,16 +239,13 @@ export default {
             }
         },
         printPickABrick() {
-            //console.log('print');
             this.$htmlToPaper('pickABrickList');
         },
         async getShoppingCartId(action) {
             return await browser.runtime
-                .sendMessage({ contentScriptQuery: 'readQAuth' })
+                .sendMessage({ service: 'pickABrick', action: 'readQAuth' })
                 .then((response) => {
-                    //console.log('response', response);
                     if (!response) {
-                        //this.openInNewTab('https://www.lego.com/');
                         if (action == 'fill') {
                             this.$bvModal.show('modal-open-lego-fill-cart');
                         } else {
@@ -274,16 +256,14 @@ export default {
                     }
 
                     this.authorization = response;
-                    //console.log("authorization", this.authorization);
                     return browser.runtime
                         .sendMessage({
-                            contentScriptQuery: 'pickABrickReadCart',
+                            service: 'pickABrick',
+                            action: 'readCart',
                             authorization: this.authorization,
                         })
                         .then((response) => {
-                            //console.log("PickABrickReadCart", response);
                             this.pickABrickShoppingCartId = response.id;
-                            //console.log("PickABrickReadCartId", this.pickABrickShoppingCartId);
                             return true;
                         })
                         .catch(() => {});
@@ -291,19 +271,15 @@ export default {
                 .catch(() => {});
         },
         openInNewTab(url) {
-            var win = window.open(url, '_blank');
-            //win.focus();
+            window.open(url, '_blank');
         },
     },
     beforeMount() {
         this.brickList = this.$store.state.shopping.pickABrickList;
-        //this.getShoppingCartId();
     },
     computed: {
         showCartButtons() {
-            if (this.$store.state.mode == 'popup') return true;
-            if (navigator.userAgent.indexOf('Chrome') != -1) return true; //is chrome or edge
-            return false;
+            return true;
         },
         buttonFillPickABrickCart() {
             return browser.i18n.getMessage('shopping_buttonFillPickABrickCart');

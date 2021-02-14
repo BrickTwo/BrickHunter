@@ -18,6 +18,7 @@ export default new Vuex.Store({
         country: '',
         language: '',
         affiliate: {},
+        syncDate: null,
     },
     mutations: {
         initialiseStore(state) {
@@ -26,6 +27,7 @@ export default new Vuex.Store({
 
             state.country = localStorage.getItem('country') || null;
             state.language = localStorage.getItem('language') || null;
+            state.syncDate = localStorage.getItem('syncDate') || new Date(Date.now() - 1000*60*60*2 );
 
             localStorage.setItem('version', state.version.current);
             //console.log(state.version)
@@ -46,11 +48,9 @@ export default new Vuex.Store({
                     sKey != 'recalcHave' &&
                     sKey != 'country' &&
                     sKey != 'language' &&
-                    sKey != 'selectedPrio1' &&
-                    sKey != 'selectedPrio2' &&
-                    sKey != 'selectedPrio3' &&
-                    sKey != 'useHave' &&
-                    sKey != 'version'
+                    sKey != 'settingsShopping' &&
+                    sKey != 'version' &&
+                    sKey != 'syncDate'
                 ) {
                     localStorage.removeItem(sKey);
                 }
@@ -71,12 +71,16 @@ export default new Vuex.Store({
             state.affiliate = payload;
             localStorage.setItem('affiliate', JSON.stringify(state.affiliate));
         },
+        setSyncDate(state, payload) {
+            state.syncDate = payload;
+            localStorage.setItem('syncDate', state.syncDate);
+        },
     },
     actions: {
         initialiseStore({ state, commit }) {
             commit('initialiseStore');
             commit('partList/initialiseStore', state.version.old);
-            commit('shopping/initialiseStore');
+            commit('shopping/initialiseStore', state.version.old);
             commit('singleParts/initialiseStore');
         },
     },

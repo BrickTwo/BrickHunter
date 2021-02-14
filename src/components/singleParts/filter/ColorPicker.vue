@@ -12,13 +12,14 @@
                     >
                 </div>
             </b-col>
-            <b-col>
+            <b-col v-if="colorTrans.length">
                 <b-dropdown
                     id="dropdown-left"
-                    class="w-100 h-100 p-1"
+                    class="w-100 p-1"
                     :text="labelTransColor"
                     variant="white"
                     no-caret
+                    style="max-height: 44px"
                 >
                     <b-dropdown-item
                         v-for="option in colorTrans"
@@ -29,7 +30,7 @@
                     >
                 </b-dropdown>
             </b-col>
-            <b-col>
+            <b-col v-if="colorBlack.length">
                 <b-dropdown
                     id="dropdown-left"
                     class="w-100 h-100 p-1"
@@ -45,7 +46,7 @@
                     >
                 </b-dropdown>
             </b-col>
-            <b-col>
+            <b-col v-if="colorBrown.length">
                 <b-dropdown
                     id="dropdown-left"
                     class="w-100 h-100 p-1"
@@ -61,7 +62,7 @@
                     >
                 </b-dropdown>
             </b-col>
-            <b-col>
+            <b-col v-if="colorRed.length">
                 <b-dropdown
                     id="dropdown-left"
                     class="w-100 h-100 p-1"
@@ -77,7 +78,7 @@
                     >
                 </b-dropdown>
             </b-col>
-            <b-col>
+            <b-col v-if="colorOrange.length">
                 <b-dropdown
                     id="dropdown-left"
                     class="w-100 h-100 p-1"
@@ -93,7 +94,7 @@
                     >
                 </b-dropdown>
             </b-col>
-            <b-col>
+            <b-col v-if="colorYellow.length">
                 <b-dropdown
                     id="dropdown-left"
                     class="w-100 h-100 p-1"
@@ -109,7 +110,7 @@
                     >
                 </b-dropdown>
             </b-col>
-            <b-col>
+            <b-col v-if="colorGreen.length">
                 <b-dropdown
                     id="dropdown-left"
                     class="w-100 h-100 p-1"
@@ -125,7 +126,7 @@
                     >
                 </b-dropdown>
             </b-col>
-            <b-col>
+            <b-col v-if="colorBlue.length">
                 <b-dropdown
                     id="dropdown-left"
                     class="w-100 h-100 p-1"
@@ -141,7 +142,7 @@
                     >
                 </b-dropdown>
             </b-col>
-            <b-col>
+            <b-col v-if="colorPurple.length">
                 <b-dropdown
                     id="dropdown-left"
                     class="w-100 h-100 p-1"
@@ -162,7 +163,7 @@
 </template>
 
 <style lang="scss">
-@import '../../../../../node_modules/bootstrap/scss/bootstrap';
+@import '../../../../node_modules/bootstrap/scss/bootstrap';
 .btn-grey {
     background-color: $gray-300;
 }
@@ -199,6 +200,11 @@
 import { requestsMixin } from '@/mixins/requestsMixin';
 
 export default {
+    props: {
+        colorList: {
+            Type: Array,
+        },
+    },
     data: () => ({
         colorTrans: [],
         colorBlack: [],
@@ -216,7 +222,8 @@ export default {
             this.$emit('selectColor', value);
         },
         async fillColors() {
-            var colors = await this.getColorsAsync();
+            //var colors = await this.getColorsAsync();
+            var colors = this.colorList;
 
             this.colorTrans = colors.filter((color) =>
                 color.group.find((group) => group === 'Trans')
@@ -261,5 +268,10 @@ export default {
             return browser.i18n.getMessage('import_sp_transColor');
         },
     },
+    watch: {
+        colorList() {
+            this.fillColors();
+        }
+    }
 };
 </script>

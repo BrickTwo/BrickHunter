@@ -12,6 +12,16 @@
                 />
             </b-col>
         </b-row>
+        <b-row v-if="errorCode">
+            <b-col offset="3" cols="9">
+                <b-icon
+                    icon="exclamation-triangle-fill"
+                    style="margin-right: 5px;"
+                    variant="danger"
+                />
+                Error: {{ errorCode }} - {{ labelErrorTryAgain }}
+            </b-col>
+        </b-row>
         <b-row>
             <b-col cols="3">
                 <label>{{ labelName }}:</label>
@@ -67,15 +77,24 @@ export default {
         setName: '',
         setNumberSuffix: true,
         cart: true,
+        errorCode: null,
     }),
     mixins: [brickProcessorMixin, brickColorMixin],
     methods: {
         async loadLegoSet() {
+            this.errorCode = null;
+            this.setNumber = this.setNumber.trim();
             if (this.setNumber.length > 0) {
                 var response = await browser.runtime.sendMessage({
-                    contentScriptQuery: 'getLegoSet',
+                    service: 'bricksAndPieces',
+                    action: 'findSet',
                     setNumber: this.setNumber,
                 });
+
+                if (response?.status) {
+                    this.errorCode = response.status;
+                    return;
+                }
 
                 if (!response) {
                     this.setNumberExist = false;
@@ -84,7 +103,7 @@ export default {
 
                 this.setNumberExist = true;
                 this.name = response.set.locale['de-de']?.title;
-                if(!this.name) {
+                if (!this.name) {
                     this.name = response.set.locale['en-us']?.title;
                 }
                 this.setName = this.name;
@@ -104,8 +123,9 @@ export default {
                 var part = {};
 
                 part.source = 'lego';
-                part.itemid = item.itemNumber;
-                part.searchids = [part.itemid];
+                part.designId = item.designId;
+                part.itemNumber = item.itemNumber;
+                part.searchids = [item.designId];
                 part.color = this.findLegoColor(item.colorFamily, this.COLOR);
                 part.qty = {
                     min: 0,
@@ -121,7 +141,7 @@ export default {
                 }
                 part.image = {
                     source: 'lego',
-                    itemId: `${part.itemid}`,
+                    rsc: item.imageUrl,
                 };
                 part.bricksAndPieces = null;
                 part.pickABrick = null;
@@ -156,7 +176,7 @@ export default {
                 source: 'lego',
                 positions: this.wantedList,
             };
-            
+
             this.$store.commit('partList/setPartList', partList);
 
             this.$bvToast.toast(this.labelSuccessfullImportBrickLinkText, {
@@ -231,6 +251,9 @@ export default {
             return browser.i18n.getMessage(
                 'import_errorImportBrickLinkTextToManyPositions'
             );
+        },
+        labelErrorTryAgain() {
+            return browser.i18n.getMessage('error_tryAgain');
         },
     },
 };

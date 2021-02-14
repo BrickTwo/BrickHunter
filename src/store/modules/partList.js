@@ -1,3 +1,5 @@
+import version from '../../function/version.js'
+
 // initial state
 const state = () => ({
     partLists: [],
@@ -30,21 +32,14 @@ const mutations = {
             }
         }
 
-        var oldVersion = oldVersion.split('.').map(Number);
-        var oldVersionCheck = '1.1.9'.split('.').map(Number);
-
-        if (
-            oldVersion[0] < oldVersionCheck[0] &&
-            oldVersion[1] < oldVersionCheck[1] &&
-            oldVersion[2] < oldVersionCheck[2]
-        ) {
+        if (version.isSmaller(oldVersion, '1.1.9')) {
             state.partLists.map((partList) => {
                 var positions = [];
                 partList.positions.map((item) => {
                     var part = {};
 
                     part.source = 'brickLink';
-                    part.itemid = item.itemid;
+                    part.designId = item.designId;
                     part.searchids = item.searchids;
                     part.color = item.color;
                     part.qty = item.qty;
@@ -74,15 +69,31 @@ const mutations = {
             });
         }
 
-        oldVersionCheck = '1.1.13'.split('.').map(Number);
-
-        if (
-            oldVersion[0] < oldVersionCheck[0] &&
-            oldVersion[1] < oldVersionCheck[1] &&
-            oldVersion[2] < oldVersionCheck[2]
-        ) {
+        if (version.isSmaller(oldVersion, '1.1.13')) {
             state.partLists.map((partList) => {
                 partList.source = partList.positions[0].source;
+                localStorage.setItem(
+                    'partList_' + partList.id,
+                    JSON.stringify(partList)
+                );
+            });
+        }
+
+        if (version.isSmaller(oldVersion, '1.4.5')) {
+            console.log(222);
+            state.partLists.map((partList) => {
+                if (partList.source == 'singleParts') {
+                    partList.positions.map((pos) => {
+                        pos.itemNumber = pos.itemid;
+                        pos.designId = pos.searchids[0];
+                        delete pos.itemid;
+                    });
+                } else {
+                    partList.positions.map((pos) => {
+                        pos.designId = pos.itemid;
+                        delete pos.itemid;
+                    });
+                }
                 localStorage.setItem(
                     'partList_' + partList.id,
                     JSON.stringify(partList)
@@ -129,19 +140,18 @@ const mutations = {
         var found = state.partLists.find(
             (partList) => partList.id === payload.id
         );
+        if (!found) return;
 
-        if (found) {
-            found.positions.push(payload.part);
-            found.date = new Date(0, 0, 0, 0, 0, 0, 0);
-        }
+        found.positions.push(payload.part);
+        found.date = new Date(0, 0, 0, 0, 0, 0, 0);
 
-        localStorage.setItem('partList_' + payload.id, JSON.stringify(payload));
+        localStorage.setItem('partList_' + payload.id, JSON.stringify(found));
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;
         });
-    }
+    },
 };
 
 export default {

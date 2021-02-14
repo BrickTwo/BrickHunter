@@ -98,8 +98,11 @@
     "brickList_lineNumber": {
         "message": "#"
     },
-    "brickList_itemId": {
+    "brickList_designId": {
         "message": "Id"
+    },
+    "brickList_ItemNumber": {
+        "message": "Element"
     },
     "brickList_brickLinkImage": {
         "message": "Bild"
@@ -133,6 +136,9 @@
     },
     "aPartList": {
         "message": " eine Teileliste."
+    },
+    "error_tryAgain": {
+        "message": "Bitte versuche es später nochmals!"
     },
     "exportCsv_generalGroupTitle": {
         "message": "Allgemein"
@@ -287,6 +293,9 @@
     "exportWantedList_copyButton": {
         "message": "In Zwischenablage kopieren"
     },
+    "notification_header": {
+        "message": "Wichtige Info!"
+    },
     "import_legoSet": {
         "message": "LEGO Set"
     },
@@ -426,7 +435,7 @@
         "message": "Spenden"
     },
     "info_donateText": {
-        "message": "Falls du BrickHunter einsetzt würde ich mich über eine freiwillige Spende freuen."
+        "message": "Falls du BrickHunter gefällt würde ich mich sehr über eine freiwillige Spende freuen."
     },
     "partList_positions": {
         "message": "Positionen"
@@ -466,6 +475,15 @@
     },
     "shopping_useHave": {
         "message": "WantedList-Have von Anzahl abziehen"
+    },
+    "shopping_ignoreBrickLinkPrice": {
+        "message": "BrickLink Preise nicht berücksichtigen"
+    },
+    "shopping_subtractBrickLinkPirceBefore": {
+        "message": "Nur zu BrickLink hinzufügen sofern der Preis"
+    },
+    "shopping_subtractBrickLinkPirceAfter": {
+        "message": "billiger ist."
     },
     "shopping_tabOverview": {
         "message": "Übersicht"
@@ -562,6 +580,42 @@
     },
     "wantedList_shoppingCart": {
         "message": "Warenkorb"
+    },
+    "wantedList_removeSelection": {
+        "message": "Auswhal aufheben"
+    },
+    "wantedList_removePositions": {
+        "message": "Positionen entfernen"
+    },
+    "wantedList_askDeletePositionHeader": {
+        "message": "Positionen löschen"
+    },
+    "wantedList_askDeletePositionBody": {
+        "message": "Selektierte Positionen wirklich löschen?"
+    },
+    "wantedList_askYes": {
+        "message": "Ja"
+    },
+    "wantedList_askNo": {
+        "message": "Nein"
+    },
+    "wantedList_askDeletePartListHeader": {
+        "message": "Teileliste löschen"
+    },
+    "wantedList_askDeletePartListBody": {
+        "message": "Soll diese Teileliste wirklich gelöscht werden?"
+    },
+    "wantedList_splitPartList": {
+        "message": "Teilelisten teilen"
+    },
+    "wantedList_copy": {
+        "message": "Kopieren"
+    },
+    "wantedList_copyHeader": {
+        "message": "Selektierte kopieren"
+    },
+    "wantedList_copyBody": {
+        "message": "Teile können nur innerhalb vom gleichen Listentyp kopiert werden."
     },
     "xmlField_copyWantedList": {
         "message": "Kopiere den Inhalt einer WantedList hier rein"

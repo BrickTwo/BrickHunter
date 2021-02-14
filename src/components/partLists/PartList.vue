@@ -25,7 +25,7 @@
                             </b-col>
                         </b-row>
                         <b-row>
-                            <b-col>
+                            <b-col v-if="!selectedItems.length">
                                 <b-button
                                     variant="primary"
                                     @click="loadPrices"
@@ -49,7 +49,7 @@
                                 </b-button>
                                 <b-button
                                     variant="danger"
-                                    @click="deleteList"
+                                    @click="$bvModal.show('askDeletePartList')"
                                     style="margin-left: 10px;"
                                     v-if="!loadWantedList"
                                 >
@@ -65,6 +65,28 @@
                                     v-if="!loadWantedList"
                                 >
                                     <b-icon icon="printer" aria-hidden="true" />
+                                </b-button>
+                            </b-col>
+                            <b-col v-if="selectedItems.length">
+                                <b-button
+                                    variant="danger"
+                                    @click="$bvModal.show('askDeletePositions')"
+                                >
+                                    {{ labelRemovePositions }}
+                                </b-button>
+                                <b-button
+                                    variant="primary"
+                                    style="margin-left: 10px;"
+                                    @click="splitPartList()"
+                                >
+                                    {{ labelSplitPartList }}
+                                </b-button>
+                                <b-button
+                                    variant="primary"
+                                    style="margin-left: 10px;"
+                                    @click="$bvModal.show('copyToPartList')"
+                                >
+                                    {{ labelCopyToPartList }}
                                 </b-button>
                             </b-col>
                         </b-row>
@@ -126,18 +148,93 @@
                 v-if="!loadWantedList"
                 :bricklist="wantedList"
                 :edit="true"
+                :isBusy="!showSort"
                 @itemDeleted="onItemDeleted"
-                @reloadItem="onReloadItem"
+                @reloadPickABrickPosition="onReloadPickABrickPosition"
+                @reloadBricksAndPiecesPosition="onReloadBricksAndPiecesPosition"
+                @selectionChanged="onSelectionChange"
             ></brick-list>
         </div>
+
         <div id="wantedListPrint" style="display: none">
             <brick-list
                 v-if="!loadWantedList"
                 :bricklist="wantedList"
                 :edit="false"
-                @itemDeleted="onItemDeleted"
             ></brick-list>
         </div>
+        <b-modal
+            id="askDeletePartList"
+            :title="labelAskDeletePartListHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            @ok="deleteList()"
+        >
+            <p class="my-4">
+                {{ labelAskDeletePartListBody }}
+            </p>
+            <p class="my-4">
+                <b>{{ partList.name }}</b>
+            </p>
+            <template #modal-footer="{ cancel, ok }">
+                <b-button @click="cancel()">
+                    {{ labelAskNo }}
+                </b-button>
+                <!-- Button with custom close trigger value -->
+                <b-button @click="ok()">
+                    {{ labelAskYes }}
+                </b-button>
+            </template>
+        </b-modal>
+        <b-modal
+            id="askDeletePositions"
+            :title="labelAskDeletePositionHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            @ok="removePositions()"
+        >
+            <p class="my-4">
+                {{ labelAskDeletePositionBody }}
+            </p>
+            <template #modal-footer="{ cancel, ok }">
+                <b-button @click="cancel()">
+                    {{ labelAskNo }}
+                </b-button>
+                <!-- Button with custom close trigger value -->
+                <b-button @click="ok()">
+                    {{ labelAskYes }}
+                </b-button>
+            </template>
+        </b-modal>
+        <b-modal
+            id="copyToPartList"
+            :title="labelCopyToPartListHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            @ok="copyToPartList()"
+        >
+            <p class="my-4">
+                {{ labelCopyToPartListBody }}
+            </p>
+            <p class="my-4">
+                <b-form-select
+                    v-model="selectedPartList"
+                    :options="copyToPartLists"
+                />
+            </p>
+            <template #modal-footer="{ cancel, ok }">
+                <b-button @click="cancel()">
+                    {{ buttonCancelLoading }}
+                </b-button>
+                <!-- Button with custom close trigger value -->
+                <b-button @click="ok()">
+                    {{ labelCopyToPartList }}
+                </b-button>
+            </template>
+        </b-modal>
     </div>
 </template>
 
@@ -147,6 +244,13 @@
 }
 #partListH2 {
     max-width: calc(100% - 70px);
+}
+.row {
+    margin-left: 0;
+}
+.container {
+    margin-left: 0;
+    padding-left: 0;
 }
 </style>
 
@@ -172,6 +276,12 @@ export default {
         totalPositions: 0,
         totalPickABrickPositions: 0,
         totalBricksAndPiecesPositions: 0,
+        showSort: true,
+        selectedItems: [],
+        headerBgVariant: 'dark',
+        headerTextVariant: 'light',
+        selectedPartList: null,
+        copyToPartLists: [],
     }),
     components: {
         BrickList,
@@ -208,29 +318,24 @@ export default {
                 var item = this.wantedList[i];
                 await this.sleep(200); //200ms timout to prevent to be blocked on the website
                 this.loadPrice(item);
-
-                //console.log(item);
             }
-
-            //console.log(this.wantedList);
         },
         async loadPrice(item) {
-            try {
-                item.bricksAndPieces = { isLoading: true };
-                if (item.source == 'brickLink') {
-                    var brickLinkHtml = await this.getBricklink(item.itemid);
-                    var returnObject = await this.returnModelsObject(
-                        brickLinkHtml
-                    );
-                    item.brickLink.strAltNo = returnObject.strAltNo;
-                    item.brickLink.mapPCCs = returnObject.mapPCCs;
+            this.showSort = false;
+
+            item.bricksAndPieces = { isLoading: true };
+            if (item.source == 'brickLink') {
+                var brickLinkHtml = await this.getBricklink(item.designId);
+                if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
+                    this.pickABrickBrickCounter++;
+                    this.bricksAndPiecesBrickCounter++;
+                    this.calcLoad();
+                    item.bricksAndPieces = { error: brickLinkHtml.status };
+                    return;
                 }
-            } catch (err) {
-                //console.log("couldn't find brick on bricklink");
-                this.pickABrickBrickCounter++;
-                this.bricksAndPiecesBrickCounter++;
-                this.calcLoad();
-                item.bricksAndPieces = null;
+                var returnObject = await this.returnModelsObject(brickLinkHtml);
+                item.brickLink.strAltNo = returnObject.strAltNo;
+                item.brickLink.mapPCCs = returnObject.mapPCCs;
             }
 
             if (this.cancelLoading) {
@@ -249,12 +354,12 @@ export default {
             item = await this.loadBricksAndPieces(item);
             item.pickABrick = { isLoading: true };
             item = await this.loadPickABrick(item);
+            
         },
         sleep(ms) {
             return new Promise((resolve) => setTimeout(resolve, ms));
         },
         calcLoad() {
-            //console.log("pickABrick: ", this.pickABrickBrickCounter, " bricksAndPieces: ", this.bricksAndPiecesBrickCounter)
             var one = 100 / this.totalPositions / 2;
 
             this.loadPercentage = Math.round(
@@ -262,16 +367,14 @@ export default {
                     one * this.bricksAndPiecesBrickCounter
             );
             if (this.loadPercentage >= 100) {
-                //console.log("setWantedList", this.wantedList)
                 this.partList.date = new Date(Date.now());
                 this.partList.positions = this.wantedList;
                 this.$store.commit('partList/setPartList', this.partList);
+                this.showSort = true;
             }
             this.calcTotals();
-            //console.log(this.loadPercentage)
         },
         print() {
-            //console.log("print")
             this.$htmlToPaper('wantedListPrint');
         },
         cancel() {
@@ -293,7 +396,6 @@ export default {
             }
 
             this.partList.name = this.editName;
-            //console.log(this.partList.name, this.editName);
             this.$store.commit('partList/setPartList', this.partList);
 
             this.$nextTick(() => {
@@ -312,25 +414,47 @@ export default {
             }
         },
         onItemDeleted(item) {
-            this.wantedList = this.wantedList.filter(pos => {
-                return pos.itemid != item.itemid || pos.color.brickLinkId != item.color.brickLinkId
+            var index = this.wantedList.findIndex((pos) => {
+                return pos.rowNumber == item.rowNumber;
             });
+
+            this.wantedList.splice(index, 1);
+            this.totalPositions = this.wantedList.length;
+
             this.partList.positions = this.wantedList;
         },
-        async onReloadItem(item) {
-            try {
-                item.bricksAndPieces = { isLoading: true };
-                if (item.source == 'brickLink') {
-                    var brickLinkHtml = await this.getBricklink(item.itemid);
-                    var returnObject = await this.returnModelsObject(
-                        brickLinkHtml
-                    );
-                    item.brickLink.strAltNo = returnObject.strAltNo;
-                    item.brickLink.mapPCCs = returnObject.mapPCCs;
+        async onReloadPickABrickPosition(item) {
+            item.pickABrick = { isLoading: true };
+            if (item.source == 'brickLink') {
+                var brickLinkHtml = await this.getBricklink(item.designId);
+                if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
+                    item.pickABrick = { error: brickLinkHtml.status };
+                    return;
                 }
-            } catch (err) {
-                //console.log("couldn't find brick on bricklink");
+                var returnObject = await this.returnModelsObject(brickLinkHtml);
+                item.brickLink.strAltNo = returnObject.strAltNo;
+                item.brickLink.mapPCCs = returnObject.mapPCCs;
+            }
+
+            if (item.source == 'brickLink' && !item.brickLink) {
                 item.bricksAndPieces = null;
+                return;
+            }
+
+            item = await this.prepareSearchIds(item);
+            item = await this.loadPickABrick(item, true);
+        },
+        async onReloadBricksAndPiecesPosition(item) {
+            item.bricksAndPieces = { isLoading: true };
+            if (item.source == 'brickLink') {
+                var brickLinkHtml = await this.getBricklink(item.designId);
+                if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
+                    item.bricksAndPieces = { error: brickLinkHtml.status };
+                    return;
+                }
+                var returnObject = await this.returnModelsObject(brickLinkHtml);
+                item.brickLink.strAltNo = returnObject.strAltNo;
+                item.brickLink.mapPCCs = returnObject.mapPCCs;
             }
 
             if (item.source == 'brickLink' && !item.brickLink) {
@@ -340,12 +464,104 @@ export default {
 
             item = await this.prepareSearchIds(item);
             item = await this.loadBricksAndPieces(item, true);
-        }
+        },
+        removePositions() {
+            this.selectedItems.map((item) => {
+                    var index = this.wantedList.findIndex(f => {
+                        return f.rowNumber == item.rowNumber
+                    });
+                    if (index>=0) {
+                        this.wantedList.splice(index, 1);
+                    }
+                });
+            this.totalPositions = this.wantedList.length;
+        },
+        onSelectionChange(selecteItems) {
+            this.selectedItems = selecteItems;
+        },
+        splitPartList() {
+            var newPartList = {
+                id: this.generateUUID(),
+                name: this.partList.name + ' 2',
+                cart: this.partList.cart,
+                date: this.partList.date,
+                source: this.partList.source,
+                positions: [...this.selectedItems],
+            };
+
+            this.$store.commit('partList/setPartList', newPartList);
+
+            this.removePositions();
+        },
+        generateUUID() {
+            // Public Domain/MIT
+            var d = new Date().getTime();
+            if (
+                typeof performance !== 'undefined' &&
+                typeof performance.now === 'function'
+            ) {
+                d += performance.now(); //use high-precision timer if available
+            }
+            var newGuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+                /[xy]/g,
+                function(c) {
+                    var r = (d + Math.random() * 16) % 16 | 0;
+                    d = Math.floor(d / 16);
+                    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+                }
+            );
+
+            return newGuid;
+        },
+        copyToPartList() {
+            var destinationPartList = this.$store.getters[
+                'partList/getPartListsById'
+            ](this.selectedPartList);
+            this.selectedPartList = null;
+            if (!destinationPartList) return;
+
+            this.selectedItems.map((item) => {
+                var foundItem = null;
+                if (item.source == 'lego' && item.itemNumber) {
+                    foundItem = destinationPartList.positions.find((f) => {
+                        return f.itemNumber == item.itemNumber;
+                    });
+                } else if (item.source == 'brickLink') {
+                    foundItem = destinationPartList.positions.find((f) => {
+                        if (item.color.id == 1) {
+                            return (
+                                f.designId == item.designId &&
+                                f.color.legoName == item.color.legoName
+                            );
+                        } else {
+                            return (
+                                f.designId == item.designId &&
+                                f.color.brickLinkId == item.color.brickLinkId
+                            );
+                        }
+                    });
+                }
+                if (foundItem) {
+                    foundItem.qty = { ...foundItem.qty };
+                    foundItem.qty.min = parseInt(foundItem.qty.min);
+                    foundItem.qty.have = parseInt(foundItem.qty.have);
+                    foundItem.qty.order = parseInt(foundItem.qty.order);
+                    foundItem.qty.min += parseInt(item.qty.min);
+                    foundItem.qty.have += parseInt(item.qty.have);
+                    foundItem.qty.order += parseInt(item.qty.order);
+                    foundItem.qty.balance +=
+                        foundItem.qty.min - foundItem.qty.have;
+                } else {
+                    destinationPartList.positions.push(
+                        JSON.parse(JSON.stringify(item))
+                    ); // push a copy ot the item
+                }
+            });
+
+            this.$store.commit('partList/setPartList', destinationPartList);
+        },
     },
     watch: {
-        /*'partList.cart': function(val, oldVal) {
-            this.$store.commit('partList/setPartList', this.partList);
-        },*/
         partList: {
             handler(val, oldVal) {
                 this.$store.commit('partList/setPartList', this.partList);
@@ -359,6 +575,25 @@ export default {
         );
         this.wantedList = this.partList.positions;
         this.calcTotals();
+
+        var partListBySource = this.$store.getters[
+            'partList/getPartListsBySource'
+        ](this.partList.source);
+
+        this.copyToPartLists = partListBySource
+            .filter((list) => {
+                return list.id != this.partList.id;
+            })
+            .map((list) => {
+                return { value: list.id, text: list.name };
+            })
+            .sort(function(a, b) {
+                if (a.text.toUpperCase() > b.text.toUpperCase()) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
     },
     computed: {
         pickABrick() {
@@ -390,6 +625,46 @@ export default {
         },
         wantedListName() {
             return browser.i18n.getMessage('wantedList_name');
+        },
+        labelRemoveSelection() {
+            return browser.i18n.getMessage('wantedList_removeSelection');
+        },
+        labelRemovePositions() {
+            return browser.i18n.getMessage('wantedList_removePositions');
+        },
+        labelAskDeletePositionHeader() {
+            return browser.i18n.getMessage(
+                'wantedList_askDeletePositionHeader'
+            );
+        },
+        labelAskDeletePositionBody() {
+            return browser.i18n.getMessage('wantedList_askDeletePositionBody');
+        },
+        labelAskYes() {
+            return browser.i18n.getMessage('wantedList_askYes');
+        },
+        labelAskNo() {
+            return browser.i18n.getMessage('wantedList_askNo');
+        },
+        labelAskDeletePartListHeader() {
+            return browser.i18n.getMessage(
+                'wantedList_askDeletePartListHeader'
+            );
+        },
+        labelAskDeletePartListBody() {
+            return browser.i18n.getMessage('wantedList_askDeletePartListBody');
+        },
+        labelSplitPartList() {
+            return browser.i18n.getMessage('wantedList_splitPartList');
+        },
+        labelCopyToPartList() {
+            return browser.i18n.getMessage('wantedList_copy');
+        },
+        labelCopyToPartListHeader() {
+            return browser.i18n.getMessage('wantedList_copyHeader');
+        },
+        labelCopyToPartListBody() {
+            return browser.i18n.getMessage('wantedList_copyBody');
         },
     },
 };

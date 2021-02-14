@@ -2,29 +2,53 @@
     <div>
         <b-navbar type="dark" variant="dark">
             <b-container class="p-0" fluid="xl">
-                <b-navbar-brand>
+                <b-navbar-brand
+                    class="p-0"
+                    style="margin-top: -10px; margin-bottom: -10px; margin-right: 5px"
+                >
                     <img
-                        src="icons/icon_24.png"
+                        src="icons/icon_trans_48.png"
                         class="d-inline-block align-top"
                     />
-                    {{ extName }}
+                </b-navbar-brand>
+                <b-navbar-brand class="p-0" style="font-size: 1.7rem;">
+                    <span>{{ extName }}</span>
                 </b-navbar-brand>
                 <b-navbar-nav
                     class="ml-auto"
                     v-if="countrySelected && languageSelected"
                 >
-                    <b-nav-item @click="showPage('import')">{{
-                        menuImport
-                    }}</b-nav-item>
-                    <b-nav-item @click="showPage('partLists')">{{
-                        menuWantedList
-                    }}</b-nav-item>
-                    <b-nav-item @click="showPage('shopping')">{{
-                        menuShoppingCart
-                    }}</b-nav-item>
-                    <b-nav-item @click="showPage('export')">{{
-                        menuExport
-                    }}</b-nav-item>
+                    <b-nav-item
+                        @click="showPage('singleParts')"
+                        :active="$router.currentRoute.path == '/singleParts'"
+                    >
+                        {{ menuSingleParts }}
+                        <b-badge variant="danger">Beta</b-badge>
+                    </b-nav-item>
+                    <b-nav-item
+                        @click="showPage('import')"
+                        :active="$router.currentRoute.path == '/import'"
+                    >
+                        {{ menuImport }}
+                    </b-nav-item>
+                    <b-nav-item
+                        @click="showPage('partLists')"
+                        :active="$router.currentRoute.path.startsWith('/partList')"
+                    >
+                        {{ menuWantedList }}
+                    </b-nav-item>
+                    <b-nav-item
+                        @click="showPage('shopping')"
+                        :active="$router.currentRoute.path == '/shopping'"
+                    >
+                        {{ menuShoppingCart }}
+                    </b-nav-item>
+                    <b-nav-item
+                        @click="showPage('export')"
+                        :active="$router.currentRoute.path.startsWith('/export')"
+                    >
+                        {{ menuExport }}
+                    </b-nav-item>
 
                     <b-nav-item
                         @click="
@@ -33,10 +57,16 @@
                         >{{ menuHelp }}</b-nav-item
                     >
 
-                    <b-nav-item @click="showPage('info')">
+                    <b-nav-item
+                        @click="showPage('info')"
+                        :active="$router.currentRoute.path == '/info'"
+                    >
                         <b-icon icon="info-circle" aria-hidden="true" />
                     </b-nav-item>
-                    <b-nav-item @click="showPage('settings')">
+                    <b-nav-item
+                        @click="showPage('settings')"
+                        :active="$router.currentRoute.path == '/settings'"
+                    >
                         <b-icon icon="gear" aria-hidden="true" />
                     </b-nav-item>
                     <b-nav-item
@@ -48,16 +78,32 @@
                 </b-navbar-nav>
             </b-container>
         </b-navbar>
-        <b-container class="pt-1 pb-3 page" fluid="xl">
-            <router-view
-                v-if="countrySelected && languageSelected"
-            ></router-view>
+        <b-container class="pt-1 pb-3 pl-0 pr-0 page" fluid="xl">
+            <b-alert
+                show
+                v-if="newVersionAvailable"
+                variant="warning"
+                dismissible
+            >
+                Neue Version {{ newVersionAvailable }} Verfügbar!
+            </b-alert>
+            <router-view v-if="countrySelected && languageSelected" />
             <SelectCountry
                 @countrySelected="onCountrySelected"
                 @languageSelected="onLanguageSelected"
                 v-if="!countrySelected || !languageSelected"
             />
         </b-container>
+        <b-modal
+            id="notificationMessage"
+            :title="labelNotificationHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            hide-footer
+        >
+            <p class="my-4" v-html="notification" />
+        </b-modal>
     </div>
 </template>
 
@@ -90,10 +136,12 @@ p {
 </style>
 
 <script>
-import SelectCountry from '@/components/SelectCountry.vue';
-import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
 import Vue from 'vue';
 export const bus = new Vue();
+
+import SelectCountry from '@/components/SelectCountry.vue';
+import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
+import { requestsMixin } from '@/mixins/requestsMixin';
 
 export default {
     components: {
@@ -106,21 +154,22 @@ export default {
             countrySelected: null,
             languageSelected: null,
             partListId: null,
+            newVersionAvailable: null,
+            headerBgVariant: 'dark',
+            headerTextVariant: 'light',
+            notification: null,
+            page: null,
         };
     },
+    mixins: [requestsMixin],
     methods: {
         onCountrySelected(country) {
             this.countrySelected = country;
         },
         showPage(page) {
-            if (
-                this.$store.state.mode == 'popup' &&
-                (page == 'import' || page == 'partLists' || page == 'export')
-            ) {
-                this.openInFullscreen(page);
-                return;
-            }
+            this.page = page;
             this.$router.push('/' + page).catch(() => {});
+            this.cloudSync();
         },
         link(value) {
             browser.tabs.create({ url: value });
@@ -146,12 +195,47 @@ export default {
             });
             window.close();
         },
+        async cloudSync() {
+            var checkDate = new Date(this.$store.state.syncDate);
+            checkDate.setHours(checkDate.getHours() + 1);
+            if (checkDate < new Date(Date.now())) {
+                var cloudData = await this.getSyncAsync();
+                this.$store.commit('setSyncDate', new Date(Date.now()));
+
+                if (cloudData.version) {
+                    var currentVersion = this.$store.state.version.current
+                        .split('.')
+                        .map(Number);
+                    var cloudVersion = cloudData.version.split('.').map(Number);
+
+                    if (
+                        currentVersion[0] <= cloudVersion[0] &&
+                        currentVersion[1] <= cloudVersion[1] &&
+                        currentVersion[2] < cloudVersion[2]
+                    ) {
+                        this.newVersionAvailable = cloudData.version;
+                    }
+                }
+
+                if (cloudData.notification) {
+                    var language = await browser.i18n.getUILanguage();
+                    if (language.startsWith('de')) {
+                        this.notification = cloudData.notification.messageDe;
+                    } else {
+                        this.notification = cloudData.notification.messageEn;
+                    }
+
+                    this.$bvModal.show('notificationMessage');
+                }
+            }
+        },
     },
     beforeMount() {
         if (this.$store.state.mode == 'popup')
             this.$router.push('/shopping').catch(() => {});
         this.countrySelected = this.$store.state.country;
         this.languageSelected = this.$store.state.language;
+        this.cloudSync();
     },
     computed: {
         extName() {
@@ -159,6 +243,9 @@ export default {
         },
         bricksAndPieces() {
             return browser.i18n.getMessage('bricksAndPieces');
+        },
+        menuSingleParts() {
+            return browser.i18n.getMessage('import_singleParts');
         },
         menuImport() {
             return browser.i18n.getMessage('menu_import');
@@ -180,6 +267,9 @@ export default {
         },
         menuHelp() {
             return browser.i18n.getMessage('menu_help');
+        },
+        labelNotificationHeader() {
+            return browser.i18n.getMessage('notification_header');
         },
     },
 };

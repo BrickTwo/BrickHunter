@@ -217,7 +217,7 @@ export default {
 
                 // general options
                 if (this.selectedOptions.includes('bricklinkId')) {
-                    csvLine = this.addToCSVLine(csvLine, element.itemid);
+                    csvLine = this.addToCSVLine(csvLine, element.designId);
                 }
                 if (this.selectedOptions.includes('want')) {
                     csvLine = this.addToCSVLine(csvLine, element.qty.min);
