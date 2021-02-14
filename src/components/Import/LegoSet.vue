@@ -83,6 +83,7 @@ export default {
     methods: {
         async loadLegoSet() {
             this.errorCode = null;
+            this.setNumber = this.setNumber.trim();
             if (this.setNumber.length > 0) {
                 var response = await browser.runtime.sendMessage({
                     service: 'bricksAndPieces',
