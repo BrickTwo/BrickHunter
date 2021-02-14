@@ -126,9 +126,9 @@
 
 <script>
 import { brickColorMixin } from '@/mixins/brickColorMixin';
-import { requestsMixin } from '@/mixins/requestsMixin';
 import BrickModal from './BrickModal';
 import Chart from './Chart';
+import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     props: {
@@ -150,7 +150,7 @@ export default {
         BrickModal,
         Chart,
     },
-    mixins: [brickColorMixin, requestsMixin],
+    mixins: [brickColorMixin],
     methods: {
         openBrick() {
             this.$bvModal.show('modal-open-lego-fill-cart');
@@ -162,7 +162,7 @@ export default {
             return 'flags/' + value + '.png';
         },
         async loadBrick() {
-            var response = await this.getBrickAsync(this.brick.itemNumber);
+            var response = await apiBrickTwo.getBrickAsync(this.brick.itemNumber, this.$store.state.country);
 
             var dataMaxAmount = [];
             response.maxAmount.map((item) => {

@@ -258,8 +258,8 @@
 import BrickList from '../BrickList';
 import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
-import { requestsMixin } from '@/mixins/requestsMixin';
 import { brickLinkProcessorMixin } from '@/mixins/brickLinkProcessorMixin';
+import apiBrickLink from '@/utility/api/bricklink.js';
 
 export default {
     data: () => ({
@@ -289,7 +289,6 @@ export default {
     mixins: [
         brickProcessorMixin,
         brickColorMixin,
-        requestsMixin,
         brickLinkProcessorMixin,
     ],
     methods: {
@@ -325,7 +324,7 @@ export default {
 
             item.bricksAndPieces = { isLoading: true };
             if (item.source == 'brickLink') {
-                var brickLinkHtml = await this.getBricklink(item.designId);
+                var brickLinkHtml = await apiBrickLink.getBricklink(item.designId);
                 if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
                     this.pickABrickBrickCounter++;
                     this.bricksAndPiecesBrickCounter++;
@@ -426,7 +425,7 @@ export default {
         async onReloadPickABrickPosition(item) {
             item.pickABrick = { isLoading: true };
             if (item.source == 'brickLink') {
-                var brickLinkHtml = await this.getBricklink(item.designId);
+                var brickLinkHtml = await apiBrickLink.getBricklink(item.designId);
                 if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
                     item.pickABrick = { error: brickLinkHtml.status };
                     return;
@@ -447,7 +446,7 @@ export default {
         async onReloadBricksAndPiecesPosition(item) {
             item.bricksAndPieces = { isLoading: true };
             if (item.source == 'brickLink') {
-                var brickLinkHtml = await this.getBricklink(item.designId);
+                var brickLinkHtml = await apiBrickLink.getBricklink(item.designId);
                 if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
                     item.bricksAndPieces = { error: brickLinkHtml.status };
                     return;

@@ -132,7 +132,6 @@
 </template>
 
 <script>
-import { requestsMixin } from '@/mixins/requestsMixin';
 import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
 import BrickGrid from './BrickGrid';
@@ -140,6 +139,7 @@ import BrickList from './BrickList';
 import ColorPicker from './filter/ColorPicker';
 import SortFilter from './filter/Sort';
 import { bus } from '@/components/BrickHunter';
+import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     props: {
@@ -177,7 +177,7 @@ export default {
         ColorPicker,
         SortFilter,
     },
-    mixins: [requestsMixin, brickProcessorMixin, brickColorMixin],
+    mixins: [brickProcessorMixin, brickColorMixin],
     methods: {
         setOrderQuantity(item) {
             var partList = this.loadPartList();
@@ -315,9 +315,10 @@ export default {
                 )
                 .catch(() => {});*/
 
-            this.search = await this.getBricksAsync(
+            this.search = await apiBrickTwo.getBricksAsync(
                 this.currentPage,
                 this.perPage,
+                this.$store.state.country,
                 this.categoryId,
                 this.selectedColor,
                 this.keyword,
@@ -456,7 +457,7 @@ export default {
                         brick.update = false;
                     });
 
-                    this.sendPrices(this.prepareSendPrice(response.bricks));
+                    apiBrickTwo.sendPrices(this.prepareSendPrice(response.bricks));
                 }
             }
         },

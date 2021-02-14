@@ -1,3 +1,5 @@
+import apiBrickTwo from '@/utility/api/bricktwo.js';
+
 export const brickProcessorMixin = {
     methods: {
         cleanDesignId(designId) {
@@ -47,7 +49,7 @@ export const brickProcessorMixin = {
                 if (result[0]) return result[0];
 
                 if (item.itemNumber) {
-                    var resp = await this.getBrickAsync(item.itemNumber);
+                    var resp = await apiBrickTwo.getBrickAsync(item.itemNumber, this.$store.state.country);
 
                     if (resp?.brick?.alternativeItemNumbers) {
                         var altItemNumbers = resp.brick.alternativeItemNumbers.split(
@@ -104,7 +106,7 @@ export const brickProcessorMixin = {
                 if (result[0]) return result[0];
                         
                 if (item.itemNumber) {
-                    var resp = await this.getBrickAsync(item.itemNumber);
+                    var resp = await apiBrickTwo.getBrickAsync(item.itemNumber, this.$store.state.country);
 
                     if (resp?.brick?.alternativeItemNumbers) {
                         var altItemNumbers = resp.brick.alternativeItemNumbers.split(
@@ -201,7 +203,7 @@ export const brickProcessorMixin = {
             if (!single) this.bricksAndPiecesBrickCounter++;
             if (!single) this.calcLoad();
 
-            this.sendPrices(this.prepareSendPrice(bricks));
+            apiBrickTwo.sendPrices(this.prepareSendPrice(bricks));
 
             return item;
         },

@@ -197,7 +197,6 @@
 </style>
 
 <script>
-import { requestsMixin } from '@/mixins/requestsMixin';
 
 export default {
     props: {
@@ -216,13 +215,11 @@ export default {
         colorBlue: [],
         colorPurple: [],
     }),
-    mixins: [requestsMixin],
     methods: {
         selectColor(value) {
             this.$emit('selectColor', value);
         },
         async fillColors() {
-            //var colors = await this.getColorsAsync();
             var colors = this.colorList;
 
             this.colorTrans = colors.filter((color) =>
