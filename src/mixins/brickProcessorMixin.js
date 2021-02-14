@@ -102,7 +102,7 @@ export const brickProcessorMixin = {
                     (brick) => brick.variant.id == item.itemNumber
                 );
                 if (result[0]) return result[0];
-
+                        
                 if (item.itemNumber) {
                     var resp = await this.getBrickAsync(item.itemNumber);
 

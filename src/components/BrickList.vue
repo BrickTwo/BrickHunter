@@ -508,5 +508,10 @@ export default {
             return browser.i18n.getMessage('brickList_reload');
         },
     },
+    computed: {
+        label_reload() {
+            return browser.i18n.getMessage('brickList_reload');
+        },
+    }
 };
 </script>
