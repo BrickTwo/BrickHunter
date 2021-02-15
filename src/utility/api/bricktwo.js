@@ -4,7 +4,7 @@ export default {
     sendPrices(items) {
         if (!items) return;
 
-        var response = null;
+        let response = null;
         try {
             response = axios.post(
                 'https://brickhunter.bricktwo.net/api/bricksandpieces/update.php',
@@ -14,7 +14,7 @@ export default {
         return response;
     },
     async getCategoriesAsync(country) {
-        var response = null;
+        let response = null;
         try {
             response = await axios.get(
                 `https://brickhunter.bricktwo.net/api/categories/read.php?country=${country}`
@@ -39,7 +39,7 @@ export default {
             categoryId = '';
         }
 
-        var response = null;
+        let response = null;
         try {
             response = await axios.get(
                 `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}`
@@ -48,7 +48,7 @@ export default {
         return response.data;
     },
     async getBrickAsync(itemNumber, country) {
-        var response = null;
+        let response = null;
         try {
             response = await axios.get(
                 `https://brickhunter.bricktwo.net/api/bricks/single/read.php?itemnumber=${itemNumber}&country=${country}`
@@ -57,7 +57,7 @@ export default {
         return response?.data;
     },
     async getColorsAsync() {
-        var response = null;
+        let response = null;
         try {
             response = await axios.get(
                 `https://brickhunter.bricktwo.net/api/colors/read.php`
@@ -66,12 +66,41 @@ export default {
         return response.data;
     },
     async getSyncAsync() {
-        var response = null;
+        let response = null;
         try {
             response = await axios.get(
                 `https://brickhunter.bricktwo.net/api/sync/read.php`
             );
         } catch (err) {}
         return response.data;
+    },
+    prepareSendPrice(bricks, country) { //api bricktwo
+        if (!bricks) return null;
+
+        let returnValue = [];
+
+        bricks.forEach((brick) => {
+            let value = {
+                designId: brick.designId,
+                itemNumber: brick.itemNumber,
+                priceAmount: brick.price.amount,
+                priceCurrency: brick.price.currency,
+                maxAmount: brick.maxAmount,
+                isAvailable: brick.isAvailable,
+                isSoldOut: brick.isSoldOut,
+                isIPElement: brick.isIPElement,
+                color: brick.color,
+                colorFamily: brick.colorFamily,
+                description: brick.description,
+                imageUrl: brick.imageUrl,
+                category: brick.category,
+                materialType: brick.materialType,
+                country: country,
+            };
+
+            returnValue.push(value);
+        });
+
+        return returnValue;
     },
 }

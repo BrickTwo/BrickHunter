@@ -2,7 +2,7 @@ const axios = require('axios');
 
 export default {
     getBricklink(item) {
-        var response = null;
+        let response = null;
         try {
             response = axios.get(
                 `https://www.bricklink.com/r3/catalog/parts/Brick_Round/Cone/product.page?P=${item}`
@@ -10,4 +10,4 @@ export default {
         } catch (err) {}
         return response;
     },
-}
+};

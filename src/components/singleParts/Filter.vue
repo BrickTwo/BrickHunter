@@ -132,7 +132,6 @@
 </template>
 
 <script>
-import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
 import BrickGrid from './BrickGrid';
 import BrickList from './BrickList';
@@ -177,7 +176,7 @@ export default {
         ColorPicker,
         SortFilter,
     },
-    mixins: [brickProcessorMixin, brickColorMixin],
+    mixins: [brickColorMixin],
     methods: {
         setOrderQuantity(item) {
             var partList = this.loadPartList();
@@ -457,7 +456,7 @@ export default {
                         brick.update = false;
                     });
 
-                    apiBrickTwo.sendPrices(this.prepareSendPrice(response.bricks));
+                    apiBrickTwo.sendPrices(apiBrickTwo.prepareSendPrice(response.bricks, this.$store.state.country));
                 }
             }
         },
