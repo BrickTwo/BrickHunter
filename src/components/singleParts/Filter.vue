@@ -358,9 +358,7 @@ export default {
                 if (!this.search || !this.search.bricks) return;
                 this.search.bricks.map((brick) => {
                     var foundPos = selectedPartList.positions.find(
-                        (pos) =>
-                            pos.designId == brick.designId &&
-                            pos.color.bricksAndPiecesName == brick.colorFamily
+                        (pos) => pos.itemNumber == brick.itemNumber
                     );
                     if (foundPos) {
                         brick.order = foundPos.qty.min;
@@ -456,7 +454,12 @@ export default {
                         brick.update = false;
                     });
 
-                    apiBrickTwo.sendPrices(apiBrickTwo.prepareSendPrice(response.bricks, this.$store.state.country));
+                    apiBrickTwo.sendPrices(
+                        apiBrickTwo.prepareSendPrice(
+                            response.bricks,
+                            this.$store.state.country
+                        )
+                    );
                 }
             }
         },
