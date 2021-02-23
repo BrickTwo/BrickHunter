@@ -117,6 +117,9 @@
             <b-col id="bricksAndPiecesList">
                 <brick-list :bricklist="brickList" :limitMaxQty="200" />
             </b-col>
+            <b-col id="bricksAndPiecesListPrint" style="display: none" >
+                <brick-list :bricklist="brickList" :limitMaxQty="200" :fullSize="true"/>
+            </b-col>
         </b-row>
     </b-container>
 </template>
@@ -210,7 +213,7 @@ export default {
                 });
         },
         printBricksAndPieces() {
-            this.$htmlToPaper('bricksAndPiecesList');
+            this.$htmlToPaper('bricksAndPiecesListPrint');
         },
         async checkIfLegoIsOpen(action) {
             return await browser.tabs

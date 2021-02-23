@@ -161,6 +161,7 @@
                 v-if="!loadWantedList"
                 :bricklist="wantedList"
                 :edit="false"
+                :fullSize="true"
             ></brick-list>
         </div>
         <b-modal

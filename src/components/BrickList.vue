@@ -61,11 +61,7 @@
             </div>
         </template>
         <template #cell(qty)="data">
-            <b-form-input
-                v-if="edit"
-                v-model="data.value.min"
-                type="number"
-            />
+            <b-form-input v-if="edit" v-model="data.value.min" type="number" />
             <div v-if="limitMaxQty > 0 && !edit">
                 <div v-if="data.value.maxAmount">
                     <div v-if="data.value.order > data.value.maxAmount">
@@ -264,6 +260,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        fullSize: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: () => ({
         sortBy: 'designId',
@@ -456,6 +456,8 @@ export default {
             }
         });
         this.sortList();
+
+        if (this.fullSize) this.tableHeight = '';
     },
     watch: {
         isBusy: async function(val) {
@@ -464,6 +466,7 @@ export default {
                 this.tableHeight = 'calc(100vh - 200px)';
                 this.sortList();
             }
+            if (this.fullSize) this.tableHeight = '';
             /*var findDesignId = this.fields.find(
                 (field) => field.key === 'designId'
             );
