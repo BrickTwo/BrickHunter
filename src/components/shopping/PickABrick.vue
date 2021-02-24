@@ -121,6 +121,9 @@
             <b-col id="pickABrickList">
                 <brick-list :bricklist="brickList" :limitMaxQty="999" :isBusy="!showSort" />
             </b-col>
+            <b-col id="pickABrickListPrint" style="display: none" >
+                <brick-list :bricklist="brickList" :limitMaxQty="999" :fullSize="true"/>
+            </b-col>
         </b-row>
     </b-container>
 </template>
@@ -239,7 +242,7 @@ export default {
             }
         },
         printPickABrick() {
-            this.$htmlToPaper('pickABrickList');
+            this.$htmlToPaper('pickABrickListPrint');
         },
         async getShoppingCartId(action) {
             return await browser.runtime

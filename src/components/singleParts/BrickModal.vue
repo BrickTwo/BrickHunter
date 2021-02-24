@@ -47,7 +47,7 @@
                 </b-col>
                 <b-col cols="4" class="p-0 text-right">
                     {{
-                        new Date(brick.lastUpdateCountry + ' UTC') | formatDate
+                        new Date(brick.lastUpdateCountry + 'Z') | formatDate
                     }}
                 </b-col>
             </b-row>
@@ -85,7 +85,7 @@
                     class="p-0 text-right"
                     v-if="isAvailable"
                 >
-                    {{ new Date(brick.updateDateBrick + ' UTC') | formatDate }}
+                    {{ new Date(brick.updateDateBrick + 'Z') | formatDate }}
                 </b-col>
                 <b-col
                     cols="7"
@@ -99,13 +99,13 @@
             <b-row class="p-1 mt-0">
                 <b-col cols="5" class="p-0">{{ labelFirstAvailability }}:</b-col>
                 <b-col cols="7" class="p-0 text-right">
-                    {{ new Date(brick.firstSeen + ' UTC') | formatDate }}
+                    {{ new Date(brick.firstSeen + 'Z') | formatDate }}
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0 stripe">
                 <b-col cols="5" class="p-0">{{ labelLastAvailability }}:</b-col>
                 <b-col cols="7" class="p-0 text-right">
-                    {{ new Date(brick.lastSeen + ' UTC') | formatDate }}
+                    {{ new Date(brick.lastSeen + 'Z') | formatDate }}
                 </b-col>
             </b-row>
         </b-container>
@@ -126,9 +126,9 @@
 
 <script>
 import { brickColorMixin } from '@/mixins/brickColorMixin';
-import { requestsMixin } from '@/mixins/requestsMixin';
 import BrickModal from './BrickModal';
 import Chart from './Chart';
+import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     props: {
@@ -150,7 +150,7 @@ export default {
         BrickModal,
         Chart,
     },
-    mixins: [brickColorMixin, requestsMixin],
+    mixins: [brickColorMixin],
     methods: {
         openBrick() {
             this.$bvModal.show('modal-open-lego-fill-cart');
@@ -162,7 +162,7 @@ export default {
             return 'flags/' + value + '.png';
         },
         async loadBrick() {
-            var response = await this.getBrickAsync(this.brick.itemNumber);
+            var response = await apiBrickTwo.getBrickAsync(this.brick.itemNumber, this.$store.state.country);
 
             var dataMaxAmount = [];
             response.maxAmount.map((item) => {

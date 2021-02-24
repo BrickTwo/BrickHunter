@@ -65,7 +65,6 @@
 </template>
 
 <script>
-import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
 
 export default {
@@ -79,7 +78,7 @@ export default {
         cart: true,
         errorCode: null,
     }),
-    mixins: [brickProcessorMixin, brickColorMixin],
+    mixins: [brickColorMixin],
     methods: {
         async loadLegoSet() {
             this.errorCode = null;

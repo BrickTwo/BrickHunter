@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 export default {
     isSmaller(version1, version2){
         var version1 = version1.split('.').map(Number);

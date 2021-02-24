@@ -161,6 +161,7 @@
                 v-if="!loadWantedList"
                 :bricklist="wantedList"
                 :edit="false"
+                :fullSize="true"
             ></brick-list>
         </div>
         <b-modal
@@ -256,10 +257,11 @@
 
 <script>
 import BrickList from '../BrickList';
-import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
-import { requestsMixin } from '@/mixins/requestsMixin';
-import { brickLinkProcessorMixin } from '@/mixins/brickLinkProcessorMixin';
+import apiBrickLink from '@/utility/api/bricklink.js';
+import brickBrickLink from '@/utility/brick/bricklink.js';
+import brickBricksAndPieces from '@/utility/brick/bricksandpieces.js';
+import brickPickABrick from '@/utility/brick/pickabrick.js';
 
 export default {
     data: () => ({
@@ -286,12 +288,7 @@ export default {
     components: {
         BrickList,
     },
-    mixins: [
-        brickProcessorMixin,
-        brickColorMixin,
-        requestsMixin,
-        brickLinkProcessorMixin,
-    ],
+    mixins: [brickColorMixin],
     methods: {
         async loadPrices() {
             this.priceLoaded = true;
@@ -325,7 +322,9 @@ export default {
 
             item.bricksAndPieces = { isLoading: true };
             if (item.source == 'brickLink') {
-                var brickLinkHtml = await this.getBricklink(item.designId);
+                var brickLinkHtml = await apiBrickLink.getBricklink(
+                    item.designId
+                );
                 if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
                     this.pickABrickBrickCounter++;
                     this.bricksAndPiecesBrickCounter++;
@@ -333,7 +332,9 @@ export default {
                     item.bricksAndPieces = { error: brickLinkHtml.status };
                     return;
                 }
-                var returnObject = await this.returnModelsObject(brickLinkHtml);
+                var returnObject = await brickBrickLink.returnModelsObject(
+                    brickLinkHtml
+                );
                 item.brickLink.strAltNo = returnObject.strAltNo;
                 item.brickLink.mapPCCs = returnObject.mapPCCs;
             }
@@ -347,14 +348,20 @@ export default {
                 return;
             }
 
-            item = await this.prepareSearchIds(item);
+            item = await brickBrickLink.prepareSearchIds(item);
             if (this.cancelLoading) {
                 return;
             }
-            item = await this.loadBricksAndPieces(item);
+            item = await brickBricksAndPieces.load(
+                item,
+                this.$store.state.country
+            );
+            this.bricksAndPiecesBrickCounter++;
+            this.calcLoad();
             item.pickABrick = { isLoading: true };
-            item = await this.loadPickABrick(item);
-            
+            item = await brickPickABrick.load(item, this.$store.state.country);
+            this.pickABrickBrickCounter++;
+            this.calcLoad();
         },
         sleep(ms) {
             return new Promise((resolve) => setTimeout(resolve, ms));
@@ -426,12 +433,16 @@ export default {
         async onReloadPickABrickPosition(item) {
             item.pickABrick = { isLoading: true };
             if (item.source == 'brickLink') {
-                var brickLinkHtml = await this.getBricklink(item.designId);
+                var brickLinkHtml = await apiBrickLink.getBricklink(
+                    item.designId
+                );
                 if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
                     item.pickABrick = { error: brickLinkHtml.status };
                     return;
                 }
-                var returnObject = await this.returnModelsObject(brickLinkHtml);
+                var returnObject = await brickBrickLink.returnModelsObject(
+                    brickLinkHtml
+                );
                 item.brickLink.strAltNo = returnObject.strAltNo;
                 item.brickLink.mapPCCs = returnObject.mapPCCs;
             }
@@ -441,18 +452,22 @@ export default {
                 return;
             }
 
-            item = await this.prepareSearchIds(item);
-            item = await this.loadPickABrick(item, true);
+            item = await brickBrickLink.prepareSearchIds(item);
+            item = await brickPickABrick.load(item, this.$store.state.country);
         },
         async onReloadBricksAndPiecesPosition(item) {
             item.bricksAndPieces = { isLoading: true };
             if (item.source == 'brickLink') {
-                var brickLinkHtml = await this.getBricklink(item.designId);
+                var brickLinkHtml = await apiBrickLink.getBricklink(
+                    item.designId
+                );
                 if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
                     item.bricksAndPieces = { error: brickLinkHtml.status };
                     return;
                 }
-                var returnObject = await this.returnModelsObject(brickLinkHtml);
+                var returnObject = await brickBrickLink.returnModelsObject(
+                    brickLinkHtml
+                );
                 item.brickLink.strAltNo = returnObject.strAltNo;
                 item.brickLink.mapPCCs = returnObject.mapPCCs;
             }
@@ -462,18 +477,21 @@ export default {
                 return;
             }
 
-            item = await this.prepareSearchIds(item);
-            item = await this.loadBricksAndPieces(item, true);
+            item = await brickBrickLink.prepareSearchIds(item);
+            item = await brickBricksAndPieces.load(
+                item,
+                this.$store.state.country
+            );
         },
         removePositions() {
             this.selectedItems.map((item) => {
-                    var index = this.wantedList.findIndex(f => {
-                        return f.rowNumber == item.rowNumber
-                    });
-                    if (index>=0) {
-                        this.wantedList.splice(index, 1);
-                    }
+                var index = this.wantedList.findIndex((f) => {
+                    return f.rowNumber == item.rowNumber;
                 });
+                if (index >= 0) {
+                    this.wantedList.splice(index, 1);
+                }
+            });
             this.totalPositions = this.wantedList.length;
         },
         onSelectionChange(selecteItems) {

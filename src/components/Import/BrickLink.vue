@@ -69,8 +69,8 @@
 <script>
 import XmlReader from './XmlReader';
 import XmlField from './XmlField';
-import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
+import brickBrickLink from '@/utility/brick/bricklink.js';
 
 export default {
     data: () => ({
@@ -83,7 +83,7 @@ export default {
         XmlReader,
         XmlField,
     },
-    mixins: [brickProcessorMixin, brickColorMixin],
+    mixins: [brickColorMixin],
     methods: {
         fileName(fileName) {
             this.name = fileName.substring(0, fileName.length - 4);
@@ -101,7 +101,7 @@ export default {
 
                     part.source = 'brickLink';
                     part.designId = item.itemid[0];
-                    part.searchids = [this.cleanDesignId(part.designId)];
+                    part.searchids = [brickBrickLink.cleanDesignId(part.designId)];
                     if (item.color) {
                         part.color = this.findColor(item.color[0], this.COLOR);
                     } else {

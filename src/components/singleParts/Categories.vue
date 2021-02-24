@@ -21,15 +21,14 @@
 </template>
 
 <script>
-import { requestsMixin } from '@/mixins/requestsMixin';
 import { bus } from '@/components/BrickHunter';
+import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     data: () => ({
         categories: [],
         selectCategory: 9999999,
     }),
-    mixins: [requestsMixin],
     methods: {
         selectCategorie(id) {
             this.selectCategory = id;
@@ -38,7 +37,7 @@ export default {
         async loadCategories() {
             this.$store.commit(
                 'singleParts/setCategories',
-                await this.getCategoriesAsync()
+                await apiBrickTwo.getCategoriesAsync(this.$store.state.country)
             );
         },
     },

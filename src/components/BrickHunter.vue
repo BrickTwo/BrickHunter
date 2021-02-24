@@ -141,7 +141,7 @@ export const bus = new Vue();
 
 import SelectCountry from '@/components/SelectCountry.vue';
 import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
-import { requestsMixin } from '@/mixins/requestsMixin';
+import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     components: {
@@ -161,7 +161,6 @@ export default {
             page: null,
         };
     },
-    mixins: [requestsMixin],
     methods: {
         onCountrySelected(country) {
             this.countrySelected = country;
@@ -199,7 +198,7 @@ export default {
             var checkDate = new Date(this.$store.state.syncDate);
             checkDate.setHours(checkDate.getHours() + 1);
             if (checkDate < new Date(Date.now())) {
-                var cloudData = await this.getSyncAsync();
+                var cloudData = await apiBrickTwo.getSyncAsync();
                 this.$store.commit('setSyncDate', new Date(Date.now()));
 
                 if (cloudData.version) {

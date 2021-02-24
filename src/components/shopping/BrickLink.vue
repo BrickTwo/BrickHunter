@@ -36,6 +36,9 @@
             <b-col id="brickLinkList">
                 <brick-list :bricklist="brickList" />
             </b-col>
+            <b-col id="brickLinkListPrint" style="display: none" >
+                <brick-list :bricklist="brickList" :fullSize="true"/>
+            </b-col>
         </b-row>
     </b-container>
 </template>
@@ -127,7 +130,7 @@ export default {
         },
         printBrickLink() {
             //console.log('print');
-            this.$htmlToPaper('brickLinkList');
+            this.$htmlToPaper('brickLinkListPrint');
         },
     },
     beforeMount() {

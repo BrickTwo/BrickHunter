@@ -132,14 +132,13 @@
 </template>
 
 <script>
-import { requestsMixin } from '@/mixins/requestsMixin';
-import { brickProcessorMixin } from '@/mixins/brickProcessorMixin';
 import { brickColorMixin } from '@/mixins/brickColorMixin';
 import BrickGrid from './BrickGrid';
 import BrickList from './BrickList';
 import ColorPicker from './filter/ColorPicker';
 import SortFilter from './filter/Sort';
 import { bus } from '@/components/BrickHunter';
+import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     props: {
@@ -177,7 +176,7 @@ export default {
         ColorPicker,
         SortFilter,
     },
-    mixins: [requestsMixin, brickProcessorMixin, brickColorMixin],
+    mixins: [brickColorMixin],
     methods: {
         setOrderQuantity(item) {
             var partList = this.loadPartList();
@@ -315,9 +314,10 @@ export default {
                 )
                 .catch(() => {});*/
 
-            this.search = await this.getBricksAsync(
+            this.search = await apiBrickTwo.getBricksAsync(
                 this.currentPage,
                 this.perPage,
+                this.$store.state.country,
                 this.categoryId,
                 this.selectedColor,
                 this.keyword,
@@ -358,9 +358,7 @@ export default {
                 if (!this.search || !this.search.bricks) return;
                 this.search.bricks.map((brick) => {
                     var foundPos = selectedPartList.positions.find(
-                        (pos) =>
-                            pos.designId == brick.designId &&
-                            pos.color.bricksAndPiecesName == brick.colorFamily
+                        (pos) => pos.itemNumber == brick.itemNumber
                     );
                     if (foundPos) {
                         brick.order = foundPos.qty.min;
@@ -456,7 +454,12 @@ export default {
                         brick.update = false;
                     });
 
-                    this.sendPrices(this.prepareSendPrice(response.bricks));
+                    apiBrickTwo.sendPrices(
+                        apiBrickTwo.prepareSendPrice(
+                            response.bricks,
+                            this.$store.state.country
+                        )
+                    );
                 }
             }
         },

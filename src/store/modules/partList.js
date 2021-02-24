@@ -1,4 +1,4 @@
-import version from '../../function/version.js'
+import version from '@/utility/version.js'
 
 // initial state
 const state = () => ({

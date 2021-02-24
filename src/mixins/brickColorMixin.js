@@ -1778,4 +1778,31 @@ export const brickColorMixin = {
             ],
         };
     },
+    methods: {
+        findColor(brickLinkColorId, colorList) {
+            var result = colorList.filter(
+                (color) => color.brickLinkId == brickLinkColorId
+            );
+            return result[0];
+        },
+        findLegoColor(colorFamily, colorList) {
+            var result = colorList.filter(
+                (color) =>
+                    color.bricksAndPiecesName.toUpperCase() ==
+                    colorFamily.toUpperCase()
+            );
+
+            if (result.length) {
+                return result[0];
+            }
+
+            var color = {
+                ...colorList.filter((color) => color.brickLinkId == 0)[0],
+            };
+            color.legoName = colorFamily;
+            color.bricksAndPiecesName = colorFamily;
+            color.pickABrickName = colorFamily;
+            return color;
+        },
+    },
 };

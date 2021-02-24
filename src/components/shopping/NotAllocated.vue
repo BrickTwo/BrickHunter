@@ -20,6 +20,9 @@
             <b-col id="brickList">
                 <brick-list :bricklist="brickList" />
             </b-col>
+            <b-col id="brickListPrint" style="display: none" >
+                <brick-list :bricklist="brickList" :fullSize="true"/>
+            </b-col>
         </b-row>
     </b-container>
 </template>
@@ -50,7 +53,7 @@ export default {
             this.$router.push('/info').catch(() => {});
         },
         printBrickLink() {
-            this.$htmlToPaper('brickList');
+            this.$htmlToPaper('brickListPrint');
         },
     },
     beforeMount() {
