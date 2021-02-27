@@ -35,6 +35,10 @@ export default {
                 value: 'FIRSTSEEN',
                 text: browser.i18n.getMessage('import_sp_firstAvailability'),
             },
+            {
+                value: 'CREATEDATEBRICK',
+                text: browser.i18n.getMessage('import_sp_indexing'),
+            },
             //{ value: 'LASTSEEN', text: 'Zuletzt Verfügbar' },
             //{ value: 'LASTUPDATECOUNTRY', text: 'Letzte Aktualisierung' },
         ],

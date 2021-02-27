@@ -30,7 +30,8 @@ export default {
         colorId,
         keyword,
         sortField,
-        sortDirection
+        sortDirection,
+        showAll,
     ) {
         if (!keyword) {
             keyword = '';
@@ -38,11 +39,13 @@ export default {
         if (categoryId == 9999999) {
             categoryId = '';
         }
+        if(showAll) showAll = 1;
+        if(!showAll) showAll = 0;
 
         let response = null;
         try {
             response = await axios.get(
-                `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}`
+                `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}&showall=${showAll}`
             );
         } catch (err) {}
         return response.data;
