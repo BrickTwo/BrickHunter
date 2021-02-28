@@ -45,10 +45,14 @@
                 <b-col cols="4" class="p-0 text-right">
                     {{ brick.priceAmount }} {{ brick.priceCurrency }}
                 </b-col>
-                <b-col cols="4" class="p-0 text-right">
-                    {{
-                        new Date(brick.lastUpdateCountry + 'Z') | formatDate
-                    }}
+                <b-col v-if="brick.lastUpdateCountry && brick.lastUpdateCountry.substr(brick.lastUpdateCountry.length -1) == 'Z'" cols="4" class="p-0 text-right">
+                    {{ new Date(brick.lastUpdateCountry) | formatDate }}
+                </b-col>
+                <b-col v-else-if="brick.lastUpdateCountry" cols="4" class="p-0 text-right">
+                    {{ new Date(brick.lastUpdateCountry + 'Z') | formatDate }}
+                </b-col>
+                <b-col v-else cols="4" class="p-0 text-right">
+                    -
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0 stripe">
@@ -70,21 +74,11 @@
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0 stripe" align-h="between">
-                <b-col cols="5" class="p-0">
-                    {{ labelMaxAmount }}:
-                </b-col>
-                <b-col
-                    cols="3"
-                    class="p-0 text-right"
-                    v-if="isAvailable"
-                >
+                <b-col cols="5" class="p-0"> {{ labelMaxAmount }}: </b-col>
+                <b-col cols="3" class="p-0 text-right" v-if="isAvailable">
                     {{ brick.maxAmount }}
                 </b-col>
-                <b-col
-                    cols="4"
-                    class="p-0 text-right"
-                    v-if="isAvailable"
-                >
+                <b-col cols="4" class="p-0 text-right" v-if="isAvailable">
                     {{ new Date(brick.updateDateBrick + 'Z') | formatDate }}
                 </b-col>
                 <b-col
@@ -97,15 +91,29 @@
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0">
-                <b-col cols="5" class="p-0">{{ labelFirstAvailability }}:</b-col>
-                <b-col cols="7" class="p-0 text-right">
+                <b-col cols="5" class="p-0"
+                    >{{ labelFirstAvailability }}:</b-col
+                >
+                <b-col v-if="brick.firstSeen" cols="7" class="p-0 text-right">
                     {{ new Date(brick.firstSeen + 'Z') | formatDate }}
+                </b-col>
+                <b-col v-else cols="7" class="p-0 text-right">
+                    -
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0 stripe">
                 <b-col cols="5" class="p-0">{{ labelLastAvailability }}:</b-col>
-                <b-col cols="7" class="p-0 text-right">
+                <b-col v-if="brick.lastSeen" cols="7" class="p-0 text-right">
                     {{ new Date(brick.lastSeen + 'Z') | formatDate }}
+                </b-col>
+                <b-col v-else cols="7" class="p-0 text-right">
+                    -
+                </b-col>
+            </b-row>
+            <b-row class="p-1 mt-0">
+                <b-col cols="5" class="p-0">{{ labelCreateDateBrick }}:</b-col>
+                <b-col cols="7" class="p-0 text-right">
+                    {{ new Date(brick.createDateBrick + 'Z') | formatDate }}
                 </b-col>
             </b-row>
         </b-container>
@@ -152,17 +160,11 @@ export default {
     },
     mixins: [brickColorMixin],
     methods: {
-        openBrick() {
-            this.$bvModal.show('modal-open-lego-fill-cart');
-        },
-        bricksAndPiecesFillCart() {},
-        cancel() {},
-        ok() {},
-        getFlagImgUrl(value) {
-            return 'flags/' + value + '.png';
-        },
         async loadBrick() {
-            var response = await apiBrickTwo.getBrickAsync(this.brick.itemNumber, this.$store.state.country);
+            var response = await apiBrickTwo.getBrickAsync(
+                this.brick.itemNumber,
+                this.$store.state.country
+            );
 
             var dataMaxAmount = [];
             response.maxAmount.map((item) => {
@@ -290,7 +292,10 @@ export default {
                         },
                         scaleLabel: {
                             display: true,
-                            labelString: this.labelPrice + ' ' + this.brick.priceCurrency,
+                            labelString:
+                                this.labelPrice +
+                                ' ' +
+                                this.brick.priceCurrency,
                         },
                         ticks: {
                             suggestedMin: 0,
@@ -307,6 +312,7 @@ export default {
             this.category = this.$store.getters['singleParts/getCategoryById'](
                 this.brick.categoryId
             );
+            console.log(this.brick.lastUpdateCountry, this.brick.createDateBrick)
         },
         onHidden() {
             this.page = 'data';
@@ -314,7 +320,9 @@ export default {
     },
     beforeMount() {
         this.color = this.COLOR.find(
-            (c) => c.bricksAndPiecesName.toUpperCase() == this.brick.colorFamily.toUpperCase()
+            (c) =>
+                c.bricksAndPiecesName.toUpperCase() ==
+                this.brick.colorFamily.toUpperCase()
         );
         if (!this.color) {
             this.color = this.COLOR.find((c) => c.brickLinkId == 0);
@@ -369,6 +377,9 @@ export default {
         },
         labelLastAvailability() {
             return browser.i18n.getMessage('import_sp_lastAvailability');
+        },
+        labelCreateDateBrick() {
+            return browser.i18n.getMessage('import_sp_indexing');
         },
         labelNotInStock() {
             return browser.i18n.getMessage('import_sp_notInStock');
