@@ -312,7 +312,6 @@ export default {
             this.category = this.$store.getters['singleParts/getCategoryById'](
                 this.brick.categoryId
             );
-            console.log(this.brick.lastUpdateCountry, this.brick.createDateBrick)
         },
         onHidden() {
             this.page = 'data';

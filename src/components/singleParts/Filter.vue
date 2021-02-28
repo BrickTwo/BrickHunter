@@ -176,6 +176,9 @@ export default {
         partListSelectedId: {
             type: String,
         },
+        favoriteSelected: {
+            type: Boolean,
+        },
         categoryId: {
             type: Number,
         },
@@ -562,6 +565,11 @@ export default {
 
             this.loadBricks(true);
         },
+        favoriteSelected: function() {
+            if(this.favoriteSelected) this.selectedItemNumbers = this.$store.state.singleParts.favorites;
+            if(!this.favoriteSelected) this.selectedItemNumbers = [];
+            this.loadBricks(true);
+        }
     },
     mounted() {
         this.loadBricks(true);

@@ -5,6 +5,7 @@
                 <Sidemenu
                     @partListActive="onPartListActive"
                     @partListSelected="onPartListSelected"
+                    @favoriteSelected="onFavoriteSelected"
                     @categorySelected="onCategorySelected"
                     class="cat"
                 />
@@ -13,6 +14,7 @@
                 <BrickFilter
                     :partListActiveId="partListActive"
                     :partListSelectedId="partListSeleted"
+                    :favoriteSelected="favoriteSelected"
                     :categoryId="categorySelected"
                     class="cat"
                 />
@@ -38,6 +40,7 @@ export default {
     data: () => ({
         partListActive: null,
         partListSeleted: null,
+        favoriteSelected: false,
         categorySelected: 9999999,
         chartdata: [],
         chartoptions: {},
@@ -53,6 +56,9 @@ export default {
         },
         onPartListSelected(id) {
             this.partListSeleted = id;
+        },
+        onFavoriteSelected(selected) {
+            this.favoriteSelected = selected;
         },
         onCategorySelected(id) {
             this.categorySelected = parseInt(id);
