@@ -39,11 +39,19 @@
                     v-model="currentPage"
                     :total-rows="totalRows"
                     :per-page="perPage"
+                    limit="7"
                     aria-controls="my-table"
                     last-number
                 />
             </b-col>
             <b-col class="text-right">
+                <b-button
+                    class="button"
+                    variant="primary"
+                    @click="$bvModal.show('settings')"
+                >
+                    <b-icon icon="gear" aria-hidden="true" />
+                </b-button>
                 <b-button
                     class="button"
                     variant="primary"
@@ -107,6 +115,7 @@
                     v-model="currentPage"
                     :total-rows="totalRows"
                     :per-page="perPage"
+                    limit="7"
                     aria-controls="my-table"
                     last-number
                 />
@@ -128,6 +137,25 @@
                 </b-button>
             </b-col>
         </b-row>
+        <b-modal
+            id="settings"
+            :title="labelSettingsHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            hide-footer
+            @close="loadBricks(true)"
+        >
+            <p class="my-4">
+                <b-form-checkbox
+                    v-model="showOnlyAvailable"
+                    id="checkbox-1"
+                    name="checkbox-1"
+                >
+                    {{ labelShowOnlyAvailable }}
+                </b-form-checkbox>
+            </p>
+        </b-modal>
     </b-container>
 </template>
 
@@ -172,6 +200,9 @@ export default {
         listUpdate: true,
         componentKey: 0,
         colorList: [],
+        headerBgVariant: 'dark',
+        headerTextVariant: 'light',
+        showOnlyAvailable: true,
         selectedItemNumbers: null,
     }),
     components: {
@@ -327,6 +358,7 @@ export default {
                 this.keyword,
                 this.selectedSort,
                 this.sortDirection,
+                !this.showOnlyAvailable,
                 this.selectedItemNumbers
             );
 
@@ -445,9 +477,9 @@ export default {
                                     Date.now()
                                 ).toUTCString();
                             }
-                            found.lastUpdateCountry = new Date(
+                            found.lastUpdateCountry = new Date(new Date(
                                 Date.now()
-                            ).toUTCString();
+                            ).toUTCString()).toISOString();
                         }
                     });
 
@@ -563,6 +595,12 @@ export default {
             return browser.i18n.getMessage(
                 'import_errorImportBrickLinkTextToManyPositions'
             );
+        },
+        labelSettingsHeader() {
+            return browser.i18n.getMessage('import_sp_settingsHeader');
+        },
+        labelShowOnlyAvailable() {
+            return browser.i18n.getMessage('import_sp_showOnlyAvailable');
         },
     },
 };

@@ -398,6 +398,15 @@
     "import_sp_add": {
         "message": "Add"
     },
+    "import_sp_indexing": {
+        "message": "Indexing"
+    },
+    "import_sp_settingsHeader": {
+        "message": "Settings"
+    },
+    "import_sp_showOnlyAvailable": {
+        "message": "Only show available parts"
+    },
     "info_disclaimerTitle": {
         "message": "Disclaimer"
     },
