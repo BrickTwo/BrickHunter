@@ -80,7 +80,6 @@ const mutations = {
         }
 
         if (version.isSmaller(oldVersion, '1.4.5')) {
-            console.log(222);
             state.partLists.map((partList) => {
                 if (partList.source == 'singleParts') {
                     partList.positions.map((pos) => {

@@ -9,6 +9,26 @@
                 <!--<b-img-lazy center :src="image" style="max-height: 120px; max-width: 175px" />-->
                 <div :style="bgimage" />
                 <b-icon
+                    v-if="favorite"
+                    @click.stop
+                    icon="heart-fill"
+                    aria-hidden="true"
+                    font-scale="1.25"
+                    style="position: absolute; top: 10px; right: 10px;"
+                    variant="danger"
+                    @click="removeFavorite(brick.itemNumber)"
+                />
+                <b-icon
+                    v-else
+                    @click.stop
+                    icon="heart"
+                    aria-hidden="true"
+                    font-scale="1.25"
+                    style="position: absolute; top: 10px; right: 10px;"
+                    variant="danger"
+                    @click="addFavorite(brick.itemNumber)"
+                />
+                <b-icon
                     icon="box-arrow-up-left"
                     aria-hidden="true"
                     style="position: absolute; top: 110px; right: 10px;"
@@ -159,6 +179,7 @@ export default {
         color: null,
         showModal: false,
         order: 0,
+        favorite: false,
     }),
     components: {
         BrickModal,
@@ -191,6 +212,14 @@ export default {
         removeFromPartList() {
             this.order = 0;
         },
+        addFavorite(itemNumber) {
+            this.favorite = true;
+            this.$store.commit('singleParts/addFavorite', itemNumber);
+        },
+        removeFavorite(itemNumber) {
+            this.favorite = false;
+            this.$store.commit('singleParts/removeFavorite', itemNumber);
+        },
     },
     beforeMount() {
         this.color = this.COLOR.find(
@@ -208,6 +237,10 @@ export default {
         if (this.brick.order) {
             this.order = this.brick.order;
         }
+
+        this.favorite = this.$store.getters['singleParts/isFavorite'](
+            this.brick.itemNumber
+        );
     },
     computed: {
         image() {

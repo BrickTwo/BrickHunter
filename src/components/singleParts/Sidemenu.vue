@@ -4,7 +4,7 @@
             <h2>{{ labelPartLists }}</h2>
         </b-row>
         <b-row>
-            <PartLists @partListActive="onPartListActive" @partListSelected="onPartListSelected" />
+            <PartLists @partListActive="onPartListActive" @partListSelected="onPartListSelected" @favoriteSelected="onFavoriteSelected" />
         </b-row>
         <b-row>
             <h2>{{ labelCategories }}</h2>
@@ -30,6 +30,9 @@ export default {
         },
         onPartListSelected(id) {
             this.$emit('partListSelected', id);
+        },
+        onFavoriteSelected(selected) {
+            this.$emit('favoriteSelected', selected);
         },
         onCategorySelected(id) {
             this.$emit('categorySelected', id);

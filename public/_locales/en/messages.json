@@ -407,6 +407,9 @@
     "import_sp_showOnlyAvailable": {
         "message": "Only show available parts"
     },
+    "import_sp_favorites": {
+        "message": "Favorites"
+    },
     "info_disclaimerTitle": {
         "message": "Disclaimer"
     },

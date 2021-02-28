@@ -5,6 +5,26 @@
                 <b-col cols="2" @click="openBrick()" style="cursor: pointer;">
                     <div :style="bgimage" />
                     <b-icon
+                        v-if="favorite"
+                        @click.stop
+                        icon="heart-fill"
+                        aria-hidden="true"
+                        font-scale="1.25"
+                        style="position: absolute; top: 0; right: 0;"
+                        variant="danger"
+                        @click="removeFavorite(brick.itemNumber)"
+                    />
+                    <b-icon
+                        v-else
+                        @click.stop
+                        icon="heart"
+                        aria-hidden="true"
+                        font-scale="1.25"
+                        style="position: absolute; top: 0; right: 0;"
+                        variant="danger"
+                        @click="addFavorite(brick.itemNumber)"
+                    />
+                    <b-icon
                         icon="box-arrow-up-left"
                         aria-hidden="true"
                         style="position: absolute; bottom: 0; right: 0;"
@@ -40,10 +60,10 @@
                         rounded="sm"
                         style="margin: 0 -5px; padding: 0 5px;"
                     >
-                        <b-row
-                            v-if="isAvailable"
-                        >
-                            <b-col cols="10" class="p-0">{{ labelMaxAmount }}:</b-col>
+                        <b-row v-if="isAvailable">
+                            <b-col cols="10" class="p-0"
+                                >{{ labelMaxAmount }}:</b-col
+                            >
                             <b-col cols="2" class="p-0 text-right">{{
                                 brick.maxAmount
                             }}</b-col>
@@ -169,6 +189,7 @@ export default {
         color: null,
         showModal: false,
         order: 0,
+        favorite: false,
     }),
     components: {
         BrickModal,
@@ -201,10 +222,20 @@ export default {
         removeFromPartList() {
             this.order = 0;
         },
+        addFavorite(itemNumber) {
+            this.favorite = true;
+            this.$store.commit('singleParts/addFavorite', itemNumber);
+        },
+        removeFavorite(itemNumber) {
+            this.favorite = false;
+            this.$store.commit('singleParts/removeFavorite', itemNumber);
+        },
     },
     beforeMount() {
         this.color = this.COLOR.find(
-            (c) => c.bricksAndPiecesName.toUpperCase() == this.brick.colorFamily.toUpperCase()
+            (c) =>
+                c.bricksAndPiecesName.toUpperCase() ==
+                this.brick.colorFamily.toUpperCase()
         );
         if (!this.color) {
             this.color = this.COLOR.find((c) => c.brickLinkId == 0);
@@ -216,6 +247,10 @@ export default {
         if (this.brick.order) {
             this.order = this.brick.order;
         }
+
+        this.favorite = this.$store.getters['singleParts/isFavorite'](
+            this.brick.itemNumber
+        );
     },
     computed: {
         image() {

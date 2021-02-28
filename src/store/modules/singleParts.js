@@ -2,12 +2,16 @@
 const state = () => ({
     categories: [],
     categoriesFiltered: [],
+    favorites: [],
 });
 
 // getters
 const getters = {
     getCategoryById: (state) => (id) => {
         return state.categories.find((category) => category.id === id);
+    },
+    isFavorite: (state) => (itemNumber) => {
+        return state.favorites.indexOf(parseInt(itemNumber)) != -1;
     },
 };
 
@@ -27,6 +31,12 @@ const mutations = {
         };
 
         state.categoriesFiltered.unshift(category);
+
+        let favorites = JSON.parse(window.localStorage.getItem('favorites'));
+        if (favorites) {
+            state.favorites = favorites;
+        }
+        console.log(state.favorites)
     },
     setCategories(state, payload) {
         state.categories = payload;
@@ -44,6 +54,20 @@ const mutations = {
         };
 
         state.categoriesFiltered.unshift(category);
+    },
+    addFavorite(state, itemNumber) {
+        if (state.favorites.indexOf(parseInt(itemNumber)) != -1) return;
+        state.favorites.push(parseInt(itemNumber));
+        localStorage.setItem('favorites', JSON.stringify(state.favorites));
+    },
+    removeFavorite(state, itemNumber) {
+        var index = state.favorites.findIndex((f) => {
+            return f == itemNumber;
+        });
+        if (index >= 0) {
+            state.favorites.splice(index, 1);
+        }
+        localStorage.setItem('favorites', JSON.stringify(state.favorites));
     },
 };
 

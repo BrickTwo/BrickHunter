@@ -12,6 +12,27 @@
             </b-col>
         </b-row>
         <b-row>
+            <label class="custom-favorite-label">
+                <b-icon icon="heart-fill" aria-hidden="true" variant="danger" />
+                <span style="margin-left: 3px">
+                    {{ labelFavorites }} ({{ favorites.length }})
+                </span>
+                <b-link
+                    @click="selectFavorite()"
+                    v-if="!favoriteSelected"
+                >
+                    <b-icon
+                        icon="eye-slash"
+                        variant="secondary"
+                        aria-hidden="true"
+                    />
+                </b-link>
+                <b-link @click="deselectFavorite()" v-else>
+                    <b-icon icon="eye" aria-hidden="true" />
+                </b-link>
+            </label>
+        </b-row>
+        <b-row class="mt-0">
             <b-form-group>
                 <b-form-radio
                     v-for="partList in partLists"
@@ -21,7 +42,10 @@
                     :value="partList.id"
                 >
                     {{ partList.name }} ({{ partList.positions.length }})
-                    <b-link @click="selectPartList(partList.id)" v-if="selectedId!=partList.id">
+                    <b-link
+                        @click="selectPartList(partList.id)"
+                        v-if="selectedId != partList.id"
+                    >
                         <b-icon
                             icon="eye-slash"
                             variant="secondary"
@@ -29,16 +53,19 @@
                         />
                     </b-link>
                     <b-link @click="deselectPartList(partList.id)" v-else>
-                        <b-icon
-                            icon="eye"
-                            aria-hidden="true"
-                        />
+                        <b-icon icon="eye" aria-hidden="true" />
                     </b-link>
                 </b-form-radio>
             </b-form-group>
         </b-row>
     </b-container>
 </template>
+
+<style scoped>
+.custom-favorite-label {
+    margin-bottom: 0;
+}
+</style>
 
 <script>
 import { bus } from '@/components/BrickHunter';
@@ -48,6 +75,8 @@ export default {
         partLists: null,
         activeId: null,
         selectedId: null,
+        favorites: null,
+        favoriteSelected: false,
     }),
     methods: {
         createNewPartList() {
@@ -102,18 +131,29 @@ export default {
             });
         },
         selectPartList(id) {
+            this.deselectFavorite();
             this.selectedId = id;
             this.$emit('partListSelected', id);
         },
         deselectPartList(id) {
             this.selectedId = null;
             this.$emit('partListSelected', null);
-        }
+        },
+        selectFavorite() {
+            this.deselectPartList();
+            this.favoriteSelected = true;
+            this.$emit('favoriteSelected', true);
+        },
+        deselectFavorite() {
+            this.favoriteSelected = false;
+            this.$emit('favoriteSelected', false);
+        },
     },
     beforeMount() {
         this.partLists = this.$store.getters['partList/getPartListsBySource'](
             'singleParts'
         );
+        this.favorites = this.$store.state.singleParts.favorites;
         this.sortPartList();
 
         if (this.partLists.length) {
@@ -140,6 +180,9 @@ export default {
         },
         labelSinglePartList() {
             return browser.i18n.getMessage('import_sp_singlePartList');
+        },
+        labelFavorites() {
+            return browser.i18n.getMessage('import_sp_favorites');
         },
     },
 };
