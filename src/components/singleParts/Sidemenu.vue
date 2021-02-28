@@ -4,7 +4,7 @@
             <h2>{{ labelPartLists }}</h2>
         </b-row>
         <b-row>
-            <PartLists @partListSelected="onPartListSelected" />
+            <PartLists @partListActive="onPartListActive" @partListSelected="onPartListSelected" />
         </b-row>
         <b-row>
             <h2>{{ labelCategories }}</h2>
@@ -25,6 +25,9 @@ export default {
         Categories,
     },
     methods: {
+        onPartListActive(id) {
+            this.$emit('partListActive', id);
+        },
         onPartListSelected(id) {
             this.$emit('partListSelected', id);
         },

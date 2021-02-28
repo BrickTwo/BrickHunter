@@ -142,7 +142,10 @@ import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     props: {
-        partListId: {
+        partListActiveId: {
+            type: String,
+        },
+        partListSelectedId: {
             type: String,
         },
         categoryId: {
@@ -169,6 +172,7 @@ export default {
         listUpdate: true,
         componentKey: 0,
         colorList: [],
+        selectedItemNumbers: null,
     }),
     components: {
         BrickGrid,
@@ -253,14 +257,14 @@ export default {
             //partList.positions.push(part);
             //partList.date = new Date(0, 0, 0, 0, 0, 0, 0);
             this.$store.commit('partList/addToPartList', {
-                id: this.partListId,
+                id: this.partListActiveId,
                 part: part,
             });
         },
         loadPartList() {
-            if (this.partListId) {
+            if (this.partListActiveId) {
                 return this.$store.getters['partList/getPartListsById'](
-                    this.partListId
+                    this.partListActiveId
                 );
             }
 
@@ -322,7 +326,8 @@ export default {
                 this.selectedColor,
                 this.keyword,
                 this.selectedSort,
-                this.sortDirection
+                this.sortDirection,
+                this.selectedItemNumbers
             );
 
             if (!this.search) {
@@ -509,8 +514,21 @@ export default {
         keyword: function() {
             this.loadBricks(true);
         },
-        partListId: function() {
+        partListActiveId: function() {
             this.selectPart();
+        },
+        partListSelectedId: function() {
+            let partList = this.$store.getters['partList/getPartListsById'](
+                this.partListSelectedId
+            );
+
+            this.selectedItemNumbers = [];
+            if (partList)
+                partList.positions.map((pos) =>
+                    this.selectedItemNumbers.push(pos.itemNumber)
+                );
+
+            this.loadBricks(true);
         },
     },
     mounted() {

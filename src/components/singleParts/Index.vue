@@ -3,6 +3,7 @@
         <b-row>
             <b-col class="p-0" cols="3" sm="4" md="3">
                 <Sidemenu
+                    @partListActive="onPartListActive"
                     @partListSelected="onPartListSelected"
                     @categorySelected="onCategorySelected"
                     class="cat"
@@ -10,7 +11,8 @@
             </b-col>
             <b-col class="p-0" cols="9" sm="8" md="9">
                 <BrickFilter
-                    :partListId="partListSeleted"
+                    :partListActiveId="partListActive"
+                    :partListSelectedId="partListSeleted"
                     :categoryId="categorySelected"
                     class="cat"
                 />
@@ -34,6 +36,7 @@ import BrickFilter from './Filter';
 
 export default {
     data: () => ({
+        partListActive: null,
         partListSeleted: null,
         categorySelected: 9999999,
         chartdata: [],
@@ -45,6 +48,9 @@ export default {
         BrickFilter,
     },
     methods: {
+        onPartListActive(id) {
+            this.partListActive = id;
+        },
         onPartListSelected(id) {
             this.partListSeleted = id;
         },

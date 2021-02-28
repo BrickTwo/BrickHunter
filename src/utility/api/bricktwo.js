@@ -30,7 +30,8 @@ export default {
         colorId,
         keyword,
         sortField,
-        sortDirection
+        sortDirection,
+        itemNumbers = null
     ) {
         if (!keyword) {
             keyword = '';
@@ -40,10 +41,15 @@ export default {
         }
 
         let response = null;
+        
         try {
-            response = await axios.get(
-                `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}`
-            );
+            response = await axios({
+                method: 'post',
+                url: `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}`,
+                data: {
+                    itemnumbers: itemNumbers
+                }
+            });
         } catch (err) {}
         return response.data;
     },
