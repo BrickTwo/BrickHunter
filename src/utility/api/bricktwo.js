@@ -32,6 +32,7 @@ export default {
         sortField,
         sortDirection,
         showAll,
+        itemNumbers = null
     ) {
         if (!keyword) {
             keyword = '';
@@ -43,10 +44,15 @@ export default {
         if(!showAll) showAll = 0;
 
         let response = null;
+        
         try {
-            response = await axios.get(
-                `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}&showall=${showAll}`
-            );
+          response = await axios({
+                method: 'post',
+                url: `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}&showall=${showAll}`,
+                data: {
+                    itemnumbers: itemNumbers
+                }
+            });
         } catch (err) {}
         return response.data;
     },

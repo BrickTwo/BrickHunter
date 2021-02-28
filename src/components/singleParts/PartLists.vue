@@ -16,13 +16,25 @@
                 <b-form-radio
                     v-for="partList in partLists"
                     :key="partList.id"
-                    v-model="selectedId"
+                    v-model="activeId"
                     name="some-radios"
                     :value="partList.id"
-                    >{{ partList.name }} ({{
-                        partList.positions.length
-                    }})</b-form-radio
                 >
+                    {{ partList.name }} ({{ partList.positions.length }})
+                    <b-link @click="selectPartList(partList.id)" v-if="selectedId!=partList.id">
+                        <b-icon
+                            icon="eye-slash"
+                            variant="secondary"
+                            aria-hidden="true"
+                        />
+                    </b-link>
+                    <b-link @click="deselectPartList(partList.id)" v-else>
+                        <b-icon
+                            icon="eye"
+                            aria-hidden="true"
+                        />
+                    </b-link>
+                </b-form-radio>
             </b-form-group>
         </b-row>
     </b-container>
@@ -34,6 +46,7 @@ import { bus } from '@/components/BrickHunter';
 export default {
     data: () => ({
         partLists: null,
+        activeId: null,
         selectedId: null,
     }),
     methods: {
@@ -88,6 +101,14 @@ export default {
                 }
             });
         },
+        selectPartList(id) {
+            this.selectedId = id;
+            this.$emit('partListSelected', id);
+        },
+        deselectPartList(id) {
+            this.selectedId = null;
+            this.$emit('partListSelected', null);
+        }
     },
     beforeMount() {
         this.partLists = this.$store.getters['partList/getPartListsBySource'](
@@ -96,7 +117,7 @@ export default {
         this.sortPartList();
 
         if (this.partLists.length) {
-            this.selectedId = this.partLists[0].id;
+            this.activeId = this.partLists[0].id;
         }
     },
     created() {
@@ -104,13 +125,13 @@ export default {
             this.partLists = this.$store.getters[
                 'partList/getPartListsBySource'
             ]('singleParts');
-            this.selectedId = this.partLists[0].id;
+            this.activeId = this.partLists[0].id;
             this.sortPartList();
         });
     },
     watch: {
-        selectedId: function() {
-            this.$emit('partListSelected', this.selectedId);
+        activeId: function() {
+            this.$emit('partListActive', this.activeId);
         },
     },
     computed: {
