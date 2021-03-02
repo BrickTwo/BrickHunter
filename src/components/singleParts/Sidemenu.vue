@@ -4,13 +4,13 @@
             <h2>{{ labelPartLists }}</h2>
         </b-row>
         <b-row>
-            <PartLists @partListActive="onPartListActive" @partListSelected="onPartListSelected" @favoriteSelected="onFavoriteSelected" />
+            <PartLists />
         </b-row>
         <b-row>
             <h2>{{ labelCategories }}</h2>
         </b-row>
         <b-row>
-            <Categories @categorySelected="onCategorySelected" />
+            <Categories />
         </b-row>
     </b-container>
 </template>
@@ -23,20 +23,6 @@ export default {
     components: {
         PartLists,
         Categories,
-    },
-    methods: {
-        onPartListActive(id) {
-            this.$emit('partListActive', id);
-        },
-        onPartListSelected(id) {
-            this.$emit('partListSelected', id);
-        },
-        onFavoriteSelected(selected) {
-            this.$emit('favoriteSelected', selected);
-        },
-        onCategorySelected(id) {
-            this.$emit('categorySelected', id);
-        },
     },
     computed: {
         labelPartLists() {

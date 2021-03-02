@@ -17,17 +17,14 @@
                 <span style="margin-left: 3px">
                     {{ labelFavorites }} ({{ favorites.length }})
                 </span>
-                <b-link
-                    @click="selectFavorite()"
-                    v-if="!favoriteSelected"
-                >
+                <b-link @click="showFavorites()" v-if="!favoriteSelected">
                     <b-icon
                         icon="eye-slash"
                         variant="secondary"
                         aria-hidden="true"
                     />
                 </b-link>
-                <b-link @click="deselectFavorite()" v-else>
+                <b-link @click="hideFavorite()" v-else>
                     <b-icon icon="eye" aria-hidden="true" />
                 </b-link>
             </label>
@@ -37,14 +34,14 @@
                 <b-form-radio
                     v-for="partList in partLists"
                     :key="partList.id"
-                    v-model="activeId"
+                    v-model="selectedPartListId"
                     name="some-radios"
                     :value="partList.id"
                 >
                     {{ partList.name }} ({{ partList.positions.length }})
                     <b-link
-                        @click="selectPartList(partList.id)"
-                        v-if="selectedId != partList.id"
+                        @click="showPartList(partList.id)"
+                        v-if="showPartListId != partList.id"
                     >
                         <b-icon
                             icon="eye-slash"
@@ -52,7 +49,7 @@
                             aria-hidden="true"
                         />
                     </b-link>
-                    <b-link @click="deselectPartList(partList.id)" v-else>
+                    <b-link @click="hidePartList(partList.id)" v-else>
                         <b-icon icon="eye" aria-hidden="true" />
                     </b-link>
                 </b-form-radio>
@@ -73,8 +70,8 @@ import { bus } from '@/components/BrickHunter';
 export default {
     data: () => ({
         partLists: null,
-        activeId: null,
-        selectedId: null,
+        selectedPartListId: null,
+        showPartListId: null,
         favorites: null,
         favoriteSelected: false,
     }),
@@ -130,23 +127,43 @@ export default {
                 }
             });
         },
-        selectPartList(id) {
-            this.deselectFavorite();
-            this.selectedId = id;
-            this.$emit('partListSelected', id);
-        },
-        deselectPartList(id) {
-            this.selectedId = null;
-            this.$emit('partListSelected', null);
-        },
-        selectFavorite() {
-            this.deselectPartList();
-            this.favoriteSelected = true;
-            this.$emit('favoriteSelected', true);
-        },
-        deselectFavorite() {
+        showPartList(id) {
             this.favoriteSelected = false;
-            this.$emit('favoriteSelected', false);
+            this.showPartListId = id;
+            //this.$emit('partListSelected', id);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected
+            );
+        },
+        hidePartList(id) {
+            this.showPartListId = null;
+            //this.$emit('partListSelected', null);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected
+            );
+        },
+        showFavorites() {
+            this.showPartListId = null;
+            this.favoriteSelected = true;
+            //this.$emit('favoriteSelected', true);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected
+            );
+        },
+        hideFavorite() {
+            this.favoriteSelected = false;
+            //this.$emit('favoriteSelected', false);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected
+            );
         },
     },
     beforeMount() {
@@ -154,10 +171,18 @@ export default {
             'singleParts'
         );
         this.favorites = this.$store.state.singleParts.favorites;
+        let filter = this.$store.state.singleParts.filter;
+
+        this.showPartListId = filter.showPartListId;
+        this.favoriteSelected = filter.showFavorites;
+
+        if (!this.partLists.find((f) => f.id == this.showPartListId))
+            this.showPartListId = null;
+
         this.sortPartList();
 
         if (this.partLists.length) {
-            this.activeId = this.partLists[0].id;
+            this.selectedPartListId = this.partLists[0].id;
         }
     },
     created() {
@@ -165,13 +190,14 @@ export default {
             this.partLists = this.$store.getters[
                 'partList/getPartListsBySource'
             ]('singleParts');
-            this.activeId = this.partLists[0].id;
+            this.selectedPartListId = this.partLists[0].id;
             this.sortPartList();
         });
     },
     watch: {
-        activeId: function() {
-            this.$emit('partListActive', this.activeId);
+        selectedPartListId: function() {
+            //this.$emit('partListActive', this.selectedPartListId);
+            bus.$emit('selectedPartList', this.selectedPartListId);
         },
     },
     computed: {

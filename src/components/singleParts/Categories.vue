@@ -32,7 +32,7 @@ export default {
     methods: {
         selectCategorie(id) {
             this.selectCategory = id;
-            this.$emit('categorySelected', id);
+            bus.$emit('categorySelected', this.selectCategory);
         },
         async loadCategories() {
             this.$store.commit(
@@ -46,8 +46,9 @@ export default {
         this.categories = this.$store.state.singleParts.categoriesFiltered;
     },
     created() {
-        bus.$on('CategoriesFiltered', (data) => {
-            this.categories = data;
+        bus.$on('CategoriesFiltered', (payload) => {
+            this.categories = payload.categories;
+            this.selectCategory = payload.selected;
         });
     },
 };
