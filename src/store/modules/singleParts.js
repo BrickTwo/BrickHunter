@@ -3,6 +3,7 @@ const state = () => ({
     categories: [],
     categoriesFiltered: [],
     favorites: [],
+    filter: {},
 });
 
 // getters
@@ -36,7 +37,21 @@ const mutations = {
         if (favorites) {
             state.favorites = favorites;
         }
-        console.log(state.favorites)
+
+        state.filter = JSON.parse(
+            localStorage.getItem('filterSingleParts')
+        ) || {
+            page: 0,
+            limit: 0,
+            categoryId: 9999999,
+            colorId: 0,
+            keyword: '',
+            sortField: '',
+            sortDirection: '',
+            showAll: 0,
+            showFavorites: false,
+            showPartListId: '',
+        };
     },
     setCategories(state, payload) {
         state.categories = payload;
@@ -68,6 +83,25 @@ const mutations = {
             state.favorites.splice(index, 1);
         }
         localStorage.setItem('favorites', JSON.stringify(state.favorites));
+    },
+    setFilter(state, payload) {
+        state.filter = {
+            page: payload.page,
+            limit: payload.limit,
+            categoryId: payload.categoryId,
+            colorId: payload.colorId,
+            keyword: payload.keyword,
+            sortField: payload.sortField,
+            sortDirection: payload.sortDirection,
+            showAll: payload.showAll,
+            showFavorites: payload.showFavorites,
+            showPartListId: payload.showPartListId,
+        };
+
+        localStorage.setItem(
+            'filterSingleParts',
+            JSON.stringify(state.filter)
+        );
     },
 };
 

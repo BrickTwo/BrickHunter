@@ -8,7 +8,7 @@
                     </b-input-group-prepend>
                     <b-form-input
                         v-model="keyword"
-                        @keyup.enter="loadBricks(true)"
+                        @update="onKeywordChange"
                         type="search"
                         debounce="500"
                         :placeholder="labelFindPartsByKeyword"
@@ -18,33 +18,18 @@
             </b-col>
             <b-col class="ml-1">
                 <SortFilter
-                    @selectSortBy="selectSortBy"
-                    @selectSortDirection="selectSortDirection"
+                    @selectSortBy="onSelectSortByChange"
+                    @selectSortDirection="onSelectSortDirectionChange"
+                    :selectedSort="selectedSort"
+                    :sortDirection="sortDirection"
                 />
             </b-col>
         </b-row>
         <b-row>
-            <ColorPicker @selectColor="selectColor" :colorList="colorList" />
+            <ColorPicker @selectColor="onColorChange" :colorList="colorList" />
         </b-row>
         <b-row class="p-1">
             <b-col>
-                <b-form-select
-                    style="width:75px"
-                    v-model="perPage"
-                    :options="perPageOptions"
-                />
-            </b-col>
-            <b-col class="center">
-                <b-pagination
-                    v-model="currentPage"
-                    :total-rows="totalRows"
-                    :per-page="perPage"
-                    limit="7"
-                    aria-controls="my-table"
-                    last-number
-                />
-            </b-col>
-            <b-col class="text-right">
                 <b-button
                     class="button"
                     variant="primary"
@@ -52,6 +37,26 @@
                 >
                     <b-icon icon="gear" aria-hidden="true" />
                 </b-button>
+                <b-form-select
+                    style="width:75px"
+                    v-model="perPage"
+                    :options="perPageOptions"
+                    @change="onChangePerPage"
+                />
+            </b-col>
+            <b-col class="center">
+                <b-pagination
+                    v-model="currentPage"
+                    :total-rows="totalRows"
+                    :per-page="perPage"
+                    @change="onChangeCurrentPage"
+                    limit="7"
+                    aria-controls="my-table"
+                    last-number
+                />
+            </b-col>
+            <b-col class="text-right">
+                
                 <b-button
                     class="button"
                     variant="primary"
@@ -108,6 +113,7 @@
                     style="width:75px"
                     v-model="perPage"
                     :options="perPageOptions"
+                    @change="onChangePerPage"
                 />
             </b-col>
             <b-col class="center">
@@ -115,6 +121,7 @@
                     v-model="currentPage"
                     :total-rows="totalRows"
                     :per-page="perPage"
+                    @change="onChangeCurrentPage"
                     limit="7"
                     aria-controls="my-table"
                     last-number
@@ -170,17 +177,8 @@ import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     props: {
-        partListActiveId: {
-            type: String,
-        },
-        partListSelectedId: {
-            type: String,
-        },
         favoriteSelected: {
             type: Boolean,
-        },
-        categoryId: {
-            type: Number,
         },
     },
     data: () => ({
@@ -192,7 +190,7 @@ export default {
             { value: 100, text: '100' },
         ],
         currentPage: 1,
-        totalRows: 5000,
+        totalRows: 0,
         group: false,
         keyword: null,
         selectedSort: 'DESCRIPTION',
@@ -207,6 +205,12 @@ export default {
         headerTextVariant: 'light',
         showOnlyAvailable: true,
         selectedItemNumbers: null,
+        currentPageChanged: 0,
+        perPageChange: 0,
+        categoryId: 0,
+        selectPartListId: '',
+        showPartListId: '',
+        showFavorites: false,
     }),
     components: {
         BrickGrid,
@@ -288,17 +292,15 @@ export default {
             part.pickABrick = null;
             part.brickLink = null;
 
-            //partList.positions.push(part);
-            //partList.date = new Date(0, 0, 0, 0, 0, 0, 0);
             this.$store.commit('partList/addToPartList', {
-                id: this.partListActiveId,
+                id: this.selectedPartListId,
                 part: part,
             });
         },
         loadPartList() {
-            if (this.partListActiveId) {
+            if (this.selectedPartListId) {
                 return this.$store.getters['partList/getPartListsById'](
-                    this.partListActiveId
+                    this.selectedPartListId
                 );
             }
 
@@ -338,6 +340,9 @@ export default {
             return newGuid;
         },
         async loadBricks(resetPage) {
+            console.log("cpbefore", this.currentPage);
+            
+
             this.$scrollTo('.bricksContainer', 100, {
                 container: '.bricksContainer',
             });
@@ -346,11 +351,20 @@ export default {
                 this.currentPage = 1;
             }
 
-            /*this.$router
-                .push(
-                    `/import/singleParts/${this.categoryId}/${this.selectedSort}/${this.sortDirection}/${this.keyword}/${this.selectedColor}/${this.currentPage}`
-                )
-                .catch(() => {});*/
+            let filter = {
+                page: this.currentPage,
+                limit: this.perPage,
+                categoryId: this.categoryId,
+                colorId: this.selectedColor,
+                keyword: this.keyword,
+                sortField: this.selectedSort,
+                sortDirection: this.sortDirection,
+                showAll: !this.showOnlyAvailable,
+                showFavorites: this.showFavorites,
+                showPartListId: this.showPartListId,
+            };
+
+            this.$store.commit('singleParts/setFilter', filter);
 
             this.search = await apiBrickTwo.getBricksAsync(
                 this.currentPage,
@@ -382,10 +396,15 @@ export default {
                 'singleParts/setCategoriesFiltered',
                 this.search.categories
             );
-            bus.$emit('CategoriesFiltered', this.search.categories);
+            bus.$emit('CategoriesFiltered', {
+                categories: this.search.categories,
+                selected: this.categoryId,
+            });
 
             this.colorList = this.search.colors;
             this.totalRows = this.search.page.total;
+
+            console.log("cpafter", this.currentPage);
 
             this.selectPart();
 
@@ -480,9 +499,9 @@ export default {
                                     Date.now()
                                 ).toUTCString();
                             }
-                            found.lastUpdateCountry = new Date(new Date(
-                                Date.now()
-                            ).toUTCString()).toISOString();
+                            found.lastUpdateCountry = new Date(
+                                new Date(Date.now()).toUTCString()
+                            ).toISOString();
                         }
                     });
 
@@ -506,73 +525,100 @@ export default {
         sleep(ms) {
             return new Promise((resolve) => setTimeout(resolve, ms));
         },
-        selectSortBy(value) {
+        onSelectSortByChange(value) {
             this.selectedSort = value;
             this.loadBricks(true);
         },
-        selectSortDirection() {
+        onSelectSortDirectionChange() {
             if (this.sortDirection == 'ASC') {
                 this.sortDirection = 'DESC';
             } else {
                 this.sortDirection = 'ASC';
             }
-
             this.loadBricks(false);
         },
-        selectColor(value) {
+        onColorChange(value) {
             this.selectedColor = value;
             this.loadBricks(true);
         },
         setKeyword(value) {
             this.selectedColor = 'all';
             this.keyword = value;
+            this.onKeywordChange();
         },
         setColor(value) {
             this.keyword = '';
             this.selectedColor = value;
             this.loadBricks(true);
         },
-    },
-    watch: {
-        categoryId: function() {
-            this.loadBricks(true);
-        },
-        /*selectedColor: function() {
-            this.loadBricks(true);
-        },*/
-        currentPage: function() {
+        onChangeCurrentPage(event) {
+            this.currentPage = event;
             this.loadBricks(false);
         },
-        perPage: function() {
+        onChangePerPage(event) {
+            this.perPage = event;
             this.loadBricks(true);
         },
-        keyword: function() {
+        onKeywordChange() {
             this.loadBricks(true);
         },
-        partListActiveId: function() {
-            this.selectPart();
+        loadFilter() {
+            let filter = this.$store.state.singleParts.filter;
+            
+            this.currentPage = filter.page;
+            this.perPage = filter.limit;
+            this.categoryId = filter.categoryId;
+            this.selectedColor = filter.colorId;
+            this.keyword = filter.keyword;
+            this.selectedSort = filter.sortField;
+            this.sortDirection = filter.sortDirection;
+            this.showOnlyAvailable = !filter.showAll;
+            this.showFavorites = filter.showFavorites;
+            this.showPartListId = filter.showPartListId;
+            this.totalRows = this.perPage*this.currentPage;
+            this.selectItemNumbers();
         },
-        partListSelectedId: function() {
-            let partList = this.$store.getters['partList/getPartListsById'](
-                this.partListSelectedId
-            );
-
+        selectItemNumbers() {
             this.selectedItemNumbers = [];
-            if (partList)
-                partList.positions.map((pos) =>
-                    this.selectedItemNumbers.push(pos.itemNumber)
-                );
 
-            this.loadBricks(true);
+            if (this.showPartListId) {
+                let partList = this.$store.getters['partList/getPartListsById'](
+                    this.showPartListId
+                );
+                if (partList)
+                    partList.positions.map((pos) =>
+                        this.selectedItemNumbers.push(pos.itemNumber)
+                    );
+            } else {
+                if (this.showFavorites)
+                    this.selectedItemNumbers = this.$store.state.singleParts.favorites;
+            }
         },
-        favoriteSelected: function() {
-            if(this.favoriteSelected) this.selectedItemNumbers = this.$store.state.singleParts.favorites;
-            if(!this.favoriteSelected) this.selectedItemNumbers = [];
-            this.loadBricks(true);
-        }
+    },
+    beforeMount() {
+        this.loadFilter();
     },
     mounted() {
-        this.loadBricks(true);
+        this.loadBricks();
+    },
+    created() {
+        bus.$on('categorySelected', (categoryId) => {
+            this.categoryId = categoryId;
+
+            this.loadBricks(true);
+        });
+        bus.$on('selectedPartList', (partListId) => {
+            this.selectedPartListId = partListId;
+
+            this.selectPart();
+        });
+        bus.$on('showPartList', (partListId, showFavorites) => {
+            this.showPartListId = partListId;
+            this.showFavorites = showFavorites;
+
+            this.selectItemNumbers();
+            this.loadBricks(true);
+        });
     },
     computed: {
         labelFindPartsByKeyword() {

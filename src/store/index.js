@@ -51,7 +51,8 @@ export default new Vuex.Store({
                     sKey != 'settingsShopping' &&
                     sKey != 'version' &&
                     sKey != 'syncDate' &&
-                    sKey != 'favorites'
+                    sKey != 'favorites' &&
+                    sKey != 'filterSingleParts'
                 ) {
                     localStorage.removeItem(sKey);
                 }
