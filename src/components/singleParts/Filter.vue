@@ -56,7 +56,6 @@
                 />
             </b-col>
             <b-col class="text-right">
-                
                 <b-button
                     class="button"
                     variant="primary"
@@ -162,6 +161,31 @@
                     {{ labelShowOnlyAvailable }}
                 </b-form-checkbox>
             </p>
+            <p class="my-4">
+                <b-form-group
+                    :label="labelSelectCategoriesToBeHidden"
+                    v-slot="{ ariaDescribedby }"
+                >
+                    <b-overlay
+                        id="overlay-background"
+                        :show="!categorieOptions"
+                        rounded="sm"
+                    >
+                        <div style="overflow: hidden scroll; height: 200px;">
+                            <b-form-checkbox
+                                v-for="option in categorieOptions"
+                                v-model="excludedCategories"
+                                :key="option.value"
+                                :value="option.value"
+                                :aria-describedby="ariaDescribedby"
+                                name="excludeCategorie"
+                            >
+                                {{ option.text }}
+                            </b-form-checkbox>
+                        </div>
+                    </b-overlay>
+                </b-form-group>
+            </p>
         </b-modal>
     </b-container>
 </template>
@@ -211,6 +235,9 @@ export default {
         selectPartListId: '',
         showPartListId: '',
         showFavorites: false,
+        categories: null,
+        excludedCategories: [],
+        categorieOptions: null,
     }),
     components: {
         BrickGrid,
@@ -340,9 +367,6 @@ export default {
             return newGuid;
         },
         async loadBricks(resetPage) {
-            console.log("cpbefore", this.currentPage);
-            
-
             this.$scrollTo('.bricksContainer', 100, {
                 container: '.bricksContainer',
             });
@@ -362,6 +386,7 @@ export default {
                 showAll: !this.showOnlyAvailable,
                 showFavorites: this.showFavorites,
                 showPartListId: this.showPartListId,
+                excludedCategories: this.excludedCategories,
             };
 
             this.$store.commit('singleParts/setFilter', filter);
@@ -376,7 +401,8 @@ export default {
                 this.selectedSort,
                 this.sortDirection,
                 !this.showOnlyAvailable,
-                this.selectedItemNumbers
+                this.selectedItemNumbers,
+                this.excludedCategories
             );
 
             if (!this.search) {
@@ -403,8 +429,6 @@ export default {
 
             this.colorList = this.search.colors;
             this.totalRows = this.search.page.total;
-
-            console.log("cpafter", this.currentPage);
 
             this.selectPart();
 
@@ -564,7 +588,7 @@ export default {
         },
         loadFilter() {
             let filter = this.$store.state.singleParts.filter;
-            
+
             this.currentPage = filter.page;
             this.perPage = filter.limit;
             this.categoryId = filter.categoryId;
@@ -575,7 +599,8 @@ export default {
             this.showOnlyAvailable = !filter.showAll;
             this.showFavorites = filter.showFavorites;
             this.showPartListId = filter.showPartListId;
-            this.totalRows = this.perPage*this.currentPage;
+            this.excludedCategories = filter.excludedCategories;
+            this.totalRows = this.perPage * this.currentPage;
             this.selectItemNumbers();
         },
         selectItemNumbers() {
@@ -594,8 +619,25 @@ export default {
                     this.selectedItemNumbers = this.$store.state.singleParts.favorites;
             }
         },
+
+        async loadCategories() {
+            this.categories = await apiBrickTwo.getCategoriesAsync(
+                this.$store.state.country
+            );
+
+            this.$store.commit('singleParts/setCategories', this.categories);
+
+            this.categorieOptions = [];
+            this.categories.map((cat) => {
+                this.categorieOptions.push({
+                    text: cat.name,
+                    value: cat.id,
+                });
+            });
+        },
     },
     beforeMount() {
+        this.loadCategories();
         this.loadFilter();
     },
     mounted() {
@@ -655,6 +697,9 @@ export default {
         },
         labelShowOnlyAvailable() {
             return browser.i18n.getMessage('import_sp_showOnlyAvailable');
+        },
+        labelSelectCategoriesToBeHidden() {
+            return browser.i18n.getMessage('import_sp_selectCategoriesToBeHidden');
         },
     },
 };

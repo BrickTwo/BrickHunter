@@ -410,6 +410,9 @@
     "import_sp_favorites": {
         "message": "Favorites"
     },
+    "import_sp_selectCategoriesToBeHidden": {
+        "message": "Do not use selected categories"
+    },
     "info_disclaimerTitle": {
         "message": "Disclaimer"
     },

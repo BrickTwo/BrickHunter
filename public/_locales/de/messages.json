@@ -404,8 +404,8 @@
     "import_sp_showOnlyAvailable": {
         "message": "Nur verfügbare Teile anzeigen"
     },
-    "import_sp_favorites": {
-        "message": "Favoriten"
+    "import_sp_selectCategoriesToBeHidden": {
+        "message": "Ausgewählte Kategorien nicht verwenden"
     },
     "info_disclaimerTitle": {
         "message": "Disclaimer"

@@ -51,6 +51,7 @@ const mutations = {
             showAll: 0,
             showFavorites: false,
             showPartListId: '',
+            excludedCategories: [],
         };
     },
     setCategories(state, payload) {
@@ -96,12 +97,10 @@ const mutations = {
             showAll: payload.showAll,
             showFavorites: payload.showFavorites,
             showPartListId: payload.showPartListId,
+            excludedCategories: payload.excludedCategories,
         };
 
-        localStorage.setItem(
-            'filterSingleParts',
-            JSON.stringify(state.filter)
-        );
+        localStorage.setItem('filterSingleParts', JSON.stringify(state.filter));
     },
 };
 

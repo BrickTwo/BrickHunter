@@ -34,15 +34,8 @@ export default {
             this.selectCategory = id;
             bus.$emit('categorySelected', this.selectCategory);
         },
-        async loadCategories() {
-            this.$store.commit(
-                'singleParts/setCategories',
-                await apiBrickTwo.getCategoriesAsync(this.$store.state.country)
-            );
-        },
     },
     beforeMount() {
-        this.loadCategories();
         this.categories = this.$store.state.singleParts.categoriesFiltered;
     },
     created() {

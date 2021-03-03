@@ -32,7 +32,8 @@ export default {
         sortField,
         sortDirection,
         showAll,
-        itemNumbers = null
+        itemNumbers,
+        excludedCategories,
     ) {
         if (!keyword) {
             keyword = '';
@@ -48,7 +49,7 @@ export default {
         try {
           response = await axios({
                 method: 'post',
-                url: `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}&showall=${showAll}`,
+                url: `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}&showall=${showAll}&notcategories=${excludedCategories}`,
                 data: {
                     itemnumbers: itemNumbers
                 }
