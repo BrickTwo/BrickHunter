@@ -41,17 +41,18 @@ const mutations = {
         state.filter = JSON.parse(
             localStorage.getItem('filterSingleParts')
         ) || {
-            page: 0,
-            limit: 0,
+            page: 1,
+            limit: 24,
             categoryId: 9999999,
-            colorId: 0,
+            colorId: 'all',
             keyword: '',
-            sortField: '',
-            sortDirection: '',
+            sortField: 'DESCRIPTION',
+            sortDirection: 'ASC',
             showAll: 0,
             showFavorites: false,
             showPartListId: '',
             excludedCategories: [],
+            selectCategoriesToBeHidden: true,
         };
     },
     setCategories(state, payload) {
@@ -98,6 +99,7 @@ const mutations = {
             showFavorites: payload.showFavorites,
             showPartListId: payload.showPartListId,
             excludedCategories: payload.excludedCategories,
+            selectCategoriesToBeHidden: payload.selectCategoriesToBeHidden,
         };
 
         localStorage.setItem('filterSingleParts', JSON.stringify(state.filter));

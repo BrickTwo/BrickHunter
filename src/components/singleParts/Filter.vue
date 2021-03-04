@@ -155,17 +155,24 @@
             <p class="my-4">
                 <b-form-checkbox
                     v-model="showOnlyAvailable"
-                    id="checkbox-1"
-                    name="checkbox-1"
+                    id="showOnlyAvailable"
+                    name="showOnlyAvailable"
                 >
                     {{ labelShowOnlyAvailable }}
                 </b-form-checkbox>
             </p>
             <p class="my-4">
+
                 <b-form-group
-                    :label="labelSelectCategoriesToBeHidden"
                     v-slot="{ ariaDescribedby }"
                 >
+                <b-form-checkbox
+                    v-model="selectCategoriesToBeHidden"
+                    id="selectCategoriesToBeHidden"
+                    name="selectCategoriesToBeHidden"
+                >
+                    {{ labelSelectCategoriesToBeHidden }}
+                </b-form-checkbox>
                     <b-overlay
                         id="overlay-background"
                         :show="!categorieOptions"
@@ -238,6 +245,7 @@ export default {
         categories: null,
         excludedCategories: [],
         categorieOptions: null,
+        selectCategoriesToBeHidden: true,
     }),
     components: {
         BrickGrid,
@@ -387,9 +395,13 @@ export default {
                 showFavorites: this.showFavorites,
                 showPartListId: this.showPartListId,
                 excludedCategories: this.excludedCategories,
+                selectCategoriesToBeHidden: this.selectCategoriesToBeHidden,
             };
 
             this.$store.commit('singleParts/setFilter', filter);
+
+            let excludedCategories = null;
+            if(this.selectCategoriesToBeHidden) excludedCategories = this.excludedCategories;
 
             this.search = await apiBrickTwo.getBricksAsync(
                 this.currentPage,
@@ -402,7 +414,7 @@ export default {
                 this.sortDirection,
                 !this.showOnlyAvailable,
                 this.selectedItemNumbers,
-                this.excludedCategories
+                excludedCategories
             );
 
             if (!this.search) {
@@ -600,6 +612,7 @@ export default {
             this.showFavorites = filter.showFavorites;
             this.showPartListId = filter.showPartListId;
             this.excludedCategories = filter.excludedCategories;
+            this.selectCategoriesToBeHidden = filter.selectCategoriesToBeHidden;
             this.totalRows = this.perPage * this.currentPage;
             this.selectItemNumbers();
         },
