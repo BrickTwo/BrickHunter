@@ -120,6 +120,7 @@ export default {
                         QTYFILLED: this.brickList[i].qty.have,
                         CONDITION: this.brickList[i].brickLink?.wantedList?.condition,
                         NOTIFY: this.brickList[i].brickLink?.wantedList?.notify,
+                        REMARKS: this.brickList[i].brickLink?.wantedList?.remarks,
                     },
                 };
 

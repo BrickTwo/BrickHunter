@@ -143,6 +143,12 @@ export default {
                     } else {
                         part.brickLink.wantedList.notify = null;
                     }
+                    if (item.remarks) {
+                        part.brickLink.wantedList.remarks = item.remarks[0];
+                        console.log(part)
+                    } else {
+                        part.brickLink.wantedList.remarks = null;
+                    }
 
                     part.image = {
                         source: 'brickLink',
