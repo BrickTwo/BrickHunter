@@ -482,7 +482,7 @@ export default {
             for (var i = 0; i < designIds.length; i++) {
                 if(currentFilter != JSON.stringify(this.currentFilter)) return;
                 var designId = designIds[i];
-                console.log(designId);
+                
                 await this.sleep(200); //200ms timout to prevent to be blocked on the website
 
                 var response = await browser.runtime.sendMessage({
