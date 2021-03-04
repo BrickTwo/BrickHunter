@@ -246,6 +246,7 @@ export default {
         excludedCategories: [],
         categorieOptions: null,
         selectCategoriesToBeHidden: true,
+        currentFilter: [],
     }),
     components: {
         BrickGrid,
@@ -383,7 +384,7 @@ export default {
                 this.currentPage = 1;
             }
 
-            let filter = {
+            this.currentFilter = {
                 page: this.currentPage,
                 limit: this.perPage,
                 categoryId: this.categoryId,
@@ -398,7 +399,7 @@ export default {
                 selectCategoriesToBeHidden: this.selectCategoriesToBeHidden,
             };
 
-            this.$store.commit('singleParts/setFilter', filter);
+            this.$store.commit('singleParts/setFilter', this.currentFilter);
 
             let excludedCategories = null;
             if(this.selectCategoriesToBeHidden) excludedCategories = this.excludedCategories;
@@ -467,6 +468,7 @@ export default {
         },
         async loadPrices() {
             var designIds = [];
+            let currentFilter = JSON.stringify(this.currentFilter);
 
             this.search.bricks.forEach((brick) => {
                 if (
@@ -478,7 +480,9 @@ export default {
             });
 
             for (var i = 0; i < designIds.length; i++) {
+                if(currentFilter != JSON.stringify(this.currentFilter)) return;
                 var designId = designIds[i];
+                console.log(designId);
                 await this.sleep(200); //200ms timout to prevent to be blocked on the website
 
                 var response = await browser.runtime.sendMessage({
