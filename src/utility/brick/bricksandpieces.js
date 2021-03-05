@@ -2,26 +2,31 @@ import apiBrickTwo from '@/utility/api/bricktwo.js';
 import brickBrickLink from '@/utility/brick/bricklink.js';
 
 export default {
-    async load(item, country) {
-        if (!item.searchids) {
-            item.bricksAndPieces = null;
-            return item;
+    async load(searchItem, items, country) {
+        if (!searchItem.searchids) {
+            items.map((i) => (i.bricksAndPieces = null));
+            //item.bricksAndPieces = null;
+            return;
         }
 
         let bricks = [];
 
-        for (let j = 0; j < item.searchids.length; j++) {
-            if (item.searchids[j]) {
+        for (let j = 0; j < searchItem.searchids.length; j++) {
+            if (searchItem.searchids[j]) {
                 try {
                     let response = await browser.runtime.sendMessage({
                         service: 'bricksAndPieces',
                         action: 'findBrick',
-                        designId: item.searchids[j],
+                        designId: searchItem.searchids[j],
                     });
 
                     if (response?.status) {
-                        item.bricksAndPieces = { error: response.status };
-                        return item;
+                        items.map(
+                            (i) =>
+                                (i.bricksAndPieces = { error: response.status })
+                        );
+                        //item.bricksAndPieces = { error: response.status };
+                        return;
                     }
                     if (response?.bricks) {
                         bricks = bricks.concat(response.bricks);
@@ -30,17 +35,18 @@ export default {
             }
         }
 
-        let foundBrick = await this.findBrick(item, bricks, country);
+        for (let i = 0; i < items.length; i++) {
+            let foundBrick = await this.findBrick(items[i], bricks, country);
 
-        if (foundBrick) {
-            item.bricksAndPieces = foundBrick;
-        } else {
-            item.bricksAndPieces = null;
+            if (foundBrick) {
+                items[i].bricksAndPieces = foundBrick;
+            } else {
+                items[i].bricksAndPieces = null;
+            }
         }
 
         apiBrickTwo.sendPrices(apiBrickTwo.prepareSendPrice(bricks, country));
-
-        return item;
+        return;
     },
     async findBrick(item, bricks, country) {
         if (!bricks || !bricks.length) return null;
