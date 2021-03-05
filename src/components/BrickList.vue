@@ -440,7 +440,7 @@ export default {
             ).length == 0
         ) {
             this.fields = this.fields.filter(
-                (field) => field.key != 'brickLink.wantedList.remarks'
+                (field) => field.key != 'brickLinkRemarks'
             );
         }
 

@@ -308,26 +308,54 @@ export default {
 
             this.calcTotals();
 
-            for (var i = 0; i < this.wantedList.length; i++) {
+            let cons = [];
+
+            this.wantedList.map((item) => {
+                if (brickBrickLink.isSpecialBrick(item)) {
+                    item.isSpecial = true;
+                    cons.push({ item: item, count: 1 });
+                } else {
+                    item.isSpecial = false;
+                    let found = cons.find(
+                        (f) =>
+                            f.item.designId == item.designId &&
+                            !f.item.isSpecial
+                    );
+                    if (!found) {
+                        cons.push({ item: item, count: 1 });
+                    } else {
+                        found.count++;
+                    }
+                }
+            });
+
+            for (var i = 0; i < cons.length; i++) {
                 if (this.cancelLoading) {
                     return;
                 }
-                var item = this.wantedList[i];
+                var item = cons[i];
                 await this.sleep(200); //200ms timout to prevent to be blocked on the website
                 this.loadPrice(item);
             }
         },
-        async loadPrice(item) {
+        async loadPrice(row) {
             this.showSort = false;
+            let item = row.item;
+            let items = this.wantedList.filter(
+                (f) =>
+                    f.designId == item.designId && f.isSpecial == item.isSpecial
+            );
 
-            item.bricksAndPieces = { isLoading: true };
+            items.map((i) => (i.bricksAndPieces = { isLoading: true }));
+            //item.bricksAndPieces = { isLoading: true };
+
             if (item.source == 'brickLink') {
                 var brickLinkHtml = await apiBrickLink.getBricklink(
                     item.designId
                 );
                 if (brickLinkHtml.status < 200 || brickLinkHtml.status >= 300) {
-                    this.pickABrickBrickCounter++;
-                    this.bricksAndPiecesBrickCounter++;
+                    this.pickABrickBrickCounter += row.count;
+                    this.bricksAndPiecesBrickCounter += row.count;
                     this.calcLoad();
                     item.bricksAndPieces = { error: brickLinkHtml.status };
                     return;
@@ -352,15 +380,21 @@ export default {
             if (this.cancelLoading) {
                 return;
             }
-            item = await brickBricksAndPieces.load(
+            await brickBricksAndPieces.load(
                 item,
+                items,
                 this.$store.state.country
             );
-            this.bricksAndPiecesBrickCounter++;
+            this.bricksAndPiecesBrickCounter += row.count;
             this.calcLoad();
-            item.pickABrick = { isLoading: true };
-            item = await brickPickABrick.load(item, this.$store.state.country);
-            this.pickABrickBrickCounter++;
+            items.map((i) => (i.pickABrick = { isLoading: true }));
+            //item.pickABrick = { isLoading: true };
+            item = await brickPickABrick.load(
+                item,
+                items,
+                this.$store.state.country
+            );
+            this.pickABrickBrickCounter += row.count;
             this.calcLoad();
         },
         sleep(ms) {
@@ -413,10 +447,14 @@ export default {
             if (this.wantedList) {
                 this.totalPositions = this.wantedList.length;
                 this.totalPickABrickPositions = this.wantedList.filter(
-                    (position) => position.pickABrick != null
+                    (position) =>
+                        position.pickABrick != null &&
+                        !position.pickABrick.isLoading
                 ).length;
                 this.totalBricksAndPiecesPositions = this.wantedList.filter(
-                    (position) => position.bricksAndPieces != null
+                    (position) =>
+                        position.bricksAndPieces != null &&
+                        !position.bricksAndPieces.isLoading
                 ).length;
             }
         },
@@ -453,7 +491,11 @@ export default {
             }
 
             item = await brickBrickLink.prepareSearchIds(item);
-            item = await brickPickABrick.load(item, this.$store.state.country);
+            item = await brickPickABrick.load(
+                item,
+                [item],
+                this.$store.state.country
+            );
         },
         async onReloadBricksAndPiecesPosition(item) {
             item.bricksAndPieces = { isLoading: true };
@@ -480,6 +522,7 @@ export default {
             item = await brickBrickLink.prepareSearchIds(item);
             item = await brickBricksAndPieces.load(
                 item,
+                [item],
                 this.$store.state.country
             );
         },
