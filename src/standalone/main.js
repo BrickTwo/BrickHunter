@@ -20,6 +20,8 @@ import Export2 from '@/components/export/Export.vue';
 import Info from '@/components/Info.vue';
 import Settings from '@/components/Settings.vue';
 
+import { getPersistedState } from '@/utility/stateMapper'; 
+
 /* eslint-disable no-new */
 extend('required', required);
 
@@ -75,8 +77,8 @@ Vue.filter('formatDate', function(value) {
 new Vue({
     store,
     router,
-    beforeCreate() {
-        this.$store.dispatch('initialiseStore');
+    async beforeCreate() {
+        await this.$store.dispatch('initialiseStore');
         this.$store.commit('setMode', 'standalone');
     },
     render: (h) => h(App),

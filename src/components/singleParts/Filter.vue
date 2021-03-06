@@ -203,7 +203,7 @@ import BrickGrid from './BrickGrid';
 import BrickList from './BrickList';
 import ColorPicker from './filter/ColorPicker';
 import SortFilter from './filter/Sort';
-import { bus } from '@/components/BrickHunter';
+import { bus } from '@/utility/bus';
 import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {

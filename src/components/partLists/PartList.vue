@@ -273,7 +273,7 @@ export default {
         priceLoaded: true,
         wantedList: [],
         cancelLoading: false,
-        partList: null,
+        partList: {name: null},
         editName: null,
         totalPositions: 0,
         totalPickABrickPositions: 0,
@@ -630,10 +630,11 @@ export default {
             deep: true,
         },
     },
-    beforeMount() {
+    async beforeMount() {
         this.partList = this.$store.getters['partList/getPartListsById'](
             this.$route.params.id
         );
+
         this.wantedList = this.partList.positions;
         this.calcTotals();
 

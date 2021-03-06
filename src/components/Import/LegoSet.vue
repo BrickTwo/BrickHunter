@@ -155,7 +155,7 @@ export default {
                 this.$store.state.partList.totalPositions +
                 this.wantedList.length;
 
-            if (totalPositionsAfterImport > 2000) {
+            /*if (totalPositionsAfterImport > 2000) {
                 this.$bvToast.toast(
                     this.labelErrorImportBrickLinkTextToManyPositions,
                     {
@@ -165,7 +165,7 @@ export default {
                     }
                 );
                 return;
-            }
+            }*/
 
             var partList = {
                 id: this.generateUUID(),

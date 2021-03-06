@@ -33,7 +33,9 @@
                     </b-nav-item>
                     <b-nav-item
                         @click="showPage('partLists')"
-                        :active="$router.currentRoute.path.startsWith('/partList')"
+                        :active="
+                            $router.currentRoute.path.startsWith('/partList')
+                        "
                     >
                         {{ menuWantedList }}
                     </b-nav-item>
@@ -45,7 +47,9 @@
                     </b-nav-item>
                     <b-nav-item
                         @click="showPage('export')"
-                        :active="$router.currentRoute.path.startsWith('/export')"
+                        :active="
+                            $router.currentRoute.path.startsWith('/export')
+                        "
                     >
                         {{ menuExport }}
                     </b-nav-item>
@@ -79,31 +83,17 @@
             </b-container>
         </b-navbar>
         <b-container class="pt-1 pb-3 pl-0 pr-0 page" fluid="xl">
-            <b-alert
-                show
-                v-if="newVersionAvailable"
-                variant="warning"
-                dismissible
-            >
-                Neue Version {{ newVersionAvailable }} Verfügbar!
-            </b-alert>
-            <router-view v-if="countrySelected && languageSelected" />
-            <SelectCountry
-                @countrySelected="onCountrySelected"
-                @languageSelected="onLanguageSelected"
-                v-if="!countrySelected || !languageSelected"
-            />
+            <NewVersionNotification v-if="flag" />
+            <div v-if="flag">
+                <router-view v-if="countrySelected && languageSelected" />
+                <SelectCountry
+                    @countrySelected="onCountrySelected"
+                    @languageSelected="onLanguageSelected"
+                    v-if="!countrySelected || !languageSelected"
+                />
+            </div>
         </b-container>
-        <b-modal
-            id="notificationMessage"
-            :title="labelNotificationHeader"
-            :header-bg-variant="headerBgVariant"
-            :header-text-variant="headerTextVariant"
-            centered
-            hide-footer
-        >
-            <p class="my-4" v-html="notification" />
-        </b-modal>
+
     </div>
 </template>
 
@@ -136,17 +126,18 @@ p {
 </style>
 
 <script>
-import Vue from 'vue';
-export const bus = new Vue();
+import { bus } from '@/utility/bus'; 
 
 import SelectCountry from '@/components/SelectCountry.vue';
 import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
+import NewVersionNotification from '@/components/NewVersionNotification.vue';
 import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     components: {
         SelectCountry,
         SelectCountryDropDown,
+        NewVersionNotification,
     },
     data() {
         return {
@@ -159,6 +150,7 @@ export default {
             headerTextVariant: 'light',
             notification: null,
             page: null,
+            flag: null,
         };
     },
     methods: {
@@ -230,11 +222,13 @@ export default {
         },
     },
     beforeMount() {
+        this.flag = this.$store.state.initialized;
+
         if (this.$store.state.mode == 'popup')
             this.$router.push('/shopping').catch(() => {});
-        this.countrySelected = this.$store.state.country;
-        this.languageSelected = this.$store.state.language;
-        this.cloudSync();
+        //this.countrySelected = this.$store.state.country;
+        //this.languageSelected = this.$store.state.language;
+        //this.cloudSync();
     },
     computed: {
         extName() {
@@ -267,9 +261,11 @@ export default {
         menuHelp() {
             return browser.i18n.getMessage('menu_help');
         },
-        labelNotificationHeader() {
-            return browser.i18n.getMessage('notification_header');
-        },
+    },
+    created() {
+        bus.$on('initialized', (payload) => {
+            this.flag = true;
+        });
     },
 };
 </script>

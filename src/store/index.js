@@ -4,6 +4,9 @@ import partList from './modules/partList';
 import shopping from './modules/shopping';
 import singleParts from './modules/singleParts';
 import { version } from '../../package';
+import { persistencePlugin } from '@/utility/persistencePlugin';
+import { getPersistedState } from '@/utility/stateMapper'; 
+import { bus } from '@/utility/bus'; 
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -19,20 +22,31 @@ export default new Vuex.Store({
         language: '',
         affiliate: {},
         syncDate: null,
+        initialized: false,
     },
     mutations: {
+        initialize(state, persistedState) {
+            state.partList.partLists = persistedState;
+            // use the fetched, persisted state.
+            // In my case, I was reconstructing an array, so I wrote a handler (overwriteStore) to deal with the data rather simplistically
+            //overwriteStore(state, { arrayOfThings: persistedState }); // but do your own thing here.
+
+
+            //Vue.set(state, 'initialized', true);
+        },
         initialiseStore(state) {
             state.version.old = localStorage.getItem('version') || '1.0.0';
             state.version.current = version;
 
             state.country = localStorage.getItem('country') || null;
             state.language = localStorage.getItem('language') || null;
-            state.syncDate = localStorage.getItem('syncDate') || new Date(Date.now() - 1000*60*60*2 );
+            state.syncDate =
+                localStorage.getItem('syncDate') ||
+                new Date(Date.now() - 1000 * 60 * 60 * 2);
 
             localStorage.setItem('version', state.version.current);
-            //console.log(state.version)
-            var sKey;
 
+            var sKey;
             for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
                 if (
                     !sKey.startsWith('partList_') &&
@@ -79,11 +93,21 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        initialiseStore({ state, commit }) {
+        async initialiseStore({ dispatch, state, commit }) {
+            await getPersistedState()
+            .then((persistedState) => {
+                commit('initialize', persistedState);
+            })
+            .catch((error) => {
+                // tsk tsk... handle this error too
+            });
             commit('initialiseStore');
-            commit('partList/initialiseStore', state.version.old);
+            dispatch('partList/initialiseStore', state.version.old);
             commit('shopping/initialiseStore', state.version.old);
             commit('singleParts/initialiseStore');
+            state.initialized = true;
+            bus.$emit('initialized', true);
         },
     },
+    plugins: [persistencePlugin],
 });

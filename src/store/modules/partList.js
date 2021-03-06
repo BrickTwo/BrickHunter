@@ -1,4 +1,4 @@
-import version from '@/utility/version.js'
+import version from '@/utility/version';
 
 // initial state
 const state = () => ({
@@ -17,18 +17,17 @@ const getters = {
 };
 
 // actions
-const actions = {};
-
-// mutations
-const mutations = {
-    initialiseStore(state, oldVersion) {
+const actions = {
+    async initialiseStore({ state }, oldVersion) {
         var sKey;
 
-        for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
-            if (sKey.startsWith('partList_')) {
-                state.partLists.push(
-                    JSON.parse(window.localStorage.getItem(sKey))
-                );
+        if (version.isSmaller(oldVersion, '1.5.3')) {
+            for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
+                if (sKey.startsWith('partList_')) {
+                    state.partLists.push(
+                        JSON.parse(window.localStorage.getItem(sKey))
+                    );
+                }
             }
         }
 
@@ -100,12 +99,42 @@ const mutations = {
             });
         }
 
+        if (version.isSmaller(oldVersion, '1.5.3')) {
+            await state.partLists.map((partList) => {
+                partList.version = '1.0';
+                //idb.savePartList(partList);
+                //localStorage.removeItem('partList_' + partList.id);
+            });
+        }
+
+        /*let partLists = await idb.getPartLists();
+        partLists.map((partList) => {
+            state.partLists.push(partList);
+            localStorage.setItem('partList_' + partList.id, JSON.stringify(partList));
+            if (!state.partLists.find((f) => f.id === partList.id))
+                state.partLists.push(partList);
+        });
+
+        state.partLists.sort((a, b) => {
+            if (a.name.toUpperCase() > b.name.toUpperCase()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });*/
+
+        //console.log(state.partLists)
+
         state.totalPositions = 0;
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;
         });
     },
-    setPartList(state, payload) {
+};
+
+// mutations
+const mutations = {
+    async setPartList(state, payload) {
         var found = state.partLists.find(
             (partList) => partList.id === payload.id
         );
@@ -116,26 +145,28 @@ const mutations = {
             state.partLists.push(payload);
         }
 
-        localStorage.setItem('partList_' + payload.id, JSON.stringify(payload));
+        //localStorage.setItem('partList_' + payload.id, JSON.stringify(payload));
+        //await idb.savePartList(payload);
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;
         });
     },
-    deletePartList(state, partListId) {
+    async deletePartList(state, partListId) {
         state.partLists = state.partLists.filter(
             (partList) => partList.id != partListId
         );
 
-        localStorage.removeItem('partList_' + partListId);
+        //localStorage.removeItem('partList_' + partListId);
+        //await idb.deletePartList(partListId);
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;
         });
     },
-    addToPartList(state, payload) {
+    async addToPartList(state, payload) {
         var found = state.partLists.find(
             (partList) => partList.id === payload.id
         );
@@ -144,7 +175,8 @@ const mutations = {
         found.positions.push(payload.part);
         found.date = new Date(0, 0, 0, 0, 0, 0, 0);
 
-        localStorage.setItem('partList_' + payload.id, JSON.stringify(found));
+        //localStorage.setItem('partList_' + payload.id, JSON.stringify(found));
+        //await idb.savePartList(found);
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {
@@ -153,10 +185,13 @@ const mutations = {
     },
 };
 
+//const plugins = [persistencePlugin];
+
 export default {
     namespaced: true,
     state,
     getters,
     actions,
     mutations,
+    //plugins,
 };
