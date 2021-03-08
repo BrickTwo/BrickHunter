@@ -9,6 +9,11 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             file: 'js/content-script.js',
         });
     }
+    if (tab.url.indexOf('https://www.lego.com/') == 0 && tab.url.indexOf('/page/static/orders/') == 0) {
+        browser.tabs.executeScript({
+            file: 'js/content-script-order.js',
+        });
+    }
 });
 
 browser.runtime.onMessage.addListener(async function(request) {
