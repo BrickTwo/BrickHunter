@@ -779,7 +779,7 @@ export const brickColorMixin = {
                     brickLinkName: 'Trans-Medium Blue',
                     legoId: 143,
                     legoName: 'Transparent Fluorescent Blue',
-                    bricksAndPiecesName: 'Tr. Fl. Blue',
+                    bricksAndPiecesName: 'Tr.Fl. Blue',
                     pickABrickName: 'N/A',
                     colorCode: '#D0E5FF',
                 },
