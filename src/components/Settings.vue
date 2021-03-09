@@ -16,9 +16,12 @@
                     {{ noLanguageSelected }}
                 </p>
             </b-form-group>
-            <!--<b-form-group label="Affiliate Link" label-for="affiliate">
-                <Affiliate />
-            </b-form-group>-->
+            <b-form-checkbox
+                id="showImagesInLegoOrder"
+                v-model="showImagesInLegoOrder"
+                @change="onShowImagesInLegoOrderChange"
+                >{{ labelShowImagesInLegoOrder }}
+            </b-form-checkbox>
         </b-form>
     </div>
 </template>
@@ -48,9 +51,13 @@ export default {
         onLanguageSelected(language) {
             this.selectedLanguage = language;
         },
+        onShowImagesInLegoOrderChange(val) {
+            this.$store.commit('setShowImagesInLegoOrder', val);
+        },
     },
     beforeMount() {
         this.selectedCountry = this.$store.state.country;
+        this.showImagesInLegoOrder = this.$store.state.showImagesInLegoOrder;
     },
     computed: {
         whereDoYouLive() {
@@ -66,6 +73,9 @@ export default {
             return browser.i18n.getMessage(
                 'selectCountry_langaugeOnLegoWebsite'
             );
+        },
+        labelShowImagesInLegoOrder() {
+            return browser.i18n.getMessage('setting_showImagesInLegoOrder');
         },
     },
 };

@@ -473,6 +473,9 @@
     "selectCountry_saveButton": {
         "message": "Speichern"
     },
+    "setting_showImagesInLegoOrder": {
+        "message": "Zeige Teilebilder im LEGO Shop bei den Bestelldetails an."
+    },
     "shopping_priorityOne": {
         "message": "Prio 1"
     },
