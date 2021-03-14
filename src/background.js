@@ -18,11 +18,7 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             (localStorage.getItem('showImagesInLegoOrder') || 'true') ===
             'true';
 
-        console.log('order', showImages);
-
         if (showImages) {
-            console.log('order2');
-
             browser.tabs.sendMessage(tabId, {
                 contentScriptQuery: 'brickHunterLoadImages',
             });
@@ -353,6 +349,12 @@ async function bricksAndPieces(request) {
                         message: response.json(),
                     };
 
+                if (response.status == 204)
+                    return {
+                        status: response.status,
+                        message: "",
+                    };
+
                 return response.json();
             })
             .catch((err) => {
@@ -361,7 +363,7 @@ async function bricksAndPieces(request) {
                     message: '',
                 };
             });
-
+        
         return response;
     }
 

@@ -162,17 +162,14 @@
                 </b-form-checkbox>
             </p>
             <p class="my-4">
-
-                <b-form-group
-                    v-slot="{ ariaDescribedby }"
-                >
-                <b-form-checkbox
-                    v-model="selectCategoriesToBeHidden"
-                    id="selectCategoriesToBeHidden"
-                    name="selectCategoriesToBeHidden"
-                >
-                    {{ labelSelectCategoriesToBeHidden }}
-                </b-form-checkbox>
+                <b-form-group v-slot="{ ariaDescribedby }">
+                    <b-form-checkbox
+                        v-model="selectCategoriesToBeHidden"
+                        id="selectCategoriesToBeHidden"
+                        name="selectCategoriesToBeHidden"
+                    >
+                        {{ labelSelectCategoriesToBeHidden }}
+                    </b-form-checkbox>
                     <b-overlay
                         id="overlay-background"
                         :show="!categorieOptions"
@@ -402,7 +399,8 @@ export default {
             this.$store.commit('singleParts/setFilter', this.currentFilter);
 
             let excludedCategories = null;
-            if(this.selectCategoriesToBeHidden) excludedCategories = this.excludedCategories;
+            if (this.selectCategoriesToBeHidden)
+                excludedCategories = this.excludedCategories;
 
             this.search = await apiBrickTwo.getBricksAsync(
                 this.currentPage,
@@ -480,9 +478,9 @@ export default {
             });
 
             for (var i = 0; i < designIds.length; i++) {
-                if(currentFilter != JSON.stringify(this.currentFilter)) return;
+                if (currentFilter != JSON.stringify(this.currentFilter)) return;
                 var designId = designIds[i];
-                
+
                 await this.sleep(200); //200ms timout to prevent to be blocked on the website
 
                 var response = await browser.runtime.sendMessage({
@@ -500,65 +498,78 @@ export default {
                         brick.update = false;
                     });
                 } else {
-                    response.bricks.map((brick) => {
-                        var found = this.search.bricks.find(
-                            (b) =>
-                                b.itemNumber == brick.itemNumber ||
-                                b.alternativeItemNumbers.includes(
-                                    `|${brick.itemNumber}|`
-                                )
-                        );
+                    if (!response.status) {
+                        response.bricks.map((brick) => {
+                            var found = this.search.bricks.find(
+                                (b) =>
+                                    b.itemNumber == brick.itemNumber ||
+                                    b.alternativeItemNumbers.includes(
+                                        `|${brick.itemNumber}|`
+                                    )
+                            );
 
-                        if (found) {
-                            //found.itemNumber = brick.itemNumber;
-                            found.color = brick.color;
-                            found.colorFamily = brick.colorFamily;
-                            found.description = brick.description;
-                            found.designId = brick.designId;
-                            found.imageUrl = brick.imageUrl;
-                            if (brick.isAvailable) {
-                                found.isAvailable = 1;
-                            } else {
-                                found.isAvailable = 0;
+                            if (found) {
+                                //found.itemNumber = brick.itemNumber;
+                                found.color = brick.color;
+                                found.colorFamily = brick.colorFamily;
+                                found.description = brick.description;
+                                found.designId = brick.designId;
+                                found.imageUrl = brick.imageUrl;
+                                if (brick.isAvailable) {
+                                    found.isAvailable = 1;
+                                } else {
+                                    found.isAvailable = 0;
+                                }
+                                if (brick.isSoldOut) {
+                                    found.isSoldOut = 1;
+                                } else {
+                                    found.isSoldOut = 0;
+                                }
+                                found.priceAmount = brick.price.amount.toFixed(
+                                    2
+                                );
+                                found.priceCurrency = brick.price.currency;
+                                found.maxAmount = brick.maxAmount;
+                                found.update = false;
+                                if (
+                                    found.maxAmount > 0 &&
+                                    found.isAvailable &&
+                                    !found.isSoldOut
+                                ) {
+                                    found.lastSeen = new Date(
+                                        Date.now()
+                                    ).toUTCString();
+                                }
+                                found.lastUpdateCountry = new Date(
+                                    new Date(Date.now()).toUTCString()
+                                ).toISOString();
                             }
-                            if (brick.isSoldOut) {
-                                found.isSoldOut = 1;
-                            } else {
-                                found.isSoldOut = 0;
-                            }
-                            found.priceAmount = brick.price.amount.toFixed(2);
-                            found.priceCurrency = brick.price.currency;
-                            found.maxAmount = brick.maxAmount;
-                            found.update = false;
-                            if (
-                                found.maxAmount > 0 &&
-                                found.isAvailable &&
-                                !found.isSoldOut
-                            ) {
-                                found.lastSeen = new Date(
-                                    Date.now()
-                                ).toUTCString();
-                            }
-                            found.lastUpdateCountry = new Date(
-                                new Date(Date.now()).toUTCString()
-                            ).toISOString();
-                        }
-                    });
+                        });
+                    }
 
                     var found = this.search.bricks.filter(
                         (b) => b.designId == designId
                     );
 
+                    if (response.status) {
+                        found.map((brick) => {
+                            brick.maxAmount = 0;
+                            brick.isAvailable = 0;
+                        });
+                    }
+
                     found.map((brick) => {
                         brick.update = false;
                     });
 
-                    apiBrickTwo.sendPrices(
-                        apiBrickTwo.prepareSendPrice(
-                            response.bricks,
-                            this.$store.state.country
-                        )
-                    );
+                    if (!response.status) {
+                        apiBrickTwo.sendPrices(
+                            apiBrickTwo.prepareSendPrice(
+                                response.bricks,
+                                this.$store.state.country
+                            )
+                        );
+                    }
                 }
             }
         },
@@ -716,7 +727,9 @@ export default {
             return browser.i18n.getMessage('import_sp_showOnlyAvailable');
         },
         labelSelectCategoriesToBeHidden() {
-            return browser.i18n.getMessage('import_sp_selectCategoriesToBeHidden');
+            return browser.i18n.getMessage(
+                'import_sp_selectCategoriesToBeHidden'
+            );
         },
     },
 };
