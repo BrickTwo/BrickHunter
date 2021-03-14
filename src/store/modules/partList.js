@@ -101,28 +101,9 @@ const actions = {
         if (version.isSmaller(oldVersion, '1.5.4')) {
             await state.partLists.map((partList) => {
                 partList.version = '1.0';
-                //idb.savePartList(partList);
                 //localStorage.removeItem('partList_' + partList.id);
             });
         }
-
-        /*let partLists = await idb.getPartLists();
-        partLists.map((partList) => {
-            state.partLists.push(partList);
-            localStorage.setItem('partList_' + partList.id, JSON.stringify(partList));
-            if (!state.partLists.find((f) => f.id === partList.id))
-                state.partLists.push(partList);
-        });
-
-        state.partLists.sort((a, b) => {
-            if (a.name.toUpperCase() > b.name.toUpperCase()) {
-                return 1;
-            } else {
-                return -1;
-            }
-        });*/
-
-        //console.log(state.partLists)
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {
@@ -139,13 +120,14 @@ const mutations = {
         );
 
         if (found) {
-            found = payload;
-        } else {
-            state.partLists.push(payload);
+            state.partLists = state.partLists.filter(
+                (partList) => partList.id != payload.id
+            );
         }
 
+        state.partLists.push(payload);
+
         //localStorage.setItem('partList_' + payload.id, JSON.stringify(payload));
-        //await idb.savePartList(payload);
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {
@@ -158,7 +140,6 @@ const mutations = {
         );
 
         //localStorage.removeItem('partList_' + partListId);
-        //await idb.deletePartList(partListId);
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {
@@ -175,7 +156,6 @@ const mutations = {
         found.date = new Date(0, 0, 0, 0, 0, 0, 0);
 
         //localStorage.setItem('partList_' + payload.id, JSON.stringify(found));
-        //await idb.savePartList(found);
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {
@@ -184,13 +164,10 @@ const mutations = {
     },
 };
 
-//const plugins = [persistencePlugin];
-
 export default {
     namespaced: true,
     state,
     getters,
     actions,
     mutations,
-    //plugins,
 };

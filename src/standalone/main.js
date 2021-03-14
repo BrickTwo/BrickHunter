@@ -20,7 +20,7 @@ import Export2 from '@/components/export/Export.vue';
 import Info from '@/components/Info.vue';
 import Settings from '@/components/Settings.vue';
 
-import { getPersistedState } from '@/utility/stateMapper'; 
+import { getPersistedState } from '@/utility/idb/stateMapper'; 
 
 /* eslint-disable no-new */
 extend('required', required);

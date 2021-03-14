@@ -1,5 +1,5 @@
 // import whatever u need from your 'statemapper'... this is just an example.
-import { setPersistedState, deletePersistedState } from './stateMapper'; 
+import { setPersistedState, deletePersistedState } from '@/utility/idb/stateMapper'; 
 
 //decide which mutations you want to listen in on, for persisting app data
 const mutationsOfInterest = [

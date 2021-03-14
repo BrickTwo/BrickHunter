@@ -1,4 +1,4 @@
-import { localForageService } from './localForageService';
+import { localForageService } from '@/utility/idb/localForageService';
 import localforageGetItems from 'localforage-getitems';
 
 export const setPersistedState = (state) => {

@@ -4,8 +4,8 @@ import partList from './modules/partList';
 import shopping from './modules/shopping';
 import singleParts from './modules/singleParts';
 import { version } from '../../package';
-import { persistencePlugin } from '@/utility/persistencePlugin';
-import { getPersistedState } from '@/utility/stateMapper';
+import { persistencePlugin } from '@/utility/idb/persistencePlugin';
+import { getPersistedState } from '@/utility/idb/stateMapper';
 import { bus } from '@/utility/bus';
 
 Vue.use(Vuex);

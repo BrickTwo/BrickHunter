@@ -7,9 +7,12 @@
             >
                 {{ labelBrickHunter }}
             </b-nav-item>
-            <b-nav-item @click="page = 'brickLink'">{{
-                labelBrickLink
-            }}</b-nav-item>
+            <b-nav-item
+                :active="page == 'brickLink'"
+                @click="page = 'brickLink'"
+            >
+                {{ labelBrickLink }}
+            </b-nav-item>
             <b-nav-item :active="page == 'csv'" @click="page = 'csv'">
                 {{ labelCsv }}
             </b-nav-item>
