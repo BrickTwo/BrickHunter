@@ -4,6 +4,9 @@ import partList from './modules/partList';
 import shopping from './modules/shopping';
 import singleParts from './modules/singleParts';
 import { version } from '../../package';
+import { persistencePlugin } from '@/utility/idb/persistencePlugin';
+import { getPersistedState } from '@/utility/idb/stateMapper';
+import { bus } from '@/utility/bus';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -19,9 +22,18 @@ export default new Vuex.Store({
         language: '',
         affiliate: {},
         syncDate: null,
+        initialized: false,
         showImagesInLegoOrder: true,
     },
     mutations: {
+        initialize(state, persistedState) {
+            state.partList.partLists = persistedState;
+            // use the fetched, persisted state.
+            // In my case, I was reconstructing an array, so I wrote a handler (overwriteStore) to deal with the data rather simplistically
+            //overwriteStore(state, { arrayOfThings: persistedState }); // but do your own thing here.
+
+            //Vue.set(state, 'initialized', true);
+        },
         initialiseStore(state) {
             state.version.old = localStorage.getItem('version') || '1.0.0';
             state.version.current = version;
@@ -36,9 +48,8 @@ export default new Vuex.Store({
                 'true';
 
             localStorage.setItem('version', state.version.current);
-            //console.log(state.version)
-            var sKey;
 
+            var sKey;
             for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
                 if (
                     !sKey.startsWith('partList_') &&
@@ -90,15 +101,28 @@ export default new Vuex.Store({
         },
         setShowImagesInLegoOrder(state, payload) {
             state.setShowImagesInLegoOrder = payload;
-            localStorage.setItem('showImagesInLegoOrder', state.setShowImagesInLegoOrder);
+            localStorage.setItem(
+                'showImagesInLegoOrder',
+                state.setShowImagesInLegoOrder
+            );
         },
     },
     actions: {
-        initialiseStore({ state, commit }) {
+        async initialiseStore({ dispatch, state, commit }) {
+            await getPersistedState()
+                .then((persistedState) => {
+                    commit('initialize', persistedState);
+                })
+                .catch((error) => {
+                    // tsk tsk... handle this error too
+                });
             commit('initialiseStore');
-            commit('partList/initialiseStore', state.version.old);
+            dispatch('partList/initialiseStore', state.version.old);
             commit('shopping/initialiseStore', state.version.old);
             commit('singleParts/initialiseStore');
+            state.initialized = true;
+            bus.$emit('initialized', true);
         },
     },
+    plugins: [persistencePlugin],
 });

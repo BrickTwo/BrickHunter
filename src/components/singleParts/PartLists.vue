@@ -65,7 +65,7 @@
 </style>
 
 <script>
-import { bus } from '@/components/BrickHunter';
+import { bus } from '@/utility/bus';
 
 export default {
     data: () => ({

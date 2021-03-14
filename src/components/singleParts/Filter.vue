@@ -200,7 +200,7 @@ import BrickGrid from './BrickGrid';
 import BrickList from './BrickList';
 import ColorPicker from './filter/ColorPicker';
 import SortFilter from './filter/Sort';
-import { bus } from '@/components/BrickHunter';
+import { bus } from '@/utility/bus';
 import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
@@ -287,7 +287,7 @@ export default {
                 return;
             }
 
-            if (this.$store.state.partList.totalPositions >= 2000) {
+            /*if (this.$store.state.partList.totalPositions >= 2000) {
                 this.$bvToast.toast(
                     this.labelErrorImportBrickLinkTextToManyPositions,
                     {
@@ -297,7 +297,7 @@ export default {
                     }
                 );
                 return;
-            }
+            }*/
 
             var part = {};
             part.source = 'lego';

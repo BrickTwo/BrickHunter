@@ -204,10 +204,10 @@ export default {
         },
         addToPartList() {
             this.order = 1;
-            if (this.$store.state.partList.totalPositions >= 2000) {
+            /*if (this.$store.state.partList.totalPositions >= 2000) {
                 this.order = 0;
                 this.brick.order = this.order;
-            }
+            }*/
             this.$emit('addToPartList', this.brick);
         },
         setKeyword(value) {

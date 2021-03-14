@@ -63,6 +63,13 @@ export default {
     },
     beforeMount() {
         this.form_country = this.$store.state.country;
+
+        this.$emit('countrySelected', this.$store.state.country);
+        this.$emit('languageSelected', this.$store.state.language);
+
+
+        //this.countrySelected = this.$store.state.country;
+        //this.languageSelected = this.$store.state.language;
     },
     computed: {
         whereDoYouLive() {

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { bus } from '@/components/BrickHunter';
+import { bus } from '@/utility/bus';
 import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {

@@ -1,4 +1,4 @@
-import version from '@/utility/version.js'
+import version from '@/utility/version';
 
 // initial state
 const state = () => ({
@@ -17,18 +17,16 @@ const getters = {
 };
 
 // actions
-const actions = {};
-
-// mutations
-const mutations = {
-    initialiseStore(state, oldVersion) {
-        var sKey;
-
-        for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
-            if (sKey.startsWith('partList_')) {
-                state.partLists.push(
-                    JSON.parse(window.localStorage.getItem(sKey))
-                );
+const actions = {
+    async initialiseStore({ state }, oldVersion) {
+        if (version.isSmaller(oldVersion, '1.5.4')) {
+            let sKey;
+            for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
+                if (sKey.startsWith('partList_')) {
+                    state.partLists.push(
+                        JSON.parse(window.localStorage.getItem(sKey))
+                    );
+                }
             }
         }
 
@@ -100,42 +98,55 @@ const mutations = {
             });
         }
 
+        if (version.isSmaller(oldVersion, '1.5.4')) {
+            await state.partLists.map((partList) => {
+                partList.version = '1.0';
+                //localStorage.removeItem('partList_' + partList.id);
+            });
+        }
+
         state.totalPositions = 0;
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;
         });
     },
-    setPartList(state, payload) {
+};
+
+// mutations
+const mutations = {
+    async setPartList(state, payload) {
         var found = state.partLists.find(
             (partList) => partList.id === payload.id
         );
 
         if (found) {
-            found = payload;
-        } else {
-            state.partLists.push(payload);
+            state.partLists = state.partLists.filter(
+                (partList) => partList.id != payload.id
+            );
         }
 
-        localStorage.setItem('partList_' + payload.id, JSON.stringify(payload));
+        state.partLists.push(payload);
+
+        //localStorage.setItem('partList_' + payload.id, JSON.stringify(payload));
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;
         });
     },
-    deletePartList(state, partListId) {
+    async deletePartList(state, partListId) {
         state.partLists = state.partLists.filter(
             (partList) => partList.id != partListId
         );
 
-        localStorage.removeItem('partList_' + partListId);
+        //localStorage.removeItem('partList_' + partListId);
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;
         });
     },
-    addToPartList(state, payload) {
+    async addToPartList(state, payload) {
         var found = state.partLists.find(
             (partList) => partList.id === payload.id
         );
@@ -144,7 +155,7 @@ const mutations = {
         found.positions.push(payload.part);
         found.date = new Date(0, 0, 0, 0, 0, 0, 0);
 
-        localStorage.setItem('partList_' + payload.id, JSON.stringify(found));
+        //localStorage.setItem('partList_' + payload.id, JSON.stringify(found));
 
         state.totalPositions = 0;
         state.partLists.map((partList) => {

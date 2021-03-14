@@ -89,10 +89,6 @@ export default {
             this.name = fileName.substring(0, fileName.length - 4);
         },
         loadXml(wantedList) {
-            //console.log(wantedList)
-            this.pickABrickBrickCounter = 0;
-            this.bricksAndPiecesBrickCounter = 0;
-
             var partList = [];
 
             wantedList.then((list) => {
@@ -158,17 +154,14 @@ export default {
                     partList.push(part);
                 });
                 this.wantedList = [...partList];
-                //this.totalBricks = this.wantedList.length;
 
                 return list;
             });
         },
         importList() {
-            var totalPositionsAfterImport =
+            /*var totalPositionsAfterImport =
                 this.$store.state.partList.totalPositions +
                 this.wantedList.length;
-
-            //console.log(totalPositionsAfterImport, this.$store.state.partList.totalPositions, this.wantedList.length);
 
             if (totalPositionsAfterImport > 2000) {
                 this.$bvToast.toast(
@@ -180,7 +173,7 @@ export default {
                     }
                 );
                 return;
-            }
+            }*/
 
             var partList = {
                 id: this.generateUUID(),
@@ -190,7 +183,7 @@ export default {
                 source: 'brickLink',
                 positions: this.wantedList,
             };
-            //console.log('importList', partList);
+            
             this.$store.commit('partList/setPartList', partList);
 
             this.$bvToast.toast(this.labelSuccessfullImportBrickLinkText, {
