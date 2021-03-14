@@ -2,37 +2,53 @@
     <div>
         <b-nav tabs>
             <b-nav-item
-                :active="page == 'brickLink'"
-                @click="page = 'brickLink'"
-                >{{ brickLink }}</b-nav-item
+                :active="page == 'brickHunter'"
+                @click="page = 'brickHunter'"
             >
-            <b-nav-item :active="page == 'csv'" @click="page = 'csv'" >{{
-                menuExportCsv
+                {{ labelBrickHunter }}
+            </b-nav-item>
+            <b-nav-item @click="page = 'brickLink'">{{
+                labelBrickLink
             }}</b-nav-item>
+            <b-nav-item :active="page == 'csv'" @click="page = 'csv'">
+                {{ labelCsv }}
+            </b-nav-item>
         </b-nav>
-            <ExportWantedList v-if="page == 'brickLink'" :partListId="$route.params.id"/>
-            <ExportCsv v-if="page == 'csv'" :partListId="$route.params.id"/>
+        <ExportBrickHunter
+            v-if="page == 'brickHunter'"
+            :partListId="$route.params.id"
+        />
+        <ExportWantedList
+            v-if="page == 'brickLink'"
+            :partListId="$route.params.id"
+        />
+        <ExportCsv v-if="page == 'csv'" :partListId="$route.params.id" />
     </div>
 </template>
 
 <script>
 import ExportWantedList from './BrickLink';
 import ExportCsv from './Csv';
+import ExportBrickHunter from './BrickHunter';
 
 export default {
     data: () => ({
-        page: 'brickLink',
+        page: 'brickHunter',
     }),
     components: {
         ExportWantedList,
         ExportCsv,
+        ExportBrickHunter,
     },
     computed: {
-        brickLink() {
+        labelBrickLink() {
             return browser.i18n.getMessage('brickLink');
         },
-        menuExportCsv() {
+        labelCsv() {
             return browser.i18n.getMessage('menu_exportCsv');
+        },
+        labelBrickHunter() {
+            return browser.i18n.getMessage('extName');
         },
     },
 };
