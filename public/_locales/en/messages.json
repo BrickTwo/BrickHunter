@@ -479,6 +479,9 @@
     "selectCountry_saveButton": {
         "message": "Save"
     },
+    "setting_showImagesInLegoOrder": {
+        "message": "Show part images at the LEGO Shop in the order details."
+    },
     "shopping_priorityOne": {
         "message": "Prio 1"
     },

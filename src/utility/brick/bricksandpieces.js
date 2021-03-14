@@ -21,6 +21,14 @@ export default {
                     });
 
                     if (response?.status) {
+                        if (response.status == 204) {
+                            items.map(
+                                (i) =>
+                                    (i.bricksAndPieces = null)
+                            );
+                            return;
+                        }
+
                         items.map(
                             (i) =>
                                 (i.bricksAndPieces = { error: response.status })

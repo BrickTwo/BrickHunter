@@ -330,6 +330,7 @@ export default {
             });
 
             for (var i = 0; i < cons.length; i++) {
+                console.log(i)
                 if (this.cancelLoading) {
                     return;
                 }
@@ -346,7 +347,9 @@ export default {
                     f.designId == item.designId && f.isSpecial == item.isSpecial
             );
 
-            items.map((i) => (i.bricksAndPieces = { isLoading: true }));
+            items.map((i) => {
+                i.bricksAndPieces = { isLoading: true };
+            });
             //item.bricksAndPieces = { isLoading: true };
 
             if (item.source == 'brickLink') {
@@ -467,6 +470,7 @@ export default {
             this.totalPositions = this.wantedList.length;
 
             this.partList.positions = this.wantedList;
+            this.calcTotals();
         },
         async onReloadPickABrickPosition(item) {
             item.pickABrick = { isLoading: true };

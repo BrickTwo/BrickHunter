@@ -23,6 +23,7 @@ export default new Vuex.Store({
         affiliate: {},
         syncDate: null,
         initialized: false,
+        showImagesInLegoOrder: true,
     },
     mutations: {
         initialize(state, persistedState) {
@@ -43,6 +44,9 @@ export default new Vuex.Store({
             state.syncDate =
                 localStorage.getItem('syncDate') ||
                 new Date(Date.now() - 1000 * 60 * 60 * 2);
+            state.showImagesInLegoOrder =
+                (localStorage.getItem('showImagesInLegoOrder') || 'true') ===
+                'true';
 
             localStorage.setItem('version', state.version.current);
 
@@ -66,7 +70,8 @@ export default new Vuex.Store({
                     sKey != 'version' &&
                     sKey != 'syncDate' &&
                     sKey != 'favorites' &&
-                    sKey != 'filterSingleParts'
+                    sKey != 'filterSingleParts' &&
+                    sKey != 'showImagesInLegoOrder'
                 ) {
                     localStorage.removeItem(sKey);
                 }
@@ -90,6 +95,14 @@ export default new Vuex.Store({
         setSyncDate(state, payload) {
             state.syncDate = payload;
             localStorage.setItem('syncDate', state.syncDate);
+        },
+        setSyncDate(state, payload) {
+            state.syncDate = payload;
+            localStorage.setItem('syncDate', state.syncDate);
+        },
+        setShowImagesInLegoOrder(state, payload) {
+            state.setShowImagesInLegoOrder = payload;
+            localStorage.setItem('showImagesInLegoOrder', state.setShowImagesInLegoOrder);
         },
     },
     actions: {
