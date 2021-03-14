@@ -5,8 +5,8 @@ import shopping from './modules/shopping';
 import singleParts from './modules/singleParts';
 import { version } from '../../package';
 import { persistencePlugin } from '@/utility/persistencePlugin';
-import { getPersistedState } from '@/utility/stateMapper'; 
-import { bus } from '@/utility/bus'; 
+import { getPersistedState } from '@/utility/stateMapper';
+import { bus } from '@/utility/bus';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -31,7 +31,6 @@ export default new Vuex.Store({
             // use the fetched, persisted state.
             // In my case, I was reconstructing an array, so I wrote a handler (overwriteStore) to deal with the data rather simplistically
             //overwriteStore(state, { arrayOfThings: persistedState }); // but do your own thing here.
-
 
             //Vue.set(state, 'initialized', true);
         },
@@ -102,18 +101,21 @@ export default new Vuex.Store({
         },
         setShowImagesInLegoOrder(state, payload) {
             state.setShowImagesInLegoOrder = payload;
-            localStorage.setItem('showImagesInLegoOrder', state.setShowImagesInLegoOrder);
+            localStorage.setItem(
+                'showImagesInLegoOrder',
+                state.setShowImagesInLegoOrder
+            );
         },
     },
     actions: {
         async initialiseStore({ dispatch, state, commit }) {
             await getPersistedState()
-            .then((persistedState) => {
-                commit('initialize', persistedState);
-            })
-            .catch((error) => {
-                // tsk tsk... handle this error too
-            });
+                .then((persistedState) => {
+                    commit('initialize', persistedState);
+                })
+                .catch((error) => {
+                    // tsk tsk... handle this error too
+                });
             commit('initialiseStore');
             dispatch('partList/initialiseStore', state.version.old);
             commit('shopping/initialiseStore', state.version.old);
