@@ -287,7 +287,7 @@ export default {
                 return;
             }
 
-            if (this.$store.state.partList.totalPositions >= 2000) {
+            /*if (this.$store.state.partList.totalPositions >= 2000) {
                 this.$bvToast.toast(
                     this.labelErrorImportBrickLinkTextToManyPositions,
                     {
@@ -297,7 +297,7 @@ export default {
                     }
                 );
                 return;
-            }
+            }*/
 
             var part = {};
             part.source = 'lego';

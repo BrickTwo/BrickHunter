@@ -19,9 +19,8 @@ const getters = {
 // actions
 const actions = {
     async initialiseStore({ state }, oldVersion) {
-        var sKey;
-
-        if (version.isSmaller(oldVersion, '1.5.3')) {
+        if (version.isSmaller(oldVersion, '1.5.4')) {
+            let sKey;
             for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
                 if (sKey.startsWith('partList_')) {
                     state.partLists.push(
@@ -99,7 +98,7 @@ const actions = {
             });
         }
 
-        if (version.isSmaller(oldVersion, '1.5.3')) {
+        if (version.isSmaller(oldVersion, '1.5.4')) {
             await state.partLists.map((partList) => {
                 partList.version = '1.0';
                 //idb.savePartList(partList);

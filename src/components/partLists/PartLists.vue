@@ -1,10 +1,10 @@
 <template>
     <b-container class="px-2" fluid="xl">
         <b-row>
-            <b-col class="text-right">
+            <!--<b-col class="text-right">
                 {{ $store.state.partList.totalPositions }} / 2000
                 {{ labelPositions }}
-            </b-col>
+            </b-col>-->
             <div class="w-100" />
             <b-col v-if="!partLists.length">
                 {{ labelItsEmptyHere }}

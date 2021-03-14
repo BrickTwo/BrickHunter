@@ -13,7 +13,6 @@ const ofInterest = (mutation) => {
 
 export const persistencePlugin = (store) => {
   store.subscribe((mutation, state) => {
-    console.log(mutation)
     if(mutation.type == 'partList/deletePartList') {
       deletePersistedState(state, mutation.payload);
     }else if (ofInterest(mutation.type)) {
