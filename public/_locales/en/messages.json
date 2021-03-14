@@ -324,13 +324,16 @@
         "message": "Clear"
     },
     "import_successfullImportBrickLinkTitle": {
-        "message": "BrickLink Import"
+        "message": "Import"
     },
     "import_successfullImportBrickLinkText": {
         "message": "Parts list successfully created."
     },
     "import_errorImportBrickLinkTextToManyPositions": {
         "message": "Total number of positions of all parts lists cannot be greater than 2000."
+    },
+    "import_override": {
+        "message": "Override same list"
     },
     "import_sp_partLists": {
         "message": "Parts Lists"

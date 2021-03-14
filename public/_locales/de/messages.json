@@ -324,13 +324,16 @@
         "message": "Zurücksetzen"
     },
     "import_successfullImportBrickLinkTitle": {
-        "message": "BrickLink Import"
+        "message": "Import"
     },
     "import_successfullImportBrickLinkText": {
         "message": "Teileliste erfolgreich angelegt."
     },
     "import_errorImportBrickLinkTextToManyPositions": {
         "message": "Total Anzahl der Positionen aller Teilelisten kann nicht grösser 2000 sein."
+    },
+    "import_override": {
+        "message": "Gleiche Liste überschreiben"
     },
     "import_sp_partLists": {
         "message": "Teilelisten"
