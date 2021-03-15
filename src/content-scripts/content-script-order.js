@@ -8,6 +8,13 @@ chrome.runtime.onMessage.addListener(async function(
     }
 });
 
+function checkImage(src, good, bad) {
+    var img = new Image();
+    img.onload = good;
+    img.onerror = bad;
+    img.src = src;
+}
+
 function brickHunterLoadImages() {
     var items = document.getElementsByClassName(
         'Tablestyles__TableRow-k7oh9o-1 eUClYI'
@@ -23,25 +30,40 @@ function brickHunterLoadImages() {
 
         let sku = item.childNodes[1].innerText;
 
-        if (sku.startsWith("SKU:")) {
+        if (sku.startsWith('SKU:')) {
             let sku = item.childNodes[1].innerText;
             let skusubstr = sku.substr(5, sku.length);
 
-            let urlLod4 =
-                'https://www.lego.com/cdn/product-assets/element.img.lod4photo.192x192/' +
-                skusubstr +
-                '.jpg';
             let urlLod5 =
                 'https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/' +
                 skusubstr +
                 '.jpg';
 
-            item.childNodes[0].innerHTML =
-                '<div style="background-image: url(' +
-                urlLod5 +
-                '), url(' +
-                urlLod4 +
-                "); width: 100%; background-repeat: no-repeat; background-size: contain; background-position: left center; height: 50px; margin-top: -15px\"></div><p style='font-size: 10px;margin-top: 0;margin-bottom: -15px;'>powered by BrickHunter</p>";
+            let addImage = function() {
+                let urlLod4 =
+                    'https://www.lego.com/cdn/product-assets/element.img.lod4photo.192x192/' +
+                    skusubstr +
+                    '.jpg';
+                let urlLod5 =
+                    'https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/' +
+                    skusubstr +
+                    '.jpg';
+
+                item.childNodes[0].innerHTML =
+                    '<div style="background-image: url(' +
+                    urlLod5 +
+                    '), url(' +
+                    urlLod4 +
+                    '); width: 100%; background-repeat: no-repeat; background-size: contain; background-position: left center; height: 50px; margin-top: -15px"></div><div style="background-image: url(https://brickhunter.bricktwo.net/icon_16.png); height: 35px;background-size: 16px;margin-top: -50px;background-repeat: no-repeat;"></div>';
+            };
+
+            let noImage = function() {
+                item.childNodes[0].innerHTML = '';
+            };
+
+            checkImage(urlLod5, addImage(), function() {
+                noImage();
+            });
         }
 
         /*if (
