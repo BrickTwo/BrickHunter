@@ -537,8 +537,8 @@ export default {
                                     !found.isSoldOut
                                 ) {
                                     found.lastSeen = new Date(
-                                        Date.now()
-                                    ).toUTCString();
+                                        new Date(Date.now()).toUTCString()
+                                    ).toISOString();
                                 }
                                 found.lastUpdateCountry = new Date(
                                     new Date(Date.now()).toUTCString()

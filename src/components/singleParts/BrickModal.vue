@@ -103,7 +103,10 @@
             </b-row>
             <b-row class="p-1 mt-0 stripe">
                 <b-col cols="5" class="p-0">{{ labelLastAvailability }}:</b-col>
-                <b-col v-if="brick.lastSeen" cols="7" class="p-0 text-right">
+                <b-col v-if="brick.lastSeen && brick.lastSeen.substr(brick.lastSeen.length -1) == 'Z'" cols="7" class="p-0 text-right">
+                    {{ new Date(brick.lastSeen) | formatDate }}
+                </b-col>
+                <b-col v-else-if="brick.lastSeen" cols="7" class="p-0 text-right">
                     {{ new Date(brick.lastSeen + 'Z') | formatDate }}
                 </b-col>
                 <b-col v-else cols="7" class="p-0 text-right">
