@@ -17,12 +17,28 @@
                 </b-input-group>
             </b-col>
             <b-col class="ml-1">
-                <SortFilter
-                    @selectSortBy="onSelectSortByChange"
-                    @selectSortDirection="onSelectSortDirectionChange"
-                    :selectedSort="selectedSort"
-                    :sortDirection="sortDirection"
-                />
+                <b-container class="p-0">
+                    <b-row class="m-0">
+                        <b-col>
+                            <SortFilter
+                                @selectSortBy="onSelectSortByChange"
+                                @selectSortDirection="
+                                    onSelectSortDirectionChange
+                                "
+                                :selectedSort="selectedSort"
+                                :sortDirection="sortDirection"
+                            />
+                        </b-col>
+                        <b-col class="ml-1 p-0" cols="auto">
+                            <b-button
+                                class="button m-0"
+                                variant="primary"
+                                @click="$bvModal.show('settings')"
+                            >
+                                <b-icon icon="gear" aria-hidden="true" />
+                            </b-button>
+                        </b-col> </b-row
+                ></b-container>
             </b-col>
         </b-row>
         <b-row>
@@ -30,13 +46,6 @@
         </b-row>
         <b-row class="p-1">
             <b-col>
-                <b-button
-                    class="button"
-                    variant="primary"
-                    @click="$bvModal.show('settings')"
-                >
-                    <b-icon icon="gear" aria-hidden="true" />
-                </b-button>
                 <b-form-select
                     style="width:75px"
                     v-model="perPage"
@@ -50,21 +59,23 @@
                     :total-rows="totalRows"
                     :per-page="perPage"
                     @change="onChangeCurrentPage"
-                    limit="7"
+                    limit="9"
                     aria-controls="my-table"
                     last-number
                 />
             </b-col>
             <b-col class="text-right">
                 <b-button
-                    class="button"
+                    v-if="showAs != 'grid'"
+                    class="button m-0"
                     variant="primary"
                     @click="showAs = 'grid'"
                 >
                     <b-icon icon="grid" aria-hidden="true" />
                 </b-button>
                 <b-button
-                    class="button"
+                    v-if="showAs != 'list'"
+                    class="button m-0"
                     variant="primary"
                     @click="showAs = 'list'"
                 >
@@ -121,21 +132,23 @@
                     :total-rows="totalRows"
                     :per-page="perPage"
                     @change="onChangeCurrentPage"
-                    limit="7"
+                    limit="9"
                     aria-controls="my-table"
                     last-number
                 />
             </b-col>
             <b-col class="text-right">
                 <b-button
-                    class="button"
+                    v-if="showAs != 'grid'"
+                    class="button m-0"
                     variant="primary"
                     @click="showAs = 'grid'"
                 >
                     <b-icon icon="grid" aria-hidden="true" />
                 </b-button>
                 <b-button
-                    class="button"
+                    v-if="showAs != 'list'"
+                    class="button m-0"
                     variant="primary"
                     @click="showAs = 'list'"
                 >
@@ -149,12 +162,15 @@
             :header-bg-variant="headerBgVariant"
             :header-text-variant="headerTextVariant"
             centered
-            hide-footer
-            @close="loadBricks(true)"
+            hide-header-close
+            no-close-on-backdrop
+            no-close-on-esc
+            @ok="okSettings"
+            @cancel="cancleSettings"
         >
             <p class="my-4">
                 <b-form-checkbox
-                    v-model="showOnlyAvailable"
+                    v-model="tempShowOnlyAvailable"
                     id="showOnlyAvailable"
                     name="showOnlyAvailable"
                 >
@@ -164,7 +180,7 @@
             <p class="my-4">
                 <b-form-group v-slot="{ ariaDescribedby }">
                     <b-form-checkbox
-                        v-model="selectCategoriesToBeHidden"
+                        v-model="tempSelectCategoriesToBeHidden"
                         id="selectCategoriesToBeHidden"
                         name="selectCategoriesToBeHidden"
                     >
@@ -175,10 +191,10 @@
                         :show="!categorieOptions"
                         rounded="sm"
                     >
-                        <div style="overflow: hidden scroll; height: 200px;">
+                        <div style="overflow: hidden scroll; height: 200px; background-color: #eee; padding: 5px">
                             <b-form-checkbox
                                 v-for="option in categorieOptions"
-                                v-model="excludedCategories"
+                                v-model="tempExcludedCategories"
                                 :key="option.value"
                                 :value="option.value"
                                 :aria-describedby="ariaDescribedby"
@@ -231,6 +247,7 @@ export default {
         colorList: [],
         headerBgVariant: 'dark',
         headerTextVariant: 'light',
+        tempShowOnlyAvailable: true,
         showOnlyAvailable: true,
         selectedItemNumbers: null,
         currentPageChanged: 0,
@@ -240,8 +257,10 @@ export default {
         showPartListId: '',
         showFavorites: false,
         categories: null,
+        tempExcludedCategories: [],
         excludedCategories: [],
         categorieOptions: null,
+        tempSelectCategoriesToBeHidden: true,
         selectCategoriesToBeHidden: true,
         currentFilter: [],
     }),
@@ -624,10 +643,13 @@ export default {
             this.selectedSort = filter.sortField;
             this.sortDirection = filter.sortDirection;
             this.showOnlyAvailable = !filter.showAll;
+            this.tempShowOnlyAvailable = this.showOnlyAvailable;
             this.showFavorites = filter.showFavorites;
             this.showPartListId = filter.showPartListId;
             this.excludedCategories = filter.excludedCategories;
+            this.tempExcludedCategories = this.excludedCategories;
             this.selectCategoriesToBeHidden = filter.selectCategoriesToBeHidden;
+            this.tempSelectCategoriesToBeHidden = this.selectCategoriesToBeHidden;
             this.totalRows = this.perPage * this.currentPage;
             this.selectItemNumbers();
         },
@@ -662,6 +684,17 @@ export default {
                     value: cat.id,
                 });
             });
+        },
+        okSettings(){
+            this.showOnlyAvailable = this.tempShowOnlyAvailable;
+            this.selectCategoriesToBeHidden = this.tempSelectCategoriesToBeHidden;
+            this.excludedCategories = this.tempExcludedCategories;
+            this.loadBricks(true);
+        },
+        cancleSettings() {
+            this.tempShowOnlyAvailable = this.showOnlyAvailable;
+            this.tempSelectCategoriesToBeHidden = this.selectCategoriesToBeHidden;
+            this.tempExcludedCategories = this.excludedCategories;
         },
     },
     beforeMount() {
