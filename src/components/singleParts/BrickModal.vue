@@ -45,10 +45,23 @@
                 <b-col cols="4" class="p-0 text-right">
                     {{ brick.priceAmount }} {{ brick.priceCurrency }}
                 </b-col>
-                <b-col v-if="brick.lastUpdateCountry && brick.lastUpdateCountry.substr(brick.lastUpdateCountry.length -1) == 'Z'" cols="4" class="p-0 text-right">
+                <b-col
+                    v-if="
+                        brick.lastUpdateCountry &&
+                            brick.lastUpdateCountry.substr(
+                                brick.lastUpdateCountry.length - 1
+                            ) == 'Z'
+                    "
+                    cols="4"
+                    class="p-0 text-right"
+                >
                     {{ new Date(brick.lastUpdateCountry) | formatDate }}
                 </b-col>
-                <b-col v-else-if="brick.lastUpdateCountry" cols="4" class="p-0 text-right">
+                <b-col
+                    v-else-if="brick.lastUpdateCountry"
+                    cols="4"
+                    class="p-0 text-right"
+                >
                     {{ new Date(brick.lastUpdateCountry + 'Z') | formatDate }}
                 </b-col>
                 <b-col v-else cols="4" class="p-0 text-right">
@@ -103,10 +116,22 @@
             </b-row>
             <b-row class="p-1 mt-0 stripe">
                 <b-col cols="5" class="p-0">{{ labelLastAvailability }}:</b-col>
-                <b-col v-if="brick.lastSeen && brick.lastSeen.substr(brick.lastSeen.length -1) == 'Z'" cols="7" class="p-0 text-right">
+                <b-col
+                    v-if="
+                        brick.lastSeen &&
+                            brick.lastSeen.substr(brick.lastSeen.length - 1) ==
+                                'Z'
+                    "
+                    cols="7"
+                    class="p-0 text-right"
+                >
                     {{ new Date(brick.lastSeen) | formatDate }}
                 </b-col>
-                <b-col v-else-if="brick.lastSeen" cols="7" class="p-0 text-right">
+                <b-col
+                    v-else-if="brick.lastSeen"
+                    cols="7"
+                    class="p-0 text-right"
+                >
                     {{ new Date(brick.lastSeen + 'Z') | formatDate }}
                 </b-col>
                 <b-col v-else cols="7" class="p-0 text-right">
@@ -121,9 +146,10 @@
             </b-row>
         </b-container>
         <Chart
-            v-if="chartLoaded && page == 'chart'"
-            :chartdata="chartdata"
-            :options="chartoptions"
+            v-if="page == 'chart'"
+            :maxAmountDataset="maxAmountDataset"
+            :priceDataset="priceDataset"
+            :priceCurrency="brick.priceCurrency"
         />
     </b-modal>
 </template>
@@ -151,11 +177,10 @@ export default {
         color: null,
         headerBgVariant: 'dark',
         headerTextVariant: 'light',
-        chartdata: [],
-        chartoptions: {},
-        chartLoaded: false,
         page: 'data',
         category: '',
+        maxAmountDataset: null,
+        priceDataset: null,
     }),
     components: {
         BrickModal,
@@ -169,146 +194,58 @@ export default {
                 this.$store.state.country
             );
 
-            var dataMaxAmount = [];
-            response.maxAmount.map((item) => {
-                dataMaxAmount.push({
+            if (response.maxAmount)
+                this.prepareMaxAmountDataset(response.maxAmount);
+            if (response.price) this.preparePriceDataset(response.price);
+        },
+        prepareMaxAmountDataset(maxAmounts) {
+            this.maxAmountDataset = [];
+            maxAmounts.map((item) => {
+                this.maxAmountDataset.push({
                     x: new Date(item.dateFrom + 'Z'),
                     y: item.maxAmount,
                 });
 
-                dataMaxAmount.push({
-                    x: new Date(item.dateTo + 'Z'),
-                    y: item.maxAmount,
-                });
+                if (item.dateFrom != item.dateTo) {
+                    this.maxAmountDataset.push({
+                        x: new Date(item.dateTo + 'Z'),
+                        y: item.maxAmount,
+                    });
+                }
             });
 
-            dataMaxAmount.sort((a, b) => {
+            this.maxAmountDataset.sort((a, b) => {
                 if (a.x > b.x) {
                     return 1;
                 } else {
                     return -1;
                 }
             });
-
-            var dataPrice = [];
-            response.price.map((item) => {
-                dataPrice.push({
+        },
+        preparePriceDataset(prices) {
+            this.priceDataset = [];
+            prices.map((item) => {
+                this.priceDataset.push({
                     x: new Date(item.dateFrom + 'Z'),
                     y: item.priceAmount,
                 });
 
                 // only if last is not same
-                dataPrice.push({
-                    x: new Date(item.dateTo + 'Z'),
-                    y: item.priceAmount,
-                });
+                if (item.dateFrom != item.dateTo) {
+                    this.priceDataset.push({
+                        x: new Date(item.dateTo + 'Z'),
+                        y: item.priceAmount,
+                    });
+                }
             });
 
-            dataPrice.sort((a, b) => {
+            this.priceDataset.sort((a, b) => {
                 if (a.x > b.x) {
                     return 1;
                 } else {
                     return -1;
                 }
             });
-
-            this.chartdata.datasets = [
-                {
-                    label: this.labelMaxAmount,
-                    borderColor: 'rgb(255, 0, 0)',
-                    lineTension: 0,
-                    fill: false,
-                    data: dataMaxAmount,
-                    yAxisID: 'yMaxAmount',
-                },
-                {
-                    label: this.labelPrice,
-                    borderColor: 'rgb(0, 0, 255)',
-                    lineTension: 0,
-                    fill: false,
-                    data: dataPrice,
-                    yAxisID: 'yPrice',
-                },
-            ];
-
-            this.chartoptions.response = true;
-            this.chartoptions.maintainAspectRatio = false;
-            /*this.chartoptions.title = {
-                display: true,
-                text: 'Chart.js Time Point Data',
-            };*/
-            this.chartoptions.animation = {
-                duration: 0,
-            };
-
-            this.chartoptions.scales = {
-                xAxes: [
-                    {
-                        type: 'time',
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: this.labelDate,
-                        },
-                        ticks: {
-                            major: {
-                                enabled: true,
-                            },
-                            font: function(context) {
-                                if (context.tick && context.tick.major) {
-                                    return {
-                                        style: 'bold',
-                                        color: '#FF0000',
-                                    };
-                                }
-                            },
-                        },
-                    },
-                ],
-                yAxes: [
-                    {
-                        id: 'yMaxAmount',
-                        type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                        display: true,
-                        position: 'left',
-                        scaleLabel: {
-                            display: true,
-                            labelString: this.labelMaxAmount,
-                        },
-
-                        ticks: {
-                            suggestedMin: 0,
-                            suggestedMax: 200,
-                            // forces step size to be 5 units
-                            stepSize: 20,
-                        },
-                    },
-                    {
-                        id: 'yPrice',
-                        type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                        display: true,
-                        position: 'right',
-
-                        // grid line settings
-                        gridLines: {
-                            drawOnChartArea: false, // only want the grid lines for one axis to show up
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString:
-                                this.labelPrice +
-                                ' ' +
-                                this.brick.priceCurrency,
-                        },
-                        ticks: {
-                            suggestedMin: 0,
-                            suggestedMax: this.brick.priceAmount * 2,
-                        },
-                    },
-                ],
-            };
-
-            this.chartLoaded = true;
         },
         onShow() {
             this.loadBrick();

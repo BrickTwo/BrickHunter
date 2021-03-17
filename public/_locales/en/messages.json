@@ -416,6 +416,15 @@
     "import_sp_selectCategoriesToBeHidden": {
         "message": "Do not use selected categories"
     },
+    "import_sp_lastMonth": {
+        "message": "Last Month"
+    },
+    "import_sp_lastThreeMonths": {
+        "message": "Last 3 Month's"
+    },
+    "import_sp_allTime": {
+        "message": "All Time"
+    },
     "info_disclaimerTitle": {
         "message": "Disclaimer"
     },
