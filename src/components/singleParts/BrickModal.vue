@@ -71,7 +71,7 @@
             <b-row class="p-1 mt-0 stripe">
                 <b-col cols="4" class="p-0">{{ labelColorBrickLink }}:</b-col>
                 <b-col cols="8" class="p-0 text-right">
-                    <span style="display: block">
+                    <span style="display: block" v-for="color in colors" :key="color.id">
                         <div :style="colorCode"></div>
                         <span>{{ color.brickLinkName }}</span>
                     </span>
@@ -82,7 +82,7 @@
                 <b-col cols="8" class="p-0 text-right">
                     <span style="display: block">
                         <div :style="colorCode"></div>
-                        <span>{{ color.legoName }}</span>
+                        <span>{{ colors[0].legoName }}</span>
                     </span>
                 </b-col>
             </b-row>
@@ -174,7 +174,7 @@ export default {
         },
     },
     data: () => ({
-        color: null,
+        colors: null,
         headerBgVariant: 'dark',
         headerTextVariant: 'light',
         page: 'data',
@@ -258,16 +258,23 @@ export default {
         },
     },
     beforeMount() {
-        this.color = this.COLOR.find(
+        this.colors = this.COLOR.filter(
             (c) =>
                 c.bricksAndPiecesName.toUpperCase() ==
                 this.brick.colorFamily.toUpperCase()
-        );
-        if (!this.color) {
-            this.color = this.COLOR.find((c) => c.brickLinkId == 0);
-            this.color.legoName = this.brick.colorFamily;
-            this.color.bricksAndPiecesName = this.brick.colorFamily;
-            this.color.pickABrickName = this.brick.colorFamily;
+        ).sort((a, b) => {
+            if (parseInt(a.brickLinkId) > parseInt(b.brickLinkId)) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+        
+        if (!this.colors.length) {
+            this.colors[0] = this.COLOR.find((c) => c.brickLinkId == 0);
+            this.colors[0].legoName = this.brick.colorFamily;
+            this.colors[0].bricksAndPiecesName = this.brick.colorFamily;
+            this.colors[0].pickABrickName = this.brick.colorFamily;
         }
     },
     computed: {
@@ -282,7 +289,7 @@ export default {
             return `background-image: url(${this.brick.imageUrl}), url('placeholder.jpg'); width: 100%; background-repeat: no-repeat; background-size: contain; background-position: center;`;
         },
         colorCode() {
-            return `background-color: ${this.color.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
+            return `background-color: ${this.colors[0].colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
         },
         labelData() {
             return browser.i18n.getMessage('import_sp_data');

@@ -86,7 +86,7 @@
                 </b-row>
             </b-overlay>
             <b-row
-                style="display: block;oveflow: hidden;white-space: nowrap; cursor: pointer"
+                style="display: block;overflow: hidden;white-space: nowrap; cursor: pointer"
                 @click="setColor()"
             >
                 <div :style="colorCode"></div>

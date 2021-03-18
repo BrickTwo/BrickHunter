@@ -61,6 +61,8 @@ const mutations = {
     setCategoriesFiltered(state, payload) {
         state.categoriesFiltered = payload;
 
+        if(!state.categoriesFiltered) state.categoriesFiltered = [];
+
         var category = {
             id: 9999999,
             name: 'All',

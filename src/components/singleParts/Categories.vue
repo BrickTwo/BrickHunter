@@ -40,8 +40,8 @@ export default {
     },
     created() {
         bus.$on('CategoriesFiltered', (payload) => {
-            this.categories = payload.categories;
-            this.selectCategory = payload.selected;
+            this.categories = payload?.categories;
+            this.selectCategory = payload?.selected;
         });
     },
 };

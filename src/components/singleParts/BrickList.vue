@@ -232,11 +232,14 @@ export default {
         },
     },
     beforeMount() {
-        this.color = this.COLOR.find(
+        let color = this.COLOR.filter(
             (c) =>
                 c.bricksAndPiecesName.toUpperCase() ==
                 this.brick.colorFamily.toUpperCase()
         );
+
+        this.color = color[color.length -1];
+        
         if (!this.color) {
             this.color = this.COLOR.find((c) => c.brickLinkId == 0);
             this.color.legoName = this.brick.colorFamily;

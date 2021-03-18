@@ -195,7 +195,7 @@
     background-color: $purple;
 }
 .coloSelection ul {
-    max-height: 100vh;
+    max-height: calc(100vh - 100px);
     overflow-y: auto;
 }
 </style>
@@ -223,7 +223,22 @@ export default {
             this.$emit('selectColor', value);
         },
         async fillColors() {
-            var colors = this.colorList;
+            var colors = [];
+            
+            this.colorList.map(color => {
+                if(!colors.find(c => c.brickLinkName == color.brickLinkName)) {
+                    colors.push(color);
+                }
+            })
+
+            colors = colors.sort(function(a, b) {
+                // Sort by hue
+                if (a.brickLinkName > b.brickLinkName) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
 
             this.colorTrans = colors.filter((color) =>
                 color.group.find((group) => group === 'Trans')
