@@ -191,7 +191,9 @@
                         :show="!categorieOptions"
                         rounded="sm"
                     >
-                        <div style="overflow: hidden scroll; height: 200px; background-color: #eee; padding: 5px">
+                        <div
+                            style="overflow: hidden scroll; height: 200px; background-color: #eee; padding: 5px"
+                        >
                             <b-form-checkbox
                                 v-for="option in categorieOptions"
                                 v-model="tempExcludedCategories"
@@ -222,6 +224,9 @@ import apiBrickTwo from '@/utility/api/bricktwo.js';
 export default {
     props: {
         favoriteSelected: {
+            type: Boolean,
+        },
+        haveItSelected: {
             type: Boolean,
         },
     },
@@ -256,6 +261,7 @@ export default {
         selectPartListId: '',
         showPartListId: '',
         showFavorites: false,
+        showHaveIts: false,
         categories: null,
         tempExcludedCategories: [],
         excludedCategories: [],
@@ -410,6 +416,7 @@ export default {
                 sortDirection: this.sortDirection,
                 showAll: !this.showOnlyAvailable,
                 showFavorites: this.showFavorites,
+                showHaveIts: this.showHaveIts,
                 showPartListId: this.showPartListId,
                 excludedCategories: this.excludedCategories,
                 selectCategoriesToBeHidden: this.selectCategoriesToBeHidden,
@@ -645,6 +652,7 @@ export default {
             this.showOnlyAvailable = !filter.showAll;
             this.tempShowOnlyAvailable = this.showOnlyAvailable;
             this.showFavorites = filter.showFavorites;
+            this.showHaveIts = filter.showHaveIts;
             this.showPartListId = filter.showPartListId;
             this.excludedCategories = filter.excludedCategories;
             this.tempExcludedCategories = this.excludedCategories;
@@ -665,8 +673,12 @@ export default {
                         this.selectedItemNumbers.push(pos.itemNumber)
                     );
             } else {
+                console.log(this.showFavorites, this.$store.state.singleParts.favorites, this.showHaveIts, this.$store.state.singleParts.haveIts)
+
                 if (this.showFavorites)
                     this.selectedItemNumbers = this.$store.state.singleParts.favorites;
+                if (this.showHaveIts)
+                    this.selectedItemNumbers = this.$store.state.singleParts.haveIts;
             }
         },
 
@@ -685,7 +697,7 @@ export default {
                 });
             });
         },
-        okSettings(){
+        okSettings() {
             this.showOnlyAvailable = this.tempShowOnlyAvailable;
             this.selectCategoriesToBeHidden = this.tempSelectCategoriesToBeHidden;
             this.excludedCategories = this.tempExcludedCategories;
@@ -715,9 +727,10 @@ export default {
 
             this.selectPart();
         });
-        bus.$on('showPartList', (partListId, showFavorites) => {
+        bus.$on('showPartList', (partListId, showFavorites, showHaveIts) => {
             this.showPartListId = partListId;
             this.showFavorites = showFavorites;
+            this.showHaveIts = showHaveIts;
 
             this.selectItemNumbers();
             this.loadBricks(true);

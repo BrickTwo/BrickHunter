@@ -30,6 +30,28 @@
             </label>
         </b-row>
         <b-row class="mt-0">
+            <label class="custom-favorite-label">
+                <b-icon
+                    icon="check-circle-fill"
+                    aria-hidden="true"
+                    variant="success"
+                />
+                <span style="margin-left: 3px">
+                    {{ labelHaveIts }} ({{ haveIts.length }})
+                </span>
+                <b-link @click="showHaveIts()" v-if="!haveItSelected">
+                    <b-icon
+                        icon="eye-slash"
+                        variant="secondary"
+                        aria-hidden="true"
+                    />
+                </b-link>
+                <b-link @click="hideHaveIt()" v-else>
+                    <b-icon icon="eye" aria-hidden="true" />
+                </b-link>
+            </label>
+        </b-row>
+        <b-row class="mt-0">
             <b-form-group>
                 <b-form-radio
                     v-for="partList in partLists"
@@ -74,6 +96,8 @@ export default {
         showPartListId: null,
         favorites: null,
         favoriteSelected: false,
+        haveIts: null,
+        haveItSelected: false,
     }),
     methods: {
         createNewPartList() {
@@ -129,12 +153,14 @@ export default {
         },
         showPartList(id) {
             this.favoriteSelected = false;
+            this.haveItSelected = false;
             this.showPartListId = id;
             //this.$emit('partListSelected', id);
             bus.$emit(
                 'showPartList',
                 this.showPartListId,
-                this.favoriteSelected
+                this.favoriteSelected,
+                this.haveItSelected
             );
         },
         hidePartList(id) {
@@ -143,17 +169,20 @@ export default {
             bus.$emit(
                 'showPartList',
                 this.showPartListId,
-                this.favoriteSelected
+                this.favoriteSelected,
+                this.haveItSelected
             );
         },
         showFavorites() {
             this.showPartListId = null;
+            this.haveItSelected = false;
             this.favoriteSelected = true;
             //this.$emit('favoriteSelected', true);
             bus.$emit(
                 'showPartList',
                 this.showPartListId,
-                this.favoriteSelected
+                this.favoriteSelected,
+                this.haveItSelected
             );
         },
         hideFavorite() {
@@ -162,7 +191,30 @@ export default {
             bus.$emit(
                 'showPartList',
                 this.showPartListId,
-                this.favoriteSelected
+                this.favoriteSelected,
+                this.haveItSelected
+            );
+        },
+        showHaveIts() {
+            this.favoriteSelected = false;
+            this.showPartListId = null;
+            this.haveItSelected = true;
+            //this.$emit('favoriteSelected', true);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected,
+                this.haveItSelected
+            );
+        },
+        hideHaveIt() {
+            this.haveItSelected = false;
+            //this.$emit('haveItSelected', false);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected,
+                this.haveItSelected
             );
         },
     },
@@ -171,10 +223,12 @@ export default {
             'singleParts'
         );
         this.favorites = this.$store.state.singleParts.favorites;
+        this.haveIts = this.$store.state.singleParts.haveIts;
         let filter = this.$store.state.singleParts.filter;
 
         this.showPartListId = filter.showPartListId;
         this.favoriteSelected = filter.showFavorites;
+        this.haveItSelected = filter.showHaveIts;
 
         if (!this.partLists.find((f) => f.id == this.showPartListId))
             this.showPartListId = null;
@@ -209,6 +263,9 @@ export default {
         },
         labelFavorites() {
             return browser.i18n.getMessage('import_sp_favorites');
+        },
+        labelHaveIts() {
+            return browser.i18n.getMessage('import_sp_haveIt');
         },
     },
 };

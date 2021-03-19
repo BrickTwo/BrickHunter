@@ -411,7 +411,10 @@
         "message": "Only show available parts"
     },
     "import_sp_favorites": {
-        "message": "Favorites"
+        "message": "Wish list"
+    },
+    "import_sp_haveIt": {
+        "message": "Have it"
     },
     "import_sp_selectCategoriesToBeHidden": {
         "message": "Do not use selected categories"

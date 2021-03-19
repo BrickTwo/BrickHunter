@@ -25,6 +25,26 @@
                         @click="addFavorite(brick.itemNumber)"
                     />
                     <b-icon
+                        v-if="haveIt"
+                        @click.stop
+                        icon="check-circle-fill"
+                        aria-hidden="true"
+                        font-scale="1.25"
+                        style="position: absolute; top: 25; right: 0;"
+                        variant="success"
+                        @click="removeHaveIt(brick.itemNumber)"
+                    />
+                    <b-icon
+                        v-else
+                        @click.stop
+                        icon="check-circle"
+                        aria-hidden="true"
+                        font-scale="1.25"
+                        style="position: absolute; top: 25; right: 0;"
+                        variant="success"
+                        @click="addHaveIt(brick.itemNumber)"
+                    />
+                    <b-icon
                         icon="box-arrow-up-left"
                         aria-hidden="true"
                         style="position: absolute; bottom: 0; right: 0;"
@@ -190,6 +210,7 @@ export default {
         showModal: false,
         order: 0,
         favorite: false,
+        haveIt: false,
     }),
     components: {
         BrickModal,
@@ -230,6 +251,14 @@ export default {
             this.favorite = false;
             this.$store.commit('singleParts/removeFavorite', itemNumber);
         },
+        addHaveIt(itemNumber) {
+            this.haveIt = true;
+            this.$store.commit('singleParts/addHaveIt', itemNumber);
+        },
+        removeHaveIt(itemNumber) {
+            this.haveIt = false;
+            this.$store.commit('singleParts/removeHaveIt', itemNumber);
+        },
     },
     beforeMount() {
         let color = this.COLOR.filter(
@@ -252,6 +281,10 @@ export default {
         }
 
         this.favorite = this.$store.getters['singleParts/isFavorite'](
+            this.brick.itemNumber
+        );
+
+        this.haveIt = this.$store.getters['singleParts/isHaveIt'](
             this.brick.itemNumber
         );
     },

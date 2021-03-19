@@ -407,6 +407,12 @@
     "import_sp_showOnlyAvailable": {
         "message": "Nur verfügbare Teile anzeigen"
     },
+    "import_sp_favorites": {
+        "message": "Wunschliste"
+    },
+    "import_sp_haveIt": {
+        "message": "Habe ich"
+    },
     "import_sp_selectCategoriesToBeHidden": {
         "message": "Ausgewählte Kategorien nicht verwenden"
     },

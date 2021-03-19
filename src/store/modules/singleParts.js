@@ -3,6 +3,7 @@ const state = () => ({
     categories: [],
     categoriesFiltered: [],
     favorites: [],
+    haveIts: [],
     filter: {},
 });
 
@@ -13,6 +14,9 @@ const getters = {
     },
     isFavorite: (state) => (itemNumber) => {
         return state.favorites.indexOf(parseInt(itemNumber)) != -1;
+    },
+    isHaveIt: (state) => (itemNumber) => {
+        return state.haveIts.indexOf(parseInt(itemNumber)) != -1;
     },
 };
 
@@ -38,6 +42,11 @@ const mutations = {
             state.favorites = favorites;
         }
 
+        let haveIts = JSON.parse(window.localStorage.getItem('haveIts'));
+        if (haveIts) {
+            state.haveIts = haveIts;
+        }
+
         state.filter = JSON.parse(
             localStorage.getItem('filterSingleParts')
         ) || {
@@ -50,6 +59,7 @@ const mutations = {
             sortDirection: 'ASC',
             showAll: 0,
             showFavorites: false,
+            showHaveIts: false,
             showPartListId: '',
             excludedCategories: [],
             selectCategoriesToBeHidden: true,
@@ -88,6 +98,20 @@ const mutations = {
         }
         localStorage.setItem('favorites', JSON.stringify(state.favorites));
     },
+    addHaveIt(state, itemNumber) {
+        if (state.haveIts.indexOf(parseInt(itemNumber)) != -1) return;
+        state.haveIts.push(parseInt(itemNumber));
+        localStorage.setItem('haveIts', JSON.stringify(state.haveIts));
+    },
+    removeHaveIt(state, itemNumber) {
+        var index = state.haveIts.findIndex((f) => {
+            return f == itemNumber;
+        });
+        if (index >= 0) {
+            state.haveIts.splice(index, 1);
+        }
+        localStorage.setItem('haveIts', JSON.stringify(state.haveIts));
+    },
     setFilter(state, payload) {
         state.filter = {
             page: payload.page,
@@ -99,6 +123,7 @@ const mutations = {
             sortDirection: payload.sortDirection,
             showAll: payload.showAll,
             showFavorites: payload.showFavorites,
+            showHaveIts: payload.showHaveIts,
             showPartListId: payload.showPartListId,
             excludedCategories: payload.excludedCategories,
             selectCategoriesToBeHidden: payload.selectCategoriesToBeHidden,

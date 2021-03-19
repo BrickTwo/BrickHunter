@@ -69,6 +69,7 @@ export default new Vuex.Store({
                     sKey != 'version' &&
                     sKey != 'syncDate' &&
                     sKey != 'favorites' &&
+                    sKey != 'haveIts' &&
                     sKey != 'filterSingleParts' &&
                     sKey != 'showImagesInLegoOrder'
                 ) {
