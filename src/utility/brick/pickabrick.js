@@ -80,10 +80,24 @@ export default {
                 );
 
                 result = bricks.filter(function(brick) {
+                    console.log(2)
                     return this.indexOf(brick.itemNumber) < 0;
                 }, colorCodes);
             }
         }
+
+        if(item.color.id == 9999){
+            console.log(4)
+            result = bricks;
+        }
+
+        result.sort((a, b) => {
+            if (a.variant.price.centAmount > b.variant.price.centAmount) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
 
         return result[0];
     },
