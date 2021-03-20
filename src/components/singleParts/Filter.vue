@@ -507,7 +507,7 @@ export default {
                 if (currentFilter != JSON.stringify(this.currentFilter)) return;
                 var designId = designIds[i];
 
-                await this.sleep(200); //200ms timout to prevent to be blocked on the website
+                await this.sleep(300); //200ms timout to prevent to be blocked on the website
 
                 var response = await browser.runtime.sendMessage({
                     service: 'bricksAndPieces',

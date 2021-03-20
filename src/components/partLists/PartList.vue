@@ -330,12 +330,11 @@ export default {
             });
 
             for (var i = 0; i < cons.length; i++) {
-                console.log(i)
                 if (this.cancelLoading) {
                     return;
                 }
                 var item = cons[i];
-                await this.sleep(200); //200ms timout to prevent to be blocked on the website
+                await this.sleep(300); //200ms timout to prevent to be blocked on the website
                 this.loadPrice(item);
             }
         },
