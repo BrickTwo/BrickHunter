@@ -30,6 +30,9 @@
             >
                 Log aktivieren
             </b-form-checkbox>
+            <b-button @click="downloadLog">
+                Download Log
+            </b-button>
         </b-form>
     </div>
 </template>
@@ -51,7 +54,7 @@ export default {
             isValidCountry: true,
             isValidLanguage: true,
             showImagesInLegoOrder: true,
-            generateLog: true,
+            generateLog: false,
         };
     },
     methods: {
@@ -66,6 +69,20 @@ export default {
         },
         onGenerateLogChange(val) {
             this.$store.commit('setGenerateLog', val);
+        },
+        downloadLog() {
+            let content =
+                'data:text/json;charset=utf-8,' +
+                encodeURIComponent(JSON.stringify(this.$store.state.log));
+
+            const data =content;
+            const link = document.createElement('a');
+            link.setAttribute('href', data);
+            link.setAttribute(
+                'download',
+                'BrickHunter_errorlog.json'
+            );
+            link.click();
         },
     },
     beforeMount() {

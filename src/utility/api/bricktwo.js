@@ -49,6 +49,7 @@ export default {
         if (!showAll) showAll = 0;
 
         let response = null;
+        
         try {
             let url = `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}&showall=${showAll}&notcategories=${excludedCategories}`;
             store.commit('addLog', { func: 'getBricksAsync', url: url });
