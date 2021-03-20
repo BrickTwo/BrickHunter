@@ -17,6 +17,9 @@
                 <span style="margin-left: 3px">
                     {{ labelFavorites }} ({{ favorites.length }})
                 </span>
+                <b-link @click="editFavorites()">
+                    <b-icon icon="pencil" variant="primary" />
+                </b-link>
                 <b-link @click="showFavorites()" v-if="!favoriteSelected">
                     <b-icon
                         icon="eye-slash"
@@ -39,6 +42,9 @@
                 <span style="margin-left: 3px">
                     {{ labelHaveIts }} ({{ haveIts.length }})
                 </span>
+                <b-link @click="editHaveIts()">
+                    <b-icon icon="pencil" variant="primary" />
+                </b-link>
                 <b-link @click="showHaveIts()" v-if="!haveItSelected">
                     <b-icon
                         icon="eye-slash"
@@ -77,6 +83,27 @@
                 </b-form-radio>
             </b-form-group>
         </b-row>
+        <b-modal
+            id="editList"
+            ref="editList"
+            :title="labelEditListHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            hide-header-close
+            no-close-on-backdrop
+            no-close-on-esc
+            @ok="okEditList"
+            @cancel="cancleEditList"
+        >
+            <p class="my-4">
+                <b-form-textarea
+                    v-model="editListContent"
+                    rows="6"
+                    max-rows="6"
+                />
+            </p>
+        </b-modal>
     </b-container>
 </template>
 
@@ -98,6 +125,11 @@ export default {
         favoriteSelected: false,
         haveIts: null,
         haveItSelected: false,
+        headerBgVariant: 'dark',
+        headerTextVariant: 'light',
+        labelEditListHeader: '',
+        editListContent: '',
+        editMode: '',
     }),
     methods: {
         createNewPartList() {
@@ -217,6 +249,59 @@ export default {
                 this.haveItSelected
             );
         },
+        editFavorites() {
+            this.editMode = 'favorites';
+            this.labelEditListHeader = this.labelFavorites;
+            this.editListContent = this.prepareEditList(
+                this.$store.state.singleParts.favorites
+            );
+            this.$refs['editList'].show();
+        },
+        editHaveIts() {
+            this.editMode = 'haveIts';
+            this.labelEditListHeader = this.labelHaveIts;
+            this.editListContent = this.prepareEditList(
+                this.$store.state.singleParts.haveIts
+            );
+            this.$refs['editList'].show();
+        },
+        prepareEditList(content) {
+            content = JSON.stringify(content);
+            content = content.slice(1); // remove first char
+            content = content.slice(0, -1); // remove last char
+            return content;
+        },
+        okEditList() {
+            let content = '[' + this.editListContent + ']';
+            try {
+                content = JSON.parse(content);
+            } catch (err) {
+                console.log(err);
+                return;
+            }
+
+            if (this.editMode == 'favorites') {
+                this.$store.commit('singleParts/setFavorites', content);
+                this.favorites = this.$store.state.singleParts.favorites;
+            } else if (this.editMode == 'haveIts') {
+                this.$store.commit('singleParts/setHaveIts', content);
+                this.haveIts = this.$store.state.singleParts.haveIts;
+            }
+
+            if (this.favoriteSelected) {
+                this.showFavorites();
+            } else if (this.haveItSelected) {
+                this.showHaveIts();
+            } else {
+                bus.$emit(
+                    'showPartList',
+                    this.showPartListId,
+                    this.favoriteSelected,
+                    this.haveItSelected
+                );
+            }
+        },
+        cancleEditList() {},
     },
     beforeMount() {
         this.partLists = this.$store.getters['partList/getPartListsBySource'](

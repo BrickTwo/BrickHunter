@@ -84,6 +84,10 @@ const mutations = {
 
         state.categoriesFiltered.unshift(category);
     },
+    setFavorites(state, payload) {
+        state.favorites = payload;
+        localStorage.setItem('favorites', JSON.stringify(state.favorites));
+    },
     addFavorite(state, itemNumber) {
         if (state.favorites.indexOf(parseInt(itemNumber)) != -1) return;
         state.favorites.push(parseInt(itemNumber));
@@ -97,6 +101,10 @@ const mutations = {
             state.favorites.splice(index, 1);
         }
         localStorage.setItem('favorites', JSON.stringify(state.favorites));
+    },
+    setHaveIts(state, payload) {
+        state.haveIts = payload;
+        localStorage.setItem('haveIts', JSON.stringify(state.haveIts));
     },
     addHaveIt(state, itemNumber) {
         if (state.haveIts.indexOf(parseInt(itemNumber)) != -1) return;
