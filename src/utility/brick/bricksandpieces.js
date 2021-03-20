@@ -109,6 +109,10 @@ export default {
             }
         }
 
+        if(item.color.id == 9999){
+            result = bricks;
+        }
+
         result.sort((a, b) => {
             if (a.price.amount > b.price.amount) {
                 return 1;

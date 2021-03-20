@@ -3,6 +3,16 @@ export const brickColorMixin = {
         return {
             COLOR: [
                 {
+                    id: 9999,
+                    brickLinkId: 9999,
+                    brickLinkName: 'Not specified!',
+                    legoId: 9999,
+                    legoName: '',
+                    bricksAndPiecesName: '',
+                    pickABrickName: '',
+                    colorCode: '#FFFFFF',
+                },
+                {
                     id: 1,
                     brickLinkId: 0,
                     brickLinkName: 'Not defined!',

@@ -101,7 +101,7 @@ export default {
                     if (item.color) {
                         part.color = this.findColor(item.color[0], this.COLOR);
                     } else {
-                        part.color = this.findColor(0, this.COLOR);
+                        part.color = this.findColor(9999, this.COLOR);
                     }
                     part.qty = {
                         min: 0,
@@ -141,18 +141,20 @@ export default {
                     }
                     if (item.remarks) {
                         part.brickLink.wantedList.remarks = item.remarks[0];
-                        console.log(part)
                     } else {
                         part.brickLink.wantedList.remarks = null;
                     }
 
                     part.image = {
                         source: 'brickLink',
-                        rsc: `https://img.bricklink.com/ItemImage/${part.brickLink.wantedList.itemtype}T/${part.color?.brickLinkId}/${part.designId}.t1.png`,
+                        rsc: `https://img.bricklink.com/ItemImage/${part.brickLink.wantedList.itemtype}N/${part.color?.brickLinkId}/${part.designId}.png`,
                     };
+
+                    
 
                     partList.push(part);
                 });
+
                 this.wantedList = [...partList];
 
                 return list;

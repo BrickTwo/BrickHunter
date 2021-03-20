@@ -222,6 +222,10 @@ export default {
                     },
                 };
 
+                if(this.wantedList[i].color.id == 9999){
+                    item.ITEM.COLOR = '';
+                }
+
                 brickLink.INVENTORY.push(item);
             }
 

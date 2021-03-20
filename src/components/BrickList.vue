@@ -36,16 +36,8 @@
             />
         </template>
         <template #cell(image)="data">
-            <img
-                v-if="data.value.rsc"
-                :src="data.value.rsc"
-                style="max-height:50px; max-width:60px;"
-            />
-            <img
-                v-else
-                :src="calcImage(data.value)"
-                style="max-height:50px; max-width:60px;"
-            />
+            <div v-if="data.value.rsc" :style="bgimage(data.value.rsc)" />
+            <div v-else :style="bgimage(calcImage(data.value))" />
         </template>
         <template #cell(color)="data">
             <div v-if="data.value">
@@ -422,6 +414,9 @@ export default {
                 }
                 return order === 'desc' ? comparison * -1 : comparison;
             });
+        },
+        bgimage(src) {
+            return `background-image: url(${src}), url('placeholder.jpg'); height:50px; max-width:60px; background-repeat: no-repeat; background-size: contain; background-position: center;`;
         },
     },
     beforeMount() {
