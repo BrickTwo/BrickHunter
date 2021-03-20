@@ -1,4 +1,5 @@
 const axios = require('axios');
+import store from '@/store';
 
 export default {
     sendPrices(items) {
@@ -16,10 +17,13 @@ export default {
     async getCategoriesAsync(country) {
         let response = null;
         try {
-            response = await axios.get(
-                `https://brickhunter.bricktwo.net/api/categories/read.php?country=${country}`
-            );
-        } catch (err) {}
+            let url = `https://brickhunter.bricktwo.net/api/categories/read.php?country=${country}`;
+            store.commit('addLog', { func: 'getCategoriesAsync', url: url });
+            response = await axios.get(url);
+            store.commit('addLog', { func: 'getCategoriesAsync', respStat: response.status });
+        } catch (err) {
+            store.commit('addLog', { func: 'getCategoriesAsync', err: err });
+        }
         return response.data;
     },
     async getBricksAsync(
@@ -33,7 +37,7 @@ export default {
         sortDirection,
         showAll,
         itemNumbers,
-        excludedCategories,
+        excludedCategories
     ) {
         if (!keyword) {
             keyword = '';
@@ -41,50 +45,64 @@ export default {
         if (categoryId == 9999999) {
             categoryId = '';
         }
-        if(showAll) showAll = 1;
-        if(!showAll) showAll = 0;
+        if (showAll) showAll = 1;
+        if (!showAll) showAll = 0;
 
         let response = null;
-        
         try {
-          response = await axios({
+            let url = `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}&showall=${showAll}&notcategories=${excludedCategories}`;
+            store.commit('addLog', { func: 'getBricksAsync', url: url });
+            response = await axios({
                 method: 'post',
-                url: `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}&showall=${showAll}&notcategories=${excludedCategories}`,
+                url: url,
                 data: {
-                    itemnumbers: itemNumbers
-                }
+                    itemnumbers: itemNumbers,
+                },
             });
-        } catch (err) {}
+            store.commit('addLog', { func: 'getBricksAsync', respStat: response.status });
+        } catch (err) {
+            store.commit('addLog', { func: 'getBricksAsync', err: err });
+        }
         return response.data;
     },
     async getBrickAsync(itemNumber, country) {
         let response = null;
         try {
-            response = await axios.get(
-                `https://brickhunter.bricktwo.net/api/bricks/single/read.php?itemnumber=${itemNumber}&country=${country}`
-            );
-        } catch (err) {}
+            let url = `https://brickhunter.bricktwo.net/api/bricks/single/read.php?itemnumber=${itemNumber}&country=${country}`;
+            store.commit('addLog', { func: 'getBrickAsync', url: url });
+            response = await axios.get(url);
+            store.commit('addLog', { func: 'getBrickAsync', respStat: response.status });
+        } catch (err) {
+            store.commit('addLog', { func: 'getBrickAsync', err: err });
+        }
         return response?.data;
     },
     async getColorsAsync() {
         let response = null;
         try {
-            response = await axios.get(
-                `https://brickhunter.bricktwo.net/api/colors/read.php`
-            );
-        } catch (err) {}
+            let url = `https://brickhunter.bricktwo.net/api/colors/read.php`;
+            store.commit('addLog', { func: 'getColorsAsync', url: url });
+            response = await axios.get(url);
+            store.commit('addLog', { func: 'getColorsAsync', respStat: response.status });
+        } catch (err) {
+            store.commit('addLog', { func: 'getColorsAsync', err: err });
+        }
         return response.data;
     },
     async getSyncAsync() {
         let response = null;
         try {
-            response = await axios.get(
-                `https://brickhunter.bricktwo.net/api/sync/read.php`
-            );
-        } catch (err) {}
+            let url = `https://brickhunter.bricktwo.net/api/sync/read.php`;
+            store.commit('addLog', { func: 'getSyncAsync', url: url });
+            response = await axios.get(url);
+            store.commit('addLog', { func: 'getSyncAsync', respStat: response.status });
+        } catch (err) {
+            store.commit('addLog', { func: 'getSyncAsync', err: err });
+        }
         return response.data;
     },
-    prepareSendPrice(bricks, country) { //api bricktwo
+    prepareSendPrice(bricks, country) {
+        //api bricktwo
         if (!bricks) return null;
 
         let returnValue = [];
@@ -113,4 +131,4 @@ export default {
 
         return returnValue;
     },
-}
+};

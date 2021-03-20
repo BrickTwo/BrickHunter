@@ -93,7 +93,11 @@
                 />
             </div>
         </b-container>
-
+        <b-modal ref="exportLog" id="exportLog" title="Session Blocked!">
+            <b-button @click="downloadLog">
+                Download Log
+            </b-button>
+        </b-modal>
     </div>
 </template>
 
@@ -126,7 +130,7 @@ p {
 </style>
 
 <script>
-import { bus } from '@/utility/bus'; 
+import { bus } from '@/utility/bus';
 
 import SelectCountry from '@/components/SelectCountry.vue';
 import SelectCountryDropDown from '@/components/SelectCountryDropDown.vue';
@@ -185,6 +189,20 @@ export default {
                 ),
             });
             window.close();
+        },
+        downloadLog() {
+            let content =
+                'data:text/json;charset=utf-8,' +
+                encodeURIComponent(JSON.stringify(this.$store.state.log));
+
+            const data =content;
+            const link = document.createElement('a');
+            link.setAttribute('href', data);
+            link.setAttribute(
+                'download',
+                'BrickHunter_errorlog.json'
+            );
+            link.click();
         },
         async cloudSync() {
             var checkDate = new Date(this.$store.state.syncDate);
@@ -265,6 +283,9 @@ export default {
     created() {
         bus.$on('initialized', (payload) => {
             this.flag = true;
+        });
+        bus.$on('exportLog', (payload) => {
+            this.$refs['exportLog'].show();
         });
     },
 };

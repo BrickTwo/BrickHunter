@@ -603,10 +603,16 @@ export default {
             return new Promise((resolve) => setTimeout(resolve, ms));
         },
         onSelectSortByChange(value) {
+            this.$store.commit('addLog', {
+                action: 'onSelectSortByChange',
+            });
             this.selectedSort = value;
             this.loadBricks(true);
         },
         onSelectSortDirectionChange() {
+            this.$store.commit('addLog', {
+                action: 'onSelectSortDirectionChange',
+            });
             if (this.sortDirection == 'ASC') {
                 this.sortDirection = 'DESC';
             } else {
@@ -615,28 +621,46 @@ export default {
             this.loadBricks(false);
         },
         onColorChange(value) {
+            this.$store.commit('addLog', {
+                action: 'onColorChange',
+            });
             this.selectedColor = value;
             this.loadBricks(true);
         },
         setKeyword(value) {
+            this.$store.commit('addLog', {
+                action: 'setKeyword',
+            });
             this.selectedColor = 'all';
             this.keyword = value;
             this.onKeywordChange();
         },
         setColor(value) {
+            this.$store.commit('addLog', {
+                action: 'setColor',
+            });
             this.keyword = '';
             this.selectedColor = value;
             this.loadBricks(true);
         },
         onChangeCurrentPage(event) {
+            this.$store.commit('addLog', {
+                action: 'onChangeCurrentPage',
+            });
             this.currentPage = event;
             this.loadBricks(false);
         },
         onChangePerPage(event) {
+            this.$store.commit('addLog', {
+                action: 'onChangePerPage',
+            });
             this.perPage = event;
             this.loadBricks(true);
         },
         onKeywordChange() {
+            this.$store.commit('addLog', {
+                action: 'onKeywordChange',
+            });
             this.loadBricks(true);
         },
         loadFilter() {
@@ -673,8 +697,6 @@ export default {
                         this.selectedItemNumbers.push(pos.itemNumber)
                     );
             } else {
-                console.log(this.showFavorites, this.$store.state.singleParts.favorites, this.showHaveIts, this.$store.state.singleParts.haveIts)
-
                 if (this.showFavorites)
                     this.selectedItemNumbers = this.$store.state.singleParts.favorites;
                 if (this.showHaveIts)
@@ -698,6 +720,9 @@ export default {
             });
         },
         okSettings() {
+            this.$store.commit('addLog', {
+                action: 'okSettings',
+            });
             this.showOnlyAvailable = this.tempShowOnlyAvailable;
             this.selectCategoriesToBeHidden = this.tempSelectCategoriesToBeHidden;
             this.excludedCategories = this.tempExcludedCategories;
@@ -714,20 +739,32 @@ export default {
         this.loadFilter();
     },
     mounted() {
+        this.$store.commit('addLog', {
+            action: 'mounted',
+        });
         this.loadBricks();
     },
     created() {
         bus.$on('categorySelected', (categoryId) => {
+            this.$store.commit('addLog', {
+                action: 'categorySelected',
+            });
             this.categoryId = categoryId;
 
             this.loadBricks(true);
         });
         bus.$on('selectedPartList', (partListId) => {
+            this.$store.commit('addLog', {
+                action: 'selectedPartList',
+            });
             this.selectedPartListId = partListId;
 
             this.selectPart();
         });
         bus.$on('showPartList', (partListId, showFavorites, showHaveIts) => {
+            this.$store.commit('addLog', {
+                action: 'showPartList',
+            });
             this.showPartListId = partListId;
             this.showFavorites = showFavorites;
             this.showHaveIts = showHaveIts;

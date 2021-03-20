@@ -24,6 +24,8 @@ export default new Vuex.Store({
         syncDate: null,
         initialized: false,
         showImagesInLegoOrder: true,
+        generateLog: false,
+        log: [],
     },
     mutations: {
         initialize(state, persistedState) {
@@ -46,6 +48,8 @@ export default new Vuex.Store({
             state.showImagesInLegoOrder =
                 (localStorage.getItem('showImagesInLegoOrder') || 'true') ===
                 'true';
+            state.generateLog =
+                (localStorage.getItem('generateLog') || 'true') === 'true';
 
             localStorage.setItem('version', state.version.current);
 
@@ -71,7 +75,8 @@ export default new Vuex.Store({
                     sKey != 'favorites' &&
                     sKey != 'haveIts' &&
                     sKey != 'filterSingleParts' &&
-                    sKey != 'showImagesInLegoOrder'
+                    sKey != 'showImagesInLegoOrder' &&
+                    sKey != 'generateLog'
                 ) {
                     localStorage.removeItem(sKey);
                 }
@@ -101,12 +106,23 @@ export default new Vuex.Store({
             localStorage.setItem('syncDate', state.syncDate);
         },
         setShowImagesInLegoOrder(state, payload) {
-            state.setShowImagesInLegoOrder = payload;
+            state.showImagesInLegoOrder = payload;
             localStorage.setItem(
                 'showImagesInLegoOrder',
-                state.setShowImagesInLegoOrder
+                state.showImagesInLegoOrder
             );
         },
+        setGenerateLog(state, payload) {
+            state.generateLog = payload;
+            localStorage.setItem('generateLog', state.generateLog);
+        },
+        addLog(state, payload){
+            if(!state.generateLog) return;
+            let log = {dateTime: new Date().toISOString(), data: payload}
+            state.log.push(log);
+            if(state.log.length > 200) state.log.shift();
+            if(payload.respStat && payload.respStat == 503) bus.$emit('exportLog', true);
+        }
     },
     actions: {
         async initialiseStore({ dispatch, state, commit }) {

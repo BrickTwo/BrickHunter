@@ -20,7 +20,15 @@
                 id="showImagesInLegoOrder"
                 v-model="showImagesInLegoOrder"
                 @change="onShowImagesInLegoOrderChange"
-                >{{ labelShowImagesInLegoOrder }}
+            >
+                {{ labelShowImagesInLegoOrder }}
+            </b-form-checkbox>
+            <b-form-checkbox
+                id="generateLog"
+                v-model="generateLog"
+                @change="onGenerateLogChange"
+            >
+                Log aktivieren
             </b-form-checkbox>
         </b-form>
     </div>
@@ -42,6 +50,8 @@ export default {
             selectedLanguage: null,
             isValidCountry: true,
             isValidLanguage: true,
+            showImagesInLegoOrder: true,
+            generateLog: true,
         };
     },
     methods: {
@@ -54,10 +64,14 @@ export default {
         onShowImagesInLegoOrderChange(val) {
             this.$store.commit('setShowImagesInLegoOrder', val);
         },
+        onGenerateLogChange(val) {
+            this.$store.commit('setGenerateLog', val);
+        },
     },
     beforeMount() {
         this.selectedCountry = this.$store.state.country;
         this.showImagesInLegoOrder = this.$store.state.showImagesInLegoOrder;
+        this.generateLog = this.$store.state.generateLog;
     },
     computed: {
         whereDoYouLive() {
