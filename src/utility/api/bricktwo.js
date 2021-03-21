@@ -10,10 +10,10 @@ export default {
 
         //console.log(absoluteCounter, new Date().toISOString(), 'throttling start', activeRequests);
         await this.sleep(200 * activeRequests);
-        activeRequests--;
         //console.log(absoluteCounter, new Date().toISOString(), 'throttling end', activeRequests);
         return;
     },
+
     sleep(ms) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     },
@@ -42,7 +42,12 @@ export default {
             });
         } catch (err) {
             store.commit('addLog', { func: 'getCategoriesAsync', err: err });
+            activeRequests--;
+            //console.log(absoluteCounter, new Date().toISOString(), 'throttling end error cat', activeRequests);
+            return null;
         }
+        activeRequests--;
+        //console.log(absoluteCounter, new Date().toISOString(), 'throttling end cat', activeRequests);
         return response.data;
     },
     async getBricksAsync(
@@ -86,7 +91,12 @@ export default {
             });
         } catch (err) {
             store.commit('addLog', { func: 'getBricksAsync', err: err });
+            activeRequests--;
+            //console.log(absoluteCounter, new Date().toISOString(), 'throttling end error bricks', activeRequests);            
+            return null;
         }
+        activeRequests--;
+        //console.log(absoluteCounter, new Date().toISOString(), 'throttling end bricks', activeRequests);
         return response.data;
     },
     async getBrickAsync(itemNumber, country) {
@@ -102,7 +112,10 @@ export default {
             });
         } catch (err) {
             store.commit('addLog', { func: 'getBrickAsync', err: err });
+            activeRequests--;
+            return null;
         }
+        activeRequests--;
         return response?.data;
     },
     async getColorsAsync() {
@@ -118,7 +131,10 @@ export default {
             });
         } catch (err) {
             store.commit('addLog', { func: 'getColorsAsync', err: err });
+            activeRequests--;
+            return null;
         }
+        activeRequests--;
         return response.data;
     },
     async getSyncAsync() {
@@ -134,7 +150,10 @@ export default {
             });
         } catch (err) {
             store.commit('addLog', { func: 'getSyncAsync', err: err });
+            activeRequests--;
+            return null;
         }
+        activeRequests--;
         return response.data;
     },
     prepareSendPrice(bricks, country) {
