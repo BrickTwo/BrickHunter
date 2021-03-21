@@ -116,13 +116,14 @@ export default new Vuex.Store({
             state.generateLog = payload;
             localStorage.setItem('generateLog', state.generateLog);
         },
-        addLog(state, payload){
-            if(!state.generateLog) return;
-            let log = {dateTime: new Date().toISOString(), data: payload}
+        addLog(state, payload) {
+            if (!state.generateLog) return;
+            let log = { dateTime: new Date().toISOString(), data: payload };
             state.log.push(log);
-            if(state.log.length > 200) state.log.shift();
-            if(payload.respStat && payload.respStat == 503) bus.$emit('exportLog', true);
-        }
+            if (state.log.length > 200) state.log.shift();
+            if (payload.respStat && payload.respStat == 503)
+                bus.$emit('exportLog', true);
+        },
     },
     actions: {
         async initialiseStore({ dispatch, state, commit }) {

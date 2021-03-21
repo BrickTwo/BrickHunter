@@ -18,7 +18,7 @@ const getters = {
 
 // actions
 const actions = {
-    async initialiseStore({ state }, oldVersion) {
+    initialiseStore({ state, commit }, oldVersion) {
         if (version.isSmaller(oldVersion, '1.5.4')) {
             let sKey;
             for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
@@ -99,7 +99,7 @@ const actions = {
         }
 
         if (version.isSmaller(oldVersion, '1.5.4')) {
-            await state.partLists.map((partList) => {
+            state.partLists.map((partList) => {
                 partList.version = '1.0';
                 //localStorage.removeItem('partList_' + partList.id);
             });
@@ -109,12 +109,16 @@ const actions = {
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;
         });
+
+        if (state.partLists.length > 0)
+            commit('setPartList', state.partLists[0]);
     },
 };
 
 // mutations
 const mutations = {
-    async setPartList(state, payload) {
+    setPartList(state, payload) {
+        console.log(2);
         var found = state.partLists.find(
             (partList) => partList.id === payload.id
         );
@@ -134,7 +138,7 @@ const mutations = {
             state.totalPositions += partList.positions.length;
         });
     },
-    async deletePartList(state, partListId) {
+    deletePartList(state, partListId) {
         state.partLists = state.partLists.filter(
             (partList) => partList.id != partListId
         );
@@ -146,7 +150,7 @@ const mutations = {
             state.totalPositions += partList.positions.length;
         });
     },
-    async addToPartList(state, payload) {
+    addToPartList(state, payload) {
         var found = state.partLists.find(
             (partList) => partList.id === payload.id
         );
