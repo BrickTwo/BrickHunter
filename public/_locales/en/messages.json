@@ -134,11 +134,20 @@
     "import": {
         "message": "Import"
     },
+    "import_fileUpload": {
+        "message": "File upload"
+    },
+    "import_textArea": {
+        "message": "Text area"
+    },
     "aPartList": {
         "message": " a parts list."
     },
     "error_tryAgain": {
         "message": "Bitte versuche es später nochmals!"
+    },
+    "exportBrickLink_notPossible": {
+        "message": "Currently only lists of type BrickLink can be exported to BrickLink!"
     },
     "exportCsv_generalGroupTitle": {
         "message": "General"
@@ -469,6 +478,12 @@
     },
     "info_donateText": {
         "message": "If you like BrickHunter I would appreciate a voluntary donation."
+    },
+    "newVersionAvailableBefore": {
+        "message": "New version"
+    },
+    "newVersionAvailableAfter": {
+        "message": "available!"
     },
     "partList_positions": {
         "message": "Positions"

@@ -1,7 +1,8 @@
 <template>
     <div>
         <b-alert show v-if="newVersionAvailable" variant="warning" dismissible>
-            Neue Version {{ newVersionAvailable }} Verfügbar!
+            {{ labelVersionAvailableBefore }} {{ newVersionAvailable }}
+            {{ labelNewVersionAvailableAfter }}
         </b-alert>
         <b-modal
             id="notificationMessage"
@@ -70,6 +71,12 @@ export default {
     computed: {
         labelNotificationHeader() {
             return browser.i18n.getMessage('notification_header');
+        },
+        labelVersionAvailableBefore() {
+            return browser.i18n.getMessage('newVersionAvailableBefore');
+        },
+        labelNewVersionAvailableAfter() {
+            return browser.i18n.getMessage('newVersionAvailableAfter');
         },
     },
 };

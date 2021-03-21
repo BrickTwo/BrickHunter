@@ -9,8 +9,8 @@
                         v-model="showUploadField"
                         name="radio-sub-component"
                     >
-                        <b-form-radio value="filePicker">Dateiupload</b-form-radio>
-                        <b-form-radio value="textArea">Textfeld</b-form-radio>
+                        <b-form-radio value="filePicker">{{ labelFileUpload }}</b-form-radio>
+                        <b-form-radio value="textArea">{{ labelImport_textArea }}</b-form-radio>
                     </b-form-radio-group>
             </b-col>
         </b-row>
@@ -252,6 +252,16 @@ export default {
         labelErrorImportBrickLinkTextToManyPositions() {
             return browser.i18n.getMessage(
                 'import_errorImportBrickLinkTextToManyPositions'
+            );
+        },
+        labelFileUpload() {
+            return browser.i18n.getMessage(
+                'import_fileUpload'
+            );
+        },
+        labelImport_textArea() {
+            return browser.i18n.getMessage(
+                'import_textArea'
             );
         },
     },

@@ -1,13 +1,15 @@
 <template>
     <div>
-        <span v-if="!partLists.length"
-            >{{ itsEmptyHere
-            }}<b-button
+        <span v-if="!partLists.length">
+            {{ itsEmptyHere }}
+            <b-button
                 variant="primary"
                 @click="$router.push('/import').catch(() => {})"
-                >{{ buttonImport }}</b-button
-            >{{ aPartList }}</span
-        >
+            >
+                {{ buttonImport }}
+            </b-button>
+            {{ aPartList }}
+        </span>
         <b-list-group>
             <b-list-group-item
                 v-for="partList in partLists"
@@ -16,15 +18,28 @@
                 @click="selectPartList(partList.id)"
                 style="display: inline"
             >
-                <span
-                    style="max-width:640px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom"
-                    >{{ partList.name }}</span
-                ><span style="float: right;">
-                    <b-badge variant="primary" pill>{{
-                        partList.positions.length
-                    }}</b-badge></span
-                ></b-list-group-item
-            >
+                <b-row>
+                    <b-col cols="2" class="text-left">
+                        <span v-if="partList.source == 'brickLink'">
+                            {{ labelBrickLink }}
+                        </span>
+                        <span v-if="partList.source == 'lego'">
+                            {{ labelLegoSet }}
+                        </span>
+                        <span v-if="partList.source == 'singleParts'">
+                            {{ labelSinglePart }}
+                        </span>
+                    </b-col>
+                    <b-col class="text-overflow-elipsis">
+                        {{ partList.name }}
+                    </b-col>
+                    <b-col cols="auto" class="text-right">
+                        <b-badge variant="primary" pill>
+                            {{ partList.positions.length }}
+                        </b-badge>
+                    </b-col>
+                </b-row>
+            </b-list-group-item>
         </b-list-group>
     </div>
 </template>
@@ -40,13 +55,15 @@ export default {
             //this.$emit('changePage', 'wantedList+' + id);
         },
         loadPartLists() {
-            this.partLists = this.$store.state.partList.partLists.sort((a, b) => {
-                if (a.name.toUpperCase() > b.name.toUpperCase()) {
-                    return 1;
-                } else {
-                    return -1;
+            this.partLists = this.$store.state.partList.partLists.sort(
+                (a, b) => {
+                    if (a.name.toUpperCase() > b.name.toUpperCase()) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
                 }
-            });
+            );
         },
     },
     beforeMount() {
@@ -61,6 +78,15 @@ export default {
         },
         aPartList() {
             return browser.i18n.getMessage('aPartList');
+        },
+        labelBrickLink() {
+            return browser.i18n.getMessage('brickLink');
+        },
+        labelLegoSet() {
+            return browser.i18n.getMessage('import_legoSet');
+        },
+        labelSinglePart() {
+            return browser.i18n.getMessage('import_singleParts');
         },
     },
 };

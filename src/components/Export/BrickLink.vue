@@ -3,8 +3,7 @@
         <div v-if="partList.source != 'brickLink'">
             <b-row>
                 <b-col>
-                    Diese Liste kann aktuell nicht nach BrickLink exportiert
-                    werden!
+                    {{ labelExportNotPossible }}
                 </b-col>
             </b-row>
         </div>
@@ -359,6 +358,9 @@ export default {
         },
         copyButton() {
             return browser.i18n.getMessage('exportWantedList_copyButton');
+        },
+        labelExportNotPossible() {
+            return browser.i18n.getMessage('exportBrickLink_notPossible');
         },
     },
 };
