@@ -1,7 +1,22 @@
 const axios = require('axios');
 import store from '@/store';
+var activeRequests = 0;
+//var absoluteCounter = 0;
 
 export default {
+    async throttling() {
+        activeRequests++;
+        //absoluteCounter++;
+
+        //console.log(absoluteCounter, new Date().toISOString(), 'throttling start', activeRequests);
+        await this.sleep(200 * activeRequests);
+        activeRequests--;
+        //console.log(absoluteCounter, new Date().toISOString(), 'throttling end', activeRequests);
+        return;
+    },
+    sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    },
     sendPrices(items) {
         if (!items) return;
 
@@ -19,8 +34,12 @@ export default {
         try {
             let url = `https://brickhunter.bricktwo.net/api/categories/read.php?country=${country}`;
             store.commit('addLog', { func: 'getCategoriesAsync', url: url });
+            await this.throttling();
             response = await axios.get(url);
-            store.commit('addLog', { func: 'getCategoriesAsync', respStat: response.status });
+            store.commit('addLog', {
+                func: 'getCategoriesAsync',
+                respStat: response.status,
+            });
         } catch (err) {
             store.commit('addLog', { func: 'getCategoriesAsync', err: err });
         }
@@ -49,10 +68,11 @@ export default {
         if (!showAll) showAll = 0;
 
         let response = null;
-        
+
         try {
             let url = `https://brickhunter.bricktwo.net/api/bricks/read.php?page=${page}&limit=${limit}&country=${country}&category=${categoryId}&color=${colorId}&keyword=${keyword}&sortfield=${sortField}&sortdir=${sortDirection}&showall=${showAll}&notcategories=${excludedCategories}`;
             store.commit('addLog', { func: 'getBricksAsync', url: url });
+            await this.throttling();
             response = await axios({
                 method: 'post',
                 url: url,
@@ -60,7 +80,10 @@ export default {
                     itemnumbers: itemNumbers,
                 },
             });
-            store.commit('addLog', { func: 'getBricksAsync', respStat: response.status });
+            store.commit('addLog', {
+                func: 'getBricksAsync',
+                respStat: response.status,
+            });
         } catch (err) {
             store.commit('addLog', { func: 'getBricksAsync', err: err });
         }
@@ -71,8 +94,12 @@ export default {
         try {
             let url = `https://brickhunter.bricktwo.net/api/bricks/single/read.php?itemnumber=${itemNumber}&country=${country}`;
             store.commit('addLog', { func: 'getBrickAsync', url: url });
+            await this.throttling();
             response = await axios.get(url);
-            store.commit('addLog', { func: 'getBrickAsync', respStat: response.status });
+            store.commit('addLog', {
+                func: 'getBrickAsync',
+                respStat: response.status,
+            });
         } catch (err) {
             store.commit('addLog', { func: 'getBrickAsync', err: err });
         }
@@ -83,8 +110,12 @@ export default {
         try {
             let url = `https://brickhunter.bricktwo.net/api/colors/read.php`;
             store.commit('addLog', { func: 'getColorsAsync', url: url });
+            await this.throttling();
             response = await axios.get(url);
-            store.commit('addLog', { func: 'getColorsAsync', respStat: response.status });
+            store.commit('addLog', {
+                func: 'getColorsAsync',
+                respStat: response.status,
+            });
         } catch (err) {
             store.commit('addLog', { func: 'getColorsAsync', err: err });
         }
@@ -95,8 +126,12 @@ export default {
         try {
             let url = `https://brickhunter.bricktwo.net/api/sync/read.php`;
             store.commit('addLog', { func: 'getSyncAsync', url: url });
+            await this.throttling();
             response = await axios.get(url);
-            store.commit('addLog', { func: 'getSyncAsync', respStat: response.status });
+            store.commit('addLog', {
+                func: 'getSyncAsync',
+                respStat: response.status,
+            });
         } catch (err) {
             store.commit('addLog', { func: 'getSyncAsync', err: err });
         }
