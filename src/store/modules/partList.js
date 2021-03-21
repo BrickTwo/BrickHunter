@@ -118,7 +118,6 @@ const actions = {
 // mutations
 const mutations = {
     setPartList(state, payload) {
-        console.log(2);
         var found = state.partLists.find(
             (partList) => partList.id === payload.id
         );
