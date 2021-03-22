@@ -333,6 +333,9 @@ export default {
             this.sortPartList();
         });
     },
+    beforeDestroy() {
+        bus.$off();
+    },
     watch: {
         selectedPartListId: function() {
             //this.$emit('partListActive', this.selectedPartListId);

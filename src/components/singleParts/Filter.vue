@@ -773,6 +773,9 @@ export default {
             this.loadBricks(true);
         });
     },
+    beforeDestroy() {
+        bus.$off();
+    },
     computed: {
         labelFindPartsByKeyword() {
             return browser.i18n.getMessage('import_sp_findPartsByKeyword');

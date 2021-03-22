@@ -22,7 +22,6 @@
 
 <script>
 import { bus } from '@/utility/bus';
-import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     data: () => ({
@@ -43,6 +42,9 @@ export default {
             this.categories = payload?.categories;
             this.selectCategory = payload?.selected;
         });
+    },
+    beforeDestroy() {
+        bus.$off();
     },
 };
 </script>

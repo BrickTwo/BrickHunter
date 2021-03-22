@@ -288,5 +288,8 @@ export default {
             this.$refs['exportLog'].show();
         });
     },
+    beforeDestroy() {
+        bus.$off();
+    },
 };
 </script>
