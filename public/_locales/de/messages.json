@@ -315,13 +315,13 @@
         "message": "Datei"
     },
     "import_setNumber": {
-        "message": "Set Number"
+        "message": "Setnummer"
     },
     "import_name": {
         "message": "Name"
     },
     "import_useSetNumberSuffix": {
-        "message": "Use Set Number as suffix"
+        "message": "Setnummer als Präfix verwenden"
     },
     "import_shoppingCart": {
         "message": "Warenkorb"

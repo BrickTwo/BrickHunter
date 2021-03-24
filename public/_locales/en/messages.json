@@ -321,7 +321,7 @@
         "message": "Name"
     },
     "import_useSetNumberSuffix": {
-        "message": "Use Set Number as suffix"
+        "message": "Use Set Number as prefix"
     },
     "import_shoppingCart": {
         "message": "Shopping cart"
