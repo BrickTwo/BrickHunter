@@ -23,7 +23,7 @@
             >
                 {{ labelShowImagesInLegoOrder }}
             </b-form-checkbox>
-            <b-form-checkbox
+            <!--<b-form-checkbox
                 id="generateLog"
                 v-model="generateLog"
                 @change="onGenerateLogChange"
@@ -32,7 +32,7 @@
             </b-form-checkbox>
             <b-button @click="downloadLog">
                 Download Log
-            </b-button>
+            </b-button>-->
         </b-form>
     </div>
 </template>
