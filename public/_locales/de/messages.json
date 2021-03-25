@@ -134,11 +134,20 @@
     "import": {
         "message": "Importiere"
     },
+    "import_fileUpload": {
+        "message": "Dateiupload"
+    },
+    "import_textArea": {
+        "message": "Textfeld"
+    },
     "aPartList": {
         "message": " eine Teileliste."
     },
     "error_tryAgain": {
         "message": "Bitte versuche es später nochmals!"
+    },
+    "exportBrickLink_notPossible": {
+        "message": "Aktuell können nur Listen vom Typ BrickLink nach BrickLink exportiert werden!"
     },
     "exportCsv_generalGroupTitle": {
         "message": "Allgemein"
@@ -306,13 +315,13 @@
         "message": "Datei"
     },
     "import_setNumber": {
-        "message": "Set Number"
+        "message": "Setnummer"
     },
     "import_name": {
         "message": "Name"
     },
     "import_useSetNumberSuffix": {
-        "message": "Use Set Number as suffix"
+        "message": "Setnummer als Präfix verwenden"
     },
     "import_shoppingCart": {
         "message": "Warenkorb"
@@ -324,13 +333,16 @@
         "message": "Zurücksetzen"
     },
     "import_successfullImportBrickLinkTitle": {
-        "message": "BrickLink Import"
+        "message": "Import"
     },
     "import_successfullImportBrickLinkText": {
         "message": "Teileliste erfolgreich angelegt."
     },
     "import_errorImportBrickLinkTextToManyPositions": {
         "message": "Total Anzahl der Positionen aller Teilelisten kann nicht grösser 2000 sein."
+    },
+    "import_override": {
+        "message": "Gleiche Liste überschreiben"
     },
     "import_sp_partLists": {
         "message": "Teilelisten"
@@ -395,6 +407,33 @@
     "import_sp_add": {
         "message": "Hinzufügen"
     },
+    "import_sp_indexing": {
+        "message": "Indexierung"
+    },
+    "import_sp_settingsHeader": {
+        "message": "Einstellungen"
+    },
+    "import_sp_showOnlyAvailable": {
+        "message": "Nur verfügbare Teile anzeigen"
+    },
+    "import_sp_favorites": {
+        "message": "Wunschliste"
+    },
+    "import_sp_haveIt": {
+        "message": "Habe ich"
+    },
+    "import_sp_selectCategoriesToBeHidden": {
+        "message": "Ausgewählte Kategorien nicht verwenden"
+    },
+    "import_sp_lastMonth": {
+        "message": "Letzter Monat"
+    },
+    "import_sp_lastThreeMonths": {
+        "message": "Letzte 3 Monate"
+    },
+    "import_sp_allTime": {
+        "message": "Alle"
+    },
     "info_disclaimerTitle": {
         "message": "Disclaimer"
     },
@@ -437,6 +476,12 @@
     "info_donateText": {
         "message": "Falls du BrickHunter gefällt würde ich mich sehr über eine freiwillige Spende freuen."
     },
+    "newVersionAvailableBefore": {
+        "message": "Neue Version"
+    },
+    "newVersionAvailableAfter": {
+        "message": "Verfügbar!"
+    },
     "partList_positions": {
         "message": "Positionen"
     },
@@ -460,6 +505,9 @@
     },
     "selectCountry_saveButton": {
         "message": "Speichern"
+    },
+    "setting_showImagesInLegoOrder": {
+        "message": "Zeige Teilebilder im LEGO Shop bei den Bestelldetails an."
     },
     "shopping_priorityOne": {
         "message": "Prio 1"

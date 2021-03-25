@@ -1,6 +1,6 @@
 {
   "name": "brickhunter",
-  "version": "1.4.13",
+  "version": "1.5.13",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service build --mode development --watch",
@@ -9,13 +9,15 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.16.0",
-    "chart.js": "^2.9.4",
+    "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
     "flags": "^0.1.3",
     "jquery": "^3.5.0",
+    "localforage": "^1.9.0",
+    "localforage-getitems": "^1.4.2",
     "vee-validate": "^3.3.11",
     "vue": "^2.6.12",
-    "vue-chartjs": "^3.5.1",
+    "vue-chartjs": "^3.5.0",
     "vue-html-to-paper": "^1.3.1",
     "vue-router": "^3.4.6",
     "vue-scrollto": "^2.20.0",

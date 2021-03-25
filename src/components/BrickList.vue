@@ -2,7 +2,7 @@
     <b-table
         hover
         small
-        responsive
+        :responsive="true"
         no-border-collapse
         select-mode="multi"
         no-local-sorting
@@ -17,6 +17,7 @@
         @row-selected="onRowSelection"
         ref="selectableTable"
         class="m-0"
+        :style="style"
     >
         <template #table-colgroup="scope">
             <col
@@ -35,16 +36,8 @@
             />
         </template>
         <template #cell(image)="data">
-            <img
-                v-if="data.value.rsc"
-                :src="data.value.rsc"
-                style="max-height:50px; max-width:60px;"
-            />
-            <img
-                v-else
-                :src="calcImage(data.value)"
-                style="max-height:50px; max-width:60px;"
-            />
+            <div v-if="data.value.rsc" :style="bgimage(data.value.rsc)" />
+            <div v-else :style="bgimage(calcImage(data.value))" />
         </template>
         <template #cell(color)="data">
             <div v-if="data.value">
@@ -220,6 +213,9 @@
                 </span>
             </div>
         </template>
+        <template #cell(brickLinkRemarks)="data">
+            <div style="overflow-y: scroll; max-height: 50px">{{ data.item.brickLink.wantedList.remarks }}</div>
+        </template>
         <template #cell(actions)="data">
             <div @click.stop>
                 <b-icon
@@ -334,6 +330,12 @@ export default {
                 width: '120px',
             },
             {
+                key: 'brickLinkRemarks',
+                label: 'BL Remarks', //browser.i18n.getMessage('brickList_brickLinkPrice'),
+                sortable: false,
+                width: '200px',
+            },
+            {
                 key: 'actions',
                 label: '',
                 width: '25px',
@@ -413,6 +415,9 @@ export default {
                 return order === 'desc' ? comparison * -1 : comparison;
             });
         },
+        bgimage(src) {
+            return `background-image: url(${src}), url('placeholder.jpg'); height:50px; max-width:60px; background-repeat: no-repeat; background-size: contain; background-position: center;`;
+        },
     },
     beforeMount() {
         if (
@@ -421,6 +426,16 @@ export default {
         ) {
             this.fields = this.fields.filter(
                 (field) => field.key != 'brickLink'
+            );
+        }
+
+        if (
+            this.bricklist.filter(
+                (p) => p.brickLink?.wantedList?.remarks?.length > 0
+            ).length == 0
+        ) {
+            this.fields = this.fields.filter(
+                (field) => field.key != 'brickLinkRemarks'
             );
         }
 
@@ -509,6 +524,15 @@ export default {
     computed: {
         label_reload() {
             return browser.i18n.getMessage('brickList_reload');
+        },
+        style() {
+            if (
+                this.bricklist.filter(
+                    (p) => p.brickLink?.wantedList?.remarks?.length > 0
+                ).length > 0
+            ) {
+                return 'width: calc(100% + 200px); margin-left: -100px !important;';
+            }
         },
     },
 };

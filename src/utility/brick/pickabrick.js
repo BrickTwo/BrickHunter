@@ -2,31 +2,37 @@ import apiBrickTwo from '@/utility/api/bricktwo.js';
 import brickBrickLink from '@/utility/brick/bricklink.js';
 
 export default {
-    async load(item, country) {
-        if (!item.searchids) {
-            item.pickABrick = null;
-            return item;
+    async load(searchItem, items, country) {
+        if (!searchItem.searchids) {
+            items.map((i) => (i.pickABrick = null));
+            //item.pickABrick = null;
+            return;
         }
         try {
             let response = await browser.runtime.sendMessage({
                 service: 'pickABrick',
                 action: 'findBrick',
-                designId: item.searchids.join('-'),
+                designId: searchItem.searchids.join('-'),
             });
 
             if (response?.status) {
-                item.pickABrick = { error: response.status };
-                return item;
+                items.map((i) => (i.pickABrick = { error: response.status }));
+                //item.pickABrick = { error: response.status };
+                return;
             }
 
-            let foundBrick = await this.findBrick(item, response, country);
-            if (foundBrick) {
-                item.pickABrick = foundBrick;
-            } else {
-                item.pickABrick = null;
+            for (let i = 0; i < items.length; i++) {
+                let foundBrick = await this.findBrick(items[i], response, country);
+
+                if (foundBrick) {
+                    items[i].pickABrick = foundBrick;
+                } else {
+                    items[i].pickABrick = null;
+                }
             }
+
         } catch (error) {}
-        return item;
+        return;
     },
     async findBrick(item, bricks, country) {
         if (!bricks || !bricks.length) return null;
@@ -74,10 +80,24 @@ export default {
                 );
 
                 result = bricks.filter(function(brick) {
+                    console.log(2)
                     return this.indexOf(brick.itemNumber) < 0;
                 }, colorCodes);
             }
         }
+
+        if(item.color.id == 9999){
+            console.log(4)
+            result = bricks;
+        }
+
+        result.sort((a, b) => {
+            if (a.variant.price.centAmount > b.variant.price.centAmount) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
 
         return result[0];
     },

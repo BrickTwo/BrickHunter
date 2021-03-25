@@ -15,7 +15,7 @@
             <b-col v-if="colorTrans.length">
                 <b-dropdown
                     id="dropdown-left"
-                    class="w-100 p-1"
+                    class="w-100 p-1 coloSelection"
                     :text="labelTransColor"
                     variant="white"
                     no-caret
@@ -33,7 +33,7 @@
             <b-col v-if="colorBlack.length">
                 <b-dropdown
                     id="dropdown-left"
-                    class="w-100 h-100 p-1"
+                    class="w-100 h-100 p-1 coloSelection"
                     variant="black"
                     no-caret
                 >
@@ -49,7 +49,7 @@
             <b-col v-if="colorBrown.length">
                 <b-dropdown
                     id="dropdown-left"
-                    class="w-100 h-100 p-1"
+                    class="w-100 h-100 p-1 coloSelection"
                     variant="brown"
                     no-caret
                 >
@@ -65,7 +65,7 @@
             <b-col v-if="colorRed.length">
                 <b-dropdown
                     id="dropdown-left"
-                    class="w-100 h-100 p-1"
+                    class="w-100 h-100 p-1 coloSelection"
                     variant="red"
                     no-caret
                 >
@@ -81,7 +81,7 @@
             <b-col v-if="colorOrange.length">
                 <b-dropdown
                     id="dropdown-left"
-                    class="w-100 h-100 p-1"
+                    class="w-100 h-100 p-1 coloSelection"
                     variant="orange"
                     no-caret
                 >
@@ -97,7 +97,7 @@
             <b-col v-if="colorYellow.length">
                 <b-dropdown
                     id="dropdown-left"
-                    class="w-100 h-100 p-1"
+                    class="w-100 h-100 p-1 coloSelection"
                     variant="yellow"
                     no-caret
                 >
@@ -113,7 +113,7 @@
             <b-col v-if="colorGreen.length">
                 <b-dropdown
                     id="dropdown-left"
-                    class="w-100 h-100 p-1"
+                    class="w-100 h-100 p-1 coloSelection"
                     variant="green"
                     no-caret
                 >
@@ -129,7 +129,7 @@
             <b-col v-if="colorBlue.length">
                 <b-dropdown
                     id="dropdown-left"
-                    class="w-100 h-100 p-1"
+                    class="w-100 h-100 p-1 coloSelection"
                     variant="blue"
                     no-caret
                 >
@@ -145,7 +145,7 @@
             <b-col v-if="colorPurple.length">
                 <b-dropdown
                     id="dropdown-left"
-                    class="w-100 h-100 p-1"
+                    class="w-100 h-100 p-1 coloSelection"
                     variant="purple"
                     no-caret
                 >
@@ -194,10 +194,13 @@
 .btn-purple {
     background-color: $purple;
 }
+.coloSelection ul {
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
 </style>
 
 <script>
-
 export default {
     props: {
         colorList: {
@@ -220,7 +223,22 @@ export default {
             this.$emit('selectColor', value);
         },
         async fillColors() {
-            var colors = this.colorList;
+            var colors = [];
+            
+            this.colorList.map(color => {
+                if(!colors.find(c => c.brickLinkName == color.brickLinkName)) {
+                    colors.push(color);
+                }
+            })
+
+            colors = colors.sort(function(a, b) {
+                // Sort by hue
+                if (a.brickLinkName > b.brickLinkName) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
 
             this.colorTrans = colors.filter((color) =>
                 color.group.find((group) => group === 'Trans')
@@ -268,7 +286,7 @@ export default {
     watch: {
         colorList() {
             this.fillColors();
-        }
-    }
+        },
+    },
 };
 </script>

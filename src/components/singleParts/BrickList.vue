@@ -5,6 +5,46 @@
                 <b-col cols="2" @click="openBrick()" style="cursor: pointer;">
                     <div :style="bgimage" />
                     <b-icon
+                        v-if="favorite"
+                        @click.stop
+                        icon="heart-fill"
+                        aria-hidden="true"
+                        font-scale="1.25"
+                        style="position: absolute; top: 0; right: 0;"
+                        variant="danger"
+                        @click="removeFavorite(brick.itemNumber)"
+                    />
+                    <b-icon
+                        v-else
+                        @click.stop
+                        icon="heart"
+                        aria-hidden="true"
+                        font-scale="1.25"
+                        style="position: absolute; top: 0; right: 0;"
+                        variant="danger"
+                        @click="addFavorite(brick.itemNumber)"
+                    />
+                    <b-icon
+                        v-if="haveIt"
+                        @click.stop
+                        icon="check-circle-fill"
+                        aria-hidden="true"
+                        font-scale="1.25"
+                        style="position: absolute; top: 25; right: 0;"
+                        variant="success"
+                        @click="removeHaveIt(brick.itemNumber)"
+                    />
+                    <b-icon
+                        v-else
+                        @click.stop
+                        icon="check-circle"
+                        aria-hidden="true"
+                        font-scale="1.25"
+                        style="position: absolute; top: 25; right: 0;"
+                        variant="success"
+                        @click="addHaveIt(brick.itemNumber)"
+                    />
+                    <b-icon
                         icon="box-arrow-up-left"
                         aria-hidden="true"
                         style="position: absolute; bottom: 0; right: 0;"
@@ -40,10 +80,10 @@
                         rounded="sm"
                         style="margin: 0 -5px; padding: 0 5px;"
                     >
-                        <b-row
-                            v-if="isAvailable"
-                        >
-                            <b-col cols="10" class="p-0">{{ labelMaxAmount }}:</b-col>
+                        <b-row v-if="isAvailable">
+                            <b-col cols="10" class="p-0"
+                                >{{ labelMaxAmount }}:</b-col
+                            >
                             <b-col cols="2" class="p-0 text-right">{{
                                 brick.maxAmount
                             }}</b-col>
@@ -169,6 +209,8 @@ export default {
         color: null,
         showModal: false,
         order: 0,
+        favorite: false,
+        haveIt: false,
     }),
     components: {
         BrickModal,
@@ -183,10 +225,10 @@ export default {
         },
         addToPartList() {
             this.order = 1;
-            if (this.$store.state.partList.totalPositions >= 2000) {
+            /*if (this.$store.state.partList.totalPositions >= 2000) {
                 this.order = 0;
                 this.brick.order = this.order;
-            }
+            }*/
             this.$emit('addToPartList', this.brick);
         },
         setKeyword(value) {
@@ -201,11 +243,32 @@ export default {
         removeFromPartList() {
             this.order = 0;
         },
+        addFavorite(itemNumber) {
+            this.favorite = true;
+            this.$store.commit('singleParts/addFavorite', itemNumber);
+        },
+        removeFavorite(itemNumber) {
+            this.favorite = false;
+            this.$store.commit('singleParts/removeFavorite', itemNumber);
+        },
+        addHaveIt(itemNumber) {
+            this.haveIt = true;
+            this.$store.commit('singleParts/addHaveIt', itemNumber);
+        },
+        removeHaveIt(itemNumber) {
+            this.haveIt = false;
+            this.$store.commit('singleParts/removeHaveIt', itemNumber);
+        },
     },
     beforeMount() {
-        this.color = this.COLOR.find(
-            (c) => c.bricksAndPiecesName.toUpperCase() == this.brick.colorFamily.toUpperCase()
+        let color = this.COLOR.filter(
+            (c) =>
+                c.bricksAndPiecesName.toUpperCase() ==
+                this.brick.colorFamily.toUpperCase()
         );
+
+        this.color = color[color.length -1];
+        
         if (!this.color) {
             this.color = this.COLOR.find((c) => c.brickLinkId == 0);
             this.color.legoName = this.brick.colorFamily;
@@ -216,6 +279,14 @@ export default {
         if (this.brick.order) {
             this.order = this.brick.order;
         }
+
+        this.favorite = this.$store.getters['singleParts/isFavorite'](
+            this.brick.itemNumber
+        );
+
+        this.haveIt = this.$store.getters['singleParts/isHaveIt'](
+            this.brick.itemNumber
+        );
     },
     computed: {
         image() {

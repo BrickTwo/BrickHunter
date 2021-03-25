@@ -9,8 +9,8 @@
                         v-model="showUploadField"
                         name="radio-sub-component"
                     >
-                        <b-form-radio value="filePicker">Dateiupload</b-form-radio>
-                        <b-form-radio value="textArea">Textfeld</b-form-radio>
+                        <b-form-radio value="filePicker">{{ labelFileUpload }}</b-form-radio>
+                        <b-form-radio value="textArea">{{ labelImport_textArea }}</b-form-radio>
                     </b-form-radio-group>
             </b-col>
         </b-row>
@@ -89,10 +89,6 @@ export default {
             this.name = fileName.substring(0, fileName.length - 4);
         },
         loadXml(wantedList) {
-            //console.log(wantedList)
-            this.pickABrickBrickCounter = 0;
-            this.bricksAndPiecesBrickCounter = 0;
-
             var partList = [];
 
             wantedList.then((list) => {
@@ -105,7 +101,7 @@ export default {
                     if (item.color) {
                         part.color = this.findColor(item.color[0], this.COLOR);
                     } else {
-                        part.color = this.findColor(0, this.COLOR);
+                        part.color = this.findColor(9999, this.COLOR);
                     }
                     part.qty = {
                         min: 0,
@@ -143,26 +139,31 @@ export default {
                     } else {
                         part.brickLink.wantedList.notify = null;
                     }
+                    if (item.remarks) {
+                        part.brickLink.wantedList.remarks = item.remarks[0];
+                    } else {
+                        part.brickLink.wantedList.remarks = null;
+                    }
 
                     part.image = {
                         source: 'brickLink',
-                        rsc: `https://img.bricklink.com/ItemImage/${part.brickLink.wantedList.itemtype}T/${part.color?.brickLinkId}/${part.designId}.t1.png`,
+                        rsc: `https://img.bricklink.com/ItemImage/${part.brickLink.wantedList.itemtype}N/${part.color?.brickLinkId}/${part.designId}.png`,
                     };
+
+                    
 
                     partList.push(part);
                 });
+
                 this.wantedList = [...partList];
-                //this.totalBricks = this.wantedList.length;
 
                 return list;
             });
         },
         importList() {
-            var totalPositionsAfterImport =
+            /*var totalPositionsAfterImport =
                 this.$store.state.partList.totalPositions +
                 this.wantedList.length;
-
-            //console.log(totalPositionsAfterImport, this.$store.state.partList.totalPositions, this.wantedList.length);
 
             if (totalPositionsAfterImport > 2000) {
                 this.$bvToast.toast(
@@ -174,7 +175,7 @@ export default {
                     }
                 );
                 return;
-            }
+            }*/
 
             var partList = {
                 id: this.generateUUID(),
@@ -184,7 +185,7 @@ export default {
                 source: 'brickLink',
                 positions: this.wantedList,
             };
-            //console.log('importList', partList);
+            
             this.$store.commit('partList/setPartList', partList);
 
             this.$bvToast.toast(this.labelSuccessfullImportBrickLinkText, {
@@ -251,6 +252,16 @@ export default {
         labelErrorImportBrickLinkTextToManyPositions() {
             return browser.i18n.getMessage(
                 'import_errorImportBrickLinkTextToManyPositions'
+            );
+        },
+        labelFileUpload() {
+            return browser.i18n.getMessage(
+                'import_fileUpload'
+            );
+        },
+        labelImport_textArea() {
+            return browser.i18n.getMessage(
+                'import_textArea'
             );
         },
     },

@@ -12,29 +12,124 @@
             </b-col>
         </b-row>
         <b-row>
+            <label class="custom-favorite-label">
+                <b-icon icon="heart-fill" aria-hidden="true" variant="danger" />
+                <span style="margin-left: 3px">
+                    {{ labelFavorites }} ({{ favorites.length }})
+                </span>
+                <b-link @click="editFavorites()">
+                    <b-icon icon="pencil" variant="primary" />
+                </b-link>
+                <b-link @click="showFavorites()" v-if="!favoriteSelected">
+                    <b-icon
+                        icon="eye-slash"
+                        variant="secondary"
+                        aria-hidden="true"
+                    />
+                </b-link>
+                <b-link @click="hideFavorite()" v-else>
+                    <b-icon icon="eye" aria-hidden="true" />
+                </b-link>
+            </label>
+        </b-row>
+        <b-row class="mt-0">
+            <label class="custom-favorite-label">
+                <b-icon
+                    icon="check-circle-fill"
+                    aria-hidden="true"
+                    variant="success"
+                />
+                <span style="margin-left: 3px">
+                    {{ labelHaveIts }} ({{ haveIts.length }})
+                </span>
+                <b-link @click="editHaveIts()">
+                    <b-icon icon="pencil" variant="primary" />
+                </b-link>
+                <b-link @click="showHaveIts()" v-if="!haveItSelected">
+                    <b-icon
+                        icon="eye-slash"
+                        variant="secondary"
+                        aria-hidden="true"
+                    />
+                </b-link>
+                <b-link @click="hideHaveIt()" v-else>
+                    <b-icon icon="eye" aria-hidden="true" />
+                </b-link>
+            </label>
+        </b-row>
+        <b-row class="mt-0">
             <b-form-group>
                 <b-form-radio
                     v-for="partList in partLists"
                     :key="partList.id"
-                    v-model="selectedId"
+                    v-model="selectedPartListId"
                     name="some-radios"
                     :value="partList.id"
-                    >{{ partList.name }} ({{
-                        partList.positions.length
-                    }})</b-form-radio
                 >
+                    {{ partList.name }} ({{ partList.positions.length }})
+                    <b-link
+                        @click="showPartList(partList.id)"
+                        v-if="showPartListId != partList.id"
+                    >
+                        <b-icon
+                            icon="eye-slash"
+                            variant="secondary"
+                            aria-hidden="true"
+                        />
+                    </b-link>
+                    <b-link @click="hidePartList(partList.id)" v-else>
+                        <b-icon icon="eye" aria-hidden="true" />
+                    </b-link>
+                </b-form-radio>
             </b-form-group>
         </b-row>
+        <b-modal
+            id="editList"
+            ref="editList"
+            :title="labelEditListHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            hide-header-close
+            no-close-on-backdrop
+            no-close-on-esc
+            @ok="okEditList"
+            @cancel="cancleEditList"
+        >
+            <p class="my-4">
+                <b-form-textarea
+                    v-model="editListContent"
+                    rows="6"
+                    max-rows="6"
+                />
+            </p>
+        </b-modal>
     </b-container>
 </template>
 
+<style scoped>
+.custom-favorite-label {
+    margin-bottom: 0;
+}
+</style>
+
 <script>
-import { bus } from '@/components/BrickHunter';
+import { bus } from '@/utility/bus';
 
 export default {
     data: () => ({
         partLists: null,
-        selectedId: null,
+        selectedPartListId: null,
+        showPartListId: null,
+        favorites: null,
+        favoriteSelected: false,
+        haveIts: null,
+        haveItSelected: false,
+        headerBgVariant: 'dark',
+        headerTextVariant: 'light',
+        labelEditListHeader: '',
+        editListContent: '',
+        editMode: '',
     }),
     methods: {
         createNewPartList() {
@@ -88,15 +183,145 @@ export default {
                 }
             });
         },
+        showPartList(id) {
+            this.favoriteSelected = false;
+            this.haveItSelected = false;
+            this.showPartListId = id;
+            //this.$emit('partListSelected', id);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected,
+                this.haveItSelected
+            );
+        },
+        hidePartList(id) {
+            this.showPartListId = null;
+            //this.$emit('partListSelected', null);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected,
+                this.haveItSelected
+            );
+        },
+        showFavorites() {
+            this.showPartListId = null;
+            this.haveItSelected = false;
+            this.favoriteSelected = true;
+            //this.$emit('favoriteSelected', true);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected,
+                this.haveItSelected
+            );
+        },
+        hideFavorite() {
+            this.favoriteSelected = false;
+            //this.$emit('favoriteSelected', false);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected,
+                this.haveItSelected
+            );
+        },
+        showHaveIts() {
+            this.favoriteSelected = false;
+            this.showPartListId = null;
+            this.haveItSelected = true;
+            //this.$emit('favoriteSelected', true);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected,
+                this.haveItSelected
+            );
+        },
+        hideHaveIt() {
+            this.haveItSelected = false;
+            //this.$emit('haveItSelected', false);
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected,
+                this.haveItSelected
+            );
+        },
+        editFavorites() {
+            this.editMode = 'favorites';
+            this.labelEditListHeader = this.labelFavorites;
+            this.editListContent = this.prepareEditList(
+                this.$store.state.singleParts.favorites
+            );
+            this.$refs['editList'].show();
+        },
+        editHaveIts() {
+            this.editMode = 'haveIts';
+            this.labelEditListHeader = this.labelHaveIts;
+            this.editListContent = this.prepareEditList(
+                this.$store.state.singleParts.haveIts
+            );
+            this.$refs['editList'].show();
+        },
+        prepareEditList(content) {
+            content = JSON.stringify(content);
+            content = content.slice(1); // remove first char
+            content = content.slice(0, -1); // remove last char
+            return content;
+        },
+        okEditList() {
+            let content = '[' + this.editListContent + ']';
+            try {
+                content = JSON.parse(content);
+            } catch (err) {
+                console.log(err);
+                return;
+            }
+
+            if (this.editMode == 'favorites') {
+                this.$store.commit('singleParts/setFavorites', content);
+                this.favorites = this.$store.state.singleParts.favorites;
+            } else if (this.editMode == 'haveIts') {
+                this.$store.commit('singleParts/setHaveIts', content);
+                this.haveIts = this.$store.state.singleParts.haveIts;
+            }
+
+            if (this.favoriteSelected) {
+                this.showFavorites();
+            } else if (this.haveItSelected) {
+                this.showHaveIts();
+            } else {
+                bus.$emit(
+                    'showPartList',
+                    this.showPartListId,
+                    this.favoriteSelected,
+                    this.haveItSelected
+                );
+            }
+        },
+        cancleEditList() {},
     },
     beforeMount() {
         this.partLists = this.$store.getters['partList/getPartListsBySource'](
             'singleParts'
         );
+        this.favorites = this.$store.state.singleParts.favorites;
+        this.haveIts = this.$store.state.singleParts.haveIts;
+        let filter = this.$store.state.singleParts.filter;
+
+        this.showPartListId = filter.showPartListId;
+        this.favoriteSelected = filter.showFavorites;
+        this.haveItSelected = filter.showHaveIts;
+
+        if (!this.partLists.find((f) => f.id == this.showPartListId))
+            this.showPartListId = null;
+
         this.sortPartList();
 
         if (this.partLists.length) {
-            this.selectedId = this.partLists[0].id;
+            this.selectedPartListId = this.partLists[0].id;
         }
     },
     created() {
@@ -104,13 +329,17 @@ export default {
             this.partLists = this.$store.getters[
                 'partList/getPartListsBySource'
             ]('singleParts');
-            this.selectedId = this.partLists[0].id;
+            this.selectedPartListId = this.partLists[0].id;
             this.sortPartList();
         });
     },
+    beforeDestroy() {
+        bus.$off();
+    },
     watch: {
-        selectedId: function() {
-            this.$emit('partListSelected', this.selectedId);
+        selectedPartListId: function() {
+            //this.$emit('partListActive', this.selectedPartListId);
+            bus.$emit('selectedPartList', this.selectedPartListId);
         },
     },
     computed: {
@@ -119,6 +348,12 @@ export default {
         },
         labelSinglePartList() {
             return browser.i18n.getMessage('import_sp_singlePartList');
+        },
+        labelFavorites() {
+            return browser.i18n.getMessage('import_sp_favorites');
+        },
+        labelHaveIts() {
+            return browser.i18n.getMessage('import_sp_haveIt');
         },
     },
 };

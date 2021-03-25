@@ -3,8 +3,7 @@
         <div v-if="partList.source != 'brickLink'">
             <b-row>
                 <b-col>
-                    Diese Liste kann aktuell nicht nach BrickLink exportiert
-                    werden!
+                    {{ labelExportNotPossible }}
                 </b-col>
             </b-row>
         </div>
@@ -171,12 +170,14 @@ export default {
                     this.wantedList[i].brickLink?.wantedList?.maxprice
                 );
 
-                var remarks = '';
+                var remarks = this.wantedList[i].brickLink?.wantedList?.remarks;
+                if(!remarks) remarks = '';
                 if (
                     this.writeLegoIdInRemark &&
                     (price[0] === 'pickABrick' ||
                         price[0] === 'bricksAndPieces')
                 ) {
+                    if(remarks.length > 0) remarks += '\n';
                     remarks = 'LEGO Id: ';
                     if (price[0] === 'pickABrick')
                         remarks += this.wantedList[i].pickABrick.variant
@@ -186,7 +187,7 @@ export default {
                 }
 
                 if (this.writeSourceOfPriceInRemark) {
-                    if (this.writeLegoIdInRemark) remarks += '\n';
+                    if (remarks.length > 0) remarks += '\n';
                     remarks += 'Source: ';
                     if (price[0] === 'pickABrick') remarks += 'Pick a Brick';
                     if (price[0] === 'bricksAndPieces')
@@ -219,6 +220,10 @@ export default {
                         REMARKS: remarks,
                     },
                 };
+
+                if(this.wantedList[i].color.id == 9999){
+                    item.ITEM.COLOR = '';
+                }
 
                 brickLink.INVENTORY.push(item);
             }
@@ -353,6 +358,9 @@ export default {
         },
         copyButton() {
             return browser.i18n.getMessage('exportWantedList_copyButton');
+        },
+        labelExportNotPossible() {
+            return browser.i18n.getMessage('exportBrickLink_notPossible');
         },
     },
 };

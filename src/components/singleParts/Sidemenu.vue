@@ -4,13 +4,13 @@
             <h2>{{ labelPartLists }}</h2>
         </b-row>
         <b-row>
-            <PartLists @partListSelected="onPartListSelected" />
+            <PartLists />
         </b-row>
         <b-row>
             <h2>{{ labelCategories }}</h2>
         </b-row>
         <b-row>
-            <Categories @categorySelected="onCategorySelected" />
+            <Categories />
         </b-row>
     </b-container>
 </template>
@@ -23,14 +23,6 @@ export default {
     components: {
         PartLists,
         Categories,
-    },
-    methods: {
-        onPartListSelected(id) {
-            this.$emit('partListSelected', id);
-        },
-        onCategorySelected(id) {
-            this.$emit('categorySelected', id);
-        },
     },
     computed: {
         labelPartLists() {

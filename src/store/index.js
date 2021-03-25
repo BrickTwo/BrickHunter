@@ -4,6 +4,9 @@ import partList from './modules/partList';
 import shopping from './modules/shopping';
 import singleParts from './modules/singleParts';
 import { version } from '../../package';
+import { persistencePlugin } from '@/utility/idb/persistencePlugin';
+import { getPersistedState } from '@/utility/idb/stateMapper';
+import { bus } from '@/utility/bus';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -19,20 +22,38 @@ export default new Vuex.Store({
         language: '',
         affiliate: {},
         syncDate: null,
+        initialized: false,
+        showImagesInLegoOrder: true,
+        generateLog: false,
+        log: [],
     },
     mutations: {
+        initialize(state, persistedState) {
+            state.partList.partLists = persistedState;
+            // use the fetched, persisted state.
+            // In my case, I was reconstructing an array, so I wrote a handler (overwriteStore) to deal with the data rather simplistically
+            //overwriteStore(state, { arrayOfThings: persistedState }); // but do your own thing here.
+
+            //Vue.set(state, 'initialized', true);
+        },
         initialiseStore(state) {
             state.version.old = localStorage.getItem('version') || '1.0.0';
             state.version.current = version;
 
             state.country = localStorage.getItem('country') || null;
             state.language = localStorage.getItem('language') || null;
-            state.syncDate = localStorage.getItem('syncDate') || new Date(Date.now() - 1000*60*60*2 );
+            state.syncDate =
+                localStorage.getItem('syncDate') ||
+                new Date(Date.now() - 1000 * 60 * 60 * 2);
+            state.showImagesInLegoOrder =
+                (localStorage.getItem('showImagesInLegoOrder') || 'true') ===
+                'true';
+            state.generateLog =
+                (localStorage.getItem('generateLog') || 'true') === 'true';
 
             localStorage.setItem('version', state.version.current);
-            //console.log(state.version)
-            var sKey;
 
+            var sKey;
             for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
                 if (
                     !sKey.startsWith('partList_') &&
@@ -50,7 +71,12 @@ export default new Vuex.Store({
                     sKey != 'language' &&
                     sKey != 'settingsShopping' &&
                     sKey != 'version' &&
-                    sKey != 'syncDate'
+                    sKey != 'syncDate' &&
+                    sKey != 'favorites' &&
+                    sKey != 'haveIts' &&
+                    sKey != 'filterSingleParts' &&
+                    sKey != 'showImagesInLegoOrder' &&
+                    sKey != 'generateLog'
                 ) {
                     localStorage.removeItem(sKey);
                 }
@@ -75,13 +101,46 @@ export default new Vuex.Store({
             state.syncDate = payload;
             localStorage.setItem('syncDate', state.syncDate);
         },
-    },
-    actions: {
-        initialiseStore({ state, commit }) {
-            commit('initialiseStore');
-            commit('partList/initialiseStore', state.version.old);
-            commit('shopping/initialiseStore', state.version.old);
-            commit('singleParts/initialiseStore');
+        setSyncDate(state, payload) {
+            state.syncDate = payload;
+            localStorage.setItem('syncDate', state.syncDate);
+        },
+        setShowImagesInLegoOrder(state, payload) {
+            state.showImagesInLegoOrder = payload;
+            localStorage.setItem(
+                'showImagesInLegoOrder',
+                state.showImagesInLegoOrder
+            );
+        },
+        setGenerateLog(state, payload) {
+            state.generateLog = payload;
+            localStorage.setItem('generateLog', state.generateLog);
+        },
+        addLog(state, payload) {
+            if (!state.generateLog) return;
+            let log = { dateTime: new Date().toISOString(), data: payload };
+            state.log.push(log);
+            if (state.log.length > 200) state.log.shift();
+            if (payload.respStat && payload.respStat == 503)
+                bus.$emit('exportLog', true);
         },
     },
+    actions: {
+        async initialiseStore({ dispatch, state, commit }) {
+            await getPersistedState()
+                .then((persistedState) => {
+                    commit('initialize', persistedState);
+                })
+                .catch((error) => {
+                    // tsk tsk... handle this error too
+                });
+            commit('initialiseStore');
+            dispatch('partList/initialiseStore', state.version.old);
+            commit('shopping/initialiseStore', state.version.old);
+            commit('singleParts/initialiseStore');
+            state.initialized = true;
+            bus.$emit('initialized', true);
+        },
+    },
+    plugins: [persistencePlugin],
 });

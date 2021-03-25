@@ -45,16 +45,33 @@
                 <b-col cols="4" class="p-0 text-right">
                     {{ brick.priceAmount }} {{ brick.priceCurrency }}
                 </b-col>
-                <b-col cols="4" class="p-0 text-right">
-                    {{
-                        new Date(brick.lastUpdateCountry + 'Z') | formatDate
-                    }}
+                <b-col
+                    v-if="
+                        brick.lastUpdateCountry &&
+                            brick.lastUpdateCountry.substr(
+                                brick.lastUpdateCountry.length - 1
+                            ) == 'Z'
+                    "
+                    cols="4"
+                    class="p-0 text-right"
+                >
+                    {{ new Date(brick.lastUpdateCountry) | formatDate }}
+                </b-col>
+                <b-col
+                    v-else-if="brick.lastUpdateCountry"
+                    cols="4"
+                    class="p-0 text-right"
+                >
+                    {{ new Date(brick.lastUpdateCountry + 'Z') | formatDate }}
+                </b-col>
+                <b-col v-else cols="4" class="p-0 text-right">
+                    -
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0 stripe">
                 <b-col cols="4" class="p-0">{{ labelColorBrickLink }}:</b-col>
                 <b-col cols="8" class="p-0 text-right">
-                    <span style="display: block">
+                    <span style="display: block" v-for="color in colors" :key="color.id">
                         <div :style="colorCode"></div>
                         <span>{{ color.brickLinkName }}</span>
                     </span>
@@ -65,26 +82,16 @@
                 <b-col cols="8" class="p-0 text-right">
                     <span style="display: block">
                         <div :style="colorCode"></div>
-                        <span>{{ color.legoName }}</span>
+                        <span>{{ colors[0].legoName }}</span>
                     </span>
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0 stripe" align-h="between">
-                <b-col cols="5" class="p-0">
-                    {{ labelMaxAmount }}:
-                </b-col>
-                <b-col
-                    cols="3"
-                    class="p-0 text-right"
-                    v-if="isAvailable"
-                >
+                <b-col cols="5" class="p-0"> {{ labelMaxAmount }}: </b-col>
+                <b-col cols="3" class="p-0 text-right" v-if="isAvailable">
                     {{ brick.maxAmount }}
                 </b-col>
-                <b-col
-                    cols="4"
-                    class="p-0 text-right"
-                    v-if="isAvailable"
-                >
+                <b-col cols="4" class="p-0 text-right" v-if="isAvailable">
                     {{ new Date(brick.updateDateBrick + 'Z') | formatDate }}
                 </b-col>
                 <b-col
@@ -97,22 +104,52 @@
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0">
-                <b-col cols="5" class="p-0">{{ labelFirstAvailability }}:</b-col>
-                <b-col cols="7" class="p-0 text-right">
+                <b-col cols="5" class="p-0"
+                    >{{ labelFirstAvailability }}:</b-col
+                >
+                <b-col v-if="brick.firstSeen" cols="7" class="p-0 text-right">
                     {{ new Date(brick.firstSeen + 'Z') | formatDate }}
+                </b-col>
+                <b-col v-else cols="7" class="p-0 text-right">
+                    -
                 </b-col>
             </b-row>
             <b-row class="p-1 mt-0 stripe">
                 <b-col cols="5" class="p-0">{{ labelLastAvailability }}:</b-col>
-                <b-col cols="7" class="p-0 text-right">
+                <b-col
+                    v-if="
+                        brick.lastSeen &&
+                            brick.lastSeen.substr(brick.lastSeen.length - 1) ==
+                                'Z'
+                    "
+                    cols="7"
+                    class="p-0 text-right"
+                >
+                    {{ new Date(brick.lastSeen) | formatDate }}
+                </b-col>
+                <b-col
+                    v-else-if="brick.lastSeen"
+                    cols="7"
+                    class="p-0 text-right"
+                >
                     {{ new Date(brick.lastSeen + 'Z') | formatDate }}
+                </b-col>
+                <b-col v-else cols="7" class="p-0 text-right">
+                    -
+                </b-col>
+            </b-row>
+            <b-row class="p-1 mt-0">
+                <b-col cols="5" class="p-0">{{ labelCreateDateBrick }}:</b-col>
+                <b-col cols="7" class="p-0 text-right">
+                    {{ new Date(brick.createDateBrick + 'Z') | formatDate }}
                 </b-col>
             </b-row>
         </b-container>
         <Chart
-            v-if="chartLoaded && page == 'chart'"
-            :chartdata="chartdata"
-            :options="chartoptions"
+            v-if="page == 'chart'"
+            :maxAmountDataset="maxAmountDataset"
+            :priceDataset="priceDataset"
+            :priceCurrency="brick.priceCurrency"
         />
     </b-modal>
 </template>
@@ -137,14 +174,13 @@ export default {
         },
     },
     data: () => ({
-        color: null,
+        colors: null,
         headerBgVariant: 'dark',
         headerTextVariant: 'light',
-        chartdata: [],
-        chartoptions: {},
-        chartLoaded: false,
         page: 'data',
         category: '',
+        maxAmountDataset: null,
+        priceDataset: null,
     }),
     components: {
         BrickModal,
@@ -152,155 +188,64 @@ export default {
     },
     mixins: [brickColorMixin],
     methods: {
-        openBrick() {
-            this.$bvModal.show('modal-open-lego-fill-cart');
-        },
-        bricksAndPiecesFillCart() {},
-        cancel() {},
-        ok() {},
-        getFlagImgUrl(value) {
-            return 'flags/' + value + '.png';
-        },
         async loadBrick() {
-            var response = await apiBrickTwo.getBrickAsync(this.brick.itemNumber, this.$store.state.country);
+            var response = await apiBrickTwo.getBrickAsync(
+                this.brick.itemNumber,
+                this.$store.state.country
+            );
 
-            var dataMaxAmount = [];
-            response.maxAmount.map((item) => {
-                dataMaxAmount.push({
+            if (response.maxAmount)
+                this.prepareMaxAmountDataset(response.maxAmount);
+            if (response.price) this.preparePriceDataset(response.price);
+        },
+        prepareMaxAmountDataset(maxAmounts) {
+            this.maxAmountDataset = [];
+            maxAmounts.map((item) => {
+                this.maxAmountDataset.push({
                     x: new Date(item.dateFrom + 'Z'),
                     y: item.maxAmount,
                 });
 
-                dataMaxAmount.push({
-                    x: new Date(item.dateTo + 'Z'),
-                    y: item.maxAmount,
-                });
+                if (item.dateFrom != item.dateTo) {
+                    this.maxAmountDataset.push({
+                        x: new Date(item.dateTo + 'Z'),
+                        y: item.maxAmount,
+                    });
+                }
             });
 
-            dataMaxAmount.sort((a, b) => {
+            this.maxAmountDataset.sort((a, b) => {
                 if (a.x > b.x) {
                     return 1;
                 } else {
                     return -1;
                 }
             });
-
-            var dataPrice = [];
-            response.price.map((item) => {
-                dataPrice.push({
+        },
+        preparePriceDataset(prices) {
+            this.priceDataset = [];
+            prices.map((item) => {
+                this.priceDataset.push({
                     x: new Date(item.dateFrom + 'Z'),
                     y: item.priceAmount,
                 });
 
                 // only if last is not same
-                dataPrice.push({
-                    x: new Date(item.dateTo + 'Z'),
-                    y: item.priceAmount,
-                });
+                if (item.dateFrom != item.dateTo) {
+                    this.priceDataset.push({
+                        x: new Date(item.dateTo + 'Z'),
+                        y: item.priceAmount,
+                    });
+                }
             });
 
-            dataPrice.sort((a, b) => {
+            this.priceDataset.sort((a, b) => {
                 if (a.x > b.x) {
                     return 1;
                 } else {
                     return -1;
                 }
             });
-
-            this.chartdata.datasets = [
-                {
-                    label: this.labelMaxAmount,
-                    borderColor: 'rgb(255, 0, 0)',
-                    lineTension: 0,
-                    fill: false,
-                    data: dataMaxAmount,
-                    yAxisID: 'yMaxAmount',
-                },
-                {
-                    label: this.labelPrice,
-                    borderColor: 'rgb(0, 0, 255)',
-                    lineTension: 0,
-                    fill: false,
-                    data: dataPrice,
-                    yAxisID: 'yPrice',
-                },
-            ];
-
-            this.chartoptions.response = true;
-            this.chartoptions.maintainAspectRatio = false;
-            /*this.chartoptions.title = {
-                display: true,
-                text: 'Chart.js Time Point Data',
-            };*/
-            this.chartoptions.animation = {
-                duration: 0,
-            };
-
-            this.chartoptions.scales = {
-                xAxes: [
-                    {
-                        type: 'time',
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: this.labelDate,
-                        },
-                        ticks: {
-                            major: {
-                                enabled: true,
-                            },
-                            font: function(context) {
-                                if (context.tick && context.tick.major) {
-                                    return {
-                                        style: 'bold',
-                                        color: '#FF0000',
-                                    };
-                                }
-                            },
-                        },
-                    },
-                ],
-                yAxes: [
-                    {
-                        id: 'yMaxAmount',
-                        type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                        display: true,
-                        position: 'left',
-                        scaleLabel: {
-                            display: true,
-                            labelString: this.labelMaxAmount,
-                        },
-
-                        ticks: {
-                            suggestedMin: 0,
-                            suggestedMax: 200,
-                            // forces step size to be 5 units
-                            stepSize: 20,
-                        },
-                    },
-                    {
-                        id: 'yPrice',
-                        type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                        display: true,
-                        position: 'right',
-
-                        // grid line settings
-                        gridLines: {
-                            drawOnChartArea: false, // only want the grid lines for one axis to show up
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: this.labelPrice + ' ' + this.brick.priceCurrency,
-                        },
-                        ticks: {
-                            suggestedMin: 0,
-                            suggestedMax: this.brick.priceAmount * 2,
-                        },
-                    },
-                ],
-            };
-
-            this.chartLoaded = true;
         },
         onShow() {
             this.loadBrick();
@@ -313,14 +258,23 @@ export default {
         },
     },
     beforeMount() {
-        this.color = this.COLOR.find(
-            (c) => c.bricksAndPiecesName.toUpperCase() == this.brick.colorFamily.toUpperCase()
-        );
-        if (!this.color) {
-            this.color = this.COLOR.find((c) => c.brickLinkId == 0);
-            this.color.legoName = this.brick.colorFamily;
-            this.color.bricksAndPiecesName = this.brick.colorFamily;
-            this.color.pickABrickName = this.brick.colorFamily;
+        this.colors = this.COLOR.filter(
+            (c) =>
+                c.bricksAndPiecesName.toUpperCase() ==
+                this.brick.colorFamily.toUpperCase()
+        ).sort((a, b) => {
+            if (parseInt(a.brickLinkId) > parseInt(b.brickLinkId)) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+        
+        if (!this.colors.length) {
+            this.colors[0] = this.COLOR.find((c) => c.brickLinkId == 0);
+            this.colors[0].legoName = this.brick.colorFamily;
+            this.colors[0].bricksAndPiecesName = this.brick.colorFamily;
+            this.colors[0].pickABrickName = this.brick.colorFamily;
         }
     },
     computed: {
@@ -335,7 +289,7 @@ export default {
             return `background-image: url(${this.brick.imageUrl}), url('placeholder.jpg'); width: 100%; background-repeat: no-repeat; background-size: contain; background-position: center;`;
         },
         colorCode() {
-            return `background-color: ${this.color.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
+            return `background-color: ${this.colors[0].colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
         },
         labelData() {
             return browser.i18n.getMessage('import_sp_data');
@@ -369,6 +323,9 @@ export default {
         },
         labelLastAvailability() {
             return browser.i18n.getMessage('import_sp_lastAvailability');
+        },
+        labelCreateDateBrick() {
+            return browser.i18n.getMessage('import_sp_indexing');
         },
         labelNotInStock() {
             return browser.i18n.getMessage('import_sp_notInStock');

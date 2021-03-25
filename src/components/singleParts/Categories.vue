@@ -21,8 +21,7 @@
 </template>
 
 <script>
-import { bus } from '@/components/BrickHunter';
-import apiBrickTwo from '@/utility/api/bricktwo.js';
+import { bus } from '@/utility/bus';
 
 export default {
     data: () => ({
@@ -32,23 +31,20 @@ export default {
     methods: {
         selectCategorie(id) {
             this.selectCategory = id;
-            this.$emit('categorySelected', id);
-        },
-        async loadCategories() {
-            this.$store.commit(
-                'singleParts/setCategories',
-                await apiBrickTwo.getCategoriesAsync(this.$store.state.country)
-            );
+            bus.$emit('categorySelected', this.selectCategory);
         },
     },
     beforeMount() {
-        this.loadCategories();
         this.categories = this.$store.state.singleParts.categoriesFiltered;
     },
     created() {
-        bus.$on('CategoriesFiltered', (data) => {
-            this.categories = data;
+        bus.$on('CategoriesFiltered', (payload) => {
+            this.categories = payload?.categories;
+            this.selectCategory = payload?.selected;
         });
+    },
+    beforeDestroy() {
+        bus.$off();
     },
 };
 </script>

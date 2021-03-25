@@ -105,11 +105,6 @@ export default {
             var brickLink = { INVENTORY: Array() };
 
             for (var i = 0; i < this.brickList.length; i++) {
-                var bricksAndPiecesPrice = 0;
-                var pickABrickPrice = 0;
-
-                var have = parseInt();
-
                 var item = {
                     ITEM: {
                         ITEMTYPE: this.brickList[i].brickLink?.wantedList?.itemtype,
@@ -120,8 +115,13 @@ export default {
                         QTYFILLED: this.brickList[i].qty.have,
                         CONDITION: this.brickList[i].brickLink?.wantedList?.condition,
                         NOTIFY: this.brickList[i].brickLink?.wantedList?.notify,
+                        REMARKS: this.brickList[i].brickLink?.wantedList?.remarks,
                     },
                 };
+
+                if(this.wantedList[i].color.id == 9999){
+                    item.ITEM.COLOR = '';
+                }
 
                 brickLink.INVENTORY.push(item);
             }

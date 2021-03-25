@@ -151,7 +151,7 @@ export default {
             this.wantedList = [...partList];
         },
         importList() {
-            var totalPositionsAfterImport =
+            /*var totalPositionsAfterImport =
                 this.$store.state.partList.totalPositions +
                 this.wantedList.length;
 
@@ -165,7 +165,7 @@ export default {
                     }
                 );
                 return;
-            }
+            }*/
 
             var partList = {
                 id: this.generateUUID(),

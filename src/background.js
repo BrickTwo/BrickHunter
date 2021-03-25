@@ -4,10 +4,25 @@ var localeCountryLanguage = '';
 const timeout = setTimeout(function() {}, 5000);
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (tab.url.indexOf('https://www.lego.com') == 0) {
+    if (tab.url.indexOf('https://www.lego.com') >= 0) {
         browser.tabs.executeScript({
             file: 'js/content-script.js',
         });
+    }
+
+    if (
+        tab.url.indexOf('https://www.lego.com/') >= 0 &&
+        tab.url.indexOf('/page/static/orders/') >= 0
+    ) {
+        let showImages =
+            (localStorage.getItem('showImagesInLegoOrder') || 'true') ===
+            'true';
+
+        if (showImages) {
+            browser.tabs.sendMessage(tabId, {
+                contentScriptQuery: 'brickHunterLoadImages',
+            });
+        }
     }
 });
 
@@ -327,11 +342,17 @@ async function bricksAndPieces(request) {
         })
             .then((response) => {
                 clearTimeout(timeout);
-                
+
                 if (response.status < 200 || response.status >= 300)
                     return {
                         status: response.status,
                         message: response.json(),
+                    };
+
+                if (response.status == 204)
+                    return {
+                        status: response.status,
+                        message: "",
                     };
 
                 return response.json();
@@ -342,7 +363,7 @@ async function bricksAndPieces(request) {
                     message: '',
                 };
             });
-
+        
         return response;
     }
 

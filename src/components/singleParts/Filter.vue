@@ -8,7 +8,7 @@
                     </b-input-group-prepend>
                     <b-form-input
                         v-model="keyword"
-                        @keyup.enter="loadBricks(true)"
+                        @update="onKeywordChange"
                         type="search"
                         debounce="500"
                         :placeholder="labelFindPartsByKeyword"
@@ -17,14 +17,32 @@
                 </b-input-group>
             </b-col>
             <b-col class="ml-1">
-                <SortFilter
-                    @selectSortBy="selectSortBy"
-                    @selectSortDirection="selectSortDirection"
-                />
+                <b-container class="p-0">
+                    <b-row class="m-0">
+                        <b-col>
+                            <SortFilter
+                                @selectSortBy="onSelectSortByChange"
+                                @selectSortDirection="
+                                    onSelectSortDirectionChange
+                                "
+                                :selectedSort="selectedSort"
+                                :sortDirection="sortDirection"
+                            />
+                        </b-col>
+                        <b-col class="ml-1 p-0" cols="auto">
+                            <b-button
+                                class="button m-0"
+                                variant="primary"
+                                @click="$bvModal.show('settings')"
+                            >
+                                <b-icon icon="gear" aria-hidden="true" />
+                            </b-button>
+                        </b-col> </b-row
+                ></b-container>
             </b-col>
         </b-row>
         <b-row>
-            <ColorPicker @selectColor="selectColor" :colorList="colorList" />
+            <ColorPicker @selectColor="onColorChange" :colorList="colorList" />
         </b-row>
         <b-row class="p-1">
             <b-col>
@@ -32,6 +50,7 @@
                     style="width:75px"
                     v-model="perPage"
                     :options="perPageOptions"
+                    @change="onChangePerPage"
                 />
             </b-col>
             <b-col class="center">
@@ -39,20 +58,24 @@
                     v-model="currentPage"
                     :total-rows="totalRows"
                     :per-page="perPage"
+                    @change="onChangeCurrentPage"
+                    limit="9"
                     aria-controls="my-table"
                     last-number
                 />
             </b-col>
             <b-col class="text-right">
                 <b-button
-                    class="button"
+                    v-if="showAs != 'grid'"
+                    class="button m-0"
                     variant="primary"
                     @click="showAs = 'grid'"
                 >
                     <b-icon icon="grid" aria-hidden="true" />
                 </b-button>
                 <b-button
-                    class="button"
+                    v-if="showAs != 'list'"
+                    class="button m-0"
                     variant="primary"
                     @click="showAs = 'list'"
                 >
@@ -100,6 +123,7 @@
                     style="width:75px"
                     v-model="perPage"
                     :options="perPageOptions"
+                    @change="onChangePerPage"
                 />
             </b-col>
             <b-col class="center">
@@ -107,20 +131,24 @@
                     v-model="currentPage"
                     :total-rows="totalRows"
                     :per-page="perPage"
+                    @change="onChangeCurrentPage"
+                    limit="9"
                     aria-controls="my-table"
                     last-number
                 />
             </b-col>
             <b-col class="text-right">
                 <b-button
-                    class="button"
+                    v-if="showAs != 'grid'"
+                    class="button m-0"
                     variant="primary"
                     @click="showAs = 'grid'"
                 >
                     <b-icon icon="grid" aria-hidden="true" />
                 </b-button>
                 <b-button
-                    class="button"
+                    v-if="showAs != 'list'"
+                    class="button m-0"
                     variant="primary"
                     @click="showAs = 'list'"
                 >
@@ -128,6 +156,59 @@
                 </b-button>
             </b-col>
         </b-row>
+        <b-modal
+            id="settings"
+            :title="labelSettingsHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            hide-header-close
+            no-close-on-backdrop
+            no-close-on-esc
+            @ok="okSettings"
+            @cancel="cancleSettings"
+        >
+            <p class="my-4">
+                <b-form-checkbox
+                    v-model="tempShowOnlyAvailable"
+                    id="showOnlyAvailable"
+                    name="showOnlyAvailable"
+                >
+                    {{ labelShowOnlyAvailable }}
+                </b-form-checkbox>
+            </p>
+            <p class="my-4">
+                <b-form-group v-slot="{ ariaDescribedby }">
+                    <b-form-checkbox
+                        v-model="tempSelectCategoriesToBeHidden"
+                        id="selectCategoriesToBeHidden"
+                        name="selectCategoriesToBeHidden"
+                    >
+                        {{ labelSelectCategoriesToBeHidden }}
+                    </b-form-checkbox>
+                    <b-overlay
+                        id="overlay-background"
+                        :show="!categorieOptions"
+                        rounded="sm"
+                    >
+                        <div
+                            style="overflow: hidden scroll; height: 200px; background-color: #eee; padding: 5px"
+                        >
+                            <b-form-checkbox
+                                v-for="option in categorieOptions"
+                                v-model="tempExcludedCategories"
+                                :key="option.value"
+                                :value="option.value"
+                                :aria-describedby="ariaDescribedby"
+                                name="excludeCategorie"
+                            >
+                                {{ option.text }}
+                            </b-form-checkbox>
+                        </div>
+                    </b-overlay>
+                </b-form-group>
+            </p>
+        </b-modal>
     </b-container>
 </template>
 
@@ -137,16 +218,16 @@ import BrickGrid from './BrickGrid';
 import BrickList from './BrickList';
 import ColorPicker from './filter/ColorPicker';
 import SortFilter from './filter/Sort';
-import { bus } from '@/components/BrickHunter';
+import { bus } from '@/utility/bus';
 import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     props: {
-        partListId: {
-            type: String,
+        favoriteSelected: {
+            type: Boolean,
         },
-        categoryId: {
-            type: Number,
+        haveItSelected: {
+            type: Boolean,
         },
     },
     data: () => ({
@@ -158,7 +239,7 @@ export default {
             { value: 100, text: '100' },
         ],
         currentPage: 1,
-        totalRows: 5000,
+        totalRows: 0,
         group: false,
         keyword: null,
         selectedSort: 'DESCRIPTION',
@@ -169,6 +250,25 @@ export default {
         listUpdate: true,
         componentKey: 0,
         colorList: [],
+        headerBgVariant: 'dark',
+        headerTextVariant: 'light',
+        tempShowOnlyAvailable: true,
+        showOnlyAvailable: true,
+        selectedItemNumbers: null,
+        currentPageChanged: 0,
+        perPageChange: 0,
+        categoryId: 0,
+        selectPartListId: '',
+        showPartListId: '',
+        showFavorites: false,
+        showHaveIts: false,
+        categories: null,
+        tempExcludedCategories: [],
+        excludedCategories: [],
+        categorieOptions: null,
+        tempSelectCategoriesToBeHidden: true,
+        selectCategoriesToBeHidden: true,
+        currentFilter: [],
     }),
     components: {
         BrickGrid,
@@ -212,7 +312,7 @@ export default {
                 return;
             }
 
-            if (this.$store.state.partList.totalPositions >= 2000) {
+            /*if (this.$store.state.partList.totalPositions >= 2000) {
                 this.$bvToast.toast(
                     this.labelErrorImportBrickLinkTextToManyPositions,
                     {
@@ -222,7 +322,7 @@ export default {
                     }
                 );
                 return;
-            }
+            }*/
 
             var part = {};
             part.source = 'lego';
@@ -250,17 +350,15 @@ export default {
             part.pickABrick = null;
             part.brickLink = null;
 
-            //partList.positions.push(part);
-            //partList.date = new Date(0, 0, 0, 0, 0, 0, 0);
             this.$store.commit('partList/addToPartList', {
-                id: this.partListId,
+                id: this.selectedPartListId,
                 part: part,
             });
         },
         loadPartList() {
-            if (this.partListId) {
+            if (this.selectedPartListId) {
                 return this.$store.getters['partList/getPartListsById'](
-                    this.partListId
+                    this.selectedPartListId
                 );
             }
 
@@ -308,11 +406,27 @@ export default {
                 this.currentPage = 1;
             }
 
-            /*this.$router
-                .push(
-                    `/import/singleParts/${this.categoryId}/${this.selectedSort}/${this.sortDirection}/${this.keyword}/${this.selectedColor}/${this.currentPage}`
-                )
-                .catch(() => {});*/
+            this.currentFilter = {
+                page: this.currentPage,
+                limit: this.perPage,
+                categoryId: this.categoryId,
+                colorId: this.selectedColor,
+                keyword: this.keyword,
+                sortField: this.selectedSort,
+                sortDirection: this.sortDirection,
+                showAll: !this.showOnlyAvailable,
+                showFavorites: this.showFavorites,
+                showHaveIts: this.showHaveIts,
+                showPartListId: this.showPartListId,
+                excludedCategories: this.excludedCategories,
+                selectCategoriesToBeHidden: this.selectCategoriesToBeHidden,
+            };
+
+            this.$store.commit('singleParts/setFilter', this.currentFilter);
+
+            let excludedCategories = null;
+            if (this.selectCategoriesToBeHidden)
+                excludedCategories = this.excludedCategories;
 
             this.search = await apiBrickTwo.getBricksAsync(
                 this.currentPage,
@@ -322,7 +436,10 @@ export default {
                 this.selectedColor,
                 this.keyword,
                 this.selectedSort,
-                this.sortDirection
+                this.sortDirection,
+                !this.showOnlyAvailable,
+                this.selectedItemNumbers,
+                excludedCategories
             );
 
             if (!this.search) {
@@ -342,7 +459,10 @@ export default {
                 'singleParts/setCategoriesFiltered',
                 this.search.categories
             );
-            bus.$emit('CategoriesFiltered', this.search.categories);
+            bus.$emit('CategoriesFiltered', {
+                categories: this.search.categories,
+                selected: this.categoryId,
+            });
 
             this.colorList = this.search.colors;
             this.totalRows = this.search.page.total;
@@ -372,6 +492,7 @@ export default {
         },
         async loadPrices() {
             var designIds = [];
+            let currentFilter = JSON.stringify(this.currentFilter);
 
             this.search.bricks.forEach((brick) => {
                 if (
@@ -383,8 +504,10 @@ export default {
             });
 
             for (var i = 0; i < designIds.length; i++) {
+                if (currentFilter != JSON.stringify(this.currentFilter)) return;
                 var designId = designIds[i];
-                await this.sleep(200); //200ms timout to prevent to be blocked on the website
+
+                await this.sleep(300); //200ms timout to prevent to be blocked on the website
 
                 var response = await browser.runtime.sendMessage({
                     service: 'bricksAndPieces',
@@ -401,120 +524,257 @@ export default {
                         brick.update = false;
                     });
                 } else {
-                    response.bricks.map((brick) => {
-                        var found = this.search.bricks.find(
-                            (b) =>
-                                b.itemNumber == brick.itemNumber ||
-                                b.alternativeItemNumbers.includes(
-                                    `|${brick.itemNumber}|`
-                                )
-                        );
+                    if (!response.status) {
+                        response.bricks.map((brick) => {
+                            var found = this.search.bricks.find(
+                                (b) =>
+                                    b.itemNumber == brick.itemNumber ||
+                                    b.alternativeItemNumbers.includes(
+                                        `|${brick.itemNumber}|`
+                                    )
+                            );
 
-                        if (found) {
-                            //found.itemNumber = brick.itemNumber;
-                            found.color = brick.color;
-                            found.colorFamily = brick.colorFamily;
-                            found.description = brick.description;
-                            found.designId = brick.designId;
-                            found.imageUrl = brick.imageUrl;
-                            if (brick.isAvailable) {
-                                found.isAvailable = 1;
-                            } else {
-                                found.isAvailable = 0;
+                            if (found) {
+                                //found.itemNumber = brick.itemNumber;
+                                found.color = brick.color;
+                                found.colorFamily = brick.colorFamily;
+                                found.description = brick.description;
+                                found.designId = brick.designId;
+                                found.imageUrl = brick.imageUrl;
+                                if (brick.isAvailable) {
+                                    found.isAvailable = 1;
+                                } else {
+                                    found.isAvailable = 0;
+                                }
+                                if (brick.isSoldOut) {
+                                    found.isSoldOut = 1;
+                                } else {
+                                    found.isSoldOut = 0;
+                                }
+                                found.priceAmount = brick.price.amount.toFixed(
+                                    2
+                                );
+                                found.priceCurrency = brick.price.currency;
+                                found.maxAmount = brick.maxAmount;
+                                found.update = false;
+                                if (
+                                    found.maxAmount > 0 &&
+                                    found.isAvailable &&
+                                    !found.isSoldOut
+                                ) {
+                                    found.lastSeen = new Date(
+                                        new Date(Date.now()).toUTCString()
+                                    ).toISOString();
+                                }
+                                found.lastUpdateCountry = new Date(
+                                    new Date(Date.now()).toUTCString()
+                                ).toISOString();
                             }
-                            if (brick.isSoldOut) {
-                                found.isSoldOut = 1;
-                            } else {
-                                found.isSoldOut = 0;
-                            }
-                            found.priceAmount = brick.price.amount.toFixed(2);
-                            found.priceCurrency = brick.price.currency;
-                            found.maxAmount = brick.maxAmount;
-                            found.update = false;
-                            if (
-                                found.maxAmount > 0 &&
-                                found.isAvailable &&
-                                !found.isSoldOut
-                            ) {
-                                found.lastSeen = new Date(
-                                    Date.now()
-                                ).toUTCString();
-                            }
-                            found.lastUpdateCountry = new Date(
-                                Date.now()
-                            ).toUTCString();
-                        }
-                    });
+                        });
+                    }
 
                     var found = this.search.bricks.filter(
                         (b) => b.designId == designId
                     );
 
+                    if (response.status) {
+                        found.map((brick) => {
+                            brick.maxAmount = 0;
+                            brick.isAvailable = 0;
+                        });
+                    }
+
                     found.map((brick) => {
                         brick.update = false;
                     });
 
-                    apiBrickTwo.sendPrices(
-                        apiBrickTwo.prepareSendPrice(
-                            response.bricks,
-                            this.$store.state.country
-                        )
-                    );
+                    if (!response.status) {
+                        apiBrickTwo.sendPrices(
+                            apiBrickTwo.prepareSendPrice(
+                                response.bricks,
+                                this.$store.state.country
+                            )
+                        );
+                    }
                 }
             }
         },
         sleep(ms) {
             return new Promise((resolve) => setTimeout(resolve, ms));
         },
-        selectSortBy(value) {
+        onSelectSortByChange(value) {
+            this.$store.commit('addLog', {
+                action: 'onSelectSortByChange',
+            });
             this.selectedSort = value;
             this.loadBricks(true);
         },
-        selectSortDirection() {
+        onSelectSortDirectionChange() {
+            this.$store.commit('addLog', {
+                action: 'onSelectSortDirectionChange',
+            });
             if (this.sortDirection == 'ASC') {
                 this.sortDirection = 'DESC';
             } else {
                 this.sortDirection = 'ASC';
             }
-
             this.loadBricks(false);
         },
-        selectColor(value) {
+        onColorChange(value) {
+            this.$store.commit('addLog', {
+                action: 'onColorChange',
+            });
             this.selectedColor = value;
             this.loadBricks(true);
         },
         setKeyword(value) {
+            this.$store.commit('addLog', {
+                action: 'setKeyword',
+            });
             this.selectedColor = 'all';
             this.keyword = value;
+            this.onKeywordChange();
         },
         setColor(value) {
+            this.$store.commit('addLog', {
+                action: 'setColor',
+            });
             this.keyword = '';
             this.selectedColor = value;
             this.loadBricks(true);
         },
-    },
-    watch: {
-        categoryId: function() {
-            this.loadBricks(true);
-        },
-        /*selectedColor: function() {
-            this.loadBricks(true);
-        },*/
-        currentPage: function() {
+        onChangeCurrentPage(event) {
+            this.$store.commit('addLog', {
+                action: 'onChangeCurrentPage',
+            });
+            this.currentPage = event;
             this.loadBricks(false);
         },
-        perPage: function() {
+        onChangePerPage(event) {
+            this.$store.commit('addLog', {
+                action: 'onChangePerPage',
+            });
+            this.perPage = event;
             this.loadBricks(true);
         },
-        keyword: function() {
+        onKeywordChange() {
+            this.$store.commit('addLog', {
+                action: 'onKeywordChange',
+            });
             this.loadBricks(true);
         },
-        partListId: function() {
-            this.selectPart();
+        loadFilter() {
+            let filter = this.$store.state.singleParts.filter;
+
+            this.currentPage = filter.page;
+            this.perPage = filter.limit;
+            this.categoryId = filter.categoryId;
+            this.selectedColor = filter.colorId;
+            this.keyword = filter.keyword;
+            this.selectedSort = filter.sortField;
+            this.sortDirection = filter.sortDirection;
+            this.showOnlyAvailable = !filter.showAll;
+            this.tempShowOnlyAvailable = this.showOnlyAvailable;
+            this.showFavorites = filter.showFavorites;
+            this.showHaveIts = filter.showHaveIts;
+            this.showPartListId = filter.showPartListId;
+            this.excludedCategories = filter.excludedCategories;
+            this.tempExcludedCategories = this.excludedCategories;
+            this.selectCategoriesToBeHidden = filter.selectCategoriesToBeHidden;
+            this.tempSelectCategoriesToBeHidden = this.selectCategoriesToBeHidden;
+            this.totalRows = this.perPage * this.currentPage;
+            this.selectItemNumbers();
+        },
+        selectItemNumbers() {
+            this.selectedItemNumbers = [];
+
+            if (this.showPartListId) {
+                let partList = this.$store.getters['partList/getPartListsById'](
+                    this.showPartListId
+                );
+                if (partList)
+                    partList.positions.map((pos) =>
+                        this.selectedItemNumbers.push(pos.itemNumber)
+                    );
+            } else {
+                if (this.showFavorites)
+                    this.selectedItemNumbers = this.$store.state.singleParts.favorites;
+                if (this.showHaveIts)
+                    this.selectedItemNumbers = this.$store.state.singleParts.haveIts;
+            }
+        },
+
+        async loadCategories() {
+            this.categories = await apiBrickTwo.getCategoriesAsync(
+                this.$store.state.country
+            );
+
+            this.$store.commit('singleParts/setCategories', this.categories);
+
+            this.categorieOptions = [];
+            this.categories.map((cat) => {
+                this.categorieOptions.push({
+                    text: cat.name,
+                    value: cat.id,
+                });
+            });
+        },
+        okSettings() {
+            this.$store.commit('addLog', {
+                action: 'okSettings',
+            });
+            this.showOnlyAvailable = this.tempShowOnlyAvailable;
+            this.selectCategoriesToBeHidden = this.tempSelectCategoriesToBeHidden;
+            this.excludedCategories = this.tempExcludedCategories;
+            this.loadBricks(true);
+        },
+        cancleSettings() {
+            this.tempShowOnlyAvailable = this.showOnlyAvailable;
+            this.tempSelectCategoriesToBeHidden = this.selectCategoriesToBeHidden;
+            this.tempExcludedCategories = this.excludedCategories;
         },
     },
+    beforeMount() {
+        this.loadCategories();
+        this.loadFilter();
+    },
     mounted() {
-        this.loadBricks(true);
+        this.$store.commit('addLog', {
+            action: 'mounted',
+        });
+        this.loadBricks();
+    },
+    created() {
+        bus.$on('categorySelected', (categoryId) => {
+            this.$store.commit('addLog', {
+                action: 'categorySelected',
+            });
+            this.categoryId = categoryId;
+
+            this.loadBricks(true);
+        });
+        bus.$on('selectedPartList', (partListId) => {
+            this.$store.commit('addLog', {
+                action: 'selectedPartList',
+            });
+            this.selectedPartListId = partListId;
+
+            this.selectPart();
+        });
+        bus.$on('showPartList', (partListId, showFavorites, showHaveIts) => {
+            this.$store.commit('addLog', {
+                action: 'showPartList',
+            });
+            this.showPartListId = partListId;
+            this.showFavorites = showFavorites;
+            this.showHaveIts = showHaveIts;
+
+            this.selectItemNumbers();
+            this.loadBricks(true);
+        });
+    },
+    beforeDestroy() {
+        bus.$off();
     },
     computed: {
         labelFindPartsByKeyword() {
@@ -544,6 +804,17 @@ export default {
         labelErrorImportBrickLinkTextToManyPositions() {
             return browser.i18n.getMessage(
                 'import_errorImportBrickLinkTextToManyPositions'
+            );
+        },
+        labelSettingsHeader() {
+            return browser.i18n.getMessage('import_sp_settingsHeader');
+        },
+        labelShowOnlyAvailable() {
+            return browser.i18n.getMessage('import_sp_showOnlyAvailable');
+        },
+        labelSelectCategoriesToBeHidden() {
+            return browser.i18n.getMessage(
+                'import_sp_selectCategoriesToBeHidden'
             );
         },
     },
