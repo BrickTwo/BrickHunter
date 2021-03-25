@@ -23,7 +23,6 @@
                         :active="$router.currentRoute.path == '/singleParts'"
                     >
                         {{ menuSingleParts }}
-                        <b-badge variant="danger">Beta</b-badge>
                     </b-nav-item>
                     <b-nav-item
                         @click="showPage('import')"
@@ -54,12 +53,24 @@
                         {{ menuExport }}
                     </b-nav-item>
 
-                    <b-nav-item
+                    <b-nav-item v-if="language=='de'"
                         @click="
-                            link('https://github.com/BrickTwo/BrickHunter/wiki')
+                            link(
+                                'https://bricktwo.net/brickhunter-dokumentation/?lang=de'
+                            )
                         "
-                        >{{ menuHelp }}</b-nav-item
                     >
+                        {{ menuHelp }}
+                    </b-nav-item>
+                    <b-nav-item v-else
+                        @click="
+                            link(
+                                'https://bricktwo.net/brickhunter-documentation/'
+                            )
+                        "
+                    >
+                        {{ menuHelp }}
+                    </b-nav-item>
 
                     <b-nav-item
                         @click="showPage('info')"
@@ -155,6 +166,7 @@ export default {
             notification: null,
             page: null,
             flag: null,
+            language: 'de',
         };
     },
     methods: {
@@ -195,13 +207,10 @@ export default {
                 'data:text/json;charset=utf-8,' +
                 encodeURIComponent(JSON.stringify(this.$store.state.log));
 
-            const data =content;
+            const data = content;
             const link = document.createElement('a');
             link.setAttribute('href', data);
-            link.setAttribute(
-                'download',
-                'BrickHunter_errorlog.json'
-            );
+            link.setAttribute('download', 'BrickHunter_errorlog.json');
             link.click();
         },
         async cloudSync() {
@@ -247,6 +256,13 @@ export default {
         //this.countrySelected = this.$store.state.country;
         //this.languageSelected = this.$store.state.language;
         //this.cloudSync();
+
+        var language = browser.i18n.getUILanguage();
+        if (language.startsWith('de')) {
+            this.language = 'de';
+        } else {
+            this.language = 'en';
+        }
     },
     computed: {
         extName() {
