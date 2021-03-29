@@ -21,20 +21,16 @@ export default {
                     });
 
                     if (response?.status) {
-                        if (response.status == 204) {
+                        if (response.status != 204) {
                             items.map(
                                 (i) =>
-                                    (i.bricksAndPieces = null)
+                                    (i.bricksAndPieces = {
+                                        error: response.status,
+                                    })
                             );
+                            //item.bricksAndPieces = { error: response.status };
                             return;
                         }
-
-                        items.map(
-                            (i) =>
-                                (i.bricksAndPieces = { error: response.status })
-                        );
-                        //item.bricksAndPieces = { error: response.status };
-                        return;
                     }
                     if (response?.bricks) {
                         bricks = bricks.concat(response.bricks);
@@ -109,7 +105,7 @@ export default {
             }
         }
 
-        if(item.color.id == 9999){
+        if (item.color.id == 9999) {
             result = bricks;
         }
 
