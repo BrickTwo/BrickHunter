@@ -1,14 +1,12 @@
 import { localForageService } from '@/utility/idb/localForageService';
 import localforageGetItems from 'localforage-getitems';
 
-export const setPersistedState = (state) => {
-  const persistedState = mapToPersistedState(state);
+export const setPersistedState = (state, mutation) => {
+  const persistedPayload = mapToPersistedPayload(mutation.payload);
 
   const promises = [];
   return new Promise((resolve, reject) => {
-    persistedState.forEach(thing => {
-      promises.push(localForageService.setItem(thing.id, thing));
-    });
+    promises.push(localForageService.setItem(persistedPayload.id, persistedPayload));
 
     Promise.all(promises)
     .then(result => {
@@ -38,7 +36,7 @@ export const deletePersistedState = (state, payload) => {
   // u decide how to delete cache
 }
 
-export const mapToPersistedState = (state) => {
+export const mapToPersistedPayload = (payload) => {
   // whatever your business logic is.
-  return JSON.parse(JSON.stringify(state.partList.partLists));
+  return JSON.parse(JSON.stringify(payload));
 };

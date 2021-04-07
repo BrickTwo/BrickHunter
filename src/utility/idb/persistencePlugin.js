@@ -14,10 +14,10 @@ const ofInterest = (mutation) => {
 export const persistencePlugin = (store) => {
   store.subscribe((mutation, state) => {
     if(mutation.type == 'partList/deletePartList') {
-      deletePersistedState(state, mutation.payload);
+      deletePersistedState(state, mutation);
     }else if (ofInterest(mutation.type)) {
       // handover to relevant get/set mappings. straightfwd example would be:
-      setPersistedState(state).catch(error => {
+      setPersistedState(state, mutation).catch(error => {
         // wow why so unlucky... handle error here
       }); 
     }

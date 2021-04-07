@@ -111,7 +111,9 @@ const actions = {
         });
 
         if (state.partLists.length > 0)
-            commit('setPartList', state.partLists[0]);
+            state.partLists.map((partList) => {
+                commit('setPartList', partList);
+            });
     },
 };
 
@@ -129,7 +131,6 @@ const mutations = {
         }
 
         state.partLists.push(payload);
-
         //localStorage.setItem('partList_' + payload.id, JSON.stringify(payload));
 
         state.totalPositions = 0;
