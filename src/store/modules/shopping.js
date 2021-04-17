@@ -1,4 +1,4 @@
-import version from '@/utility/version.js'
+import version from '@/utility/version.js';
 
 // initial state
 const state = () => ({
@@ -15,6 +15,7 @@ const state = () => ({
     bricksAndPiecesPrice: 0,
     pickABrickPrice: 0,
     brickLinkPrice: 0,
+    bricksAndPiecesBrickAmount: 0,
     currency: '',
     settings: {},
 });
@@ -183,14 +184,22 @@ const mutations = {
             }
         }
 
+        state.brickAndPiecesList.reduce((a, b) => {
+            console.log(a, b)
+            return a + parseInt(b.qty.balance);
+        })
+
         state.bricksAndPiecesPrice +=
             qtyForPrice * payload.bricksAndPieces.price.amount;
         state.currency = payload.bricksAndPieces.price.currency;
+
+        state.bricksAndPiecesBrickAmount += qtyForPrice;
     },
     clearBricksAndPiecesList(state) {
         state.brickAndPiecesList = [];
         state.bricksAndPiecesPositions = 0;
         state.bricksAndPiecesPrice = 0;
+        state.qtyForPrice = 0;
         state.wantedListPositionsMerged =
             state.pickABrickPositions +
             state.brickLinkPositions +

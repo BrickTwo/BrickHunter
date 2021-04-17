@@ -66,6 +66,8 @@ export default {
         loadJson(partList) {
             this.name = partList.name;
 
+            console.log(partList, this.name, this.name.length)
+
             if(partList.version != '1.0') return;
             if(!partList.positions) return;
             console.log(partList.source)

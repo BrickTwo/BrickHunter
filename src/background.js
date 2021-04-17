@@ -352,7 +352,7 @@ async function bricksAndPieces(request) {
                 if (response.status == 204)
                     return {
                         status: response.status,
-                        message: "",
+                        message: '',
                     };
 
                 return response.json();
@@ -363,7 +363,7 @@ async function bricksAndPieces(request) {
                     message: '',
                 };
             });
-        
+
         return response;
     }
 
@@ -475,7 +475,7 @@ async function bricksAndPieces(request) {
             .catch((error) => console.log(error));
 
         browser.tabs.update(tabId, {
-            url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`,
+            url: `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale/location`,
             active: true,
         });
 
@@ -486,19 +486,23 @@ async function bricksAndPieces(request) {
         var tabId = await getLegoTab();
         if (!tabId) return false;
 
-        var url = `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale`;
+        var target = `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale/location`;
         if (affiliate) {
             if (affiliate.linkType == 'webgains') {
-                url =
-                    `https://track.webgains.com/click.html?wgcampaignid=${affiliate.wgcampaignid}&wgprogramid=${affiliate.wgprogramid}&clickref=${affiliate.clickref}&wgtarget=` +
-                    url;
+                url = `https://track.webgains.com/click.html?wgcampaignid=${
+                    affiliate.wgcampaignid
+                }&wgprogramid=${affiliate.wgprogramid}&clickref=${
+                    affiliate.clickref
+                }&wgtarget=${target}`;
             }
+        } else {
+            url = target;
         }
-        browser.tabs.update(tabId, {
-            url: url,
-            active: true,
-        });
-
+        browser.tabs
+            .update(tabId, {
+                url: url,
+                active: true,
+            })
         return true;
     }
 }

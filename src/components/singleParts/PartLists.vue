@@ -148,6 +148,7 @@ export default {
                 date: new Date(0, 0, 0, 0, 0, 0, 0),
                 source: 'singleParts',
                 positions: [],
+                version: '1.0',
             };
 
             this.partLists.push(newPartList);

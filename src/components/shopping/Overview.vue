@@ -8,7 +8,7 @@
                     wantedListPositions
                 }})<br />
                 {{ bricksAndPieces }}:
-                {{ $store.state.shopping.bricksAndPiecesPositions }}<br />
+                {{ $store.state.shopping.bricksAndPiecesPositions }} ({{ $store.state.shopping.bricksAndPiecesBrickAmount }})<br />
                 {{ pickABrick }}: {{ $store.state.shopping.pickABrickPositions
                 }}<br />
                 {{ brickLink }}: {{ $store.state.shopping.brickLinkPositions
