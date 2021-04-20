@@ -2,7 +2,6 @@ import version from '@/utility/version.js';
 
 // initial state
 const state = () => ({
-    wantedListPositionsMerged: 0,
     notAllocatedPositions: 0,
     wantedList: [],
     brickAndPiecesList: {},
@@ -138,10 +137,6 @@ const mutations = {
         if (!state.settings.subtractBrickLinkPriceUnit)
             state.settings.subtractBrickLinkPriceUnit = 'absolute';
     },
-    setwantedListPositionsMerged(state, payload) {
-        //console.log(payload)
-        state.wantedListPositionsMerged = payload;
-    },
     setWantedList(state, payload) {
         state.wantedList = payload;
     },
@@ -234,17 +229,12 @@ const mutations = {
                 payload.qty.maxAmount = payload.bricksAndPieces.maxAmount;
             }
             state.brickAndPiecesList.push(JSON.parse(JSON.stringify(payload)));
-            state.wantedListPositionsMerged++;
         }
         state.currency = payload.bricksAndPieces.price.currency;
     },
     clearBricksAndPiecesList(state) {
         state.brickAndPiecesList = [];
         state.qtyForPrice = 0;
-        state.wantedListPositionsMerged =
-            state.pickABrickPositions +
-            state.brickLinkPositions +
-            state.notAllocatedPositions;
     },
     addToPickABrickList(state, payload) {
         var found = state.pickABrickList.find(
@@ -269,16 +259,11 @@ const mutations = {
                 payload.qty.order = 999;
             }
             state.pickABrickList.push(JSON.parse(JSON.stringify(payload)));
-            state.wantedListPositionsMerged++;
         }
         state.currency = payload.pickABrick.variant.price.currencyCode;
     },
     clearPickABrickList(state) {
         state.pickABrickList = [];
-        state.wantedListPositionsMerged =
-            state.bricksAndPiecesPositions +
-            state.brickLinkPositions +
-            state.notAllocatedPositions;
     },
     addToBrickLinkList(state, payload) {
         var found = state.brickLinkList.find((f) => {
@@ -306,15 +291,10 @@ const mutations = {
             found.qty.balance = found.qty.min - found.qty.have;
         } else {
             state.brickLinkList.push(JSON.parse(JSON.stringify(payload)));
-            state.wantedListPositionsMerged++;
         }
     },
     clearBrickLinkList(state) {
         state.brickLinkList = [];
-        state.wantedListPositionsMerged =
-            state.bricksAndPiecesPositions +
-            state.pickABrickPositions +
-            state.notAllocatedPositions;
     },
     addToNotAllocatedList(state, payload) {
         var found = state.notAllocatedList.find((f) => {
@@ -343,16 +323,10 @@ const mutations = {
         } else {
             state.notAllocatedList.push(JSON.parse(JSON.stringify(payload)));
             state.notAllocatedPositions++;
-            state.wantedListPositionsMerged++;
         }
     },
     clearNotallocatedList(state) {
         state.notAllocatedList = [];
-        state.notAllocatedPositions = 0;
-        state.wantedListPositionsMerged =
-            state.bricksAndPiecesPositions +
-            state.pickABrickPositions +
-            state.brickLinkPositions;
     },
 };
 
