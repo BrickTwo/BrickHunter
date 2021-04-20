@@ -26,7 +26,7 @@
                 "
             >
                 {{ bricksAndPieces }} ({{
-                    $store.state.shopping.bricksAndPiecesPositions
+                    $store.getters['shopping/getBricksAndPiecesPositions']()
                 }})
             </b-nav-item>
             <b-nav-item
@@ -40,7 +40,7 @@
                 "
             >
                 {{ pickABrick }} ({{
-                    $store.state.shopping.pickABrickPositions
+                    $store.getters['shopping/getPickABrickPositions']()
                 }})
             </b-nav-item>
             <b-nav-item
@@ -53,7 +53,7 @@
                         $store.state.shopping.settings.selectedPrio3 == 'brickLink'
                 "
             >
-                {{ brickLink }} ({{ $store.state.shopping.brickLinkPositions }})
+                {{ brickLink }} ({{ $store.getters['shopping/getBrickLinkPositions']() }})
             </b-nav-item>
             <b-nav-item
                 class="p-0"
@@ -62,7 +62,7 @@
                 v-if="$store.state.shopping.notAllocatedPositions > 0"
             >
                 {{ notAllocated }} ({{
-                    $store.state.shopping.notAllocatedPositions
+                    $store.getters['shopping/getNotAllocatedPositions']()
                 }})
             </b-nav-item>
         </b-nav>

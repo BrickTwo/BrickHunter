@@ -226,9 +226,6 @@ export default {
         },
         async pickABrickAddToCart(item) {
             if (item.pickABrick) {
-                var qty = item.qty.order;
-                if (qty > 999) qty = 999; // it's not possible to order more than 999 pieces per brick
-
                 var partId = item.pickABrick.variant.id;
 
                 var response = await browser.runtime.sendMessage({
@@ -236,7 +233,7 @@ export default {
                     action: 'addToCart',
                     authorization: this.authorization,
                     PABCartId: this.pickABrickShoppingCartId,
-                    qty: qty,
+                    qty: item.qty.order,
                     partId: partId,
                 });
             }

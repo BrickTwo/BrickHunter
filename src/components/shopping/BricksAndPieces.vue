@@ -154,23 +154,11 @@ export default {
 
             for (var i = 0; i < this.brickList.length; i++) {
                 if (this.brickList[i].bricksAndPieces) {
-                    var qty = this.brickList[i].qty.order;
-                    if (qty > 200) qty = 200; // it's not possible to order more than 200 pieces per brick
-
-                    if (qty > this.brickList[i].bricksAndPieces.maxAmount)
-                        qty = this.brickList[i].bricksAndPieces.maxAmount;
-
                     var pos = {
                         id: this.brickList[i].bricksAndPieces.itemNumber,
                         product: this.brickList[i].bricksAndPieces,
-                        quantity: parseInt(qty),
+                        quantity: parseInt(this.brickList[i].qty.order),
                     };
-
-                    /*pos.product.description = pos.product.description.replace(
-                        /[\""]/g,
-                        '\\"'
-                    ); // escape quotes in description
-                    */
                     order.push(pos);
                 }
             }

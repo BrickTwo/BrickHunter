@@ -3,25 +3,88 @@ import version from '@/utility/version.js';
 // initial state
 const state = () => ({
     wantedListPositionsMerged: 0,
-    bricksAndPiecesPositions: 0,
-    pickABrickPositions: 0,
-    brickLinkPositions: 0,
     notAllocatedPositions: 0,
     wantedList: [],
     brickAndPiecesList: {},
     pickABrickList: {},
     brickLinkList: {},
     notAllocatedList: {},
-    bricksAndPiecesPrice: 0,
-    pickABrickPrice: 0,
-    brickLinkPrice: 0,
-    bricksAndPiecesBrickAmount: 0,
     currency: '',
     settings: {},
 });
 
 // getters
-const getters = {};
+const getters = {
+    getBricksAndPiecesPositions: (state) => () => {
+        return state.brickAndPiecesList.length;
+    },
+    getBricksAndPiecesBrickAmount: (state) => () => {
+        let amount = 0;
+        state.brickAndPiecesList.map((pos) => {
+            amount += pos.qty.order;
+        });
+        return amount;
+    },
+    getBricksAndPiecesTotalPrice: (state) => () => {
+        let price = 0;
+        state.brickAndPiecesList.map((pos) => {
+            price += pos.qty.order * pos.bricksAndPieces.price.amount;
+        });
+        return price;
+    },
+
+    getPickABrickPositions: (state) => () => {
+        return state.pickABrickList.length;
+    },
+    getPickABrickBrickAmount: (state) => () => {
+        let amount = 0;
+        state.pickABrickList.map((pos) => {
+            amount += pos.qty.order;
+        });
+        return amount;
+    },
+    getPickABrickTotalPrice: (state) => () => {
+        let price = 0;
+        state.pickABrickList.map((pos) => {
+            price +=
+                (pos.qty.order * pos.pickABrick.variant.price.centAmount) / 100;
+        });
+        return price;
+    },
+
+    getBrickLinkPositions: (state) => () => {
+        return state.brickLinkList.length;
+    },
+    getBrickLinkBrickAmount: (state) => () => {
+        let amount = 0;
+        state.brickLinkList.map((pos) => {
+            amount += pos.qty.order;
+        });
+        return amount;
+    },
+    getBrickLinkTotalPrice: (state) => () => {
+        let returnPrice = 0;
+        state.brickLinkList.map((pos) => {
+            var price = 0;
+            if (pos.brickLink?.wantedList?.maxprice)
+                price = pos.brickLink?.wantedList?.maxprice;
+            if (price < 0) price = 0;
+            returnPrice += pos.qty.order * price;
+        });
+        return returnPrice;
+    },
+
+    getNotAllocatedPositions: (state) => () => {
+        return state.notAllocatedList.length;
+    },
+    getNotAllocatedBrickAmount: (state) => () => {
+        let amount = 0;
+        state.notAllocatedList.map((pos) => {
+            amount += pos.qty.order;
+        });
+        return amount;
+    },
+};
 
 // actions
 const actions = {};
@@ -144,7 +207,6 @@ const mutations = {
                 f.bricksAndPieces.itemNumber ==
                 payload.bricksAndPieces.itemNumber
         );
-        var qtyForPrice = 0;
 
         if (found) {
             found.qty = { ...found.qty };
@@ -156,13 +218,13 @@ const mutations = {
             found.qty.order += parseInt(payload.qty.order);
             found.qty.balance = found.qty.min - found.qty.have;
 
-            qtyForPrice = found.qty.order;
-            if (qtyForPrice > 200) {
-                qtyForPrice = 200;
+            payload.qty.order = found.qty.order;
+            if (payload.qty.order > 200) {
+                payload.qty.order = 200;
             }
 
-            if (found.bricksAndPieces.maxAmount < qtyForPrice) {
-                qtyForPrice = found.qty.maxAmount;
+            if (found.bricksAndPieces.maxAmount < payload.qty.order) {
+                payload.qty.order = found.qty.maxAmount;
             }
         } else {
             if (payload.qty.order > 200) {
@@ -172,33 +234,12 @@ const mutations = {
                 payload.qty.maxAmount = payload.bricksAndPieces.maxAmount;
             }
             state.brickAndPiecesList.push(JSON.parse(JSON.stringify(payload)));
-            state.bricksAndPiecesPositions++;
             state.wantedListPositionsMerged++;
-
-            qtyForPrice = payload.qty.order;
-            if (qtyForPrice > 200) {
-                qtyForPrice = 200;
-            }
-            if (payload.bricksAndPieces.maxAmount < qtyForPrice) {
-                qtyForPrice = payload.qty.maxAmount;
-            }
         }
-
-        state.brickAndPiecesList.reduce((a, b) => {
-            console.log(a, b)
-            return a + parseInt(b.qty.balance);
-        })
-
-        state.bricksAndPiecesPrice +=
-            qtyForPrice * payload.bricksAndPieces.price.amount;
         state.currency = payload.bricksAndPieces.price.currency;
-
-        state.bricksAndPiecesBrickAmount += qtyForPrice;
     },
     clearBricksAndPiecesList(state) {
         state.brickAndPiecesList = [];
-        state.bricksAndPiecesPositions = 0;
-        state.bricksAndPiecesPrice = 0;
         state.qtyForPrice = 0;
         state.wantedListPositionsMerged =
             state.pickABrickPositions +
@@ -210,11 +251,7 @@ const mutations = {
             (f) => f.pickABrick.variant.id == payload.pickABrick.variant.id
         );
 
-        var qtyForPrice = 0;
-
         if (found) {
-            var orderSizeBeforeCalculation = found.qty.order;
-
             found.qty = { ...found.qty };
             found.qty.min = parseInt(found.qty.min);
             found.qty.have = parseInt(found.qty.have);
@@ -224,30 +261,20 @@ const mutations = {
             found.qty.order += parseInt(payload.qty.order);
             found.qty.balance = found.qty.min - found.qty.have;
 
-            qtyForPrice = found.qty.order;
-            if (qtyForPrice > 999) {
-                qtyForPrice = 999;
+            if (found.qty.order > 999) {
+                found.qty.order = 999;
             }
-            qtyForPrice -= orderSizeBeforeCalculation;
         } else {
-            state.pickABrickList.push(JSON.parse(JSON.stringify(payload)));
-            state.pickABrickPositions++;
-            state.wantedListPositionsMerged++;
-
-            qtyForPrice = payload.qty.order;
-            if (qtyForPrice > 999) {
-                qtyForPrice = 999;
+            if (payload.qty.order > 999) {
+                payload.qty.order = 999;
             }
+            state.pickABrickList.push(JSON.parse(JSON.stringify(payload)));
+            state.wantedListPositionsMerged++;
         }
-
-        state.pickABrickPrice +=
-            (qtyForPrice * payload.pickABrick.variant.price.centAmount) / 100;
         state.currency = payload.pickABrick.variant.price.currencyCode;
     },
     clearPickABrickList(state) {
         state.pickABrickList = [];
-        state.pickABrickPositions = 0;
-        state.pickABrickPrice = 0;
         state.wantedListPositionsMerged =
             state.bricksAndPiecesPositions +
             state.brickLinkPositions +
@@ -279,20 +306,11 @@ const mutations = {
             found.qty.balance = found.qty.min - found.qty.have;
         } else {
             state.brickLinkList.push(JSON.parse(JSON.stringify(payload)));
-            state.brickLinkPositions++;
             state.wantedListPositionsMerged++;
         }
-
-        var price = 0;
-        if (payload.brickLink?.wantedList?.maxprice)
-            price = payload.brickLink?.wantedList?.maxprice;
-        if (price < 0) price = 0;
-        state.brickLinkPrice += payload.qty.order * price;
     },
     clearBrickLinkList(state) {
         state.brickLinkList = [];
-        state.brickLinkPositions = 0;
-        state.brickLinkPrice = 0;
         state.wantedListPositionsMerged =
             state.bricksAndPiecesPositions +
             state.pickABrickPositions +
