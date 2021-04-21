@@ -30,9 +30,8 @@ export const getPersistedState = (fetchKey) => {
   // u decide how to fetch from cache
 }
 
-export const deletePersistedState = (state, payload) => {
-  console.log('delete', state, payload)
-  return localForageService.removeItem(payload);
+export const deletePersistedState = (state, mutation) => {
+  return localForageService.removeItem(mutation.payload);
   // u decide how to delete cache
 }
 
