@@ -56,7 +56,7 @@ export default new Vuex.Store({
             var sKey;
             for (var i = 0; (sKey = window.localStorage.key(i)); i++) {
                 if (
-                    !sKey.startsWith('partList_') &&
+                    //!sKey.startsWith('partList_') &&
                     sKey != 'selectedOptions' &&
                     sKey != 'selectedColorOptions' &&
                     sKey != 'selectedPickABrickOptions' &&
