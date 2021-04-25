@@ -270,7 +270,18 @@ export default {
                 })
                 .catch(() => {});
         },
-        openInNewTab(url) {
+        openInNewTab(target) {
+            let affiliate = this.$store.state.affiliate;
+            let url = '';
+
+            if (affiliate) {
+                if (affiliate.linkType == 'webgains') {
+                    url = `https://track.webgains.com/click.html?wgcampaignid=${affiliate.wgcampaignid}&wgprogramid=${affiliate.wgprogramid}&clickref=${affiliate.clickref}&wgtarget=${target}`;
+                }
+            } else {
+                url = target;
+            }
+
             window.open(url, '_blank');
         },
     },

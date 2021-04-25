@@ -117,8 +117,12 @@
             <b-col id="bricksAndPiecesList">
                 <brick-list :bricklist="brickList" :limitMaxQty="200" />
             </b-col>
-            <b-col id="bricksAndPiecesListPrint" style="display: none" >
-                <brick-list :bricklist="brickList" :limitMaxQty="200" :fullSize="true"/>
+            <b-col id="bricksAndPiecesListPrint" style="display: none">
+                <brick-list
+                    :bricklist="brickList"
+                    :limitMaxQty="200"
+                    :fullSize="true"
+                />
             </b-col>
         </b-row>
     </b-container>
@@ -218,7 +222,18 @@ export default {
                     return true;
                 });
         },
-        openInNewTab(url) {
+        openInNewTab(target) {
+            let affiliate = this.$store.state.affiliate;
+            let url = '';
+
+            if (affiliate) {
+                if (affiliate.linkType == 'webgains') {
+                    url = `https://track.webgains.com/click.html?wgcampaignid=${affiliate.wgcampaignid}&wgprogramid=${affiliate.wgprogramid}&clickref=${affiliate.clickref}&wgtarget=${target}`;
+                }
+            } else {
+                url = target;
+            }
+
             var win = window.open(url, '_blank');
             //win.focus();
         },
