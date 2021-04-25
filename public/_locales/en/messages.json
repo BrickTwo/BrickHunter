@@ -308,11 +308,17 @@
     "import_legoSet": {
         "message": "LEGO Set"
     },
+    "import_fileImport": {
+        "message": "File import"
+    },
     "import_singleParts": {
         "message": "Single Parts"
     },
     "import_file": {
         "message": "File"
+    },
+    "import_fileFormat": {
+        "message": "File format"
     },
     "import_setNumber": {
         "message": "Set Number"
