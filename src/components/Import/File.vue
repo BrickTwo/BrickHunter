@@ -41,7 +41,6 @@
                     disabled
                     v-model="selectedSource"
                     :options="sourceOptions"
-                    @change="onSelectedSourceChange"
                 />
             </b-col>
         </b-row>
@@ -53,7 +52,7 @@
                 <b-form-input v-model="name" :state="name.length > 0" />
             </b-col>
         </b-row>
-        <b-row v-if="selectedSource=='BrickLink'">
+        <b-row>
             <b-col cols="3">
                 <label>{{ labelShoppingCart }}:</label>
             </b-col>
@@ -102,6 +101,10 @@ export default {
         showUploadField: 'filePicker',
         sourceOptions: [
             {
+                value: 'Unknown',
+                text: browser.i18n.getMessage('import_fileFormatUnknown'),
+            },
+            {
                 value: 'BrickHunter',
                 text: browser.i18n.getMessage('extName'),
             },
@@ -110,7 +113,7 @@ export default {
                 text: browser.i18n.getMessage('brickLink'),
             },
         ],
-        selectedSource: 'BrickHunter',
+        selectedSource: 'Unknown',
     }),
     components: {
         FileReader,
@@ -118,8 +121,8 @@ export default {
     },
     mixins: [brickColorMixin],
     methods: {
-        onSelectedSourceChange() {},
         onFileChange(returnObject) {
+            console.log(returnObject)
             this.partList = null;
             this.name = '';
 
@@ -132,11 +135,14 @@ export default {
                     this.selectedSource = 'BrickHunter';
                     this.partListFromBrickHunter(returnObject);
                     break;
+                default:
+                    this.selectedSource = 'Unknown';
             }
         },
         partListFromBrickHunter(returnObject) {
             let partList = returnObject.content;
             this.name = partList.name;
+            this.cart = partList.cart;
 
             if (partList.version != '1.0') return;
             if (!partList.positions) return;
@@ -280,7 +286,7 @@ export default {
             if (this.name) this.partList.name = this.name;
             if (!this.partList.date)
                 this.partList.date = new Date(0, 0, 0, 0, 0, 0, 0);
-            if (!this.partList.cart) this.partList.cart = true;
+            this.partList.cart = this.cart;
 
             this.$store.commit('partList/setPartList', this.partList);
 

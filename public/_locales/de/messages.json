@@ -308,6 +308,9 @@
     "import_legoSet": {
         "message": "LEGO Set"
     },
+    "import_fileFormatUnknown": {
+        "message": "Unbekannt"
+    },
     "import_fileImport": {
         "message": "Dateiimport"
     },

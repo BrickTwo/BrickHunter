@@ -7,7 +7,7 @@
             >
                 {{ labelFileImport }}
             </b-nav-item>
-            <b-nav-item
+            <!--<b-nav-item
                 :active="page == 'brickHunter'"
                 @click="changePage('brickHunter')"
             >
@@ -18,7 +18,7 @@
                 @click="changePage('brickLink')"
             >
                 {{ labelBrickLink }}
-            </b-nav-item>
+            </b-nav-item>-->
             <b-nav-item
                 :active="page == 'legoSet'"
                 @click="changePage('legoSet')"
