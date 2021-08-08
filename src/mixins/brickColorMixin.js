@@ -1946,7 +1946,17 @@ export const brickColorMixin = {
                     bricksAndPiecesName: 'Wa. Yell. Ora',
                     pickABrickName: 'N/A',
                     colorCode: '#F89A39',
-                },                
+                },
+                {         
+                    id: 188,
+                    brickLinkId: 233,
+                    brickLinkName: 'Satin Trans-Bright Green',
+                    legoId: 367,
+                    legoName: 'Transparant Green Opal',
+                    bricksAndPiecesName: 'Tr.Green Opal',
+                    pickABrickName: 'N/A',
+                    colorCode: '#7FE15B',
+                },               
             ],
         };
     },
