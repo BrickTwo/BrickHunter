@@ -1956,6 +1956,16 @@ export const brickColorMixin = {
                     bricksAndPiecesName: 'Tr.Green Opal',
                     pickABrickName: 'N/A',
                     colorCode: '#7FE15B',
+                },
+                {         
+                    id: 189,
+                    brickLinkId: 232,
+                    brickLinkName: 'Satin Trans-Dark Blue',
+                    legoId: 1019,
+                    legoName: 'Trans-Dark Blue Opal',
+                    bricksAndPiecesName: 'Tr.Blue Opal',
+                    pickABrickName: 'N/A',
+                    colorCode: '#1552E2',
                 },               
             ],
         };
