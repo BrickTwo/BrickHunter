@@ -156,6 +156,25 @@ export default {
         activeRequests--;
         return response.data;
     },
+    async getSubscriptions(chatId) {
+        let response = null;
+        try {
+            let url = `https://brickhunter.bricktwo.net/api/bot/subscriptions/read.php?chatid=${chatId}`;
+            store.commit('addLog', { func: 'getSubscriptions', url: url });
+            await this.throttling();
+            response = await axios.get(url);
+            store.commit('addLog', {
+                func: 'getSubscriptions',
+                respStat: response.status,
+            });
+        } catch (err) {
+            store.commit('addLog', { func: 'getSubscriptions', err: err });
+            activeRequests--;
+            return null;
+        }
+        activeRequests--;
+        return response.data;
+    },
     prepareSendPrice(bricks, country) {
         //api bricktwo
         if (!bricks) return null;

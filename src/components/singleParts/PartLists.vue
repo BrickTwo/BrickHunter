@@ -58,6 +58,33 @@
             </label>
         </b-row>
         <b-row class="mt-0">
+            <label class="custom-favorite-label">
+                <font-awesome-icon
+                    :icon="['fab', 'telegram-plane']"
+                    style="height: 16px; width: 16px; color: #0088CC"
+                />
+                <span style="margin-left: 3px">
+                    {{ labelNotifications }} ({{ haveIts.length }})
+                </span>
+                <b-link @click="editNotifications()">
+                    <b-icon icon="pencil" variant="primary" />
+                </b-link>
+                <b-link
+                    @click="showNotifications()"
+                    v-if="!notificationSelected"
+                >
+                    <b-icon
+                        icon="eye-slash"
+                        variant="secondary"
+                        aria-hidden="true"
+                    />
+                </b-link>
+                <b-link @click="hideHaveIt()" v-else>
+                    <b-icon icon="eye" aria-hidden="true" />
+                </b-link>
+            </label>
+        </b-row>
+        <b-row class="mt-0">
             <b-form-group>
                 <b-form-radio
                     v-for="partList in partLists"
@@ -104,6 +131,39 @@
                 />
             </p>
         </b-modal>
+        <b-modal
+            id="editListNotification"
+            ref="editListNotification"
+            :title="labelEditListHeader"
+            :header-bg-variant="headerBgVariant"
+            :header-text-variant="headerTextVariant"
+            centered
+            hide-header-close
+            no-close-on-backdrop
+            no-close-on-esc
+            @ok="okEditList"
+            @cancel="cancleEditList"
+        >
+            <p class="my-4">
+                {{ labelChatId }} <b-icon icon="info-circle-fill" aria-hidden="true" variant="primary" />
+                <b-form-input
+                    v-model="notificationChatId"
+                    :state="chatIdValid"
+                />
+                {{ labelElement }}
+                <b-form-textarea
+                    v-model="notificationDesignIds"
+                    rows="6"
+                    max-rows="6"
+                />
+                {{ labelDesignNumber }}
+                <b-form-textarea
+                    v-model="notificationItemNumbers"
+                    rows="6"
+                    max-rows="6"
+                />
+            </p>
+        </b-modal>
     </b-container>
 </template>
 
@@ -115,6 +175,7 @@
 
 <script>
 import { bus } from '@/utility/bus';
+import apiBrickTwo from '@/utility/api/bricktwo.js';
 
 export default {
     data: () => ({
@@ -125,11 +186,17 @@ export default {
         favoriteSelected: false,
         haveIts: null,
         haveItSelected: false,
+        notifications: null,
+        notificationSelected: false,
         headerBgVariant: 'dark',
         headerTextVariant: 'light',
         labelEditListHeader: '',
         editListContent: '',
         editMode: '',
+        chatIdValid: false,
+        notificationChatId: null,
+        notificationDesignIds: [],
+        notificationItemNumbers: [],
     }),
     methods: {
         createNewPartList() {
@@ -266,6 +333,14 @@ export default {
             );
             this.$refs['editList'].show();
         },
+        editNotifications() {
+            this.editMode = 'notifications';
+            this.labelEditListHeader = this.labelNotifications;
+            this.editListContent = this.prepareEditList(
+                this.$store.state.singleParts.haveIts
+            );
+            this.$refs['editListNotification'].show();
+        },
         prepareEditList(content) {
             content = JSON.stringify(content);
             content = content.slice(1); // remove first char
@@ -311,6 +386,7 @@ export default {
         this.favorites = this.$store.state.singleParts.favorites;
         this.haveIts = this.$store.state.singleParts.haveIts;
         let filter = this.$store.state.singleParts.filter;
+        this.notificationChatId = this.$store.state.singleParts.notificationChatId;
 
         this.showPartListId = filter.showPartListId;
         this.favoriteSelected = filter.showFavorites;
@@ -342,6 +418,26 @@ export default {
             //this.$emit('partListActive', this.selectedPartListId);
             bus.$emit('selectedPartList', this.selectedPartListId);
         },
+        notificationChatId: function(value) {
+            this.$store.commit('singleParts/setNotificationChatId', value);
+
+            apiBrickTwo.getSubscriptions(value).then((result) => {
+                this.chatIdValid = false;
+                console.log(result);
+                if (result) this.chatIdValid = true;
+
+                this.notificationDesignIds = "";
+                result.DesignId.forEach(d => {
+                    if(this.notificationDesignIds) this.notificationDesignIds += ",";
+                    this.notificationDesignIds += d;
+                });
+                this.notificationItemNumbers = "";
+                result.ItemNumber.forEach(i => {
+                    if(this.notificationItemNumbers) this.notificationItemNumbers += ",";
+                    this.notificationItemNumbers += i;
+                });
+            });
+        },
     },
     computed: {
         labelNewPartLists() {
@@ -355,6 +451,18 @@ export default {
         },
         labelHaveIts() {
             return browser.i18n.getMessage('import_sp_haveIt');
+        },
+        labelNotifications() {
+            return 'Notifications';
+        },
+        labelChatId() {
+            return 'Chat Id';
+        },
+        labelElement() {
+            return browser.i18n.getMessage('import_sp_element');
+        },
+        labelDesignNumber() {
+            return browser.i18n.getMessage('import_sp_designNumber');
         },
     },
 };

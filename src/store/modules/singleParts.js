@@ -5,6 +5,7 @@ const state = () => ({
     favorites: [],
     haveIts: [],
     filter: {},
+    notificationChatId: null,
 });
 
 // getters
@@ -64,6 +65,8 @@ const mutations = {
             excludedCategories: [],
             selectCategoriesToBeHidden: true,
         };
+
+        state.notificationChatId = window.localStorage.getItem('notificationChatId');
     },
     setCategories(state, payload) {
         state.categories = payload;
@@ -139,6 +142,10 @@ const mutations = {
 
         localStorage.setItem('filterSingleParts', JSON.stringify(state.filter));
     },
+    setNotificationChatId(state, chatId) {
+        state.notificationChatId = chatId;
+        localStorage.setItem('notificationChatId', state.notificationChatId);
+    }
 };
 
 export default {

@@ -76,7 +76,8 @@ export default new Vuex.Store({
                     sKey != 'haveIts' &&
                     sKey != 'filterSingleParts' &&
                     sKey != 'showImagesInLegoOrder' &&
-                    sKey != 'generateLog'
+                    sKey != 'generateLog' &&
+                    sKey != 'notificationChatId'
                 ) {
                     localStorage.removeItem(sKey);
                 }

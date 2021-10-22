@@ -10,6 +10,11 @@ import { required } from 'vee-validate/dist/rules';
 import VueHtmlToPaper from 'vue-html-to-paper';
 import VueScrollTo from 'vue-scrollto';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+//import { faUserSecret} from '@fortawesome/free-solid-svg-icons'
+import { faTelegram, faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 import SingleParts from '@/components/singleParts/Index.vue';
 import Import from '@/components/import/Index.vue';
 import PartLists from '@/components/partLists/PartLists.vue';
@@ -46,11 +51,15 @@ const routes = [
     { path: '/settings', component: Settings },
 ];
 
+library.add(faTelegram)
+library.add(faTelegramPlane)
+
 const router = new VueRouter({
     routes, // short for `routes: routes`
 });
 
 window.eventHub = new Vue();
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.use(VueRouter);

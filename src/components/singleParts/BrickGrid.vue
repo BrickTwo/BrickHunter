@@ -48,6 +48,41 @@
                     variant="success"
                     @click="addHaveIt(brick.itemNumber)"
                 />
+                <div style="position: absolute; top: 10px; left: 10px;">
+                    <font-awesome-icon
+                        @click.stop
+                        :icon="['fab', 'telegram-plane']"
+                        @click="showNotificationHandler(brick.itemNumber)"
+                        :id="`popover-1-${brick.itemNumber}`"
+                        style="height: 20px; width: 20px;"
+                    />
+                    <b-popover
+                        :showNotification="showNotification == brick.itemNumber"
+                        :target="`popover-1-${brick.itemNumber}`"
+                        placement="bottomright"
+                        triggers="click"
+                    >
+                        <!--<b-form-checkbox
+                            id="checkbox-1"
+                            v-model="status"
+                            name="checkbox-1"
+                            value="accepted"
+                            unchecked-value="not_accepted"
+                        >
+                            {{ labelElement }}
+                        </b-form-checkbox>
+                        <b-form-checkbox
+                            id="checkbox-2"
+                            v-model="status2"
+                            name="checkbox-2"
+                            value="accepted"
+                            unchecked-value="not_accepted"
+                        >
+                            {{ labelDesignNumber }}
+                        </b-form-checkbox>-->
+                    </b-popover>
+                </div>
+
                 <b-icon
                     icon="box-arrow-up-left"
                     aria-hidden="true"
@@ -63,8 +98,9 @@
                     class="text-right"
                     style="cursor: pointer"
                     @click="setKeyword(brick.itemNumber)"
-                    >{{ brick.itemNumber }}</b-col
                 >
+                    {{ brick.itemNumber }}
+                </b-col>
             </b-row>
             <b-row>
                 <b-col md="auto" class="p-0">{{ labelDesignNumber }}:</b-col>
@@ -72,8 +108,9 @@
                     class="text-right"
                     style="cursor: pointer"
                     @click="setKeyword(brick.designId)"
-                    >{{ brick.designId }}</b-col
                 >
+                    {{ brick.designId }}
+                </b-col>
             </b-row>
             <b-overlay
                 id="overlay-background"
@@ -201,6 +238,7 @@ export default {
         order: 0,
         favorite: false,
         haveIt: false,
+        showNotification: null,
     }),
     components: {
         BrickModal,
@@ -248,6 +286,13 @@ export default {
         removeHaveIt(itemNumber) {
             this.haveIt = false;
             this.$store.commit('singleParts/removeHaveIt', itemNumber);
+        },
+        showNotificationHandler(itemNumber) {
+            if (this.showNotification == itemNumber) {
+                this.showNotification = null;
+            } else {
+                this.showNotification = itemNumber;
+            }
         },
     },
     beforeMount() {
