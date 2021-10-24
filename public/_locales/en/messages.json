@@ -179,6 +179,9 @@
     "exportCsv_generalOptionBrickLinkMaxPrice": {
         "message": "BrickLink max price"
     },
+    "exportCsv_generalOptionBrickLinkWeight": {
+        "message": "BrickLink weight"
+    },
     "exportCsv_colorOptionBrickLinkId": {
         "message": "BrickLink id"
     },
@@ -238,6 +241,9 @@
     },
     "exportCsv_csvHeaderGeneralBrickLinkMaxPrice": {
         "message": "BrickLink max price"
+    },
+    "exportCsv_csvHeaderGeneralBrickLinkWeight": {
+        "message": "Weight"
     },
     "exportCsv_csvHeaderColorBrickLinkId": {
         "message": "BrickLink color id"

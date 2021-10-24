@@ -118,6 +118,12 @@ export default {
                     ),
                     value: 'blMaxPrice',
                 },
+                {
+                    text: browser.i18n.getMessage(
+                        'exportCsv_generalOptionBrickLinkWeight'
+                    ),
+                    value: 'blWeight',
+                },
             ],
             optionsColor: [
                 {
@@ -245,6 +251,9 @@ export default {
                 }
                 if (this.selectedOptions.includes('blMaxPrice')) {
                     csvLine = this.addToCSVLine(csvLine, element.brickLink?.wantedList?.maxprice);
+                }
+                if (this.selectedOptions.includes('blWeight')) {
+                    csvLine = this.addToCSVLine(csvLine, element.brickLink?.weight);
                 }
 
                 // color options
@@ -434,6 +443,14 @@ export default {
                     csvLine,
                     browser.i18n.getMessage(
                         'exportCsv_csvHeaderGeneralBrickLinkMaxPrice'
+                    )
+                );
+            }
+            if (this.selectedOptions.includes('blWeight')) {
+                csvLine = this.addToCSVLine(
+                    csvLine,
+                    browser.i18n.getMessage(
+                        'exportCsv_csvHeaderGeneralBrickLinkWeight'
                     )
                 );
             }

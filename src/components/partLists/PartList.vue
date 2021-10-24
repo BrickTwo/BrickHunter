@@ -273,7 +273,7 @@ export default {
         priceLoaded: true,
         wantedList: [],
         cancelLoading: false,
-        partList: {name: null},
+        partList: { name: null },
         editName: null,
         totalPositions: 0,
         totalPickABrickPositions: 0,
@@ -365,8 +365,12 @@ export default {
                 var returnObject = await brickBrickLink.returnModelsObject(
                     brickLinkHtml
                 );
-                item.brickLink.strAltNo = returnObject.strAltNo;
-                item.brickLink.mapPCCs = returnObject.mapPCCs;
+
+                items.map((i) => {
+                    i.brickLink.strAltNo = returnObject.strAltNo;
+                    i.brickLink.mapPCCs = returnObject.mapPCCs;
+                    i.brickLink.weight = returnObject.weight;
+                });
             }
 
             if (this.cancelLoading) {
@@ -486,6 +490,7 @@ export default {
                 );
                 item.brickLink.strAltNo = returnObject.strAltNo;
                 item.brickLink.mapPCCs = returnObject.mapPCCs;
+                item.brickLink.weight = returnObject.weight;
             }
 
             if (item.source == 'brickLink' && !item.brickLink) {
@@ -515,6 +520,7 @@ export default {
                 );
                 item.brickLink.strAltNo = returnObject.strAltNo;
                 item.brickLink.mapPCCs = returnObject.mapPCCs;
+                item.brickLink.weight = returnObject.weight;
             }
 
             if (item.source == 'brickLink' && !item.brickLink) {
