@@ -50,6 +50,15 @@
                 />
                 <div style="position: absolute; top: 10px; left: 10px;">
                     <font-awesome-icon
+                        v-if="itemNumberSelect || designIdSelect"
+                        @click.stop
+                        :icon="['fab', 'telegram-plane']"
+                        @click="showNotificationHandler(brick.itemNumber)"
+                        :id="`popover-1-${brick.itemNumber}`"
+                        style="height: 20px; width: 20px; color: #0088CC;"
+                    />
+                    <font-awesome-icon
+                        v-else
                         @click.stop
                         :icon="['fab', 'telegram-plane']"
                         @click="showNotificationHandler(brick.itemNumber)"
@@ -60,26 +69,22 @@
                         :showNotification="showNotification == brick.itemNumber"
                         :target="`popover-1-${brick.itemNumber}`"
                         placement="bottomright"
-                        triggers="click"
+                        triggers="click blur"
                     >
-                        <!--<b-form-checkbox
-                            id="checkbox-1"
-                            v-model="status"
-                            name="checkbox-1"
-                            value="accepted"
-                            unchecked-value="not_accepted"
+                        <b-form-checkbox
+                            v-model="itemNumberSelect"
+                            @change="
+                                editNotificationItemNumber(brick.itemNumber)
+                            "
                         >
                             {{ labelElement }}
                         </b-form-checkbox>
                         <b-form-checkbox
-                            id="checkbox-2"
-                            v-model="status2"
-                            name="checkbox-2"
-                            value="accepted"
-                            unchecked-value="not_accepted"
+                            v-model="designIdSelect"
+                            @change="editNotificationDesignId(brick.designId)"
                         >
                             {{ labelDesignNumber }}
-                        </b-form-checkbox>-->
+                        </b-form-checkbox>
                     </b-popover>
                 </div>
 
@@ -225,6 +230,7 @@
 <script>
 import { brickColorMixin } from '@/mixins/brickColorMixin';
 import BrickModal from './BrickModal';
+import { bus } from '@/utility/bus';
 
 export default {
     props: {
@@ -239,6 +245,8 @@ export default {
         favorite: false,
         haveIt: false,
         showNotification: null,
+        itemNumberSelect: false,
+        designIdSelect: false,
     }),
     components: {
         BrickModal,
@@ -287,6 +295,42 @@ export default {
             this.haveIt = false;
             this.$store.commit('singleParts/removeHaveIt', itemNumber);
         },
+        editNotificationItemNumber(itemNumber) {
+            if (this.itemNumberSelect) {
+                this.addNotificationItemNumber(itemNumber);
+            } else {
+                this.removeNotificationItemNumber(itemNumber);
+            }
+        },
+        addNotificationItemNumber(itemNumber) {
+            this.$store.commit(
+                'singleParts/addNotificationItemNumber',
+                itemNumber
+            );
+        },
+        removeNotificationItemNumber(itemNumber) {
+            this.$store.commit(
+                'singleParts/removeNotificationItemNumber',
+                itemNumber
+            );
+        },
+        editNotificationDesignId(designId) {
+            if (this.designIdSelect) {
+                this.addNotificationDesignId(designId);
+            } else {
+                this.removeNotificationDesignId(designId);
+            }
+            bus.$emit('ChangeNotification', {});
+        },
+        addNotificationDesignId(designId) {
+            this.$store.commit('singleParts/addNotificationDesignId', designId);
+        },
+        removeNotificationDesignId(designId) {
+            this.$store.commit(
+                'singleParts/removeNotificationDesignId',
+                designId
+            );
+        },
         showNotificationHandler(itemNumber) {
             if (this.showNotification == itemNumber) {
                 this.showNotification = null;
@@ -319,6 +363,14 @@ export default {
         this.haveIt = this.$store.getters['singleParts/isHaveIt'](
             this.brick.itemNumber
         );
+
+        this.designIdSelect = this.$store.getters[
+            'singleParts/isNotificationDesignId'
+        ](this.brick.designId);
+
+        this.itemNumberSelect = this.$store.getters[
+            'singleParts/isNotificationItemNumber'
+        ](this.brick.itemNumber);
     },
     computed: {
         image() {
@@ -368,6 +420,13 @@ export default {
             this.brick.order = this.order;
             this.$emit('setOrderQuantity', this.brick);
         },
+    },
+    created() {
+        bus.$on('ChangeNotification', () => {
+            this.designIdSelect = this.$store.getters[
+                'singleParts/isNotificationDesignId'
+            ](this.brick.designId);
+        });
     },
 };
 </script>

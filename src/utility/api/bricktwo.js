@@ -61,6 +61,7 @@ export default {
         sortDirection,
         showAll,
         itemNumbers,
+        designIds,
         excludedCategories
     ) {
         if (!keyword) {
@@ -83,6 +84,7 @@ export default {
                 url: url,
                 data: {
                     itemnumbers: itemNumbers,
+                    designids: designIds,
                 },
             });
             store.commit('addLog', {
@@ -169,6 +171,33 @@ export default {
             });
         } catch (err) {
             store.commit('addLog', { func: 'getSubscriptions', err: err });
+            activeRequests--;
+            return null;
+        }
+        activeRequests--;
+        return response.data;
+    },
+    async setSubscriptions(chatId,itemNumbers,designIds) {
+        let response = null;
+        try {
+            let url = `https://brickhunter.bricktwo.net/api/bot/subscriptions/write.php`;
+            store.commit('addLog', { func: 'setSubscriptions', url: url });
+            await this.throttling();
+            response = await axios({
+                method: 'post',
+                url: url,
+                data: {
+                    chatId: chatId,
+                    itemNumbers: itemNumbers,
+                    designIds: designIds
+                },
+            });
+            store.commit('addLog', {
+                func: 'setSubscriptions',
+                respStat: response.status,
+            });
+        } catch (err) {
+            store.commit('addLog', { func: 'setSubscriptions', err: err });
             activeRequests--;
             return null;
         }

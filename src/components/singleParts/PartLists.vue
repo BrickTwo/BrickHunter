@@ -64,7 +64,7 @@
                     style="height: 16px; width: 16px; color: #0088CC"
                 />
                 <span style="margin-left: 3px">
-                    {{ labelNotifications }} ({{ haveIts.length }})
+                    {{ labelNotifications }} ({{ $store.state.singleParts.notificationItemNumbers.length }}/{{ $store.state.singleParts.notificationDesignIds.length }})
                 </span>
                 <b-link @click="editNotifications()">
                     <b-icon icon="pencil" variant="primary" />
@@ -79,7 +79,7 @@
                         aria-hidden="true"
                     />
                 </b-link>
-                <b-link @click="hideHaveIt()" v-else>
+                <b-link @click="hideNotifications()" v-else>
                     <b-icon icon="eye" aria-hidden="true" />
                 </b-link>
             </label>
@@ -141,24 +141,29 @@
             hide-header-close
             no-close-on-backdrop
             no-close-on-esc
-            @ok="okEditList"
-            @cancel="cancleEditList"
+            @ok="okEditNotificationList"
+            @cancel="cancleEditNotificationList"
         >
             <p class="my-4">
-                {{ labelChatId }} <b-icon icon="info-circle-fill" aria-hidden="true" variant="primary" />
+                {{ labelChatId }}
+                <b-icon
+                    icon="info-circle-fill"
+                    aria-hidden="true"
+                    variant="primary"
+                />
                 <b-form-input
                     v-model="notificationChatId"
                     :state="chatIdValid"
                 />
                 {{ labelElement }}
                 <b-form-textarea
-                    v-model="notificationDesignIds"
+                    v-model="notificationItemNumbers"
                     rows="6"
                     max-rows="6"
                 />
                 {{ labelDesignNumber }}
                 <b-form-textarea
-                    v-model="notificationItemNumbers"
+                    v-model="notificationDesignIds"
                     rows="6"
                     max-rows="6"
                 />
@@ -254,67 +259,93 @@ export default {
         showPartList(id) {
             this.favoriteSelected = false;
             this.haveItSelected = false;
+            this.notificationSelected = false;
             this.showPartListId = id;
-            //this.$emit('partListSelected', id);
             bus.$emit(
                 'showPartList',
                 this.showPartListId,
                 this.favoriteSelected,
-                this.haveItSelected
+                this.haveItSelected,
+                this.notificationSelected
             );
         },
         hidePartList(id) {
             this.showPartListId = null;
-            //this.$emit('partListSelected', null);
             bus.$emit(
                 'showPartList',
                 this.showPartListId,
                 this.favoriteSelected,
-                this.haveItSelected
+                this.haveItSelected,
+                this.notificationSelected
             );
         },
         showFavorites() {
-            this.showPartListId = null;
-            this.haveItSelected = false;
             this.favoriteSelected = true;
-            //this.$emit('favoriteSelected', true);
+            this.haveItSelected = false;
+            this.notificationSelected = false;
+            this.showPartListId = null;
             bus.$emit(
                 'showPartList',
                 this.showPartListId,
                 this.favoriteSelected,
-                this.haveItSelected
+                this.haveItSelected,
+                this.notificationSelected
             );
         },
         hideFavorite() {
             this.favoriteSelected = false;
-            //this.$emit('favoriteSelected', false);
             bus.$emit(
                 'showPartList',
                 this.showPartListId,
                 this.favoriteSelected,
-                this.haveItSelected
+                this.haveItSelected,
+                this.notificationSelected
             );
         },
         showHaveIts() {
             this.favoriteSelected = false;
-            this.showPartListId = null;
             this.haveItSelected = true;
-            //this.$emit('favoriteSelected', true);
+            this.notificationSelected = false;
+            this.showPartListId = null;
             bus.$emit(
                 'showPartList',
                 this.showPartListId,
                 this.favoriteSelected,
-                this.haveItSelected
+                this.haveItSelected,
+                this.notificationSelected
             );
         },
         hideHaveIt() {
             this.haveItSelected = false;
-            //this.$emit('haveItSelected', false);
             bus.$emit(
                 'showPartList',
                 this.showPartListId,
                 this.favoriteSelected,
-                this.haveItSelected
+                this.haveItSelected,
+                this.notificationSelected
+            );
+        },
+        showNotifications() {
+            this.favoriteSelected = false;
+            this.haveItSelected = false;
+            this.notificationSelected = true;
+            this.showPartListId = null;
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected,
+                this.haveItSelected,
+                this.notificationSelected
+            );
+        },
+        hideNotifications() {
+            this.notificationSelected = false;
+            bus.$emit(
+                'showPartList',
+                this.showPartListId,
+                this.favoriteSelected,
+                this.haveItSelected,
+                this.notificationSelected
             );
         },
         editFavorites() {
@@ -336,8 +367,11 @@ export default {
         editNotifications() {
             this.editMode = 'notifications';
             this.labelEditListHeader = this.labelNotifications;
-            this.editListContent = this.prepareEditList(
-                this.$store.state.singleParts.haveIts
+            this.notificationDesignIds = this.prepareEditList(
+                this.$store.state.singleParts.notificationDesignIds
+            );
+            this.notificationItemNumbers = this.prepareEditList(
+                this.$store.state.singleParts.notificationItemNumbers
             );
             this.$refs['editListNotification'].show();
         },
@@ -378,6 +412,72 @@ export default {
             }
         },
         cancleEditList() {},
+        okEditNotificationList() {
+            let notificationDesignIds = '[' + this.notificationDesignIds + ']';
+            let notificationItemNumbers =
+                '[' + this.notificationItemNumbers + ']';
+            try {
+                notificationDesignIds = JSON.parse(notificationDesignIds);
+                notificationItemNumbers = JSON.parse(notificationItemNumbers);
+            } catch (err) {
+                console.log(err);
+                return;
+            }
+
+            this.$store.commit('singleParts/setNotificationChatId', this.notificationChatId);
+
+            this.$store.commit(
+                'singleParts/setNotificationDesignId',
+                notificationDesignIds
+            );
+            this.$store.commit(
+                'singleParts/setNotificationItemNumber',
+                notificationItemNumbers
+            );
+            //this.favorites = this.$store.state.singleParts.favorites;
+
+            if (this.notificationSelected) {
+                this.showNotifications();
+            } else {
+                bus.$emit(
+                    'showPartList',
+                    this.showPartListId,
+                    this.favoriteSelected,
+                    this.haveItSelected,
+                    this.notificationSelected
+                );
+            }
+        },
+        cancleEditNotificationList() {
+            this.notificationChatId = this.$store.state.singleParts.notificationChatId;
+
+            this.notificationDesignIds = '';
+            this.notificationItemNumbers = '';
+
+            apiBrickTwo.getSubscriptions(this.notificationChatId).then((result) => {
+                this.chatIdValid = false;
+
+                if (result) this.chatIdValid = true;
+
+                if (result.DesignId) {
+                    result.DesignId.forEach((d) => {
+                        if (this.notificationDesignIds)
+                            this.notificationDesignIds += ',';
+                        this.notificationDesignIds += d;
+                    });
+                    //this.$store.commit('singleParts/setNotificationDesignId', result.DesignId);
+                }
+
+                if (result.ItemNumber) {
+                    result.ItemNumber.forEach((i) => {
+                        if (this.notificationItemNumbers)
+                            this.notificationItemNumbers += ',';
+                        this.notificationItemNumbers += i;
+                    });
+                    //this.$store.commit('singleParts/setNotificationItemNumber', result.ItemNumber);
+                }
+            });
+        },
     },
     beforeMount() {
         this.partLists = this.$store.getters['partList/getPartListsBySource'](
@@ -391,6 +491,7 @@ export default {
         this.showPartListId = filter.showPartListId;
         this.favoriteSelected = filter.showFavorites;
         this.haveItSelected = filter.showHaveIts;
+        this.notificationSelected = filter.showNotifications;
 
         if (!this.partLists.find((f) => f.id == this.showPartListId))
             this.showPartListId = null;
@@ -419,23 +520,33 @@ export default {
             bus.$emit('selectedPartList', this.selectedPartListId);
         },
         notificationChatId: function(value) {
-            this.$store.commit('singleParts/setNotificationChatId', value);
+            //this.$store.commit('singleParts/setNotificationChatId', value);
+
+            this.notificationDesignIds = '';
+            this.notificationItemNumbers = '';
 
             apiBrickTwo.getSubscriptions(value).then((result) => {
                 this.chatIdValid = false;
-                console.log(result);
+
                 if (result) this.chatIdValid = true;
 
-                this.notificationDesignIds = "";
-                result.DesignId.forEach(d => {
-                    if(this.notificationDesignIds) this.notificationDesignIds += ",";
-                    this.notificationDesignIds += d;
-                });
-                this.notificationItemNumbers = "";
-                result.ItemNumber.forEach(i => {
-                    if(this.notificationItemNumbers) this.notificationItemNumbers += ",";
-                    this.notificationItemNumbers += i;
-                });
+                if (result.DesignId) {
+                    result.DesignId.forEach((d) => {
+                        if (this.notificationDesignIds)
+                            this.notificationDesignIds += ',';
+                        this.notificationDesignIds += d;
+                    });
+                    //this.$store.commit('singleParts/setNotificationDesignId', result.DesignId);
+                }
+
+                if (result.ItemNumber) {
+                    result.ItemNumber.forEach((i) => {
+                        if (this.notificationItemNumbers)
+                            this.notificationItemNumbers += ',';
+                        this.notificationItemNumbers += i;
+                    });
+                    //this.$store.commit('singleParts/setNotificationItemNumber', result.ItemNumber);
+                }
             });
         },
     },
@@ -453,10 +564,10 @@ export default {
             return browser.i18n.getMessage('import_sp_haveIt');
         },
         labelNotifications() {
-            return 'Notifications';
+            return 'Notifications'; // to translate
         },
         labelChatId() {
-            return 'Chat Id';
+            return 'Chat Id'; // to translate
         },
         labelElement() {
             return browser.i18n.getMessage('import_sp_element');
