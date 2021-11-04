@@ -3,22 +3,42 @@
         <b-row>
             <b-col>
                 <h2>{{ titleAmountPositions }}</h2>
-                {{ amountPartList }}:
-                {{ $store.state.shopping.wantedListPositionsMerged }} ({{
-                    wantedListPositions
+                {{ amountPartList }}: {{ wantedListPositions }}->{{
+                    $store.getters['shopping/getBricksAndPiecesPositions']() +
+                        $store.getters['shopping/getPickABrickPositions']() +
+                        $store.getters['shopping/getBrickLinkPositions']() +
+                        $store.getters['shopping/getNotAllocatedPositions']()
+                }}
+                ({{
+                    $store.getters['shopping/getBricksAndPiecesBrickAmount']() +
+                        $store.getters['shopping/getPickABrickBrickAmount']() +
+                        $store.getters['shopping/getBrickLinkBrickAmount']() +
+                        $store.getters['shopping/getNotAllocatedBrickAmount']()
                 }})<br />
                 {{ bricksAndPieces }}:
-                {{ $store.state.shopping.bricksAndPiecesPositions }}<br />
-                {{ pickABrick }}: {{ $store.state.shopping.pickABrickPositions
-                }}<br />
-                {{ brickLink }}: {{ $store.state.shopping.brickLinkPositions
-                }}<br />
+                {{ $store.getters['shopping/getBricksAndPiecesPositions']() }}
+                ({{
+                    $store.getters['shopping/getBricksAndPiecesBrickAmount']()
+                }})<br />
+                {{ pickABrick }}:
+                {{ $store.getters['shopping/getPickABrickPositions']() }}
+                ({{
+                    $store.getters['shopping/getPickABrickBrickAmount']()
+                }})<br />
+                {{ brickLink }}:
+                {{ $store.getters['shopping/getBrickLinkPositions']() }}
+                ({{
+                    $store.getters['shopping/getBrickLinkBrickAmount']()
+                }})<br />
                 {{ notAllocated }}:
-                {{ $store.state.shopping.notAllocatedPositions }}<br />
+                {{ $store.getters['shopping/getNotAllocatedPositions']() }}
+                ({{
+                    $store.getters['shopping/getNotAllocatedBrickAmount']()
+                }})<br />
                 {{ amountTotalFoundLego }}:
                 {{
-                    $store.state.shopping.bricksAndPiecesPositions +
-                        $store.state.shopping.pickABrickPositions
+                    $store.getters['shopping/getBricksAndPiecesPositions']() +
+                        $store.getters['shopping/getPickABrickPositions']()
                 }}
 
                 <h2>{{ titlePrice }}</h2>
@@ -26,24 +46,38 @@
                 {{ $store.state.shopping.currency }}
                 {{
                     Math.round(
-                        $store.state.shopping.bricksAndPiecesPrice * 100
+                        $store.getters[
+                            'shopping/getBricksAndPiecesTotalPrice'
+                        ]() * 100
                     ) / 100
                 }}<br />
                 {{ pickABrick }}:
                 {{ $store.state.shopping.currency }}
                 {{
-                    Math.round($store.state.shopping.pickABrickPrice * 100) /
-                        100
+                    Math.round(
+                        $store.getters['shopping/getPickABrickTotalPrice']() *
+                            100
+                    ) / 100
                 }}<br />
                 {{ brickLink }}: (<a id="bricklinkCurrency" href="">?</a>)
-                {{ Math.round($store.state.shopping.brickLinkPrice * 100) / 100
+                {{
+                    Math.round(
+                        $store.getters['shopping/getBrickLinkTotalPrice']() *
+                            100
+                    ) / 100
                 }}<br />
                 {{ total }}: {{ $store.state.shopping.currency }}
                 {{
                     Math.round(
-                        ($store.state.shopping.bricksAndPiecesPrice +
-                            $store.state.shopping.pickABrickPrice +
-                            $store.state.shopping.brickLinkPrice) *
+                        ($store.getters[
+                            'shopping/getBricksAndPiecesTotalPrice'
+                        ]() +
+                            $store.getters[
+                                'shopping/getPickABrickTotalPrice'
+                            ]() +
+                            $store.getters[
+                                'shopping/getBrickLinkTotalPrice'
+                            ]()) *
                             100
                     ) / 100
                 }}
@@ -53,14 +87,14 @@
             </b-col>
             <b-col>
                 <h1>{{ donateTitle }}</h1>
-        <p>{{ donateText }}</p>
-        <img
-            alt=""
-            border="0"
-            src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
-            @click="donate()"
-            style="cursor: pointer"
-        />
+                <p>{{ donateText }}</p>
+                <img
+                    alt=""
+                    border="0"
+                    src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
+                    @click="donate()"
+                    style="cursor: pointer"
+                />
             </b-col>
         </b-row>
     </b-container>

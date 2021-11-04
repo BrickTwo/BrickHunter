@@ -53,7 +53,8 @@
                         {{ menuExport }}
                     </b-nav-item>
 
-                    <b-nav-item v-if="language=='de'"
+                    <b-nav-item
+                        v-if="language == 'de'"
                         @click="
                             link(
                                 'https://bricktwo.net/brickhunter-dokumentation/?lang=de'
@@ -62,7 +63,8 @@
                     >
                         {{ menuHelp }}
                     </b-nav-item>
-                    <b-nav-item v-else
+                    <b-nav-item
+                        v-else
                         @click="
                             link(
                                 'https://bricktwo.net/brickhunter-documentation/'
@@ -95,7 +97,7 @@
         </b-navbar>
         <b-container class="pt-1 pb-3 pl-0 pr-0 page" fluid="xl">
             <NewVersionNotification v-if="flag" />
-            <div v-if="flag">
+            <div v-if="flag && flagNotification">
                 <router-view v-if="countrySelected && languageSelected" />
                 <SelectCountry
                     @countrySelected="onCountrySelected"
@@ -166,6 +168,7 @@ export default {
             notification: null,
             page: null,
             flag: null,
+            flagNotification: false,
             language: 'de',
         };
     },
@@ -299,6 +302,9 @@ export default {
     created() {
         bus.$on('initialized', (payload) => {
             this.flag = true;
+        });
+        bus.$on('notificationInitialized', (payload) => {
+            this.flagNotification = true;
         });
         bus.$on('exportLog', (payload) => {
             this.$refs['exportLog'].show();

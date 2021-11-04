@@ -5,13 +5,17 @@
                 <label>{{ labelFile }}:</label>
             </b-col>
             <b-col cols="9">
-                    <b-form-radio-group
-                        v-model="showUploadField"
-                        name="radio-sub-component"
-                    >
-                        <b-form-radio value="filePicker">{{ labelFileUpload }}</b-form-radio>
-                        <b-form-radio value="textArea">{{ labelImport_textArea }}</b-form-radio>
-                    </b-form-radio-group>
+                <b-form-radio-group
+                    v-model="showUploadField"
+                    name="radio-sub-component"
+                >
+                    <b-form-radio value="filePicker">{{
+                        labelFileUpload
+                    }}</b-form-radio>
+                    <b-form-radio value="textArea">{{
+                        labelImport_textArea
+                    }}</b-form-radio>
+                </b-form-radio-group>
             </b-col>
         </b-row>
         <b-row v-if="showUploadField == 'textArea'">
@@ -97,7 +101,9 @@ export default {
 
                     part.source = 'brickLink';
                     part.designId = item.itemid[0];
-                    part.searchids = [brickBrickLink.cleanDesignId(part.designId)];
+                    part.searchids = [
+                        brickBrickLink.cleanDesignId(part.designId),
+                    ];
                     if (item.color) {
                         part.color = this.findColor(item.color[0], this.COLOR);
                     } else {
@@ -150,8 +156,6 @@ export default {
                         rsc: `https://img.bricklink.com/ItemImage/${part.brickLink.wantedList.itemtype}N/${part.color?.brickLinkId}/${part.designId}.png`,
                     };
 
-                    
-
                     partList.push(part);
                 });
 
@@ -184,8 +188,9 @@ export default {
                 date: new Date(0, 0, 0, 0, 0, 0, 0),
                 source: 'brickLink',
                 positions: this.wantedList,
+                version: '1.0',
             };
-            
+
             this.$store.commit('partList/setPartList', partList);
 
             this.$bvToast.toast(this.labelSuccessfullImportBrickLinkText, {
@@ -255,14 +260,10 @@ export default {
             );
         },
         labelFileUpload() {
-            return browser.i18n.getMessage(
-                'import_fileUpload'
-            );
+            return browser.i18n.getMessage('import_fileUpload');
         },
         labelImport_textArea() {
-            return browser.i18n.getMessage(
-                'import_textArea'
-            );
+            return browser.i18n.getMessage('import_textArea');
         },
     },
 };

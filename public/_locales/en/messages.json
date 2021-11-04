@@ -179,6 +179,9 @@
     "exportCsv_generalOptionBrickLinkMaxPrice": {
         "message": "BrickLink max price"
     },
+    "exportCsv_generalOptionBrickLinkWeight": {
+        "message": "BrickLink weight"
+    },
     "exportCsv_colorOptionBrickLinkId": {
         "message": "BrickLink id"
     },
@@ -238,6 +241,9 @@
     },
     "exportCsv_csvHeaderGeneralBrickLinkMaxPrice": {
         "message": "BrickLink max price"
+    },
+    "exportCsv_csvHeaderGeneralBrickLinkWeight": {
+        "message": "Weight"
     },
     "exportCsv_csvHeaderColorBrickLinkId": {
         "message": "BrickLink color id"
@@ -308,11 +314,20 @@
     "import_legoSet": {
         "message": "LEGO Set"
     },
+    "import_fileFormatUnknown": {
+        "message": "Unknown"
+    },
+    "import_fileImport": {
+        "message": "File import"
+    },
     "import_singleParts": {
         "message": "Single Parts"
     },
     "import_file": {
         "message": "File"
+    },
+    "import_fileFormat": {
+        "message": "File format"
     },
     "import_setNumber": {
         "message": "Set Number"
@@ -424,6 +439,18 @@
     },
     "import_sp_haveIt": {
         "message": "Have it"
+    },
+    "import_sp_notification": {
+        "message": "Notifications"
+    },
+    "import_sp_notificationChatId": {
+        "message": "Chat Id"
+    },
+    "import_sp_notificationExplanationBeforeLink": {
+        "message": "Get informed as soon as a part becomes available. Open the BrickHunter bot in Telegram or use the following link "
+    },
+    "import_sp_notificationExplanationAfterLink": {
+        "message": " (The bot itself is currently only available in German). After the bot is set up execute the command /ShowChatId and then enter your ChatId in the corresponding field here."
     },
     "import_sp_selectCategoriesToBeHidden": {
         "message": "Do not use selected categories"

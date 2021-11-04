@@ -174,6 +174,7 @@ export default {
                 date: new Date(0, 0, 0, 0, 0, 0, 0),
                 source: 'lego',
                 positions: this.wantedList,
+                version: '1.0',
             };
 
             this.$store.commit('partList/setPartList', partList);

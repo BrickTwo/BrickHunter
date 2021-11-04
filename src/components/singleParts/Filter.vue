@@ -255,6 +255,7 @@ export default {
         tempShowOnlyAvailable: true,
         showOnlyAvailable: true,
         selectedItemNumbers: null,
+        selectedDesignIds: null,
         currentPageChanged: 0,
         perPageChange: 0,
         categoryId: 0,
@@ -262,6 +263,7 @@ export default {
         showPartListId: '',
         showFavorites: false,
         showHaveIts: false,
+        shotNotifications: false,
         categories: null,
         tempExcludedCategories: [],
         excludedCategories: [],
@@ -417,6 +419,7 @@ export default {
                 showAll: !this.showOnlyAvailable,
                 showFavorites: this.showFavorites,
                 showHaveIts: this.showHaveIts,
+                showNotifications: this.showNotifications,
                 showPartListId: this.showPartListId,
                 excludedCategories: this.excludedCategories,
                 selectCategoriesToBeHidden: this.selectCategoriesToBeHidden,
@@ -427,7 +430,7 @@ export default {
             let excludedCategories = null;
             if (this.selectCategoriesToBeHidden)
                 excludedCategories = this.excludedCategories;
-
+    
             this.search = await apiBrickTwo.getBricksAsync(
                 this.currentPage,
                 this.perPage,
@@ -439,6 +442,7 @@ export default {
                 this.sortDirection,
                 !this.showOnlyAvailable,
                 this.selectedItemNumbers,
+                this.selectedDesignIds,
                 excludedCategories
             );
 
@@ -677,6 +681,7 @@ export default {
             this.tempShowOnlyAvailable = this.showOnlyAvailable;
             this.showFavorites = filter.showFavorites;
             this.showHaveIts = filter.showHaveIts;
+            this.showNotifications = filter.showNotifications;
             this.showPartListId = filter.showPartListId;
             this.excludedCategories = filter.excludedCategories;
             this.tempExcludedCategories = this.excludedCategories;
@@ -687,6 +692,7 @@ export default {
         },
         selectItemNumbers() {
             this.selectedItemNumbers = [];
+            this.selectedDesignIds = [];
 
             if (this.showPartListId) {
                 let partList = this.$store.getters['partList/getPartListsById'](
@@ -701,6 +707,10 @@ export default {
                     this.selectedItemNumbers = this.$store.state.singleParts.favorites;
                 if (this.showHaveIts)
                     this.selectedItemNumbers = this.$store.state.singleParts.haveIts;
+                if (this.showNotifications){
+                    this.selectedItemNumbers = this.$store.state.singleParts.notificationItemNumbers;
+                    this.selectedDesignIds = this.$store.state.singleParts.notificationDesignIds;
+                }
             }
         },
 
@@ -761,13 +771,14 @@ export default {
 
             this.selectPart();
         });
-        bus.$on('showPartList', (partListId, showFavorites, showHaveIts) => {
+        bus.$on('showPartList', (partListId, showFavorites, showHaveIts, showNotifications) => {
             this.$store.commit('addLog', {
                 action: 'showPartList',
             });
             this.showPartListId = partListId;
             this.showFavorites = showFavorites;
             this.showHaveIts = showHaveIts;
+            this.showNotifications = showNotifications
 
             this.selectItemNumbers();
             this.loadBricks(true);

@@ -179,6 +179,9 @@
     "exportCsv_generalOptionBrickLinkMaxPrice": {
         "message": "BrickLink Max Price"
     },
+    "exportCsv_generalOptionBrickLinkWeight": {
+        "message": "BrickLink Gewicht"
+    },
     "exportCsv_colorOptionBrickLinkId": {
         "message": "BrickLink Id"
     },
@@ -238,6 +241,9 @@
     },
     "exportCsv_csvHeaderGeneralBrickLinkMaxPrice": {
         "message": "BrickLink Max Price"
+    },
+    "exportCsv_csvHeaderGeneralBrickLinkWeight": {
+        "message": "Gewicht"
     },
     "exportCsv_csvHeaderColorBrickLinkId": {
         "message": "BrickLink Farbe Id"
@@ -308,11 +314,20 @@
     "import_legoSet": {
         "message": "LEGO Set"
     },
+    "import_fileFormatUnknown": {
+        "message": "Unbekannt"
+    },
+    "import_fileImport": {
+        "message": "Dateiimport"
+    },
     "import_singleParts": {
         "message": "Einzelteile"
     },
     "import_file": {
         "message": "Datei"
+    },
+    "import_fileFormat": {
+        "message": "Dateiformat"
     },
     "import_setNumber": {
         "message": "Setnummer"
@@ -422,6 +437,18 @@
     "import_sp_haveIt": {
         "message": "Habe ich"
     },
+    "import_sp_notification": {
+        "message": "Benachrichtigungen"
+    },
+    "import_sp_notificationChatId": {
+        "message": "Chat Id"
+    },
+    "import_sp_notificationExplanationBeforeLink": {
+        "message": "Lass dich informieren sobald ein Teil verfügbar wird. Öffne dazu in Telegram den BrickHunter Bot oder vewende den folgenden Link "
+    },
+    "import_sp_notificationExplanationAfterLink": {
+        "message": ". Der Bot ist aktuell leider nur in Deutsch verfügbar. Nachdem der Bot eingerichtet ist führe den befehl /ShowChatId aus und füge anschliessend deine ChatId im entsprechenden Feld hier ein."
+    },
     "import_sp_selectCategoriesToBeHidden": {
         "message": "Ausgewählte Kategorien nicht verwenden"
     },
@@ -434,6 +461,7 @@
     "import_sp_allTime": {
         "message": "Alle"
     },
+
     "info_disclaimerTitle": {
         "message": "Disclaimer"
     },

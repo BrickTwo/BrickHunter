@@ -48,6 +48,46 @@
                     variant="success"
                     @click="addHaveIt(brick.itemNumber)"
                 />
+                <div style="position: absolute; top: 10px; left: 10px;" v-if="$store.state.singleParts.notificationChatId">
+                    <font-awesome-icon
+                        v-if="(itemNumberSelect || designIdSelect)"
+                        @click.stop
+                        :icon="['fab', 'telegram-plane']"
+                        @click="showNotificationHandler(brick.itemNumber)"
+                        :id="`popover-1-${brick.itemNumber}`"
+                        style="height: 20px; width: 20px; color: #0088CC;"
+                    />
+                    <font-awesome-icon
+                        v-else
+                        @click.stop
+                        :icon="['fab', 'telegram-plane']"
+                        @click="showNotificationHandler(brick.itemNumber)"
+                        :id="`popover-1-${brick.itemNumber}`"
+                        style="height: 20px; width: 20px;"
+                    />
+                    <b-popover
+                        :showNotification="showNotification == brick.itemNumber"
+                        :target="`popover-1-${brick.itemNumber}`"
+                        placement="bottomright"
+                        triggers="click blur"
+                    >
+                        <b-form-checkbox
+                            v-model="itemNumberSelect"
+                            @change="
+                                editNotificationItemNumber(brick.itemNumber)
+                            "
+                        >
+                            {{ labelElement }}
+                        </b-form-checkbox>
+                        <b-form-checkbox
+                            v-model="designIdSelect"
+                            @change="editNotificationDesignId(brick.designId)"
+                        >
+                            {{ labelDesignNumber }}
+                        </b-form-checkbox>
+                    </b-popover>
+                </div>
+
                 <b-icon
                     icon="box-arrow-up-left"
                     aria-hidden="true"
@@ -63,8 +103,9 @@
                     class="text-right"
                     style="cursor: pointer"
                     @click="setKeyword(brick.itemNumber)"
-                    >{{ brick.itemNumber }}</b-col
                 >
+                    {{ brick.itemNumber }}
+                </b-col>
             </b-row>
             <b-row>
                 <b-col md="auto" class="p-0">{{ labelDesignNumber }}:</b-col>
@@ -72,8 +113,9 @@
                     class="text-right"
                     style="cursor: pointer"
                     @click="setKeyword(brick.designId)"
-                    >{{ brick.designId }}</b-col
                 >
+                    {{ brick.designId }}
+                </b-col>
             </b-row>
             <b-overlay
                 id="overlay-background"
@@ -188,6 +230,7 @@
 <script>
 import { brickColorMixin } from '@/mixins/brickColorMixin';
 import BrickModal from './BrickModal';
+import { bus } from '@/utility/bus';
 
 export default {
     props: {
@@ -201,6 +244,9 @@ export default {
         order: 0,
         favorite: false,
         haveIt: false,
+        showNotification: null,
+        itemNumberSelect: false,
+        designIdSelect: false,
     }),
     components: {
         BrickModal,
@@ -249,6 +295,49 @@ export default {
             this.haveIt = false;
             this.$store.commit('singleParts/removeHaveIt', itemNumber);
         },
+        editNotificationItemNumber(itemNumber) {
+            if (this.itemNumberSelect) {
+                this.addNotificationItemNumber(itemNumber);
+            } else {
+                this.removeNotificationItemNumber(itemNumber);
+            }
+        },
+        addNotificationItemNumber(itemNumber) {
+            this.$store.commit(
+                'singleParts/addNotificationItemNumber',
+                itemNumber
+            );
+        },
+        removeNotificationItemNumber(itemNumber) {
+            this.$store.commit(
+                'singleParts/removeNotificationItemNumber',
+                itemNumber
+            );
+        },
+        editNotificationDesignId(designId) {
+            if (this.designIdSelect) {
+                this.addNotificationDesignId(designId);
+            } else {
+                this.removeNotificationDesignId(designId);
+            }
+            bus.$emit('ChangeNotification', {});
+        },
+        addNotificationDesignId(designId) {
+            this.$store.commit('singleParts/addNotificationDesignId', designId);
+        },
+        removeNotificationDesignId(designId) {
+            this.$store.commit(
+                'singleParts/removeNotificationDesignId',
+                designId
+            );
+        },
+        showNotificationHandler(itemNumber) {
+            if (this.showNotification == itemNumber) {
+                this.showNotification = null;
+            } else {
+                this.showNotification = itemNumber;
+            }
+        },
     },
     beforeMount() {
         this.color = this.COLOR.find(
@@ -274,6 +363,14 @@ export default {
         this.haveIt = this.$store.getters['singleParts/isHaveIt'](
             this.brick.itemNumber
         );
+
+        this.designIdSelect = this.$store.getters[
+            'singleParts/isNotificationDesignId'
+        ](this.brick.designId);
+
+        this.itemNumberSelect = this.$store.getters[
+            'singleParts/isNotificationItemNumber'
+        ](this.brick.itemNumber);
     },
     computed: {
         image() {
@@ -323,6 +420,13 @@ export default {
             this.brick.order = this.order;
             this.$emit('setOrderQuantity', this.brick);
         },
+    },
+    created() {
+        bus.$on('ChangeNotification', () => {
+            this.designIdSelect = this.$store.getters[
+                'singleParts/isNotificationDesignId'
+            ](this.brick.designId);
+        });
     },
 };
 </script>

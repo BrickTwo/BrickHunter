@@ -105,13 +105,22 @@ const actions = {
             });
         }
 
+        if (version.isSmaller(oldVersion, '1.5.19')) {
+            state.partLists.map((partList) => {
+                partList.version = '1.0';
+                //localStorage.removeItem('partList_' + partList.id);
+            });
+        }
+
         state.totalPositions = 0;
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;
         });
 
         if (state.partLists.length > 0)
-            commit('setPartList', state.partLists[0]);
+            state.partLists.map((partList) => {
+                commit('setPartList', partList);
+            });
     },
 };
 
@@ -129,7 +138,6 @@ const mutations = {
         }
 
         state.partLists.push(payload);
-
         //localStorage.setItem('partList_' + payload.id, JSON.stringify(payload));
 
         state.totalPositions = 0;

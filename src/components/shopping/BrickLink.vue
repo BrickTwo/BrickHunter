@@ -118,8 +118,8 @@ export default {
                         REMARKS: this.brickList[i].brickLink?.wantedList?.remarks,
                     },
                 };
-
-                if(this.wantedList[i].color.id == 9999){
+                
+                if(this.brickList[i].color.id == 9999){
                     item.ITEM.COLOR = '';
                 }
 

@@ -226,9 +226,6 @@ export default {
         },
         async pickABrickAddToCart(item) {
             if (item.pickABrick) {
-                var qty = item.qty.order;
-                if (qty > 999) qty = 999; // it's not possible to order more than 999 pieces per brick
-
                 var partId = item.pickABrick.variant.id;
 
                 var response = await browser.runtime.sendMessage({
@@ -236,7 +233,7 @@ export default {
                     action: 'addToCart',
                     authorization: this.authorization,
                     PABCartId: this.pickABrickShoppingCartId,
-                    qty: qty,
+                    qty: item.qty.order,
                     partId: partId,
                 });
             }
@@ -273,7 +270,18 @@ export default {
                 })
                 .catch(() => {});
         },
-        openInNewTab(url) {
+        openInNewTab(target) {
+            let affiliate = this.$store.state.affiliate;
+            let url = '';
+
+            if (affiliate) {
+                if (affiliate.linkType == 'webgains') {
+                    url = `https://track.webgains.com/click.html?wgcampaignid=${affiliate.wgcampaignid}&wgprogramid=${affiliate.wgprogramid}&clickref=${affiliate.clickref}&wgtarget=${target}`;
+                }
+            } else {
+                url = target;
+            }
+
             window.open(url, '_blank');
         },
     },

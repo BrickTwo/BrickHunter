@@ -51,6 +51,7 @@ export default {
         let returnModel = {
             strAltNo: model.data?.dmItemDetail?.dmItem?.dmBasic?.strAltNo,
             mapPCCs: model.data?.dmItemDetail?.dmItem?.mapPCCs,
+            weight: model.data?.dmItemDetail?.dmItem?.fWeight,
         };
 
         return returnModel;

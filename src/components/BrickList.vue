@@ -57,33 +57,33 @@
             <b-form-input v-if="edit" v-model="data.value.min" type="number" />
             <div v-if="limitMaxQty > 0 && !edit">
                 <div v-if="data.value.maxAmount">
-                    <div v-if="data.value.order > data.value.maxAmount">
+                    <div v-if="data.value.balance > data.value.maxAmount">
                         <span id="maxqty" style="color: red">
                             {{ data.value.maxAmount }}
                         </span>
                         <br />
                         <span style="color: grey; font-size: small;">
-                            [{{ data.value.order }}]
+                            [{{ data.value.balance }}]
                         </span>
                     </div>
                     <div v-else>
-                        {{ data.value.order }}
+                        {{ data.value.balance }}
                     </div>
                 </div>
-                <div v-else>
-                    {{ data.value.min }}
-                </div>
-                <div v-if="data.value.order > limitMaxQty">
+                <div v-else-if="data.value.balance > limitMaxQty">
                     <span id="maxqty" style="color: red">
                         {{ limitMaxQty }}
                     </span>
                     <br />
                     <span style="color: grey; font-size: small;">
-                        [{{ data.value.order }}]
+                        [{{ data.value.balance }}]
                     </span>
                 </div>
-                <div v-if="data.value.have > 0">
-                    {{ data.value.order }}
+                <div v-else-if="data.value.have > 0">
+                    {{ data.value.balance }}
+                </div>
+                <div v-else>
+                    {{ data.value.min }}
                 </div>
             </div>
             <div v-else-if="!edit">

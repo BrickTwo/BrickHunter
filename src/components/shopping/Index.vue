@@ -26,7 +26,7 @@
                 "
             >
                 {{ bricksAndPieces }} ({{
-                    $store.state.shopping.bricksAndPiecesPositions
+                    $store.getters['shopping/getBricksAndPiecesPositions']()
                 }})
             </b-nav-item>
             <b-nav-item
@@ -40,7 +40,7 @@
                 "
             >
                 {{ pickABrick }} ({{
-                    $store.state.shopping.pickABrickPositions
+                    $store.getters['shopping/getPickABrickPositions']()
                 }})
             </b-nav-item>
             <b-nav-item
@@ -53,7 +53,7 @@
                         $store.state.shopping.settings.selectedPrio3 == 'brickLink'
                 "
             >
-                {{ brickLink }} ({{ $store.state.shopping.brickLinkPositions }})
+                {{ brickLink }} ({{ $store.getters['shopping/getBrickLinkPositions']() }})
             </b-nav-item>
             <b-nav-item
                 class="p-0"
@@ -62,7 +62,7 @@
                 v-if="$store.state.shopping.notAllocatedPositions > 0"
             >
                 {{ notAllocated }} ({{
-                    $store.state.shopping.notAllocatedPositions
+                    $store.getters['shopping/getNotAllocatedPositions']()
                 }})
             </b-nav-item>
         </b-nav>
@@ -146,34 +146,6 @@ export default {
                 }
                 wantedList = [].concat(wantedList, ...partList.positions);
             });
-            /*var partListMerged = [];
-
-            wantedList.map((part) => {
-                var found = partListMerged.find(
-                    (f) =>
-                        f.designId == part.designId &&
-                        f.color.brickLinkId == part.color.brickLinkId
-                );
-
-                if (found) {
-                    found.qty = { ...found.qty };
-                    found.qty.min = parseInt(found.qty.min);
-                    found.qty.have = parseInt(found.qty.have);
-                    found.qty.min += parseInt(part.qty.min);
-                    found.qty.have += parseInt(part.qty.have);
-                    found.qty.balance = found.qty.min - found.qty.have;
-                } else {
-                    partListMerged.push({ ...part });
-                }
-            });
-
-            this.$store.commit('shopping/setWantedList', partListMerged);
-
-            if (this.$store.state.shopping.wantedList.length)
-                this.$store.commit(
-                    'shopping/setwantedListPositionsMerged',
-                    this.$store.state.shopping.wantedList.length
-                );*/
 
             this.$store.commit('shopping/setWantedList', wantedList);
         },
