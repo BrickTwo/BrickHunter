@@ -1,6 +1,6 @@
 {
   "name": "brickhunter",
-  "version": "1.6.1",
+  "version": "1.6.3",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service build --mode development --watch",

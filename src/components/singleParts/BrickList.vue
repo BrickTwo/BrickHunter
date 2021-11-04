@@ -49,7 +49,7 @@
                         aria-hidden="true"
                         style="position: absolute; bottom: 0; right: 0;"
                     />
-                    <div style="position: absolute; top: 0px; left: 0px;">
+                    <div style="position: absolute; top: 0px; left: 0px;" v-if="$store.state.singleParts.notificationChatId">
                         <font-awesome-icon
                             v-if="itemNumberSelect || designIdSelect"
                             @click.stop

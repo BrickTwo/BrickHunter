@@ -48,9 +48,9 @@
                     variant="success"
                     @click="addHaveIt(brick.itemNumber)"
                 />
-                <div style="position: absolute; top: 10px; left: 10px;">
+                <div style="position: absolute; top: 10px; left: 10px;" v-if="$store.state.singleParts.notificationChatId">
                     <font-awesome-icon
-                        v-if="itemNumberSelect || designIdSelect"
+                        v-if="(itemNumberSelect || designIdSelect)"
                         @click.stop
                         :icon="['fab', 'telegram-plane']"
                         @click="showNotificationHandler(brick.itemNumber)"
