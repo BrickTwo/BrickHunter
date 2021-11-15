@@ -22,7 +22,7 @@ export default {
             }
 
             for (let i = 0; i < items.length; i++) {
-                let foundBrick = await this.findBrick(items[i], response, country);
+                let foundBrick = await this.findBrick(searchItem, items[i], response, country);
 
                 if (foundBrick) {
                     items[i].pickABrick = foundBrick;
@@ -34,7 +34,7 @@ export default {
         } catch (error) {}
         return;
     },
-    async findBrick(item, bricks, country) {
+    async findBrick(searchItem, item, bricks, country) {
         if (!bricks || !bricks.length) return null;
 
         if (item.source == 'lego' || item.source == 'singleParts') {
@@ -69,7 +69,8 @@ export default {
 
         let result = bricks.filter(
             (brick) =>
-                brick.variant.attributes.colour == item.color.pickABrickName
+                brick.variant.attributes.colour == item.color.pickABrickName &&
+                searchItem.searchids.includes(brick.variant.attributes.designNumber.toString())
         );
 
         if (brickBrickLink.isSpecialBrick(item) && item.source == 'brickLink') {
@@ -80,14 +81,12 @@ export default {
                 );
 
                 result = bricks.filter(function(brick) {
-                    console.log(2)
                     return this.indexOf(brick.itemNumber) < 0;
                 }, colorCodes);
             }
         }
 
         if(item.color.id == 9999){
-            console.log(4)
             result = bricks;
         }
 
