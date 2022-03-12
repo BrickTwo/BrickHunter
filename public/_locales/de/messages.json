@@ -636,6 +636,9 @@
     "shopping_pleaseUsePopup": {
         "message": "Bitte benutze für diese Aktion die Popup variante von BrickHunter."
     },
+    "shopping_bapInfo": {
+        "message": "Falls LEGO für dein Land Teile und Steine nicht mehr unterstützt, deaktiviere bitte die \"Steine & Teile\" option in der Prioritätenliste unter Einstellungen."
+    },
     "wantedList_buttonWantedList": {
         "message": "WantedList"
     },

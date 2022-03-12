@@ -638,6 +638,9 @@
     "shopping_pleaseUsePopup": {
         "message": "Please use the popup mode of BrickHunter for this action."
     },
+    "shopping_bapInfo": {
+        "message": "If LEGO isn't supporting Bricks & Pieces anymore for your country please deactivate the \"Bricks & Pieces\" option in the priority list in the Settings tab."
+    },
     "wantedList_buttonWantedList": {
         "message": "WantedList"
     },

@@ -1,7 +1,7 @@
 var localCountry = '';
 var localLanguage = '';
 var localeCountryLanguage = '';
-const timeout = setTimeout(function() {}, 5000);
+const timeout = setTimeout(function () { }, 5000);
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (tab.url.indexOf('https://www.lego.com') >= 0) {
@@ -26,7 +26,7 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     }
 });
 
-browser.runtime.onMessage.addListener(async function(request) {
+browser.runtime.onMessage.addListener(async function (request) {
     prepareLocation();
 
     switch (request.service) {
@@ -80,13 +80,15 @@ function addContentScript(tabId) {
 async function pickABrick(request) {
     switch (request.action) {
         case 'findBrick':
-            return await findBrick(request.designId);
+            return await findBrick(request.designId, request.sessionCookieId);
         case 'readQAuth':
             return await readQAuth();
+        case 'readSessionCookieId':
+            return await readSessionCookieId();
         case 'readCart':
             return await readCart(request.authorization);
         case 'clearCart':
-            return await clearCart(request.authorization, request.PABCartId);
+            return await clearCart(request.authorization, request.cartType);
         case 'addToCart':
             return await addToCart(
                 request.authorization,
@@ -94,18 +96,27 @@ async function pickABrick(request) {
                 request.partId,
                 request.qty
             );
+        case 'addElementToCart':
+            return await addElementToCart(
+                request.authorization,
+                request.partId,
+                request.qty,
+                request.cartType
+            );
         case 'open':
             return await open(request.affiliate);
     }
 
     pickABrick.findBrick = findBrick;
     pickABrick.readQAuth = readQAuth;
+    pickABrick.readSessionCookieId = readSessionCookieId;
     pickABrick.readCart = readCart;
     pickABrick.clearCart = clearCart;
     pickABrick.addToCart = addToCart;
+    pickABrick.addElementToCart = addElementToCart;
     pickABrick.open = open;
 
-    async function findBrick(designId) {
+    async function findBrick(designId, sessionCookieId) {
         var PickABrickQuery = {
             operationName: 'PickABrickQuery',
             variables: {
@@ -114,7 +125,7 @@ async function pickABrick(request) {
                 query: encodeURIComponent(designId),
             },
             query:
-                'query PickABrickQuery($query: String, $page: Int, $perPage: Int, $sort: SortInput, $filters: [Filter!]) {\n  __typename\n  elements(query: $query, page: $page, perPage: $perPage, filters: $filters, sort: $sort) {\n    count\n    facets {\n      ...FacetData\n      __typename\n    }\n    sortOptions {\n      ...Sort_SortOptions\n      __typename\n    }\n    results {\n      ...ElementLeafData\n      __typename\n    }\n    total\n    __typename\n  }\n  me {\n    ... on LegoUser {\n      ...UserData\n      pabCart {\n        id\n        ... on BrickCart {\n          PABLineItems {\n            ...PABLineItemData\n            __typename\n          }\n          __typename\n        }\n        taxedPrice {\n          totalGross {\n            currencyCode\n            formattedAmount\n            formattedValue\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment FacetData on Facet {\n  id\n  key\n  name\n  labels {\n    count\n    key\n    name\n    ... on FacetValue {\n      value\n      __typename\n    }\n    ... on FacetRange {\n      from\n      to\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment Sort_SortOptions on SortOptions {\n  id\n  key\n  direction\n  label\n  __typename\n}\n\nfragment ElementLeafData on Element {\n  id\n  name\n  primaryImage\n  categories {\n    id\n    name\n    key\n    parent {\n      name\n      id\n      __typename\n    }\n    __typename\n  }\n  spinsetMedia {\n    frames {\n      url\n      __typename\n    }\n    __typename\n  }\n  ... on SingleVariantElement {\n    variant {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  ... on MultiVariantElement {\n    variants {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ElementLeafVariant on ElementVariant {\n  id\n  price {\n    currencyCode\n    centAmount\n    formattedAmount\n    __typename\n  }\n  attributes {\n    availabilityStatus\n    canAddToBag\n    colour\n    colourFamily\n    designNumber\n    mainGroup\n    materialGroup\n    materialType\n    maxOrderQuantity\n    showInListing\n    colourId\n    deliveryChannel\n    __typename\n  }\n  __typename\n}\n\nfragment UserData on LegoUser {\n  pabCart {\n    id\n    ... on BrickCart {\n      PABLineItems {\n        id\n        quantity\n        element {\n          id\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment PABLineItemData on PABCartLineItem {\n  id\n  quantity\n  element {\n    id\n    name\n    primaryImage\n    __typename\n  }\n  price {\n    centAmount\n    currencyCode\n    __typename\n  }\n  elementVariant {\n    id\n    attributes {\n      designNumber\n      __typename\n    }\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    __typename\n  }\n  __typename\n}\n',
+                'query PickABrickQuery($query: String, $page: Int, $perPage: Int, $sort: SortInput, $filters: [Filter!]) {\n  __typename\n  elements(query: $query, page: $page, perPage: $perPage, filters: $filters, sort: $sort) {\n    count\n    results {\n      ...ElementLeafData\n      __typename\n    }\n    total\n    __typename\n  }\n}\n\nfragment ElementLeafData on Element {\n  id\n  name\n  primaryImage\n  ... on SingleVariantElement {\n    variant {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  ... on MultiVariantElement {\n    variants {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ElementLeafVariant on ElementVariant {\n  id\n  price {\n    currencyCode\n    centAmount\n    formattedAmount\n    __typename\n  }\n  attributes {\n    availabilityStatus\n    canAddToBag\n    colour\n	colourId\n    colourFamily\n    designNumber\n    mainGroup\n    materialGroup\n    materialType\n    maxOrderQuantity\n    showInListing\n    colourId\n    deliveryChannel\n    __typename\n  }\n  __typename\n}\n',
         };
 
         var url = 'https://www.lego.com/api/graphql/PickABrickQuery';
@@ -125,6 +136,7 @@ async function pickABrick(request) {
             headers: {
                 'Content-Type': 'application/json',
                 'x-locale': localeCountryLanguage,
+                'session-cookie-id': sessionCookieId
             },
             body: JSON.stringify(PickABrickQuery),
         })
@@ -154,10 +166,25 @@ async function pickABrick(request) {
 
         return await browser.tabs
             .sendMessage(tabId, {
-                contentScriptQuery: 'readCookie',
+                contentScriptQuery: 'readCookieGQAuth',
             })
             .then((authorization) => {
                 return authorization;
+            })
+            .catch((error) => console.log(error));
+    }
+
+    async function readSessionCookieId() {
+        var tabId = await getLegoTab();
+
+        if (!tabId) return false;
+
+        return await browser.tabs
+            .sendMessage(tabId, {
+                contentScriptQuery: 'readCookieSessionCookieId',
+            })
+            .then((sessionId) => {
+                return sessionId;
             })
             .catch((error) => console.log(error));
     }
@@ -201,14 +228,26 @@ async function pickABrick(request) {
         return response.data.me.pabCart;
     }
 
-    async function clearCart(authorization, PABCartId) {
+    async function clearCart(authorization, cartType) {
+        // var PickABrickQuery = {
+        //     operationName: 'RemoveAllPABLineItems',
+        //     variables: {
+        //         PABCartId: PABCartId,
+        //     },
+        //     query:
+        //         'mutation RemoveAllPABLineItems($PABCartId: String!) {\n  removeAllPABLineItems(input: {PABCartId: $PABCartId}) {\n    id\n    taxedPrice {\n      totalGross {\n        formattedAmount\n        __typename\n      }\n      __typename\n    }\n    PABLineItems {\n      id\n      quantity\n      element {\n        id\n        __typename\n      }\n      totalPrice {\n        formattedAmount\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n',
+        // };
+
+        // var url = 'https://www.lego.com/api/graphql/RemoveAllPABLineItems';
+
+
         var PickABrickQuery = {
-            operationName: 'RemoveAllPABLineItems',
+            operationName: 'RemoveAllElementsFromCart',
             variables: {
-                PABCartId: PABCartId,
+                cartType: cartType,
             },
             query:
-                'mutation RemoveAllPABLineItems($PABCartId: String!) {\n  removeAllPABLineItems(input: {PABCartId: $PABCartId}) {\n    id\n    taxedPrice {\n      totalGross {\n        formattedAmount\n        __typename\n      }\n      __typename\n    }\n    PABLineItems {\n      id\n      quantity\n      element {\n        id\n        __typename\n      }\n      totalPrice {\n        formattedAmount\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n',
+                'mutation RemoveAllElementsFromCart($cartType: CartType!) {\n  removeAllElementsFromCart(input: {cartType: $cartType}) {\n    ... on BrickCart {\n      ...BrickCartData\n      __typename\n    }\n    ... on BAMCart {\n      ...BAMCartData\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n  taxedPrice {\n    totalGross {\n      formattedAmount\n      formattedValue\n      currencyCode\n      __typename\n    }\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    formattedValue\n    currencyCode\n    __typename\n  }\n  ... on BrickCart {\n    PABLineItems {\n      ...PABLineItemData\n      __typename\n    }\n    subTotal {\n      formattedAmount\n      __typename\n    }\n    shippingMethod {\n      price {\n        formattedAmount\n        __typename\n      }\n      shippingRate {\n        formattedAmount\n        __typename\n      }\n      isFree\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment PABLineItemData on PABCartLineItem {\n  id\n  quantity\n  element {\n    id\n    name\n    __typename\n  }\n  price {\n    centAmount\n    currencyCode\n    __typename\n  }\n  elementVariant {\n    id\n    attributes {\n      designNumber\n      deliveryChannel\n      __typename\n    }\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    __typename\n  }\n  __typename\n}\n\nfragment BAMCartData on BAMCart {\n  id\n  taxedPrice {\n    totalGross {\n      formattedAmount\n      formattedValue\n      currencyCode\n      __typename\n    }\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    formattedValue\n    currencyCode\n    __typename\n  }\n  ... on BAMCart {\n    BAMFigureData {\n      ...BAMDataTupleData\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment BAMDataTupleData on BAMDataTuple {\n  figureId\n  elements {\n    ...BAMLineItemData\n    __typename\n  }\n  __typename\n}\n\nfragment BAMLineItemData on PABCartLineItem {\n  id\n  elementVariant {\n    id\n    attributes {\n      indexImageURL\n      backImageURL\n      isShort\n      __typename\n    }\n    __typename\n  }\n  metadata {\n    bamCategory\n    bamFigureId\n    __typename\n  }\n  __typename\n}\n',
         };
 
         var url = 'https://www.lego.com/api/graphql/RemoveAllPABLineItems';
@@ -255,6 +294,54 @@ async function pickABrick(request) {
         };
 
         var url = 'https://www.lego.com/api/graphql/AddToPABCart';
+
+        var response = await fetch(url, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-locale': localeCountryLanguage,
+                authorization: authorization,
+            },
+            body: JSON.stringify(PickABrickQuery),
+        })
+            .then((response) => {
+                clearTimeout(timeout);
+                if (response.status < 200 || response.status >= 300)
+                    return {
+                        status: response.status,
+                        message: response.json(),
+                    };
+                return response.json();
+            })
+            .catch((err) => {
+                return null;
+            });
+
+        return response;
+    }
+
+    function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    async function addElementToCart(authorization, partId, quantity, cartType) {
+        var PickABrickQuery = {
+            operationName: 'AddToElementCart',
+            variables: {
+                items: {
+                    sku: partId.toString(),
+                    quantity: parseInt(quantity)
+                },
+                cartType: cartType
+            },
+            query:
+                'mutation AddToElementCart($items: [ElementInput!]!, $cartType: CartType) {\n  addToElementCart(input: {items: $items, cartType: $cartType}) {\n    ... on BrickCart {\n      ...BrickCartData\n      __typename\n    }\n    ... on BAMCart {\n      ...BAMCartData\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n  taxedPrice {\n    totalGross {\n      formattedAmount\n      formattedValue\n      currencyCode\n      __typename\n    }\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    formattedValue\n    currencyCode\n    __typename\n  }\n  ... on BrickCart {\n    PABLineItems {\n      ...PABLineItemData\n      __typename\n    }\n    subTotal {\n      formattedAmount\n      __typename\n    }\n    shippingMethod {\n      price {\n        formattedAmount\n        __typename\n      }\n      shippingRate {\n        formattedAmount\n        __typename\n      }\n      isFree\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment PABLineItemData on PABCartLineItem {\n  id\n  quantity\n  element {\n    id\n    name\n    __typename\n  }\n  price {\n    centAmount\n    currencyCode\n    __typename\n  }\n  elementVariant {\n    id\n    attributes {\n      designNumber\n      deliveryChannel\n      __typename\n    }\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    __typename\n  }\n  __typename\n}\n\nfragment BAMCartData on BAMCart {\n  id\n  taxedPrice {\n    totalGross {\n      formattedAmount\n      formattedValue\n      currencyCode\n      __typename\n    }\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    formattedValue\n    currencyCode\n    __typename\n  }\n  ... on BAMCart {\n    BAMFigureData {\n      ...BAMDataTupleData\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment BAMDataTupleData on BAMDataTuple {\n  figureId\n  elements {\n    ...BAMLineItemData\n    __typename\n  }\n  __typename\n}\n\nfragment BAMLineItemData on PABCartLineItem {\n  id\n  elementVariant {\n    id\n    attributes {\n      indexImageURL\n      backImageURL\n      isShort\n      __typename\n    }\n    __typename\n  }\n  metadata {\n    bamCategory\n    bamFigureId\n    __typename\n  }\n  __typename\n}\n',
+        };
+
+        var url = 'https://www.lego.com/api/graphql/AddToElementCart';
+
+        await sleep(1000);
 
         var response = await fetch(url, {
             method: 'POST',
@@ -489,11 +576,9 @@ async function bricksAndPieces(request) {
         var target = `https://www.lego.com/${localeCountryLanguage.toLowerCase()}/service/replacementparts/sale/location`;
         if (affiliate) {
             if (affiliate.linkType == 'webgains') {
-                url = `https://track.webgains.com/click.html?wgcampaignid=${
-                    affiliate.wgcampaignid
-                }&wgprogramid=${affiliate.wgprogramid}&clickref=${
-                    affiliate.clickref
-                }&wgtarget=${target}`;
+                url = `https://track.webgains.com/click.html?wgcampaignid=${affiliate.wgcampaignid
+                    }&wgprogramid=${affiliate.wgprogramid}&clickref=${affiliate.clickref
+                    }&wgtarget=${target}`;
             }
         } else {
             url = target;

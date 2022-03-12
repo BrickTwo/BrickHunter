@@ -8,22 +8,14 @@
                     variant="primary"
                     @click="pickABrickFillCart"
                     :disabled="!brickList || brickList.length == 0"
-                >
-                    {{ buttonFillPickABrickCart }}
-                </b-button>
+                >{{ buttonFillPickABrickCart }}</b-button>
                 <b-button
                     class="button"
                     variant="danger"
                     @click="pickABrickClearCart"
                     :disabled="!brickList || brickList.length == 0"
-                >
-                    {{ buttonClearPickABrickCart }}
-                </b-button>
-                <Affiliate
-                    class="button"
-                    style="display: inline;"
-                    :noAffiliate="true"
-                />
+                >{{ buttonClearPickABrickCart }}</b-button>
+                <Affiliate class="button" style="display: inline;" :noAffiliate="true" />
                 <b-button
                     class="button"
                     variant="primary"
@@ -53,25 +45,17 @@
                     centered
                     @ok="pickABrickClearCart()"
                 >
-                    <p class="my-4">
-                        {{ openLegoWebsiteText }}
-                    </p>
+                    <p class="my-4">{{ openLegoWebsiteText }}</p>
                     <p>
                         <b-button
                             variant="primary"
                             @click="openInNewTab('https://www.lego.com/')"
-                        >
-                            {{ openLegoWebsite }}
-                        </b-button>
+                        >{{ openLegoWebsite }}</b-button>
                     </p>
                     <template #modal-footer="{ cancel, ok }">
-                        <b-button @click="cancel()">
-                            {{ labelCancel }}
-                        </b-button>
+                        <b-button @click="cancel()">{{ labelCancel }}</b-button>
                         <!-- Button with custom close trigger value -->
-                        <b-button @click="ok()">
-                            {{ tryAgain }}
-                        </b-button>
+                        <b-button @click="ok()">{{ tryAgain }}</b-button>
                     </template>
                 </b-modal>
                 <b-modal
@@ -82,25 +66,17 @@
                     centered
                     @ok="pickABrickFillCart()"
                 >
-                    <p class="my-4">
-                        {{ openLegoWebsiteText }}
-                    </p>
+                    <p class="my-4">{{ openLegoWebsiteText }}</p>
                     <p>
                         <b-button
                             variant="primary"
                             @click="openInNewTab('https://www.lego.com/')"
-                        >
-                            {{ openLegoWebsite }}
-                        </b-button>
+                        >{{ openLegoWebsite }}</b-button>
                     </p>
                     <template #modal-footer="{ cancel, ok }">
-                        <b-button @click="cancel()">
-                            {{ labelCancel }}
-                        </b-button>
+                        <b-button @click="cancel()">{{ labelCancel }}</b-button>
                         <!-- Button with custom close trigger value -->
-                        <b-button @click="ok()">
-                            {{ tryAgain }}
-                        </b-button>
+                        <b-button @click="ok()">{{ tryAgain }}</b-button>
                     </template>
                 </b-modal>
                 <b-modal
@@ -111,9 +87,7 @@
                     centered
                     @ok="bricksAndPiecesFillCart()"
                 >
-                    <p class="my-4">
-                        {{ pleaseUsePopup }}
-                    </p>
+                    <p class="my-4">{{ pleaseUsePopup }}</p>
                 </b-modal>
             </b-col>
         </b-row>
@@ -121,8 +95,8 @@
             <b-col id="pickABrickList">
                 <brick-list :bricklist="brickList" :limitMaxQty="999" :isBusy="!showSort" />
             </b-col>
-            <b-col id="pickABrickListPrint" style="display: none" >
-                <brick-list :bricklist="brickList" :limitMaxQty="999" :fullSize="true"/>
+            <b-col id="pickABrickListPrint" style="display: none">
+                <brick-list :bricklist="brickList" :limitMaxQty="999" :fullSize="true" />
             </b-col>
         </b-row>
     </b-container>
@@ -150,7 +124,7 @@ export default {
     methods: {
         showInfo() {
             //console.log('changePage');
-            this.$router.push('/info').catch(() => {});
+            this.$router.push('/info').catch(() => { });
         },
         async pickABrickClearCart() {
             if (!this.showCartButtons) {
@@ -164,29 +138,41 @@ export default {
                     service: 'pickABrick',
                     action: 'clearCart',
                     authorization: this.authorization,
-                    PABCartId: this.pickABrickShoppingCartId,
+                    //PABCartId: this.pickABrickShoppingCartId,
+                    cartType: "bap",
                 })
                 .then((response) => {
-                    browser.tabs
-                        .query({ currentWindow: true, active: true })
-                        .then((tabs) => {
-                            var tab = tabs[0];
-                            var countrySelected = this.$store.state.country;
-                            var languageSelected = this.$store.state.language;
+                    browser.runtime
+                        .sendMessage({
+                            service: 'pickABrick',
+                            action: 'clearCart',
+                            authorization: this.authorization,
+                            //PABCartId: this.pickABrickShoppingCartId,
+                            cartType: "pab",
+                        })
+                        .then((response) => {
+                            browser.tabs
+                                .query({ currentWindow: true, active: true })
+                                .then((tabs) => {
+                                    var tab = tabs[0];
+                                    var countrySelected = this.$store.state.country;
+                                    var languageSelected = this.$store.state.language;
 
-                            browser.runtime.sendMessage({
-                                service: 'pickABrick',
-                                action: 'open',
-                            });
+                                    browser.runtime.sendMessage({
+                                        service: 'pickABrick',
+                                        action: 'open',
+                                    });
 
-                            this.$bvToast.toast(this.clearCartSuccessfullText, {
-                                title: this.pickABrick,
-                                autoHideDelay: 5000,
-                                variant: 'success',
-                            });
-                        });
+                                    this.$bvToast.toast(this.clearCartSuccessfullText, {
+                                        title: this.pickABrick,
+                                        autoHideDelay: 5000,
+                                        variant: 'success',
+                                    });
+                                });
+                        })
+                        .catch(() => { });
                 })
-                .catch(() => {});
+                .catch(() => { });
         },
         async pickABrickFillCart() {
             if (!this.showCartButtons) {
@@ -200,7 +186,8 @@ export default {
             this.loadPABPercentage = 0;
             for (var i = 0; i < this.brickList.length; i++) {
                 this.loadPABPercentage += percentageSingle;
-                await this.pickABrickAddToCart(this.brickList[i]);
+                //await this.pickABrickAddToCart(this.brickList[i]);
+                await this.pickABrickAddElementToCart(this.brickList[i]);
             }
             this.loadPABPercentage = 100;
             browser.tabs
@@ -238,6 +225,21 @@ export default {
                 });
             }
         },
+        async pickABrickAddElementToCart(item) {
+            if (item.pickABrick) {
+                var partId = item.pickABrick.variant.id;
+                var cartType = item.pickABrick.variant.attributes.deliveryChannel;
+
+                var response = await browser.runtime.sendMessage({
+                    service: 'pickABrick',
+                    action: 'addElementToCart',
+                    authorization: this.authorization,
+                    qty: item.qty.order,
+                    partId: partId,
+                    cartType: cartType
+                });
+            }
+        },
         printPickABrick() {
             this.$htmlToPaper('pickABrickListPrint');
         },
@@ -266,9 +268,9 @@ export default {
                             this.pickABrickShoppingCartId = response.id;
                             return true;
                         })
-                        .catch(() => {});
+                        .catch(() => { });
                 })
-                .catch(() => {});
+                .catch(() => { });
         },
         openInNewTab(target) {
             let affiliate = this.$store.state.affiliate;

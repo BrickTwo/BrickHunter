@@ -142,7 +142,7 @@ export default {
         },
         buttonBrickLinkCopy() {
             return browser.i18n.getMessage('shopping_buttonBrickLinkCopy');
-        },
+        }
     },
 };
 </script>
