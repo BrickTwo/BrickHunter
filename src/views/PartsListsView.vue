@@ -72,6 +72,22 @@
   <n-drawer v-model:show="showSetImport" :width="800" style="max-width: 100%">
     <SetImportDrawer />
   </n-drawer>
+  <n-modal
+    v-model:show="showModalDeleteRequest"
+    :mask-closable="false"
+    preset="dialog"
+    type="warning"
+    title="Delete"
+    positive-text="Confirm"
+    negative-text="Cancel"
+    @positive-click="onDeleteRequestPositiveClick"
+    @negative-click="onDeleteRequestNegativeClick"
+  >
+    <div>
+      Are you sure you want to delete the following part list? <br />
+      <p>{{ selectedRow?.name }}</p>
+    </div>
+  </n-modal>
 </template>
 
 <script lang="ts">
@@ -128,6 +144,12 @@ export default defineComponent({
     });
 
     const myRouter = useRouter();
+    const showFileImport = ref(false);
+    const showSetImport = ref(false);
+    const showModalDeleteRequest = ref(false);
+    const partsLists: Ref<IRowData[]> = ref([]);
+    const state = partsListStore.getState();
+    const selectedRow: Ref<IRowData | undefined> = ref(undefined);
 
     watch(
       () => partsListStore.getState(),
@@ -144,9 +166,6 @@ export default defineComponent({
       { deep: true }
     );
 
-    const partsLists: Ref<IRowData[]> = ref([]);
-
-    const state = partsListStore.getState();
     state.entries.forEach((partsList) => {
       partsLists.value.push({
         id: partsList.id,
@@ -203,7 +222,10 @@ export default defineComponent({
               {
                 id: "delete",
                 size: "small",
-                onClick: () => deletePartsList(row),
+                onClick: () => {
+                  selectedRow.value = row;
+                  showModalDeleteRequest.value = true;
+                },
               },
               {
                 default: () => "Delete",
@@ -245,6 +267,10 @@ export default defineComponent({
     return {
       partsLists,
       columns,
+      showFileImport,
+      showSetImport,
+      showModalDeleteRequest,
+      selectedRow,
       bulkOptions: [
         {
           label: "Show",
@@ -272,12 +298,19 @@ export default defineComponent({
           icon: renderIcon(DeleteOutlined),
         },
       ],
+      onDeleteRequestPositiveClick() {
+        showModalDeleteRequest.value = false;
+        if (!selectedRow.value) return;
+        deletePartsList(selectedRow.value);
+      },
+      onDeleteRequestNegativeClick() {
+        showModalDeleteRequest.value = false;
+      },
+
       send,
     };
   },
   data: () => ({
-    showFileImport: false,
-    showSetImport: false,
     checkedRowKeys: checkedRowKeysRef,
     iteration: 0,
   }),

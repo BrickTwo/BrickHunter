@@ -18,7 +18,7 @@
     "core-js": "^3.8.3",
     "fast-xml-parser": "^4.0.6",
     "idb": "^7.0.0",
-    "naive-ui": "^2.26.3",
+    "naive-ui": "^2.26.4",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.3"

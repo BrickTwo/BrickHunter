@@ -3780,9 +3780,9 @@ highlight.js@^10.7.1:
   integrity sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==
 
 highlight.js@^11.0.1:
-  version "11.4.0"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.4.0.tgz#34ceadd49e1596ee5aba3d99346cdfd4845ee05a"
-  integrity sha512-nawlpCBCSASs7EdvZOYOYVkJpGmAOKMYZgZtUqSRqodZE0GRVcFKwo1RcpeOemqh9hyttTdd5wDBwHkuSyUfnA==
+  version "11.5.0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.5.0.tgz#00abb7ed926491adbdabc93a4f3fd2b88b451b4a"
+  integrity sha512-SM6WDj5/C+VfIY8pZ6yW6Xa0Fm1tniYVYWYW1Q/DcMnISZFrC3aQAZZZFAAZtybKNrGId3p/DNbFTtcTXXgYBw==
 
 hosted-git-info@^2.1.4:
   version "2.8.9"
@@ -4618,9 +4618,9 @@ mz@^2.4.0:
     thenify-all "^1.0.0"
 
 naive-ui@^2.26.3:
-  version "2.26.3"
-  resolved "https://registry.yarnpkg.com/naive-ui/-/naive-ui-2.26.3.tgz#c97d00e77e7c6f10b53a46b7bacc510bc7f26733"
-  integrity sha512-U7UQzkwNMUntnxa1/qV6kkGwJfrcAO+98FS97HPU6HKlpKq681Cb53VVYqZMYZRVaHEO83BWxzsQJXd+VMPbhQ==
+  version "2.26.4"
+  resolved "https://registry.yarnpkg.com/naive-ui/-/naive-ui-2.26.4.tgz#96b91fd36919fd36d20641668c8636a02e144d65"
+  integrity sha512-yJQl6y58pxQWKi8YAofiFk0+4WVN+dNYoyKiMfaVdvVQTh9VxjBrcs4z5NUT+d98xUXOtmMzpIlrW/4P1xty+w==
   dependencies:
     "@css-render/plugin-bem" "^0.15.8"
     "@css-render/vue3-ssr" "^0.15.8"

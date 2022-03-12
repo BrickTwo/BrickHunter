@@ -61,6 +61,12 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
     this.state.entries.push(partsList);
   }
 
+  setPartsListName(id: string, name: string) {
+    const partsList = this.getPartsList(id);
+    if (!partsList) return;
+    partsList.name = name;
+  }
+
   deletePartsList(partListId: string) {
     const index = this.state.entries.findIndex((e) => {
       return e.id == partListId;

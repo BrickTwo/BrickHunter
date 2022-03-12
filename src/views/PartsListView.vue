@@ -1,125 +1,159 @@
 <template>
-  <n-space vertical size="large" style="width: 100%">
-    <n-layout>
-      <n-page-header @back="handleBack">
-        <template #title>Parts List</template>
-        <!-- <template #extra><Help /></template> -->
-        <template #avatar>
-          <n-icon size="20">
-            <ManageSearchOutlined />
-          </n-icon>
-        </template>
-      </n-page-header>
-    </n-layout>
-    <n-layout style="width: 100%" v-if="partsList">
-      <n-card style="width: 100%">
-        <div class="container" ref="container">
-          <n-space justify="space-between">
-            <n-space vertical size="small" style="padding: 0; margin: 0">
-              <n-h1 style="padding: 0; margin: 0; line-height: 35px">
-                {{ partsList.name }}
-              </n-h1>
+  <div>
+    <n-space vertical size="large" style="width: 100%">
+      <n-layout>
+        <n-page-header @back="handleBack">
+          <template #title>Parts List</template>
+          <!-- <template #extra><Help /></template> -->
+          <template #avatar>
+            <n-icon size="20">
+              <ManageSearchOutlined />
+            </n-icon>
+          </template>
+        </n-page-header>
+      </n-layout>
+      <n-layout style="width: 100%" v-if="partsList">
+        <n-card style="width: 100%">
+          <div class="container" ref="container">
+            <n-space justify="space-between">
+              <n-space vertical size="small" style="padding: 0; margin: 0">
+                <n-h1 style="padding: 0; margin: 0; line-height: 35px">
+                  {{ partsList.name }}
+                </n-h1>
+                <n-space>
+                  <n-button @click="showModalDeleteRequest = true">
+                    <template #icon>
+                      <n-icon>
+                        <DeleteOutlined />
+                      </n-icon>
+                    </template>
+                    Delete
+                  </n-button>
+                  <n-button @click="showModalRename = true">
+                    <template #icon>
+                      <n-icon>
+                        <ModeEditOutlined />
+                      </n-icon>
+                    </template>
+                    Rename
+                  </n-button>
+                  <n-button>
+                    <template #icon>
+                      <n-icon>
+                        <SaveAltOutlined />
+                      </n-icon>
+                    </template>
+                    Export
+                  </n-button>
+                </n-space>
+              </n-space>
               <n-space>
-                <n-button>
+                <n-statistic label="Total Rows">
+                  {{ partsList.parts?.length }}
+                </n-statistic>
+                <n-divider vertical />
+                <n-statistic label="Total Parts">
+                  {{
+                    partsList.parts
+                      ? partsList.parts
+                          .map((p) => p.qty)
+                          .reduce((prev, curr) => prev + curr, 0)
+                      : 0
+                  }}
+                </n-statistic>
+                <n-divider vertical />
+                <n-statistic label="PaB Bestseller">25</n-statistic>
+                <n-divider vertical />
+                <n-statistic label="PaB Standard">442</n-statistic>
+              </n-space>
+            </n-space>
+          </div>
+          <n-divider style="margin-top: 10px; margin-bottom: 10px" />
+          <n-space vertical>
+            <n-space justify="space-between">
+              <n-dropdown
+                trigger="click"
+                :options="bulkOptions"
+                placement="bottom-start"
+              >
+                <n-button :disabled="!checkedRowKeys.length">
                   <template #icon>
                     <n-icon>
-                      <DeleteOutlined />
+                      <ArrowDropDownOutlined />
                     </n-icon>
                   </template>
-                  Delete
+                  Bulk Action
+                </n-button>
+              </n-dropdown>
+              <n-space justify="end">
+                <n-button type="primary" ghost>
+                  <template #icon>
+                    <n-icon>
+                      <DownloadingOutlined />
+                    </n-icon>
+                  </template>
+                  Check Prices
                 </n-button>
                 <n-button>
                   <template #icon>
                     <n-icon>
-                      <ModeEditOutlined />
+                      <PrintOutlined />
                     </n-icon>
                   </template>
-                  Rename
-                </n-button>
-                <n-button>
-                  <template #icon>
-                    <n-icon>
-                      <SaveAltOutlined />
-                    </n-icon>
-                  </template>
-                  Export
+                  Print
                 </n-button>
               </n-space>
             </n-space>
-            <n-space>
-              <n-statistic label="Total Rows">
-                {{ partsList.parts.length }}
-              </n-statistic>
-              <n-divider vertical />
-              <n-statistic label="Total Parts">
-                {{
-                  partsList.parts
-                    .map((p) => p.qty)
-                    .reduce((prev, curr) => prev + curr, 0)
-                }}
-              </n-statistic>
-              <n-divider vertical />
-              <n-statistic label="Pick a Brick">25</n-statistic>
-              <n-divider vertical />
-              <n-statistic label="Bricks & Pieces">442</n-statistic>
-            </n-space>
+            <n-data-table
+              size="small"
+              virtual-scroll
+              flex-height
+              style="height: calc(100vh - 280px)"
+              ref="table"
+              :columns="columns"
+              :data="partsList.parts"
+              :row-key="
+                (rowData) => {
+                  return rowData.id + '+' + rowData.color.id;
+                }
+              "
+              @update:checked-row-keys="handleCheck"
+            />
           </n-space>
-        </div>
-        <n-divider style="margin-top: 10px; margin-bottom: 10px" />
-        <n-space vertical>
-          <n-space justify="space-between">
-            <n-dropdown
-              trigger="click"
-              :options="bulkOptions"
-              placement="bottom-start"
-            >
-              <n-button :disabled="!checkedRowKeys.length">
-                <template #icon>
-                  <n-icon>
-                    <ArrowDropDownOutlined />
-                  </n-icon>
-                </template>
-                Bulk Action
-              </n-button>
-            </n-dropdown>
-            <n-space justify="end">
-              <n-button type="primary" ghost>
-                <template #icon>
-                  <n-icon>
-                    <DownloadingOutlined />
-                  </n-icon>
-                </template>
-                Check Prices
-              </n-button>
-              <n-button>
-                <template #icon>
-                  <n-icon>
-                    <PrintOutlined />
-                  </n-icon>
-                </template>
-                Print
-              </n-button>
-            </n-space>
-          </n-space>
-          <n-data-table
-            size="small"
-            virtual-scroll
-            flex-height
-            style="height: calc(100vh - 280px)"
-            ref="table"
-            :columns="columns"
-            :data="partsList.parts"
-            :row-key="
-              (rowData) => {
-                return rowData.id + '+' + rowData.color.id;
-              }
-            "
-            @update:checked-row-keys="handleCheck"
-          />
-        </n-space>
-      </n-card>
-    </n-layout>
-  </n-space>
+        </n-card>
+      </n-layout>
+    </n-space>
+    <n-modal
+      v-model:show="showModalDeleteRequest"
+      :mask-closable="false"
+      preset="dialog"
+      type="warning"
+      title="Delete"
+      positive-text="Confirm"
+      negative-text="Cancel"
+      @positive-click="onDeleteRequestPositiveClick"
+      @negative-click="onDeleteRequestNegativeClick"
+    >
+      <div>
+        Are you sure you want to delete the following part list?
+        <br />
+        <p>{{ partsList?.name }}</p>
+      </div>
+    </n-modal>
+    <n-modal
+      v-model:show="showModalRename"
+      preset="dialog"
+      type="default"
+      :show-icon="false"
+      title="Rename"
+      positive-text="Save"
+      negative-text="Cancel"
+      @positive-click="onRenamePositiveClick"
+      @negative-click="onRenameNegativeClick"
+    >
+      <n-input v-model:value="newName" type="text" />
+    </n-modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -140,6 +174,7 @@ import {
 // import Help from "../../general/Help.vue";
 import { partsListStore } from "@/store/partslist-store";
 import { IPartsList, IParts } from "@/types/types";
+import { useRouter } from "vue-router";
 
 const checkedRowKeysRef = ref([]);
 
@@ -156,21 +191,35 @@ export default defineComponent({
   props: ["id"],
   setup(prop, { emit }) {
     const partsList: Ref<IPartsList | undefined> = ref({} as IPartsList);
+    const showModalDeleteRequest = ref(false);
+    const showModalRename = ref(false);
+    const myRouter = useRouter();
+    const newName = ref("");
 
     watch(
       () => partsListStore.getDetailedPartsList(prop.id),
       () => {
         partsList.value = partsListStore.getDetailedPartsList(prop.id);
-        console.log("current partsList", partsList, partsList.value);
+        newName.value = partsList.value ? partsList.value.name : "";
       },
       { deep: true }
     );
 
+    const deletePartsList = () => {
+      if (!partsList.value) return;
+      console.log("delete", partsList.value.id);
+      partsListStore.deletePartsList(partsList.value.id.toString());
+    };
+
     partsList.value = partsListStore.getDetailedPartsList(prop.id);
+    newName.value = partsList.value ? partsList.value.name : "";
 
     return {
       partsList,
       positions: partsListPositions.positions,
+      showModalDeleteRequest,
+      showModalRename,
+      newName,
       bulkValue: ref(null),
       bulkOptions: [
         {
@@ -201,6 +250,23 @@ export default defineComponent({
       ],
       handleBack() {
         emit("changePage", "partslists");
+      },
+      onDeleteRequestPositiveClick() {
+        showModalDeleteRequest.value = false;
+        deletePartsList();
+        myRouter.push({ path: "/partslists/" });
+      },
+      onDeleteRequestNegativeClick() {
+        showModalDeleteRequest.value = false;
+      },
+      onRenamePositiveClick() {
+        showModalRename.value = false;
+        if (!partsList.value) return;
+        //if (partsList.value) partsList.value.name = newName.value;
+        partsListStore.setPartsListName(partsList.value.id, newName.value);
+      },
+      onRenameNegativeClick() {
+        showModalRename.value = false;
       },
     };
   },

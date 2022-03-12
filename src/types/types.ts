@@ -28,6 +28,7 @@ export interface IColor {
   }
 
 export interface IPartsList {
+    id: string,
     name: string,
     parts: IParts[]
 }
