@@ -1,42 +1,51 @@
-module.exports = {
-  pages: {
-    popup: {
-      template: 'public/browser-extension.html',
-      entry: './src/popup/main.js',
-      title: 'BrickHunter'
-    },
-    standalone: {
-      template: 'public/browser-extension.html',
-      entry: './src/standalone/main.js',
-      title: 'BrickHunter',
-      filename: 'index.html'
-    },
-    devtools: {
-      template: 'public/browser-extension.html',
-      entry: './src/devtools/main.js',
-      title: 'Devtools'
-    }
-  },
-  pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'scss',
-      // load which style file you want to import globally
-      patterns: ['scss/custom.scss'],
-    },
-    browserExtension: {
-      componentOptions: {
-        background: {
-          entry: 'src/background.js'
-        },
-        contentScripts: {
-          entries: {
-            'content-script': [
-              'src/content-scripts/content-script.js',
-              'src/content-scripts/content-script-order.js'
-            ]
-          }
-        }
-      }
-    }
-  }
+const path = require("path");
+const fs = require("fs");
+
+// Generate pages object
+const pages = {};
+
+function getEntryFile(entryPath) {
+  let files = fs.readdirSync(entryPath);
+  return files;
 }
+
+const chromeName = getEntryFile(path.resolve(`src/entry`));
+
+function getFileExtension(filename) {
+  return /[.]/.exec(filename) ? /[^.]+$/.exec(filename)[0] : undefined;
+}
+chromeName.forEach((name) => {
+  const fileExtension = getFileExtension(name);
+  const fileName = name.replace("." + fileExtension, "");
+  pages[fileName] = {
+    entry: `src/entry/${name}`,
+    template: "public/index.html",
+    filename: `${fileName}.html`,
+  };
+});
+
+const isDevMode = process.env.NODE_ENV === "development";
+
+module.exports = {
+  pages,
+  filenameHashing: false,
+  chainWebpack: (config) => {
+    config.plugin("copy").use(require("copy-webpack-plugin"), [
+      {
+        patterns: [
+          {
+            from: path.resolve(`src/manifest.${process.env.NODE_ENV}.json`),
+            to: `${path.resolve("dist")}/manifest.json`,
+          },
+        ],
+      },
+    ]);
+  },
+  configureWebpack: {
+    output: {
+      filename: `js/[name].js`,
+      chunkFilename: `[name].js`,
+    },
+    devtool: isDevMode ? "inline-source-map" : false,
+  },
+};

@@ -1,0 +1,23 @@
+{
+    "manifest_version": 3,
+    "name": "BrickHunter",
+    "description": "BrickHunter 2.0",
+    "version": "2.0.0",
+    "background": {
+        "service_worker": "/js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "/js/content.js"
+            ],
+            "css": [
+                "/js/content.css"
+            ]
+        }
+    ],
+    "options_page": "options.html"
+}
