@@ -112,6 +112,13 @@ const actions = {
             });
         }
 
+        if (version.isSmaller(oldVersion, '1.7.1')) {
+            state.partLists.map((partList) => {
+                partList.date = null;
+                //localStorage.removeItem('partList_' + partList.id);
+            });
+        }
+
         state.totalPositions = 0;
         state.partLists.map((partList) => {
             state.totalPositions += partList.positions.length;

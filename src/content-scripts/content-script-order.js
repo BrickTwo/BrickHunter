@@ -20,10 +20,12 @@ function brickHunterLoadImages() {
         'Tablestyles__TableRow-sc-1r2ldnh-1 kzYbnH'
     );
 
-    if (items.length <= 0) setTimeout(brickHunterLoadImages, 1000);
-
+    if (items.length <= 0) {
+        setTimeout(brickHunterLoadImages, 1000);
+        return;
+    }
     var active = false;
-    items.forEach((item) => {
+    Array.from(items).forEach((item) => {
         /*if (item.childNodes[0].innerText != '') {
             active = false;
         }*/
@@ -31,7 +33,7 @@ function brickHunterLoadImages() {
         let sku = item.childNodes[1].innerText;
 
         if (sku.startsWith('SKU:')) {
-            let sku = item.childNodes[1].innerText;
+            //let sku = item.childNodes[1].innerText;
             let skusubstr = sku.substr(5, sku.length);
 
             let urlLod5 =

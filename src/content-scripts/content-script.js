@@ -3,8 +3,16 @@ chrome.runtime.onMessage.addListener(async function(
     sender,
     sendResponse
 ) {
-    if (request.contentScriptQuery == 'readCookie') {
+    if (request.contentScriptQuery == 'readCookieGQAuth') {
         var cookie = getCookie('gqauth');
+        if (navigator.userAgent.indexOf('Chrome') != -1) {
+            return sendResponse(cookie);
+        }
+        return cookie;
+    }
+
+    if (request.contentScriptQuery == 'readCookieSessionCookieId') {
+        var cookie = getCookie('session_cookie_id');
         if (navigator.userAgent.indexOf('Chrome') != -1) {
             return sendResponse(cookie);
         }

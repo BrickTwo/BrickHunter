@@ -114,6 +114,11 @@
             </b-col>
         </b-row>
         <b-row>
+            <b-col>
+                <b-alert show variant="warning">{{ bapInfo }}</b-alert>                
+            </b-col>
+        </b-row>
+        <b-row>
             <b-col id="bricksAndPiecesList">
                 <brick-list :bricklist="brickList" :limitMaxQty="200" />
             </b-col>
@@ -287,6 +292,9 @@ export default {
         pleaseUsePopup() {
             return browser.i18n.getMessage('shopping_pleaseUsePopup');
         },
+        bapInfo() {
+            return browser.i18n.getMessage('shopping_bapInfo');
+        }
     },
 };
 </script>

@@ -347,7 +347,7 @@ export default {
             );
 
             items.map((i) => {
-                i.bricksAndPieces = { isLoading: true };
+                //i.bricksAndPieces = { isLoading: true };
             });
             //item.bricksAndPieces = { isLoading: true };
 
@@ -386,11 +386,11 @@ export default {
             if (this.cancelLoading) {
                 return;
             }
-            await brickBricksAndPieces.load(
+            /*await brickBricksAndPieces.load(
                 item,
                 items,
                 this.$store.state.country
-            );
+            );*/
             this.bricksAndPiecesBrickCounter += row.count;
             this.calcLoad();
             items.map((i) => (i.pickABrick = { isLoading: true }));
@@ -557,6 +557,7 @@ export default {
                 date: this.partList.date,
                 source: this.partList.source,
                 positions: [...this.selectedItems],
+                version: '1.0',
             };
 
             this.$store.commit('partList/setPartList', newPartList);

@@ -9,10 +9,18 @@ export default {
             return;
         }
         try {
+            // let sessionCookieId = await browser.runtime
+            //     .sendMessage({ service: 'pickABrick', action: 'readSessionCookieId' });
+        
+            //     console.log("bh cookie", sessionCookieId);
+
+            let sessionCookieId = 'uzsfHTUFSSGg54gSDGsdf'; // random value
+
             let response = await browser.runtime.sendMessage({
                 service: 'pickABrick',
                 action: 'findBrick',
                 designId: searchItem.searchids.join('-'),
+                sessionCookieId: sessionCookieId
             });
 
             if (response?.status) {
