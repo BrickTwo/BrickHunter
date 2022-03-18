@@ -1,7 +1,11 @@
 import { PersistentStore, StoreObject } from "./store";
 import { PARTS_LIST_STORE_NAME } from "./store-names";
 import { BrickTwoApi } from "@/service/api/bricktwo";
-import { BrickLinkItemModel, GetPartsRequest } from "@/types/api-types";
+import {
+  BrickLinkItemModel,
+  GetPaBPartsRequest,
+  GetPartsRequest,
+} from "@/types/api-types";
 import { generateGuid } from "@/utilities/general/guid";
 import { getColor } from "@/utilities/color";
 import { partsStore } from "@/store/parts-store";
@@ -25,7 +29,10 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
     return partsList ? partsList : ({} as PartsListStore);
   }
 
-  getDetailedPartsList(id: string): IPartsList | undefined {
+  async getDetailedPartsList(
+    id: string,
+    pab: boolean
+  ): Promise<IPartsList | undefined> {
     const partsList = JSON.parse(
       JSON.stringify(this.getPartsList(id))
     ) as IPartsList;
@@ -36,8 +43,9 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
     partsList?.parts.forEach((part) => {
       const p = partsStore.getPart(`${part.id}+${part.color}`);
       if (p?.elementIds[0]) {
-        p.elementIds.sort();
-        part.elementId = p.elementIds[0];
+        part.elementIds = p.elementIds.map((id) => parseInt(id));
+        part.elementIds.sort((a, b) => b - a); // numerical sort desc
+        part.elementId = part.elementIds[0];
       }
       part.color = Color.getColor(p.color, "Rebrickable");
       part.name = p.name;
@@ -49,10 +57,31 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
       part.yearTo = p.yearTo;
       part.isPrint = p.isPrint;
       part.externalIds = p.externalIds;
-      part.elementIds = p.elementIds;
+
       part.brickLink = p.brickLink;
-      part.lego = p.lego;
+      part.lego = undefined;
     });
+
+    if (pab) {
+      const pabPartRequest: GetPaBPartsRequest = {
+        country: "de",
+        elementIds: partsList?.parts.map((part) => {
+          return {
+            key: `${part.id}+${part.color.id}`,
+            ids: part.elementIds,
+          };
+        }),
+      };
+
+      const pabPartResponse = await BrickTwoApi.getPaBParts(pabPartRequest);
+
+      partsList?.parts.forEach((part) => {
+        const pab = pabPartResponse.elementIds.find(
+          (p) => p.key === `${part.id}+${part.color.id}`
+        )?.pab;
+        part.lego = pab;
+      });
+    }
 
     return partsList;
   }
@@ -107,8 +136,6 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
           (e) => e.externalId == item.itemId && e.source === "BrickLink"
         );
       });
-
-      console.log("resp", resp, item);
 
       const color = getColor(item.color, "BrickLink");
 

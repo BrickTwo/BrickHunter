@@ -19,7 +19,7 @@ chromeName.forEach((name) => {
   const fileName = name.replace("." + fileExtension, "");
   pages[fileName] = {
     entry: `src/entry/${name}`,
-    template: "public/index.html",
+    template: "public/template.html",
     filename: `${fileName}.html`,
   };
 });
@@ -37,6 +37,7 @@ module.exports = {
             from: path.resolve(`src/manifest.${process.env.NODE_ENV}.json`),
             to: `${path.resolve("dist")}/manifest.json`,
           },
+          { from: path.resolve(`public`), to: `${path.resolve("dist")}/` },
         ],
       },
     ]);

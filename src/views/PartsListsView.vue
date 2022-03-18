@@ -60,15 +60,20 @@
             max-height="100%"
             :columns="columns"
             :data="partsLists"
+            :row-key="(rowData) => rowData.id"
             @update:checked-row-keys="handleCheck"
           />
         </n-space>
       </n-card>
     </n-layout>
   </n-space>
-  <n-drawer v-model:show="showFileImport" :width="800" style="max-width: 100%">
-    <FileImportDrawer />
-  </n-drawer>
+
+  <FileImportDrawer
+    v-model:show="showFileImport"
+    @close="showFileImport = false"
+    @imported="showFileImport = false"
+  />
+
   <n-drawer v-model:show="showSetImport" :width="800" style="max-width: 100%">
     <SetImportDrawer />
   </n-drawer>

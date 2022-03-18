@@ -41,7 +41,7 @@ export class Color {
   }
 
   public static getColor(colorId: number | undefined, type: string): IColor {
-    if (!colorId) return colors[0];
+    if (colorId == undefined) return colors[0];
 
     const color = colors.find((color) => {
       switch (type) {

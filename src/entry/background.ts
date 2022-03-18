@@ -9,9 +9,8 @@ chrome.action.onClicked.addListener((tab: any) => {
   // if (tab.id) {
   //     chrome.tabs.sendMessage(tab.id, { toggleVisible: true });
   // }
-  console.log("blub");
   chrome.tabs.create({
-    url: "options.html#/partslists",
+    url: "index.html#/partslists",
   });
 });
 

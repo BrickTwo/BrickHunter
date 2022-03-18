@@ -69,7 +69,6 @@
             :collapsed-icon-size="22"
             :options="menuOptions"
             v-model:value="activeKey"
-            @update:value="changePage"
           />
         </n-layout-sider>
         <n-layout>
@@ -91,14 +90,8 @@
             <div
               style="position: absolute; z-index: 99; top: 10px; right: 150px"
             >
-              <CartShort @changePage="changePage" />
+              <CartShort />
             </div>
-            <!-- <BrowseParts v-if="page == 'browseparts'" />
-            <PartsLists @changePage="changePage" v-if="page == 'partslists'" />
-            <PartsList @changePage="changePage" v-if="page == 'partslist'" />
-            <Cart @changePage="changePage" v-if="page == 'cart'" />
-            <Settings @changeTheme="changeTheme" v-if="page == 'settings'" />
-            <Info @changeTheme="changeTheme" v-if="page == 'info'" />-->
             <router-view />
           </div>
         </n-layout>
@@ -108,7 +101,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, h, ref, onBeforeMount } from "vue";
+import { defineComponent, h, ref } from "vue";
 import { darkTheme } from "naive-ui";
 import { NIcon } from "naive-ui";
 import {
@@ -247,9 +240,6 @@ export default defineComponent({
     },
   },
   methods: {
-    changePage(page: string) {
-      this.page = page;
-    },
     changeTheme(theme: BuiltInGlobalTheme) {
       this.theme = theme;
     },

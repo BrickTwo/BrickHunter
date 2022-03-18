@@ -62,9 +62,9 @@
                   }}
                 </n-statistic>
                 <n-divider vertical />
-                <n-statistic label="PaB Bestseller">25</n-statistic>
+                <n-statistic label="PaB Bestseller">0</n-statistic>
                 <n-divider vertical />
-                <n-statistic label="PaB Standard">442</n-statistic>
+                <n-statistic label="PaB Standard">0</n-statistic>
               </n-space>
             </n-space>
           </div>
@@ -158,7 +158,15 @@
 
 <script lang="ts">
 import { NIcon, NImage } from "naive-ui";
-import { defineComponent, Ref, ref, h, watch } from "vue";
+import {
+  defineComponent,
+  Ref,
+  ref,
+  h,
+  watch,
+  onBeforeMount,
+  onMounted,
+} from "vue";
 import { partsListPositions } from "@/dummyData/partslist";
 import {
   DeleteOutlined,
@@ -175,6 +183,8 @@ import {
 import { partsListStore } from "@/store/partslist-store";
 import { IPartsList, IParts } from "@/types/types";
 import { useRouter } from "vue-router";
+import PartTableDetail from "@/components/parttable/partTableDetail.vue";
+import partTableCellPAB from "@/components/parttable/partTableCellPAB.vue";
 
 const checkedRowKeysRef = ref([]);
 
@@ -189,7 +199,7 @@ const renderIcon = (icon: any) => {
 export default defineComponent({
   name: "PartsListView",
   props: ["id"],
-  setup(prop, { emit }) {
+  setup(prop) {
     const partsList: Ref<IPartsList | undefined> = ref({} as IPartsList);
     const showModalDeleteRequest = ref(false);
     const showModalRename = ref(false);
@@ -197,22 +207,39 @@ export default defineComponent({
     const newName = ref("");
 
     watch(
-      () => partsListStore.getDetailedPartsList(prop.id),
-      () => {
-        partsList.value = partsListStore.getDetailedPartsList(prop.id);
+      () => partsListStore.getDetailedPartsList(prop.id, true),
+      async () => {
+        partsList.value = await partsListStore.getDetailedPartsList(
+          prop.id,
+          true
+        );
         newName.value = partsList.value ? partsList.value.name : "";
+
+        console.log(partsList.value);
       },
       { deep: true }
     );
 
+    onMounted(async () => {
+      partsList.value = await partsListStore.getDetailedPartsList(
+        prop.id,
+        true
+      );
+      newName.value = partsList.value ? partsList.value.name : "";
+    });
+
+    onBeforeMount(async () => {
+      partsList.value = await partsListStore.getDetailedPartsList(
+        prop.id,
+        false
+      );
+      newName.value = partsList.value ? partsList.value.name : "";
+    });
+
     const deletePartsList = () => {
       if (!partsList.value) return;
-      console.log("delete", partsList.value.id);
       partsListStore.deletePartsList(partsList.value.id.toString());
     };
-
-    partsList.value = partsListStore.getDetailedPartsList(prop.id);
-    newName.value = partsList.value ? partsList.value.name : "";
 
     return {
       partsList,
@@ -249,7 +276,7 @@ export default defineComponent({
         },
       ],
       handleBack() {
-        emit("changePage", "partslists");
+        myRouter.push({ path: "/partslists/" });
       },
       onDeleteRequestPositiveClick() {
         showModalDeleteRequest.value = false;
@@ -279,6 +306,8 @@ export default defineComponent({
     SaveAltOutlined,
     ManageSearchOutlined,
     ArrowDropDownOutlined,
+    PartTableDetail,
+    partTableCellPAB,
     // Help,
   },
   data: () => ({
@@ -302,7 +331,9 @@ export default defineComponent({
           type: "expand",
           expandable: () => true,
           renderExpand: (rowData: IParts) => {
-            return `${rowData.name}`;
+            return h(PartTableDetail, {
+              part: rowData,
+            });
           },
         },
         {
@@ -329,6 +360,8 @@ export default defineComponent({
               height: 50,
               width: 50,
               objectFit: "scale-down",
+              fallbackSrc:
+                "https://www.nicepng.com/png/detail/103-1037013_lego-brick-coloring-page-lego-brick-coloring-pages.png",
             });
           },
         },
@@ -360,12 +393,12 @@ export default defineComponent({
           key: "brickLink.wantedList.maxprice",
         },
         {
-          title: "PaB Bestseller",
-          key: "pickABrick.variant.price.formattedAmount",
-        },
-        {
-          title: "PaB Standard",
-          key: "bricksAndPieces.price.amount",
+          title: "Pick a Brick",
+          render(rowData: IParts) {
+            return h(partTableCellPAB, {
+              part: rowData,
+            });
+          },
         },
       ];
     },

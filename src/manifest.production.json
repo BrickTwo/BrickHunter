@@ -1,23 +1,21 @@
 {
     "manifest_version": 3,
     "name": "BrickHunter",
-    "description": "BrickHunter 2.0",
-    "version": "2.0.0",
+    "description": "BrickHunter",
+    "version": "2.0.1",
     "background": {
         "service_worker": "/js/background.js"
     },
-    "content_scripts": [
-        {
-            "matches": [
-                "<all_urls>"
-            ],
-            "js": [
-                "/js/content.js"
-            ],
-            "css": [
-                "/js/content.css"
-            ]
-        }
+    "permissions": [
+        "tabs",
+        "activeTab"
     ],
-    "options_page": "options.html"
+    "action": {
+        "default_title": "BrickHunter"
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    }
 }

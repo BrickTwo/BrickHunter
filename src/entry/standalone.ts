@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import App from "../options.vue";
+import App from "../standalone.vue";
 import router from "../router";
 import naive from "naive-ui";
 
