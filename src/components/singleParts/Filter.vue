@@ -1,6 +1,11 @@
 <template>
     <b-container fluid="xl" class="bricksContainer">
         <b-row class="p-1">
+            <b-col>
+                <b-alert show variant="warning">{{ labelSinglePartsInfo }}</b-alert>                
+            </b-col>
+        </b-row>
+        <b-row class="p-1">
             <b-col class="mr-1">
                 <b-input-group variant="primary">
                     <b-input-group-prepend is-text>
@@ -474,7 +479,7 @@ export default {
 
             this.selectPart();
 
-            this.loadPrices();
+            //this.loadPrices();
             this.listUpdate = false;
         },
         selectPart() {
@@ -827,6 +832,11 @@ export default {
         labelSelectCategoriesToBeHidden() {
             return browser.i18n.getMessage(
                 'import_sp_selectCategoriesToBeHidden'
+            );
+        },
+        labelSinglePartsInfo() {
+            return browser.i18n.getMessage(
+                'singlePartsInfo'
             );
         },
     },

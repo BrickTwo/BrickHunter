@@ -712,5 +712,20 @@
     },
     "xmlReader_dropFile": {
         "message": "Move in here..."
+    },
+    "info": {
+        "message": "Bricks and Pieces has been removed in the latest update of BrickHunter since they are now fully integreated into Pick a Brick in all countries. A bigger update which addresses the overall changes at LEGO side is in development."
+    },
+    "pabMaxOrderInfo1": {
+        "message": "Please reduce the size of your order. It is currently only possible to have orders with up to 180 unique parts per Bestseller and Standard. Your order currently consists of"
+    },
+    "pabMaxOrderInfo2": {
+        "message": "Bestseller and"
+    },
+    "pabMaxOrderInfo3": {
+        "message": "Standard items."
+    },
+    "singlePartsInfo": {
+        "message": "This page currently only shows parts from the old Bricks and Pieces service and not from the new Pick a Brick service. The availability may differ"
     }
 }

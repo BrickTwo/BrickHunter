@@ -117,12 +117,12 @@
                     {{ brick.designId }}
                 </b-col>
             </b-row>
-            <b-overlay
+            <!-- <b-overlay
                 id="overlay-background"
                 :show="brick.update"
                 rounded="sm"
                 style="margin: 0 -5px; padding: 0 5px;"
-            >
+            > -->
                 <b-row v-if="isAvailable">
                     <b-col cols="10" class="p-0">{{ labelMaxAmount }}:</b-col>
                     <b-col cols="2" class="p-0 text-right">{{
@@ -146,7 +146,7 @@
                         {{ brick.priceAmount }} {{ brick.priceCurrency }}
                     </b-col>
                 </b-row>
-            </b-overlay>
+            <!-- </b-overlay> -->
             <b-row
                 style="display: block;overflow: hidden;white-space: nowrap; cursor: pointer"
                 @click="setColor()"

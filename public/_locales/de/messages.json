@@ -710,5 +710,20 @@
     },
     "xmlReader_dropFile": {
         "message": "Hier reinziehen..."
+    },
+    "info": {
+        "message": "Steine und Teile wurden mit dem letzten BrickHunter update entfernt da LEGO diesen Service nun in allen Ländern in Pick a Brick integriert hat. Ein grösseres Update welches diese Integration im vollem Umfang adressiert ist in Entwicklung."
+    },
+    "pabMaxOrderInfo1": {
+        "message": "Bitte verkleiner deine Bestellung. Es ist aktuell nur möglich Bestellungen mit bis zu 180 Positionen je Bestseller und Standard zu haben. Deine Bestellung besteht aktuell aus"
+    },
+    "pabMaxOrderInfo2": {
+        "message": "Bestseller und"
+    },
+    "pabMaxOrderInfo3": {
+        "message": "Standard Positionen."
+    },
+    "singlePartsInfo": {
+        "message": "Diese Seite zeigt Teile aus dem alten Steine und Teile Service und nocht aus dem neuen Pick a Brick service an. Die Verfügbarkeit kann abweichen."
     }
 }

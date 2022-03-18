@@ -99,8 +99,7 @@ async function pickABrick(request) {
         case 'addElementToCart':
             return await addElementToCart(
                 request.authorization,
-                request.partId,
-                request.qty,
+                request.items,
                 request.cartType
             );
         case 'open':
@@ -191,17 +190,16 @@ async function pickABrick(request) {
 
     async function readCart(authorization) {
         var PickABrickQuery = {
-            operationName: 'PickABrickQuery',
+            operationName: 'ElementCartQuery',
             variables: {
-                page: 1,
-                perPage: 20,
+                cartTypes: ["pab","bap"],
                 query: '',
             },
             query:
-                'query PickABrickQuery($query: String, $page: Int, $perPage: Int, $filters: [Filter!]) {\n  elements(query: $query, page: $page, perPage: $perPage, filters: $filters) {\n    count\n    facets {\n      ...FacetData\n      __typename\n    }\n    results {\n      ...ElementLeafData\n      __typename\n    }\n    total\n    __typename\n  }\n  me {\n    ... on LegoUser {\n      ...UserData\n      pabCart {\n        PABLineItems {\n          ...PABLineItemData\n          __typename\n        }\n        taxedPrice {\n          totalGross {\n            currencyCode\n            formattedAmount\n            formattedValue\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment FacetData on Facet {\n  id\n  key\n  name\n  labels {\n    count\n    key\n    name\n    ... on FacetValue {\n      value\n      __typename\n    }\n    ... on FacetRange {\n      from\n      to\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ElementLeafData on Element {\n  id\n  name\n  primaryImage\n  spinsetMedia {\n    frames {\n      url\n      __typename\n    }\n    __typename\n  }\n  ... on SingleVariantElement {\n    variant {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  ... on MultiVariantElement {\n    variants {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ElementLeafVariant on ElementVariant {\n  id\n  price {\n    currencyCode\n    centAmount\n    formattedAmount\n    __typename\n  }\n  attributes {\n    availabilityStatus\n    canAddToBag\n    colour\n    colourFamily\n    designNumber\n    mainGroup\n    materialGroup\n    materialType\n    maxOrderQuantity\n    showInListing\n    __typename\n  }\n  __typename\n}\n\nfragment UserData on LegoUser {\n  pabCart {\n    id\n    PABLineItems {\n      id\n      quantity\n      element {\n        id\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment PABLineItemData on PABCartLineItem {\n  id\n  quantity\n  element {\n    id\n    name\n    primaryImage\n    __typename\n  }\n  price {\n    centAmount\n    currencyCode\n    __typename\n  }\n  elementVariant {\n    id\n    attributes {\n      designNumber\n      __typename\n    }\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    __typename\n  }\n  __typename\n}\n',
+            'query ElementCartQuery($cartTypes: [CartType]) {\n  me {\n    ... on LegoUser {\n      elementCarts(types: $cartTypes) {\n        carts {\n          ... on BrickCart {\n            ...BrickCartData\n            __typename\n          }\n          type\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n  ... on BrickCart {\n    __typename\n  }\n  __typename\n}\n',
         };
 
-        var url = 'https://www.lego.com/api/graphql/PickABrickQuery';
+        var url = 'https://www.lego.com/api/graphql/ElementCartQuery';
 
         var response = await fetch(url, {
             method: 'POST',
@@ -225,7 +223,7 @@ async function pickABrick(request) {
             .catch((error) => console.log(error));
 
         if (response.status) return response;
-        return response.data.me.pabCart;
+        return response.data.me.elementCarts.carts;
     }
 
     async function clearCart(authorization, cartType) {
@@ -325,14 +323,11 @@ async function pickABrick(request) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
-    async function addElementToCart(authorization, partId, quantity, cartType) {
+    async function addElementToCart(authorization, items, cartType) {
         var PickABrickQuery = {
             operationName: 'AddToElementCart',
             variables: {
-                items: {
-                    sku: partId.toString(),
-                    quantity: parseInt(quantity)
-                },
+                items,
                 cartType: cartType
             },
             query:
@@ -341,7 +336,7 @@ async function pickABrick(request) {
 
         var url = 'https://www.lego.com/api/graphql/AddToElementCart';
 
-        await sleep(1000);
+        await sleep(500);
 
         var response = await fetch(url, {
             method: 'POST',

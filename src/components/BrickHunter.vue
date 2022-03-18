@@ -219,7 +219,7 @@ export default {
         async cloudSync() {
             var checkDate = new Date(this.$store.state.syncDate);
             checkDate.setHours(checkDate.getHours() + 1);
-            if (checkDate < new Date(Date.now())) {
+            // if (checkDate < new Date(Date.now())) {
                 var cloudData = await apiBrickTwo.getSyncAsync();
                 this.$store.commit('setSyncDate', new Date(Date.now()));
 
@@ -246,9 +246,11 @@ export default {
                         this.notification = cloudData.notification.messageEn;
                     }
 
+                    this.notification ="sdfdsf";
+
                     this.$bvModal.show('notificationMessage');
                 }
-            }
+            // }
         },
     },
     beforeMount() {

@@ -1,6 +1,11 @@
 <template>
     <b-container class="px-2" fluid="xl">
         <b-row>
+            <b-col>
+                <b-alert show variant="warning">{{ labelInfo }}</b-alert> 
+            </b-col>
+        </b-row>
+        <b-row>
             <!--<b-col class="text-right">
                 {{ $store.state.partList.totalPositions }} / 2000
                 {{ labelPositions }}
@@ -187,6 +192,9 @@ export default {
         },
         labelSinglePart() {
             return browser.i18n.getMessage('import_singleParts');
+        },
+        labelInfo() {
+            return browser.i18n.getMessage('info');
         },
     },
 };

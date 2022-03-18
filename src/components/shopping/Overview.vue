@@ -15,11 +15,11 @@
                         $store.getters['shopping/getBrickLinkBrickAmount']() +
                         $store.getters['shopping/getNotAllocatedBrickAmount']()
                 }})<br />
-                {{ bricksAndPieces }}:
+                <!-- {{ bricksAndPieces }}:
                 {{ $store.getters['shopping/getBricksAndPiecesPositions']() }}
                 ({{
                     $store.getters['shopping/getBricksAndPiecesBrickAmount']()
-                }})<br />
+                }})<br /> -->
                 {{ pickABrick }}:
                 {{ $store.getters['shopping/getPickABrickPositions']() }}
                 ({{
@@ -42,7 +42,7 @@
                 }}
 
                 <h2>{{ titlePrice }}</h2>
-                {{ bricksAndPieces }}:
+                <!-- {{ bricksAndPieces }}:
                 {{ $store.state.shopping.currency }}
                 {{
                     Math.round(
@@ -50,7 +50,7 @@
                             'shopping/getBricksAndPiecesTotalPrice'
                         ]() * 100
                     ) / 100
-                }}<br />
+                }}<br /> -->
                 {{ pickABrick }}:
                 {{ $store.state.shopping.currency }}
                 {{

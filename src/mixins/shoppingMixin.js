@@ -49,9 +49,10 @@ export const shoppingMixin = {
                             item.brickLink?.wantedList?.maxprice
                         );
                         if (price[1]) {
-                            if (price[0] == 'bricksAndPieces') {
-                                this.addToBricksAndPiecesList(item);
-                            } else if (price[0] == 'pickABrick') {
+                            // if (price[0] == 'bricksAndPieces') {
+                            //     this.addToBricksAndPiecesList(item);
+                            // } else 
+                            if (price[0] == 'pickABrick') {
                                 this.addToPickABrickList(item);
                             } else if (
                                 price[0] == 'brickLink' ||

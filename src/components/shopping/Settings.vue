@@ -84,10 +84,10 @@ export default {
                     value: 'none',
                     text: browser.i18n.getMessage('shopping_optionsNone'),
                 },
-                {
-                    value: 'bricksAndPieces',
-                    text: browser.i18n.getMessage('bricksAndPieces'),
-                },
+                // {
+                //     value: 'bricksAndPieces',
+                //     text: browser.i18n.getMessage('bricksAndPieces'),
+                // },
                 {
                     value: 'pickABrick',
                     text: browser.i18n.getMessage('pickABrick'),
@@ -102,10 +102,10 @@ export default {
                     value: 'none',
                     text: browser.i18n.getMessage('shopping_optionsNone'),
                 },
-                {
-                    value: 'bricksAndPieces',
-                    text: browser.i18n.getMessage('bricksAndPieces'),
-                },
+                // {
+                //     value: 'bricksAndPieces',
+                //     text: browser.i18n.getMessage('bricksAndPieces'),
+                // },
                 {
                     value: 'pickABrick',
                     text: browser.i18n.getMessage('pickABrick'),
@@ -120,10 +120,10 @@ export default {
                     value: 'none',
                     text: browser.i18n.getMessage('shopping_optionsNone'),
                 },
-                {
-                    value: 'bricksAndPieces',
-                    text: browser.i18n.getMessage('bricksAndPieces'),
-                },
+                // {
+                //     value: 'bricksAndPieces',
+                //     text: browser.i18n.getMessage('bricksAndPieces'),
+                // },
                 {
                     value: 'pickABrick',
                     text: browser.i18n.getMessage('pickABrick'),
@@ -166,6 +166,10 @@ export default {
         this.optionsSubtractBrickLinkPriceUnit.find(
             (option) => (option.value = 'absolute')
         ).text = country.currency;
+
+        if (this.selectedPrio1 == "bricksAndPieces") this.selectedPrio1 = 'none';
+        if (this.selectedPrio2 == "bricksAndPieces") this.selectedPrio2 = 'none';
+        if (this.selectedPrio3 == "bricksAndPieces") this.selectedPrio3 = 'none';
     },
     watch: {
         selectedPrio1: function(val) {
