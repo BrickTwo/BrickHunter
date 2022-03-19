@@ -9,6 +9,7 @@
     "build-watch": "vue-cli-service  --env.NODE_ENV=development build-watch --mode development"
   },
   "dependencies": {
+    "@types/webextension-polyfill": "^0.8.2",
     "@vicons/antd": "^0.12.0",
     "@vicons/fa": "^0.12.0",
     "@vicons/fluent": "^0.12.0",
@@ -21,7 +22,8 @@
     "naive-ui": "^2.26.4",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "webextension-polyfill": "^0.8.0"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.179",

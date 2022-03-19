@@ -1,17 +1,20 @@
 {
     "manifest_version": 3,
-    "name": "BrickHunter",
-    "description": "BrickHunter",
+    "name": "BrickHunter Alpha",
+    "description": "BrickHunter Alpha",
     "version": "2.0.1",
     "background": {
         "service_worker": "/js/background.js"
     },
+    "host_permissions" : [
+        "https://brichunter-web-svc.azurewebsites.net",
+        "https://*.lego.com/*"
+    ],
     "permissions": [
-        "tabs",
         "activeTab"
     ],
     "action": {
-        "default_title": "BrickHunter"
+        "default_title": "BrickHunter Alpha"
     },
     "icons": {
         "16": "icons/icon16.png",

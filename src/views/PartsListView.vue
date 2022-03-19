@@ -48,11 +48,11 @@
                 </n-space>
               </n-space>
               <n-space>
-                <n-statistic label="Total Rows">
+                <n-statistic label="Total Unique Parts">
                   {{ partsList.parts?.length }}
                 </n-statistic>
                 <n-divider vertical />
-                <n-statistic label="Total Parts">
+                <n-statistic label="Total Quantity">
                   {{
                     partsList.parts
                       ? partsList.parts
@@ -65,6 +65,8 @@
                 <n-statistic label="PaB Bestseller">0</n-statistic>
                 <n-divider vertical />
                 <n-statistic label="PaB Standard">0</n-statistic>
+                <n-divider vertical />
+                <n-statistic label="PaB Out Of Stock">0</n-statistic>
               </n-space>
             </n-space>
           </div>
@@ -86,7 +88,7 @@
                 </n-button>
               </n-dropdown>
               <n-space justify="end">
-                <n-button type="primary" ghost>
+                <n-button type="primary" ghost @click="findPaBParts()">
                   <template #icon>
                     <n-icon>
                       <DownloadingOutlined />
@@ -181,10 +183,17 @@ import {
 } from "@vicons/material";
 // import Help from "../../general/Help.vue";
 import { partsListStore } from "@/store/partslist-store";
-import { IPartsList, IParts } from "@/types/types";
+import {
+  IPartsList,
+  IParts,
+  BackgroundRequest,
+  BackgroundRequestAction,
+} from "@/types/types";
 import { useRouter } from "vue-router";
 import PartTableDetail from "@/components/parttable/partTableDetail.vue";
 import partTableCellPAB from "@/components/parttable/partTableCellPAB.vue";
+import browser from "webextension-polyfill";
+import { GetPaBFindPartsResponse } from "@/types/api-types";
 
 const checkedRowKeysRef = ref([]);
 
@@ -213,6 +222,7 @@ export default defineComponent({
           prop.id,
           true
         );
+
         newName.value = partsList.value ? partsList.value.name : "";
 
         console.log(partsList.value);
@@ -236,6 +246,71 @@ export default defineComponent({
       newName.value = partsList.value ? partsList.value.name : "";
     });
 
+    const findPaBParts = async () => {
+      if (!partsList.value) return;
+
+      for (var i = 0; i < partsList.value.parts.length; i++) {
+        let item = partsList.value.parts[i];
+
+        var request: BackgroundRequest = {
+          action: BackgroundRequestAction.FindPaBPart,
+          request: {
+            page: 1,
+            perPage: 500,
+            query: `${item.externalIds
+              .filter((e) => e.source === "LEGO")
+              .map((id) => id.externalId)
+              .join(", ")}, ${
+              item.elementIds ? item.elementIds.join(", ") : ""
+            }`,
+            location: "de-DE",
+          },
+        };
+
+        console.log("request", request);
+
+        var response = (await browser.runtime.sendMessage(
+          request
+        )) as GetPaBFindPartsResponse;
+
+        var parts = response.data.elements.results
+          .filter((p) => {
+            return item.externalIds.filter(
+              (e) =>
+                e.source === "LEGO" &&
+                e.externalId === p.variant.attributes.designNumber.toString()
+            ).length;
+          })
+          .filter(
+            (p) =>
+              p.variant.attributes.colourId ===
+              item.color.external_ids.LEGO?.ext_ids[0].toString()
+          );
+
+        parts.concat(
+          response.data.elements.results.filter((p) => {
+            return item.elementIds
+              ? item.elementIds.find((e) => e.toString() === p.variant.id)
+              : false;
+          })
+        );
+
+        parts.sort(
+          (a, b) =>
+            a.variant.price.formattedValue - b.variant.price.formattedValue
+        );
+
+        var result = parts[0];
+        item.lego = result;
+
+        await sleep(500);
+      }
+    };
+
+    const sleep = (ms: number) => {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    };
+
     const deletePartsList = () => {
       if (!partsList.value) return;
       partsListStore.deletePartsList(partsList.value.id.toString());
@@ -247,6 +322,7 @@ export default defineComponent({
       showModalDeleteRequest,
       showModalRename,
       newName,
+      findPaBParts,
       bulkValue: ref(null),
       bulkOptions: [
         {

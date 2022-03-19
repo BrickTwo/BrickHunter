@@ -72,3 +72,36 @@ export interface GetPaBPartsResponse {
     } | null;
   }[];
 }
+
+export interface GetPaBFindPartsRequest {
+  page: number;
+  perPage: number;
+  query: string;
+  location: string;
+}
+
+export interface GetPaBFindPartsResponse {
+  data: {
+    elements: {
+      count: number;
+      total: number;
+      results: GetPaBFindPartsResponseResults[];
+    };
+  };
+}
+
+export interface GetPaBFindPartsResponseResults {
+  inStock: boolean;
+  variant: {
+    id: string;
+    price: {
+      currencyCode: string;
+      formattedValue: number;
+    };
+    attributes: {
+      colourId: string;
+      designNumber: number;
+      deliveryChannel: string;
+    };
+  };
+}

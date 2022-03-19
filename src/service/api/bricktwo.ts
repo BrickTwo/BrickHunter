@@ -6,8 +6,8 @@ import {
   GetPartsResponse,
 } from "@/types/api-types";
 
-//const apiUrl = "https://brichunter-web-svc.azurewebsites.net";
-const apiUrl = "https://localhost:7141";
+const apiUrl = "https://brichunter-web-svc.azurewebsites.net";
+//const apiUrl = "https://localhost:7141";
 
 export class BrickTwoApi {
   // public static async convert(requestBody: Array<ConvertRequest>): Promise<Array<ConvertResponse>> {

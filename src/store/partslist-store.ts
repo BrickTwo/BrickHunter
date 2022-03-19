@@ -62,26 +62,26 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
       part.lego = undefined;
     });
 
-    if (pab) {
-      const pabPartRequest: GetPaBPartsRequest = {
-        country: "de",
-        elementIds: partsList?.parts.map((part) => {
-          return {
-            key: `${part.id}+${part.color.id}`,
-            ids: part.elementIds,
-          };
-        }),
-      };
+    // if (pab) {
+    //   const pabPartRequest: GetPaBPartsRequest = {
+    //     country: "de",
+    //     elementIds: partsList?.parts.map((part) => {
+    //       return {
+    //         key: `${part.id}+${part.color.id}`,
+    //         ids: part.elementIds,
+    //       };
+    //     }),
+    //   };
 
-      const pabPartResponse = await BrickTwoApi.getPaBParts(pabPartRequest);
+    //   const pabPartResponse = await BrickTwoApi.getPaBParts(pabPartRequest);
 
-      partsList?.parts.forEach((part) => {
-        const pab = pabPartResponse.elementIds.find(
-          (p) => p.key === `${part.id}+${part.color.id}`
-        )?.pab;
-        part.lego = pab;
-      });
-    }
+    //   partsList?.parts.forEach((part) => {
+    //     const pab = pabPartResponse.elementIds.find(
+    //       (p) => p.key === `${part.id}+${part.color.id}`
+    //     )?.pab;
+    //     part.lego = pab;
+    //   });
+    // }
 
     return partsList;
   }

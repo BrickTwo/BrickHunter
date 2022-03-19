@@ -1,3 +1,8 @@
+import {
+  GetPaBFindPartsRequest,
+  GetPaBFindPartsResponseResults,
+} from "./api-types";
+
 export interface IColor {
   id: number;
   name: string;
@@ -66,28 +71,20 @@ export interface IParts extends Object {
     hasSound: boolean;
     isStickerPart: boolean;
   };
-  lego?: {
-    elementId: number;
-    designId: number;
-    colorId: number;
-    id: string | null;
-    name: string;
-    primaryImageUrl: string;
-    materialGroup: string | null;
-    materialType: string | null;
-    deliveryChannel: string;
-    createDate: Date;
-    updateDate: Date;
-    price: number;
-    currency: string;
-    countryGroupId: number;
-    isAvailable: boolean;
-    lastAvailableDate: Date;
-  } | null;
+  lego?: GetPaBFindPartsResponseResults | null;
   source: {
     name: string;
     id?: string;
     itemNumber?: number;
     color?: number;
   };
+}
+
+export interface BackgroundRequest {
+  action: BackgroundRequestAction;
+  request: GetPaBFindPartsRequest;
+}
+
+export enum BackgroundRequestAction {
+  FindPaBPart = 1,
 }

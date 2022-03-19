@@ -1,17 +1,29 @@
 <template>
   <div v-if="data.lego">
-    <n-text>{{ data.lego?.currency }} {{ data.lego?.price }}</n-text>
-    <br />
-    <n-text depth="3">
-      [{{ data.lego?.designId }}/{{ data.lego?.elementId }}]
+    <n-text>
+      {{ data.lego?.variant.price.currencyCode }}
+      {{ data.lego?.variant.price.formattedValue }}
     </n-text>
     <br />
-    <n-tag type="success" v-if="data.lego?.deliveryChannel === 'pab'">
+    <n-text depth="3">
+      [{{ data.lego?.variant.id }}/{{
+        data.lego?.variant.attributes.designNumber
+      }}]
+    </n-text>
+    <br />
+    <n-tag
+      type="success"
+      v-if="data.lego?.variant.attributes.deliveryChannel === 'pab'"
+    >
       Bestseller
     </n-tag>
-    <n-tag type="info" v-if="data.lego?.deliveryChannel === 'bap'">
+    <n-tag
+      type="info"
+      v-if="data.lego?.variant.attributes.deliveryChannel === 'bap'"
+    >
       Standard
     </n-tag>
+    <n-tag type="error" v-if="!data.lego?.inStock"> Out Of Stock </n-tag>
   </div>
 </template>
 
