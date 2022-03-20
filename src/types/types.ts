@@ -1,7 +1,5 @@
-import {
-  GetPaBFindPartsRequest,
-  GetPaBFindPartsResponseResults,
-} from "./api-types";
+import { GetPaBFindPartsRequest } from "./api-types";
+import { PartsListPartStore, PartStore } from "./store-types";
 
 export interface IColor {
   id: number;
@@ -35,49 +33,13 @@ export interface IColor {
 export interface IPartsList {
   id: string;
   name: string;
-  parts: IParts[];
+  parts: IPart[];
 }
 
-export interface IParts extends Object {
-  id: string;
-  elementId: number;
+export interface IPart extends Object {
+  source: PartsListPartStore;
+  detail: PartStore;
   color: IColor;
-  qty: number;
-  have: number;
-  itemType: string;
-  maxPrice: number;
-  condition: string;
-  notify: string;
-  remarks: string;
-  name: string;
-  imageUrl: string;
-  partCatId: number;
-  yearFrom: number;
-  yearTo: number;
-  isPrint: boolean;
-  externalIds: { source: string; externalId: string }[];
-  elementIds: number[];
-  brickLink?: {
-    itemNo: string;
-    altNo: string;
-    itemName: string;
-    catStr: string;
-    year: number;
-    yearTo: number;
-    weight: number;
-    dimX: number;
-    dimY: number;
-    dimZ: number;
-    hasSound: boolean;
-    isStickerPart: boolean;
-  };
-  lego?: GetPaBFindPartsResponseResults | null;
-  source: {
-    name: string;
-    id?: string;
-    itemNumber?: number;
-    color?: number;
-  };
 }
 
 export interface BackgroundRequest {

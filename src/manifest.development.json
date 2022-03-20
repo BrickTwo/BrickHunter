@@ -2,12 +2,12 @@
     "manifest_version": 3,
     "name": "BrickHunter Alpha",
     "description": "BrickHunter Alpha",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "background": {
         "service_worker": "/js/background.js"
     },
     "host_permissions" : [
-        "https://brichunter-web-svc.azurewebsites.net",
+        "https://brichunter-web-svc.azurewebsites.net/*",
         "https://*.lego.com/*"
     ],
     "permissions": [

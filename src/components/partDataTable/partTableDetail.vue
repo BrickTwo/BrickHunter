@@ -1,10 +1,10 @@
 <template>
   <div>
-    <n-card :title="data.name" :bordered="false">
+    <n-card :title="data.detail.name" :bordered="false">
       <n-row style="width: 100%">
         <n-col :span="6">
           <n-image
-            :src="data.imageUrl"
+            :src="data.detail.imageUrl"
             fallback-src="https://www.nicepng.com/png/detail/103-1037013_lego-brick-coloring-page-lego-brick-coloring-pages.png"
             style="max-width: 150px; max-height: 150px"
             width="150"
@@ -15,18 +15,20 @@
         <n-col :span="12">
           <n-h3>Item Info</n-h3>
           <n-col :span="12"
-            ><n-text strong>Part Number:</n-text> {{ data.id }}<br />
+            ><n-text strong>Part Number:</n-text> {{ data.detail.id }}<br />
             <n-text strong>Element Id's:</n-text>
-            {{ data.elementIds ? data.elementIds.join(", ") : "" }}<br />
-            <n-text strong>Category Id:</n-text> {{ data.partCatId }}<br />
-            <n-text strong>Printed:</n-text> {{ data.isPrint ? "Yes" : "No"
+            {{ data.detail.elementIds ? data.detail.elementIds.join(", ") : ""
             }}<br />
+            <n-text strong>Category Id:</n-text> {{ data.detail.partCatId
+            }}<br />
+            <n-text strong>Printed:</n-text>
+            {{ data.detail.isPrint ? "Yes" : "No" }}<br />
             <n-text strong>Transparent:</n-text>
             {{ data.color.is_trans ? "Yes" : "No" }}
           </n-col>
           <n-col :span="12">
-            <n-text strong>Year:</n-text> {{ data.yearFrom }} to {{ data.yearTo
-            }}<br />
+            <n-text strong>Year:</n-text> {{ data.detail.yearFrom }} to
+            {{ data.detail.yearTo }}<br />
             <n-text strong>Weight:</n-text><br />
             <n-text strong>Stud Dim.:</n-text><br />
             <n-text strong>Pack. Dim.:</n-text>
@@ -34,10 +36,10 @@
         </n-col>
         <n-col :span="6">
           <n-h3>Lot</n-h3>
-          <n-text strong>Quantity:</n-text> {{ data.qty }}<br />
-          <n-text strong>Have:</n-text> {{ data.have }}<br />
-          <n-text strong>Max Price:</n-text> {{ data.maxPrice }}<br />
-          <n-text strong>Remarks:</n-text> {{ data.remarks }}<br />
+          <n-text strong>Quantity:</n-text> {{ data.source.qty }}<br />
+          <n-text strong>Have:</n-text> {{ data.source.have }}<br />
+          <n-text strong>Max Price:</n-text> {{ data.source.maxPrice }}<br />
+          <n-text strong>Remarks:</n-text> {{ data.source.remarks }}<br />
         </n-col>
       </n-row>
       <n-row>
@@ -130,12 +132,12 @@
           <n-h3>Design Number's</n-h3>
           <n-descriptions label-placement="top">
             <n-descriptions-item label="Rebrickable">
-              {{ data.id }}
+              {{ data.detail.id }}
             </n-descriptions-item>
             <n-descriptions-item label="BrickLink">
               <n-text
                 tag="div"
-                v-for="(eId, index) in data.externalIds.filter(
+                v-for="(eId, index) in data.detail.externalIds.filter(
                   (e) => e.source === 'BrickLink'
                 )"
                 :key="index"
@@ -146,7 +148,7 @@
             <n-descriptions-item label="BrickOwl">
               <n-text
                 tag="div"
-                v-for="(eId, index) in data.externalIds.filter(
+                v-for="(eId, index) in data.detail.externalIds.filter(
                   (e) => e.source === 'BrickOwl'
                 )"
                 :key="index"
@@ -157,7 +159,7 @@
             <n-descriptions-item label="LDraw">
               <n-text
                 tag="div"
-                v-for="(eId, index) in data.externalIds.filter(
+                v-for="(eId, index) in data.detail.externalIds.filter(
                   (e) => e.source === 'LDraw'
                 )"
                 :key="index"
@@ -168,7 +170,7 @@
             <n-descriptions-item label="LEGO">
               <n-text
                 tag="div"
-                v-for="(eId, index) in data.externalIds.filter(
+                v-for="(eId, index) in data.detail.externalIds.filter(
                   (e) => e.source === 'LEGO'
                 )"
                 :key="index"
@@ -179,7 +181,7 @@
             <n-descriptions-item label="Peeron">
               <n-text
                 tag="div"
-                v-for="(eId, index) in data.externalIds.filter(
+                v-for="(eId, index) in data.detail.externalIds.filter(
                   (e) => e.source === 'Peeron'
                 )"
                 :key="index"
@@ -196,13 +198,13 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { IParts } from "@/types/types";
+import { IPart } from "@/types/types";
 
 export default defineComponent({
   name: "PartTableDetail",
   props: { part: { type: Object, required: true } },
   setup(props) {
-    const data = ref(props.part as IParts);
+    const data = ref(props.part as IPart);
 
     return { data };
   },

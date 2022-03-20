@@ -27,7 +27,10 @@ class PartsStore extends PersistentStore<PartStore> {
   }
 
   addPart(part: PartStore) {
+    const exist = this.getPart(part.id);
+    if (exist) part.lego = exist.lego;
     console.log("parts store: add part ", part);
+
     this.state.entries.push(part);
   }
 

@@ -113,14 +113,15 @@ import FileImportDrawer from "@/components/partslists/FileImportDrawer.vue";
 import SetImportDrawer from "@/components/partslists/SetImportDrawer.vue";
 import { partsListStore } from "@/store/partslist-store";
 import { useRouter } from "vue-router";
+import { PartsListStore } from "@/types/store-types";
 // import { partStore } from "@/store/part-store";
 // import Help from "../general/Help.vue";
 
-interface IRowData {
-  id: number;
-  name: string;
-  positions: number;
-}
+// interface IRowData {
+//   id: number;
+//   name: string;
+//   positions: number;
+// }
 
 const checkedRowKeysRef = ref([]);
 
@@ -152,32 +153,33 @@ export default defineComponent({
     const showFileImport = ref(false);
     const showSetImport = ref(false);
     const showModalDeleteRequest = ref(false);
-    const partsLists: Ref<IRowData[]> = ref([]);
+    const partsLists = ref(partsListStore.getAllPartsListSortedByName());
     const state = partsListStore.getState();
-    const selectedRow: Ref<IRowData | undefined> = ref(undefined);
+    const selectedRow: Ref<PartsListStore | undefined> = ref(undefined);
 
     watch(
       () => partsListStore.getState(),
-      (state) => {
-        partsLists.value = [];
-        state.entries.forEach((partsList) => {
-          partsLists.value.push({
-            id: partsList.id,
-            name: partsList.name,
-            positions: partsList.parts.length,
-          } as unknown as IRowData);
-        });
+      () => {
+        partsLists.value = partsListStore.getAllPartsListSortedByName();
+        // partsLists.value = [];
+        // state.entries.forEach((partsList) => {
+        //   partsLists.value.push({
+        //     id: partsList.id,
+        //     name: partsList.name,
+        //     positions: partsList.parts.length,
+        //   } as unknown as PartsListStore);
+        // });
       },
       { deep: true }
     );
 
-    state.entries.forEach((partsList) => {
-      partsLists.value.push({
-        id: partsList.id,
-        name: partsList.name,
-        positions: partsList.parts.length,
-      } as unknown as IRowData);
-    });
+    // state.entries.forEach((partsList) => {
+    //   partsLists.value.push({
+    //     id: partsList.id,
+    //     name: partsList.name,
+    //     positions: partsList.parts.length,
+    //   } as unknown as IRowData);
+    // });
 
     const columns = [
       {
@@ -189,12 +191,12 @@ export default defineComponent({
       },
       {
         title: "Positions",
-        key: "positions",
+        key: "parts.length",
       },
       {
         title: "Action",
         key: "actions",
-        render(row: IRowData) {
+        render(row: PartsListStore) {
           return h(NSpace, {}, () => [
             h(
               NButton,
@@ -235,7 +237,7 @@ export default defineComponent({
               {
                 default: () => "Delete",
                 icon: () =>
-                  h(NIcon, null, { default: () => h(ShoppingCartOutlined) }),
+                  h(NIcon, null, { default: () => h(DeleteOutlined) }),
               }
             ),
           ]);
@@ -243,19 +245,19 @@ export default defineComponent({
       },
     ];
 
-    const deletePartsList = (row: IRowData) => {
+    const deletePartsList = (row: PartsListStore) => {
       console.log("delete", row.id);
       // todo: add confirmation request
       partsListStore.deletePartsList(row.id.toString());
     };
 
-    const openPartsList = (row: IRowData) => {
+    const openPartsList = (row: PartsListStore) => {
       //console.log(row);
       myRouter.push({ path: "/partslists/" + row.id });
       //this.$emit("changePage", "partslist");
     };
 
-    const addToCart = (row: IRowData) => {
+    const addToCart = (row: PartsListStore) => {
       console.log(row);
     };
 

@@ -56,17 +56,43 @@
                   {{
                     partsList.parts
                       ? partsList.parts
-                          .map((p) => p.qty)
+                          .map((p) => p.source.qty)
                           .reduce((prev, curr) => prev + curr, 0)
                       : 0
                   }}
                 </n-statistic>
                 <n-divider vertical />
-                <n-statistic label="PaB Bestseller">0</n-statistic>
+                <n-statistic label="PaB Bestseller">
+                  {{
+                    partsList.parts
+                      ? partsList.parts.filter(
+                          (p) =>
+                            p.detail.lego.attributes.deliveryChannel == "pab"
+                        ).length
+                      : 0
+                  }}
+                </n-statistic>
                 <n-divider vertical />
-                <n-statistic label="PaB Standard">0</n-statistic>
+                <n-statistic label="PaB Standard">
+                  {{
+                    partsList.parts
+                      ? partsList.parts.filter(
+                          (p) =>
+                            p.detail.lego.attributes.deliveryChannel == "bap"
+                        ).length
+                      : 0
+                  }}
+                </n-statistic>
                 <n-divider vertical />
-                <n-statistic label="PaB Out Of Stock">0</n-statistic>
+                <n-statistic label="PaB Out Of Stock">
+                  {{
+                    partsList.parts
+                      ? partsList.parts.filter(
+                          (p) => !p.detail.lego.inStock && p.detail.lego.date
+                        ).length
+                      : 0
+                  }}
+                </n-statistic>
               </n-space>
             </n-space>
           </div>
@@ -116,7 +142,7 @@
               :data="partsList.parts"
               :row-key="
                 (rowData) => {
-                  return rowData.id + '+' + rowData.color.id;
+                  return rowData.source.id + '+' + rowData.source.color;
                 }
               "
               @update:checked-row-keys="handleCheck"
@@ -185,13 +211,13 @@ import {
 import { partsListStore } from "@/store/partslist-store";
 import {
   IPartsList,
-  IParts,
+  IPart,
   BackgroundRequest,
   BackgroundRequestAction,
 } from "@/types/types";
 import { useRouter } from "vue-router";
-import PartTableDetail from "@/components/parttable/partTableDetail.vue";
-import partTableCellPAB from "@/components/parttable/partTableCellPAB.vue";
+import PartTableDetail from "@/components/partDataTable/partTableDetail.vue";
+import partTableCellPAB from "@/components/partDataTable/partTableCellPAB.vue";
 import browser from "webextension-polyfill";
 import { GetPaBFindPartsResponse } from "@/types/api-types";
 
@@ -216,12 +242,9 @@ export default defineComponent({
     const newName = ref("");
 
     watch(
-      () => partsListStore.getDetailedPartsList(prop.id, true),
+      () => partsListStore.getCombinedPartsList(prop.id),
       async () => {
-        partsList.value = await partsListStore.getDetailedPartsList(
-          prop.id,
-          true
-        );
+        partsList.value = await partsListStore.getCombinedPartsList(prop.id);
 
         newName.value = partsList.value ? partsList.value.name : "";
 
@@ -231,18 +254,12 @@ export default defineComponent({
     );
 
     onMounted(async () => {
-      partsList.value = await partsListStore.getDetailedPartsList(
-        prop.id,
-        true
-      );
+      partsList.value = await partsListStore.getCombinedPartsList(prop.id);
       newName.value = partsList.value ? partsList.value.name : "";
     });
 
     onBeforeMount(async () => {
-      partsList.value = await partsListStore.getDetailedPartsList(
-        prop.id,
-        false
-      );
+      partsList.value = await partsListStore.getCombinedPartsList(prop.id);
       newName.value = partsList.value ? partsList.value.name : "";
     });
 
@@ -257,11 +274,11 @@ export default defineComponent({
           request: {
             page: 1,
             perPage: 500,
-            query: `${item.externalIds
+            query: `${item.detail.externalIds
               .filter((e) => e.source === "LEGO")
               .map((id) => id.externalId)
               .join(", ")}, ${
-              item.elementIds ? item.elementIds.join(", ") : ""
+              item.detail.elementIds ? item.detail.elementIds.join(", ") : ""
             }`,
             location: "de-DE",
           },
@@ -275,7 +292,7 @@ export default defineComponent({
 
         var parts = response.data.elements.results
           .filter((p) => {
-            return item.externalIds.filter(
+            return item.detail.externalIds.filter(
               (e) =>
                 e.source === "LEGO" &&
                 e.externalId === p.variant.attributes.designNumber.toString()
@@ -289,8 +306,10 @@ export default defineComponent({
 
         parts.concat(
           response.data.elements.results.filter((p) => {
-            return item.elementIds
-              ? item.elementIds.find((e) => e.toString() === p.variant.id)
+            return item.detail.elementIds
+              ? item.detail.elementIds.find(
+                  (e) => e.toString() === p.variant.id
+                )
               : false;
           })
         );
@@ -301,7 +320,21 @@ export default defineComponent({
         );
 
         var result = parts[0];
-        item.lego = result;
+        if (result) {
+          item.detail.lego.id = result.variant.id;
+          item.detail.lego.inStock = result.inStock;
+          item.detail.lego.price.currencyCode =
+            result.variant.price.currencyCode;
+          item.detail.lego.price.formattedValue =
+            result.variant.price.formattedValue;
+          item.detail.lego.attributes.designNumber =
+            result.variant.attributes.designNumber;
+          item.detail.lego.attributes.colourId =
+            result.variant.attributes.colourId;
+          item.detail.lego.attributes.deliveryChannel =
+            result.variant.attributes.deliveryChannel;
+          item.detail.lego.date = Date.now();
+        }
 
         await sleep(500);
       }
@@ -406,7 +439,7 @@ export default defineComponent({
         {
           type: "expand",
           expandable: () => true,
-          renderExpand: (rowData: IParts) => {
+          renderExpand: (rowData: IPart) => {
             return h(PartTableDetail, {
               part: rowData,
             });
@@ -414,25 +447,25 @@ export default defineComponent({
         },
         {
           title: "Id",
-          key: "id",
+          key: "detail.id",
           sortOrder: false,
-          sorter(rowA: IParts, rowB: IParts) {
-            return rowA.id > rowB.id;
+          sorter(rowA: IPart, rowB: IPart) {
+            return rowA.detail.id > rowB.detail.id;
           },
         },
         {
           title: "Element",
-          key: "elementId",
+          key: "detail.elementId",
           sortOrder: false,
-          sorter(rowA: IParts, rowB: IParts) {
-            return rowA.elementId > rowB.elementId;
+          sorter(rowA: IPart, rowB: IPart) {
+            return rowA.detail.elementId > rowB.detail.elementId;
           },
         },
         {
           title: "Picture",
-          render(rowData: IParts) {
+          render(rowData: IPart) {
             return h(NImage, {
-              src: rowData.imageUrl,
+              src: rowData.detail.imageUrl,
               height: 50,
               width: 50,
               objectFit: "scale-down",
@@ -443,7 +476,7 @@ export default defineComponent({
         },
         {
           title: "Color",
-          render(rowData: IParts) {
+          render(rowData: IPart) {
             return h(
               "span",
               {
@@ -462,7 +495,7 @@ export default defineComponent({
         },
         {
           title: "Qty.",
-          key: "qty",
+          key: "source.qty",
         },
         {
           title: "BrickLink",
@@ -470,7 +503,7 @@ export default defineComponent({
         },
         {
           title: "Pick a Brick",
-          render(rowData: IParts) {
+          render(rowData: IPart) {
             return h(partTableCellPAB, {
               part: rowData,
             });

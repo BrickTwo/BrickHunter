@@ -1,11 +1,7 @@
 import { PersistentStore, StoreObject } from "./store";
 import { PARTS_LIST_STORE_NAME } from "./store-names";
 import { BrickTwoApi } from "@/service/api/bricktwo";
-import {
-  BrickLinkItemModel,
-  GetPaBPartsRequest,
-  GetPartsRequest,
-} from "@/types/api-types";
+import { BrickLinkItemModel, GetPartsRequest } from "@/types/api-types";
 import { generateGuid } from "@/utilities/general/guid";
 import { getColor } from "@/utilities/color";
 import { partsStore } from "@/store/parts-store";
@@ -14,7 +10,7 @@ import {
   PartsListPartStore,
   PartStore,
 } from "@/types/store-types";
-import { IPartsList } from "@/types/types";
+import { IPartsList, IPart } from "@/types/types";
 import { Color } from "@/utilities/color";
 
 class PartsListsStore extends PersistentStore<PartsListStore> {
@@ -24,64 +20,38 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
     };
   }
 
+  getAllPartsListSortedByName(): PartsListStore[] {
+    return this.state.entries.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
   getPartsList(id: string): PartsListStore {
     const partsList = this.state.entries.find((entry) => entry.id == id);
     return partsList ? partsList : ({} as PartsListStore);
   }
 
-  async getDetailedPartsList(
-    id: string,
-    pab: boolean
-  ): Promise<IPartsList | undefined> {
-    const partsList = JSON.parse(
-      JSON.stringify(this.getPartsList(id))
-    ) as IPartsList;
-    if (!partsList) return undefined;
+  async getCombinedPartsList(id: string): Promise<IPartsList | undefined> {
+    const source = this.getPartsList(id);
+    if (!source) return undefined;
 
-    if (!partsList.parts) return partsList;
+    const partsList: IPartsList = {
+      id: source.id,
+      name: source.name,
+      parts: [],
+    };
 
-    partsList?.parts.forEach((part) => {
-      const p = partsStore.getPart(`${part.id}+${part.color}`);
-      if (p?.elementIds[0]) {
-        part.elementIds = p.elementIds.map((id) => parseInt(id));
-        part.elementIds.sort((a, b) => b - a); // numerical sort desc
-        part.elementId = part.elementIds[0];
-      }
-      part.color = Color.getColor(p.color, "Rebrickable");
-      part.name = p.name;
-      part.imageUrl = p.imageUrl;
-      if (!part.imageUrl)
-        part.imageUrl = `https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${part.elementId}.jpg`;
-      part.partCatId = p.partCatId;
-      part.yearFrom = p.yearFrom;
-      part.yearTo = p.yearTo;
-      part.isPrint = p.isPrint;
-      part.externalIds = p.externalIds;
+    if (!source.parts) return partsList;
 
-      part.brickLink = p.brickLink;
-      part.lego = undefined;
+    source.parts.forEach((s) => {
+      const p = partsStore.getPart(`${s.id}+${s.color}`);
+
+      const part: IPart = {
+        source: s,
+        detail: p,
+        color: Color.getColor(p.color, "Rebrickable"),
+      };
+
+      partsList.parts.push(part);
     });
-
-    // if (pab) {
-    //   const pabPartRequest: GetPaBPartsRequest = {
-    //     country: "de",
-    //     elementIds: partsList?.parts.map((part) => {
-    //       return {
-    //         key: `${part.id}+${part.color.id}`,
-    //         ids: part.elementIds,
-    //       };
-    //     }),
-    //   };
-
-    //   const pabPartResponse = await BrickTwoApi.getPaBParts(pabPartRequest);
-
-    //   partsList?.parts.forEach((part) => {
-    //     const pab = pabPartResponse.elementIds.find(
-    //       (p) => p.key === `${part.id}+${part.color.id}`
-    //     )?.pab;
-    //     part.lego = pab;
-    //   });
-    // }
 
     return partsList;
   }
@@ -142,10 +112,10 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
       partsList.parts.push({
         id: resp ? resp.partNum : "",
         color: color.id,
-        qty: item.minQty,
-        have: item.qtyFilled,
+        qty: item.minQty ? item.minQty : 0,
+        have: item.qtyFilled ? item.qtyFilled : 0,
         itemType: item.itemType,
-        maxPrice: item.maxPrice,
+        maxPrice: item.maxPrice ? item.maxPrice : 0,
         condition: item.condition,
         notify: item.notify,
         remarks: item.remarks,
@@ -158,6 +128,16 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
       });
 
       if (resp) {
+        const elementIds = resp.elementIds
+          .filter((e) => e.colorId == color.id)
+          .map((item) => item.elementId)
+          .map((id) => parseInt(id))
+          .sort((a, b) => b - a) // numerical sort desc
+          .map((id) => id.toString());
+
+        if (!resp.imageUrl)
+          resp.imageUrl = `https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${elementIds[0]}.jpg`;
+
         const part: PartStore = {
           id: resp.partNum + "+" + color.id,
           partNum: resp.partNum,
@@ -169,9 +149,8 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
           yearTo: resp.yearTo,
           isPrint: resp.isPrint,
           externalIds: resp.externalIds,
-          elementIds: resp.elementIds
-            .filter((e) => e.colorId == color.id)
-            .map((item) => item.elementId),
+          elementIds: elementIds,
+          elementId: elementIds[0],
           /*brickLink: {
                         itemNo: resp.brickLink.itemNo,
                         altNo: resp.brickLink.altNo,
@@ -187,7 +166,21 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
                         isStickerPart: resp.brickLink.isStickerPart,
                     },*/
           brickLink: undefined,
-          lego: undefined,
+          lego: {
+            id: "",
+            inStock: undefined,
+            price: {
+              currencyCode: "",
+              formattedValue: 0,
+            },
+            attributes: {
+              colourId: "",
+              designNumber: 0,
+              deliveryChannel: "",
+            },
+            date: undefined,
+            checkPrice: false,
+          },
         };
 
         partsStore.addPart(part);
