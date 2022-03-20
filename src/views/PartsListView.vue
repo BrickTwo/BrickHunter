@@ -132,19 +132,9 @@
                 </n-button>
               </n-space>
             </n-space>
-            <n-data-table
-              size="small"
-              virtual-scroll
-              flex-height
+            <PartDataTable
+              :partsList="partsList"
               style="height: calc(100vh - 280px)"
-              ref="table"
-              :columns="columns"
-              :data="partsList.parts"
-              :row-key="
-                (rowData) => {
-                  return rowData.source.id + '+' + rowData.source.color;
-                }
-              "
               @update:checked-row-keys="handleCheck"
             />
           </n-space>
@@ -218,6 +208,7 @@ import {
 import { useRouter } from "vue-router";
 import PartTableDetail from "@/components/partDataTable/partTableDetail.vue";
 import partTableCellPAB from "@/components/partDataTable/partTableCellPAB.vue";
+import PartDataTable from "@/components/partDataTable/partDataTable.vue";
 import browser from "webextension-polyfill";
 import { GetPaBFindPartsResponse } from "@/types/api-types";
 
@@ -242,9 +233,9 @@ export default defineComponent({
     const newName = ref("");
 
     watch(
-      () => partsListStore.getCombinedPartsList(prop.id),
+      () => partsListStore.getPartsListWithDetail(prop.id),
       async () => {
-        partsList.value = await partsListStore.getCombinedPartsList(prop.id);
+        partsList.value = await partsListStore.getPartsListWithDetail(prop.id);
 
         newName.value = partsList.value ? partsList.value.name : "";
 
@@ -254,12 +245,12 @@ export default defineComponent({
     );
 
     onMounted(async () => {
-      partsList.value = await partsListStore.getCombinedPartsList(prop.id);
+      partsList.value = await partsListStore.getPartsListWithDetail(prop.id);
       newName.value = partsList.value ? partsList.value.name : "";
     });
 
     onBeforeMount(async () => {
-      partsList.value = await partsListStore.getCombinedPartsList(prop.id);
+      partsList.value = await partsListStore.getPartsListWithDetail(prop.id);
       newName.value = partsList.value ? partsList.value.name : "";
     });
 
@@ -406,7 +397,6 @@ export default defineComponent({
       },
     };
   },
-  emits: ["changePage"],
   components: {
     DeleteOutlined,
     ModeEditOutlined,
@@ -417,99 +407,17 @@ export default defineComponent({
     ArrowDropDownOutlined,
     PartTableDetail,
     partTableCellPAB,
+    PartDataTable,
     // Help,
   },
   data: () => ({
-    columns: [] as unknown,
     checkedRowKeys: checkedRowKeysRef,
   }),
-  beforeMount() {
-    this.columns = this.createColumns();
-  },
   //mixins: [partsListMixin],
   methods: {
     handleCheck(rowKeys: never[]) {
+      console.log(rowKeys);
       checkedRowKeysRef.value = rowKeys;
-    },
-    createColumns() {
-      return [
-        {
-          type: "selection",
-        },
-        {
-          type: "expand",
-          expandable: () => true,
-          renderExpand: (rowData: IPart) => {
-            return h(PartTableDetail, {
-              part: rowData,
-            });
-          },
-        },
-        {
-          title: "Id",
-          key: "detail.id",
-          sortOrder: false,
-          sorter(rowA: IPart, rowB: IPart) {
-            return rowA.detail.id > rowB.detail.id;
-          },
-        },
-        {
-          title: "Element",
-          key: "detail.elementId",
-          sortOrder: false,
-          sorter(rowA: IPart, rowB: IPart) {
-            return rowA.detail.elementId > rowB.detail.elementId;
-          },
-        },
-        {
-          title: "Picture",
-          render(rowData: IPart) {
-            return h(NImage, {
-              src: rowData.detail.imageUrl,
-              height: 50,
-              width: 50,
-              objectFit: "scale-down",
-              fallbackSrc:
-                "https://www.nicepng.com/png/detail/103-1037013_lego-brick-coloring-page-lego-brick-coloring-pages.png",
-            });
-          },
-        },
-        {
-          title: "Color",
-          render(rowData: IPart) {
-            return h(
-              "span",
-              {
-                style: "display: block",
-              },
-              [
-                h("div", {
-                  style: `background-color: #${rowData.color.rgb}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`,
-                }),
-                h("span", {
-                  innerHTML: rowData.color.name,
-                }),
-              ]
-            );
-          },
-        },
-        {
-          title: "Qty.",
-          key: "source.qty",
-        },
-        {
-          title: "BrickLink",
-          key: "brickLink.wantedList.maxprice",
-        },
-        {
-          title: "Pick a Brick",
-          render(rowData: IPart) {
-            return h(partTableCellPAB, {
-              part: rowData,
-            });
-          },
-        },
-      ];
     },
   },
 });

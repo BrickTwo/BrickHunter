@@ -29,7 +29,7 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
     return partsList ? partsList : ({} as PartsListStore);
   }
 
-  async getCombinedPartsList(id: string): Promise<IPartsList | undefined> {
+  async getPartsListWithDetail(id: string): Promise<IPartsList | undefined> {
     const source = this.getPartsList(id);
     if (!source) return undefined;
 
@@ -43,6 +43,8 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
 
     source.parts.forEach((s) => {
       const p = partsStore.getPart(`${s.id}+${s.color}`);
+
+      if (p.elementId == undefined) p.elementId = "";
 
       const part: IPart = {
         source: s,
