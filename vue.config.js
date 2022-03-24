@@ -29,6 +29,7 @@ const isDevMode = process.env.NODE_ENV === "development";
 module.exports = {
   pages,
   filenameHashing: false,
+
   chainWebpack: (config) => {
     config.plugin("copy").use(require("copy-webpack-plugin"), [
       {
@@ -42,11 +43,24 @@ module.exports = {
       },
     ]);
   },
+
   configureWebpack: {
     output: {
       filename: `js/[name].js`,
       chunkFilename: `[name].js`,
     },
     devtool: isDevMode ? "inline-source-map" : false,
+  },
+
+  pluginOptions: {
+    i18n: {
+      locale: "en",
+      fallbackLocale: "en",
+      localeDir: "locales",
+      enableLegacy: false,
+      runtimeOnly: false,
+      compositionOnly: false,
+      fullInstall: true,
+    },
   },
 };

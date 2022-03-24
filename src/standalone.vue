@@ -97,11 +97,21 @@
         </n-layout>
       </n-layout>
     </n-space>
+    <n-modal
+      v-model:show="showLocalizationModal"
+      :mask-closable="false"
+      :close-on-esc="false"
+      preset="dialog"
+      :title="$t('settings.localization.title')"
+      :positive-text="$t('general.functions.confirm')"
+    >
+      <SettingsLocalization />
+    </n-modal>
   </n-config-provider>
 </template>
 
 <script lang="ts">
-import { defineComponent, h, ref } from "vue";
+import { defineComponent, h, ref, onBeforeMount } from "vue";
 import { darkTheme } from "naive-ui";
 import { NIcon } from "naive-ui";
 import {
@@ -117,6 +127,11 @@ import LoadingShort from "./components/loading/LoadingShort.vue";
 import CartShort from "./components/cart/CartShort.vue";
 import { BuiltInGlobalTheme } from "naive-ui/lib/themes/interface";
 import { RouterLink } from "vue-router";
+import i18n from "@/i18n";
+import { settingsStore } from "@/store/settings-store";
+import SettingsLocalization from "@/components/settings/SettingsLocalization.vue";
+
+const { t } = i18n.global;
 
 // eslint-disable-next-line
 function renderIcon(icon: any) {
@@ -147,7 +162,7 @@ const menuOptions = [
             name: "partsLists",
           },
         },
-        { default: () => "Parts Lists" }
+        { default: () => t("partsList.title", 2) }
       ),
     key: "partslists",
     icon: renderIcon(FormatListBulletedOutlined),
@@ -215,6 +230,17 @@ export default defineComponent({
   components: {
     LoadingShort,
     CartShort,
+    SettingsLocalization,
+  },
+  setup() {
+    const showLocalizationModal = ref(false);
+
+    onBeforeMount(() => {
+      settingsStore.init();
+      showLocalizationModal.value = !settingsStore.getState().country;
+    });
+
+    return { showLocalizationModal };
   },
   data: () => ({
     page: "partslists",

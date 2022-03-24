@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-watch": "vue-cli-service  --env.NODE_ENV=development build-watch --mode development"
+    "build-watch": "vue-cli-service  --env.NODE_ENV=development build-watch --mode development",
+    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
   },
   "dependencies": {
     "@types/webextension-polyfill": "^0.8.2",
@@ -22,10 +23,12 @@
     "naive-ui": "^2.26.4",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
+    "vue-i18n": "^9.1.0",
     "vue-router": "^4.0.3",
     "webextension-polyfill": "^0.8.0"
   },
   "devDependencies": {
+    "@intlify/vue-i18n-loader": "^3.0.0",
     "@types/chrome": "^0.0.179",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
@@ -41,6 +44,7 @@
     "eslint-plugin-vue": "^8.0.3",
     "prettier": "^2.4.1",
     "typescript": "~4.5.5",
-    "vue-cli-plugin-chrome-extension-cli": "~1.1.2"
+    "vue-cli-plugin-chrome-extension-cli": "~1.1.2",
+    "vue-cli-plugin-i18n": "~2.3.1"
   }
 }

@@ -1,0 +1,134 @@
+{
+  "countries": {
+    "AU": "Australia",
+    "BE": "Belgium",
+    "DK": "Denmark",
+    "DE": "Germany",
+    "FI": "Finland",
+    "FR": "France",
+    "GB": "Great Britain",
+    "IE": "Ireland",
+    "IT": "Italy",
+    "CA": "Canada",
+    "LU": "Luxembourg",
+    "NZ": "New Zealand",
+    "NL": "Netherlands",
+    "NO": "Norway",
+    "AT": "Austria",
+    "PL": "Poland",
+    "PT": "Portugal",
+    "SE": "Sweden",
+    "CH": "Switzerland",
+    "ES": "Spain",
+    "CZ": "Czech Republic",
+    "HU": "Hungary",
+    "US": "United States"
+  },
+  "fileImport": {
+    "fileUpload": "File Upload",
+    "fileUploadInputHint": "Click or drag a file to this area to upload",
+    "import": "Import",
+    "partListName": "Part List Name",
+    "partListNameValidation": "Please input a name for your list",
+    "partListNameInputHint": "Input Name",
+    "source": "Source",
+    "textInput": "Text Input",
+    "textInputInputHint": "Past file content here",
+    "title": "File Import"
+  },
+  "general": {
+    "functions": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "save": "Save"
+    },
+    "names": {
+      "brickHunter": "BrickHunter",
+      "brickLink": "BrickLink",
+      "brickOwl": "BrickOwl",
+      "lDraw": "LDraw",
+      "lego": "LEGO",
+      "peeron": "Peeron",
+      "pickABrick": "Pick a Brick",
+      "pickABrickBestseller": "Bestseller",
+      "pickABrickOutOfStock": "Out Of Stock",
+      "pickABrickShort": "PaB",
+      "pickABrickStandard": "Standard",
+      "rebrickable": "Rebrickable"
+    },
+    "no": "No",
+    "yes": "Yes"
+  },
+  "dataDataTable": {
+    "category": "Category",
+    "color": "Color",
+    "designNumber": "Design Number | Desing Number's",
+    "element": "Element | Element Id's",
+    "have": "Have",
+    "itemInfo": "Item Info",
+    "lot": "Lot",
+    "maxPrice": "Max Price",
+    "packageDimensionShort": "Pack. Dim.",
+    "partNumber": "Part Number",
+    "partNumberShort": "Part Num.",
+    "picture": "Picture",
+    "printed": "Printed",
+    "quantity": "Quantity",
+    "quantityShort": "Qty.",
+    "remarks": "Remarks",
+    "studDimensionShort": "Stud Dim.",
+    "transparent": "Transparent",
+    "weight": "Weight",
+    "year": "Year",
+    "yearTo": "{from} to {to}"
+  },
+  "languages": {
+    "DE": "German",
+    "EN": "English",
+    "FR": "French",
+    "NL": "Dutch",
+    "DA": "Danish",
+    "FI": "Finnish",
+    "IT": "Italian",
+    "NO": "Norwegian",
+    "PL": "Polish",
+    "SV": "Swedish",
+    "ES": "Spanish",
+    "CS": "Czech",
+    "HU": "Hungarian"
+  },
+  "partsList": {
+    "actions": {
+      "addToCart": "Add To Cart",
+      "bulkAction": "Bulk Action",
+      "checkPrices": "Check Prices",
+      "copyTo": "Copy To",
+      "delete": "Delete",
+      "export": "Export",
+      "open": "Open",
+      "print": "Print",
+      "rename": "Rename",
+      "split": "Split",
+      "title": "Actions"
+    },
+    "delete": {
+      "request": "Are you sure you want to delete the following part list? | Are you sure you want to delete the following part lists?",
+      "title": "Delete"
+    },
+    "name": "Name",
+    "positions": "Positions",
+    "statistic": {
+      "totalQuantity": "Total Quantity",
+      "totalUniqueParts": "Total Unique Parts"
+    },
+    "title": "Parts List | Parts Lists"
+  },
+  "settings": {
+    "localization": {
+      "languageBrickHunter": "Language BrickHunter",
+      "legoCountry": "Where do you live?",
+      "legoLanguage": "What language do you use in the LEGO® Online Store?",
+      "title": "Localization"
+    }
+  }
+}

@@ -50,3 +50,15 @@ export interface BackgroundRequest {
 export enum BackgroundRequestAction {
   FindPaBPart = 1,
 }
+
+export interface ICountry {
+  value: string;
+  label: string | undefined;
+  languages: Array<ILanguage | undefined>;
+  currency: string;
+}
+
+export interface ILanguage {
+  value: string;
+  label: string | undefined;
+}

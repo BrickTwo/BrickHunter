@@ -1,62 +1,64 @@
 <template>
-  <n-drawer-content title="Set Import" closable>
-    <n-form :model="model" ref="formRef" :rules="rules">
-      <n-form-item path="SetNumber">
-        <n-auto-complete
-          :options="options"
-          v-model:value="value"
-          placeholder="Set Number"
-        />
-      </n-form-item>
-      <n-grid :x-gap="12" :y-gap="8" :cols="3">
-        <n-gi v-for="(set, index) in sets" :key="index">
-          <n-card :title="set.name" hoverable>
-            <template #cover>
-              <img :src="set.img" />
-            </template>
-            <n-statistic label="Number">{{ set.id }}</n-statistic>
-            <n-statistic label="Bricks">{{ set.bricks }}</n-statistic>
-            <n-statistic label="Year">{{ set.year }}</n-statistic>
-            <n-statistic label="Source">{{ set.source }}</n-statistic>
-          </n-card>
-        </n-gi>
-      </n-grid>
-      <n-form-item label="Name" path="name">
-        <n-space vertical style="width: 100%">
-          <n-input
+  <n-drawer v-model:show="active" :width="800" style="max-width: 100%">
+    <n-drawer-content title="Set Import" closable>
+      <n-form :model="model" ref="formRef" :rules="rules">
+        <n-form-item path="SetNumber">
+          <n-auto-complete
+            :options="options"
             v-model:value="value"
-            type="text"
-            placeholder="Basic Input"
-            style="width: 100%"
+            placeholder="Set Number"
           />
-          <n-checkbox checked>Use Set Number as prefix</n-checkbox>
-        </n-space>
-      </n-form-item>
+        </n-form-item>
+        <n-grid :x-gap="12" :y-gap="8" :cols="3">
+          <n-gi v-for="(set, index) in sets" :key="index">
+            <n-card :title="set.name" hoverable>
+              <template #cover>
+                <img :src="set.img" />
+              </template>
+              <n-statistic label="Number">{{ set.id }}</n-statistic>
+              <n-statistic label="Bricks">{{ set.bricks }}</n-statistic>
+              <n-statistic label="Year">{{ set.year }}</n-statistic>
+              <n-statistic label="Source">{{ set.source }}</n-statistic>
+            </n-card>
+          </n-gi>
+        </n-grid>
+        <n-form-item label="Name" path="name">
+          <n-space vertical style="width: 100%">
+            <n-input
+              v-model:value="value"
+              type="text"
+              placeholder="Basic Input"
+              style="width: 100%"
+            />
+            <n-checkbox checked>Use Set Number as prefix</n-checkbox>
+          </n-space>
+        </n-form-item>
 
-      <n-space justify="start">
-        <n-button type="primary" ghost>
-          <template #icon>
-            <n-icon>
-              <SaveAltOutlined />
-            </n-icon>
-          </template>
-          Import
-        </n-button>
-        <n-button>
-          <template #icon>
-            <n-icon>
-              <ClearOutlined />
-            </n-icon>
-          </template>
-          Cancel
-        </n-button>
-      </n-space>
-    </n-form>
-  </n-drawer-content>
+        <n-space justify="start">
+          <n-button type="primary" ghost>
+            <template #icon>
+              <n-icon>
+                <SaveAltOutlined />
+              </n-icon>
+            </template>
+            Import
+          </n-button>
+          <n-button>
+            <template #icon>
+              <n-icon>
+                <ClearOutlined />
+              </n-icon>
+            </template>
+            Cancel
+          </n-button>
+        </n-space>
+      </n-form>
+    </n-drawer-content>
+  </n-drawer>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { SaveAltOutlined, ClearOutlined } from "@vicons/material";
 
 export default defineComponent({
@@ -119,6 +121,15 @@ export default defineComponent({
       },
     ],
   }),
+  setup() {
+    const show = ref(false);
+    const active = ref(false);
+    const model = ref();
+    const rules = ref();
+    const value = ref();
+
+    return { active, show, model, rules, value };
+  },
 });
 </script>
 

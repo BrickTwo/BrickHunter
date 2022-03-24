@@ -34,6 +34,12 @@
         </n-gi>
         <n-gi>
           <n-space vertical>
+            <n-card :title="$t('settings.localization.languageBrickHunter')">
+              <template #header-extra>
+                <HelpView />
+              </template>
+              <SettingsLocalization />
+            </n-card>
             <n-card title="Sources">
               <template #header-extra>
                 <HelpView />
@@ -62,6 +68,7 @@ import SettingsSynchronizeAndBackup from "@/components/settings/SettingsSynchron
 import SettingsLegoCom from "@/components/settings/SettingsLegoCom.vue";
 import SettingsSources from "@/components/settings/SettingsSources.vue";
 import SettingsTableFields from "@/components/settings/SettingsTableFields.vue";
+import SettingsLocalization from "@/components/settings/SettingsLocalization.vue";
 import HelpView from "@/views/HelpView.vue";
 
 export default defineComponent({
@@ -74,6 +81,7 @@ export default defineComponent({
     SettingsLegoCom,
     SettingsSources,
     SettingsTableFields,
+    SettingsLocalization,
     HelpView,
   },
   methods: {

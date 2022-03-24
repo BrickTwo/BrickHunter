@@ -2,8 +2,8 @@
   <div>
     <n-space vertical size="large" style="width: 100%">
       <n-layout>
-        <n-page-header @back="handleBack">
-          <template #title>Parts List</template>
+        <n-page-header @back="$router.push({ path: '/partslists/' })">
+          <template #title>{{ $t("partsList.title") }}</template>
           <!-- <template #extra><Help /></template> -->
           <template #avatar>
             <n-icon size="20">
@@ -27,7 +27,7 @@
                         <DeleteOutlined />
                       </n-icon>
                     </template>
-                    Delete
+                    {{ $t("partsList.actions.delete") }}
                   </n-button>
                   <n-button @click="showModalRename = true">
                     <template #icon>
@@ -35,7 +35,7 @@
                         <ModeEditOutlined />
                       </n-icon>
                     </template>
-                    Rename
+                    {{ $t("partsList.actions.rename") }}
                   </n-button>
                   <n-button>
                     <template #icon>
@@ -43,16 +43,18 @@
                         <SaveAltOutlined />
                       </n-icon>
                     </template>
-                    Export
+                    {{ $t("partsList.actions.export") }}
                   </n-button>
                 </n-space>
               </n-space>
               <n-space>
-                <n-statistic label="Total Unique Parts">
+                <n-statistic
+                  :label="$t('partsList.statistic.totalUniqueParts')"
+                >
                   {{ partsList.parts?.length }}
                 </n-statistic>
                 <n-divider vertical />
-                <n-statistic label="Total Quantity">
+                <n-statistic :label="$t('partsList.statistic.totalQuantity')">
                   {{
                     partsList.parts
                       ? partsList.parts
@@ -62,7 +64,13 @@
                   }}
                 </n-statistic>
                 <n-divider vertical />
-                <n-statistic label="PaB Bestseller">
+                <n-statistic
+                  :label="
+                    $t('general.names.pickABrickShort') +
+                    ' ' +
+                    $t('general.names.pickABrickBestseller')
+                  "
+                >
                   {{
                     partsList.parts
                       ? partsList.parts.filter(
@@ -73,7 +81,13 @@
                   }}
                 </n-statistic>
                 <n-divider vertical />
-                <n-statistic label="PaB Standard">
+                <n-statistic
+                  :label="
+                    $t('general.names.pickABrickShort') +
+                    ' ' +
+                    $t('general.names.pickABrickStandard')
+                  "
+                >
                   {{
                     partsList.parts
                       ? partsList.parts.filter(
@@ -84,7 +98,13 @@
                   }}
                 </n-statistic>
                 <n-divider vertical />
-                <n-statistic label="PaB Out Of Stock">
+                <n-statistic
+                  :label="
+                    $t('general.names.pickABrickShort') +
+                    ' ' +
+                    $t('general.names.pickABrickOutOfStock')
+                  "
+                >
                   {{
                     partsList.parts
                       ? partsList.parts.filter(
@@ -110,17 +130,17 @@
                       <ArrowDropDownOutlined />
                     </n-icon>
                   </template>
-                  Bulk Action
+                  {{ $t("partsList.actions.bulkAction") }}
                 </n-button>
               </n-dropdown>
               <n-space justify="end">
-                <n-button type="primary" ghost @click="findPaBParts()">
+                <n-button type="primary" ghost @click="onCheckPrices()">
                   <template #icon>
                     <n-icon>
                       <DownloadingOutlined />
                     </n-icon>
                   </template>
-                  Check Prices
+                  {{ $t("partsList.actions.checkPrices") }}
                 </n-button>
                 <n-button>
                   <template #icon>
@@ -128,7 +148,7 @@
                       <PrintOutlined />
                     </n-icon>
                   </template>
-                  Print
+                  {{ $t("partsList.actions.print") }}
                 </n-button>
               </n-space>
             </n-space>
@@ -139,26 +159,20 @@
             />
           </n-space>
         </n-card>
+        <DeletePartsListDialog
+          v-model:show="showModalDeleteRequest"
+          :partsList="partsList"
+          @positive-click="onDeleteRequestPositiveClick()"
+        />
+        <RenamePartsListDialog
+          v-model:show="showModalRename"
+          :partsList="partsList"
+          @positive-click="onRenamePositiveClick"
+        />
       </n-layout>
     </n-space>
-    <n-modal
-      v-model:show="showModalDeleteRequest"
-      :mask-closable="false"
-      preset="dialog"
-      type="warning"
-      title="Delete"
-      positive-text="Confirm"
-      negative-text="Cancel"
-      @positive-click="onDeleteRequestPositiveClick"
-      @negative-click="onDeleteRequestNegativeClick"
-    >
-      <div>
-        Are you sure you want to delete the following part list?
-        <br />
-        <p>{{ partsList?.name }}</p>
-      </div>
-    </n-modal>
-    <n-modal
+
+    <!-- <n-modal
       v-model:show="showModalRename"
       preset="dialog"
       type="default"
@@ -170,22 +184,12 @@
       @negative-click="onRenameNegativeClick"
     >
       <n-input v-model:value="newName" type="text" />
-    </n-modal>
+    </n-modal> -->
   </div>
 </template>
 
 <script lang="ts">
-import { NIcon, NImage } from "naive-ui";
-import {
-  defineComponent,
-  Ref,
-  ref,
-  h,
-  watch,
-  onBeforeMount,
-  onMounted,
-} from "vue";
-import { partsListPositions } from "@/dummyData/partslist";
+import { defineComponent, Ref, ref, watch, onBeforeMount } from "vue";
 import {
   DeleteOutlined,
   ModeEditOutlined,
@@ -194,14 +198,10 @@ import {
   SaveAltOutlined,
   ManageSearchOutlined,
   ArrowDropDownOutlined,
-  CallSplitOutlined,
-  ContentCopyOutlined,
 } from "@vicons/material";
-// import Help from "../../general/Help.vue";
 import { partsListStore } from "@/store/partslist-store";
 import {
   IPartsList,
-  IPart,
   BackgroundRequest,
   BackgroundRequestAction,
 } from "@/types/types";
@@ -211,16 +211,12 @@ import partTableCellPAB from "@/components/partDataTable/partTableCellPAB.vue";
 import PartDataTable from "@/components/partDataTable/partDataTable.vue";
 import browser from "webextension-polyfill";
 import { GetPaBFindPartsResponse } from "@/types/api-types";
+import { PartsListBulkActions } from "@/service/lists/partsListBulkActions";
+import DeletePartsListDialog from "@/components/partslists/DeletePartsListDialog.vue";
+import RenamePartsListDialog from "@/components/partslists/RenamePartsListDialog.vue";
+import { sleep } from "@/utilities/general/sleep";
 
 const checkedRowKeysRef = ref([]);
-
-const renderIcon = (icon: any) => {
-  return () => {
-    return h(NIcon, null, {
-      default: () => h(icon),
-    });
-  };
-};
 
 export default defineComponent({
   name: "PartsListView",
@@ -230,31 +226,20 @@ export default defineComponent({
     const showModalDeleteRequest = ref(false);
     const showModalRename = ref(false);
     const myRouter = useRouter();
-    const newName = ref("");
+    const bulkValue = ref(null);
 
-    watch(
-      () => partsListStore.getPartsListWithDetail(prop.id),
-      async () => {
-        partsList.value = await partsListStore.getPartsListWithDetail(prop.id);
+    const onDeleteRequestPositiveClick = () => {
+      showModalDeleteRequest.value = false;
+      deletePartsList();
+      myRouter.push({ path: "/partslists/" });
+    };
 
-        newName.value = partsList.value ? partsList.value.name : "";
+    const onRenamePositiveClick = (newName: string) => {
+      if (!partsList.value) return;
+      partsListStore.setPartsListName(partsList.value.id, newName);
+    };
 
-        console.log(partsList.value);
-      },
-      { deep: true }
-    );
-
-    onMounted(async () => {
-      partsList.value = await partsListStore.getPartsListWithDetail(prop.id);
-      newName.value = partsList.value ? partsList.value.name : "";
-    });
-
-    onBeforeMount(async () => {
-      partsList.value = await partsListStore.getPartsListWithDetail(prop.id);
-      newName.value = partsList.value ? partsList.value.name : "";
-    });
-
-    const findPaBParts = async () => {
+    const onCheckPrices = async () => {
       if (!partsList.value) return;
 
       for (var i = 0; i < partsList.value.parts.length; i++) {
@@ -331,70 +316,32 @@ export default defineComponent({
       }
     };
 
-    const sleep = (ms: number) => {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    };
-
     const deletePartsList = () => {
       if (!partsList.value) return;
       partsListStore.deletePartsList(partsList.value.id.toString());
     };
 
+    onBeforeMount(async () => {
+      partsList.value = await partsListStore.getPartsListWithDetail(prop.id);
+    });
+
+    watch(
+      () => partsListStore.getPartsListWithDetail(prop.id),
+      async () => {
+        partsList.value = await partsListStore.getPartsListWithDetail(prop.id);
+      },
+      { deep: true }
+    );
+
     return {
       partsList,
-      positions: partsListPositions.positions,
       showModalDeleteRequest,
       showModalRename,
-      newName,
-      findPaBParts,
-      bulkValue: ref(null),
-      bulkOptions: [
-        {
-          label: "Delete",
-          key: "delete",
-          icon: renderIcon(DeleteOutlined),
-        },
-        {
-          label: "Copy to",
-          key: "copyTo",
-          icon: renderIcon(ContentCopyOutlined),
-        },
-        {
-          label: "Split",
-          key: "split",
-          icon: renderIcon(CallSplitOutlined),
-        },
-        {
-          label: "Check Prices",
-          key: "checkPrices",
-          icon: renderIcon(DownloadingOutlined),
-        },
-        {
-          label: "Print",
-          key: "print",
-          icon: renderIcon(PrintOutlined),
-        },
-      ],
-      handleBack() {
-        myRouter.push({ path: "/partslists/" });
-      },
-      onDeleteRequestPositiveClick() {
-        showModalDeleteRequest.value = false;
-        deletePartsList();
-        myRouter.push({ path: "/partslists/" });
-      },
-      onDeleteRequestNegativeClick() {
-        showModalDeleteRequest.value = false;
-      },
-      onRenamePositiveClick() {
-        showModalRename.value = false;
-        if (!partsList.value) return;
-        //if (partsList.value) partsList.value.name = newName.value;
-        partsListStore.setPartsListName(partsList.value.id, newName.value);
-      },
-      onRenameNegativeClick() {
-        showModalRename.value = false;
-      },
+      bulkValue,
+      bulkOptions: PartsListBulkActions(),
+      onDeleteRequestPositiveClick,
+      onRenamePositiveClick,
+      onCheckPrices,
     };
   },
   components: {
@@ -408,6 +355,8 @@ export default defineComponent({
     PartTableDetail,
     partTableCellPAB,
     PartDataTable,
+    DeletePartsListDialog,
+    RenamePartsListDialog,
     // Help,
   },
   data: () => ({

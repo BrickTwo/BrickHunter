@@ -68,3 +68,9 @@ export interface PartStore extends PersistentObject {
     checkPrice: boolean;
   };
 }
+
+export interface ISettingsStore {
+  country: string,
+  language: string,
+  uiLanguage: string,
+}

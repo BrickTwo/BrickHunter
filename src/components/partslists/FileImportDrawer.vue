@@ -1,22 +1,17 @@
 <template>
-  <n-drawer
-    v-model:show="showDrawer"
-    :width="800"
-    style="max-width: 100%"
-    :mask-closable="!isImporting"
-  >
-    <n-drawer-content title="File Import" closable>
+  <n-drawer :width="800" style="max-width: 100%" :mask-closable="!isImporting">
+    <n-drawer-content :title="$t('fileImport.title')" closable>
       <n-spin style="height: 100%" :show="isImporting">
         <n-form :model="formValue" ref="formRef" :rules="rules">
           <n-tabs type="line">
-            <n-tab-pane name="file upload" tab="File Upload">
+            <n-tab-pane name="file upload" :tab="$t('fileImport.fileUpload')">
               <n-form-item path="fileUpload">
                 <n-upload
                   style="width: 100%"
                   :max="1"
                   accept="text/xml, application/json, .csv"
                   v-model="fileList"
-                  @update:file-list="handleFileListChange"
+                  @update:file-list="onFileListChange"
                 >
                   <n-upload-dragger v-if="!fileList">
                     <div style="margin-bottom: 12px">
@@ -25,34 +20,39 @@
                       </n-icon>
                     </div>
                     <n-text style="font-size: 16px">
-                      Click or drag a file to this area to upload
+                      {{ $t("fileImport.fileUploadInputHint") }}
                     </n-text>
                     <n-p depth="3" style="margin: 8px 0 0 0">
-                      BrickHunter, BrickLink, Rebrickable, CSV
+                      {{ $t("general.names.brickHunter") }},
+                      {{ $t("general.names.brickLink") }},
+                      {{ $t("general.names.rebrickable") }}, CSV
                     </n-p>
                   </n-upload-dragger>
                 </n-upload>
               </n-form-item>
             </n-tab-pane>
-            <n-tab-pane name="text input" tab="Text Input">
+            <n-tab-pane name="text input" :tab="$t('fileImport.textInput')">
               <n-form-item path="textInput">
                 <n-input
                   v-model:value="formValue.textInpuit"
                   type="textarea"
-                  placeholder="Copy file content here"
+                  :placeholder="$t('fileImport.textInputInputHint')"
                   style="height: 200px"
                 />
               </n-form-item>
             </n-tab-pane>
           </n-tabs>
-          <n-form-item label="Source" path="source">
-            <n-select v-model:value="formValue.source" :options="options" />
+          <n-form-item :label="$t('fileImport.source')" path="source">
+            <n-select
+              v-model:value="formValue.source"
+              :options="sourceOptions"
+            />
           </n-form-item>
-          <n-form-item label="Name" path="name">
+          <n-form-item :label="$t('fileImport.partListName')" path="name">
             <n-input
               v-model:value="formValue.name"
               type="text"
-              placeholder="Input Name"
+              :placeholder="$t('fileImport.partListNameInputHint')"
             />
           </n-form-item>
           <n-form-item
@@ -93,15 +93,15 @@
             <n-button
               type="primary"
               ghost
-              @click="handleClickImport"
-              :disabled="!showImportButton"
+              @click="onImport"
+              :disabled="!disableImportButton"
             >
               <template #icon>
                 <n-icon>
                   <SaveAltOutlined />
                 </n-icon>
               </template>
-              Import
+              {{ $t("fileImport.import") }}
             </n-button>
             <n-button @click="$emit('update:show', false)">
               <template #icon>
@@ -109,7 +109,7 @@
                   <ClearOutlined />
                 </n-icon>
               </template>
-              Cancel
+              {{ $t("general.functions.cancel") }}
             </n-button>
           </n-space>
         </n-form>
@@ -119,15 +119,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref } from "vue";
 import {
   UploadOutlined,
   SaveAltOutlined,
   ClearOutlined,
 } from "@vicons/material";
 import { ImportBrickLink } from "@/service/reader/import-brickLink";
-import { partsListStore } from "@/store/partslist-store";
 import { BrickLinkItemModel } from "@/types/api-types";
+import { fileImportCSVValues } from "@/service/lists/fileImportCSVValues";
+import { fileImportCSVOptions } from "@/service/lists/fileImportCSVOptions";
+import { fileImportSourceOptions } from "@/service/lists/fileImportSourceOptions";
+import { partsListStore } from "@/store/partslist-store";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "FileImport",
@@ -136,154 +140,67 @@ export default defineComponent({
     SaveAltOutlined,
     ClearOutlined,
   },
-  props: { show: { type: Boolean, required: true } },
-  emits: ["update:show"],
-  setup(prop, { emit }) {
+  setup(props, { emit }) {
+    const { t } = useI18n();
     const formValue = ref({
       name: "",
       textInpuit: "",
       source: ref("brickhunter"),
     });
-    const fileList = ref();
     const isImporting = ref(false);
-    const showDrawer = ref(prop.show);
-    const showImportButton = ref(false);
-
+    const rules = ref({
+      name: {
+        required: true,
+        message: t("fileImport.partListNameValidation"),
+        trigger: ["input", "blur"],
+      },
+    });
+    const fileList = ref();
+    const disableImportButton = ref(false);
     let wantedList: BrickLinkItemModel[] = [];
 
-    watch(
-      () => prop.show,
-      () => {
-        showDrawer.value = prop.show;
+    const onFileListChange = async (fileList: any) => {
+      disableImportButton.value = false;
+      let xml = new ImportBrickLink();
+      if (fileList) {
+        wantedList = await xml.parseFileToObject(fileList[0].file);
+        if (!wantedList[0]) return;
+
+        console.log(fileList[0], wantedList);
+        formValue.value.name = fileList[0].name.substring(
+          0,
+          fileList[0].name.length - 4
+        );
+        if (fileList[0].type === "text/xml" && wantedList)
+          formValue.value.source = "bricklink";
+
+        disableImportButton.value = true;
       }
-    );
+    };
+
+    const onImport = async () => {
+      // todo: form validation check
+      isImporting.value = true;
+      await partsListStore.importFromBrickLink(
+        wantedList,
+        formValue.value.name
+      );
+      isImporting.value = false;
+      emit("onImported");
+    };
 
     return {
-      fileList,
-      isImporting,
-      showDrawer,
-      showImportButton,
-      async handleFileListChange(fileList: any) {
-        showImportButton.value = false;
-        let xml = new ImportBrickLink();
-        if (fileList) {
-          wantedList = await xml.parseFileToObject(fileList[0].file);
-          if (!wantedList[0]) return;
-
-          console.log(fileList[0], wantedList);
-          formValue.value.name = fileList[0].name.substring(
-            0,
-            fileList[0].name.length - 4
-          );
-          if (fileList[0].type === "text/xml" && wantedList)
-            formValue.value.source = "bricklink";
-
-          showImportButton.value = true;
-        }
-      },
       formValue,
-      async handleClickImport() {
-        // todo: form validation check
-        isImporting.value = true;
-        await partsListStore.importFromBrickLink(
-          wantedList,
-          formValue.value.name
-        );
-        isImporting.value = false;
-        emit("update:show", false);
-      },
-      rules: {
-        name: {
-          required: true,
-          message: "Please input a name for your list",
-          trigger: ["input", "blur"],
-        },
-      },
-      csvValues: ref([
-        {
-          field: "Ignore",
-          csvValue: "3004",
-        },
-        {
-          field: "Ignore",
-          csvValue: "55665",
-        },
-        {
-          field: "Ignore",
-          csvValue: "Red",
-        },
-        {
-          field: "Ignore",
-          csvValue: "15",
-        },
-      ]),
-      csvOptions: [
-        {
-          fieldLabel: "Ignore",
-          fieldValue: "ignore",
-        },
-        {
-          fieldLabel: "DesignId",
-          fieldValue: "designId",
-        },
-        {
-          fieldLabel: "Element",
-          fieldValue: "itemNumber",
-        },
-        {
-          fieldLabel: "Color",
-          fieldValue: "color",
-          fieldChildren: [
-            {
-              fieldLabel: "BrickLink Name",
-              fieldValue: "brickLinkColor",
-            },
-            {
-              fieldLabel: "LEGO Name",
-              fieldValue: "legoColor",
-            },
-          ],
-        },
-        {
-          fieldLabel: "BrickLink Price",
-          fieldValue: "brickLinkPrice",
-        },
-        {
-          fieldLabel: "Pick a Brick Price",
-          fieldValue: "pickABrickPrice",
-        },
-        {
-          fieldLabel: "Bricks & Pieces Price",
-          fieldValue: "bricksAndPiecesPrice",
-        },
-      ],
+      isImporting,
+      rules,
+      fileList,
+      disableImportButton,
+      onFileListChange,
+      onImport,
+      csvValues: fileImportCSVValues(),
+      csvOptions: fileImportCSVOptions(),
+      sourceOptions: fileImportSourceOptions(),
     };
   },
-  data: () => ({
-    options: [
-      {
-        label: "BrickHunter",
-        value: "brickhunter",
-      },
-      {
-        label: "BrickLink",
-        value: "bricklink",
-      },
-      {
-        label: "Rebrickable",
-        value: "rebrickable",
-      },
-      {
-        label: "Custom CSV",
-        value: "customcsv",
-      },
-    ],
-  }),
 });
 </script>
-
-<style>
-.n-upload-trigger {
-  width: 100%;
-}
-</style>

@@ -13,15 +13,17 @@
       type="success"
       v-if="data.detail.lego.attributes.deliveryChannel === 'pab'"
     >
-      Bestseller
+      {{ $t("general.names.pickABrickBestseller") }}
     </n-tag>
     <n-tag
       type="info"
       v-if="data.detail.lego.attributes.deliveryChannel === 'bap'"
     >
-      Standard
+      {{ $t("general.names.pickABrickStandard") }}
     </n-tag>
-    <n-tag type="error" v-if="!data.detail.lego.inStock"> Out Of Stock </n-tag>
+    <n-tag type="error" v-if="!data.detail.lego.inStock">
+      {{ $t("general.names.pickABrickOutOfStock") }}
+    </n-tag>
   </div>
 </template>
 

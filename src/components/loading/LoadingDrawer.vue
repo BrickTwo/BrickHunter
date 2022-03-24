@@ -84,7 +84,7 @@ import {
 
 export default defineComponent({
   name: "CartDrawer",
-  setup(prop, { emit }) {
+  setup() {
     return { queue: partsListPositions.positions.slice(-55) };
   },
 });
