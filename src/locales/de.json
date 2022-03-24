@@ -129,6 +129,11 @@
       "legoCountry": "Wo wohnst du?",
       "legoLanguage": "Welche Sprache verwendest du im LEGO® Online-Shop?",
       "title": "Lokalisierung"
+    },
+    "theme": {
+      "dark": "Dunkel",
+      "light": "Hell",
+      "title": "Erscheinung"
     }
   }
 }

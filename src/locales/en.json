@@ -129,6 +129,11 @@
       "legoCountry": "Where do you live?",
       "legoLanguage": "What language do you use in the LEGO® Online Store?",
       "title": "Localization"
+    },
+    "theme": {
+      "dark": "Dark",
+      "light": "Light",
+      "title": "Theme"
     }
   }
 }

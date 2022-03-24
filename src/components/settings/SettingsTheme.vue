@@ -1,24 +1,23 @@
 <template>
   <n-space>
-    <n-button @click="changeTheme(darkTheme)">Dark</n-button>
-    <n-button @click="changeTheme(null)">Light</n-button>
+    <n-button @click="changeTheme('dark')">
+      {{ $t("settings.theme.dark") }}
+    </n-button>
+    <n-button @click="changeTheme('light')">
+      {{ $t("settings.theme.light") }}
+    </n-button>
   </n-space>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { darkTheme } from "naive-ui";
-import { BuiltInGlobalTheme } from "naive-ui/lib/themes/interface";
+import { settingsStore } from "@/store/settings-store";
 
 export default defineComponent({
   name: "SettingsTheme",
-  data: () => ({
-    darkTheme,
-  }),
-  emits: ["changeTheme"],
   methods: {
-    changeTheme(theme: BuiltInGlobalTheme) {
-      this.$emit("changeTheme", theme);
+    changeTheme(theme: string) {
+      settingsStore.SetTheme(theme);
     },
   },
 });

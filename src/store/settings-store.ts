@@ -5,6 +5,7 @@ export interface LocalStorageObject {
   country: string;
   language: string;
   uiLanguage: string;
+  theme: string;
 }
 
 export abstract class LocalStorageStore {
@@ -30,16 +31,19 @@ export abstract class LocalStorageStore {
       this.state.country = localStorage.getItem("country") || "";
       this.state.language = localStorage.getItem("language") || "";
       this.state.uiLanguage = localStorage.getItem("uiLanguage") || "en";
+      this.state.theme = localStorage.getItem("theme") || "light";
       i18n.global.locale.value = this.state.uiLanguage;
       localStorage.setItem("country", this.state.country);
       localStorage.setItem("language", this.state.language);
       localStorage.setItem("uiLanguage", this.state.uiLanguage);
+      localStorage.setItem("theme", this.state.theme);
       watch(
         () => this.state,
         () => {
           localStorage.setItem("country", this.state.country);
           localStorage.setItem("language", this.state.language);
           localStorage.setItem("uiLanguage", this.state.uiLanguage);
+          localStorage.setItem("theme", this.state.theme);
         },
         { deep: true }
       );
@@ -59,6 +63,7 @@ class SettingsStore extends LocalStorageStore {
       country: "",
       language: "",
       uiLanguage: "",
+      theme: "",
     };
   }
 
@@ -72,6 +77,10 @@ class SettingsStore extends LocalStorageStore {
 
   SetLanguaga(language: string) {
     this.state.language = language;
+  }
+
+  SetTheme(theme: string) {
+    this.state.theme = theme;
   }
 }
 

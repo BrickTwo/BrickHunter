@@ -12,7 +12,7 @@
       <n-grid x-gap="12" :cols="2">
         <n-gi>
           <n-space vertical>
-            <n-card title="Theme">
+            <n-card :title="$t('settings.theme.title')">
               <template #header-extra>
                 <HelpView />
               </template>

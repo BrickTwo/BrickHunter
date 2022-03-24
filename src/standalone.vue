@@ -111,9 +111,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, h, ref, onBeforeMount } from "vue";
-import { darkTheme } from "naive-ui";
-import { NIcon } from "naive-ui";
+import { defineComponent, h, ref, onBeforeMount, watch } from "vue";
+import { darkTheme, lightTheme, NIcon } from "naive-ui";
 import {
   FormatListBulletedOutlined,
   SettingsOutlined,
@@ -234,18 +233,27 @@ export default defineComponent({
   },
   setup() {
     const showLocalizationModal = ref(false);
+    const theme = ref(darkTheme);
 
     onBeforeMount(() => {
       settingsStore.init();
       showLocalizationModal.value = !settingsStore.getState().country;
+      theme.value =
+        settingsStore.getState().theme === "dark" ? darkTheme : lightTheme;
     });
 
-    return { showLocalizationModal };
+    watch(
+      () => settingsStore.getState().theme,
+      () => {
+        theme.value =
+          settingsStore.getState().theme === "dark" ? darkTheme : lightTheme;
+      }
+    );
+
+    return { showLocalizationModal, theme };
   },
   data: () => ({
     page: "partslists",
-    darkTheme,
-    theme: ref(darkTheme),
     activeKey: ref(null),
     collapsed: ref(false),
     menuOptions,
