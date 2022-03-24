@@ -113,12 +113,12 @@ export default defineComponent({
     watch(
       () => countryValue.value,
       () => {
-        settingsStore.SetCountry(countryValue.value);
         legoLanguageOptions.value = countryOptions.value.find(
           (c) => c.value == countryValue.value
         )?.languages;
-
         legoLanguageValue.value = getMainLanguage();
+        settingsStore.SetCountry(countryValue.value);
+        settingsStore.SetLanguaga(legoLanguageValue.value);
       }
     );
 
