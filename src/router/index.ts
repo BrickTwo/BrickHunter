@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import BrowsePartsView from "@/views/BrowsePartsView.vue";
 import PartsListsView from "@/views/PartsListsView.vue";
 import PartsListView from "@/views/PartsListView.vue";
+import PrintView from "@/views/PrintView.vue";
 import CartView from "@/views/CartView.vue";
 import SettingsView from "@/views/SettingsView.vue";
 import InfoView from "@/views/InfoView.vue";
@@ -15,6 +16,7 @@ const routes = [
   { path: "/browseparts", name: "browseParts", component: BrowsePartsView },
   { path: "/partslists", name: "partsLists", component: PartsListsView },
   { path: "/partslists/:id", component: PartsListView, props: true },
+  { path: "/print/:type/:id", component: PrintView, props: true },
   { path: "/cart", name: "cart", component: CartView },
   { path: "/settings", name: "settings", component: SettingsView },
   { path: "/help", name: "help", component: InfoView },

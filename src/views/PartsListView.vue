@@ -142,7 +142,9 @@
                   </template>
                   {{ $t("partsList.actions.checkPrices") }}
                 </n-button>
-                <n-button>
+                <n-button
+                  @click="$router.push({ path: `/print/partslist/${id}` })"
+                >
                   <template #icon>
                     <n-icon>
                       <PrintOutlined />
@@ -171,20 +173,6 @@
         />
       </n-layout>
     </n-space>
-
-    <!-- <n-modal
-      v-model:show="showModalRename"
-      preset="dialog"
-      type="default"
-      :show-icon="false"
-      title="Rename"
-      positive-text="Save"
-      negative-text="Cancel"
-      @positive-click="onRenamePositiveClick"
-      @negative-click="onRenameNegativeClick"
-    >
-      <n-input v-model:value="newName" type="text" />
-    </n-modal> -->
   </div>
 </template>
 

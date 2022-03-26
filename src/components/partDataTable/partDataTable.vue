@@ -1,8 +1,8 @@
 <template>
   <n-data-table
     size="small"
-    virtual-scroll
-    flex-height
+    :virtual-scroll="!print"
+    :flex-height="!print"
     :style="style"
     ref="table"
     :columns="columns"
@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { DataTableSortState, DataTableColumns } from "naive-ui";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onBeforeMount } from "vue";
 import { partDataTableColumns } from "@/service/lists/partDataTableColumns";
 
 export default defineComponent({
@@ -26,8 +26,9 @@ export default defineComponent({
   props: {
     partsList: { type: Object, required: true },
     style: { type: Object, required: false },
+    print: { type: Boolean, required: false, default: false },
   },
-  setup() {
+  setup(prop) {
     const columns = ref(partDataTableColumns() as DataTableColumns);
 
     const onSorterChange = (sorter: DataTableSortState | null) => {
@@ -46,6 +47,14 @@ export default defineComponent({
         else column.sortOrder = false;
       });
     };
+
+    onBeforeMount(() => {
+      if (prop.print) {
+        columns.value = columns.value.filter(
+          (c) => c.type !== "selection" && c.type !== "expand"
+        );
+      }
+    });
 
     return {
       columns,
