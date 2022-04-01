@@ -14,7 +14,7 @@
             >
                 {{ tabOverview }}
             </b-nav-item>
-            <b-nav-item
+            <!-- <b-nav-item
                 class="p-0"
                 :active="page == 'bricksAndPieces'"
                 @click="page = 'bricksAndPieces'"
@@ -28,7 +28,7 @@
                 {{ bricksAndPieces }} ({{
                     $store.getters['shopping/getBricksAndPiecesPositions']()
                 }})
-            </b-nav-item>
+            </b-nav-item> -->
             <b-nav-item
                 class="p-0"
                 :active="page == 'pickABrick'"

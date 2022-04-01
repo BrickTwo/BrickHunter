@@ -162,6 +162,9 @@
                     [{{ data.value.variant.attributes.designNumber }}/{{
                         data.value.variant.id
                     }}]
+                    <br />
+                    <span v-if="data.value.variant.attributes.deliveryChannel == 'pab'">Bestseller</span>
+                    <span v-if="data.value.variant.attributes.deliveryChannel == 'bap'">Standard</span>
                 </span>
             </div>
         </template>
@@ -320,7 +323,7 @@ export default {
                 sortBy: 'pickABrick.variant.price.centAmount',
                 width: '110px',
             },
-            {
+            /*{
                 key: 'bricksAndPieces',
                 label: browser.i18n.getMessage(
                     'brickList_bricksAndPiecesPrice'
@@ -328,7 +331,7 @@ export default {
                 sortable: true,
                 sortBy: 'bricksAndPieces.price.amount',
                 width: '120px',
-            },
+            },*/
             {
                 key: 'brickLinkRemarks',
                 label: 'BL Remarks', //browser.i18n.getMessage('brickList_brickLinkPrice'),
