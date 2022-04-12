@@ -17,7 +17,7 @@ function checkImage(src, good, bad) {
 
 function brickHunterLoadImages() {
     var items = document.getElementsByClassName(
-        'Tablestyles__TableRow-sc-1r2ldnh-1 kzYbnH'
+        'Tablestyles__TableRow-sc-1r2ldnh-1 cKkxPr'
     );
 
     if (items.length <= 0) {
