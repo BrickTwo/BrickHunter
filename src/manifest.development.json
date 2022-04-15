@@ -8,6 +8,7 @@
     },
     "host_permissions" : [
         "https://brichunter-web-svc.azurewebsites.net/*",
+        "https://localhost:7141/*",
         "https://*.lego.com/*"
     ],
     "permissions": [

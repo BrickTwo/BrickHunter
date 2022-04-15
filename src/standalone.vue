@@ -82,13 +82,13 @@
             "
             id="content"
           >
-            <div
+            <!-- <div
               style="position: absolute; z-index: 99; top: 10px; right: 24px"
             >
               <LoadingShort />
-            </div>
+            </div> -->
             <div
-              style="position: absolute; z-index: 99; top: 10px; right: 150px"
+              style="position: absolute; z-index: 99; top: 10px; right: 24px"
             >
               <CartShort />
             </div>

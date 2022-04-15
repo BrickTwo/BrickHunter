@@ -1,6 +1,8 @@
 import { PersistentStore, StoreObject } from "./store";
 import { PARTS_STORE_NAME } from "./store-names";
 import { IPartStore, IPartsListStore } from "@/types/store-types";
+import { BrickHunterApi } from "@/service/api/brickhunter";
+import { GetPaBPartsRequest } from "@/types/api-types";
 
 class PartsStore extends PersistentStore<IPartStore> {
   protected data(): StoreObject<IPartStore> {
@@ -46,6 +48,58 @@ class PartsStore extends PersistentStore<IPartStore> {
 
     this.state.stored.entries.splice(index, 1);
     this.delete(partId);
+  }
+
+  async loadPaB() {
+    const request: GetPaBPartsRequest = {
+      country: "de",
+      elementIds: [],
+    };
+
+    request.elementIds = this.state.stored.entries.map((p) => ({
+      key: p.id,
+      ids: p.elementIds.map(Number),
+    }));
+
+    const response = await BrickHunterApi.getPaBParts(request);
+
+    this.state.stored.entries.map((p) => {
+      const pab = response.elementIds.find((r) => r.key === p.id)?.pab;
+      if (!pab) {
+        p.lego = {
+          id: "",
+          inStock: undefined,
+          price: {
+            currencyCode: "",
+            formattedValue: 0,
+          },
+          attributes: {
+            colourId: "",
+            designNumber: 0,
+            deliveryChannel: "",
+          },
+          date: undefined,
+          lastAvailableDate: undefined,
+        };
+        return;
+      }
+
+      p.lego = {
+        id: pab.elementId.toString(),
+        inStock: pab.isAvailable,
+        price: {
+          currencyCode: pab.currency,
+          formattedValue: pab.price,
+        },
+        attributes: {
+          designNumber: pab.designId,
+          colourId: pab.colorId.toString(),
+          deliveryChannel: pab.deliveryChannel,
+        },
+        date: pab.updateDate,
+        lastAvailableDate: pab.lastAvailableDate,
+      };
+    });
   }
 }
 

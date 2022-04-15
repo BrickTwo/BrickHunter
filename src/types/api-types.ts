@@ -56,11 +56,6 @@ export interface GetPaBPartsResponse {
       elementId: number;
       designId: number;
       colorId: number;
-      id: string | null;
-      name: string;
-      primaryImageUrl: string;
-      materialGroup: string | null;
-      materialType: string | null;
       deliveryChannel: string;
       createDate: Date;
       updateDate: Date;

@@ -1,6 +1,6 @@
 import { PersistentStore, StoreObject } from "./store";
 import { PARTS_LIST_STORE_NAME } from "./store-names";
-import { BrickTwoApi } from "@/service/api/bricktwo";
+import { BrickHunterApi } from "@/service/api/brickhunter";
 import { BrickLinkItemModel, GetPartsRequest } from "@/types/api-types";
 import { generateGuid } from "@/utilities/general/guid";
 import { getColor } from "@/utilities/color";
@@ -14,6 +14,7 @@ import {
 import { IPartsList, IPart } from "@/types/types";
 import { Color } from "@/utilities/color";
 import { watch } from "vue";
+import { parts } from "@/dummyData/parts";
 
 class PartsListsStore extends PersistentStore<IPartsListStore> {
   protected data(): StoreObject<IPartsListStore> {
@@ -101,8 +102,22 @@ class PartsListsStore extends PersistentStore<IPartsListStore> {
     });
     if (index == -1) return;
 
+    cartsStore.removePartListFromCarts(this.getPartsList(partListId));
+
     this.state.stored.entries.splice(index, 1);
     this.delete(partListId);
+
+    const parts = [...partsStore.getState().stored.entries];
+
+    parts.forEach((p) => {
+      if (!this.isUsedPart(p.id)) partsStore.deletePart(p.id);
+    });
+  }
+
+  isUsedPart(partId: string): boolean {
+    return !!this.state.stored.entries.find((e) =>
+      e.positions.find((p) => `${p.id}+${p.color}` === partId)
+    );
   }
 
   addPartToList(partListId: string, part: IPartsListPositionStore) {
@@ -121,7 +136,7 @@ class PartsListsStore extends PersistentStore<IPartsListStore> {
       request.ids.push(item.itemId.toString());
     });
 
-    const response = await BrickTwoApi.getParts(request);
+    const response = await BrickHunterApi.getParts(request);
 
     const partsList: IPartsListStore = {
       id: generateGuid(),
@@ -210,7 +225,7 @@ class PartsListsStore extends PersistentStore<IPartsListStore> {
               deliveryChannel: "",
             },
             date: undefined,
-            checkPrice: false,
+            lastAvailableDate: undefined,
           },
         };
 

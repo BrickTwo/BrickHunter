@@ -53,7 +53,7 @@
     </n-space>
     <PartDataTable
       :partsList="partsList"
-      style="height: calc(100vh - 280px)"
+      style="height: calc(100vh - 300px)"
       @update:checked-row-keys="onHandleCheck"
     />
   </n-space>
@@ -113,7 +113,7 @@ export default defineComponent({
       return (
         Math.round(
           partsList.value.parts
-            .map((p) => p.detail.lego.price.formattedValue)
+            .map((p) => p.detail.lego?.price?.formattedValue)
             .reduce((prev, curr) => prev + curr, 0) * 100
         ) / 100
       ).toFixed(2);

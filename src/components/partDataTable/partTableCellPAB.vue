@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data.detail.lego.date">
+  <div v-if="data.detail.lego?.date">
     <n-text>
       {{ data.detail.lego.price.currencyCode }}
       {{ data.detail.lego.price.formattedValue.toFixed(2) }}
@@ -21,7 +21,7 @@
     >
       {{ $t("general.names.pickABrickStandard") }}
     </n-tag>
-    <n-tag type="error" v-if="!data.detail.lego.inStock">
+    <n-tag type="error" v-if="!data.detail.lego?.inStock">
       {{ $t("general.names.pickABrickOutOfStock") }}
     </n-tag>
   </div>

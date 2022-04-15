@@ -75,7 +75,7 @@
                     partsList.parts
                       ? partsList.parts.filter(
                           (p) =>
-                            p.detail.lego.attributes.deliveryChannel == "pab"
+                            p.detail.lego?.attributes?.deliveryChannel == "pab"
                         ).length
                       : 0
                   }}
@@ -92,7 +92,7 @@
                     partsList.parts
                       ? partsList.parts.filter(
                           (p) =>
-                            p.detail.lego.attributes.deliveryChannel == "bap"
+                            p.detail.lego?.attributes?.deliveryChannel == "bap"
                         ).length
                       : 0
                   }}
@@ -108,10 +108,24 @@
                   {{
                     partsList.parts
                       ? partsList.parts.filter(
-                          (p) => !p.detail.lego.inStock && p.detail.lego.date
+                          (p) => !p.detail.lego?.inStock && p.detail.lego?.date
                         ).length
                       : 0
+                  }} </n-statistic
+                ><n-divider vertical />
+                <n-statistic :label="$t('partsList.statistic.price')">
+                  {{
+                    partsList.parts
+                      ? (
+                          Math.round(
+                            partsList.parts
+                              .map((p) => p.detail.lego?.price?.formattedValue)
+                              .reduce((prev, curr) => prev + curr, 0) * 100
+                          ) / 100
+                        ).toFixed(2)
+                      : 0
                   }}
+                  EUR
                 </n-statistic>
               </n-space>
             </n-space>
@@ -134,14 +148,14 @@
                 </n-button>
               </n-dropdown>
               <n-space justify="end">
-                <n-button type="primary" ghost @click="onCheckPrices()">
+                <!-- <n-button type="primary" ghost @click="onCheckPrices()">
                   <template #icon>
                     <n-icon>
                       <DownloadingOutlined />
                     </n-icon>
                   </template>
                   {{ $t("partsList.actions.checkPrices") }}
-                </n-button>
+                </n-button> -->
                 <n-button
                   @click="$router.push({ path: `/print/partslist/${id}` })"
                 >
@@ -188,6 +202,7 @@ import {
   ArrowDropDownOutlined,
 } from "@vicons/material";
 import { partsListStore } from "@/store/partslist-store";
+import { partsStore } from "@/store/parts-store";
 import {
   IPartsList,
   BackgroundRequest,
@@ -254,6 +269,8 @@ export default defineComponent({
           request
         )) as GetPaBFindPartsResponse;
 
+        console.log("response", response);
+
         var parts = response.data.elements.results
           .filter((p) => {
             return item.detail.externalIds.filter(
@@ -311,6 +328,7 @@ export default defineComponent({
 
     onBeforeMount(async () => {
       partsList.value = await partsListStore.getPartsListWithDetail(prop.id);
+      partsStore.loadPaB();
     });
 
     watch(

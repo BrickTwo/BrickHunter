@@ -58,7 +58,12 @@ class CartsStore extends PersistentStore<ICartStore, CartsNotStoredObject> {
           .map((item) => this.ConvertToIPart(item));
       default:
         return this.state.notStored.openPositions
-          .filter((p) => p.part.lego?.attributes?.deliveryChannel === "")
+          .filter(
+            (p) =>
+              p.part.lego?.attributes?.deliveryChannel === "oos" ||
+              p.part.lego?.attributes?.deliveryChannel === "" ||
+              !p.part.lego
+          )
           .map((item) => this.ConvertToIPart(item));
     }
 
@@ -117,7 +122,10 @@ class CartsStore extends PersistentStore<ICartStore, CartsNotStoredObject> {
         ).length;
       default:
         return this.state.notStored.openPositions.filter(
-          (p) => p.part.lego?.attributes?.deliveryChannel === ""
+          (p) =>
+            p.part.lego?.attributes?.deliveryChannel === "oos" ||
+            p.part.lego?.attributes?.deliveryChannel === "" ||
+            !p.part.lego
         ).length;
     }
   }

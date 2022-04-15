@@ -66,8 +66,8 @@ export interface IPartStore extends IPersistentObject {
       designNumber: number;
       deliveryChannel: string;
     };
-    date: number | undefined;
-    checkPrice: boolean;
+    date: Date | number | undefined;
+    lastAvailableDate: Date | undefined;
   };
 }
 

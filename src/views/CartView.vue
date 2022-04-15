@@ -59,6 +59,7 @@ import Bestseller from "@/components/cart/CartBestseller.vue";
 import Standard from "@/components/cart/CartStandard.vue";
 import BrickLink from "@/components/cart/CartBrickLink.vue";
 import { cartsStore } from "@/store/carts-store";
+import { partsStore } from "@/store/parts-store";
 import { CartType } from "@/types/store-types";
 
 export default defineComponent({
@@ -78,6 +79,7 @@ export default defineComponent({
     const totalUniquePartsBrickLink = ref(0);
 
     onBeforeMount(async () => {
+      await partsStore.loadPaB();
       totalUniquePartsBestseller.value =
         cartsStore.getTotalOpenUniquePartsByType(CartType.Bestseller);
       totalUniquePartsStandard.value = cartsStore.getTotalOpenUniquePartsByType(

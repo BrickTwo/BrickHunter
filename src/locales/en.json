@@ -135,8 +135,9 @@
     "name": "Name",
     "positions": "Positions",
     "statistic": {
+      "price": "Preis",
       "totalQuantity": "Total Quantity",
-      "totalUniqueParts": "Total Unique Parts"
+      "totalUniqueParts": "Unique Parts"
     },
     "title": "Parts List | Parts Lists"
   },
