@@ -2,7 +2,7 @@
   <div v-if="data.detail.lego.date">
     <n-text>
       {{ data.detail.lego.price.currencyCode }}
-      {{ data.detail.lego.price.formattedValue }}
+      {{ data.detail.lego.price.formattedValue.toFixed(2) }}
     </n-text>
     <br />
     <n-text depth="3">

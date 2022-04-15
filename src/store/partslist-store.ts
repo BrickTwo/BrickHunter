@@ -5,28 +5,55 @@ import { BrickLinkItemModel, GetPartsRequest } from "@/types/api-types";
 import { generateGuid } from "@/utilities/general/guid";
 import { getColor } from "@/utilities/color";
 import { partsStore } from "@/store/parts-store";
+import { cartsStore } from "@/store/carts-store";
 import {
-  PartsListStore,
-  PartsListPartStore,
-  PartStore,
+  IPartsListStore,
+  IPartsListPositionStore,
+  IPartStore,
 } from "@/types/store-types";
 import { IPartsList, IPart } from "@/types/types";
 import { Color } from "@/utilities/color";
+import { watch } from "vue";
 
-class PartsListsStore extends PersistentStore<PartsListStore> {
-  protected data(): StoreObject<PartsListStore> {
+class PartsListsStore extends PersistentStore<IPartsListStore> {
+  protected data(): StoreObject<IPartsListStore> {
     return {
-      entries: [],
+      stored: { entries: [] },
+      notStored: undefined,
     };
   }
 
-  getAllPartsListSortedByName(): PartsListStore[] {
-    return this.state.entries.sort((a, b) => a.name.localeCompare(b.name));
+  constructor(readonly storeName: string) {
+    super(storeName);
+
+    watch(
+      () => this.state,
+      () => {
+        this.state.stored.entries.map((partList) => {
+          if (partList.inCart) {
+            cartsStore.addPartListToCarts(partList);
+          } else {
+            cartsStore.removePartListFromCarts(partList);
+          }
+        });
+      },
+      { deep: true }
+    );
   }
 
-  getPartsList(id: string): PartsListStore {
-    const partsList = this.state.entries.find((entry) => entry.id == id);
-    return partsList ? partsList : ({} as PartsListStore);
+  getAllPartsListSortedByName(): IPartsListStore[] {
+    return this.state.stored.entries.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  }
+
+  getAllPartsListsInCart(): IPartsListStore[] {
+    return this.state.stored.entries.filter((e) => e.inCart);
+  }
+
+  getPartsList(id: string): IPartsListStore {
+    const partsList = this.state.stored.entries.find((entry) => entry.id == id);
+    return partsList ? partsList : ({} as IPartsListStore);
   }
 
   async getPartsListWithDetail(id: string): Promise<IPartsList | undefined> {
@@ -39,10 +66,10 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
       parts: [],
     };
 
-    if (!source.parts) return partsList;
+    if (!source.positions) return partsList;
 
-    source.parts.forEach((s) => {
-      const p = partsStore.getPart(`${s.id}+${s.color}`);
+    source.positions.forEach((s) => {
+      const p = partsStore.getPart(s.id, s.color);
 
       if (p.elementId == undefined) p.elementId = "";
 
@@ -58,8 +85,8 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
     return partsList;
   }
 
-  addPartsList(partsList: PartsListStore) {
-    this.state.entries.push(partsList);
+  addPartsList(partsList: IPartsListStore) {
+    this.state.stored.entries.push(partsList);
   }
 
   setPartsListName(id: string, name: string) {
@@ -69,16 +96,16 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
   }
 
   deletePartsList(partListId: string) {
-    const index = this.state.entries.findIndex((e) => {
+    const index = this.state.stored.entries.findIndex((e) => {
       return e.id == partListId;
     });
     if (index == -1) return;
 
-    this.state.entries.splice(index, 1);
+    this.state.stored.entries.splice(index, 1);
     this.delete(partListId);
   }
 
-  addPartToList(partListId: string, part: PartsListPartStore) {
+  addPartToList(partListId: string, part: IPartsListPositionStore) {
     return;
   }
 
@@ -96,10 +123,11 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
 
     const response = await BrickTwoApi.getParts(request);
 
-    const partsList: PartsListStore = {
+    const partsList: IPartsListStore = {
       id: generateGuid(),
       name: name,
-      parts: [],
+      inCart: false,
+      positions: [],
     };
 
     wantedList.forEach((item) => {
@@ -111,11 +139,12 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
 
       const color = getColor(item.color, "BrickLink");
 
-      partsList.parts.push({
+      partsList.positions.push({
         id: resp ? resp.partNum : "",
         color: color.id,
         qty: item.minQty ? item.minQty : 0,
         have: item.qtyFilled ? item.qtyFilled : 0,
+        qtyOrdered: 0,
         itemType: item.itemType,
         maxPrice: item.maxPrice ? item.maxPrice : 0,
         condition: item.condition,
@@ -140,7 +169,7 @@ class PartsListsStore extends PersistentStore<PartsListStore> {
         if (!resp.imageUrl)
           resp.imageUrl = `https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${elementIds[0]}.jpg`;
 
-        const part: PartStore = {
+        const part: IPartStore = {
           id: resp.partNum + "+" + color.id,
           partNum: resp.partNum,
           color: color.id,

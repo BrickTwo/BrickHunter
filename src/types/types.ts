@@ -1,5 +1,9 @@
 import { GetPaBFindPartsRequest } from "./api-types";
-import { PartsListPartStore, PartStore } from "./store-types";
+import {
+  ICartPositionStore,
+  IPartsListPositionStore,
+  IPartStore,
+} from "./store-types";
 
 export interface IColor {
   id: number;
@@ -37,8 +41,9 @@ export interface IPartsList {
 }
 
 export interface IPart extends Object {
-  source: PartsListPartStore;
-  detail: PartStore;
+  source: IPartsListPositionStore;
+  detail: IPartStore;
+  cart?: ICartPositionStore;
   color: IColor;
 }
 

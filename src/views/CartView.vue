@@ -1,7 +1,7 @@
 <template>
   <n-space vertical size="large" style="width: 100%">
     <n-layout>
-      <n-page-header @back="handleBack">
+      <n-page-header>
         <template #title>Shopping Cart</template>
         <template #avatar>
           <n-icon size="20"> <ShoppingCartOutlined /> </n-icon>
@@ -22,21 +22,27 @@
           <n-tab-pane tab="Settings" name="settings">
             <Settings />
           </n-tab-pane>
-          <n-tab-pane tab="Action Required (55)" name="actionRequired">
-            <ActionRequired />
+          <n-tab-pane
+            :tab="`Bestseller (${totalUniquePartsBestseller})`"
+            name="bestseller"
+          >
+            <Bestseller />
           </n-tab-pane>
-          <n-tab-pane tab="Bricks & Pieces (225)" name="bricksAndPieces">
-            <BricksAndPieces />
+          <n-tab-pane
+            :tab="`Standard (${totalUniquePartsStandard})`"
+            name="standard"
+          >
+            <Standard />
           </n-tab-pane>
-          <n-tab-pane tab="Pick a Brick (25)" name="pickABrick">
-            <PickABrick />
-          </n-tab-pane>
-          <n-tab-pane tab="BrickLink (35)" name="brickLink">
+          <n-tab-pane
+            :tab="`BrickLink (${totalUniquePartsBrickLink})`"
+            name="brickLink"
+          >
             <BrickLink />
           </n-tab-pane>
-          <n-tab-pane tab="Set (5)" name="set">
+          <!-- <n-tab-pane tab="Set (5)" name="set">
             <BrickLink />
-          </n-tab-pane>
+          </n-tab-pane> -->
         </n-tabs>
       </n-card>
     </n-layout>
@@ -44,14 +50,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, watch, onBeforeMount } from "vue";
 import { ShoppingCartOutlined } from "@vicons/material";
 import Settings from "@/components/cart/settings/CartSettings.vue";
 import Overview from "@/components/cart/overview/CartOverview.vue";
 import ActionRequired from "@/components/cart/CartActionRequired.vue";
-import BricksAndPieces from "@/components/cart/CartBricksAndPieces.vue";
-import PickABrick from "@/components/cart/CartPickABrick.vue";
+import Bestseller from "@/components/cart/CartBestseller.vue";
+import Standard from "@/components/cart/CartStandard.vue";
 import BrickLink from "@/components/cart/CartBrickLink.vue";
+import { cartsStore } from "@/store/carts-store";
+import { CartType } from "@/types/store-types";
 
 export default defineComponent({
   name: "PartsListsView",
@@ -60,15 +68,42 @@ export default defineComponent({
     Settings,
     Overview,
     ActionRequired,
-    BricksAndPieces,
-    PickABrick,
+    Bestseller,
+    Standard,
     BrickLink,
   },
-  setup(prop, { emit }) {
-    return {
-      handleBack() {
-        emit("changePage", "partslists");
+  setup() {
+    const totalUniquePartsBestseller = ref(0);
+    const totalUniquePartsStandard = ref(0);
+    const totalUniquePartsBrickLink = ref(0);
+
+    onBeforeMount(async () => {
+      totalUniquePartsBestseller.value =
+        cartsStore.getTotalOpenUniquePartsByType(CartType.Bestseller);
+      totalUniquePartsStandard.value = cartsStore.getTotalOpenUniquePartsByType(
+        CartType.Standard
+      );
+      totalUniquePartsBrickLink.value =
+        cartsStore.getTotalOpenUniquePartsByType(CartType.BrickLink);
+    });
+
+    watch(
+      () => cartsStore.getState(),
+      async () => {
+        totalUniquePartsBestseller.value =
+          cartsStore.getTotalOpenUniquePartsByType(CartType.Bestseller);
+        totalUniquePartsStandard.value =
+          cartsStore.getTotalOpenUniquePartsByType(CartType.Standard);
+        totalUniquePartsBrickLink.value =
+          cartsStore.getTotalOpenUniquePartsByType(CartType.BrickLink);
       },
+      { deep: true }
+    );
+
+    return {
+      totalUniquePartsBestseller,
+      totalUniquePartsStandard,
+      totalUniquePartsBrickLink,
     };
   },
 });

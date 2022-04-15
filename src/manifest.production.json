@@ -7,7 +7,7 @@
         "service_worker": "/js/background.js"
     },
     "host_permissions" : [
-        "https://brichunter-web-svc.azurewebsites.net",
+        "https://brichunter-web-svc.azurewebsites.net/*",
         "https://*.lego.com/*"
     ],
     "permissions": [

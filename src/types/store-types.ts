@@ -1,17 +1,19 @@
-export interface PersistentObject extends Object {
+export interface IPersistentObject extends Object {
   id: string;
 }
 
-export interface PartsListStore extends PersistentObject {
+export interface IPartsListStore extends IPersistentObject {
   name: string;
-  parts: PartsListPartStore[];
+  inCart: boolean;
+  positions: IPartsListPositionStore[];
 }
 
-export interface PartsListPartStore extends Object {
+export interface IPartsListPositionStore extends Object {
   id: string;
   color?: number;
   qty: number;
   have: number;
+  qtyOrdered: number;
   itemType?: string;
   maxPrice: number;
   condition?: string;
@@ -25,7 +27,7 @@ export interface PartsListPartStore extends Object {
   };
 }
 
-export interface PartStore extends PersistentObject {
+export interface IPartStore extends IPersistentObject {
   id: string;
   partNum: string;
   elementId: string;
@@ -70,7 +72,35 @@ export interface PartStore extends PersistentObject {
 }
 
 export interface ISettingsStore {
-  country: string,
-  language: string,
-  uiLanguage: string,
+  country: string;
+  language: string;
+  uiLanguage: string;
+}
+
+export interface ICartStore {
+  state: CartState;
+  OrderDate: Date;
+  CartType: CartType;
+  Positions: ICartPositionStore[];
+}
+
+export enum CartState {
+  Open = 1,
+  Fixed = 2,
+  Ordered = 3,
+}
+
+export enum CartType {
+  Bestseller = 1,
+  Standard = 2,
+  BrickLink = 3,
+}
+
+export interface ICartPositionStore {
+  id: string;
+  color?: number;
+  qty: {
+    partListId: string;
+    qty: number;
+  }[];
 }

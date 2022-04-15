@@ -85,7 +85,7 @@ import FileImportDrawer from "@/components/partslists/FileImportDrawer.vue";
 import SetImportDrawer from "@/components/partslists/SetImportDrawer.vue";
 import { partsListStore } from "@/store/partslist-store";
 import { useRouter } from "vue-router";
-import { PartsListStore } from "@/types/store-types";
+import { IPartsListStore } from "@/types/store-types";
 import { PartsListsBulkActions } from "@/service/lists/partsListsBulkActions";
 import { PartsListsColumns } from "@/service/lists/partsListColumns";
 import DeletePartsListDialog from "@/components/partslists/DeletePartsListDialog.vue";
@@ -107,18 +107,18 @@ export default defineComponent({
     const showSetImport = ref(false);
     const showModalDeleteRequest = ref(false);
     const partsLists = ref(partsListStore.getAllPartsListSortedByName());
-    const selectedRow: Ref<PartsListStore | undefined> = ref(undefined);
+    const selectedRow: Ref<IPartsListStore | undefined> = ref(undefined);
     const checkedPartsLists = ref([]);
 
-    const onOpenPartsList = (row: PartsListStore) => {
+    const onOpenPartsList = (row: IPartsListStore) => {
       myRouter.push({ path: "/partslists/" + row.id });
     };
 
-    const onAddToCart = (row: PartsListStore) => {
-      console.log(row);
+    const onAddToCart = (row: IPartsListStore) => {
+      row.inCart = !row.inCart;
     };
 
-    const onDelete = (row: PartsListStore) => {
+    const onDelete = (row: IPartsListStore) => {
       selectedRow.value = row;
       showModalDeleteRequest.value = true;
     };
@@ -133,8 +133,7 @@ export default defineComponent({
       checkedPartsLists.value = rowKeys;
     };
 
-    const deletePartsList = (row: PartsListStore) => {
-      console.log("delete", row.id);
+    const deletePartsList = (row: IPartsListStore) => {
       partsListStore.deletePartsList(row.id.toString());
     };
 

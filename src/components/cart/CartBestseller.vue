@@ -33,6 +33,39 @@
         </n-button>
       </n-dropdown>
       <n-space justify="end">
+        <n-button type="primary" ghost>
+          <template #icon>
+            <n-icon>
+              <ShoppingBagOutlined />
+            </n-icon>
+          </template>
+          {{ $t("cart.actions.addToLegoShoppingBag") }}
+        </n-button>
+        <n-button>
+          <template #icon>
+            <n-icon>
+              <ShoppingBagOutlined />
+            </n-icon>
+            <n-icon style="position: absolute">
+              <ClearOutlined />
+            </n-icon>
+          </template>
+          {{ $t("cart.actions.clearLegoBestsellerShoppingBag") }}
+        </n-button>
+        <div style="height: 34px; line-height: 30px">
+          <n-popover trigger="hover">
+            <template #trigger>
+              <n-checkbox
+                default-checked
+                value="true"
+                :label="$t('cart.actions.affiliate')"
+              />
+            </template>
+            <span>
+              {{ $t("cart.actions.affiliateInfoText") }}
+            </span>
+          </n-popover>
+        </div>
         <n-button>
           <template #icon>
             <n-icon>
@@ -83,7 +116,7 @@ const renderIcon = (icon: any) => {
 };
 
 export default defineComponent({
-  name: "CartStandard",
+  name: "CartBestseller",
   setup() {
     const partsList: Ref<IPartsList | undefined> = ref({} as IPartsList);
     const checkedRowKeys = ref([]);
@@ -123,7 +156,7 @@ export default defineComponent({
       let partList: IPartsList = {
         id: "",
         name: "",
-        parts: await cartsStore.getPositionsByType(CartType.BrickLink),
+        parts: await cartsStore.getPositionsByType(CartType.Bestseller),
       };
 
       partsList.value = partList;
@@ -138,7 +171,7 @@ export default defineComponent({
         let partList: IPartsList = {
           id: "",
           name: "",
-          parts: await cartsStore.getPositionsByType(CartType.BrickLink),
+          parts: await cartsStore.getPositionsByType(CartType.Bestseller),
         };
 
         partsList.value = partList;

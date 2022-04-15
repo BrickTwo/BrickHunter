@@ -1,4 +1,9 @@
 import { IDBPDatabase, openDB } from "idb";
+import {
+  PARTS_STORE_NAME,
+  PARTS_LIST_STORE_NAME,
+  CARTS_STORE_NAME,
+} from "./store-names";
 //import { isTypedArray } from 'util/types';
 
 class IndexedDb {
@@ -7,13 +12,21 @@ class IndexedDb {
 
   public async createObjectStore() {
     try {
-      this.db = await openDB(this.database, 2.0, {
+      this.db = await openDB(this.database, 3, {
         upgrade(db: IDBPDatabase) {
-          const tableNames: string[] = ["PARTS_LIST", "PARTS"];
+          const tableNames: string[] = [
+            PARTS_STORE_NAME,
+            PARTS_LIST_STORE_NAME,
+            CARTS_STORE_NAME,
+          ];
           for (const tableName of tableNames) {
+            console.log(tableName);
             if (db.objectStoreNames.contains(tableName)) {
+              console.log(true);
               continue;
             }
+            console.log(false);
+            console.log(tableName);
             db.createObjectStore(tableName, {
               autoIncrement: false,
               keyPath: "id",
@@ -58,8 +71,9 @@ class IndexedDb {
     const tx = this.db.transaction(tableName, "readwrite");
     const store = tx.objectStore(tableName);
     for (const value of values) {
-      const result = await store.put(value);
-      //console.log("Put Bulk Data ", JSON.stringify(result));
+      await store.put(value);
+      // const result = await store.put(value);
+      // console.log("Put Bulk Data ", JSON.stringify(result));
     }
     return this.getAllValue(tableName);
   }

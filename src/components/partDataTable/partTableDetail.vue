@@ -208,6 +208,9 @@
           </n-descriptions>
         </n-col>
       </n-row>
+      <n-row v-if="data.cart">
+        {{ data.cart.qty }}
+      </n-row>
     </n-card>
   </div>
 </template>

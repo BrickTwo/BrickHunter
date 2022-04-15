@@ -3,7 +3,7 @@ export class FileImport {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
 
-      fileReader.onload = (e) => {
+      fileReader.onload = () => {
         let loadedString = "";
         if (fileReader?.result) loadedString = fileReader?.result?.toString();
         resolve(loadedString);

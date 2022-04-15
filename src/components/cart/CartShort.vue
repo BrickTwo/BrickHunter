@@ -3,41 +3,43 @@
     <n-el>
       <n-space
         style="font-size: 30px; cursor: pointer; line-height: 50px"
-        @click="showCart = true"
+        @click="showCartDrawer = true"
       >
         <n-icon size="40" style="margin-top: 5px">
           <ShoppingCartOutlined />
         </n-icon>
-        <div>596/3,524</div>
+        <div>{{ totalOpenUniqueParts }}/{{ totalOpenQuantity }}</div>
       </n-space>
     </n-el>
-    <!--<n-space>
-      <n-button @click="minus"> Minus 10% </n-button>
-      <n-button @click="add"> Add 10% </n-button>
-    </n-space>-->
   </n-space>
-  <n-drawer v-model:show="showCart" :width="800" style="max-width: 100%">
-    <CartDrawer @changePage="changePage" />
-  </n-drawer>
+  <CartDrawer v-model:showDrawer="showCartDrawer" />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { ShoppingCartOutlined } from "@vicons/material";
 import CartDrawer from "./CartDrawer.vue";
+import { cartsStore } from "@/store/carts-store";
 
 export default defineComponent({
-  setup(prop, { emit }) {
-    const showCart = ref(false);
+  setup() {
+    const showCartDrawer = ref(false);
+    const totalOpenUniqueParts = ref(cartsStore.getTotalOpenUniqueParts());
+    const totalOpenQuantity = ref(cartsStore.getTotalOpenQuantity());
 
-    const changePage = () => {
-      showCart.value = false;
-      emit("changePage", "cart");
-    };
+    watch(
+      () => cartsStore.getState(),
+      () => {
+        totalOpenUniqueParts.value = cartsStore.getTotalOpenUniqueParts();
+        totalOpenQuantity.value = cartsStore.getTotalOpenQuantity();
+      },
+      { deep: true }
+    );
 
     return {
-      showCart,
-      changePage,
+      showCartDrawer,
+      totalOpenUniqueParts,
+      totalOpenQuantity,
     };
   },
   components: { ShoppingCartOutlined, CartDrawer },

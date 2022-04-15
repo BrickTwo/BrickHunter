@@ -1,46 +1,50 @@
 import { PersistentStore, StoreObject } from "./store";
 import { PARTS_STORE_NAME } from "./store-names";
-import { PartStore, PartsListStore } from "@/types/store-types";
+import { IPartStore, IPartsListStore } from "@/types/store-types";
 
-class PartsStore extends PersistentStore<PartStore> {
-  protected data(): StoreObject<PartStore> {
+class PartsStore extends PersistentStore<IPartStore> {
+  protected data(): StoreObject<IPartStore> {
     return {
-      entries: [],
+      stored: { entries: [] },
+      notStored: undefined,
     };
   }
 
-  getPart(id: string): PartStore {
-    const part = this.state.entries.find((entry) => entry.id == id);
-    return part ? part : ({} as PartStore);
+  getPartById(id: string): IPartStore {
+    const part = this.state.stored.entries.find((entry) => entry.id == id);
+    return part ? part : ({} as IPartStore);
   }
 
-  getParts(partsList: PartsListStore): PartStore[] {
-    const parts: PartStore[] = [];
+  getPart(id: string, colorId: number | undefined): IPartStore {
+    return this.getPartById(`${id}+${colorId}`);
+  }
 
-    if (!partsList?.parts) return parts;
+  getParts(partsList: IPartsListStore): IPartStore[] {
+    const parts: IPartStore[] = [];
 
-    partsList.parts.map((part) => {
-      parts.push(this.getPart(part.id + "+" + part.color));
+    if (!partsList?.positions) return parts;
+
+    partsList.positions.map((position) => {
+      parts.push(this.getPart(position.id, position.color));
     });
 
     return parts;
   }
 
-  addPart(part: PartStore) {
-    const exist = this.getPart(part.id);
+  addPart(part: IPartStore) {
+    const exist = this.getPartById(part.id);
     if (exist) part.lego = exist.lego;
-    console.log("parts store: add part ", part);
 
-    this.state.entries.push(part);
+    this.state.stored.entries.push(part);
   }
 
   deletePart(partId: string) {
-    const index = this.state.entries.findIndex((e) => {
+    const index = this.state.stored.entries.findIndex((e) => {
       return e.id == partId;
     });
     if (index == -1) return;
 
-    this.state.entries.splice(index, 1);
+    this.state.stored.entries.splice(index, 1);
     this.delete(partId);
   }
 }

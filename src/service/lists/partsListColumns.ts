@@ -1,7 +1,7 @@
 import { h } from "vue";
 import { NIcon, NButton, NSpace } from "naive-ui";
 import i18n from "@/i18n";
-import { PartsListStore } from "@/types/store-types";
+import { IPartsListStore } from "@/types/store-types";
 import {
   ManageSearchOutlined,
   DeleteOutlined,
@@ -11,9 +11,9 @@ import {
 const { t } = i18n.global;
 
 export function PartsListsColumns(
-  onOpenPartsList: any,
-  onAddToCart: any,
-  onDelete: any
+  onOpenPartsList: (row: IPartsListStore) => void,
+  onAddToCart: (row: IPartsListStore) => void,
+  onDelete: (row: IPartsListStore) => void
 ) {
   return [
     {
@@ -25,12 +25,12 @@ export function PartsListsColumns(
     },
     {
       title: t("partsList.positions"),
-      key: "parts.length",
+      key: "positions.length",
     },
     {
       title: t("partsList.actions.title"),
       key: "actions",
-      render(row: PartsListStore) {
+      render(row: IPartsListStore) {
         return h(NSpace, {}, () => [
           h(
             NButton,
@@ -53,7 +53,10 @@ export function PartsListsColumns(
               onClick: () => onAddToCart(row),
             },
             {
-              default: () => t("partsList.actions.addToCart"),
+              default: () =>
+                row.inCart
+                  ? t("partsList.actions.removeFromCart")
+                  : t("partsList.actions.addToCart"),
               icon: () =>
                 h(NIcon, null, { default: () => h(ShoppingCartOutlined) }),
             }

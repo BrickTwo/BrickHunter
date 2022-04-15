@@ -1,4 +1,21 @@
 {
+  "cart": {
+    "actions": {
+      "addToLegoShoppingBag": "Zum LEGO Warenkorb hinzufügen",
+      "affiliate": "Affiliate",
+      "affiliateInfoText": "Unterstütze BrickHunter indem du BrickHunter erlaubst einen Affiliatelink zu setzen.",
+      "clearLegoBestsellerShoppingBag": "LEGO Bestseller Warenkorb leeren",
+      "clearLegoStandardShoppingBag": "LEGO Standard Warenkorb leeren",
+      "export": "Export",
+      "bulkAction": "Massenaktion",
+      "print": "Drucken"
+    },
+    "goToShoppingCart": "Warenkorb öffnen",
+    "price": "Preis",
+    "title": "Warenkorb",
+    "totalQuantity": "Total Menge",
+    "totalUniqueParts": "Verschiedene Teile"
+  },
   "countries": {
     "AU": "Australien",
     "BE": "Belgien",
@@ -71,6 +88,7 @@
     "maxPrice": "Max Preis",
     "packageDimensionShort": "Pack. Dim.",
     "partNumber": "Teilenummer",
+    "partNumberShort": "Teilenr.",
     "picture": "Bild",
     "printed": "Bedruckt",
     "quantity": "Menge",
@@ -99,7 +117,7 @@
   },
   "partsList": {
     "actions": {
-      "addToCart": "In den Warenkorb",
+      "addToCart": "Zum Warenkorb hinzufügen",
       "bulkAction": "Massenaktion",
       "checkPrices": "Preise laden",
       "copyTo": "Kopieren nach",
@@ -107,6 +125,7 @@
       "export": "Export",
       "open": "Öffnen",
       "print": "Drucken",
+      "removeFromCart": "Aus Warenkorb entfernen",
       "rename": "Umbennen",
       "split": "Teilen",
       "title": "Aktionen"
