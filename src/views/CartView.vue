@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, onBeforeMount } from "vue";
+import { defineComponent, ref, watch, onMounted } from "vue";
 import { ShoppingCartOutlined } from "@vicons/material";
 import Settings from "@/components/cart/settings/CartSettings.vue";
 import Overview from "@/components/cart/overview/CartOverview.vue";
@@ -61,6 +61,7 @@ import BrickLink from "@/components/cart/CartBrickLink.vue";
 import { cartsStore } from "@/store/carts-store";
 import { partsStore } from "@/store/parts-store";
 import { CartType } from "@/types/store-types";
+import { useLoadingBar } from "naive-ui";
 
 export default defineComponent({
   name: "PartsListsView",
@@ -74,11 +75,13 @@ export default defineComponent({
     BrickLink,
   },
   setup() {
+    const loadingBar = useLoadingBar();
     const totalUniquePartsBestseller = ref(0);
     const totalUniquePartsStandard = ref(0);
     const totalUniquePartsBrickLink = ref(0);
 
-    onBeforeMount(async () => {
+    onMounted(async () => {
+      loadingBar.start();
       await partsStore.loadPaB();
       totalUniquePartsBestseller.value =
         cartsStore.getTotalOpenUniquePartsByType(CartType.Bestseller);
@@ -87,6 +90,7 @@ export default defineComponent({
       );
       totalUniquePartsBrickLink.value =
         cartsStore.getTotalOpenUniquePartsByType(CartType.BrickLink);
+      loadingBar.finish();
     });
 
     watch(

@@ -191,7 +191,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref, watch, onBeforeMount } from "vue";
+import { defineComponent, Ref, ref, watch, onMounted } from "vue";
 import {
   DeleteOutlined,
   ModeEditOutlined,
@@ -218,6 +218,7 @@ import { PartsListBulkActions } from "@/service/lists/partsListBulkActions";
 import DeletePartsListDialog from "@/components/partslists/DeletePartsListDialog.vue";
 import RenamePartsListDialog from "@/components/partslists/RenamePartsListDialog.vue";
 import { sleep } from "@/utilities/general/sleep";
+import { useLoadingBar } from "naive-ui";
 
 const checkedRowKeysRef = ref([]);
 
@@ -225,6 +226,7 @@ export default defineComponent({
   name: "PartsListView",
   props: ["id"],
   setup(prop) {
+    const loadingBar = useLoadingBar();
     const partsList: Ref<IPartsList | undefined> = ref({} as IPartsList);
     const showModalDeleteRequest = ref(false);
     const showModalRename = ref(false);
@@ -326,9 +328,11 @@ export default defineComponent({
       partsListStore.deletePartsList(partsList.value.id.toString());
     };
 
-    onBeforeMount(async () => {
+    onMounted(async () => {
+      loadingBar.start();
       partsList.value = await partsListStore.getPartsListWithDetail(prop.id);
-      partsStore.loadPaB();
+      await partsStore.loadPaB();
+      loadingBar.finish();
     });
 
     watch(

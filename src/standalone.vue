@@ -92,7 +92,9 @@
             >
               <CartShort />
             </div>
-            <router-view />
+            <n-loading-bar-provider>
+              <router-view />
+            </n-loading-bar-provider>
           </div>
         </n-layout>
       </n-layout>
@@ -175,7 +177,7 @@ const menuOptions = [
             name: "cart",
           },
         },
-        { default: () => "Shopping Cart" }
+        { default: () => t("cart.title") }
       ),
     key: "cart",
     icon: renderIcon(ShoppingCartOutlined),
