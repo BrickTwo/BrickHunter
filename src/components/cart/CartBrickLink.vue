@@ -10,7 +10,7 @@
       </n-statistic>
       <n-divider vertical />
       <n-statistic :label="$t('cart.price')">
-        {{ totalPrice }} <span style="font-size: 10px">USD</span>
+        {{ totalPrice }} <span style="font-size: 10px">EUR</span>
       </n-statistic>
       <n-divider vertical />
     </n-space>
