@@ -68,24 +68,27 @@ export interface GetPaBPartsResponse {
   }[];
 }
 
-export interface GetPaBFindPartsRequest {
+export interface PickABrickQueryRequest {
   page: number;
   perPage: number;
   query: string;
   location: string;
 }
 
-export interface GetPaBFindPartsResponse {
+export interface PickABrickQueryResponse {
   data: {
     elements: {
       count: number;
       total: number;
-      results: GetPaBFindPartsResponseResults[];
+      results: PickABrickQueryResponseResults[];
     };
   };
+  errors: {
+    message: string;
+  }[];
 }
 
-export interface GetPaBFindPartsResponseResults {
+export interface PickABrickQueryResponseResults {
   inStock: boolean;
   variant: {
     id: string;
@@ -99,4 +102,68 @@ export interface GetPaBFindPartsResponseResults {
       deliveryChannel: string;
     };
   };
+}
+
+export interface ElementCartQueryRequest {
+  authorization: string;
+  location: string;
+  cartType: string;
+}
+
+export interface ElementCartQueryResponse {
+  data: {
+    me: {
+      elementCarts: {
+        carts: {
+          id: string;
+          type: string;
+          PABLineItems: {
+            id: string;
+            quantity: number;
+          }[];
+        }[];
+      };
+    };
+  };
+  errors: {
+    message: string;
+  }[];
+}
+
+export interface AddToElementCartRequest {
+  items: {
+    sku: string;
+    quantity: number;
+  }[];
+  cartType: string;
+  authorization: string;
+  location: string;
+}
+
+export interface AddToElementCartResponse {
+  data: {
+    addToElementCart: {
+      id: string;
+    };
+  };
+  errors: {
+    message: string;
+  }[];
+}
+
+export interface RemoveAllElementsFromCartRequest {
+  cartType: string;
+  authorization: string;
+  location: string;
+}
+
+export interface RemoveAllElementsFromCartResponse {
+  data: {
+    removeAllElementsFromCart: {
+      id: string;
+    };
+  };
+  errors: {
+    message: string;
+  }[];
 }

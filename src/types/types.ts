@@ -1,4 +1,9 @@
-import { GetPaBFindPartsRequest } from "./api-types";
+import {
+  AddToElementCartRequest,
+  ElementCartQueryRequest,
+  PickABrickQueryRequest,
+  RemoveAllElementsFromCartRequest,
+} from "./api-types";
 import {
   ICartPositionStore,
   IPartsListPositionStore,
@@ -49,11 +54,32 @@ export interface IPart extends Object {
 
 export interface BackgroundRequest {
   action: BackgroundRequestAction;
-  request: GetPaBFindPartsRequest;
+  request:
+    | PickABrickQueryRequest
+    | ElementCartQueryRequest
+    | RemoveAllElementsFromCartRequest
+    | AddToElementCartRequest
+    | BackgroundTabIdRequest
+    | undefined;
 }
 
 export enum BackgroundRequestAction {
   FindPaBPart = 1,
+  GetLegoTabId = 2,
+  GetAuthorization = 3,
+  GetCart = 4,
+  ClearCart = 5,
+  AddToCart = 6,
+  GoToPaB = 7,
+}
+
+export interface BackgroundResponse {
+  action: BackgroundResponseAction;
+  response: unknown;
+}
+
+export enum BackgroundResponseAction {
+  Lego = 1,
 }
 
 export interface ICountry {
@@ -66,4 +92,8 @@ export interface ICountry {
 export interface ILanguage {
   value: string;
   label: string | undefined;
+}
+
+export interface BackgroundTabIdRequest {
+  location: string;
 }

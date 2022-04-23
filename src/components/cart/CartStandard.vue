@@ -33,24 +33,18 @@
         </n-button>
       </n-dropdown>
       <n-space justify="end">
-        <n-button type="primary" ghost>
+        <n-button
+          type="primary"
+          @click="showModal = true"
+          ghost
+          :disabled="!totalUniqueParts"
+        >
           <template #icon>
             <n-icon>
               <ShoppingBagOutlined />
             </n-icon>
           </template>
-          {{ $t("cart.actions.addToLegoShoppingBag") }}
-        </n-button>
-        <n-button>
-          <template #icon>
-            <n-icon>
-              <ShoppingBagOutlined />
-            </n-icon>
-            <n-icon style="position: absolute">
-              <ClearOutlined />
-            </n-icon>
-          </template>
-          {{ $t("cart.actions.clearLegoStandardShoppingBag") }}
+          {{ $t("cart.actions.transferToLego") }}
         </n-button>
         <div style="height: 34px; line-height: 30px">
           <n-popover trigger="hover">
@@ -59,6 +53,7 @@
                 default-checked
                 value="true"
                 :label="$t('cart.actions.affiliate')"
+                :disabled="!totalUniqueParts"
               />
             </template>
             <span>
@@ -66,7 +61,7 @@
             </span>
           </n-popover>
         </div>
-        <n-button>
+        <n-button :disabled="!totalUniqueParts">
           <template #icon>
             <n-icon>
               <PrintOutlined />
@@ -74,7 +69,7 @@
           </template>
           {{ $t("cart.actions.print") }}
         </n-button>
-        <n-button>
+        <n-button :disabled="!totalUniqueParts">
           <template #icon>
             <n-icon>
               <SaveAltOutlined />
@@ -90,6 +85,11 @@
       @update:checked-row-keys="onHandleCheck"
     />
   </n-space>
+  <TransferToLegoModal
+    v-model:showModal="showModal"
+    :partsList="partsList"
+    cartType="bap"
+  />
 </template>
 
 <script lang="ts">
@@ -103,6 +103,7 @@ import {
   ClearOutlined,
 } from "@vicons/material";
 import PartDataTable from "@/components/partDataTable/partDataTable.vue";
+import TransferToLegoModal from "./TransferToLegoModal.vue";
 import { cartsStore } from "@/store/carts-store";
 import { IPartsList } from "@/types/types";
 import { CartType } from "@/types/store-types";
@@ -123,6 +124,7 @@ export default defineComponent({
     const totalUniqueParts = ref(0);
     const totalQuantity = ref(0);
     const totalPrice = ref("0.00");
+    const showModal = ref(false);
 
     const onHandleCheck = (rowKeys: never[]) => {
       console.log(rowKeys);
@@ -190,6 +192,7 @@ export default defineComponent({
       totalPrice,
       bulkValue: ref(null),
       moveToValue: ref(10),
+      showModal,
       bulkOptions: [
         {
           label: "Print",
@@ -207,6 +210,7 @@ export default defineComponent({
     ShoppingBagOutlined,
     ClearOutlined,
     PartDataTable,
+    TransferToLegoModal,
   },
 });
 </script>

@@ -1,13 +1,19 @@
 import {
-  GetPaBFindPartsRequest,
-  GetPaBFindPartsResponse,
+  PickABrickQueryRequest,
+  PickABrickQueryResponse,
+  ElementCartQueryRequest,
+  ElementCartQueryResponse,
+  AddToElementCartRequest,
+  AddToElementCartResponse,
+  RemoveAllElementsFromCartRequest,
+  RemoveAllElementsFromCartResponse,
 } from "@/types/api-types";
 
 export class LegoApi {
-  public static async getPaBParts(
-    request: GetPaBFindPartsRequest
-  ): Promise<GetPaBFindPartsResponse> {
-    console.log("getPaBParts request", request);
+  public static async pickABrickQuery(
+    request: PickABrickQueryRequest
+  ): Promise<PickABrickQueryResponse> {
+    console.log("pickABrickQuery request", request);
 
     const PickABrickQuery = {
       operationName: "PickABrickQuery",
@@ -38,9 +44,112 @@ export class LegoApi {
       body: JSON.stringify(PickABrickQuery),
     });
 
-    const resp = (await response.json()) as GetPaBFindPartsResponse;
+    const resp = (await response.json()) as PickABrickQueryResponse;
 
-    console.log("getPaBParts response", resp);
+    console.log("pickABrickQuery response", resp);
+    //if (response.status) return response;
+    return resp;
+  }
+
+  public static async elementCartQuery(
+    request: ElementCartQueryRequest
+  ): Promise<ElementCartQueryResponse> {
+    console.log("elementCartQuery request", request);
+
+    const ElementCartQuery = {
+      operationName: "ElementCartQuery",
+      variables: {
+        cartTypes: [request.cartType],
+      },
+      query:
+        "query ElementCartQuery($cartTypes: [CartType]) {\n  me {\n    ... on LegoUser {\n      elementCarts(types: $cartTypes) {\n        carts {\n          ...BrickCartData\n          type\n        }\n      }\n    }\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n  PABLineItems {\n    ...PABLineItemData\n  }\n}\n\nfragment PABLineItemData on PABCartLineItem {\n  id\n  quantity\n}\n",
+    };
+
+    const url = "https://www.lego.com/api/graphql/ElementCartQuery";
+
+    const response = await fetch(url, {
+      method: "POST",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "x-locale": request.location,
+        authorization: request.authorization,
+      },
+      body: JSON.stringify(ElementCartQuery),
+    });
+
+    const resp = (await response.json()) as ElementCartQueryResponse;
+
+    console.log("elementCartQuery response", resp);
+    //if (response.status) return response;
+    return resp;
+  }
+
+  public static async addToElementCart(
+    request: AddToElementCartRequest
+  ): Promise<AddToElementCartResponse> {
+    console.log("addToElementCart request", request);
+
+    const AddToElementCart = {
+      operationName: "AddToElementCart",
+      variables: {
+        items: request.items,
+        cartType: request.cartType,
+      },
+      query:
+        "mutation AddToElementCart($items: [ElementInput!]!, $cartType: CartType) {\n  addToElementCart(input: {items: $items, cartType: $cartType}) {\n    ...BrickCartData\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n}\n",
+    };
+
+    const url = "https://www.lego.com/api/graphql/AddToElementCart";
+
+    const response = await fetch(url, {
+      method: "POST",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "x-locale": request.location,
+        authorization: request.authorization,
+      },
+      body: JSON.stringify(AddToElementCart),
+    });
+
+    const resp = (await response.json()) as AddToElementCartResponse;
+
+    console.log("addToElementCart response", resp);
+    //if (response.status) return response;
+    return resp;
+  }
+
+  public static async removeAllElementsFromCart(
+    request: RemoveAllElementsFromCartRequest
+  ): Promise<RemoveAllElementsFromCartResponse> {
+    console.log("removeAllElementsFromCart request", request);
+
+    const AddToElementCart = {
+      operationName: "RemoveAllElementsFromCart",
+      variables: {
+        cartType: request.cartType,
+      },
+      query:
+        "mutation RemoveAllElementsFromCart($cartType: CartType!) {\n  removeAllElementsFromCart(input: {cartType: $cartType}) {\n    ...BrickCartData\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n}\n",
+    };
+
+    const url = "https://www.lego.com/api/graphql/RemoveAllElementsFromCart";
+
+    const response = await fetch(url, {
+      method: "POST",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "x-locale": request.location,
+        authorization: request.authorization,
+      },
+      body: JSON.stringify(AddToElementCart),
+    });
+
+    const resp = (await response.json()) as RemoveAllElementsFromCartResponse;
+
+    console.log("removeAllElementsFromCart response", resp);
     //if (response.status) return response;
     return resp;
   }

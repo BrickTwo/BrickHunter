@@ -1,11 +1,9 @@
 {
   "cart": {
     "actions": {
-      "addToLegoShoppingBag": "Zum LEGO Warenkorb hinzufügen",
+      "transferToLego": "Zum LEGO Shop übertragen",
       "affiliate": "Affiliate",
       "affiliateInfoText": "Unterstütze BrickHunter indem du BrickHunter erlaubst einen Affiliatelink zu setzen.",
-      "clearLegoBestsellerShoppingBag": "LEGO Bestseller Warenkorb leeren",
-      "clearLegoStandardShoppingBag": "LEGO Standard Warenkorb leeren",
       "export": "Export",
       "bulkAction": "Massenaktion",
       "print": "Drucken"
@@ -14,7 +12,26 @@
     "price": "Preis",
     "title": "Warenkorb",
     "totalQuantity": "Total Menge",
-    "totalUniqueParts": "Verschiedene Teile"
+    "totalUniqueParts": "Verschiedene Teile",
+    "transferToLego": {
+      "title": "Zum LEGO Shop übertragen",
+      "states": {
+        "loading": "Lade...",
+        "WaitingForLego": "Warten auf lego.com",
+        "GetAuthorization": "Autorisierung abrufen",
+        "GetCart": "Warenkorb auslesen",
+        "CartNotEmptyRequest": "Teile im Warenkorb gefunden",
+        "CartNotEmptyRequestText": "Der {cartType} Warenkorb beinhaltet bereits {foundItemQuantityInCart} Bestellpositionen. Sollen diese vor dem Transferieren der Teile entfernent werden? Werden diese nicht entfernt kann es zu einem nicht funktionalen Pick a Brick Warenkorb führen, falls die maximale Anzahl erlaubter Bestellpositionen überschritten wird!",
+        "CartNotEmptyRequestClearCartButton": "Vorhandene Teile entfernen",
+        "CartNotEmptyRequestAddToCartButton": "Weiter ohne entfernen",
+        "ClearCart": "Warenkorb leeren",
+        "AddToCart": "Füge Teile dem Warenkorb hinzu",
+        "TransferSuccessfulText": "Warenkorb wurde erfolgreich übertragen",
+        "TransferSuccessfulCloseButton": "Schliessen",
+        "ErrorText": "Es ist ein Fehler aufgetreten. Versuche lego.com neu zu laden und lösche gegebenenfalls die Cookies auf lego.com um den Fehler zu beheben.",
+        "ErrorTextCloseButton": "Schliessen"
+      }
+    }
   },
   "countries": {
     "AU": "Australien",

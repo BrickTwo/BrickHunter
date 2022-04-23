@@ -213,7 +213,7 @@ import PartTableDetail from "@/components/partDataTable/partTableDetail.vue";
 import partTableCellPAB from "@/components/partDataTable/partTableCellPAB.vue";
 import PartDataTable from "@/components/partDataTable/partDataTable.vue";
 import browser from "webextension-polyfill";
-import { GetPaBFindPartsResponse } from "@/types/api-types";
+import { PickABrickQueryResponse } from "@/types/api-types";
 import { PartsListBulkActions } from "@/service/lists/partsListBulkActions";
 import DeletePartsListDialog from "@/components/partslists/DeletePartsListDialog.vue";
 import RenamePartsListDialog from "@/components/partslists/RenamePartsListDialog.vue";
@@ -269,7 +269,7 @@ export default defineComponent({
 
         var response = (await browser.runtime.sendMessage(
           request
-        )) as GetPaBFindPartsResponse;
+        )) as PickABrickQueryResponse;
 
         console.log("response", response);
 
