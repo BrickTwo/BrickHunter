@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "BrickHunter Alpha",
-    "description": "BrickHunter Alpha",
-    "version": "2.0.5",
+    "name": "BrickHunter Dev",
+    "description": "BrickHunter Dev",
+    "version": "2.0.7",
     "background": {
         "service_worker": "/js/background.js"
     },
@@ -16,7 +16,7 @@
         "cookies"
     ],
     "action": {
-        "default_title": "BrickHunter Alpha"
+        "default_title": "BrickHunter Dev"
     },
     "icons": {
         "16": "icons/icon16.png",

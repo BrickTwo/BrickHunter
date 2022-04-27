@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "BrickHunter Alpha",
     "description": "BrickHunter Alpha",
-    "version": "2.0.5",
+    "version": "2.0.6",
     "background": {
         "service_worker": "/js/background.js"
     },
@@ -11,7 +11,8 @@
         "https://*.lego.com/*"
     ],
     "permissions": [
-        "activeTab"
+        "activeTab",
+        "cookies"
     ],
     "action": {
         "default_title": "BrickHunter Alpha"
