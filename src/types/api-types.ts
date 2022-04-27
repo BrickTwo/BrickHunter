@@ -1,4 +1,5 @@
 import { NumberAnimationInst } from "naive-ui";
+import { DateTimeOptions } from "vue-i18n";
 
 export interface BrickLinkItemModel {
   itemType: string;
@@ -10,6 +11,46 @@ export interface BrickLinkItemModel {
   condition?: string;
   remarks?: string;
   notify?: string;
+}
+
+export interface BrickHunterV1ListModel {
+  id: string;
+  name: string;
+  cart: boolean;
+  date: Date;
+  source: string;
+  version?: string;
+  positions: BrickHunterV1ItemModel[];
+}
+
+export interface BrickHunterV1ItemModel {
+  source: string;
+  designId: string;
+  itemNumber?: number;
+  color: {
+    id: number;
+    brickLinkId: number;
+    brickLinkName: string;
+    legoId: number;
+    legoName: string;
+    bricksAndPiecesName: string;
+    pickABrickName: string;
+  };
+  qty: {
+    min: number;
+    have: number;
+    balance: number;
+    order: number;
+  };
+  brickLink?: {
+    wantedList: {
+      itemtype: string;
+      maxprice: number;
+      condition: string;
+      notify: string;
+      remarks: string;
+    };
+  };
 }
 
 export interface GetPartsRequest {

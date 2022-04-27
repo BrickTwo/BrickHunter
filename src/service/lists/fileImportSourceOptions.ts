@@ -8,13 +8,13 @@ export function fileImportSourceOptions() {
       label: "BrickLink",
       value: "bricklink",
     },
-    {
-      label: "Rebrickable",
-      value: "rebrickable",
-    },
-    {
-      label: "Custom CSV",
-      value: "customcsv",
-    },
+    // {
+    //   label: "Rebrickable",
+    //   value: "rebrickable",
+    // },
+    // {
+    //   label: "Custom CSV",
+    //   value: "customcsv",
+    // },
   ];
 }
