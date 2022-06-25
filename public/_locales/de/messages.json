@@ -725,5 +725,8 @@
     },
     "singlePartsInfo": {
         "message": "Diese Seite zeigt Teile aus dem alten Steine und Teile Service und nocht aus dem neuen Pick a Brick service an. Die Verfügbarkeit kann abweichen."
+    },
+    "singlePartsNoPrice": {
+        "message": "Kein Preis vorhanden"
     }
 }

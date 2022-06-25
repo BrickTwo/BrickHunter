@@ -9,7 +9,9 @@
     "https://www.bricklink.com/*",
     "http://www.bricklink.com/*",
     "https://brickhunter.bricktwo.net/*",
-    "http://brickhunter.bricktwo.net/*"
+    "http://brickhunter.bricktwo.net/*",
+    "https://api.bricktwo.net/*",
+    "http://api.bricktwo.net/*"
   ],
   "icons": {
     "16": "icons/icon_16.png",

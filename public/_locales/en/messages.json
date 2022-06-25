@@ -727,5 +727,8 @@
     },
     "singlePartsInfo": {
         "message": "This page currently only shows parts from the old Bricks and Pieces service and not from the new Pick a Brick service. The availability may differ"
+    },
+    "singlePartsNoPrice": {
+        "message": "No price available"
     }
 }

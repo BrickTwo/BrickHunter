@@ -41,7 +41,7 @@
         </b-link>
       </label>
     </b-row>
-    <b-row class="mt-0">
+    <!-- <b-row class="mt-0">
       <label class="custom-favorite-label">
         <font-awesome-icon
           :icon="['fab', 'telegram-plane']"
@@ -62,7 +62,7 @@
           <b-icon icon="eye" aria-hidden="true" />
         </b-link>
       </label>
-    </b-row>
+    </b-row> -->
     <b-row class="mt-0">
       <b-form-group>
         <b-form-radio
