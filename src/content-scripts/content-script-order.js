@@ -1,12 +1,12 @@
-chrome.runtime.onMessage.addListener(async function(
-    request,
-    sender,
-    sendResponse
-) {
-    if (request.contentScriptQuery == 'brickHunterLoadImages') {
-        setTimeout(brickHunterLoadImages, 500);
-    }
-});
+// chrome.runtime.onMessage.addListener(async function(
+//     request,
+//     sender,
+//     sendResponse
+// ) {
+//     if (request.contentScriptQuery == 'brickHunterLoadImages') {
+//         setTimeout(brickHunterLoadImages, 500);
+//     }
+// });
 
 function checkImage(src, good, bad) {
     var img = new Image();
