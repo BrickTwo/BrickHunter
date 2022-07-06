@@ -225,7 +225,7 @@ export default {
         async fillColors() {
             var colors = [];
             
-            this.colorList.map(color => {
+            this.colorList?.map(color => {
                 if(!colors.find(c => c.brickLinkName == color.brickLinkName)) {
                     colors.push(color);
                 }

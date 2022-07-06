@@ -17,7 +17,7 @@ const state = () => ({
 // getters
 const getters = {
     getCategoryById: (state) => (id) => {
-        return state.categories.find((category) => category.id === id);
+        return state.categories.find((category) => category.id == id);
     },
     isFavorite: (state) => (itemNumber) => {
         return state.favorites.indexOf(parseInt(itemNumber)) != -1;
