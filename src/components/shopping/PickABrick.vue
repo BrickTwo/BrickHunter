@@ -7,7 +7,12 @@
           id="btn-pickABrick-add-to-card"
           variant="primary"
           @click="pickABrickFillCart"
-          :disabled="!brickList || brickList.length == 0 || itemsBap.length > maxOrderSize || itemsPab.length > maxOrderSize"
+          :disabled="
+            !brickList ||
+            brickList.length == 0 ||
+            itemsBap.length > maxOrderSize ||
+            itemsPab.length > maxOrderSize
+          "
         >
           {{ buttonFillPickABrickCart }}
         </b-button>
@@ -53,7 +58,7 @@
           <p>
             <b-button
               variant="primary"
-              @click="openInNewTab('https://www.lego.com/')"
+              @click="openInNewTab(`https://www.lego.com/${languageCountry}`)"
               >{{ openLegoWebsite }}</b-button
             >
           </p>
@@ -75,7 +80,7 @@
           <p>
             <b-button
               variant="primary"
-              @click="openInNewTab('https://www.lego.com/')"
+              @click="openInNewTab(`https://www.lego.com/${languageCountry}`)"
               >{{ openLegoWebsite }}</b-button
             >
           </p>
@@ -105,10 +110,11 @@
           "
           show
           variant="warning"
-          >
-          {{ labelPabMaxOrderInfo1 }} {{ itemsBap.length }} {{ labelPabMaxOrderInfo2 }} {{itemsPab.length}} {{ labelPabMaxOrderInfo3 }}
-          </b-alert
         >
+          {{ labelPabMaxOrderInfo1 }} {{ itemsBap.length }}
+          {{ labelPabMaxOrderInfo2 }} {{ itemsPab.length }}
+          {{ labelPabMaxOrderInfo3 }}
+        </b-alert>
       </b-col>
     </b-row>
     <b-row>
@@ -334,20 +340,25 @@ export default {
     this.itemsPab = pabElements.map((part) => {
       return {
         sku: part.pickABrick.variant.id,
-        quantity: part.qty.order
+        quantity: part.qty.order,
       };
     });
 
     this.itemsBap = bapElements.map((part) => {
       return {
         sku: part.pickABrick.variant.id,
-        quantity: part.qty.order
+        quantity: part.qty.order,
       };
     });
   },
   computed: {
     showCartButtons() {
       return true;
+    },
+    languageCountry() {
+      const localeCountry = localStorage.getItem("country") || "DE";
+      const localeLanguage = localStorage.getItem("language") || "DE";
+      return localeLanguage.toLowerCase() + "-" + localeCountry.toUpperCase();
     },
     buttonFillPickABrickCart() {
       return browser.i18n.getMessage("shopping_buttonFillPickABrickCart");

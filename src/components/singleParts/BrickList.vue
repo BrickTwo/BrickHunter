@@ -127,7 +127,7 @@
           <b-row
             v-if="brick.deliveryChannel == 'bap'"
             style="
-              background-color: #32a852;
+              background-color: #81cc95;
               color: white;
               border-radius: 0.25rem;
               margin: 0 -5px;
