@@ -3,6 +3,9 @@ chrome.runtime.onMessage.addListener(async function(
     sender,
     sendResponse
 ) {
+    if (request.contentScriptQuery == 'loaded') {
+        return true;
+    }
     if (request.contentScriptQuery == 'readCookieGQAuth') {
         var cookie = getCookie('gqauth');
         if (navigator.userAgent.indexOf('Chrome') != -1) {
