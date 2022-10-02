@@ -36,8 +36,9 @@
             />
         </template>
         <template #cell(image)="data">
-            <div v-if="data.value.rsc" :style="bgimage(data.value.rsc)" />
-            <div v-else :style="bgimage(calcImage(data.value))" />
+            <div v-if="data.value.rsc > ''" :style="bgimage(data.value.rsc)" />
+            <div v-else-if="data.value.itemId" :style="bgimage(calcImage(data.value.itemId))" />
+            <div v-else :style="bgimage(calcImage(data.item.itemNumber))" />
         </template>
         <template #cell(color)="data">
             <div v-if="data.value">
@@ -351,7 +352,8 @@ export default {
     },
     methods: {
         calcImage(value) {
-            return `https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${value.itemId}.jpg`;
+            //return `https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${value.itemId}.jpg`;
+            return `https://brickhunter.blob.core.windows.net/parts/pab/${value}.jpg`;
         },
         calcColor(value) {
             return `background-color: ${value.colorCode}; border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block`;
