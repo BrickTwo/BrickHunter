@@ -267,7 +267,7 @@ const mutations = {
     },
     addToBrickLinkList(state, payload) {
         var found = state.brickLinkList.find((f) => {
-            if (payload.color.id == 1) {
+            if (payload.color?.id == 1) {
                 return (
                     f.designId == payload.designId &&
                     f.color.legoName == payload.color.legoName
