@@ -88,7 +88,7 @@ function showImages() {
   if (nextData.query) {
     const xlocale = `${
       nextData.query.locale.split("-")[0]
-    }-${nextData.query.locale.split("-")[0].toUpperCase()}`;
+    }-${nextData.query.locale.split("-")[1].toUpperCase()}`;
 
     fetch("https://www.lego.com/api/graphql/AccountOrderDetails", {
       method: "POST",
