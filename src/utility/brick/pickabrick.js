@@ -49,30 +49,31 @@ export default {
             let result = bricks.filter(
                 (brick) => brick.variant.id == item.itemNumber
             );
-            if (result[0]) return result[0];
+            return result[0];
+            // if (result[0]) return result[0];
 
-            if (item.itemNumber) {
-                let resp = await apiBrickTwo.getBrickAsync(
-                    item.itemNumber,
-                    country
-                );
+            // if (item.itemNumber) {
+            //     let resp = await apiBrickTwo.getBrickAsync(
+            //         item.itemNumber,
+            //         country
+            //     );
 
-                if (resp?.brick?.alternativeItemNumbers) {
-                    let altItemNumbers = resp.brick.alternativeItemNumbers.split(
-                        '|'
-                    );
+            //     if (resp?.brick?.alternativeItemNumbers) {
+            //         let altItemNumbers = resp.brick.alternativeItemNumbers.split(
+            //             '|'
+            //         );
 
-                    for (let i = 1; i < altItemNumbers.length - 1; i++) {
-                        let result = bricks.filter(
-                            (brick) => brick.itemNumber == altItemNumbers[i]
-                        );
+            //         for (let i = 1; i < altItemNumbers.length - 1; i++) {
+            //             let result = bricks.filter(
+            //                 (brick) => brick.itemNumber == altItemNumbers[i]
+            //             );
 
-                        if (result[0]) return result[0];
-                    }
-                }
+            //             if (result[0]) return result[0];
+            //         }
+            //     }
 
-                return result[0];
-            }
+            //     return result[0];
+            // }
         }
 
         let result = bricks.filter(

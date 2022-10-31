@@ -128,7 +128,7 @@ async function pickABrick(request) {
       operationName: "PickABrickQuery",
       variables: {
         page: 1,
-        perPage: 200,
+        perPage: 500,
         query: encodeURIComponent(designId),
       },
       query:
