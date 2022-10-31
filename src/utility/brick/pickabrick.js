@@ -49,8 +49,8 @@ export default {
             let result = bricks.filter(
                 (brick) => brick.variant.id == item.itemNumber
             );
-            return result[0];
-            // if (result[0]) return result[0];
+            
+            if (result[0]) return result[0];
 
             // if (item.itemNumber) {
             //     let resp = await apiBrickTwo.getBrickAsync(
@@ -94,9 +94,10 @@ export default {
                 }, colorCodes);
             }
         }
-
-        if(item.color.id == 9999){
+        
+        if(item.color.id == 1){
             result = bricks;
+            
         }
 
         result.sort((a, b) => {

@@ -107,7 +107,7 @@ export default {
                     if (item.color) {
                         part.color = this.findColor(item.color[0], this.COLOR);
                     } else {
-                        part.color = this.findColor(9999, this.COLOR);
+                        part.color = this.findColor(0, this.COLOR);
                     }
                     part.qty = {
                         min: 0,
