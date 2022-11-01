@@ -88,7 +88,7 @@ function addContentScript(tabId) {
 async function pickABrick(request) {
   switch (request.action) {
     case "findBrick":
-      return await findBrick(request.designId, request.sessionCookieId);
+      return await findBrick(request.designId, request.sessionCookieId, request.source);
     case "readQAuth":
       return await readQAuth();
     case "readSessionCookieId":
@@ -123,17 +123,33 @@ async function pickABrick(request) {
   pickABrick.addElementToCart = addElementToCart;
   pickABrick.open = open;
 
-  async function findBrick(designId, sessionCookieId) {
+  async function findBrick(designId, sessionCookieId, source) {
     var PickABrickQuery = {
       operationName: "PickABrickQuery",
       variables: {
         page: 1,
         perPage: 500,
-        query: encodeURIComponent(designId),
+        query: encodeURIComponent(designId)
       },
       query:
         "query PickABrickQuery($query: String, $page: Int, $perPage: Int, $sort: SortInput, $filters: [Filter!]) {\n  __typename\n  elements(query: $query, page: $page, perPage: $perPage, filters: $filters, sort: $sort) {\n    count\n    results {\n      ...ElementLeafData\n      __typename\n    }\n    total\n    __typename\n  }\n}\n\nfragment ElementLeafData on Element {\n  id\n  name\n  primaryImage\n  ... on SingleVariantElement {\n    variant {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  ... on MultiVariantElement {\n    variants {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ElementLeafVariant on ElementVariant {\n  id\n  price {\n    currencyCode\n    centAmount\n    formattedAmount\n    __typename\n  }\n  attributes {\n    availabilityStatus\n    canAddToBag\n    colour\n	colourId\n    colourFamily\n    designNumber\n    mainGroup\n    materialGroup\n    materialType\n    maxOrderQuantity\n    showInListing\n    colourId\n    deliveryChannel\n    __typename\n  }\n  __typename\n}\n",
     };
+
+    console.log("1", source, PickABrickQuery)
+    if (source == "lego") {
+      PickABrickQuery.variables = {
+        page: 1,
+        perPage: 500,
+        query: "",
+        "filters.i0.key": "variants.attributes.designNumber",
+        "filters.i0.values.i0": designId,
+        filters: [{
+            key: "variants.attributes.designNumber",
+            values: [designId]
+        }]
+      }
+    }
+    console.log("2", source, PickABrickQuery)
 
     var url = "https://www.lego.com/api/graphql/PickABrickQuery";
 
