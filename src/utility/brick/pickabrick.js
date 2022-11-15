@@ -47,6 +47,7 @@ export default {
         if (!bricks || !bricks.length) return null;
 
         if (item.source == 'lego' || item.source == 'singleParts') {
+            
             let result = bricks.filter(
                 (brick) => brick.variant.id == item.itemNumber
             );
@@ -81,7 +82,7 @@ export default {
 
         let result = bricks.filter(
             (brick) =>
-                brick.variant.attributes.colour == item.color.pickABrickName &&
+                brick.variant.attributes.colourId == item.color.legoId &&
                 searchItem.searchids.includes(brick.variant.attributes.designNumber.toString())
         );
 

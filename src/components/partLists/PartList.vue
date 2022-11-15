@@ -311,6 +311,10 @@ export default {
             let cons = [];
 
             this.wantedList.map((item) => {
+                if(item.color) {
+                    item.color = this.findColorById(item.color.id, this.COLOR)
+                }
+                
                 if (brickBrickLink.isSpecialBrick(item)) {
                     item.isSpecial = true;
                     cons.push({ item: item, count: 1 });

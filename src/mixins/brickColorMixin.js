@@ -524,9 +524,9 @@ export const brickColorMixin = {
           brickLinkId: "50",
           brickLinkName: "Trans-Dark Pink",
           legoId: "113",
-          legoName: "Transparent Medium Reddish Viole",
+          legoName: "Transparent Medium Reddish Violet",
           bricksAndPiecesName: "Tr.Ml.R.Viol",
-          pickABrickName: "Tr. Medium Reddish Violet",
+          pickABrickName: "Transparent Medium Reddish Violet",
           colorCode: "#FD8ECF",
           group: ["Red", "Trans"],
         },
@@ -666,7 +666,7 @@ export const brickColorMixin = {
           id: "61",
           brickLinkId: "65",
           brickLinkName: "Metallic Gold",
-          legoId: "299",
+          legoId: "335",
           legoName:
             "Warm Gold, Drum Lacquered / Gold Metalized / Gold Laquered",
           bricksAndPiecesName: "Gold Ink",
@@ -1022,7 +1022,7 @@ export const brickColorMixin = {
           legoId: "182",
           legoName: "Transparent Bright Orange",
           bricksAndPiecesName: "Tr. Br. Orange",
-          pickABrickName: "Tr. Bright Orange",
+          pickABrickName: "Transparent Bright Orange",
           colorCode: "#E18D0A",
           group: ["Orange", "Trans"],
         },
@@ -1327,7 +1327,7 @@ export const brickColorMixin = {
           id: "121",
           brickLinkId: "128",
           brickLinkName: "Mx Black",
-          legoId: "3",
+          legoId: "0",
           legoName: "Black",
           bricksAndPiecesName: "N/A",
           pickABrickName: "N/A",
@@ -1382,7 +1382,7 @@ export const brickColorMixin = {
           id: "126",
           brickLinkId: "133",
           brickLinkName: "Mx Buff",
-          legoId: "5",
+          legoId: "0",
           legoName: "Buff",
           bricksAndPiecesName: "N/A",
           pickABrickName: "N/A",
@@ -2076,7 +2076,7 @@ export const brickColorMixin = {
           id: "189",
           brickLinkId: "232",
           brickLinkName: "Satin Trans-Dark Blue",
-          legoId: "1019",
+          legoId: "366",
           legoName: "Trans-Dark Blue Opal",
           bricksAndPiecesName: "Tr.Blue Opal",
           pickABrickName: "N/A",
@@ -2098,6 +2098,12 @@ export const brickColorMixin = {
     };
   },
   methods: {
+    findColorById(id, colorList) {
+      var result = colorList.filter(
+        (color) => color.id == id
+      );
+      return result[0];
+    },
     findColor(brickLinkColorId, colorList) {
       var result = colorList.filter(
         (color) => color.brickLinkId == brickLinkColorId
