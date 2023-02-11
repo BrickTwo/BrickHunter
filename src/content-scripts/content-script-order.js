@@ -90,7 +90,7 @@ function showImages() {
       nextData.query.locale.split("-")[0]
     }-${nextData.query.locale.split("-")[1].toUpperCase()}`;
 
-    fetch("https://www.lego.com/api/graphql/AccountOrderDetails", {
+    fetch("https://www.lego.com/api/graphql/OrderDetailsV2", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,10 +98,10 @@ function showImages() {
         authorization: getCookie("gqauth"),
       },
       body: JSON.stringify({
-        operationName: "AccountOrderDetails",
-        variables: { orderNumber: location.href.split("/").slice(-1)[0] },
+        operationName: "OrderDetailsV2",
+        variables: { orderIdentifier: location.href.split("/").slice(-1)[0] },
         query:
-          "query AccountOrderDetails($orderNumber: String!) {\n  orderDetails(orderNumber: $orderNumber) {\n    orderNumber\n    orderStatus\n    orderDate\n    orderCancellable\n    orderReturnCode\n    currencyCode\n    shippingMethod\n    shippingAddress {\n      addressLine1\n      addressLine2\n      city\n      company\n      country\n      firstName\n      lastName\n      postalCode\n      region\n      state\n      phone\n      externalId\n      __typename\n    }\n    billingAddress {\n      addressLine1\n      addressLine2\n      city\n      company\n      country\n      firstName\n      lastName\n      postalCode\n      region\n      state\n      phone\n      externalId\n      __typename\n    }\n    collectionPointAddress {\n      company\n      address {\n        houseNo\n        street\n        town\n        city\n        zipCode\n        country\n        __typename\n      }\n      __typename\n    }\n    payment {\n      cardType\n      lastFourDigits\n      __typename\n    }\n    orderTotals {\n      subtotal\n      tax {\n        name\n        amount\n        __typename\n      }\n      discount\n      vipRedeemed\n      delivery\n      total\n      __typename\n    }\n    productGroups {\n      status\n      shipBy\n      subTotal\n      totalQuantity\n      items {\n        quantity\n        linePrice\n        lineTotal\n        productCode\n        sku\n        status\n        name\n        slug\n        sequence\n        itemReturnCode\n        __typename\n      }\n      __typename\n    }\n    tracking {\n      trackingNumber\n      __typename\n    }\n    relatedOrders {\n      returns\n      __typename\n    }\n    __typename\n  }\n}\n",
+          "query OrderDetailsV2($orderIdentifier: String!, $guest: Boolean, $useMockData: Boolean) {\n  orderDetailsV2(\n    orderIdentifier: $orderIdentifier\n    guest: $guest\n    useMockData: $useMockData\n  ) {\n    orderNumber\n    status\n    date\n    itemGroups {\n      status\n      type\n      subtotal\n      headerItem {\n        name\n        sku\n        status\n        linePrice\n        unitPrice\n        quantity\n        returnCode\n        returnableQty\n        sequence\n        productCode\n        __typename\n      }\n      items {\n        name\n        sku\n        status\n        linePrice\n        unitPrice\n        quantity\n        returnCode\n        returnableQty\n        sequence\n        productCode\n        __typename\n      }\n      __typename\n    }\n    billingAddress {\n      firstName\n      lastName\n      company\n      addressLine1\n      addressLine2\n      city\n      region\n      postalCode\n      country\n      __typename\n    }\n    shippingAddress {\n      firstName\n      lastName\n      company\n      addressLine1\n      addressLine2\n      city\n      region\n      postalCode\n      country\n      __typename\n    }\n    shippingMethod\n    tracking {\n      trackingNumber\n      url\n      __typename\n    }\n    currencyCode\n    totals {\n      subtotal\n      shipping\n      discount\n      vipRedeemed\n      finalTotal\n      __typename\n    }\n    tax {\n      portions {\n        key\n        amount\n        __typename\n      }\n      isNonInclusive\n      __typename\n    }\n    payments {\n      lastFourDigits\n      cardType\n      __typename\n    }\n    returnOrders\n    relatedOrders\n    returnCode\n    cancellable\n    __typename\n  }\n}",
       }),
     })
       .then((response) => response.text())
@@ -118,7 +118,7 @@ function showImages() {
 
           items.forEach((item, index) => {
             const sku =
-              data.data.orderDetails.productGroups[pgIndex].items[index].sku;
+              data.data.orderDetailsV2.itemGroups[pgIndex].items[index]?.sku;
 
             if (sku) {
               let urlLod5 = `https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/${sku}.jpg`;
