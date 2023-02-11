@@ -510,7 +510,7 @@ async function bricksAndPieces(request) {
         message: responseSearch.json(),
       };
 
-    var urlProduct = `https://bricksandpieces.services.lego.com/api/v1/bricks/product/${encodeURIComponent(
+    var urlProduct = `https://bricksandpieces.cs.services.lego.com/api/v1/bricks/product/${encodeURIComponent(
       setNumber
     )}?country=${localeCountry}&orderType=missing`;
 
