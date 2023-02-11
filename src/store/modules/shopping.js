@@ -254,9 +254,17 @@ const mutations = {
             if (found.qty.order > 999) {
                 found.qty.order = 999;
             }
+
+            if (found.pickABrick.variant.attributes.maxOrderQuantity < payload.qty.order) {
+                payload.qty.order = found.qty.maxAmount;
+            }
         } else {
             if (payload.qty.order > 999) {
                 payload.qty.order = 999;
+            }
+            if (payload.pickABrick.variant.attributes.maxOrderQuantity < payload.qty.order) {
+                payload.qty.maxAmount = payload.pickABrick.variant.attributes.maxOrderQuantity;
+                payload.qty.order = payload.qty.maxAmount;
             }
             state.pickABrickList.push(JSON.parse(JSON.stringify(payload)));
         }
