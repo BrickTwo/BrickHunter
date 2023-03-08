@@ -1,37 +1,19 @@
 {
-  "manifest_version": 2,
-  "name": "__MSG_extName__",
-  "description": "Browse the complete LEGO Shop bricks and pieces catalog, import BrickLink Wanted lists and auto fill the LEGO Shop shopping cart",
-  "default_locale": "en",
-  "permissions": [
-    "tabs",
-    "https://*.lego.com/*",
-    "https://www.bricklink.com/*",
-    "http://www.bricklink.com/*",
-    "https://brickhunter.bricktwo.net/*",
-    "http://brickhunter.bricktwo.net/*",
-    "https://api.bricktwo.net/*",
-    "http://api.bricktwo.net/*"
-  ],
-  "icons": {
-    "16": "icons/icon_16.png",
-    "48": "icons/icon_48.png",
-    "128": "icons/icon_128.png"
-  },
+  "name": "BrickHunter 2.0",
+  "version": "1.0",
+  "description": "Build an Extension with Angular",
+  "manifest_version": 3,
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://*.lego.com/*"],
   "background": {
-    "scripts": [
-      "js/background.js"
-    ],
-    "persistent": false
+    "service_worker": "background.js"
   },
-  "devtools_page": "devtools.html",
-  "browser_action": {
-    "default_popup": "popup.html",
-    "default_title": "__MSG_extName__",
+  "action": {
+    "default_title": "Make this page red",
     "default_icon": {
-      "16": "icons/icon_16.png",
-      "24": "icons/icon_24.png",
-      "32": "icons/icon_32.png"
+      "16": "favicon.ico",
+      "24": "favicon.ico",
+      "32": "favicon.ico"
     }
   }
 }
