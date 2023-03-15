@@ -10,6 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import * as fromApp from './store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { PartsListEffects } from './parts-list/store/parts-list.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,9 @@ import * as fromApp from './store/app.reducer';
     HttpClientModule,
     SharedModule,
     CommonModule,
-    StoreModule.forRoot(fromApp.appReducer)
+    StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot(PartsListEffects),
+    StoreDevtoolsModule.instrument({ logOnly: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent],

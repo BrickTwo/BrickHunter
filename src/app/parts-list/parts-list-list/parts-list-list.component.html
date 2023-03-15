@@ -22,9 +22,9 @@
           <!-- Action Column -->
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
               <button mat-stroked-button><mat-icon>shopping_cart</mat-icon>Shopping Cart</button>
-              <button mat-stroked-button><mat-icon>delete</mat-icon>Delete</button>
+              <button mat-stroked-button (click)="onDeletePartsList(element.id)"><mat-icon>delete</mat-icon>Delete</button>
             </td>
           </ng-container>
 

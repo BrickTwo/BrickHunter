@@ -3,10 +3,12 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { MaterialModule } from "src/app/material.module";
 import { FileUploadComponent } from "./file-upload/file-upload.component";
+import { PartsTableComponent } from "./parts-table/parts-table.component";
 
 @NgModule({
     declarations: [
-        FileUploadComponent
+        FileUploadComponent,
+        PartsTableComponent
     ],
     imports: [
         HttpClientModule,
@@ -14,7 +16,8 @@ import { FileUploadComponent } from "./file-upload/file-upload.component";
         CommonModule
     ],
     exports: [
-        FileUploadComponent
+        FileUploadComponent,
+        PartsTableComponent
     ]
 })
 export class SharedModule {}

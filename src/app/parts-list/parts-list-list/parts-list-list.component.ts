@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, Subscription } from 'rxjs';
 import * as fromApp from '../../store/app.reducer';
+import * as partsListActions from '../store/parts-list.actions';
 import { PartsList } from '../parts-list.model';
 
 @Component({
@@ -26,7 +27,11 @@ export class PartsListListComponent implements OnInit, OnDestroy {
   }
 
   openPartsList(row: PartsList) {
-    this.router.navigate([row.id], { relativeTo: this.route });
+    this.router.navigate([row.uid], { relativeTo: this.route });
+  }
+
+  onDeletePartsList(id: number) {
+    this.store.dispatch(partsListActions.deletePartsList({ id: id }));
   }
 
   ngOnDestroy(): void {

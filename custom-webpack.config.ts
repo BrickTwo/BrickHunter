@@ -6,6 +6,6 @@ module.exports = {
     contentscript: { import: 'src/content-script.ts', runtime: false },
   },
   resolve: {
-    fallback: { "timers": require.resolve('timers-browserify') }
+    //fallback: { "timers": require.resolve('timers-browserify') }
   },
 } as Configuration;

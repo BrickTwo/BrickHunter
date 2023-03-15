@@ -4,7 +4,7 @@
       <h3 matListItemTitle class="text-3xl font-bold">BrickHunter</h3>
     </mat-list-item>
   <mat-nav-list>
-    <mat-list-item>
+    <mat-list-item [disabled]="true">
       <mat-icon matListItemIcon>web</mat-icon>
       <h3 matListItemTitle>Browse Parts</h3>
     </mat-list-item>
@@ -14,15 +14,19 @@
         <h3 matListItemTitle>Parts Lists</h3>
       </mat-list-item>
     </a>
-    <mat-list-item>
+    <mat-list-item [disabled]="true">
+      <mat-icon matListItemIcon>history</mat-icon>
+      <h3 matListItemTitle>PaB Changelog</h3>
+    </mat-list-item>
+    <mat-list-item [disabled]="true">
       <mat-icon matListItemIcon>shopping_cart</mat-icon>
       <h3 matListItemTitle>Shopping Cart</h3>
     </mat-list-item>
-    <mat-list-item>
+    <mat-list-item [disabled]="true">
       <mat-icon matListItemIcon>help</mat-icon>
       <h3 matListItemTitle>Help</h3>
     </mat-list-item>
-    <mat-list-item>
+    <mat-list-item [disabled]="true">
       <mat-icon matListItemIcon>info</mat-icon>
       <h3 matListItemTitle>Info</h3>
     </mat-list-item>

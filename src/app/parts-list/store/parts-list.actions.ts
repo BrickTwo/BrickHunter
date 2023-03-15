@@ -1,5 +1,22 @@
 import { createAction, props } from "@ngrx/store";
+import { BrickLinkWantedListItem } from "src/app/shared/bricklink-wantedlist.model";
 import { Part, PartsList } from "../parts-list.model";
+
+export const importPartsList = createAction(
+    '[PartsList] Import Parts List',
+    props<{
+        partsListName: string,
+        source: string,
+        parts: BrickLinkWantedListItem[]
+    }>()
+);
+
+export const setPartsLists = createAction(
+    '[PartsList] Set Parts Lists',
+    props<{
+        partsLists: PartsList[]
+    }>()
+);
 
 export const addPartsList = createAction(
     '[PartsList] Add Parts List',
@@ -11,15 +28,15 @@ export const addPartsList = createAction(
 export const updatePartsList = createAction(
     '[PartsList] Update Parts List',
     props<{
-        id: string,
+        id: number,
         partsList: PartsList
     }>()
 );
 
 export const deletePartsList = createAction(
-    '[PartsList] Delete PArts List',
+    '[PartsList] Delete Parts List',
     props<{
-        id: string
+        id: number
     }>()
 );
 
@@ -31,12 +48,11 @@ export const addPartToPartsList = createAction(
     }>()
 );
 
-export const updatePartInPartsList = createAction(
-    '[PartsList] Update Part in Parts List',
+export const updatePartsInPartsList = createAction(
+    '[PartsList] Update Parts in Parts List',
     props<{
-        partsListId: string,
-        elementId: number,
-        part: Part
+        partsListId: number,
+        parts: Part[]
     }>()
 );
 
@@ -46,4 +62,8 @@ export const deletePartFromPartsList = createAction(
         partsListId: string,
         elementId: number
     }>()
+);
+
+export const restorePartsLists = createAction(
+    '[PartsList] Restore Parts Lists'
 );

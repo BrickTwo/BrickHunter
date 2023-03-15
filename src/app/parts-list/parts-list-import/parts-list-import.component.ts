@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { BrickLinkWantedListItem, IBrickLinkWantedListItem } from 'src/app/shared/bricklink-wantedlist.model';
 import * as xml2js from 'xml2js';
 import * as fromApp from '../../store/app.reducer';
-import { Part, PartsList } from '../parts-list.model';
+import { GetPartsRequest, Part, PartsList } from '../parts-list.model';
 import * as partListActions from '../store/parts-list.actions';
 
 @Component({
@@ -19,7 +19,7 @@ export class PartsListImportComponent {
   @ViewChild('importForm', { static: false }) importForm: NgForm;
   wantedList: BrickLinkWantedListItem[];
 
-  constructor(private store: Store<fromApp.AppState>) {}
+  constructor(private store: Store<fromApp.AppState>) { }
 
   onFileNameChange(fileName: string) {
     this.importForm.setValue({
@@ -58,7 +58,7 @@ export class PartsListImportComponent {
 
     xml2js.parseStringPromise(fileContent, { normalizeTags: true, explicitArray: false, tagNameProcessors: tagNameProcessor, valueProcessors: valueProcessor })
       .then(result => {
-        this.wantedList = result.inventory.item as IBrickLinkWantedListItem[];        
+        this.wantedList = result.inventory.item as IBrickLinkWantedListItem[];
       })
       .catch(function (err) {
         // Failed
@@ -66,21 +66,21 @@ export class PartsListImportComponent {
   }
 
   onSubmit(form: NgForm) {
-    this.store.dispatch(partListActions.addPartsList({
-      partsList: new PartsList("555", form.value.listName, 'BrickLink', this.wantedList.map(item => {
-        return new Part(
-          item.color,
-          item.itemId,
-          0,
-          0,
-          {
-            amount: item.minQty,
-            have:  item.qtyFilled
-          }
-        )
-      }))
-    }));
+    this.store.dispatch(partListActions.importPartsList({ partsListName: form.value.listName, source: "BrickLink", parts: this.wantedList}));
+    // this.store.dispatch(partListActions.addPartsList({
+    //   partsList: new PartsList("555", form.value.listName, 'BrickLink', this.wantedList.map(item => {
+    //     return new Part(
+    //       item.color,
+    //       item.itemId,
+    //       0,
+    //       0,
+    //       {
+    //         amount: item.minQty,
+    //         have: item.qtyFilled
+    //       }
+    //     )
+    //   }))
+    // }));
     this.close.emit();
   }
-
 }

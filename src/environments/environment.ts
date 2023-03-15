@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  brickHunterApiBaseUrl: "https://brichunter-web-svc.azurewebsites.net"
 };
 
 /*

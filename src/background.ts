@@ -1,3 +1,5 @@
+import { PickABrick } from "./app/shared/functions/pickabrick";
+
 chrome.action.onClicked.addListener((tab: any) => {
   chrome.tabs.create({
     //url: '/partslists',
@@ -12,9 +14,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         .sendMessage(tabId, {
           contentScriptQuery: 'loaded',
         })
-        .then(() => {})
+        .then(() => { })
         .catch((error) => {
-          console.log('add content-script');
           chrome.scripting.executeScript({
             target: { tabId: tabId, allFrames: true },
             files: ['contentscript.js'],
@@ -23,3 +24,24 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     }
   }
 });
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log('background')
+  switch (request.action) {
+    case 'findBrick':
+      PickABrick.finBrick(request.designIds, localeCountryLanguage).then(resp => sendResponse(resp));
+      return true;
+    case 'addElementToCart':
+      PickABrick.addElementToCart(request.authorization, request.items, request.cartType, localeCountryLanguage).then(resp => sendResponse(resp));
+      return true;
+    case 'readQAuth':
+      console.log('readQAuth')
+      PickABrick.readQAuth().then(resp => sendResponse(resp));;
+      return true;
+  }
+
+  return false;
+});
+
+
+const localeCountryLanguage = "de-DE";

@@ -1,58 +1,41 @@
 console.log("bbbbbbbb")
 
-chrome.runtime.onMessage.addListener(async function(
+// chrome.runtime.onMessage.addListener(
+//     function(request, sender, sendResponse) {
+//       console.log(sender.tab ?
+//                   "from a content script:" + sender.tab.url :
+//                   "from the extension", navigator.userAgent);
+//       if (request.greeting === "hello")
+//         sendResponse({farewell: "goodbye"});
+//     }
+//   );
+
+
+chrome.runtime.onMessage.addListener(function(
     request,
     sender,
     sendResponse
 ) {
+    console.log('contentscript', request)
     if (request.contentScriptQuery == 'loaded') {
         return true;
     }
     if (request.contentScriptQuery == 'readCookieGQAuth') {
         var cookie = getCookie('gqauth');
+        console.log("cookie", cookie, navigator.userAgent.indexOf('Chrome'))
         if (navigator.userAgent.indexOf('Chrome') != -1) {
             return sendResponse(cookie);
         }
         return cookie;
     }
 
-    if (request.contentScriptQuery == 'readCookieSessionCookieId') {
-        var cookie = getCookie('session_cookie_id');
-        if (navigator.userAgent.indexOf('Chrome') != -1) {
-            return sendResponse(cookie);
-        }
-        return cookie;
-    }
-
-    if (request.contentScriptQuery == 'setItem') {
-        return await asyncSessionStorage
-            .setItem(
-                'b_and_p_buy_' + request.country,
-                JSON.stringify(request.order)
-            )
-            .then(function() {
-                chrome.tabs
-                    .query({ currentWindow: true })
-                    .then(async (tabs) => {
-                        let tabId = 0;
-                        if (tabs[0].id) tabId = tabs[0].id;
-                        chrome.tabs.update(tabId, {
-                            url: `https://www.lego.com/service/replacementparts/sale`,
-                        });
-                    }).catch((error) => console.log(error));
-
-                return true;
-            });
-    }
-
-    if (request.contentScriptQuery == 'removeItem') {
-        return await asyncSessionStorage
-            .removeItem('b_and_p_buy_' + request.country)
-            .then(function() {
-
-                return true;
-            }).catch((error) => console.log(error));
-    }
+    // if (request.contentScriptQuery == 'readCookieSessionCookieId') {
+    //     var cookie = getCookie('session_cookie_id');
+    //     if (navigator.userAgent.indexOf('Chrome') != -1) {
+    //         return sendResponse(cookie);
+    //     }
+    //     return cookie;
+    // }
 });
 
 function getCookie(cname: string) {
@@ -70,18 +53,3 @@ function getCookie(cname: string) {
     }
     return '';
 }
-
-const asyncSessionStorage = {
-    setItem: async function(key: string, value: string) {
-        await null;
-        return sessionStorage.setItem(key, value);
-    },
-    getItem: async function(key: string) {
-        await null;
-        return sessionStorage.getItem(key);
-    },
-    removeItem: async function(key: string) {
-        await null;
-        return sessionStorage.removeItem(key);
-    },
-};
