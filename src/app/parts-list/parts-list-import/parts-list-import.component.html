@@ -1,10 +1,13 @@
-<app-file-upload requiredFileType="text/xml, application/json" [directRead]="true"
-        (fileUpload)="onFileContentChange($event)" (fileName)="onFileNameChange($event)"></app-file-upload>
-    
-<form (ngSubmit)="onSubmit(importForm)" #importForm="ngForm">
-    <mat-form-field class="example-full-width">
-        <mat-label>Name of the parts list</mat-label>
-        <input matInput name="listName" ngModel>
-    </mat-form-field>
-    <button mat-stroked-button>Import</button>
-</form>
+<div class="flex flex-col ...">
+    <app-file-upload requiredFileType="text/xml, application/json" [directRead]="true"
+        (fileUpload)="onFileContentChange($event)" (fileName)="onFileNameChange($event)" style="padding-bottom: 10px;"></app-file-upload>
+    <form (ngSubmit)="onSubmit(importForm)" #importForm="ngForm">
+        <div class="flex flex-col ...">
+            <mat-form-field class="example-full-width">
+                <mat-label>Name of the parts list</mat-label>
+                <input matInput name="listName" ngModel>
+            </mat-form-field>
+            <button mat-stroked-button>Import</button>
+        </div>
+    </form>
+</div>

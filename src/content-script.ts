@@ -1,41 +1,22 @@
-console.log("bbbbbbbb")
+console.log("ccccc")
 
-// chrome.runtime.onMessage.addListener(
-//     function(request, sender, sendResponse) {
-//       console.log(sender.tab ?
-//                   "from a content script:" + sender.tab.url :
-//                   "from the extension", navigator.userAgent);
-//       if (request.greeting === "hello")
-//         sendResponse({farewell: "goodbye"});
-//     }
-//   );
-
-
-chrome.runtime.onMessage.addListener(function(
+chrome.runtime.onMessage.addListener(function (
     request,
     sender,
     sendResponse
 ) {
     console.log('contentscript', request)
     if (request.contentScriptQuery == 'loaded') {
+        console.log('a')
         return true;
     }
     if (request.contentScriptQuery == 'readCookieGQAuth') {
         var cookie = getCookie('gqauth');
-        console.log("cookie", cookie, navigator.userAgent.indexOf('Chrome'))
         if (navigator.userAgent.indexOf('Chrome') != -1) {
             return sendResponse(cookie);
         }
         return cookie;
     }
-
-    // if (request.contentScriptQuery == 'readCookieSessionCookieId') {
-    //     var cookie = getCookie('session_cookie_id');
-    //     if (navigator.userAgent.indexOf('Chrome') != -1) {
-    //         return sendResponse(cookie);
-    //     }
-    //     return cookie;
-    // }
 });
 
 function getCookie(cname: string) {

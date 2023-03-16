@@ -1,6 +1,5 @@
 export interface RebrickableModel {
     partNum: string;
-    elementId: string;
     color: number;
     name: string;
     imageUrl: string;
@@ -9,20 +8,25 @@ export interface RebrickableModel {
     yearTo: number;
     isPrint: boolean;
     externalIds: { source: string; externalId: string }[];
-    elementIds: string[];
+    
 }
 
 export interface BrickLinkModel {
+    itemId: number;
+    itemType: string;
     itemNo: string;
-    altNo: string;
     itemName: string;
-    catStr: string;
     year: number;
     yearTo: number;
+    yearColor: number;
+    yearToColor: number;
     weight: number;
     dimX: number;
     dimY: number;
     dimZ: number;
+    dimXmm: number;
+    dimYmm: number;
+    dimZmm: number;
     hasSound: boolean;
     isStickerPart: boolean;
 }
@@ -50,6 +54,8 @@ export interface Part {
     condition: string;
     notify: boolean;
     remarks: string;
+    elementId: number;
+    elementIds?: number[];
     source: {
         source: string;
         id?: string;
@@ -69,23 +75,57 @@ export interface PartsList {
     parts: Part[];
 }
 
-export class GetPartsRequest {
-    constructor(
-        public source: string,
-        public ids: string[]
-    ) { }
+export interface GetPartsRequest {
+    source: string;
+    ids: string[];
 }
 
-export class GetPartsResponse {
-    constructor(
-        public partNum: string,
-        public name: string,
-        public imageUrl: string,
-        public partCatId: number,
-        public yearFrom: number,
-        public yearTo: number,
-        public isPrint: boolean,
-        public externalIds: { source: string; externalId: string }[],
-        public elementIds: { elementId: string; colorId: number }[]
-    ) { }
+export interface GetPartsResponse {
+    partNum: string;
+    name: string;
+    imageUrl: string;
+    partCatId: number;
+    yearFrom: number;
+    yearTo: number;
+    isPrint: boolean;
+    externalIds: { source: string; externalId: string }[];
+    elementIds: { elementId: number; colorId: number }[];
+}
+
+export interface GetBrickLinkRequest {
+    itemNumbers: string[];
+}
+
+export interface GetBrickLinkResponse {
+    itemId: number;
+    itemType: string;
+    itemNo: string;
+    itemName: string;
+    year: number;
+    yearTo: number;
+    defaultColorId: number;
+    weight: number;
+    dimX: number;
+    dimY: number;
+    dimZ: number;
+    dimXmm: number;
+    dimYmm: number;
+    dimZmm: number;
+    hasSound: boolean;
+    isStickerPart: boolean;
+    elementIds: GetBrickLinkElementIdsResponse[];
+    colors: GetBrickLinkColorsResponse[];
+}
+
+export interface GetBrickLinkElementIdsResponse
+{
+    colorId: number;
+    elementId: number;
+}
+
+export interface GetBrickLinkColorsResponse
+{
+    colorId: number;
+    yearFrom: number;
+    yearTo: number;
 }

@@ -1,14 +1,14 @@
 const timeout = setTimeout(function () { }, 5000);
 
 export class PickABrick {
-  static async finBrick(designIds: number[], locale: string) {
+  static async finBrick(elementIds: number[], locale: string) {
     var PickABrickQuery = {
       operationName: "PickABrickQuery",
       variables: {
         includeOutOfStock: true,
         page: 1,
         perPage: 500,
-        query: designIds.join(' '),
+        query: elementIds.join(' '),
       },
       query:
         "query PickABrickQuery($query: String, $page: Int, $perPage: Int, $sort: SortInput, $filters: [Filter!], $includeOutOfStock: Boolean) {\n  __typename\n  elements(query: $query, page: $page, perPage: $perPage, filters: $filters, sort: $sort, includeOutOfStock: $includeOutOfStock) {\n    count\n    results {\n      ...ElementLeafData\n      __typename\n    }\n    total\n    __typename\n  }\n}\n\nfragment ElementLeafData on Element {\n  id\n  name\n  inStock\n  primaryImage\n  ... on SingleVariantElement {\n    variant {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  ... on MultiVariantElement {\n    variants {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ElementLeafVariant on ElementVariant {\n  id\n  price {\n    currencyCode\n    centAmount\n    formattedAmount\n    __typename\n  }\n  attributes {\n    availabilityStatus\n    canAddToBag\n    colour\n	colourId\n    colourFamily\n    designNumber\n    mainGroup\n    materialGroup\n    materialType\n    maxOrderQuantity\n    showInListing\n    colourId\n    deliveryChannel\n    __typename\n  }\n  __typename\n}\n",
@@ -85,32 +85,54 @@ export class PickABrick {
     return response;
   }
 
+  static async readCart(authorization, locale: string) {
+    var PickABrickQuery = {
+      operationName: "ElementCartQuery",
+      variables: {
+        cartTypes: ["pab", "bap"],
+        query: "",
+      },
+      query:
+        "query ElementCartQuery($cartTypes: [CartType]) {\n  me {\n    ... on LegoUser {\n      elementCarts(types: $cartTypes) {\n        carts {\n          ... on BrickCart {\n            ...BrickCartData\n            __typename\n          }\n          type\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n  ... on BrickCart {\n    __typename\n  }\n  __typename\n}\n",
+    };
+
+    var url = "https://www.lego.com/api/graphql/ElementCartQuery";
+
+    var response = await fetch(url, {
+      method: "POST",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "x-locale": locale,
+        authorization: authorization,
+      },
+      body: JSON.stringify(PickABrickQuery),
+    })
+      .then((response) => {
+        clearTimeout(timeout);
+        if (response.status < 200 || response.status >= 300)
+          return {
+            status: response.status,
+            message: response.json(),
+          };
+        return response.json();
+      })
+      .catch((error) => console.log(error));
+
+    if (response.status) return response;
+    return response.data.me.elementCarts.carts;
+  }
+
   static async readQAuth() {
     var tabId = await PickABrick.getLegoTab();
     if (!tabId) return false;
 
+    let response = await (async () => {
+      const response = await chrome.tabs.sendMessage(tabId, { contentScriptQuery: "readCookieGQAuth" });
+      return response;
+    })();
 
-    // (async () => {
-    //   const [tab] = await chrome.tabs.query({ url: "*://*.lego.com/*", status: "complete" });
-    //   const response = await chrome.tabs.sendMessage(tab.id, { greeting: "hello" });
-    //   // do something with response here, not outside the function
-    //   console.log("dddd", response);
-    // })();
-
-    let response =  await chrome.tabs
-      .sendMessage(tabId, {
-        contentScriptQuery: "readCookieGQAuth",
-      })
-      .then((authorization) => {
-        console.log('authorization', authorization)
-        return authorization;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-      console.log("resp", response);
-      return response
+    return response
   }
 
   static getLegoTab() {
@@ -123,27 +145,8 @@ export class PickABrick {
           return false;
         }
 
-        console.log(tabs)
-
         return tabs[0].id;
       })
       .catch((error) => console.log(error));
   }
-}
-
-
-function getCookie(cname: string) {
-  var name = cname + '=';
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return '';
 }

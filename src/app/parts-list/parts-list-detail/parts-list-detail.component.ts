@@ -6,18 +6,12 @@ import * as fromApp from '../../store/app.reducer';
 import * as partsListActions from '../store/parts-list.actions';
 import { Part, PartsList } from '../parts-list.model';
 
-export interface PartsLists {
-  name: string;
-  positions: number;
-}
-
 @Component({
   selector: 'app-parts-list-detail',
   templateUrl: './parts-list-detail.component.html',
   styleUrls: ['./parts-list-detail.component.css']
 })
 export class PartsListDetailComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'sourceId', 'elementId', 'image', 'color', 'quantity', 'brickLink', 'pickABrick'];
   partsList: PartsList;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: Store<fromApp.AppState>) { }
@@ -39,16 +33,19 @@ export class PartsListDetailComponent implements OnInit {
       });
   }
 
-  onSync() {
+  onLoadPab() {
+    let elementIds: number[] = [];
+    this.partsList.parts.map(item => elementIds.push(...item.elementIds));
+
     chrome.runtime.sendMessage({
       service: 'pickABrick',
       action: 'findBrick',
-      designIds: this.partsList.parts.map(item => item.rebrickable?.elementIds.join(' '))
+      elementIds: elementIds,
     }).then(results => {
-      console.log(results);
+      console.log("findBrick", results);
       let parts: Part[] = this.partsList.parts.map(part => {
-        if (!part.rebrickable) return { ...part, lego: null };
-        const pab = results.find(result => part.rebrickable.elementIds.find(e => e === result.variant.id));
+        if (!part.elementIds || part.elementIds.length === 0) return { ...part, lego: null };
+        const pab = results.find(result => part.elementIds?.find(e => e === Number(result.variant.id)));
         if (!pab) return { ...part, lego: null };
 
         part.lego = {
@@ -65,7 +62,6 @@ export class PartsListDetailComponent implements OnInit {
 
         return part;
       })
-
       this.store.dispatch(partsListActions.updatePartsInPartsList({ partsListId: this.partsList.id, parts: parts }))
     });
   }
@@ -75,10 +71,36 @@ export class PartsListDetailComponent implements OnInit {
     chrome.runtime.sendMessage({
       service: 'pickABrick',
       action: 'readQAuth',
-      designIds: this.partsList.parts.map(item => item.rebrickable?.elementIds.join(' '))
-    }).then((response) => {
-      console.log('qauth', response)
-      if (!response) {
+      designIds: this.partsList.parts.map(item => item.elementIds?.join(' '))
+    }).then((response: string) => {
+      console.log('qauth front', response)
+      const authorization = response;
+      if (response) {
+        console.log("sendReadCart")
+        // chrome.runtime.sendMessage({
+        //       service: "pickABrick",
+        //       action: "readCart",
+        //       authorization: response,
+        //     })
+        //     .then((response) => {
+              const items = this.getParts(cartType).map((part) => {
+                return {
+                  sku: part.lego.elementId.toString(),
+                  quantity: part.qty,
+                };
+              });
+
+              console.log("readcart", response)
+              chrome.runtime.sendMessage({
+                service: "pickABrick",
+                action: "addElementToCart",
+                authorization: authorization,
+                items: items.slice(1,150),
+                cartType: cartType,
+              });
+              // return true;
+            // })
+            // .catch(() => {});
         // if (action == "fill") {
         //   // this.$bvModal.show("modal-open-lego-fill-cart");
         // } else {

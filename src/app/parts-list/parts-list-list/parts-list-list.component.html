@@ -1,6 +1,9 @@
-<mat-sidenav-container [hasBackdrop]="false">
+<mat-sidenav-container [hasBackdrop]="false" style="background-color: transparent;">
   <mat-sidenav-content>
-    <h2><mat-icon matListItemIcon>list_alt</mat-icon>Parts Lists</h2>
+    <div class="flex flex-row">
+      <mat-icon matListItemIcon style="margin-top: 7px">list_alt</mat-icon>
+      <h2>Parts Lists</h2>
+    </div>
     <mat-card>
       <mat-card-content>
         <button mat-stroked-button (click)="drawer.open()">Import</button>
@@ -23,7 +26,6 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
-              <button mat-stroked-button><mat-icon>shopping_cart</mat-icon>Shopping Cart</button>
               <button mat-stroked-button (click)="onDeletePartsList(element.id)"><mat-icon>delete</mat-icon>Delete</button>
             </td>
           </ng-container>
@@ -34,8 +36,10 @@
       </mat-card-content>
     </mat-card>
   </mat-sidenav-content>
-  <mat-sidenav mode="over" #drawer position="end" fixedInViewport="Fixed" style="min-width: 50vw;">
-    <button mat-stroked-button (click)="drawer.close()">Close</button>
+  <mat-sidenav mode="over" #drawer position="end" fixedInViewport="Fixed" style="width: 600px; padding: 20px">
+    <div class="flex flex-row-reverse ...">
+      <mat-icon (click)="drawer.close()" style="cursor: pointer; font-size: xx-large;">close</mat-icon>
+    </div>
     <app-parts-list-import (close)="drawer.close()"></app-parts-list-import>
   </mat-sidenav>
 </mat-sidenav-container>

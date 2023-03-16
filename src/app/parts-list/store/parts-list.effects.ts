@@ -5,7 +5,7 @@ import { Store } from "@ngrx/store";
 import { map, switchMap, tap, withLatestFrom } from "rxjs";
 import { environment } from "src/environments/environment";
 import * as fromApp from "src/app/store/app.reducer";
-import { GetPartsRequest, GetPartsResponse, RebrickableModel, Part, PartsList } from "../parts-list.model";
+import { GetPartsRequest, GetPartsResponse, RebrickableModel, Part, PartsList, GetBrickLinkResponse, GetBrickLinkRequest, BrickLinkModel } from "../parts-list.model";
 import * as PartsListActions from "./parts-list.actions";
 import { Color } from "src/app/shared/functions/color";
 import { Guid } from "src/app/shared/functions/guid";
@@ -18,16 +18,24 @@ export class PartsListEffects {
             ofType(PartsListActions.importPartsList),
             switchMap(actionData => {
                 const partIds = actionData.parts.map(item => { return item.itemId });
-                const request = new GetPartsRequest(actionData.source, partIds);
+                const request: GetPartsRequest = { source: actionData.source, ids: partIds };
                 return this.http.post<GetPartsResponse[]>(environment.brickHunterApiBaseUrl + '/parts', request)
-                    .pipe(map(response => ({ actionData, response })));
+                    .pipe(map(responseParts => ({ actionData, responseParts })));
             }),
-            map(({ actionData, response }) => {
+            switchMap(({ actionData, responseParts }) => {
+                const partIds = actionData.parts.map(item => { return item.itemId });
+                const request: GetBrickLinkRequest = { itemNumbers: partIds}
+                return this.http.post<GetBrickLinkResponse[]>(environment.brickHunterApiBaseUrl + '/bricklink', request)
+                    .pipe(map(responseBrickLink => ({ actionData, responseParts, responseBrickLink })));
+            }),
+            map(({ actionData, responseParts, responseBrickLink }) => {
                 const parts = actionData.parts.map(item => {
                     const color = Color.getColor(item.color, actionData.source);
 
                     const part: Part = {
-                        id: item.itemId,
+                        id: `${item.itemId}+${item.color}`,
+                        elementId: 0,
+                        elementIds: [],
                         color: color.id,
                         qty: item.minQty,
                         have: item.qtyFilled,
@@ -43,7 +51,7 @@ export class PartsListEffects {
                         }
                     };
 
-                    const resp = response.find((resp) => {
+                    const resp = responseParts.find((resp) => {
                         return resp.externalIds.find(
                             (e) => e.externalId === item.itemId && e.source === "BrickLink"
                         );
@@ -53,13 +61,10 @@ export class PartsListEffects {
                         const elementIds = resp.elementIds
                             .filter((e) => e.colorId == color.id)
                             .map((item) => item.elementId)
-                            .map((id) => parseInt(id))
-                            .sort((a, b) => b - a) // numerical sort desc
-                            .map((id) => id.toString());
+                            .map((id) => Number(id))
 
                         const rebrickable: RebrickableModel = {
                             partNum: resp.partNum,
-                            elementId: elementIds[0],
                             color: color.id,
                             name: resp.name,
                             imageUrl: resp.imageUrl,
@@ -67,12 +72,55 @@ export class PartsListEffects {
                             yearFrom: resp.yearFrom,
                             yearTo: resp.yearTo,
                             isPrint: resp.isPrint,
-                            externalIds: resp.externalIds,
-                            elementIds: elementIds,
+                            externalIds: resp.externalIds
                         }
 
+                        part.elementIds = elementIds;
                         part.rebrickable = rebrickable;
                     }
+
+                    const respBrickLink = responseBrickLink.find((resp) => resp.itemNo === item.itemId);
+                    if(respBrickLink) {
+                        const colorInfo = respBrickLink.colors.find(c => c.colorId === item.color);
+                        let yearColor = 0;
+                        let yearToColor = 0;
+                        if(colorInfo) {
+                            yearColor = colorInfo.yearFrom;
+                            yearToColor = colorInfo.yearTo;
+                        }
+
+                        const brickLink: BrickLinkModel = {
+                            itemId: respBrickLink.itemId,
+                            itemType: respBrickLink.itemType,
+                            itemNo: respBrickLink.itemNo,
+                            itemName: respBrickLink.itemName,
+                            year: respBrickLink.year,
+                            yearTo: respBrickLink.yearTo,
+                            yearColor: yearColor,
+                            yearToColor: yearToColor,
+                            weight: respBrickLink.weight,
+                            dimX: respBrickLink.dimX,
+                            dimY: respBrickLink.dimY,
+                            dimZ: respBrickLink.dimZ,
+                            dimXmm: respBrickLink.dimXmm,
+                            dimYmm: respBrickLink.dimYmm,
+                            dimZmm: respBrickLink.dimZmm,
+                            hasSound: respBrickLink.hasSound,
+                            isStickerPart: respBrickLink.isStickerPart
+                        }
+
+                        var elmts = respBrickLink.elementIds
+                                                .filter(el => el.colorId === item.color)
+                                                .filter(o=> !part.elementIds.some(i=> i === o.elementId))
+                                                .map(el => el.elementId);
+
+                        part.elementIds.push(...elmts);
+
+                        part.brickLink = brickLink;
+                    }
+
+                    part.elementIds = part.elementIds?.map((id) => id).sort((a, b) => b - a) // numerical sort desc
+                    part.elementId = part.elementIds[0];
 
                     return part;
                 });

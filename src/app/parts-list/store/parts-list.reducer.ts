@@ -62,6 +62,7 @@ const _partsListReducer = createReducer(
             partsList.parts = partsList.parts.map(part => {
                 let updatePart = action.parts.find(p => p.id === part.id);
                 if (!updatePart) return part;
+                if(updatePart.elementIds.length != part.elementIds.length) console.log("blub", part.elementIds, updatePart.elementIds)
                 return updatePart;
             });
 

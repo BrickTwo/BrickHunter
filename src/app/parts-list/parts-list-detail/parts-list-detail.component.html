@@ -1,18 +1,21 @@
-<h2><mat-icon matListItemIcon>list_alt</mat-icon>{{ partsList?.name }}</h2>
+<div class="flex flex-row">
+  <mat-icon matListItemIcon style="margin-top: 7px">list_alt</mat-icon>
+  <h2>{{ partsList?.name }}</h2>
+</div>
 <div class="grid grid-cols-12 gap-4">
   <div class="col-span-12 2xl:col-span-3 2xl:order-last">
     <mat-card>
       <mat-card-content>
         <div class="grid grid-cols-4 2xl:grid-cols-1 gap-4">
           <div class="flex flex-col space-x-0 space-y-1">
-            <div class="grow">
+            <!-- <div class="grow">
               <button mat-stroked-button style="width: 100%"><mat-icon>settings</mat-icon>Settings</button>
-            </div>
+            </div> -->
             <div class="grow">
               <button mat-stroked-button style="width: 100%"
                 (click)="onDeletePartsList()"><mat-icon>delete</mat-icon>Delete</button>
             </div>
-            <div class="grow">
+            <!-- <div class="grow">
               <button mat-stroked-button style="width: 100%"><mat-icon>call_split</mat-icon>Split</button>
             </div>
             <div class="grow">
@@ -20,9 +23,10 @@
             </div>
             <div class="grow">
               <button mat-stroked-button style="width: 100%"><mat-icon>print</mat-icon>Print</button>
-            </div>
+            </div> -->
             <div class="grow">
-              <button mat-stroked-button style="width: 100%" (click)="onSync()"><mat-icon>sync</mat-icon>Sync</button>
+              <button mat-stroked-button style="width: 100%" (click)="onLoadPab()"><mat-icon>sync</mat-icon>Load
+                PaB</button>
             </div>
           </div>
           <span>
@@ -42,12 +46,16 @@
               </div>
             </div>
             <div class="flex flex-col space-x-0 space-y-1">
-              <div class="grow"><button mat-stroked-button
-                  style="width: 100%" (click)="onTransfer('pab')"><mat-icon>shopping_cart</mat-icon>Transfer</button></div>
-              <div class="grow"><button mat-stroked-button style="width: 100%"><mat-icon>download</mat-icon>BL
+              <div class="grow">
+                <button mat-stroked-button style="width: 100%" (click)="onTransfer('pab')">
+                  <mat-icon>shopping_cart</mat-icon>
+                  Transfer
+                </button>
+              </div>
+              <!-- <div class="grow"><button mat-stroked-button style="width: 100%"><mat-icon>download</mat-icon>BL
                   Download</button></div>
               <div class="grow"><button mat-stroked-button style="width: 100%"><mat-icon>print</mat-icon>Print</button>
-              </div>
+              </div> -->
             </div>
           </span>
           <span>
@@ -67,12 +75,16 @@
               </div>
             </div>
             <div class="flex flex-col space-x-0 space-y-1">
-              <div class="grow"><button mat-stroked-button
-                  style="width: 100%"><mat-icon>shopping_cart</mat-icon>Transfer</button></div>
-              <div class="grow"><button mat-stroked-button style="width: 100%"><mat-icon>download</mat-icon>BL
+              <div class="grow">
+                <button mat-stroked-button style="width: 100%" (click)="onTransfer('bap')">
+                  <mat-icon>shopping_cart</mat-icon>
+                  Transfer
+                </button>
+              </div>
+              <!-- <div class="grow"><button mat-stroked-button style="width: 100%"><mat-icon>download</mat-icon>BL
                   Download</button></div>
               <div class="grow"><button mat-stroked-button style="width: 100%"><mat-icon>print</mat-icon>Print</button>
-              </div>
+              </div> -->
             </div>
           </span>
           <span>
@@ -92,10 +104,10 @@
               </div>
             </div>
             <div class="flex flex-col space-x-0 space-y-1">
-              <div class="grow"><button mat-stroked-button style="width: 100%"><mat-icon>download</mat-icon>BL
+              <!-- <div class="grow"><button mat-stroked-button style="width: 100%"><mat-icon>download</mat-icon>BL
                   Download</button></div>
               <div class="grow"><button mat-stroked-button style="width: 100%"><mat-icon>print</mat-icon>Print</button>
-              </div>
+              </div> -->
             </div>
           </span>
         </div>
@@ -107,64 +119,7 @@
       <mat-card-content>
         <mat-tab-group animationDuration="0ms">
           <mat-tab label="All">
-            <table mat-table [dataSource]="partsList?.parts">
-
-              <ng-container matColumnDef="select">
-                <th mat-header-cell *matHeaderCellDef> Select </th>
-                <td mat-cell *matCellDef="let element"></td>
-              </ng-container>
-
-              <ng-container matColumnDef="sourceId">
-                <th mat-header-cell *matHeaderCellDef> Item Id </th>
-                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-              </ng-container>
-
-              <!-- <ng-container matColumnDef="designId">
-                <th mat-header-cell *matHeaderCellDef> designId </th>
-                <td mat-cell *matCellDef="let element"> {{element.designId}} </td>
-              </ng-container> -->
-
-              <ng-container matColumnDef="elementId">
-                <th mat-header-cell *matHeaderCellDef> Element Id </th>
-                <td mat-cell *matCellDef="let element"> {{element.rebrickable?.elementId}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="image">
-                <th mat-header-cell *matHeaderCellDef> image </th>
-                <td mat-cell *matCellDef="let element"> <img [src]="'https://img.bricklink.com/ItemImage/PN/'+element.source.color+'/'+ element.source.id +'.png'" style="max-width: 60px; max-height: 60px;" /> </td>
-              </ng-container>
-
-              <ng-container matColumnDef="color">
-                <th mat-header-cell *matHeaderCellDef> Color </th>
-                <td mat-cell *matCellDef="let element"> {{element.color}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="quantity">
-                <th mat-header-cell *matHeaderCellDef> Quantity </th>
-                <td mat-cell *matCellDef="let element"> {{element.qty}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="brickLink">
-                <th mat-header-cell *matHeaderCellDef> BrickLink </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="pickABrick">
-                <th mat-header-cell *matHeaderCellDef> Pick a Brick </th>
-                <td mat-cell *matCellDef="let element">
-                  <p>{{element.lego?.price.amount}} {{element.lego?.price.currencyCode}}</p>
-                  <p>{{(!element.lego)?'':(!element.lego.inStock)?"oos":(element.lego.deliveryChannel==='pab')?'Bestseller':'Standard'}}</p>
-                </td>
-              </ng-container>
-
-              <!-- <ng-container matColumnDef="positions">
-                <th mat-header-cell *matHeaderCellDef> Positions </th>
-                <td mat-cell *matCellDef="let element"> {{element.positions}} </td>
-              </ng-container> -->
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
+            <app-parts-table [parts]="partsList.parts"></app-parts-table>
           </mat-tab>
           <mat-tab label="PaB Bestseller">
             <app-parts-table [parts]="getParts('pab')"></app-parts-table>

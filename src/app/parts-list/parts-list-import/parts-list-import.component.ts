@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { BrickLinkWantedListItem, IBrickLinkWantedListItem } from 'src/app/shared/bricklink-wantedlist.model';
 import * as xml2js from 'xml2js';
 import * as fromApp from '../../store/app.reducer';
-import { GetPartsRequest, Part, PartsList } from '../parts-list.model';
 import * as partListActions from '../store/parts-list.actions';
 
 @Component({
@@ -66,21 +65,8 @@ export class PartsListImportComponent {
   }
 
   onSubmit(form: NgForm) {
-    this.store.dispatch(partListActions.importPartsList({ partsListName: form.value.listName, source: "BrickLink", parts: this.wantedList}));
-    // this.store.dispatch(partListActions.addPartsList({
-    //   partsList: new PartsList("555", form.value.listName, 'BrickLink', this.wantedList.map(item => {
-    //     return new Part(
-    //       item.color,
-    //       item.itemId,
-    //       0,
-    //       0,
-    //       {
-    //         amount: item.minQty,
-    //         have: item.qtyFilled
-    //       }
-    //     )
-    //   }))
-    // }));
+    this.store.dispatch(partListActions.importPartsList({ partsListName: form.value.listName, source: "BrickLink", parts: this.wantedList }));
+    this.importForm.setValue({ listName: "" });
     this.close.emit();
   }
 }
