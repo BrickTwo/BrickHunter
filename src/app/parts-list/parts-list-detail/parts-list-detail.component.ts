@@ -117,22 +117,22 @@ export class PartsListDetailComponent implements OnInit {
     switch (filter) {
       case 'pab':
       case 'bap':
-        return this.partsList.parts.filter(p => p.lego?.deliveryChannel === filter);
+        return this.partsList?.parts?.filter(p => p.lego?.deliveryChannel === filter);
       case 'oos':
-        return this.partsList.parts.filter(p => p.lego?.inStock === false);
+        return this.partsList?.parts?.filter(p => p.lego?.inStock === false);
       case 'brickLink':
-        return this.partsList.parts.filter(p => !p.lego);
+        return this.partsList?.parts?.filter(p => !p.lego);
       default:
-        return this.partsList.parts;
+        return this.partsList?.parts;
     }
   }
 
   getTotalQuantity(filter: string): number {
-    return this.getParts(filter).reduce((a, b) => a + b.qty, 0)
+    return this.getParts(filter)?.reduce((a, b) => a + b.qty, 0)
   }
 
   getTotalPrice(filter: string): string {
-    return (Math.round(this.getParts(filter).reduce((a, b) => a + b.qty * b.lego?.price.amount, 0) * 100) / 100).toFixed(2);
+    return (Math.round(this.getParts(filter)?.reduce((a, b) => a + b.qty * b.lego?.price.amount, 0) * 100) / 100).toFixed(2);
   }
 
   onDeletePartsList() {

@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { BrickLinkWantedListItem, IBrickLinkWantedListItem } from 'src/app/shared/bricklink-wantedlist.model';
 import * as xml2js from 'xml2js';
 import * as fromApp from '../../store/app.reducer';
@@ -11,14 +12,37 @@ import * as partListActions from '../store/parts-list.actions';
   templateUrl: './parts-list-import.component.html',
   styleUrls: ['./parts-list-import.component.css']
 })
-export class PartsListImportComponent {
+export class PartsListImportComponent implements OnInit, OnDestroy {
   @Output()
   close = new EventEmitter<string>()
 
   @ViewChild('importForm', { static: false }) importForm: NgForm;
+
   wantedList: BrickLinkWantedListItem[];
+  importStatus: number;
+
+  private storeSub: Subscription;
 
   constructor(private store: Store<fromApp.AppState>) { }
+
+  ngOnInit(): void {
+    this.storeSub = this.store.select('partsList').subscribe(partsListState => {
+      let closeModal = false
+      if (this.importStatus > 0 && partsListState.importProgress === 0) {
+        closeModal = true;
+      }
+      this.importStatus = partsListState.importProgress;
+
+      if (closeModal) {
+        this.importForm.setValue({ listName: "" });
+        this.close.emit();
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    if (this.storeSub) this.storeSub.unsubscribe();
+  }
 
   onFileNameChange(fileName: string) {
     this.importForm.setValue({
@@ -66,7 +90,5 @@ export class PartsListImportComponent {
 
   onSubmit(form: NgForm) {
     this.store.dispatch(partListActions.importPartsList({ partsListName: form.value.listName, source: "BrickLink", parts: this.wantedList }));
-    this.importForm.setValue({ listName: "" });
-    this.close.emit();
   }
 }

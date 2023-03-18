@@ -2,7 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { map, switchMap, tap, withLatestFrom } from "rxjs";
+import { of, withLatestFrom } from "rxjs";
+import { catchError, map, switchMap, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import * as fromApp from "src/app/store/app.reducer";
 import { GetPartsRequest, GetPartsResponse, RebrickableModel, Part, PartsList, GetBrickLinkResponse, GetBrickLinkRequest, BrickLinkModel } from "../parts-list.model";
@@ -16,111 +17,146 @@ export class PartsListEffects {
     importPartsList$ = createEffect(() =>
         this.actions$.pipe(
             ofType(PartsListActions.importPartsList),
-            switchMap(actionData => {
-                const partIds = actionData.parts.map(item => { return item.itemId });
-                const request: GetPartsRequest = { source: actionData.source, ids: partIds };
-                return this.http.post<GetPartsResponse[]>(environment.brickHunterApiBaseUrl + '/parts', request)
-                    .pipe(map(responseParts => ({ actionData, responseParts })));
+            map(action => {
+                return PartsListActions.loadRebrickableData({ partsListName: action.partsListName, source: action.source, parts: action.parts });
+            })
+        )
+    );
+
+    loadRebrickableData$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(PartsListActions.loadRebrickableData),
+            switchMap(action => {
+                const partIds = action.parts.map(item => { return item.itemId });
+                const request: GetPartsRequest = { source: action.source, ids: partIds };
+                return this.http.post<GetPartsResponse[]>(environment.brickHunterApiBaseUrl + '/part', request)
+                    .pipe(
+                        map(responseParts => {
+                            const parts = action.parts.map(item => {
+                                const color = Color.getColor(item.color, action.source);
+            
+                                const part: Part = {
+                                    id: `${item.itemId}+${item.color}`,
+                                    elementId: 0,
+                                    elementIds: [],
+                                    color: color.id,
+                                    qty: item.minQty,
+                                    have: item.qtyFilled,
+                                    itemType: item.itemType,
+                                    maxPrice: item.maxPrice,
+                                    condition: item.condition,
+                                    notify: item.notify,
+                                    remarks: item.remarks,
+                                    source: {
+                                        source: action.source,
+                                        id: item.itemId,
+                                        color: item.color
+                                    }
+                                };
+            
+                                const resp = responseParts.find((resp) => {
+                                    return resp.externalIds.find(
+                                        (e) => e.externalId === item.itemId && e.source === "BrickLink"
+                                    );
+                                });
+            
+                                if (resp) {
+                                    const elementIds = resp.elementIds
+                                        .filter((e) => e.colorId == color.id)
+                                        .map((item) => item.elementId)
+                                        .map((id) => Number(id))
+            
+                                    const rebrickable: RebrickableModel = {
+                                        partNum: resp.partNum,
+                                        color: color.id,
+                                        name: resp.name,
+                                        imageUrl: resp.imageUrl,
+                                        partCatId: resp.partCatId,
+                                        yearFrom: resp.yearFrom,
+                                        yearTo: resp.yearTo,
+                                        isPrint: resp.isPrint,
+                                        externalIds: resp.externalIds
+                                    }
+            
+                                    part.elementIds = elementIds;
+                                    part.rebrickable = rebrickable;
+                                }
+            
+                                part.elementIds = part.elementIds?.map((id) => id).sort((a, b) => b - a) // numerical sort desc
+                                part.elementId = part.elementIds[0];
+            
+                                return part;
+                            });
+            
+                            return PartsListActions.loadBrickLinkData({ partsListName: action.partsListName, source: action.source, parts: parts });
+                        }),
+                        // catchError((errorRes) => console.log(error))
+                    )
             }),
-            switchMap(({ actionData, responseParts }) => {
-                const partIds = actionData.parts.map(item => { return item.itemId });
-                const request: GetBrickLinkRequest = { itemNumbers: partIds}
+            
+            catchError(errorRes => {
+                console.log(errorRes)
+                return of(PartsListActions.importFail({ errorMessage: JSON.stringify(errorRes) }))
+            })
+        )
+    );
+
+    loadBricklinkData$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(PartsListActions.loadBrickLinkData),
+            switchMap(action => {
+                const partIds = action.parts.map(item => { return item.source.id });
+                const request: GetBrickLinkRequest = { itemNumbers: partIds }
                 return this.http.post<GetBrickLinkResponse[]>(environment.brickHunterApiBaseUrl + '/bricklink', request)
-                    .pipe(map(responseBrickLink => ({ actionData, responseParts, responseBrickLink })));
+                    .pipe(map(responseBrickLink => ({ action, responseBrickLink })));
             }),
-            map(({ actionData, responseParts, responseBrickLink }) => {
-                const parts = actionData.parts.map(item => {
-                    const color = Color.getColor(item.color, actionData.source);
+            map(({ action, responseBrickLink }) => {
+                let i = 0;
+                const parts = action.parts.map(item => {
+                    let part = { ...item };
+                    part.elementIds = [...part.elementIds];
 
-                    const part: Part = {
-                        id: `${item.itemId}+${item.color}`,
-                        elementId: 0,
-                        elementIds: [],
-                        color: color.id,
-                        qty: item.minQty,
-                        have: item.qtyFilled,
-                        itemType: item.itemType,
-                        maxPrice: item.maxPrice,
-                        condition: item.condition,
-                        notify: item.notify,
-                        remarks: item.remarks,
-                        source: {
-                            source: actionData.source,
-                            id: item.itemId,
-                            color: item.color
-                        }
-                    };
-
-                    const resp = responseParts.find((resp) => {
-                        return resp.externalIds.find(
-                            (e) => e.externalId === item.itemId && e.source === "BrickLink"
-                        );
-                    });
-
+                    const resp = responseBrickLink.find((resp) => resp.itemNo === item.source.id);
                     if (resp) {
-                        const elementIds = resp.elementIds
-                            .filter((e) => e.colorId == color.id)
-                            .map((item) => item.elementId)
-                            .map((id) => Number(id))
-
-                        const rebrickable: RebrickableModel = {
-                            partNum: resp.partNum,
-                            color: color.id,
-                            name: resp.name,
-                            imageUrl: resp.imageUrl,
-                            partCatId: resp.partCatId,
-                            yearFrom: resp.yearFrom,
-                            yearTo: resp.yearTo,
-                            isPrint: resp.isPrint,
-                            externalIds: resp.externalIds
-                        }
-
-                        part.elementIds = elementIds;
-                        part.rebrickable = rebrickable;
-                    }
-
-                    const respBrickLink = responseBrickLink.find((resp) => resp.itemNo === item.itemId);
-                    if(respBrickLink) {
-                        const colorInfo = respBrickLink.colors.find(c => c.colorId === item.color);
+                        const colorInfo = resp.colors.find(c => c.colorId === item.color);
                         let yearColor = 0;
                         let yearToColor = 0;
-                        if(colorInfo) {
+                        if (colorInfo) {
                             yearColor = colorInfo.yearFrom;
                             yearToColor = colorInfo.yearTo;
                         }
 
                         const brickLink: BrickLinkModel = {
-                            itemId: respBrickLink.itemId,
-                            itemType: respBrickLink.itemType,
-                            itemNo: respBrickLink.itemNo,
-                            itemName: respBrickLink.itemName,
-                            year: respBrickLink.year,
-                            yearTo: respBrickLink.yearTo,
+                            itemId: resp.itemId,
+                            itemType: resp.itemType,
+                            itemNo: resp.itemNo,
+                            itemName: resp.itemName,
+                            year: resp.year,
+                            yearTo: resp.yearTo,
                             yearColor: yearColor,
                             yearToColor: yearToColor,
-                            weight: respBrickLink.weight,
-                            dimX: respBrickLink.dimX,
-                            dimY: respBrickLink.dimY,
-                            dimZ: respBrickLink.dimZ,
-                            dimXmm: respBrickLink.dimXmm,
-                            dimYmm: respBrickLink.dimYmm,
-                            dimZmm: respBrickLink.dimZmm,
-                            hasSound: respBrickLink.hasSound,
-                            isStickerPart: respBrickLink.isStickerPart
+                            weight: resp.weight,
+                            dimX: resp.dimX,
+                            dimY: resp.dimY,
+                            dimZ: resp.dimZ,
+                            dimXmm: resp.dimXmm,
+                            dimYmm: resp.dimYmm,
+                            dimZmm: resp.dimZmm,
+                            hasSound: resp.hasSound,
+                            isStickerPart: resp.isStickerPart
                         }
 
-                        var elmts = respBrickLink.elementIds
-                                                .filter(el => el.colorId === item.color)
-                                                .filter(o=> !part.elementIds.some(i=> i === o.elementId))
-                                                .map(el => el.elementId);
+                        var elmts = resp.elementIds
+                            .filter(el => el.colorId === item.source.color)
+                            .filter(o => !item.elementIds.some(i => i === o.elementId))
+                            .map(el => el.elementId);
 
-                        part.elementIds.push(...elmts);
-
+                        if (elmts.length) part.elementIds.push(...elmts);
                         part.brickLink = brickLink;
                     }
 
-                    part.elementIds = part.elementIds?.map((id) => id).sort((a, b) => b - a) // numerical sort desc
-                    part.elementId = part.elementIds[0];
+                    part.elementIds = item.elementIds?.map((id) => id).sort((a, b) => b - a) // numerical sort desc
+                    part.elementId = item.elementIds[0];
 
                     return part;
                 });
@@ -128,8 +164,8 @@ export class PartsListEffects {
                 const partsList: PartsList = {
                     id: 0,
                     uid: Guid.generate(),
-                    name: actionData.partsListName,
-                    source: actionData.source,
+                    name: action.partsListName,
+                    source: action.source,
                     parts: parts
                 };
                 return PartsListActions.addPartsList({ partsList: partsList });

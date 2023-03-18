@@ -5,15 +5,40 @@ import * as PartsListActions from './parts-list.actions';
 export interface State {
     partsLists: PartsList[];
     maxPartsListId: number;
+    importProgress: number;
+    importError: string;
 }
 
 const initialState: State = {
     partsLists: [],
-    maxPartsListId: 0
+    maxPartsListId: 0,
+    importProgress: 0,
+    importError: ''
 };
 
 const _partsListReducer = createReducer(
     initialState,
+
+    on(PartsListActions.importPartsList,
+        (state, action) => ({
+            ...state,
+            importProgress: 1
+        })
+    ),
+
+    on(PartsListActions.loadRebrickableData,
+        (state, action) => ({
+            ...state,
+            importProgress: 2
+        })
+    ),
+
+    on(PartsListActions.loadRebrickableData,
+        (state, action) => ({
+            ...state,
+            importProgress: 3
+        })
+    ),
 
     on(PartsListActions.setPartsLists,
         (state, action) => ({
@@ -30,7 +55,8 @@ const _partsListReducer = createReducer(
             return {
                 ...state,
                 partsLists: state.partsLists.concat({ ...partsList }),
-                maxPartsListId: partsListId
+                maxPartsListId: partsListId,
+                importProgress: 0
             };
         }
     ),

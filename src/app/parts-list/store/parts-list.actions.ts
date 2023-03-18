@@ -11,6 +11,31 @@ export const importPartsList = createAction(
     }>()
 );
 
+export const loadRebrickableData = createAction(
+    '[PartsList] Load Parts Infos',
+    props<{
+        partsListName: string,
+        source: string,
+        parts: BrickLinkWantedListItem[]
+    }>()
+);
+
+export const loadBrickLinkData = createAction(
+    '[PartsList] load BrickLink data',
+    props<{
+        partsListName: string,
+        source: string,
+        parts: Part[]
+    }>()
+);
+
+export const importFail = createAction(
+    '[PartsList] load BrickLink data',
+    props<{
+        errorMessage: string
+    }>()
+);
+
 export const setPartsLists = createAction(
     '[PartsList] Set Parts Lists',
     props<{
