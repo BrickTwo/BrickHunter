@@ -2,27 +2,30 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { MaterialModule } from "../material.module";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { PrimengModule } from "../primeng.module";
 import { SharedModule } from "../shared/shared.module";
-import { PartsListDetailComponent } from "./parts-list-detail/parts-list-detail.component";
-import { PartsListImportComponent } from "./parts-list-import/parts-list-import.component";
-import { PartsListListComponent } from "./parts-list-list/parts-list-list.component";
+import { PartsListImportComponent, PartsListSettingsComponent, PartsTableComponent } from "./components";
+import { PartsListDetailComponent, PartsListListComponent } from "./pages";
 
 @NgModule({
     declarations: [
         PartsListListComponent,
         PartsListDetailComponent,
-        PartsListImportComponent
+        PartsListSettingsComponent,
+        PartsListImportComponent,
+        PartsTableComponent
     ],
     imports: [
-        MaterialModule,
+        PrimengModule,
         RouterModule.forChild([
             { path: '', component: PartsListListComponent },
-            { path: ':id', component: PartsListDetailComponent } 
+            { path: ':id', component: PartsListDetailComponent }
         ]),
         CommonModule,
         SharedModule,
-        FormsModule
+        FormsModule,
+        FontAwesomeModule
     ]
 })
 export class PartsListsModule { }

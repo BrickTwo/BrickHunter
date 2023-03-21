@@ -1,0 +1,20 @@
+:host {
+  ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+
+  ::ng-deep .p-datatable > .p-datatable-wrapper {
+    overflow: unset;
+  }
+
+  ::ng-deep.p-ripple .p-ink {
+    background: #0a3463;
+  }
+
+  ::ng-deep.part-image {
+    max-width: 60px; max-height: 60px;
+  }
+}
+

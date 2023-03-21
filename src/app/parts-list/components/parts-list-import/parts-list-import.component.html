@@ -1,0 +1,26 @@
+<p-sidebar [(visible)]="display" position="right" (onHide)="onHide()">
+  <h2>Import</h2>
+  <form (ngSubmit)="onImport(importForm)" #importForm="ngForm">
+    <div class="flex flex-column card-container green-container gap-3">
+      <p-fileUpload #fileUpload name="myfile[]" url="./upload.php" accept="text/xml, application/json"
+        (onSelect)="onUpload($event)" [showUploadButton]="false">
+        <ng-template pTemplate="toolbar">
+          <div>Select file or drag below.</div>
+        </ng-template>
+      </p-fileUpload>
+      <div>
+        <label for="partsListName" class="block">Parts List name</label>
+        <input id="partsListName" name="partsListName" type="text" pInputText style="width: 100%" ngModel />
+      </div>
+      <button pButton pRipple type="button" label="Import" style="width: 100%" (click)="onImport(importForm)"></button>
+    </div>
+  </form>
+</p-sidebar>
+<p-dialog header="Importing new Parts List" [(visible)]="showImportDialog" [style]="{ width: '50vw' }"
+  [closable]="false" [modal]="true">
+  <div class="flex flex-wrap card-container blue-container gap-3">
+    <p-progressSpinner></p-progressSpinner>
+    <p class=" align-items-center justify-content-center" *ngIf="importStep === 1">[1/2] Get Rebrickable Data</p>
+    <p class=" align-items-center justify-content-center" *ngIf="importStep === 2">[2/2] Get BrickLink Data</p>
+  </div>
+</p-dialog>

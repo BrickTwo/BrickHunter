@@ -1,4 +1,4 @@
-import { PickABrick } from "./app/shared/functions/pickabrick";
+import { PickABrick } from "./app/background/functions/pickabrick";
 
 chrome.action.onClicked.addListener((tab: any) => {
   chrome.tabs.create({

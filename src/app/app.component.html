@@ -1,10 +1,5 @@
-<ng-container>
-  <mat-sidenav-container class="example-container" [hasBackdrop]="false">
-    <mat-sidenav mode="over" opened class="sideNav" #sidenav>
-      <app-side-navigation></app-side-navigation>
-    </mat-sidenav>
-    <mat-sidenav-content style="padding: 20px; padding-left: 80px">
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</ng-container>
+<app-side-navigation></app-side-navigation>
+<div style="margin-left: 70px;">
+    <p-toast></p-toast>
+    <router-outlet></router-outlet>
+</div>

@@ -4,35 +4,31 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MaterialModule } from './material.module';
-import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
-import { StoreModule } from '@ngrx/store';
-import * as fromApp from './store/app.reducer';
-import { EffectsModule } from '@ngrx/effects';
-import { PartsListEffects } from './parts-list/store/parts-list.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { PrimengModule } from './primeng.module';
+import { CoreModule } from './core/core.module';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SideNavigationComponent,
-    ],
+  ],
   imports: [
+    CoreModule,
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule,
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
-    CommonModule,
-    StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot(PartsListEffects),
+    PrimengModule,
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
   ],
-  providers: [],
+  providers: [
+    ConfirmationService,
+    MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -1,0 +1,45 @@
+<p-sidebar [(visible)]="display" position="right">
+  <h2>Settings</h2>
+  <form (ngSubmit)="onSubmit(importForm)" #importForm="ngForm">
+    <div class="flex flex-column card-container green-container gap-3">
+      <div>
+        <label for="partsListName" class="block">Parts List name</label>
+        <input id="partsListName" type="text" pInputText style="width: 100%" />
+      </div>
+      <div class="field-checkbox">
+        <p-checkbox
+          name="group1"
+          value="have"
+          [(ngModel)]="selectedDistribution"
+          inputId="have"
+        ></p-checkbox>
+        <label for="have">Subtract WantedList-Have from number</label>
+      </div>
+      <div class="field-checkbox">
+        <p-checkbox
+          name="group1"
+          value="withoutbl"
+          [(ngModel)]="selectedDistribution"
+          inputId="withoutbl"
+        ></p-checkbox>
+        <label for="withoutbl">Do not take BrickLink prices into account</label>
+      </div>
+      <div class="field-checkbox">
+        <p-checkbox
+          name="bllower"
+          value="Los Angeles"
+          [(ngModel)]="selectedDistribution"
+          inputId="bllower"
+        ></p-checkbox>
+        <label for="bllower">Only add to BrickLink if price is x lower</label>
+      </div>
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Save"
+        style="width: 100%"
+      ></button>
+    </div>
+  </form>
+</p-sidebar>

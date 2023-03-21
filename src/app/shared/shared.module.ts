@@ -1,23 +1,20 @@
 import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { MaterialModule } from "src/app/material.module";
-import { FileUploadComponent } from "./file-upload/file-upload.component";
-import { PartsTableComponent } from "./parts-table/parts-table.component";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { PrimengModule } from "../primeng.module";
+import { SideNavigationComponent } from "./layout";
 
 @NgModule({
     declarations: [
-        FileUploadComponent,
-        PartsTableComponent
+        SideNavigationComponent
     ],
     imports: [
-        HttpClientModule,
-        MaterialModule,
-        CommonModule
+        PrimengModule,
+        CommonModule,
+        FontAwesomeModule
     ],
     exports: [
-        FileUploadComponent,
-        PartsTableComponent
+        SideNavigationComponent
     ]
 })
 export class SharedModule {}

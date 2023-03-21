@@ -1,0 +1,33 @@
+<p-table [value]="parts" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pRipple pSortableColumn="id">ItemId <p-sortIcon field="id"></p-sortIcon></th>
+      <th pRipple pSortableColumn="lego.designNumber">DesignId <p-sortIcon field="lego.designNumber"></p-sortIcon></th>
+      <th pRipple pSortableColumn="elementId">ElementId <p-sortIcon field="elementId"></p-sortIcon></th>
+      <th>Image</th>
+      <th pRipple pSortableColumn="color">Color <p-sortIcon field="color"></p-sortIcon></th>
+      <th pRipple pSortableColumn="qty">Quantity <p-sortIcon field="qty"></p-sortIcon></th>
+      <th>BrickLink</th>
+      <th pRipple pSortableColumn="lego.price.amount">Pick a Brick <p-sortIcon field="lego.price.amount"></p-sortIcon></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-part>
+    <tr>
+      <td>{{ part.id }}</td>
+      <td>{{ part.lego?.designNumber }}</td>
+      <td>{{ part.elementId }}</td>
+      <td>
+        <p-image [src]="caclImageUrl(part)" imageClass="part-image" [preview]="true"></p-image>
+      </td>
+      <td>{{ part.color }}</td>
+      <td>{{ part.qty }}</td>
+      <td></td>
+      <td>
+        <p>{{part.lego?.price.amount.toFixed(2)}} {{part.lego?.price.currencyCode}}</p>
+        <p>
+          {{(!part.lego)?'':(!part.lego.inStock)?"Out Of Stock":(part.lego.deliveryChannel==='pab')?'Bestseller':'Standard'}}
+        </p>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

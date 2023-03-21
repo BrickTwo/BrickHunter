@@ -1,7 +1,98 @@
 /* You can add global styles to this file, and also import other style files */
-@use 'app/theme/style';
-@use 'styles/themes';
-@use 'styles/custom';
-@use 'styles/grid';
-@use 'styles/helpers';
-@use 'styles/plugins';
+@use "./assets/theme/theme.css";
+@use "../node_modules/primeng/resources/primeng.min.css";
+@use "../node_modules/primeflex/primeflex" with (
+  $breakpoints: (
+    "sm": 576px,
+    "md": 768px,
+    "lg": 992px,
+    "xl": 1300px,
+    "xxl": 1500px,
+  )
+);
+@use "../node_modules/@fortawesome/fontawesome-free/css/solid.min.css";
+
+body {
+  background-color: rgb(240, 240, 240);
+  font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial,
+    Lucida Grande, sans-serif;
+}
+
+.page-title-icon {
+  margin-right: 5px; 
+}
+
+h2 {
+  color: #444444;
+}
+
+// theme overrides
+
+.pi {
+  font-family: "Font Awesome 6 Free";
+  font-style: normal;
+}
+
+.pi-times:before {
+  content: "\f00d";
+}
+
+.pi-check:before {
+  content: "\f00c";
+}
+
+.pi-times-circle:before {
+  content: "\f057";
+}
+
+.pi-info-circle:before {
+  content: "\f05a";
+}
+
+.pi-exclamation-triangle:before {
+  content: "\f071";
+}
+
+.pi-plus:before {
+  content: "\f067";
+}
+
+.pi-sort-alt:before {
+  content: "\f176";
+}
+
+.pi-sort-alt:after {
+  content: "\f175";
+}
+
+.pi-sort-amount-up-alt:before {
+  content: "\f885";
+}
+
+.pi-sort-amount-down:before {
+  content: "\f160";
+}
+
+.p-datatable .p-sortable-column.p-highlight:hover {
+  background-color: black;
+}
+
+.p-datatable .p-sortable-column:not(.p-highlight):hover {
+  background-color: #f5f5f5;
+}
+
+.p-datatable .p-sortable-column.p-highlight:hover {
+  background-color: #f5f5f5;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  background-color: #f5f5f5;
+}
+
+.p-datatable .p-sortable-column:focus {
+  background-color: #f5f5f5;
+}
+
+.p-datatable th {
+  z-index: 999;
+}

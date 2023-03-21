@@ -1,0 +1,69 @@
+:host {
+  ::ng-deep.p-sidebar-left {
+    width: 60px;
+    transition: 200ms;
+  }
+
+  ::ng-deep.p-sidebar-left:hover {
+    width: 250px;
+    transition: 100ms;
+  }
+
+  ::ng-deep.p-sidebar-content {
+    padding: 0px;
+    overflow: hidden;
+  }
+
+  ::ng-deep.p-sidebar-header {
+    padding: 0px;
+    overflow: hidden;
+  }
+
+  ::ng-deep.p-ripple .p-ink {
+    background: #0a3463;
+  }
+
+  ::ng-deep.p-sidebar {
+    background: #fff;
+    color: rgba(0, 0, 0, 0.87);
+    border: 0 none;
+    box-shadow: 5px 0px 8px 0px #C1C1C1;
+  }
+
+  ::ng-deep.p-image {
+    margin: 6px;
+  }
+}
+
+ul {
+  width: 250px;
+  padding: 0px;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  padding: 1rem;
+  padding-left: 0px;
+  color: #7c7b7b;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  width: 100%;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica,
+    Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  font-weight: 500;
+}
+
+a:hover {
+  background-color: #f5f5f5;
+}
+
+.icon {
+  display: inline-block;
+  width: 60px;
+  text-align: center;
+}

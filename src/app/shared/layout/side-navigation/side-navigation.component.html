@@ -1,0 +1,43 @@
+<p-sidebar class="sideNav" [visible]="true" [transitionOptions]="'0ms'" [showCloseIcon]="false" [modal]="false">
+  <ng-template pTemplate="header">
+    <p-image
+      src="./assets/icons/icon-trans48.png"
+      width="48"
+    ></p-image>
+  </ng-template>
+   
+  <ng-template pTemplate="content">
+    <ul>
+      <li>
+        <a pRipple href="#" pRipple>
+          <fa-icon [icon]="faBook" class="icon"></fa-icon>
+          <span>Browse Parts</span>
+        </a>
+      </li>
+      <li>
+        <a pRipple routerLink="/partslists">
+          <fa-icon [icon]="faList" class="icon"></fa-icon>
+          <span>Parts Lists</span>
+        </a>
+      </li>
+      <li>
+        <a pRipple href="#">
+          <fa-icon [icon]="faClockRotateLeft" class="icon"></fa-icon>
+          <span>PaB Changelog</span>
+        </a>
+      </li>
+      <li>
+        <a pRipple href="#">
+          <fa-icon [icon]="faCircleQuestion" class="icon"></fa-icon>
+          <span>Help</span>
+        </a>
+      </li>
+      <li>
+        <a pRipple href="#">
+          <fa-icon [icon]="faCircleInfo" class="icon"></fa-icon>
+          <span>Info</span>
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</p-sidebar>
