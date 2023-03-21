@@ -95,7 +95,7 @@ export class PartsListImportComponent {
     partsList$.subscribe((parts: IPart[]) => {
       const partsList: IPartsList = {
         id: 0,
-        uid: this.guidService.generate(),
+        uuid: this.guidService.generate(),
         name: importForm.value.partsListName,
         source: source,
         parts: parts

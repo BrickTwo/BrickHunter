@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { PickABrickService } from 'src/app/core/services/pickabrick.service';
 import { IPart, IPartsList } from 'src/app/models/parts-list';
 import { PartsListSettingsComponent } from '../../components/parts-list-settings/parts-list-settings.component';
 import { PartsListService } from '../../parts-list.service';
@@ -37,6 +38,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly confirmationService: ConfirmationService,
     private readonly messageService: MessageService,
+    private readonly pickabrickService: PickABrickService
   ) { }
 
   ngOnDestroy(): void {
@@ -44,16 +46,16 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = this.partsListService.pabLoading.subscribe(isLoading => {
+    this.subscription = this.pickabrickService.pabLoading.subscribe(isLoading => {
       if(!isLoading && this.pabIsLoading) {
-        if(this.partsListService.pabLoadError) {
+        if(this.pickabrickService.pabLoadError) {
           this.messageService.add({
             severity: 'error',
             summary: "Couldn't load PaB Data!",
-            detail: this.partsListService.pabLoadError,
+            detail: this.pickabrickService.pabLoadError,
           });
         }
-        this.partsList = this.partsListService.getPartsList(this.partsList.uid);
+        this.partsList = this.partsListService.getPartsList(this.partsList.uuid);
         this.parts = this.getParts(String(this.activeItem.id));
       }
       this.pabIsLoading = isLoading;
@@ -62,7 +64,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       const uuid = params['id'];
       this.partsList = this.partsListService.getPartsList(uuid);
       this.parts = this.getParts(String(this.activeItem.id));
-      this.partsListService.loadPaB(this.partsList.uid);
+      this.pickabrickService.loadPaB(this.partsList.uuid);
     });
   }
 

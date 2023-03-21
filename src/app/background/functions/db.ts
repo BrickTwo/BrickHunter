@@ -1,13 +1,13 @@
 import Dexie, { Table } from 'dexie';
-import { PartsList } from '../../parts-list/parts-list.model';
+import { IPartsList } from 'src/app/models/parts-list';
 
 export class AppDB extends Dexie {
-  partsLists!: Table<PartsList, number>;
+  partsLists!: Table<IPartsList, number>;
 
   constructor() {
     super('brickhunterdb');
     this.version(1).stores({
-      partsLists: '++id,uid',
+      partsLists: '++id,uuid',
     });
     // this.on('populate', () => this.populate());
   }

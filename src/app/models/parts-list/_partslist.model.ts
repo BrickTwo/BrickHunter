@@ -2,7 +2,7 @@ import { IPart } from ".";
 
 export interface IPartsList {
     id: number;
-    uid: string;
+    uuid: string;
     name: string;
     source: string;
     parts: IPart[];
