@@ -77,14 +77,19 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   }
 
   private reloadPartsList() {
+    let loadPab = false;
     if (!this.uuid) return;
     const partsList = this.partsListService.getPartsList(this.uuid);
     if (!this.partsList && partsList) {
-      this.pabIsLoading = true;
-      this.pickabrickService.loadPaB(this.uuid);
+      loadPab = true;
     }
     this.partsList = partsList;
     this.parts = this.getParts(String(this.activeItem.id));
+
+    if (loadPab) {
+      this.pabIsLoading = true;
+      this.pickabrickService.loadPaB(this.uuid);
+    }
   }
 
   onTableChange(selectedTab: MenuItem) {

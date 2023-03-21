@@ -14,8 +14,7 @@
               class="p-button-outlined"
               icon="fa fa-gear"
               style="width: 100%"
-              (click)="onSetting()"
-            ></button>
+              (click)="onSetting()"></button>
             <button
               pButton
               pRipple
@@ -24,8 +23,7 @@
               class="p-button-outlined"
               icon="fa fa-trash-can"
               style="width: 100%"
-              (click)="onDelete()"
-            ></button>
+              (click)="onDelete()"></button>
             <button
               pButton
               pRipple
@@ -33,8 +31,7 @@
               label="Split"
               class="p-button-outlined"
               icon="fa fa-scissors"
-              style="width: 100%"
-            ></button>
+              style="width: 100%"></button>
             <button
               pButton
               pRipple
@@ -42,28 +39,24 @@
               label="Print"
               class="p-button-outlined"
               icon="fa fa-print"
-              style="width: 100%"
-            ></button>
+              style="width: 100%"></button>
           </div>
         </div>
         <div class="col-3 xxl:col-12">
           <h3>PaB Bestseller</h3>
           <div class="flex flex-column gap-2">
-            <div
-              class="flex justify-content-between"
-              style="height: 41.844px"
-            >
+            <div class="flex justify-content-between" style="height: 41.844px">
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Lot</div>
-                <div>{{ getParts("pab")?.length }}</div>
+                <div>{{ getParts('pab')?.length }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Pieces</div>
-                <div>{{ getTotalQuantity("pab") }}</div>
+                <div>{{ getTotalQuantity('pab') }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Price</div>
-                <div>{{ getTotalPrice("pab") }}</div>
+                <div>{{ getTotalPrice('pab') }}</div>
               </div>
             </div>
             <button
@@ -73,28 +66,24 @@
               label="Transfer"
               class="p-button-outlined"
               icon="fa fa-cart-shopping"
-              style="width: 100%"
-            ></button>
+              style="width: 100%"></button>
           </div>
         </div>
         <div class="col-3 xxl:col-12">
           <h3>PaB Standard</h3>
           <div class="flex flex-column gap-2">
-            <div
-              class="flex justify-content-between vertical-align-middle"
-              style="height: 41.844px"
-            >
+            <div class="flex justify-content-between vertical-align-middle" style="height: 41.844px">
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Lot</div>
-                <div>{{ getParts("bap")?.length }}</div>
+                <div>{{ getParts('bap')?.length }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Pieces</div>
-                <div>{{ getTotalQuantity("bap") }}</div>
+                <div>{{ getTotalQuantity('bap') }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Price</div>
-                <div>{{ getTotalPrice("bap") }}</div>
+                <div>{{ getTotalPrice('bap') }}</div>
               </div>
             </div>
             <button
@@ -104,28 +93,24 @@
               label="Transfer"
               class="p-button-outlined"
               icon="fa fa-cart-shopping"
-              style="width: 100%"
-            ></button>
+              style="width: 100%"></button>
           </div>
         </div>
         <div class="col-3 xxl:col-12">
           <h3>BrickLink</h3>
           <div class="flex flex-column gap-2">
-            <div
-              class="flex justify-content-between vertical-align-middle"
-              style="height: 41.844px"
-            >
+            <div class="flex justify-content-between vertical-align-middle" style="height: 41.844px">
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Lot</div>
-                <div>{{ getParts("brickLink")?.length }}</div>
+                <div>{{ getParts('brickLink')?.length }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Pieces</div>
-                <div>{{ getTotalQuantity("brickLink") }}</div>
+                <div>{{ getTotalQuantity('brickLink') }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Price</div>
-                <div>{{ getTotalPrice("brickLink") }}</div>
+                <div>{{ getTotalPrice('brickLink') }}</div>
               </div>
             </div>
           </div>
@@ -135,20 +120,15 @@
   </div>
   <div class="col-12 xl:col xxl:flex-order-0">
     <p-card>
-      <p-tabMenu
-        [model]="items"
-        [activeItem]="activeItem"
-        (activeItemChange)="onTableChange($event)"
-      ></p-tabMenu>
+      <p-tabMenu [model]="items" [activeItem]="activeItem" (activeItemChange)="onTableChange($event)"></p-tabMenu>
       <app-parts-table [parts]="parts" [pabIsLoading]="pabIsLoading"></app-parts-table>
     </p-card>
   </div>
 </div>
 <p-confirmDialog
-[style]="{ width: '50vw' }"
-key="positionDialog"
-position="top"
-[baseZIndex]="10000"
-rejectButtonStyleClass="p-button-outlined"
-></p-confirmDialog>
+  [style]="{ width: '50vw' }"
+  key="positionDialog"
+  position="top"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 <app-parts-list-settings></app-parts-list-settings>
