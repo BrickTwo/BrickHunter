@@ -2,6 +2,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { BrickHunterApiService } from './http/brickhunterapi.service';
 import { ColorService } from './services/color.service';
 import { GuidService } from './services/guid.service';
+import { IndexedDBService } from './services/indexeddb.service.ts';
 import { PickABrickService } from './services/pickabrick.service';
  
 @NgModule({
@@ -11,7 +12,8 @@ import { PickABrickService } from './services/pickabrick.service';
     BrickHunterApiService,
     ColorService,
     GuidService,
-    PickABrickService
+    PickABrickService,
+    IndexedDBService
   ],
   declarations: []
 })

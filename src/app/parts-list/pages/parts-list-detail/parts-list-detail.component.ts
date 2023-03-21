@@ -26,8 +26,10 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   ];
   activeItem = this.items[0];
   parts: IPart[];
-  subscription: Subscription;
+  pabSubscription: Subscription;
+  partsListSubscription: Subscription;
   pabIsLoading: boolean = false;
+  uuid: string;
 
   @ViewChild(PartsListSettingsComponent, { static: false })
   private partsListSettingsComponent?: PartsListSettingsComponent;
@@ -39,33 +41,50 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     private readonly confirmationService: ConfirmationService,
     private readonly messageService: MessageService,
     private readonly pickabrickService: PickABrickService
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
-    if(this.subscription) this.subscription.unsubscribe();
+    if (this.pabSubscription) this.pabSubscription.unsubscribe();
+    if (this.partsListSubscription) this.partsListSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.subscription = this.pickabrickService.pabLoading.subscribe(isLoading => {
-      if(!isLoading && this.pabIsLoading) {
-        if(this.pickabrickService.pabLoadError) {
-          this.messageService.add({
-            severity: 'error',
-            summary: "Couldn't load PaB Data!",
-            detail: this.pickabrickService.pabLoadError,
-          });
-        }
-        this.partsList = this.partsListService.getPartsList(this.partsList.uuid);
-        this.parts = this.getParts(String(this.activeItem.id));
-      }
-      this.pabIsLoading = isLoading;
-    });
     this.route.params.subscribe((params: Params) => {
-      const uuid = params['id'];
-      this.partsList = this.partsListService.getPartsList(uuid);
-      this.parts = this.getParts(String(this.activeItem.id));
-      this.pickabrickService.loadPaB(this.partsList.uuid);
+      this.uuid = params['id'];
+      this.reloadPartsList();
+
+      this.pabSubscription = this.pickabrickService.pabLoading.subscribe(isLoading => {
+        console.log(isLoading);
+        if (!isLoading && this.pabIsLoading) {
+          if (this.pickabrickService.pabLoadError) {
+            this.messageService.add({
+              severity: 'error',
+              summary: "Couldn't load PaB Data!",
+              detail: this.pickabrickService.pabLoadError,
+            });
+          }
+          this.reloadPartsList();
+        }
+        this.pabIsLoading = isLoading;
+      });
+
+      this.partsListSubscription = this.partsListService.partsListsChanged.subscribe(partsLists => {
+        if (!this.partsList && partsLists) {
+          this.reloadPartsList();
+        }
+      });
     });
+  }
+
+  private reloadPartsList() {
+    if (!this.uuid) return;
+    const partsList = this.partsListService.getPartsList(this.uuid);
+    if (!this.partsList && partsList) {
+      this.pabIsLoading = true;
+      this.pickabrickService.loadPaB(this.uuid);
+    }
+    this.partsList = partsList;
+    this.parts = this.getParts(String(this.activeItem.id));
   }
 
   onTableChange(selectedTab: MenuItem) {
@@ -76,15 +95,13 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     switch (filter) {
       case 'pab':
       case 'bap':
-        return this.partsList?.parts?.filter(
-          (p) => p.lego?.deliveryChannel === filter
-        );
+        return this.partsList?.parts?.filter(p => p.lego?.deliveryChannel === filter);
       case 'oos':
-        return this.partsList?.parts?.filter((p) => p.lego?.inStock === false);
+        return this.partsList?.parts?.filter(p => p.lego?.inStock === false);
       case 'brickLink':
-        return this.partsList?.parts?.filter((p) => !p.lego);
+        return this.partsList?.parts?.filter(p => !p.lego);
       case 'warning':
-        return this.partsList?.parts?.filter((p) => p.lego?.inStock === false);
+        return this.partsList?.parts?.filter(p => p.lego?.inStock === false);
       default:
         return this.partsList?.parts;
     }
@@ -97,11 +114,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   getTotalPrice(filter: string): string {
     return (
       Math.round(
-        this.getParts(filter)?.reduce(
-          (a, b) =>
-            a + b.qty * (!!b.lego?.price.amount ? b.lego.price.amount : 0),
-          0
-        ) * 100
+        this.getParts(filter)?.reduce((a, b) => a + b.qty * (!!b.lego?.price.amount ? b.lego.price.amount : 0), 0) * 100
       ) / 100
     ).toFixed(2);
   }

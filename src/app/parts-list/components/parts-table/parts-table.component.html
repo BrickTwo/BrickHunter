@@ -8,8 +8,13 @@
       <th pRipple pSortableColumn="color">Color <p-sortIcon field="color"></p-sortIcon></th>
       <th pRipple pSortableColumn="qty">Quantity <p-sortIcon field="qty"></p-sortIcon></th>
       <th>BrickLink</th>
-      <th pRipple pSortableColumn="lego.price.amount">Pick a Brick <p-sortIcon field="lego.price.amount"></p-sortIcon>
-        <p-progressSpinner [style]="{width: '19px', height: '19px'}" class="vertical-align-middle" *ngIf="pabIsLoading"></p-progressSpinner></th>
+      <th pRipple pSortableColumn="lego.price.amount">
+        Pick a Brick <p-sortIcon field="lego.price.amount"></p-sortIcon>
+        <p-progressSpinner
+          [style]="{ width: '19px', height: '19px' }"
+          class="vertical-align-middle"
+          *ngIf="pabIsLoading"></p-progressSpinner>
+      </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-part>
@@ -24,9 +29,17 @@
       <td>{{ part.qty }}</td>
       <td></td>
       <td>
-        <p>{{part.lego?.price.amount.toFixed(2)}} {{part.lego?.price.currencyCode}}</p>
+        <p>{{ part.lego?.price.amount.toFixed(2) }} {{ part.lego?.price.currencyCode }}</p>
         <p>
-          {{(!part.lego)?'':(!part.lego.inStock)?"Out Of Stock":(part.lego.deliveryChannel==='pab')?'Bestseller':'Standard'}}
+          {{
+            !part.lego
+              ? ''
+              : !part.lego.inStock
+              ? 'Out Of Stock'
+              : part.lego.deliveryChannel === 'pab'
+              ? 'Bestseller'
+              : 'Standard'
+          }}
         </p>
       </td>
     </tr>
