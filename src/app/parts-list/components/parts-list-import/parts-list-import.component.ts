@@ -59,7 +59,6 @@ export class PartsListImportComponent {
     fileReader.onload = async (event) => {
       const fileContent = event.target?.result.toString();
       this.wantedList = await this.importXml(fileContent);
-      console.log(this.wantedList);
     };
 
     fileReader.readAsText(file);
@@ -68,7 +67,7 @@ export class PartsListImportComponent {
   onImport(importForm: NgForm) {
     this.showImportDialog = true;
 
-    const source = "bricklink";
+    const source = "BrickLink";
 
     this.importStep = 1;
     const partIds = this.wantedList.map(item => { return item.itemId });
@@ -184,7 +183,7 @@ export class PartsListImportComponent {
 
       const resp = rebrickableData.find((resp) => {
         return resp.externalIds.find(
-          (e) => e.externalId === item.itemId && e.source === "BrickLink"
+          (e) => e.externalId === item.itemId && e.source === source
         );
       });
 

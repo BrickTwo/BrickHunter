@@ -10,6 +10,9 @@ export class PartsTableComponent {
   @Input()
   parts: IPart[] = [];
 
+  @Input()
+  pabIsLoading = false;
+
   caclImageUrl(part: IPart) {
     return `https://img.bricklink.com/ItemImage/PN/${part.source.color}/${part.source.id}.png`;
   }

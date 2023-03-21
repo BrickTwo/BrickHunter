@@ -38,7 +38,7 @@ export class PickABrick {
       .catch((err) => {
         return {
           status: response.error,
-          message: "",
+          message: "somethign went wrong",
         };
       });
 
@@ -79,7 +79,7 @@ export class PickABrick {
         return response.json();
       })
       .catch((err) => {
-        return null;
+        throw new err(err);
       });
 
     return response;

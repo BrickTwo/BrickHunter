@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
-import { IPartsList } from "../models/parts-list";
+import { IPart, IPartsList } from "../models/parts-list";
 
 @Injectable({ providedIn: 'root' })
 export class PartsListService {
   partsListsChanged = new Subject<IPartsList[]>();
+  pabLoading = new Subject<boolean>();
+  pabLoadError = "";
 
   private partsLists: IPartsList[] = [partsListInitialiser];
 
@@ -22,12 +24,13 @@ export class PartsListService {
   }
 
   addPartsList(partsList: IPartsList) {
+    console.log(partsList)
     this.partsLists.push(partsList);
     this.partsListsChanged.next(this.partsLists.slice());
   }
 
-  updatePartsList(id: number, newPartsList: IPartsList) {
-    let partsList = this.partsLists.find(p => p.id === id);
+  updatePartsList(newPartsList: IPartsList) {
+    let partsList = this.partsLists.find(p => p.id === newPartsList.id);
     partsList = newPartsList;
     this.partsListsChanged.next(this.partsLists.slice());
   }
@@ -35,6 +38,52 @@ export class PartsListService {
   deletePartsList(id: number) {
     this.partsLists = this.partsLists.filter(p => p.id !== id);
     this.partsListsChanged.next(this.partsLists.slice());
+  }
+
+  loadPaB(uuid: string) {
+    this.pabLoadError = "";
+    this.pabLoading.next(true);
+
+    let elementIds: number[] = [];
+    const partsList = this.getPartsList(uuid);
+    partsList.parts.map(item => elementIds.push(...item.elementIds));
+
+    chrome.runtime.sendMessage({
+      service: 'pickABrick',
+      action: 'findBrick',
+      elementIds: elementIds,
+    }).then(results => {
+      if (results.status) throw new Error(results.message);
+
+      let parts: IPart[] = partsList.parts.map(part => {
+        if (!part.elementIds || part.elementIds.length === 0) return { ...part, lego: null };
+        const pab = results.find(result => part.elementIds?.find(e => e === Number(result.variant.id)));
+        if (!pab) return { ...part, lego: null };
+
+        part.lego = {
+          elementId: Number(pab.variant.id),
+          designNumber: Number(pab.variant.attributes.designNumber),
+          price: {
+            currencyCode: String(pab.variant.price.currencyCode),
+            amount: Number(pab.variant.price.centAmount) / 100
+          },
+          colourId: Number(pab.variant.attributes.colourId),
+          deliveryChannel: String(pab.variant.attributes.deliveryChannel),
+          inStock: Boolean(pab.inStock)
+        }
+
+        return part;
+      });
+
+      console.log(parts);
+
+      partsList.parts = parts;
+      this.updatePartsList(partsList);
+      this.pabLoading.next(false);
+    }).catch(e => {
+      this.pabLoadError = "something went wrong";
+      this.pabLoading.next(false);
+    });
   }
 }
 

@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 import { IPart, IPartsList } from 'src/app/models/parts-list';
 import { PartsListSettingsComponent } from '../../components/parts-list-settings/parts-list-settings.component';
 import { PartsListService } from '../../parts-list.service';
@@ -11,7 +12,7 @@ import { PartsListService } from '../../parts-list.service';
   templateUrl: './parts-list-detail.component.html',
   styleUrls: ['./parts-list-detail.component.scss'],
 })
-export class PartsListDetailComponent implements OnInit {
+export class PartsListDetailComponent implements OnInit, OnDestroy {
   faClipboardList = faClipboardList;
   partsList: IPartsList;
   items: MenuItem[] = [
@@ -24,6 +25,8 @@ export class PartsListDetailComponent implements OnInit {
   ];
   activeItem = this.items[0];
   parts: IPart[];
+  subscription: Subscription;
+  pabIsLoading: boolean = false;
 
   @ViewChild(PartsListSettingsComponent, { static: false })
   private partsListSettingsComponent?: PartsListSettingsComponent;
@@ -36,12 +39,31 @@ export class PartsListDetailComponent implements OnInit {
     private readonly messageService: MessageService,
   ) { }
 
+  ngOnDestroy(): void {
+    if(this.subscription) this.subscription.unsubscribe();
+  }
+
   ngOnInit(): void {
+    this.subscription = this.partsListService.pabLoading.subscribe(isLoading => {
+      if(!isLoading && this.pabIsLoading) {
+        if(this.partsListService.pabLoadError) {
+          this.messageService.add({
+            severity: 'error',
+            summary: "Couldn't load PaB Data!",
+            detail: this.partsListService.pabLoadError,
+          });
+        }
+        this.partsList = this.partsListService.getPartsList(this.partsList.uid);
+        this.parts = this.getParts(String(this.activeItem.id));
+      }
+      this.pabIsLoading = isLoading;
+    });
     this.route.params.subscribe((params: Params) => {
       const uuid = params['id'];
       this.partsList = this.partsListService.getPartsList(uuid);
       this.parts = this.getParts(String(this.activeItem.id));
-    })
+      this.partsListService.loadPaB(this.partsList.uid);
+    });
   }
 
   onTableChange(selectedTab: MenuItem) {
