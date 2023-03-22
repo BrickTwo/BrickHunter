@@ -5,10 +5,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
   if (request.contentScriptQuery == 'readCookieGQAuth') {
     var cookie = getCookie('gqauth');
-    if (navigator.userAgent.indexOf('Chrome') != -1) {
-      return sendResponse(cookie);
-    }
-    return cookie;
+    return sendResponse(cookie);
   }
 });
 

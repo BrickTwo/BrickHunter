@@ -26,10 +26,15 @@
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/assets", "src/manifest.json"],
-            "styles": [
-              "src/styles.scss"
+            "assets": [
+              "src/assets",
+              {
+                "input": "src/manifest/chrome",
+                "output": "",
+                "glob": "manifest.json"
+              }
             ],
+            "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {

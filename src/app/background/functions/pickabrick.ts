@@ -51,7 +51,6 @@ export class PickABrick {
       .then(response => {
         clearTimeout(timeout);
         if (response.status < 200 || response.status >= 300) {
-          console.log(1, 'error');
           return {
             status: response.status,
             message: response.json(),
@@ -60,7 +59,6 @@ export class PickABrick {
         return response.json();
       })
       .catch(err => {
-        console.log(2, 'error');
         return {
           status: response.error,
           message: 'somethign went wrong',
@@ -149,17 +147,12 @@ export class PickABrick {
   }
 
   static async readQAuth(tabId) {
-    //var tabId = await PickABrick.getLegoTab();
-
-    //if (tabI.status) return false;
-
     let response = await (async () => {
       const response = await chrome.tabs.sendMessage(tabId, { contentScriptQuery: 'readCookieGQAuth' }).catch(error => {
         return { status: 1, message: error };
       });
       return response;
     })();
-
     return response;
   }
 
