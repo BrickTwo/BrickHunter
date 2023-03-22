@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { PickABrickService } from 'src/app/core/services/pickabrick.service';
 import { IPart, IPartsList } from 'src/app/models/parts-list';
 import { PartsListSettingsComponent } from '../../components/parts-list-settings/parts-list-settings.component';
+import { PartsListTransferComponent } from '../../components/parts-list-transfer/parts-list-transfer.component';
 import { PartsListService } from '../../parts-list.service';
 
 @Component({
@@ -34,6 +35,9 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   @ViewChild(PartsListSettingsComponent, { static: false })
   private partsListSettingsComponent?: PartsListSettingsComponent;
 
+  @ViewChild(PartsListTransferComponent, { static: false })
+  private partsListTransferComponent?: PartsListTransferComponent;
+
   constructor(
     private readonly partsListService: PartsListService,
     private readonly router: Router,
@@ -54,13 +58,12 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       this.reloadPartsList();
 
       this.pabSubscription = this.pickabrickService.pabLoading.subscribe(isLoading => {
-        console.log(isLoading);
         if (!isLoading && this.pabIsLoading) {
           if (this.pickabrickService.pabLoadError) {
             this.messageService.add({
               severity: 'error',
               summary: "Couldn't load PaB Data!",
-              detail: this.pickabrickService.pabLoadError,
+              detail: 'PLease try again later',
             });
           }
           this.reloadPartsList();
@@ -88,7 +91,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
 
     if (loadPab) {
       this.pabIsLoading = true;
-      this.pickabrickService.loadPaB(this.uuid);
+      this.pickabrickService.getParts(this.uuid);
     }
   }
 
@@ -151,9 +154,16 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
               detail: 'You have rejected',
             });
             break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
         }
       },
       key: 'positionDialog',
     });
+  }
+
+  onTransfer(cartType: string) {
+    this.partsListTransferComponent?.start(this.getParts(cartType), cartType);
   }
 }

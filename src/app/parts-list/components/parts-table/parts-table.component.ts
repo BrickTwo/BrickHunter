@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IPart } from 'src/app/models/parts-list';
 
 @Component({
@@ -6,12 +6,20 @@ import { IPart } from 'src/app/models/parts-list';
   templateUrl: './parts-table.component.html',
   styleUrls: ['./parts-table.component.scss'],
 })
-export class PartsTableComponent {
+export class PartsTableComponent implements OnChanges {
   @Input()
   parts: IPart[] = [];
 
   @Input()
   pabIsLoading = false;
+
+  rowHeight = 119;
+  tableHeight = 0;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.tableHeight = (this.parts ? this.parts?.length : 0) * this.rowHeight + 56;
+    this.tableHeight = 500;
+  }
 
   caclImageUrl(part: IPart) {
     return `https://img.bricklink.com/ItemImage/PN/${part.source.color}/${part.source.id}.png`;

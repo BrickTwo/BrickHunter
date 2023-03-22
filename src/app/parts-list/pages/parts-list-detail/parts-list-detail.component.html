@@ -66,7 +66,8 @@
               label="Transfer"
               class="p-button-outlined"
               icon="fa fa-cart-shopping"
-              style="width: 100%"></button>
+              style="width: 100%"
+              (click)="onTransfer('pab')"></button>
           </div>
         </div>
         <div class="col-3 xxl:col-12">
@@ -93,7 +94,8 @@
               label="Transfer"
               class="p-button-outlined"
               icon="fa fa-cart-shopping"
-              style="width: 100%"></button>
+              style="width: 100%"
+              (click)="onTransfer('bap')"></button>
           </div>
         </div>
         <div class="col-3 xxl:col-12">
@@ -132,3 +134,4 @@
   [baseZIndex]="10000"
   rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 <app-parts-list-settings></app-parts-list-settings>
+<app-parts-list-transfer></app-parts-list-transfer>

@@ -7,16 +7,18 @@ import { PartsListService } from 'src/app/parts-list/parts-list.service';
 export class PickABrickService {
   pabLoading = new Subject<boolean>();
   pabLoadError = '';
+  transferStep = new Subject<number>();
+  transferError = '';
 
   constructor(private readonly partsListService: PartsListService) {}
 
-  loadPaB(uuid: string) {
+  getParts(uuid: string) {
     this.pabLoadError = '';
     this.pabLoading.next(true);
 
     let elementIds: number[] = [];
     const partsList = this.partsListService.getPartsList(uuid);
-    partsList.parts.map((item) => elementIds.push(...item.elementIds));
+    partsList.parts.map(item => elementIds.push(...item.elementIds));
 
     chrome.runtime
       .sendMessage({
@@ -24,15 +26,12 @@ export class PickABrickService {
         action: 'findBrick',
         elementIds: elementIds,
       })
-      .then((results) => {
+      .then(results => {
         if (results.status) throw new Error(results.message);
 
-        let parts: IPart[] = partsList.parts.map((part) => {
-          if (!part.elementIds || part.elementIds.length === 0)
-            return { ...part, lego: null };
-          const pab = results.find((result) =>
-            part.elementIds?.find((e) => e === Number(result.variant.id))
-          );
+        let parts: IPart[] = partsList.parts.map(part => {
+          if (!part.elementIds || part.elementIds.length === 0) return { ...part, lego: null };
+          const pab = results.find(result => part.elementIds?.find(e => e === Number(result.variant.id)));
           if (!pab) return { ...part, lego: null };
 
           part.lego = {
@@ -54,9 +53,104 @@ export class PickABrickService {
         this.partsListService.updatePartsList(partsList);
         this.pabLoading.next(false);
       })
-      .catch((e) => {
+      .catch(e => {
         this.pabLoadError = 'something went wrong';
         this.pabLoading.next(false);
       });
+  }
+
+  transferParts(parts: IPart[], cartType: string) {
+    this.transferError = '';
+    this.transferStep.next(1);
+    this.getTabId()
+      .then(tabId => {
+        this.transferStep.next(2);
+        this.getQAuth(tabId)
+          .then(authorization => {
+            this.transferStep.next(4);
+            this.addElementsToCart(authorization, parts, cartType)
+              .then(response => {
+                this.transferStep.next(0);
+                this.openPickABrick(tabId);
+              })
+              .catch(e => {
+                this.transferError = e;
+                this.transferStep.next(0);
+              });
+          })
+          .catch(e => {
+            this.transferError = e;
+            this.transferStep.next(0);
+          });
+      })
+      .catch(e => {
+        this.transferError = e;
+        this.transferStep.next(0);
+      });
+  }
+
+  getTabId() {
+    return chrome.runtime
+      .sendMessage({
+        service: 'pickABrick',
+        action: 'getTabId',
+      })
+      .then(response => {
+        if (response.status) throw new Error(response.message);
+        return response;
+      })
+      .catch(e => {
+        throw new Error('No tab open with lego.com.');
+      });
+  }
+
+  getQAuth(tabId: number) {
+    return chrome.runtime
+      .sendMessage({
+        service: 'pickABrick',
+        action: 'readQAuth',
+        tabId: tabId,
+      })
+      .then(response => {
+        if (response.status) throw new Error(response.message);
+        return response;
+      })
+      .catch(e => {
+        throw new Error("Couldn't read authentication");
+      });
+  }
+
+  addElementsToCart(authorization: string, parts: IPart[], cartType: string) {
+    const items = parts.map(part => {
+      return {
+        sku: part.lego.elementId.toString(),
+        quantity: part.qty,
+      };
+    });
+
+    return chrome.runtime
+      .sendMessage({
+        service: 'pickABrick',
+        action: 'addElementToCart',
+        authorization: authorization,
+        items: items.slice(0, 150),
+        cartType: cartType,
+      })
+      .then(response => {
+        if (response.status) throw new Error(response.message);
+        return response;
+      })
+      .catch(e => {
+        throw new Error("Couldn't add parts to shopping cart");
+      });
+  }
+
+  openPickABrick(tabId: number) {
+    return chrome.runtime.sendMessage({
+      service: 'pickABrick',
+      action: 'openPickABrick',
+      tabId: tabId,
+      affiliate: '',
+    });
   }
 }

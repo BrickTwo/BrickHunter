@@ -13,9 +13,7 @@ import { CoreModule } from './core/core.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     CoreModule,
     BrowserModule,
@@ -26,9 +24,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     PrimengModule,
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
   ],
-  providers: [
-    ConfirmationService,
-    MessageService],
+  providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

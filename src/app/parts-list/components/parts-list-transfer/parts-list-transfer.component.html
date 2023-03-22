@@ -1,0 +1,59 @@
+<p-dialog [(visible)]="show" [style]="{ width: '50vw' }" [modal]="true" [closable]="false">
+  <ng-template pTemplate="header">
+    Transfer {{ cartType === 'pab' ? 'Bestseller' : 'Standard' }} parts to LEGO shopping cart
+  </ng-template>
+  <div class="flex flex-wrap card-container blue-container gap-3">
+    <p-progressSpinner></p-progressSpinner>
+    <div>
+      <p class="align-items-center justify-content-center">
+        [
+        <fa-icon [icon]="faCheck" class="icon" *ngIf="transferStep > 1"></fa-icon>
+        <fa-icon [icon]="faRightLong" class="icon" *ngIf="transferStep === 1"></fa-icon>
+        <fa-icon [icon]="faCheck" class="icon" *ngIf="transferStep < 1"></fa-icon>
+        ] Check for open lego.com tab
+      </p>
+      <p class="align-items-center justify-content-center">
+        [
+        <fa-icon [icon]="faCheck" class="icon" *ngIf="transferStep > 2"></fa-icon>
+        <fa-icon [icon]="faRightLong" class="icon" *ngIf="transferStep === 2"></fa-icon>
+        <fa-icon [icon]="faO" class="icon" *ngIf="transferStep < 2"></fa-icon>
+        ] Get auth token
+      </p>
+      <p class="align-items-center justify-content-center">
+        [
+        <fa-icon [icon]="faCheck" class="icon" *ngIf="transferStep > 3"></fa-icon>
+        <fa-icon [icon]="faRightLong" class="icon" *ngIf="transferStep === 3"></fa-icon>
+        <fa-icon [icon]="faO" class="icon" *ngIf="transferStep < 3"></fa-icon>
+        ] Check current cart (to do!)
+      </p>
+      <p class="align-items-center justify-content-center">
+        [
+        <fa-icon [icon]="faCheck" class="icon" *ngIf="transferStep > 4"></fa-icon>
+        <fa-icon [icon]="faRightLong" class="icon" *ngIf="transferStep === 4"></fa-icon>
+        <fa-icon [icon]="faO" class="icon" *ngIf="transferStep < 4"></fa-icon>
+        ] Transfer Parts
+      </p>
+    </div>
+  </div>
+  <p-message severity="error" [text]="errorMessage" *ngIf="!!errorMessage"></p-message>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="onOpenLegoWebsite()"
+      label="open LEGO.com"
+      styleClass="p-button-solid"
+      *ngIf="transferStep === 1 && !!errorMessage"></p-button>
+    <p-button
+      icon="pi pi-check"
+      (click)="onRetry()"
+      label="Retry"
+      styleClass="p-button-outlined"
+      *ngIf="transferStep === 1 && !!errorMessage"></p-button>
+    <p-button
+      icon="pi pi-check"
+      (click)="onClose()"
+      label="Close"
+      styleClass="p-button-outlined p-button-danger"
+      *ngIf="!!errorMessage"></p-button>
+  </ng-template>
+</p-dialog>

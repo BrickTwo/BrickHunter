@@ -1,6 +1,5 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -11,14 +10,14 @@ import { DividerModule } from 'primeng/divider';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ToastModule } from 'primeng/toast';
-
-
 
 const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
   primeConfig.ripple = true;
@@ -36,6 +35,8 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     FileUploadModule,
     ImageModule,
     InputTextModule,
+    MessageModule,
+    MessagesModule,
     ProgressSpinnerModule,
     RippleModule,
     SidebarModule,
@@ -52,4 +53,4 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     },
   ],
 })
-export class PrimengModule { }
+export class PrimengModule {}

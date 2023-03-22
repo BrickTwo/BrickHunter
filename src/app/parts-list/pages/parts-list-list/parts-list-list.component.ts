@@ -1,11 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faList } from '@fortawesome/free-solid-svg-icons';
-import {
-  ConfirmationService,
-  ConfirmEventType,
-  MessageService,
-} from 'primeng/api';
+import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { IPartsList } from 'src/app/models/parts-list';
 import { PartsListImportComponent } from '../../components/parts-list-import/parts-list-import.component';
@@ -35,7 +31,7 @@ export class PartsListListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.partsListService.partsListsChanged.subscribe((partsLists: IPartsList[]) => {
       this.partsLists = partsLists;
-    })
+    });
     this.partsLists = this.partsListService.getPartsLists();
   }
 
@@ -61,6 +57,9 @@ export class PartsListListComponent implements OnInit, OnDestroy {
               detail: 'You have rejected',
             });
             break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
         }
       },
       key: 'positionDialog',
@@ -76,6 +75,6 @@ export class PartsListListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if(this.subscription) this.subscription.unsubscribe();
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

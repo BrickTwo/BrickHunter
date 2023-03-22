@@ -1,11 +1,12 @@
+<!-- <div *ngIf="parts" [style.height.px]="tableHeight"> -->
 <p-table
   [value]="parts"
   [tableStyle]="{ 'min-width': '50rem' }"
   styleClass="p-datatable-striped"
-  scrollHeight="calc(100vh - 200px)"
+  scrollHeight="calc(100vh - 210px)"
   [scrollable]="true"
   [virtualScroll]="true"
-  [virtualScrollItemSize]="34">
+  [virtualScrollItemSize]="rowHeight">
   <ng-template pTemplate="header">
     <tr>
       <th pRipple pSortableColumn="id">ItemId <p-sortIcon field="id"></p-sortIcon></th>
@@ -25,7 +26,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-part>
-    <tr>
+    <tr style="height: 119px">
       <td>{{ part.id }}</td>
       <td>{{ part.lego?.designNumber }}</td>
       <td>{{ part.elementId }}</td>
@@ -52,3 +53,4 @@
     </tr>
   </ng-template>
 </p-table>
+<!-- </div> -->
