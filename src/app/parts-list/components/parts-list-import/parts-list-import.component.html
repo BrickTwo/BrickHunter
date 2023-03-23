@@ -31,10 +31,10 @@
     <p-progressSpinner></p-progressSpinner>
     <div>
       <p class="align-items-center justify-content-center">
-        [<fa-icon [icon]="faCheck" class="icon" *ngIf="importStep >= 1"></fa-icon>] Get Rebrickable Data
+        <app-progress-icon [step]="1" [currentStep]="importStep"></app-progress-icon> Get Rebrickable Data
       </p>
       <p class="align-items-center justify-content-center">
-        [<fa-icon [icon]="faCheck" class="icon" *ngIf="importStep >= 2"></fa-icon>] Get BrickLink Data
+        <app-progress-icon [step]="2" [currentStep]="importStep"></app-progress-icon> Get BrickLink Data
       </p>
     </div>
   </div>

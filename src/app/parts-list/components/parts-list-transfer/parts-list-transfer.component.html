@@ -6,32 +6,16 @@
     <p-progressSpinner></p-progressSpinner>
     <div>
       <p class="align-items-center justify-content-center">
-        [
-        <fa-icon [icon]="faCheck" class="icon" *ngIf="transferStep > 1"></fa-icon>
-        <fa-icon [icon]="faRightLong" class="icon" *ngIf="transferStep === 1"></fa-icon>
-        <fa-icon [icon]="faCheck" class="icon" *ngIf="transferStep < 1"></fa-icon>
-        ] Check for open lego.com tab
+        <app-progress-icon [step]="1" [currentStep]="transferStep"></app-progress-icon> Check for open lego.com tab
       </p>
       <p class="align-items-center justify-content-center">
-        [
-        <fa-icon [icon]="faCheck" class="icon" *ngIf="transferStep > 2"></fa-icon>
-        <fa-icon [icon]="faRightLong" class="icon" *ngIf="transferStep === 2"></fa-icon>
-        <fa-icon [icon]="faO" class="icon" *ngIf="transferStep < 2"></fa-icon>
-        ] Get auth token
+        <app-progress-icon [step]="2" [currentStep]="transferStep"></app-progress-icon> Get auth token
       </p>
       <p class="align-items-center justify-content-center">
-        [
-        <fa-icon [icon]="faCheck" class="icon" *ngIf="transferStep > 3"></fa-icon>
-        <fa-icon [icon]="faRightLong" class="icon" *ngIf="transferStep === 3"></fa-icon>
-        <fa-icon [icon]="faO" class="icon" *ngIf="transferStep < 3"></fa-icon>
-        ] Check current cart (to do!)
+        <app-progress-icon [step]="3" [currentStep]="transferStep"></app-progress-icon> Check current cart (to do!)
       </p>
       <p class="align-items-center justify-content-center">
-        [
-        <fa-icon [icon]="faCheck" class="icon" *ngIf="transferStep > 4"></fa-icon>
-        <fa-icon [icon]="faRightLong" class="icon" *ngIf="transferStep === 4"></fa-icon>
-        <fa-icon [icon]="faO" class="icon" *ngIf="transferStep < 4"></fa-icon>
-        ] Transfer Parts
+        <app-progress-icon [step]="4" [currentStep]="transferStep"></app-progress-icon> Transfer Parts
       </p>
     </div>
   </div>

@@ -1,5 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { faCheck, faO, faRightLong } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PickABrickService } from 'src/app/core/services/pickabrick.service';
 import { IPart } from 'src/app/models/parts-list';
@@ -10,9 +9,6 @@ import { IPart } from 'src/app/models/parts-list';
   styleUrls: ['./parts-list-transfer.component.scss'],
 })
 export class PartsListTransferComponent implements OnInit, OnDestroy {
-  faCheck = faCheck;
-  faRightLong = faRightLong;
-  faO = faO;
   transferStep = 0;
   subscription: Subscription;
   show = false;

@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { MessageService } from 'primeng/api';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { BrickHunterApiService } from 'src/app/core/http/brickhunterapi.service';
@@ -23,7 +22,6 @@ import { PartsListService } from '../../parts-list.service';
   styleUrls: ['./parts-list-import.component.scss'],
 })
 export class PartsListImportComponent {
-  faCheck = faCheck;
   display = false;
   showImportDialog = false;
   importStep = 0;
