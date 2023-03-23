@@ -16,36 +16,6 @@ chrome.action.onClicked.addListener((tab: any) => {
   });
 });
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (tab.url && tab.url.indexOf('https://www.lego.com') >= 0) {
-    if (changeInfo.status == 'complete') {
-      (async () => {
-        chrome.tabs
-          .sendMessage(tabId, { contentScriptQuery: 'loaded' })
-          .then(resp => {})
-          .catch(error => {
-            chrome.scripting.executeScript({
-              target: { tabId: tabId, allFrames: true },
-              files: ['contentscript.js'],
-            });
-          });
-      })();
-
-      // chrome.tabs
-      //   .sendMessage(tabId, {
-      //     contentScriptQuery: 'loaded',
-      //   })
-      //   .then((resp) => { console.log("loaded", resp) })
-      //   .catch((error) => {
-      //     chrome.scripting.executeScript({
-      //       target: { tabId: tabId, allFrames: true },
-      //       files: ['contentscript.js'],
-      //     });
-      //   });
-    }
-  }
-});
-
 chrome.runtime.onMessage.addListener((request: BackgroudnRequest, sender, sendResponse) => {
   // console.log('background', request.action);
   switch (request.action) {
