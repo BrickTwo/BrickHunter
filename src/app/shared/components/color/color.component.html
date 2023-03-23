@@ -1,0 +1,11 @@
+<div>
+  <span style="display: block">
+    <div
+      style="border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"
+      [style.background-color]="'#' + color.rgb"></div>
+    <span>{{ color.external_ids.BrickLink?.ext_descrs }}</span>
+  </span>
+  <span v-if="data.value.legoName" style="color: grey; font-size: small; margin-left: 20px">
+    [{{ color.external_ids.LEGO?.ext_descrs[0][0] }}]
+  </span>
+</div>

@@ -33,7 +33,9 @@
       <td>
         <p-image [src]="caclImageUrl(part)" imageClass="part-image" [preview]="true"></p-image>
       </td>
-      <td>{{ part.color }}</td>
+      <td>
+        <app-color [colorId]="part.color"></app-color>
+      </td>
       <td>{{ part.qty }}</td>
       <td></td>
       <td>
