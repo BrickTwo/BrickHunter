@@ -1,6 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import {
+  BackgroundRequestAction,
+  BackgroundRequestService,
+  IBackgroundAddElementRequest,
+  IBackgroundFindBricksRequest,
+  IBackgroundGetTabIdRequest,
+  IBackgroundOpenBrickABrickRequest,
+  IBackgroundReadQauthRequest,
+} from 'src/app/models/background-message';
 import { IPart } from 'src/app/models/parts-list';
+import { IAddElementItem } from 'src/app/models/pick-a-brick';
 import { PartsListService } from 'src/app/parts-list/parts-list.service';
 
 @Injectable()
@@ -20,12 +30,15 @@ export class PickABrickService {
     const partsList = this.partsListService.getPartsList(uuid);
     partsList.parts.map(item => elementIds.push(...item.elementIds));
 
+    const request: IBackgroundFindBricksRequest = {
+      service: BackgroundRequestService.PickaBrick,
+      action: BackgroundRequestAction.FindBricks,
+      elementIds: elementIds,
+      locale: '',
+    };
+
     chrome.runtime
-      .sendMessage({
-        service: 'pickABrick',
-        action: 'findBrick',
-        elementIds: elementIds,
-      })
+      .sendMessage(request)
       .then(results => {
         if (results.status) throw new Error(results.message);
 
@@ -90,11 +103,13 @@ export class PickABrickService {
   }
 
   getTabId() {
+    const request: IBackgroundGetTabIdRequest = {
+      service: BackgroundRequestService.PickaBrick,
+      action: BackgroundRequestAction.GetLegoTabId,
+    };
+
     return chrome.runtime
-      .sendMessage({
-        service: 'pickABrick',
-        action: 'getTabId',
-      })
+      .sendMessage(request)
       .then(response => {
         if (response.status) throw new Error(response.message);
         return response;
@@ -105,12 +120,14 @@ export class PickABrickService {
   }
 
   getQAuth(tabId: number) {
+    const request: IBackgroundReadQauthRequest = {
+      service: BackgroundRequestService.PickaBrick,
+      action: BackgroundRequestAction.ReadLegoQAuth,
+      tabId: tabId,
+    };
+
     return chrome.runtime
-      .sendMessage({
-        service: 'pickABrick',
-        action: 'readQAuth',
-        tabId: tabId,
-      })
+      .sendMessage(request)
       .then(response => {
         if (response.status) throw new Error(response.message);
         return response;
@@ -122,20 +139,24 @@ export class PickABrickService {
 
   addElementsToCart(authorization: string, parts: IPart[], cartType: string) {
     const items = parts.map(part => {
-      return {
+      const item: IAddElementItem = {
         sku: part.lego.elementId.toString(),
         quantity: part.qty,
       };
+      return item;
     });
 
+    const request: IBackgroundAddElementRequest = {
+      service: BackgroundRequestService.PickaBrick,
+      action: BackgroundRequestAction.AddElementToCart,
+      authorization: authorization,
+      items: items.slice(0, 150),
+      cartType: cartType,
+      locale: '',
+    };
+
     return chrome.runtime
-      .sendMessage({
-        service: 'pickABrick',
-        action: 'addElementToCart',
-        authorization: authorization,
-        items: items.slice(0, 150),
-        cartType: cartType,
-      })
+      .sendMessage(request)
       .then(response => {
         if (response.status) throw new Error(response.message);
         return response;
@@ -146,11 +167,14 @@ export class PickABrickService {
   }
 
   openPickABrick(tabId: number) {
-    return chrome.runtime.sendMessage({
-      service: 'pickABrick',
-      action: 'openPickABrick',
+    const request: IBackgroundOpenBrickABrickRequest = {
+      service: BackgroundRequestService.PickaBrick,
+      action: BackgroundRequestAction.OpenPickABrick,
       tabId: tabId,
-      affiliate: '',
-    });
+      affiliate: null,
+      locale: '',
+    };
+
+    return chrome.runtime.sendMessage(request);
   }
 }

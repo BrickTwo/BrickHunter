@@ -1,14 +1,17 @@
+import { IAffiliate } from 'src/app/models/global';
+import { IAddElement, IAddElementItem } from 'src/app/models/pick-a-brick';
+
 const timeout = setTimeout(function () {}, 5000);
 
 export class PickABrick {
-  static async finBrick(elementIds: number[], locale: string) {
+  static async finBricks(elementIds: number[], locale: string) {
     const amountPerIteration = 900;
     let iteration = 0;
     let parts = [];
 
     do {
       let items = elementIds.slice(iteration * amountPerIteration, amountPerIteration);
-      const response = await this.findBrickRequest(items, locale);
+      const response = await this.findBricksRequest(items, locale);
       if (response.status) {
         return {
           status: response.status,
@@ -23,7 +26,7 @@ export class PickABrick {
     return parts;
   }
 
-  static async findBrickRequest(elementIds: number[], locale: string) {
+  static async findBricksRequest(elementIds: number[], locale: string) {
     var PickABrickQuery = {
       operationName: 'PickABrickQuery',
       variables: {
@@ -69,11 +72,11 @@ export class PickABrick {
     return response.data.elements.results;
   }
 
-  static async addElementToCart(authorization, items, cartType, locale: string) {
-    var PickABrickQuery = {
+  static async addElementToCart(authorization: string, items: IAddElementItem[], cartType: string, locale: string) {
+    var PickABrickQuery: IAddElement = {
       operationName: 'AddToElementCart',
       variables: {
-        items,
+        items: items,
         cartType: cartType,
       },
       query:
@@ -108,7 +111,7 @@ export class PickABrick {
     return response;
   }
 
-  static async readCart(authorization, locale: string) {
+  static async readCart(authorization: string, locale: string) {
     var PickABrickQuery = {
       operationName: 'ElementCartQuery',
       variables: {
@@ -146,7 +149,7 @@ export class PickABrick {
     return response.data.me.elementCarts.carts;
   }
 
-  static async readQAuth(tabId) {
+  static async readQAuth(tabId: number) {
     let response = await (async () => {
       const response = await chrome.tabs.sendMessage(tabId, { contentScriptQuery: 'readCookieGQAuth' }).catch(error => {
         return { status: 1, message: error };
@@ -174,14 +177,12 @@ export class PickABrick {
       });
   }
 
-  static openPickABrick(tabId, affiliate, locale) {
+  static openPickABrick(tabId: number, affiliate: IAffiliate, locale: string) {
     var url = `https://www.lego.com/${locale}/page/static/pick-a-brick`;
     if (affiliate) {
-      if (affiliate.linkType == 'webgains') {
-        url =
-          `https://track.webgains.com/click.html?wgcampaignid=${affiliate.wgcampaignid}&wgprogramid=${affiliate.wgprogramid}&clickref=${affiliate.clickref}&wgtarget=` +
-          url;
-      }
+      url =
+        `https://track.webgains.com/click.html?wgcampaignid=${affiliate.wgcampaignid}&wgprogramid=${affiliate.wgprogramid}&clickref=${affiliate.clickref}&wgtarget=` +
+        url;
     }
 
     chrome.tabs
