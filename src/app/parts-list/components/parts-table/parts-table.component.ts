@@ -22,6 +22,8 @@ export class PartsTableComponent implements OnChanges {
   }
 
   caclImageUrl(part: IPart) {
-    return `https://img.bricklink.com/ItemImage/PN/${part.source.color}/${part.source.id}.png`;
+    if (part.source.source === 'BrickLink')
+      return `https://img.bricklink.com/ItemImage/PN/${part.source.color}/${part.source.id}.png`;
+    return `https://brickhunter.blob.core.windows.net/parts/pab/${part.elementId}.jpg`;
   }
 }

@@ -28,7 +28,7 @@
   <ng-template pTemplate="body" let-part>
     <tr style="height: 119px">
       <td>{{ part.id }}</td>
-      <td>{{ part.lego?.designNumber }}</td>
+      <td>{{ part.designId }}</td>
       <td>{{ part.elementId }}</td>
       <td>
         <p-image [src]="caclImageUrl(part)" imageClass="part-image" [preview]="true"></p-image>

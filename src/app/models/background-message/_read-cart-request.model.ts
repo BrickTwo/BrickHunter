@@ -1,6 +1,6 @@
 import { IBackgroundRequest } from '.';
 
-export interface IBackgroundFindBricksRequest extends IBackgroundRequest {
+export interface IBackgroundReadCartRequest extends IBackgroundRequest {
   elementIds: number[];
   locale: string;
 }

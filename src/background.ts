@@ -1,5 +1,6 @@
 import { PickABrick } from './app/background/functions/pickabrick';
 import {
+  BackgroudnRequest,
   BackgroundRequestAction,
   IBackgroundAddElementRequest,
   IBackgroundFindBricksRequest,
@@ -45,7 +46,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 });
 
-chrome.runtime.onMessage.addListener((request: IBackgroundRequest, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request: BackgroudnRequest, sender, sendResponse) => {
   // console.log('background', request.action);
   switch (request.action) {
     case BackgroundRequestAction.FindBricks:

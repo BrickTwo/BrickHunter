@@ -15,6 +15,6 @@ export class ColorComponent implements OnInit {
   constructor(private readonly colorService: ColorService) {}
 
   ngOnInit(): void {
-    this.color = this.colorService.getColor(this.colorId, 'Rebrickable');
+    this.color = this.colorService.getColor(this.colorId);
   }
 }
