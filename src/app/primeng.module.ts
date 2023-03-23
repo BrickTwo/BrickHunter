@@ -17,6 +17,7 @@ import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 
 const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
@@ -42,6 +43,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     SidebarModule,
     TableModule,
     TabMenuModule,
+    TagModule,
     ToastModule,
   ],
   providers: [

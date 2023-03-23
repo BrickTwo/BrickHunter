@@ -21,7 +21,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     { label: 'All', id: 'all' },
     { label: 'PaB Bestseller', id: 'pab' },
     { label: 'PaB Standard', id: 'bap' },
-    { label: 'PaB Out Of Service', id: 'oos' },
+    { label: 'PaB Out Of Stock', id: 'oos' },
     { label: 'BrickLink', id: 'brickLink' },
     { label: 'Warnings', id: 'warning' },
   ];

@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PartsListImportComponent, PartsListSettingsComponent, PartsTableComponent } from './components';
 import { PartsListTransferComponent } from './components/parts-list-transfer/parts-list-transfer.component';
 import { PartsListDetailComponent, PartsListListComponent } from './pages';
+import { PabPriceComponent } from './components/pab-price/pab-price.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PartsListDetailComponent, PartsListListComponent } from './pages';
     PartsListImportComponent,
     PartsTableComponent,
     PartsListTransferComponent,
+    PabPriceComponent,
   ],
   imports: [
     PrimengModule,

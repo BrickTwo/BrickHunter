@@ -39,18 +39,7 @@
       <td>{{ part.qty }}</td>
       <td></td>
       <td>
-        <p>{{ part.lego?.price.amount.toFixed(2) }} {{ part.lego?.price.currencyCode }}</p>
-        <p>
-          {{
-            !part.lego
-              ? ''
-              : !part.lego.inStock
-              ? 'Out Of Stock'
-              : part.lego.deliveryChannel === 'pab'
-              ? 'Bestseller'
-              : 'Standard'
-          }}
-        </p>
+        <app-pab-price [part]="part"></app-pab-price>
       </td>
     </tr>
   </ng-template>
