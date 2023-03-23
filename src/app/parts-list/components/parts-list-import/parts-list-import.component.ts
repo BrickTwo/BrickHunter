@@ -5,7 +5,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { BrickHunterApiService } from 'src/app/core/http/brickhunterapi.service';
 import { ColorService } from 'src/app/core/services/color.service';
 import { GuidService } from 'src/app/core/services/guid.service';
-import { IBrickHunterV1, IBrickHunterV1Item } from 'src/app/models/brickhunter';
+import { IBrickHunterV1 } from 'src/app/models/brickhunter';
 import {
   GetBrickLinkPartsRequest,
   GetBrickLinkPartsResponse,
@@ -30,7 +30,7 @@ export class PartsListImportComponent {
   wantedList: IBrickLinkWantedListItem[];
   brickhunterV1List: IBrickHunterV1;
   source: string;
-  @ViewChild('importForm', { static: false }) importForm: NgForm;
+  @ViewChild('form', { static: false }) form: NgForm;
   @ViewChild('fileUpload', { static: false }) fileUpload: any;
 
   clear() {
@@ -50,7 +50,7 @@ export class PartsListImportComponent {
 
   onHide() {
     this.importStep = 0;
-    this.importForm.setValue({ partsListName: '' });
+    this.form.setValue({ partsListName: '' });
     this.fileUpload.clear();
   }
 
@@ -70,14 +70,14 @@ export class PartsListImportComponent {
 
       switch (file.type) {
         case 'text/xml':
-          this.importForm.setValue({ partsListName: fileName });
+          this.form.setValue({ partsListName: fileName });
           this.source = 'BrickLink';
           this.wantedList = await this.importXml(fileContent);
           break;
         case 'application/json':
           this.source = 'BrickHunterV1';
           this.brickhunterV1List = JSON.parse(fileContent) as IBrickHunterV1;
-          this.importForm.setValue({ partsListName: this.brickhunterV1List.name });
+          this.form.setValue({ partsListName: this.brickhunterV1List.name });
           break;
         default:
           return;
@@ -87,7 +87,7 @@ export class PartsListImportComponent {
     fileReader.readAsText(file);
   }
 
-  onImport(importForm: NgForm) {
+  onSubmit(importForm: NgForm) {
     this.showImportDialog = true;
 
     this.importStep = 1;

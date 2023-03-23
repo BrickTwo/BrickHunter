@@ -1,6 +1,6 @@
 <p-sidebar [(visible)]="display" position="right" (onHide)="onHide()">
   <h2>Import</h2>
-  <form (ngSubmit)="onImport(importForm)" #importForm="ngForm">
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
     <div class="flex flex-column card-container green-container gap-3">
       <p-fileUpload
         #fileUpload
@@ -17,7 +17,7 @@
         <label for="partsListName" class="block">Parts List name</label>
         <input id="partsListName" name="partsListName" type="text" pInputText style="width: 100%" ngModel />
       </div>
-      <button pButton pRipple type="button" label="Import" style="width: 100%" (click)="onImport(importForm)"></button>
+      <button pButton pRipple type="submit" label="Import" style="width: 100%"></button>
     </div>
   </form>
 </p-sidebar>
