@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IPartsList } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 
@@ -8,34 +8,36 @@ import { PartsListService } from '../../services/parts-list.service';
   templateUrl: './parts-list-settings.component.html',
   styleUrls: ['./parts-list-settings.component.scss'],
 })
-export class PartsListSettingsComponent implements OnChanges, AfterViewInit {
+export class PartsListSettingsComponent implements OnInit, OnChanges {
   display = false;
   have: boolean;
   withoutbl: boolean;
   bllower: boolean;
 
+  form = new FormGroup({
+    partsListName: new FormControl(),
+  });
+
   @Input() partsList: IPartsList;
 
-  @ViewChild('form', { static: false }) form: NgForm;
-
   constructor(private readonly partsListService: PartsListService) {}
+
+  ngOnInit(): void {
+    // console.log('init', this.partsList?.name, !!this.form);
+    // if (this.partsList) this.form.setValue({ partsListName: this.partsList.name });
+    //this.form.patchValue({ partsListName: this.partsList.name });
+  }
 
   public open() {
     this.display = true;
   }
 
-  ngAfterViewInit(): void {
-    if (this.form && this.partsList)
-      this.form.setValue({ partsListName: this.partsList?.name, have: false, withoutbl: false, bllower: false });
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.form && this.partsList)
-      this.form.setValue({ partsListName: this.partsList?.name, have: false, withoutbl: false, bllower: false });
+    if (this.partsList) this.form.patchValue({ partsListName: this.partsList.name });
   }
 
-  onSubmit(form: NgForm) {
-    this.partsList.name = form.value.partsListName;
+  onSubmit() {
+    this.partsList.name = this.form.value.partsListName;
     this.partsListService.updatePartsList(this.partsList);
     this.display = false;
   }

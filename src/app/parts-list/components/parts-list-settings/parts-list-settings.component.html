@@ -1,12 +1,12 @@
 <p-sidebar [(visible)]="display" position="right">
   <h2>Settings</h2>
-  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="flex flex-column card-container green-container gap-3">
       <div>
         <label for="partsListName" class="block">Parts List name</label>
-        <input id="partsListName" name="partsListName" type="text" pInputText style="width: 100%" ngModel />
+        <input id="partsListName" formControlName="partsListName" type="text" pInputText style="width: 100%" />
       </div>
-      <div class="field-checkbox">
+      <!-- <div class="field-checkbox">
         <p-checkbox [(ngModel)]="have" [binary]="false" inputId="have" name="have"></p-checkbox>
         <label for="have">Subtract WantedList-Have from number</label>
       </div>
@@ -17,7 +17,7 @@
       <div class="field-checkbox">
         <p-checkbox name="bllower" [(ngModel)]="bllower" inputId="bllower" name="bllower"></p-checkbox>
         <label for="bllower">Only add to BrickLink if price is x lower</label>
-      </div>
+      </div> -->
       <button pButton pRipple type="submit" label="Save" style="width: 100%"></button>
     </div>
   </form>

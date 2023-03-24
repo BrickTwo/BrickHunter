@@ -13,7 +13,7 @@ export class PartsTableComponent implements OnChanges {
   @Input()
   pabIsLoading = false;
 
-  rowHeight = 119;
+  rowHeight = 91;
   tableHeight = 0;
 
   ngOnChanges(changes: SimpleChanges): void {

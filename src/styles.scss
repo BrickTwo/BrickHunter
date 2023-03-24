@@ -104,3 +104,8 @@ h2 {
 .p-datatable th {
   z-index: 999;
 }
+
+.p-datatable .p-datatable-tbody > tr > td {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}

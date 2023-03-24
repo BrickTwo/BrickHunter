@@ -71,7 +71,6 @@ export class PartsListListComponent implements OnInit, OnDestroy {
   }
 
   openPartsList(partsList: IPartsList) {
-    console.log(partsList.uuid);
     this.router.navigate([partsList.uuid], { relativeTo: this.route });
   }
 

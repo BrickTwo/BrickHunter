@@ -100,7 +100,7 @@ export class PartsListImportComponent implements OnDestroy {
       this.importStep = step;
 
       if (step === 0) {
-        this.subscription.unsubscribe();
+        if (this.subscription) this.subscription.unsubscribe();
       }
     });
 
