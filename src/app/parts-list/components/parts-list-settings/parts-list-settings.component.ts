@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IPartsList } from 'src/app/models/parts-list';
-import { PartsListService } from '../../parts-list.service';
+import { PartsListService } from '../../services/parts-list.service';
 
 @Component({
   selector: 'app-parts-list-settings',

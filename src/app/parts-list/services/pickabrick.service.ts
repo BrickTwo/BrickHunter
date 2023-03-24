@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { LocaleService } from 'src/app/core/services/locale.service';
 import {
   BackgroundRequestAction,
   BackgroundRequestService,
@@ -11,7 +12,7 @@ import {
 } from 'src/app/models/background-message';
 import { IPart } from 'src/app/models/parts-list';
 import { IAddElementItem } from 'src/app/models/pick-a-brick';
-import { PartsListService } from 'src/app/parts-list/parts-list.service';
+import { PartsListService } from './parts-list.service';
 
 @Injectable()
 export class PickABrickService {
@@ -20,7 +21,7 @@ export class PickABrickService {
   transferStep = new Subject<number>();
   transferError = '';
 
-  constructor(private readonly partsListService: PartsListService) {}
+  constructor(private readonly partsListService: PartsListService, private readonly localeService: LocaleService) {}
 
   getParts(uuid: string) {
     this.pabLoadError = '';
@@ -34,7 +35,7 @@ export class PickABrickService {
       service: BackgroundRequestService.PickaBrick,
       action: BackgroundRequestAction.FindBricks,
       elementIds: elementIds,
-      locale: '',
+      locale: this.localeService.languageCountryCode,
     };
 
     chrome.runtime
@@ -152,7 +153,7 @@ export class PickABrickService {
       authorization: authorization,
       items: items.slice(0, 150),
       cartType: cartType,
-      locale: '',
+      locale: this.localeService.languageCountryCode,
     };
 
     return chrome.runtime
@@ -172,7 +173,7 @@ export class PickABrickService {
       action: BackgroundRequestAction.OpenPickABrick,
       tabId: tabId,
       affiliate: null,
-      locale: '',
+      locale: this.localeService.languageCountryCode,
     };
 
     return chrome.runtime.sendMessage(request);

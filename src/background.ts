@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener((request: BackgroudnRequest, sender, sendRe
   switch (request.action) {
     case BackgroundRequestAction.FindBricks:
       const findBricksRequest = request as IBackgroundFindBricksRequest;
-      PickABrick.finBricks(findBricksRequest.elementIds, localeCountryLanguage).then(resp => sendResponse(resp));
+      PickABrick.finBricks(findBricksRequest.elementIds, findBricksRequest.locale).then(resp => sendResponse(resp));
       return true;
     case BackgroundRequestAction.AddElementToCart:
       const addElementRequest = request as IBackgroundAddElementRequest;
@@ -29,7 +29,7 @@ chrome.runtime.onMessage.addListener((request: BackgroudnRequest, sender, sendRe
         addElementRequest.authorization,
         addElementRequest.items,
         addElementRequest.cartType,
-        localeCountryLanguage
+        addElementRequest.locale
       ).then(resp => sendResponse(resp));
       return true;
     // case 'readCart':
@@ -44,11 +44,13 @@ chrome.runtime.onMessage.addListener((request: BackgroudnRequest, sender, sendRe
       return true;
     case BackgroundRequestAction.OpenPickABrick:
       const openBrickABrickRequest = request as IBackgroundOpenBrickABrickRequest;
-      PickABrick.openPickABrick(openBrickABrickRequest.tabId, openBrickABrickRequest.affiliate, localeCountryLanguage);
+      PickABrick.openPickABrick(
+        openBrickABrickRequest.tabId,
+        openBrickABrickRequest.affiliate,
+        openBrickABrickRequest.locale
+      );
       return true;
   }
 
   return false;
 });
-
-const localeCountryLanguage = 'de-DE';

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { VersionService } from './core/services/version.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  
+  constructor(private readonly versionService: VersionService) {}
 }

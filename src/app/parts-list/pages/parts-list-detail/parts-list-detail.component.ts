@@ -3,11 +3,11 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { PickABrickService } from 'src/app/core/services/pickabrick.service';
 import { IPart, IPartsList } from 'src/app/models/parts-list';
 import { PartsListSettingsComponent } from '../../components/parts-list-settings/parts-list-settings.component';
 import { PartsListTransferComponent } from '../../components/parts-list-transfer/parts-list-transfer.component';
-import { PartsListService } from '../../parts-list.service';
+import { PartsListService } from '../../services/parts-list.service';
+import { PickABrickService } from '../../services/pickabrick.service';
 
 @Component({
   selector: 'app-parts-list-detail',
@@ -137,7 +137,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       header: 'Delete Confirmation',
       icon: 'fa fa-circle-info',
       accept: () => {
-        this.partsListService.deletePartsList(this.partsList.id);
+        this.partsListService.deletePartsList(this.partsList.uuid);
         this.router.navigate(['/partslists']);
         this.messageService.add({
           severity: 'info',

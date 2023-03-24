@@ -4,12 +4,14 @@ import { IPartsList } from 'src/app/models/parts-list';
 
 @Injectable()
 export class IndexedDBService extends Dexie {
-  partsLists!: Table<IPartsList, number>;
+  partsLists!: Table<IPartsList, string>;
+  partLists!: Table<any, string>;
 
   constructor() {
-    super('brickhunterdb');
+    super('brickhunterDB');
     this.version(1).stores({
-      partsLists: '++id,uuid',
+      partsLists: 'uuid',
+      partLists: '',
     });
   }
 }

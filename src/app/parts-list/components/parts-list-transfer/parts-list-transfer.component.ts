@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PickABrickService } from 'src/app/core/services/pickabrick.service';
+import { LocaleService } from 'src/app/core/services/locale.service';
 import { IPart } from 'src/app/models/parts-list';
+import { PickABrickService } from '../../services/pickabrick.service';
 
 @Component({
   selector: 'app-parts-list-transfer',
@@ -16,7 +17,7 @@ export class PartsListTransferComponent implements OnInit, OnDestroy {
   cartType: string;
   errorMessage: string;
 
-  constructor(private readonly pickabrickService: PickABrickService) {}
+  constructor(private readonly pickabrickService: PickABrickService, private readonly localeService: LocaleService) {}
 
   ngOnInit(): void {
     this.subscription = this.pickabrickService.transferStep.subscribe(step => {
@@ -56,7 +57,7 @@ export class PartsListTransferComponent implements OnInit, OnDestroy {
 
   onOpenLegoWebsite() {
     let affiliate = '';
-    let url = 'https://www.lego.com/de-de';
+    let url = `https://www.lego.com/${this.localeService.languageCountryCode}`;
     if (affiliate) {
       // if (affiliate.linkType == "webgains") {
       //   url = `https://track.webgains.com/click.html?wgcampaignid=${affiliate.wgcampaignid}&wgprogramid=${affiliate.wgprogramid}&clickref=${affiliate.clickref}&wgtarget=${target}`;

@@ -1,23 +1,54 @@
 <h2><fa-icon [icon]="faGear" class="page-title-icon"></fa-icon>Settings</h2>
 <p-card>
-  <p-cascadeSelect
-    [(ngModel)]="selectedCity"
+  <p-dropdown
     [options]="countries"
-    optionLabel="cname"
-    optionGroupLabel="name"
-    [optionGroupChildren]="['states', 'cities']"
-    [style]="{ minWidth: '14rem' }"
-    placeholder="Select a City">
-    <ng-template pTemplate="option" let-option>
-      <div class="flex align-items-center gap-2">
+    [(ngModel)]="selectedCountry"
+    optionLabel="text"
+    placeholder="Select a Country"
+    (click)="onCountrySelect()">
+    <ng-template pTemplate="selectedItem">
+      <div class="flex align-items-center gap-2" *ngIf="selectedCountry">
         <img
-          *ngIf="option.states"
-          src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-          [class]="'flag flag-' + option.code.toLowerCase()" />
-        <i class="pi pi-compass mr-2" *ngIf="option.cities"></i>
-        <i class="pi pi-map-marker mr-2" *ngIf="option.cname"></i>
-        <span>{{ option.cname || option.name }}</span>
+          src="/assets/flag_placeholder.png"
+          [class]="'flag flag-' + selectedCountry.code.toLowerCase()"
+          style="width: 18px" />
+        <div>{{ selectedCountry.text }}</div>
       </div>
     </ng-template>
-  </p-cascadeSelect>
+    <ng-template let-country pTemplate="item">
+      <div class="flex align-items-center gap-2">
+        <img
+          src="/assets/flag_placeholder.png"
+          [class]="'flag flag-' + country.code.toLowerCase()"
+          style="width: 18px" />
+        <div>{{ country.text }}</div>
+      </div>
+    </ng-template>
+  </p-dropdown>
+
+  <p-dropdown
+    [options]="selectedCountry.languages"
+    [(ngModel)]="selectedLanguage"
+    optionLabel="text"
+    placeholder="Select a Language"
+    (click)="onLanguageSelect()">
+    <ng-template pTemplate="selectedItem">
+      <div class="flex align-items-center gap-2" *ngIf="selectedLanguage">
+        <img
+          src="/assets/flag_placeholder.png"
+          [class]="'flag flag-' + selectedLanguage.flag.toLowerCase()"
+          style="width: 18px" />
+        <div>{{ selectedLanguage.text }}</div>
+      </div>
+    </ng-template>
+    <ng-template let-language pTemplate="item">
+      <div class="flex align-items-center gap-2">
+        <img
+          src="/assets/flag_placeholder.png"
+          [class]="'flag flag-' + language.flag.toLowerCase()"
+          style="width: 18px" />
+        <div>{{ language.text }}</div>
+      </div>
+    </ng-template>
+  </p-dropdown>
 </p-card>

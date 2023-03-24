@@ -3,11 +3,11 @@ import { PrimeNGConfig } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
+import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { InputTextModule } from 'primeng/inputtext';
@@ -30,11 +30,11 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     AvatarModule,
     ButtonModule,
     CardModule,
-    CascadeSelectModule,
     CheckboxModule,
     ConfirmDialogModule,
     DialogModule,
     DividerModule,
+    DropdownModule,
     FileUploadModule,
     ImageModule,
     InputTextModule,

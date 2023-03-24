@@ -9,6 +9,8 @@ import { PartsListImportComponent, PartsListSettingsComponent, PartsTableCompone
 import { PartsListTransferComponent } from './components/parts-list-transfer/parts-list-transfer.component';
 import { PartsListDetailComponent, PartsListListComponent } from './pages';
 import { PabPriceComponent } from './components/pab-price/pab-price.component';
+import { ImportService } from './services/import.service';
+import { PickABrickService } from './services/pickabrick.service';
 
 @NgModule({
   declarations: [
@@ -31,5 +33,6 @@ import { PabPriceComponent } from './components/pab-price/pab-price.component';
     FormsModule,
     FontAwesomeModule,
   ],
+  providers: [ImportService, PickABrickService],
 })
 export class PartsListsModule {}

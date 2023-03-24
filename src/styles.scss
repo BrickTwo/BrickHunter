@@ -73,6 +73,14 @@ h2 {
   content: '\f160';
 }
 
+.pi-chevron-down:before {
+  content: '\f078';
+}
+
+.pi-angle-right:before {
+  content: '\f105';
+}
+
 .p-datatable .p-sortable-column.p-highlight:hover {
   background-color: black;
 }

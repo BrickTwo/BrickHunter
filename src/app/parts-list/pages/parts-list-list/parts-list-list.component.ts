@@ -5,7 +5,7 @@ import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/a
 import { Subscription } from 'rxjs';
 import { IPartsList } from 'src/app/models/parts-list';
 import { PartsListImportComponent } from '../../components/parts-list-import/parts-list-import.component';
-import { PartsListService } from '../../parts-list.service';
+import { PartsListService } from '../../services/parts-list.service';
 
 @Component({
   selector: 'app-parts-list-list',
@@ -35,13 +35,13 @@ export class PartsListListComponent implements OnInit, OnDestroy {
     this.partsLists = this.partsListService.getPartsLists();
   }
 
-  onDeletePartsList(id: number) {
+  onDeletePartsList(uuid: string) {
     this.confirmationService.confirm({
       message: 'Do you want to delete this parts list?',
       header: 'Delete Confirmation',
       icon: 'fa fa-circle-info',
       accept: () => {
-        this.partsListService.deletePartsList(id);
+        this.partsListService.deletePartsList(uuid);
         this.messageService.add({
           severity: 'info',
           summary: 'Confirmed',
@@ -71,6 +71,7 @@ export class PartsListListComponent implements OnInit, OnDestroy {
   }
 
   openPartsList(partsList: IPartsList) {
+    console.log(partsList.uuid);
     this.router.navigate([partsList.uuid], { relativeTo: this.route });
   }
 

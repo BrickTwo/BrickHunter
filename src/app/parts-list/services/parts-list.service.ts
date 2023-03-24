@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IndexedDBService } from '../core/services/indexeddb.service.ts';
-import { IPartsList } from '../models/parts-list';
+import { IndexedDBService } from '../../core/services/indexeddb.service.ts';
+import { IPartsList } from '../../models/parts-list';
 
 @Injectable({ providedIn: 'root' })
 export class PartsListService {
@@ -29,22 +29,21 @@ export class PartsListService {
   }
 
   addPartsList(partsList: IPartsList) {
-    partsList.id = undefined;
     this.indexedDBService.partsLists.add(partsList);
     this.partsLists.push(partsList);
     this.partsListsChanged.next(this.partsLists.slice());
   }
 
   updatePartsList(newPartsList: IPartsList) {
-    let partsList = this.partsLists.find(p => p.id === newPartsList.id);
+    let partsList = this.partsLists.find(p => p.uuid === newPartsList.uuid);
     partsList = newPartsList;
-    this.indexedDBService.partsLists.put(partsList, partsList.id);
+    this.indexedDBService.partsLists.put(partsList, partsList.uuid);
     this.partsListsChanged.next(this.partsLists.slice());
   }
 
-  deletePartsList(id: number) {
-    this.indexedDBService.partsLists.delete(id);
-    this.partsLists = this.partsLists.filter(p => p.id !== id);
+  deletePartsList(uuid: string) {
+    this.indexedDBService.partsLists.delete(uuid);
+    this.partsLists = this.partsLists.filter(p => p.uuid !== uuid);
     this.partsListsChanged.next(this.partsLists.slice());
   }
 }
