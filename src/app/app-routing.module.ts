@@ -4,6 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: '/partslists', pathMatch: 'full' },
   { path: 'partslists', loadChildren: () => import('./parts-list/parts-list.module').then(m => m.PartsListsModule) },
+  { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
 ];
 
 @NgModule({

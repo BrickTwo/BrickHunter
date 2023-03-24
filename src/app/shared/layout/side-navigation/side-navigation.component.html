@@ -1,9 +1,6 @@
 <p-sidebar class="sideNav" [visible]="true" [transitionOptions]="'0ms'" [showCloseIcon]="false" [modal]="false">
   <ng-template pTemplate="header">
-    <p-image
-      src="./assets/icons/icon-trans48.png"
-      width="48"
-    ></p-image>
+    <p-image src="./assets/icons/icon-trans48.png" width="48"></p-image>
   </ng-template>
    
   <ng-template pTemplate="content">
@@ -24,6 +21,12 @@
         <a pRipple href="#">
           <fa-icon [icon]="faClockRotateLeft" class="icon"></fa-icon>
           <span>PaB Changelog</span>
+        </a>
+      </li>
+      <li>
+        <a pRipple routerLink="/settings">
+          <fa-icon [icon]="faGear" class="icon"></fa-icon>
+          <span>Settings</span>
         </a>
       </li>
       <li>
