@@ -9,12 +9,12 @@
   [virtualScrollItemSize]="rowHeight">
   <ng-template pTemplate="header">
     <tr>
-      <th pRipple pSortableColumn="id">ItemId <p-sortIcon field="id"></p-sortIcon></th>
-      <th pRipple pSortableColumn="lego.designNumber">DesignId <p-sortIcon field="lego.designNumber"></p-sortIcon></th>
-      <th pRipple pSortableColumn="elementId">ElementId <p-sortIcon field="elementId"></p-sortIcon></th>
+      <th pRipple pSortableColumn="id">ItemId<p-sortIcon field="id"></p-sortIcon></th>
+      <th pRipple pSortableColumn="lego.designNumber">DesignId<p-sortIcon field="lego.designNumber"></p-sortIcon></th>
+      <th pRipple pSortableColumn="elementId">ElementId<p-sortIcon field="elementId"></p-sortIcon></th>
       <th>Image</th>
-      <th pRipple pSortableColumn="color">Color <p-sortIcon field="color"></p-sortIcon></th>
-      <th pRipple pSortableColumn="qty">Quantity <p-sortIcon field="qty"></p-sortIcon></th>
+      <th pRipple pSortableColumn="color">Color<p-sortIcon field="color"></p-sortIcon></th>
+      <th pRipple pSortableColumn="qty">Quantity<p-sortIcon field="qty"></p-sortIcon></th>
       <th>BrickLink</th>
       <th pRipple pSortableColumn="lego.price.amount">
         Pick a Brick <p-sortIcon field="lego.price.amount"></p-sortIcon>
@@ -36,7 +36,15 @@
       <td>
         <app-color [colorId]="part.color"></app-color>
       </td>
-      <td>{{ part.qty }}</td>
+      <td>
+        <div class="flex flex-column">
+          <div>{{ part.qty }}</div>
+          <div *ngIf="part.have" style="color: grey; font-size: 12px">have: {{ part.have }}</div>
+          <div *ngIf="part.lego && part.lego.maxOrderQuantity < part.qty" style="color: red; font-size: 12px">
+            max: {{ part.lego.maxOrderQuantity }}
+          </div>
+        </div>
+      </td>
       <td></td>
       <td>
         <app-pab-price [part]="part"></app-pab-price>

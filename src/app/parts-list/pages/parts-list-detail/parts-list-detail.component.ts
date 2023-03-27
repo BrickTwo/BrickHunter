@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { IPart, IPartsList } from 'src/app/models/parts-list';
 import { PartsListSettingsComponent } from '../../components/parts-list-settings/parts-list-settings.component';
 import { PartsListTransferComponent } from '../../components/parts-list-transfer/parts-list-transfer.component';
+import { TransferWarningComponent } from '../../components/transfer-warning/transfer-warning.component';
 import { PartsListService } from '../../services/parts-list.service';
 import { PickABrickService } from '../../services/pickabrick.service';
 
@@ -37,6 +38,9 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
 
   @ViewChild(PartsListTransferComponent, { static: false })
   private partsListTransferComponent?: PartsListTransferComponent;
+
+  @ViewChild(TransferWarningComponent, { static: false })
+  private transferWarningComponent?: TransferWarningComponent;
 
   constructor(
     private readonly partsListService: PartsListService,
@@ -109,7 +113,11 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       case 'brickLink':
         return this.partsList?.parts?.filter(p => !p.lego);
       case 'warning':
-        return this.partsList?.parts?.filter(p => p.lego?.inStock === false);
+        return this.partsList?.parts?.filter(p => {
+          if (p.lego?.inStock === false) return true;
+          if (p.lego && p.lego.maxOrderQuantity < p.qty) return true;
+          return false;
+        });
       default:
         return this.partsList?.parts;
     }
@@ -164,6 +172,6 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   }
 
   onTransfer(cartType: string) {
-    this.partsListTransferComponent?.start(this.getParts(cartType), cartType);
+    this.partsListTransferComponent?.start(this.getParts(cartType), cartType, this.transferWarningComponent);
   }
 }

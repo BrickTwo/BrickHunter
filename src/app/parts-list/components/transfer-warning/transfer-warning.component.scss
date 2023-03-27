@@ -1,0 +1,10 @@
+:host {
+  ::ng-deep .p-ripple .p-ink {
+    background-color: #0a3463;
+  }
+
+  ::ng-deep .part-image {
+    max-width: 60px;
+    max-height: 60px;
+  }
+}

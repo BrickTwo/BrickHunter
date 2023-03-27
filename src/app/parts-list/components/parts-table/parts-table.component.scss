@@ -13,12 +13,12 @@
   //   overflow: unset;
   // }
 
-  ::ng-deep.p-ripple .p-ink {
+  ::ng-deep .p-ripple .p-ink {
     background: #0a3463;
   }
 
-  ::ng-deep.part-image {
-    max-width: 60px; max-height: 60px;
+  ::ng-deep .part-image {
+    max-width: 60px;
+    max-height: 60px;
   }
 }
-

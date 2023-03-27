@@ -1,6 +1,7 @@
 import { IBackgroundRequest } from '.';
 
 export interface IBackgroundReadCartRequest extends IBackgroundRequest {
-  elementIds: number[];
+  authorization: string;
   locale: string;
+  deliveryChannels: string[];
 }

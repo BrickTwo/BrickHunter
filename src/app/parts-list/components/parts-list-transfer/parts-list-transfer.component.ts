@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { IPart } from 'src/app/models/parts-list';
 import { PickABrickService } from '../../services/pickabrick.service';
+import { TransferWarningComponent } from '../transfer-warning/transfer-warning.component';
 
 @Component({
   selector: 'app-parts-list-transfer',
@@ -16,6 +17,7 @@ export class PartsListTransferComponent implements OnInit, OnDestroy {
   parts: IPart[];
   cartType: string;
   errorMessage: string;
+  transferWarningComponent: TransferWarningComponent;
 
   constructor(private readonly pickabrickService: PickABrickService, private readonly localeService: LocaleService) {}
 
@@ -42,17 +44,18 @@ export class PartsListTransferComponent implements OnInit, OnDestroy {
     this.show = false;
   }
 
-  start(parts: IPart[], cartType: string) {
+  start(parts: IPart[], cartType: string, transferWarningComponent: TransferWarningComponent) {
     this.show = true;
     this.errorMessage = '';
     this.parts = parts;
     this.cartType = cartType;
-    this.pickabrickService.transferParts(this.parts, this.cartType);
+    this.transferWarningComponent = transferWarningComponent;
+    this.pickabrickService.transferParts(this.parts, this.cartType, this.transferWarningComponent);
   }
 
   onRetry() {
     this.errorMessage = '';
-    this.pickabrickService.transferParts(this.parts, this.cartType);
+    this.pickabrickService.transferParts(this.parts, this.cartType, this.transferWarningComponent);
   }
 
   onOpenLegoWebsite() {

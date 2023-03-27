@@ -8,10 +8,15 @@ import {
   IBackgroundFindBricksRequest,
   IBackgroundGetTabIdRequest,
   IBackgroundOpenBrickABrickRequest,
+  IBackgroundReadCartRequest,
+  IBackgroundReadCartResponse,
   IBackgroundReadQauthRequest,
+  IBackgroundResponse,
+  IReadCartItem,
 } from 'src/app/models/background-message';
 import { IPart } from 'src/app/models/parts-list';
 import { IAddElementItem } from 'src/app/models/pick-a-brick';
+import { TransferWarningComponent } from '../components/transfer-warning/transfer-warning.component';
 import { PartsListService } from './parts-list.service';
 
 @Injectable()
@@ -20,6 +25,11 @@ export class PickABrickService {
   pabLoadError = '';
   transferStep = new Subject<number>();
   transferError = '';
+  transferWarningComponent: TransferWarningComponent;
+  authorization: string;
+  tabId: number;
+  cartType: string;
+  parts: IPart[];
 
   constructor(private readonly partsListService: PartsListService, private readonly localeService: LocaleService) {}
 
@@ -58,6 +68,8 @@ export class PickABrickService {
             colourId: Number(pab.variant.attributes.colourId),
             deliveryChannel: String(pab.variant.attributes.deliveryChannel),
             inStock: Boolean(pab.inStock),
+            maxOrderQuantity:
+              pab.variant.attributes.maxOrderQuantity > 0 ? pab.variant.attributes.maxOrderQuantity : 999,
           };
 
           return part;
@@ -73,19 +85,36 @@ export class PickABrickService {
       });
   }
 
-  transferParts(parts: IPart[], cartType: string) {
+  transferParts(parts: IPart[], cartType: string, transferWarningComponent: TransferWarningComponent) {
+    this.transferWarningComponent = transferWarningComponent;
     this.transferError = '';
     this.transferStep.next(1);
+    this.cartType = cartType;
+    this.parts = parts;
+
     this.getTabId()
       .then(tabId => {
         this.transferStep.next(2);
         this.getQAuth(tabId)
           .then(authorization => {
-            this.transferStep.next(4);
-            this.addElementsToCart(authorization, parts, cartType)
-              .then(response => {
-                this.transferStep.next(0);
-                this.openPickABrick(tabId);
+            this.transferStep.next(3);
+            this.getReadCart(authorization, cartType)
+              .then(cart => {
+                console.log('cart', cart);
+                if (!this.checkCart(cart, parts)) {
+                  return;
+                }
+
+                this.transferStep.next(4);
+                this.addElementsToCart(authorization, parts, cartType)
+                  .then(response => {
+                    this.transferStep.next(0);
+                    this.openPickABrick(tabId);
+                  })
+                  .catch(e => {
+                    this.transferError = e;
+                    this.transferStep.next(0);
+                  });
               })
               .catch(e => {
                 this.transferError = e;
@@ -113,6 +142,7 @@ export class PickABrickService {
       .sendMessage(request)
       .then(response => {
         if (response.status) throw new Error(response.message);
+        this.tabId = response;
         return response;
       })
       .catch(e => {
@@ -131,6 +161,7 @@ export class PickABrickService {
       .sendMessage(request)
       .then(response => {
         if (response.status) throw new Error(response.message);
+        this.authorization = response;
         return response;
       })
       .catch(e => {
@@ -138,11 +169,32 @@ export class PickABrickService {
       });
   }
 
+  getReadCart(authorization: string, cartType: string) {
+    const request: IBackgroundReadCartRequest = {
+      service: BackgroundRequestService.PickaBrick,
+      action: BackgroundRequestAction.ReadCart,
+      authorization: authorization,
+      locale: this.localeService.languageCountryCode,
+      deliveryChannels: [cartType],
+    };
+
+    return chrome.runtime
+      .sendMessage(request)
+      .then((response: IBackgroundResponse) => {
+        console.log(response);
+        if (response.error) throw new Error(response.error.message);
+        return response.success[0] as IBackgroundReadCartResponse;
+      })
+      .catch(e => {
+        throw new Error("Couldn't read shopping cart");
+      });
+  }
+
   addElementsToCart(authorization: string, parts: IPart[], cartType: string) {
     const items = parts.map(part => {
       const item: IAddElementItem = {
         sku: part.lego.elementId.toString(),
-        quantity: part.qty,
+        quantity: Number(part.qty),
       };
       return item;
     });
@@ -177,5 +229,42 @@ export class PickABrickService {
     };
 
     return chrome.runtime.sendMessage(request);
+  }
+
+  checkCart(cart: IBackgroundReadCartResponse, parts: IPart[]) {
+    let partsWithWarning: { part: IPart; cart: IReadCartItem | undefined }[] = [];
+
+    parts.forEach(part => {
+      const inCart = cart.lineItems.find(li => Number(li.elementVariant.id) === part.lego.elementId);
+      const qtyForCart = part.qty + inCart?.quantity;
+
+      if (part.lego.maxOrderQuantity < qtyForCart) {
+        partsWithWarning.push({ part: part, cart: inCart });
+      }
+    });
+
+    if (partsWithWarning) {
+      this.transferWarningComponent.open(partsWithWarning);
+      return false;
+    }
+
+    return true;
+  }
+
+  cancelTransfer() {
+    this.transferStep.next(0);
+  }
+
+  continueTransfer() {
+    this.transferStep.next(4);
+    this.addElementsToCart(this.authorization, this.parts, this.cartType)
+      .then(response => {
+        this.transferStep.next(0);
+        this.openPickABrick(this.tabId);
+      })
+      .catch(e => {
+        this.pabLoadError = 'something went wrong';
+        this.pabLoading.next(false);
+      });
   }
 }

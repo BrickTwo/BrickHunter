@@ -5,6 +5,7 @@ import {
   IBackgroundAddElementRequest,
   IBackgroundFindBricksRequest,
   IBackgroundOpenBrickABrickRequest,
+  IBackgroundReadCartRequest,
   IBackgroundReadQauthRequest,
   IBackgroundRequest,
 } from './app/models/background-message';
@@ -32,9 +33,12 @@ chrome.runtime.onMessage.addListener((request: BackgroudnRequest, sender, sendRe
         addElementRequest.locale
       ).then(resp => sendResponse(resp));
       return true;
-    // case 'readCart':
-    //   PickABrick.readCart(request.authorization, localeCountryLanguage).then(resp => sendResponse(resp));
-    //   return true;
+    case BackgroundRequestAction.ReadCart:
+      const readCartRequest = request as IBackgroundReadCartRequest;
+      PickABrick.readCart(readCartRequest.authorization, readCartRequest.locale, readCartRequest.deliveryChannels).then(
+        resp => sendResponse(resp)
+      );
+      return true;
     case BackgroundRequestAction.ReadLegoQAuth:
       const readQauthRequest = request as IBackgroundReadQauthRequest;
       PickABrick.readQAuth(readQauthRequest.tabId).then(resp => sendResponse(resp));

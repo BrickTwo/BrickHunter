@@ -11,6 +11,8 @@ import { PartsListDetailComponent, PartsListListComponent } from './pages';
 import { PabPriceComponent } from './components/pab-price/pab-price.component';
 import { ImportService } from './services/import.service';
 import { PickABrickService } from './services/pickabrick.service';
+import { PartsListSplitComponent } from './components/parts-list-split/parts-list-split.component';
+import { TransferWarningComponent } from './components/transfer-warning/transfer-warning.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { PickABrickService } from './services/pickabrick.service';
     PartsTableComponent,
     PartsListTransferComponent,
     PabPriceComponent,
+    PartsListSplitComponent,
+    TransferWarningComponent,
   ],
   imports: [
     PrimengModule,

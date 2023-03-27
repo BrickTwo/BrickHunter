@@ -1,3 +1,4 @@
+import { IBackgroundReadCartResponse, IBackgroundResponse } from 'src/app/models/background-message';
 import { IAffiliate } from 'src/app/models/global';
 import { IAddElement, IAddElementItem } from 'src/app/models/pick-a-brick';
 
@@ -8,30 +9,36 @@ export class PickABrick {
     const amountPerIteration = 900;
     let iteration = 0;
     let parts = [];
+    let page = 0;
 
     do {
-      let items = elementIds.slice(iteration * amountPerIteration, amountPerIteration);
-      const response = await this.findBricksRequest(items, locale);
-      if (response.status) {
-        return {
-          status: response.status,
-          message: 'error loading parts',
-        };
-      }
+      let items = elementIds.slice(iteration * amountPerIteration, (iteration + 1) * amountPerIteration);
+      let response: any;
+      do {
+        page++;
+        response = await this.findBricksRequest(items, locale, page);
+        if (response.status) {
+          return {
+            status: response.status,
+            message: 'error loading parts',
+          };
+        }
 
-      parts.push(...response);
+        parts.push(...response.results);
+      } while (response.total > page * 500);
+      page = 0;
       iteration++;
     } while (elementIds.length > iteration * amountPerIteration);
 
     return parts;
   }
 
-  static async findBricksRequest(elementIds: number[], locale: string) {
+  static async findBricksRequest(elementIds: number[], locale: string, page: number) {
     var PickABrickQuery = {
       operationName: 'PickABrickQuery',
       variables: {
         includeOutOfStock: true,
-        page: 1,
+        page: page,
         perPage: 500,
         query: elementIds.join(' '),
       },
@@ -69,7 +76,7 @@ export class PickABrick {
       });
 
     if (response.status) return response;
-    return response.data.elements.results;
+    return response.data.elements;
   }
 
   static async addElementToCart(authorization: string, items: IAddElementItem[], cartType: string, locale: string) {
@@ -111,20 +118,24 @@ export class PickABrick {
     return response;
   }
 
-  static async readCart(authorization: string, locale: string) {
+  static async readCart(
+    authorization: string,
+    locale: string,
+    deliveryChannels: string[]
+  ): Promise<IBackgroundResponse> {
     var PickABrickQuery = {
       operationName: 'ElementCartQuery',
       variables: {
-        cartTypes: ['pab', 'bap'],
+        cartTypes: deliveryChannels,
         query: '',
       },
       query:
-        'query ElementCartQuery($cartTypes: [CartType]) {\n  me {\n    ... on LegoUser {\n      elementCarts(types: $cartTypes) {\n        carts {\n          ... on BrickCart {\n            ...BrickCartData\n            __typename\n          }\n          type\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n  ... on BrickCart {\n    __typename\n  }\n  __typename\n}\n',
+        'query ElementCartQuery($cartTypes: [CartType]) {\n  me {\n    ... on LegoUser {\n      elementCarts(types: $cartTypes) {\n        carts {\n          ...BrickCartData\n        }\n      }\n    }\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n  lineItems {\n    ...LineItemData\n  }\n}\n\nfragment LineItemData on PABCartLineItem {\n  id\n  quantity\n  elementVariant {\n    id\n    attributes {\n      designNumber\n      deliveryChannel\n      maxOrderQuantity\n    }\n  }\n}',
     };
 
     var url = 'https://www.lego.com/api/graphql/ElementCartQuery';
 
-    var response = await fetch(url, {
+    var response: IBackgroundResponse = await fetch(url, {
       method: 'POST',
       cache: 'no-cache',
       headers: {
@@ -136,17 +147,35 @@ export class PickABrick {
     })
       .then(response => {
         clearTimeout(timeout);
-        if (response.status < 200 || response.status >= 300)
-          return {
-            status: response.status,
-            message: response.json(),
-          };
         return response.json();
       })
-      .catch(error => console.log(error));
+      .then(response => {
+        if (response.status < 200 || response.status >= 300) {
+          return {
+            error: {
+              status: response.status,
+              message: JSON.stringify(response),
+            },
+          };
+        }
 
-    if (response.status) return response;
-    return response.data.me.elementCarts.carts;
+        console.log('bbb', response);
+
+        return {
+          success: response.data.me.elementCarts.carts as IBackgroundReadCartResponse[],
+        };
+      })
+      .catch(error => {
+        console.log(error);
+        return {
+          error: {
+            status: 9999,
+            message: JSON.stringify(error),
+          },
+        };
+      });
+
+    return response;
   }
 
   static async readQAuth(tabId: number) {

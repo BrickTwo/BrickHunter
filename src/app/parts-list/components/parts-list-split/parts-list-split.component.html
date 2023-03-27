@@ -1,0 +1,22 @@
+<p-sidebar [(visible)]="display" position="right">
+  <h2>Split</h2>
+  <div class="flex flex-column card-container green-container gap-3">
+    <div>
+      If the parts list contains more than 150 BaP bestsellers or standard parts or the maximum number of orderable
+      parts of a part, BrickHunter tries to split it into as few parts lists as possible that exceed the minimum fee.
+    </div>
+    <!-- <div class="field-checkbox">
+          <p-checkbox [(ngModel)]="have" [binary]="false" inputId="have" name="have"></p-checkbox>
+          <label for="have">Subtract WantedList-Have from number</label>
+        </div>
+        <div class="field-checkbox">
+          <p-checkbox [(ngModel)]="withoutbl" inputId="withoutbl" name="withoutbl"></p-checkbox>
+          <label for="withoutbl">Do not take BrickLink prices into account</label>
+        </div>
+        <div class="field-checkbox">
+          <p-checkbox name="bllower" [(ngModel)]="bllower" inputId="bllower" name="bllower"></p-checkbox>
+          <label for="bllower">Only add to BrickLink if price is x lower</label>
+        </div> -->
+    <button pButton pRipple type="submit" label="Save" style="width: 100%"></button>
+  </div>
+</p-sidebar>
