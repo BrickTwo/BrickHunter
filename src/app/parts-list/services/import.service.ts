@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, Subject, switchMap } from 'rxjs';
+import { catchError, map, Subject, Subscriber, switchMap } from 'rxjs';
 import { BrickHunterApiService } from 'src/app/core/http/brickhunterapi.service';
 import { ColorService } from 'src/app/core/services/color.service';
 import { GuidService } from 'src/app/core/services/guid.service';
@@ -18,9 +18,6 @@ import { PartsListService } from './parts-list.service';
   providedIn: 'root',
 })
 export class ImportService {
-  step = new Subject<number>();
-  errorMessage: string;
-
   constructor(
     private readonly brickHunterApiService: BrickHunterApiService,
     private readonly colorService: ColorService,
@@ -28,9 +25,13 @@ export class ImportService {
     private readonly guidService: GuidService
   ) {}
 
-  import(partsListName: string, source: string, parts: IBrickLinkWantedListItem[] | IBrickHunterV1) {
-    this.errorMessage;
-    this.step.next(1);
+  import(
+    importStep$: Subscriber<number>,
+    partsListName: string,
+    source: string,
+    parts: IBrickLinkWantedListItem[] | IBrickHunterV1
+  ) {
+    importStep$.next(1);
 
     let partsList: IPart[];
 
@@ -46,7 +47,7 @@ export class ImportService {
       return item.externalId;
     });
 
-    this.step.next(2);
+    importStep$.next(2);
     const getRebrickableRequest: GetRebrickablePartsRequest = { source: source, ids: partIds };
 
     this.brickHunterApiService
@@ -56,7 +57,7 @@ export class ImportService {
           return this.transformRebrickableData(responseRebrickableParts, partsList, source);
         }),
         switchMap(parts => {
-          this.step.next(3);
+          importStep$.next(3);
           const request: GetBrickLinkPartsRequest = { itemNumbers: partIds };
           return this.brickHunterApiService.getBrickLinkParts(request).pipe(
             map(responseBrickLinkParts => {
@@ -77,11 +78,10 @@ export class ImportService {
             parts: parts,
           };
           this.partsListService.addPartsList(partsList);
-          this.step.next(0);
+          importStep$.complete();
         },
         error: err => {
-          this.errorMessage = 'Something went wrong!';
-          this.step.next(0);
+          importStep$.error('Something went wrong!');
         },
       });
   }

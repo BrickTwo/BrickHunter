@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IBrickHunterV1 } from 'src/app/models/brickhunter';
 import { ImportService } from 'src/app/parts-list/services/import.service';
 import { IndexedDBService } from './indexeddb.service.ts';
@@ -23,7 +24,11 @@ export class VersionService {
         .modify((pl: IBrickHunterV1) => {
           const name = pl.name;
           const source = 'BrickHunterV1';
-          this.importService.import(name, source, pl);
+
+          new Observable<number>(subscriber => {
+            this.importService.import(subscriber, name, source, pl);
+          });
+
           rowKeys.push(pl.id);
         })
         .then(value => {

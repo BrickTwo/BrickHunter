@@ -2,6 +2,7 @@ import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'dexie';
 import { MessageService } from 'primeng/api';
+import { Observable } from 'rxjs';
 import { IBrickHunterV1 } from 'src/app/models/brickhunter';
 import { IBrickLinkWantedListItem } from 'src/app/models/bricklink';
 import { IPart } from 'src/app/models/parts-list';
@@ -21,7 +22,7 @@ export class PartsListImportComponent implements OnDestroy {
   wantedList: IBrickLinkWantedListItem[];
   brickhunterV1List: IBrickHunterV1;
   source: string;
-  subscription: Subscription;
+  subscription$: Subscription;
 
   @ViewChild('form', { static: false }) form: NgForm;
   @ViewChild('fileUpload', { static: false }) fileUpload: any;
@@ -32,7 +33,7 @@ export class PartsListImportComponent implements OnDestroy {
   constructor(private readonly messageService: MessageService, private importService: ImportService) {}
 
   ngOnDestroy(): void {
-    if (this.subscription) this.subscription.unsubscribe();
+    if (this.subscription$) this.subscription$.unsubscribe();
   }
 
   public open() {
@@ -80,35 +81,34 @@ export class PartsListImportComponent implements OnDestroy {
 
   onSubmit(importForm: NgForm) {
     this.showImportDialog = true;
-    this.importService.step.subscribe(step => {
-      if (this.importStep > 0 && step === 0 && !!this.importService.errorMessage) {
-        this.closeSideBar();
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: this.importService.errorMessage,
-        });
-      } else if (this.importStep > 0 && step === 0) {
+
+    this.subscription$ = new Observable<number>(subscriber => {
+      if (this.source === 'BrickLink') {
+        this.importService.import(subscriber, importForm.value.partsListName, this.source, this.wantedList);
+      } else {
+        this.importService.import(subscriber, importForm.value.partsListName, this.source, this.brickhunterV1List);
+      }
+    }).subscribe({
+      next: step => {
+        this.importStep = step;
+      },
+      complete: () => {
         this.closeSideBar();
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
           detail: 'New parts list has been successfully added!',
         });
-      }
-
-      this.importStep = step;
-
-      if (step === 0) {
-        if (this.subscription) this.subscription.unsubscribe();
-      }
+      },
+      error: error => {
+        this.closeSideBar();
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error,
+        });
+      },
     });
-
-    if (this.source === 'BrickLink') {
-      this.importService.import(importForm.value.partsListName, this.source, this.wantedList);
-    } else {
-      this.importService.import(importForm.value.partsListName, this.source, this.brickhunterV1List);
-    }
   }
 
   private importXml(content: string): IBrickLinkWantedListItem[] {
