@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Subscriber } from 'rxjs';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import {
   BackgroundRequestAction,
@@ -23,8 +23,7 @@ import { PartsListService } from './parts-list.service';
 export class PickABrickService {
   pabLoading = new Subject<boolean>();
   pabLoadError = '';
-  transferStep = new Subject<number>();
-  transferError = '';
+  transferStep$: Subscriber<number>;
   transferWarningComponent: TransferWarningComponent;
   authorization: string;
   tabId: number;
@@ -85,51 +84,59 @@ export class PickABrickService {
       });
   }
 
-  transferParts(parts: IPart[], cartType: string, transferWarningComponent: TransferWarningComponent) {
+  async transferParts(
+    transferStep$: Subscriber<number>,
+    parts: IPart[],
+    cartType: string,
+    transferWarningComponent: TransferWarningComponent
+  ) {
+    this.transferStep$ = transferStep$;
     this.transferWarningComponent = transferWarningComponent;
-    this.transferError = '';
-    this.transferStep.next(1);
     this.cartType = cartType;
     this.parts = parts;
 
-    this.getTabId()
-      .then(tabId => {
-        this.transferStep.next(2);
-        this.getQAuth(tabId)
-          .then(authorization => {
-            this.transferStep.next(3);
-            this.getReadCart(authorization, cartType)
-              .then(cart => {
-                console.log('cart', cart);
-                if (!this.checkCart(cart, parts)) {
-                  return;
-                }
+    this.startTransfer();
+  }
 
-                this.transferStep.next(4);
-                this.addElementsToCart(authorization, parts, cartType)
-                  .then(response => {
-                    this.transferStep.next(0);
-                    this.openPickABrick(tabId);
-                  })
-                  .catch(e => {
-                    this.transferError = e;
-                    this.transferStep.next(0);
-                  });
-              })
-              .catch(e => {
-                this.transferError = e;
-                this.transferStep.next(0);
-              });
-          })
-          .catch(e => {
-            this.transferError = e;
-            this.transferStep.next(0);
-          });
-      })
-      .catch(e => {
-        this.transferError = e;
-        this.transferStep.next(0);
-      });
+  private async startTransfer() {
+    // 1. get Tab Id
+    this.transferStep$.next(1);
+    await this.getTabId().catch(e => {
+      this.transferStep$.error(e);
+    });
+
+    // 2. get QAuth
+    this.transferStep$.next(2);
+    await this.getQAuth(this.tabId).catch(e => {
+      this.transferStep$.error(e);
+    });
+
+    // 3. Check current Cart
+    this.transferStep$.next(3);
+    if (
+      !(await this.getReadCart(this.authorization, this.cartType)
+        .then(cart => {
+          console.log('cart', cart);
+          if (!this.checkCart(cart, this.parts)) {
+            return false;
+          }
+          return true;
+        })
+        .catch(e => {
+          this.transferStep$.error(e);
+        }))
+    )
+      return;
+
+    // 4. Add elements to cart
+    this.transferStep$.next(4);
+    await this.addElementsToCart(this.authorization, this.parts, this.cartType).catch(e => {
+      this.transferStep$.error(e);
+    });
+
+    // 5. open pick a brick page
+    this.transferStep$.complete();
+    this.openPickABrick(this.tabId);
   }
 
   getTabId() {
@@ -143,7 +150,6 @@ export class PickABrickService {
       .then(response => {
         if (response.status) throw new Error(response.message);
         this.tabId = response;
-        return response;
       })
       .catch(e => {
         throw new Error('No tab open with lego.com.');
@@ -162,7 +168,6 @@ export class PickABrickService {
       .then(response => {
         if (response.status) throw new Error(response.message);
         this.authorization = response;
-        return response;
       })
       .catch(e => {
         throw new Error("Couldn't read authentication");
@@ -243,7 +248,7 @@ export class PickABrickService {
       }
     });
 
-    if (partsWithWarning) {
+    if (partsWithWarning.length) {
       this.transferWarningComponent.open(partsWithWarning);
       return false;
     }
@@ -252,19 +257,12 @@ export class PickABrickService {
   }
 
   cancelTransfer() {
-    this.transferStep.next(0);
+    this.transferStep$.next(9);
+    this.transferStep$.complete();
   }
 
-  continueTransfer() {
-    this.transferStep.next(4);
-    this.addElementsToCart(this.authorization, this.parts, this.cartType)
-      .then(response => {
-        this.transferStep.next(0);
-        this.openPickABrick(this.tabId);
-      })
-      .catch(e => {
-        this.pabLoadError = 'something went wrong';
-        this.pabLoading.next(false);
-      });
+  async continueTransfer(parts: IPart[]) {
+    this.parts = parts;
+    this.startTransfer();
   }
 }

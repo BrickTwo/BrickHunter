@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { IPart } from 'src/app/models/parts-list';
 import { PickABrickService } from '../../services/pickabrick.service';
@@ -10,9 +10,9 @@ import { TransferWarningComponent } from '../transfer-warning/transfer-warning.c
   templateUrl: './parts-list-transfer.component.html',
   styleUrls: ['./parts-list-transfer.component.scss'],
 })
-export class PartsListTransferComponent implements OnInit, OnDestroy {
+export class PartsListTransferComponent implements OnDestroy {
   transferStep = 0;
-  subscription: Subscription;
+  subscription$: Subscription;
   show = false;
   parts: IPart[];
   cartType: string;
@@ -21,26 +21,12 @@ export class PartsListTransferComponent implements OnInit, OnDestroy {
 
   constructor(private readonly pickabrickService: PickABrickService, private readonly localeService: LocaleService) {}
 
-  ngOnInit(): void {
-    this.subscription = this.pickabrickService.transferStep.subscribe(step => {
-      if (this.transferStep > 0 && step === 0 && !this.pickabrickService.transferError) {
-        this.show = false;
-      }
-      if (!this.pickabrickService.transferError) {
-        this.transferStep = step;
-      }
-      if (this.pickabrickService.transferError) {
-        this.errorMessage = this.pickabrickService.transferError;
-        if (!this.errorMessage) this.errorMessage = 'Something went wrong!';
-      }
-    });
-  }
-
   ngOnDestroy(): void {
-    if (this.subscription) this.subscription.unsubscribe();
+    if (this.subscription$) this.subscription$.unsubscribe();
   }
 
   onClose() {
+    if (this.subscription$) this.subscription$.unsubscribe();
     this.show = false;
   }
 
@@ -50,12 +36,24 @@ export class PartsListTransferComponent implements OnInit, OnDestroy {
     this.parts = parts;
     this.cartType = cartType;
     this.transferWarningComponent = transferWarningComponent;
-    this.pickabrickService.transferParts(this.parts, this.cartType, this.transferWarningComponent);
+
+    this.subscription$ = new Observable<number>(subscriber => {
+      this.pickabrickService.transferParts(subscriber, this.parts, this.cartType, this.transferWarningComponent);
+    }).subscribe({
+      next: step => {
+        this.transferStep = step;
+      },
+      complete: () => {
+        this.show = false;
+      },
+      error: err => {
+        this.errorMessage = err;
+      },
+    });
   }
 
   onRetry() {
-    this.errorMessage = '';
-    this.pickabrickService.transferParts(this.parts, this.cartType, this.transferWarningComponent);
+    this.start(this.parts, this.cartType, this.transferWarningComponent);
   }
 
   onOpenLegoWebsite() {
