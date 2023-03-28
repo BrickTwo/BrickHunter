@@ -21,7 +21,7 @@ export class TransferWarningComponent {
   }
 
   onContinue() {
-    this.pickabrickService.continueTransfer(this.parts.map(row => row.part));
+    this.pickabrickService.continueTransfer();
     this.show = false;
   }
 

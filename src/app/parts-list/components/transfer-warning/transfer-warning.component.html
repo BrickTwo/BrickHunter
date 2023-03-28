@@ -23,6 +23,7 @@
         <th pRipple pSortableColumn="part.lego.price.amount">
           Pick a Brick <p-sortIcon field="part.lego.price.amount"></p-sortIcon>
         </th>
+        <th>Warning</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-part>
@@ -46,6 +47,8 @@
         <td>
           <app-pab-price [part]="part.part"></app-pab-price>
         </td>
+        <td *ngIf="!part.cart">Not transfered</td>
+        <td *ngIf="part.cart">Amount reduced</td>
       </tr>
     </ng-template>
   </p-table>

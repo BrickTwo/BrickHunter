@@ -239,14 +239,35 @@ export class PickABrickService {
   checkCart(cart: IBackgroundReadCartResponse, parts: IPart[]) {
     let partsWithWarning: { part: IPart; cart: IReadCartItem | undefined }[] = [];
 
-    parts.forEach(part => {
-      const inCart = cart.lineItems.find(li => Number(li.elementVariant.id) === part.lego.elementId);
+    let newParts = parts.flatMap(part => {
+      const inCart = cart?.lineItems?.find(li => Number(li.elementVariant.id) === part.lego.elementId);
       const qtyForCart = part.qty + inCart?.quantity;
 
       if (part.lego.maxOrderQuantity < qtyForCart) {
         partsWithWarning.push({ part: part, cart: inCart });
       }
+
+      const maxPossibleQuantity = part.lego.maxOrderQuantity - inCart?.quantity;
+      if (maxPossibleQuantity === 0) return [];
+      if (part.qty > maxPossibleQuantity) part.qty = maxPossibleQuantity;
+
+      return [part];
     });
+
+    const differenceAmount = cart?.lineItems?.filter(
+      item => !parts.some(p => p.lego.elementId === Number(item.elementVariant.id))
+    ).length;
+
+    if (parts.length + differenceAmount > 150) {
+      for (let i = parts.length - 1; i >= 0; i--) {
+        if (cart?.lineItems?.find(item => Number(item.elementVariant.id) === newParts[i].elementId)) continue;
+        partsWithWarning.push({ part: newParts[i], cart: null });
+        newParts.splice(i, 1);
+
+        if (newParts.length - differenceAmount === 150) break;
+      }
+      this.parts = newParts;
+    }
 
     if (partsWithWarning.length) {
       this.transferWarningComponent.open(partsWithWarning);
@@ -261,8 +282,7 @@ export class PickABrickService {
     this.transferStep$.complete();
   }
 
-  async continueTransfer(parts: IPart[]) {
-    this.parts = parts;
+  async continueTransfer() {
     this.startTransfer();
   }
 }
