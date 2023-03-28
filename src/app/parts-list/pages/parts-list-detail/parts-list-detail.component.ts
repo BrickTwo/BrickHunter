@@ -4,6 +4,7 @@ import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { IPart, IPartsList } from 'src/app/models/parts-list';
+import { PaBCartType } from 'src/app/models/pick-a-brick';
 import { PartsListSettingsComponent } from '../../components/parts-list-settings/parts-list-settings.component';
 import { PartsListTransferComponent } from '../../components/parts-list-transfer/parts-list-transfer.component';
 import { TransferWarningComponent } from '../../components/transfer-warning/transfer-warning.component';
@@ -32,6 +33,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   partsListSubscription: Subscription;
   pabIsLoading: boolean = false;
   uuid: string;
+  cartType = PaBCartType;
 
   @ViewChild(PartsListSettingsComponent, { static: false })
   private partsListSettingsComponent?: PartsListSettingsComponent;
@@ -171,7 +173,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  onTransfer(cartType: string) {
+  onTransfer(cartType: PaBCartType) {
     this.partsListTransferComponent?.start(this.getParts(cartType), cartType, this.transferWarningComponent);
   }
 }

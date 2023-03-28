@@ -1,4 +1,11 @@
 <p-dialog header="Changelog" [(visible)]="visible" [style]="{ width: '50vw', height: '50vh' }" [modal]="true">
+  <section *ngIf="isVersionGreater('2.0.12')">
+    <h2>2.0.12</h2>
+    <h3>Features</h3>
+    <ul>
+      <li>Check cart step in transfer parts workflow complete</li>
+    </ul>
+  </section>
   <section *ngIf="isVersionGreater('2.0.11')">
     <h2>2.0.11</h2>
     <h3>Features</h3>

@@ -1,10 +1,10 @@
-import { IAddElementItem } from '.';
+import { IAddElementItem, PaBCartType } from '.';
 
 export interface IAddElement {
   operationName: string;
   variables: {
     items: IAddElementItem[];
-    cartType: string;
+    cartType: PaBCartType;
   };
   query: string;
 }

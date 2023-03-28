@@ -5,6 +5,7 @@ import {
   BackgroundRequestAction,
   BackgroundRequestService,
   IBackgroundAddElementRequest,
+  IBackgroundChangeElementRequest,
   IBackgroundFindBricksRequest,
   IBackgroundGetTabIdRequest,
   IBackgroundOpenBrickABrickRequest,
@@ -15,7 +16,7 @@ import {
   IReadCartItem,
 } from 'src/app/models/background-message';
 import { IPart } from 'src/app/models/parts-list';
-import { IAddElementItem } from 'src/app/models/pick-a-brick';
+import { IAddElementItem, IChangeElementItem, PaBCartType } from 'src/app/models/pick-a-brick';
 import { TransferWarningComponent } from '../components/transfer-warning/transfer-warning.component';
 import { PartsListService } from './parts-list.service';
 
@@ -27,8 +28,9 @@ export class PickABrickService {
   transferWarningComponent: TransferWarningComponent;
   authorization: string;
   tabId: number;
-  cartType: string;
+  cartType: PaBCartType;
   parts: IPart[];
+  cart: IBackgroundReadCartResponse;
 
   constructor(private readonly partsListService: PartsListService, private readonly localeService: LocaleService) {}
 
@@ -87,13 +89,13 @@ export class PickABrickService {
   async transferParts(
     transferStep$: Subscriber<number>,
     parts: IPart[],
-    cartType: string,
+    cartType: PaBCartType,
     transferWarningComponent: TransferWarningComponent
   ) {
     this.transferStep$ = transferStep$;
     this.transferWarningComponent = transferWarningComponent;
     this.cartType = cartType;
-    this.parts = parts;
+    this.parts = [...parts];
 
     this.startTransfer();
   }
@@ -116,8 +118,7 @@ export class PickABrickService {
     if (
       !(await this.getReadCart(this.authorization, this.cartType)
         .then(cart => {
-          console.log('cart', cart);
-          if (!this.checkCart(cart, this.parts)) {
+          if (!this.checkCart(cart)) {
             return false;
           }
           return true;
@@ -130,11 +131,18 @@ export class PickABrickService {
 
     // 4. Add elements to cart
     this.transferStep$.next(4);
-    await this.addElementsToCart(this.authorization, this.parts, this.cartType).catch(e => {
+    await this.addElementsToCart().catch(e => {
       this.transferStep$.error(e);
     });
 
-    // 5. open pick a brick page
+    // 5. Add elements to cart
+    this.transferStep$.next(5);
+    await this.changeElementsInCart().catch(e => {
+      this.transferStep$.error(e);
+    });
+
+    // 6. open pick a brick page
+    this.transferStep$.next(6);
     this.transferStep$.complete();
     this.openPickABrick(this.tabId);
   }
@@ -188,6 +196,7 @@ export class PickABrickService {
       .then((response: IBackgroundResponse) => {
         console.log(response);
         if (response.error) throw new Error(response.error.message);
+        this.cart = response.success[0] as IBackgroundReadCartResponse;
         return response.success[0] as IBackgroundReadCartResponse;
       })
       .catch(e => {
@@ -195,8 +204,14 @@ export class PickABrickService {
       });
   }
 
-  addElementsToCart(authorization: string, parts: IPart[], cartType: string) {
-    const items = parts.map(part => {
+  async addElementsToCart() {
+    const partsToAdd = this.parts.filter(
+      part => !this.cart.lineItems.some(item => part.lego.elementId === Number(item.elementVariant.id))
+    );
+
+    if (partsToAdd.length === 0) return;
+
+    const items = partsToAdd.map(part => {
       const item: IAddElementItem = {
         sku: part.lego.elementId.toString(),
         quantity: Number(part.qty),
@@ -207,17 +222,54 @@ export class PickABrickService {
     const request: IBackgroundAddElementRequest = {
       service: BackgroundRequestService.PickaBrick,
       action: BackgroundRequestAction.AddElementToCart,
-      authorization: authorization,
+      authorization: this.authorization,
       items: items.slice(0, 150),
-      cartType: cartType,
+      cartType: this.cartType,
       locale: this.localeService.languageCountryCode,
     };
 
-    return chrome.runtime
+    return await chrome.runtime
       .sendMessage(request)
       .then(response => {
         if (response.status) throw new Error(response.message);
-        return response;
+        return;
+      })
+      .catch(e => {
+        throw new Error("Couldn't add parts to shopping cart");
+      });
+  }
+
+  async changeElementsInCart() {
+    const partsToChange = this.parts.filter(part =>
+      this.cart.lineItems.some(item => part.lego.elementId === Number(item.elementVariant.id))
+    );
+
+    if (partsToChange.length === 0) return;
+
+    const items = partsToChange.map(part => {
+      const itemInCart = this.cart.lineItems.find(item => Number(item.elementVariant.id) === part.lego.elementId);
+
+      const item: IChangeElementItem = {
+        lineItemId: itemInCart.id,
+        quantity: itemInCart.quantity + Number(part.qty),
+      };
+      return item;
+    });
+
+    const request: IBackgroundChangeElementRequest = {
+      service: BackgroundRequestService.PickaBrick,
+      action: BackgroundRequestAction.ChangeElementInCart,
+      authorization: this.authorization,
+      items: items,
+      cartType: this.cartType,
+      locale: this.localeService.languageCountryCode,
+    };
+
+    return await chrome.runtime
+      .sendMessage(request)
+      .then(response => {
+        if (response.status) throw new Error(response.message);
+        return;
       })
       .catch(e => {
         throw new Error("Couldn't add parts to shopping cart");
@@ -236,38 +288,49 @@ export class PickABrickService {
     return chrome.runtime.sendMessage(request);
   }
 
-  checkCart(cart: IBackgroundReadCartResponse, parts: IPart[]) {
+  private checkCart(cart: IBackgroundReadCartResponse) {
     let partsWithWarning: { part: IPart; cart: IReadCartItem | undefined }[] = [];
 
-    let newParts = parts.flatMap(part => {
+    let newParts = this.parts.flatMap(({ ...part }) => {
       const inCart = cart?.lineItems?.find(li => Number(li.elementVariant.id) === part.lego.elementId);
-      const qtyForCart = part.qty + inCart?.quantity;
 
-      if (part.lego.maxOrderQuantity < qtyForCart) {
-        partsWithWarning.push({ part: part, cart: inCart });
+      const maxPossibleQuantity = part.lego.maxOrderQuantity - (inCart ? inCart.quantity : 0);
+      if (maxPossibleQuantity === 0) {
+        partsWithWarning.push({ part: { ...part }, cart: inCart });
+        return [];
       }
 
-      const maxPossibleQuantity = part.lego.maxOrderQuantity - inCart?.quantity;
-      if (maxPossibleQuantity === 0) return [];
-      if (part.qty > maxPossibleQuantity) part.qty = maxPossibleQuantity;
+      if (part.qty > maxPossibleQuantity) {
+        partsWithWarning.push({ part: { ...part }, cart: inCart });
+        part.qty = maxPossibleQuantity;
+      }
 
       return [part];
     });
 
     const differenceAmount = cart?.lineItems?.filter(
-      item => !parts.some(p => p.lego.elementId === Number(item.elementVariant.id))
+      item => !this.parts.some(p => p.lego.elementId === Number(item.elementVariant.id))
     ).length;
 
-    if (parts.length + differenceAmount > 150) {
-      for (let i = parts.length - 1; i >= 0; i--) {
+    if (this.parts.length + differenceAmount > 150) {
+      for (let i = this.parts.length - 1; i >= 0; i--) {
         if (cart?.lineItems?.find(item => Number(item.elementVariant.id) === newParts[i].elementId)) continue;
-        partsWithWarning.push({ part: newParts[i], cart: null });
+
+        const partWithWarning = partsWithWarning.find(
+          item => item.part.lego.elementId === this.parts[i].lego.elementId
+        );
+        if (partWithWarning) {
+          partWithWarning.cart = null;
+        } else {
+          partsWithWarning.push({ part: newParts[i], cart: null });
+        }
+
         newParts.splice(i, 1);
 
         if (newParts.length - differenceAmount === 150) break;
       }
-      this.parts = newParts;
     }
+    this.parts = newParts;
 
     if (partsWithWarning.length) {
       this.transferWarningComponent.open(partsWithWarning);

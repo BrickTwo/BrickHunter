@@ -68,7 +68,7 @@
               icon="fa fa-cart-shopping"
               style="width: 100%"
               [disabled]="pabIsLoading"
-              (click)="onTransfer('pab')"></button>
+              (click)="onTransfer(cartType.Bestseller)"></button>
           </div>
         </div>
         <div class="col-3 xxl:col-12">
@@ -97,7 +97,7 @@
               icon="fa fa-cart-shopping"
               style="width: 100%"
               [disabled]="pabIsLoading"
-              (click)="onTransfer('bap')"></button>
+              (click)="onTransfer(cartType.Standard)"></button>
           </div>
         </div>
         <div class="col-3 xxl:col-12">

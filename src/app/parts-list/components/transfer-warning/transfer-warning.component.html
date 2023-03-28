@@ -48,7 +48,7 @@
           <app-pab-price [part]="part.part"></app-pab-price>
         </td>
         <td *ngIf="!part.cart">Not transfered</td>
-        <td *ngIf="part.cart">Amount reduced</td>
+        <td *ngIf="part.cart">Amount reduced to {{ part.part.lego.maxOrderQuantity - part.cart?.quantity }}</td>
       </tr>
     </ng-template>
   </p-table>

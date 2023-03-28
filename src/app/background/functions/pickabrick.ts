@@ -1,6 +1,12 @@
 import { IBackgroundReadCartResponse, IBackgroundResponse } from 'src/app/models/background-message';
 import { IAffiliate } from 'src/app/models/global';
-import { IAddElement, IAddElementItem } from 'src/app/models/pick-a-brick';
+import {
+  IAddElement,
+  IAddElementItem,
+  IChangeElement,
+  IChangeElementItem,
+  PaBCartType,
+} from 'src/app/models/pick-a-brick';
 
 const timeout = setTimeout(function () {}, 5000);
 
@@ -79,7 +85,12 @@ export class PickABrick {
     return response.data.elements;
   }
 
-  static async addElementToCart(authorization: string, items: IAddElementItem[], cartType: string, locale: string) {
+  static async addElementToCart(
+    authorization: string,
+    items: IAddElementItem[],
+    cartType: PaBCartType,
+    locale: string
+  ) {
     var PickABrickQuery: IAddElement = {
       operationName: 'AddToElementCart',
       variables: {
@@ -91,6 +102,50 @@ export class PickABrick {
     };
 
     var url = 'https://www.lego.com/api/graphql/AddToElementCart';
+
+    var response = await fetch(url, {
+      method: 'POST',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-locale': locale,
+        authorization: authorization,
+      },
+      body: JSON.stringify(PickABrickQuery),
+    })
+      .then(response => {
+        clearTimeout(timeout);
+        if (response.status < 200 || response.status >= 300)
+          return {
+            status: response.status,
+            message: response.json(),
+          };
+        return response.json();
+      })
+      .catch(err => {
+        throw new err(err);
+      });
+
+    return response;
+  }
+
+  static async changeElementInCart(
+    authorization: string,
+    items: IChangeElementItem[],
+    cartType: PaBCartType,
+    locale: string
+  ) {
+    var PickABrickQuery: IChangeElement = {
+      operationName: 'ChangeElementLineItem',
+      variables: {
+        elements: items,
+        cartType: cartType,
+      },
+      query:
+        'mutation ChangeElementLineItem($cartType: CartType!, $elements: [ChangeElementQuantityLineItem!], $lineItemId: String, $quantity: Int) {\n  changeElementLineItemQuantity(\n    input: {cartType: $cartType, elements: $elements, lineItemId: $lineItemId, quantity: $quantity}\n  ) {\n    ...BrickCartData\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n}',
+    };
+
+    var url = 'https://www.lego.com/api/graphql/ChangeElementLineItem';
 
     var response = await fetch(url, {
       method: 'POST',

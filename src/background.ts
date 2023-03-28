@@ -3,6 +3,7 @@ import {
   BackgroudnRequest,
   BackgroundRequestAction,
   IBackgroundAddElementRequest,
+  IBackgroundChangeElementRequest,
   IBackgroundFindBricksRequest,
   IBackgroundOpenBrickABrickRequest,
   IBackgroundReadCartRequest,
@@ -31,6 +32,15 @@ chrome.runtime.onMessage.addListener((request: BackgroudnRequest, sender, sendRe
         addElementRequest.items,
         addElementRequest.cartType,
         addElementRequest.locale
+      ).then(resp => sendResponse(resp));
+      return true;
+    case BackgroundRequestAction.ChangeElementInCart:
+      const changeElementRequest = request as IBackgroundChangeElementRequest;
+      PickABrick.changeElementInCart(
+        changeElementRequest.authorization,
+        changeElementRequest.items,
+        changeElementRequest.cartType,
+        changeElementRequest.locale
       ).then(resp => sendResponse(resp));
       return true;
     case BackgroundRequestAction.ReadCart:

@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { IPart } from 'src/app/models/parts-list';
+import { PaBCartType } from 'src/app/models/pick-a-brick';
 import { PickABrickService } from '../../services/pickabrick.service';
 import { TransferWarningComponent } from '../transfer-warning/transfer-warning.component';
 
@@ -15,7 +16,7 @@ export class PartsListTransferComponent implements OnDestroy {
   subscription$: Subscription;
   show = false;
   parts: IPart[];
-  cartType: string;
+  cartType: PaBCartType;
   errorMessage: string;
   transferWarningComponent: TransferWarningComponent;
 
@@ -30,7 +31,7 @@ export class PartsListTransferComponent implements OnDestroy {
     this.show = false;
   }
 
-  start(parts: IPart[], cartType: string, transferWarningComponent: TransferWarningComponent) {
+  start(parts: IPart[], cartType: PaBCartType, transferWarningComponent: TransferWarningComponent) {
     this.show = true;
     this.errorMessage = '';
     this.parts = parts;
