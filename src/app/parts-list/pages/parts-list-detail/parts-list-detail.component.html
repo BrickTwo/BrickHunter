@@ -67,6 +67,7 @@
               class="p-button-solid"
               icon="fa fa-cart-shopping"
               style="width: 100%"
+              [disabled]="pabIsLoading"
               (click)="onTransfer('pab')"></button>
           </div>
         </div>
@@ -95,6 +96,7 @@
               class="p-button-solid"
               icon="fa fa-cart-shopping"
               style="width: 100%"
+              [disabled]="pabIsLoading"
               (click)="onTransfer('bap')"></button>
           </div>
         </div>
