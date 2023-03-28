@@ -1,0 +1,14 @@
+<p-dialog header="Changelog" [(visible)]="visible" [style]="{ width: '50vw', height: '50vh' }" [modal]="true">
+  <section *ngIf="isVersionGreater('2.0.11')">
+    <h2>2.0.11</h2>
+    <h3>Features</h3>
+    <ul>
+      <li>Check current cart before transfering parts</li>
+      <li>Show changelog</li>
+      <li>Disbale transfer buttons until BaP data are loaded</li>
+    </ul>
+  </section>
+  <ng-template pTemplate="footer">
+    <p-button (click)="onClose()" label="Close" styleClass="p-button-solid"></p-button>
+  </ng-template>
+</p-dialog>

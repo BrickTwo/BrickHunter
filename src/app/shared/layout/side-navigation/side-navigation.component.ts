@@ -7,6 +7,7 @@ import {
   faBook,
   faGear,
 } from '@fortawesome/free-solid-svg-icons';
+import { VersionService } from 'src/app/core/services/version.service';
 
 @Component({
   selector: 'app-side-navigation',
@@ -20,4 +21,9 @@ export class SideNavigationComponent {
   faGear = faGear;
   faCircleInfo = faCircleInfo;
   faCircleQuestion = faCircleQuestion;
+  currentVersion: string;
+
+  constructor(private readonly versionService: VersionService) {
+    this.currentVersion = this.versionService.currentVersion;
+  }
 }

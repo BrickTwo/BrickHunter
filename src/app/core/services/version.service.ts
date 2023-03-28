@@ -6,15 +6,22 @@ import { IndexedDBService } from './indexeddb.service.ts';
 
 @Injectable()
 export class VersionService {
-  currentVersion = '2.0.9';
+  oldVersion = '';
+  currentVersion = '';
 
   constructor(private readonly importService: ImportService, private readonly indexedDbService: IndexedDBService) {
-    const oldVersion = this.readVersion();
-    this.updateStructure(oldVersion);
+    this.oldVersion = this.readVersion();
+    try {
+      var manifestData = chrome.runtime.getManifest();
+      this.currentVersion = manifestData.version;
+    } catch (err) {
+      this.currentVersion = '2.0.9';
+    }
+    this.updateStructure();
   }
 
-  updateStructure(oldVersion: string) {
-    if (this.isVersionGreater(oldVersion, '2.0.0')) {
+  updateStructure() {
+    if (this.isVersionGreater(this.oldVersion, '2.0.0')) {
       console.log('update');
       // clean local storage
       const rowKeys: string[] = [];
@@ -36,7 +43,7 @@ export class VersionService {
         });
     }
 
-    localStorage.setItem('version', '2.0.8');
+    localStorage.setItem('version', this.currentVersion);
   }
 
   private readVersion() {
@@ -45,7 +52,7 @@ export class VersionService {
     return version;
   }
 
-  private isVersionGreater(oldVersion: string, newVersion: string) {
+  isVersionGreater(oldVersion: string, newVersion: string) {
     const oldVersionArray = oldVersion.split('.');
     const newVersionArray = newVersion.split('.');
 
