@@ -6,9 +6,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PrimengModule } from '../primeng.module';
 import { SharedModule } from '../shared/shared.module';
 import { SettingsComponent } from './page/settings/settings.component';
+import { LocaleSettingsComponent } from './components/locale-settings/locale-settings.component';
 
 @NgModule({
-  declarations: [SettingsComponent],
+  declarations: [SettingsComponent, LocaleSettingsComponent],
   imports: [
     PrimengModule,
     RouterModule.forChild([{ path: '', component: SettingsComponent }]),

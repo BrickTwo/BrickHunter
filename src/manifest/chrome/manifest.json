@@ -1,9 +1,9 @@
 {
   "name": "BrickHunter 2.0 alpha",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Fills automatic your Pick a Brick shopping cart from a imported BrickLink wanted list.",
   "manifest_version": 3,
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab"],
   "host_permissions": ["https://*.lego.com/*"],
   "background": {
     "service_worker": "background.js"

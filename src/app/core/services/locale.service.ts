@@ -4,13 +4,18 @@ import { ICountry, ILanguage } from 'src/app/models/global';
 @Injectable()
 export class LocaleService {
   countries = initializeCountries;
-  country: ICountry = initializeCountries[0];
+  country?: ICountry = initializeCountries[0];
   language: ILanguage = this.country.languages[0];
   languageCountryCode = `${this.language.code.toLowerCase()}-${this.country.code.toUpperCase()}`;
+  localeNotSet = false;
 
   constructor() {
     const countryCode = localStorage.getItem('country') || null;
     const languageCode = localStorage.getItem('language') || null;
+    if (!countryCode || !languageCode) {
+      this.localeNotSet = true;
+    }
+
     this.setCountry(countryCode);
     this.setLanguage(languageCode);
   }
@@ -28,7 +33,6 @@ export class LocaleService {
     }
 
     this.setLanguageCountryCode();
-    this.store();
   }
 
   setLanguage(code: string) {
@@ -40,14 +44,13 @@ export class LocaleService {
     }
 
     this.setLanguageCountryCode();
-    this.store();
   }
 
   private setLanguageCountryCode() {
     this.languageCountryCode = `${this.language.code.toLowerCase()}-${this.country.code.toUpperCase()}`;
   }
 
-  private store() {
+  store() {
     localStorage.setItem('country', this.country.code);
     localStorage.setItem('language', this.language.code);
   }

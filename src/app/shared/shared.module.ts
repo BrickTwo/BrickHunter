@@ -6,10 +6,12 @@ import { ChangelogComponent } from './components/changelog/changelog.component';
 import { ColorComponent } from './components/color/color.component';
 import { ProgressIconComponent } from './components/progress-icon/progress-icon.component';
 import { SideNavigationComponent } from './layout';
+import { LocaleComponent } from './components/locale/locale.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [SideNavigationComponent, ProgressIconComponent, ColorComponent, ChangelogComponent],
-  imports: [PrimengModule, CommonModule, FontAwesomeModule],
-  exports: [SideNavigationComponent, ProgressIconComponent, ColorComponent, ChangelogComponent],
+  declarations: [SideNavigationComponent, ProgressIconComponent, ColorComponent, ChangelogComponent, LocaleComponent],
+  imports: [PrimengModule, CommonModule, FontAwesomeModule, FormsModule],
+  exports: [SideNavigationComponent, ProgressIconComponent, ColorComponent, ChangelogComponent, LocaleComponent],
 })
 export class SharedModule {}
