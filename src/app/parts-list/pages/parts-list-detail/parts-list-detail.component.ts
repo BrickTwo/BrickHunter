@@ -5,6 +5,7 @@ import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 
 import { Subscription } from 'rxjs';
 import { IPart, IPartsList } from 'src/app/models/parts-list';
 import { PaBCartType } from 'src/app/models/pick-a-brick';
+import { PartsListPdfComponent } from '../../components/parts-list-pdf/parts-list-pdf.component';
 import { PartsListSettingsComponent } from '../../components/parts-list-settings/parts-list-settings.component';
 import { PartsListTransferComponent } from '../../components/parts-list-transfer/parts-list-transfer.component';
 import { TransferWarningComponent } from '../../components/transfer-warning/transfer-warning.component';
@@ -37,6 +38,9 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
 
   @ViewChild(PartsListSettingsComponent, { static: false })
   private partsListSettingsComponent?: PartsListSettingsComponent;
+
+  @ViewChild(PartsListPdfComponent, { static: false })
+  private partsListPdfComponent?: PartsListPdfComponent;
 
   @ViewChild(PartsListTransferComponent, { static: false })
   private partsListTransferComponent?: PartsListTransferComponent;
@@ -139,6 +143,10 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
 
   onSetting() {
     this.partsListSettingsComponent?.open();
+  }
+
+  onPdf() {
+    this.partsListPdfComponent.open(this.uuid);
   }
 
   onDelete() {

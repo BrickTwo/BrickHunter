@@ -1,0 +1,13 @@
+<p-sidebar [(visible)]="display" position="right">
+  <h2>Generate PDF</h2>
+  <div class="field">
+    <p-selectButton
+      [options]="printOptions"
+      [(ngModel)]="selectedValue"
+      optionLabel="name"
+      optionValue="value"></p-selectButton>
+  </div>
+  <div class="field">
+    <button pButton pRipple type="button" label="Download PDF" style="width: 100%" (click)="onExport()"></button>
+  </div>
+</p-sidebar>

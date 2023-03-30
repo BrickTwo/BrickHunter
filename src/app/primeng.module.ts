@@ -15,6 +15,7 @@ import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RippleModule } from 'primeng/ripple';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -42,6 +43,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     MessagesModule,
     ProgressSpinnerModule,
     RippleModule,
+    SelectButtonModule,
     SidebarModule,
     TableModule,
     TabMenuModule,

@@ -9,8 +9,7 @@
   [virtualScrollItemSize]="rowHeight">
   <ng-template pTemplate="header">
     <tr>
-      <th pRipple pSortableColumn="id">ItemId<p-sortIcon field="id"></p-sortIcon></th>
-      <th pRipple pSortableColumn="lego.designNumber">DesignId<p-sortIcon field="lego.designNumber"></p-sortIcon></th>
+      <th pRipple pSortableColumn="designId">DesignId<p-sortIcon field="designId"></p-sortIcon></th>
       <th pRipple pSortableColumn="elementId">ElementId<p-sortIcon field="elementId"></p-sortIcon></th>
       <th>Image</th>
       <th pRipple pSortableColumn="color">Color<p-sortIcon field="color"></p-sortIcon></th>
@@ -27,7 +26,6 @@
   </ng-template>
   <ng-template pTemplate="body" let-part>
     <tr style="height: 91px">
-      <td>{{ part.id }}</td>
       <td>{{ part.designId }}</td>
       <td>{{ part.elementId }}</td>
       <td>

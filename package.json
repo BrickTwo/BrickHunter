@@ -29,6 +29,8 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "dexie": "^3.2.3",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.28",
     "primeflex": "^3.3.0",
     "primeng": "^15.2.0",
     "rxjs": "~7.8.0",

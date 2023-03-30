@@ -24,22 +24,23 @@
               icon="fa fa-trash-can"
               style="width: 100%"
               (click)="onDelete()"></button>
-            <button
+            <!-- <button
               pButton
               pRipple
               type="button"
               label="Split"
               class="p-button-outlined"
               icon="fa fa-scissors"
-              style="width: 100%"></button>
+              style="width: 100%"></button> -->
             <button
               pButton
               pRipple
               type="button"
-              label="Print"
+              label="PDF"
               class="p-button-outlined"
               icon="fa fa-print"
-              style="width: 100%"></button>
+              style="width: 100%"
+              (click)="onPdf()"></button>
           </div>
         </div>
         <div class="col-3 xxl:col-12">
@@ -136,5 +137,6 @@
   [baseZIndex]="10000"
   rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 <app-parts-list-settings [partsList]="partsList"></app-parts-list-settings>
+<app-parts-list-pdf></app-parts-list-pdf>
 <app-parts-list-transfer></app-parts-list-transfer>
 <app-transfer-warning></app-transfer-warning>
