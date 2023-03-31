@@ -20,6 +20,6 @@ export class ChangelogComponent {
   }
 
   isVersionGreater(version: string) {
-    return this.versionService.isVersionGreater(version, this.versionService.oldVersion);
+    return this.versionService.isVersionGreater(this.versionService.oldVersion, version);
   }
 }

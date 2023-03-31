@@ -1,4 +1,4 @@
-export interface IColor {
+export interface GetRebrickableColorResponse {
   id: number;
   name: string;
   rgb: string;

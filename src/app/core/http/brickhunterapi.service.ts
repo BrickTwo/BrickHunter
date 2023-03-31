@@ -3,11 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import {
+  GetBrickHunterGlobalSettingsResponse,
   GetBrickLinkPartsRequest,
   GetBrickLinkPartsResponse,
   GetRebrickablePartsRequest,
   GetRebrickablePartsResponse,
 } from 'src/app/models/brickhunter-api';
+import { GetRebrickableColorResponse } from 'src/app/models/brickhunter-api/_get-rebrickable-color-response.model';
 
 @Injectable()
 export class BrickHunterApiService {
@@ -22,5 +24,13 @@ export class BrickHunterApiService {
 
   getBrickLinkParts(request: GetBrickLinkPartsRequest): Observable<GetBrickLinkPartsResponse[]> {
     return this.http.post<GetBrickLinkPartsResponse[]>(this.baseURL + 'bricklink', request);
+  }
+
+  getBrickHunterGlobalSettings() {
+    return this.http.get<GetBrickHunterGlobalSettingsResponse>(this.baseURL + 'v1/brickhunter/global-settings');
+  }
+
+  getRebrickableColors() {
+    return this.http.get<GetRebrickableColorResponse>(this.baseURL + 'v1/rebrickable/colors');
   }
 }

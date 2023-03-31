@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject, Subscriber } from 'rxjs';
+import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import {
   BackgroundRequestAction,
@@ -32,7 +33,11 @@ export class PickABrickService {
   parts: IPart[];
   cart: IBackgroundReadCartResponse;
 
-  constructor(private readonly partsListService: PartsListService, private readonly localeService: LocaleService) {}
+  constructor(
+    private readonly partsListService: PartsListService,
+    private readonly localeService: LocaleService,
+    private readonly gloablSettingsService: GlobalSettingsService
+  ) {}
 
   getParts(uuid: string) {
     this.pabLoadError = '';
@@ -223,7 +228,7 @@ export class PickABrickService {
       service: BackgroundRequestService.PickaBrick,
       action: BackgroundRequestAction.AddElementToCart,
       authorization: this.authorization,
-      items: items.slice(0, 150),
+      items: items.slice(0, this.gloablSettingsService.maxPaBLotPerOrder),
       cartType: this.cartType,
       locale: this.localeService.languageCountryCode,
     };
@@ -312,7 +317,7 @@ export class PickABrickService {
       item => !this.parts.some(p => p.lego.elementId === Number(item.elementVariant.id))
     ).length;
 
-    if (this.parts.length + differenceAmount > 150) {
+    if (this.parts.length + differenceAmount > this.gloablSettingsService.maxPaBLotPerOrder) {
       for (let i = this.parts.length - 1; i >= 0; i--) {
         if (cart?.lineItems?.find(item => Number(item.elementVariant.id) === newParts[i].elementId)) continue;
 
@@ -327,7 +332,7 @@ export class PickABrickService {
 
         newParts.splice(i, 1);
 
-        if (newParts.length - differenceAmount === 150) break;
+        if (newParts.length - differenceAmount === this.gloablSettingsService.maxPaBLotPerOrder) break;
       }
     }
     this.parts = newParts;

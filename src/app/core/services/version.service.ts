@@ -15,7 +15,7 @@ export class VersionService {
       var manifestData = chrome.runtime.getManifest();
       this.currentVersion = manifestData.version;
     } catch (err) {
-      this.currentVersion = '2.0.9';
+      this.currentVersion = '2.0.12';
     }
     this.updateStructure();
   }
@@ -56,9 +56,9 @@ export class VersionService {
     const oldVersionArray = oldVersion.split('.');
     const newVersionArray = newVersion.split('.');
 
-    if (oldVersionArray[0] < newVersionArray[0]) return true;
-    if (oldVersionArray[1] < newVersionArray[1]) return true;
-    if (oldVersionArray[2] < newVersionArray[2]) return true;
+    if (Number(oldVersionArray[0]) < Number(newVersionArray[0])) return true;
+    if (Number(oldVersionArray[1]) < Number(newVersionArray[1])) return true;
+    if (Number(oldVersionArray[2]) < Number(newVersionArray[2])) return true;
     return false;
   }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GlobalSettingsService } from './core/services/global-settings.service';
 import { VersionService } from './core/services/version.service';
 
 @Component({
@@ -7,5 +8,8 @@ import { VersionService } from './core/services/version.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(private readonly versionService: VersionService) {}
+  constructor(
+    private readonly versionService: VersionService,
+    private readonly gloabSettingsService: GlobalSettingsService
+  ) {}
 }

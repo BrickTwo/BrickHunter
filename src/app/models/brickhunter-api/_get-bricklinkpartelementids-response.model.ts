@@ -1,5 +1,4 @@
-export interface GetBrickLinkPartElementIdsResponse
-{
-    colorId: number;
-    elementId: number;
+export interface GetBrickLinkPartElementIdsResponse {
+  colorId: number;
+  elementId: number;
 }
