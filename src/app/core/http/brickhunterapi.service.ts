@@ -13,24 +13,24 @@ import { GetRebrickableColorResponse } from 'src/app/models/brickhunter-api/_get
 
 @Injectable()
 export class BrickHunterApiService {
-  baseURL: string = 'https://brichunter-web-svc.azurewebsites.net/';
+  baseURL: string = 'https://brichunter-web-svc.azurewebsites.net/v2/';
   //baseURL: string = 'https://localhost:7141/';
 
   constructor(private http: HttpClient) {}
 
   getRebrickableParts(request: GetRebrickablePartsRequest): Observable<GetRebrickablePartsResponse[]> {
-    return this.http.post<GetRebrickablePartsResponse[]>(this.baseURL + 'parts', request);
+    return this.http.post<GetRebrickablePartsResponse[]>(this.baseURL + 'rebrickable/parts', request);
   }
 
   getBrickLinkParts(request: GetBrickLinkPartsRequest): Observable<GetBrickLinkPartsResponse[]> {
-    return this.http.post<GetBrickLinkPartsResponse[]>(this.baseURL + 'bricklink', request);
+    return this.http.post<GetBrickLinkPartsResponse[]>(this.baseURL + 'bricklink/parts', request);
   }
 
   getBrickHunterGlobalSettings() {
-    return this.http.get<GetBrickHunterGlobalSettingsResponse>(this.baseURL + 'v1/brickhunter/global-settings');
+    return this.http.get<GetBrickHunterGlobalSettingsResponse>(this.baseURL + 'brickhunter/global-settings');
   }
 
   getRebrickableColors() {
-    return this.http.get<GetRebrickableColorResponse>(this.baseURL + 'v1/rebrickable/colors');
+    return this.http.get<GetRebrickableColorResponse>(this.baseURL + 'rebrickable/colors');
   }
 }

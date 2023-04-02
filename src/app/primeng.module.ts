@@ -5,12 +5,14 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { InputTextModule } from 'primeng/inputtext';
+import { MenuModule } from 'primeng/menu';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -33,12 +35,14 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     CardModule,
     CheckboxModule,
     ConfirmDialogModule,
+    DataViewModule,
     DialogModule,
     DividerModule,
     DropdownModule,
     FileUploadModule,
     ImageModule,
     InputTextModule,
+    MenuModule,
     MessageModule,
     MessagesModule,
     ProgressSpinnerModule,

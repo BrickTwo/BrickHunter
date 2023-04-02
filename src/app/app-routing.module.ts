@@ -2,8 +2,12 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/partslists', pathMatch: 'full' },
-  { path: 'partslists', loadChildren: () => import('./parts-list/parts-list.module').then(m => m.PartsListsModule) },
+  { path: '', redirectTo: '/parts-lists', pathMatch: 'full' },
+  {
+    path: 'browse-parts',
+    loadChildren: () => import('./browse-parts/browse-parts.module').then(m => m.BrowsePartsModule),
+  },
+  { path: 'parts-lists', loadChildren: () => import('./parts-list/parts-list.module').then(m => m.PartsListsModule) },
   { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
 ];
 

@@ -1,0 +1,17 @@
+<h2><fa-icon [icon]="faBook" class="page-title-icon"></fa-icon>Browse Parts</h2>
+<div class="grid">
+  <div class="col-fixed" style="width: 300px">
+    <div class="flex flex-column gap-3">
+      <app-browse-parts-parts-lists></app-browse-parts-parts-lists>
+      <app-browse-parts-category-selection></app-browse-parts-category-selection>
+    </div>
+  </div>
+  <div class="col">
+    <div class="flex flex-column gap-3">
+      <p-card>
+        <app-browse-parts-color-filter></app-browse-parts-color-filter>
+      </p-card>
+      <app-browse-parts-data-view></app-browse-parts-data-view>
+    </div>
+  </div>
+</div>

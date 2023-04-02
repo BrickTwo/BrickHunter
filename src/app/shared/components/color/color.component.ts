@@ -9,12 +9,13 @@ import { IColor } from 'src/app/models/parts-list';
 })
 export class ColorComponent implements OnInit {
   @Input() colorId: number;
+  @Input() onlyMainColor = false;
 
   color: IColor;
 
   constructor(private readonly colorService: ColorService) {}
 
-  ngOnInit(): void {
-    this.color = this.colorService.getColor(this.colorId);
+  async ngOnInit(): Promise<void> {
+    this.color = await this.colorService.getColor(this.colorId);
   }
 }

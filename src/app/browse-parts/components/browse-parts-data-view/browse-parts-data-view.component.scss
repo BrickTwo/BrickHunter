@@ -1,0 +1,20 @@
+:host {
+  ::ng-deep.p-ripple .p-ink {
+    background: #0a3463;
+  }
+}
+
+.full-width-button {
+  width: 100%;
+  display: grid;
+}
+
+.top-10 {
+  top: -10px;
+  position: relative;
+}
+
+.top-20 {
+  top: -20px;
+  position: relative;
+}

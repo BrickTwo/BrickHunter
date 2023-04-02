@@ -1,9 +1,11 @@
 <span style="display: block">
   <div
     style="border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"
-    [style.background-color]="'#' + color.rgb"></div>
-  <span>{{ color.externalIds.brickLink?.extDescrs[0] }}</span>
+    [style.background-color]="'#' + color?.rgb"></div>
+  <span>{{ color?.externalIds.brickLink?.extDescrs[0] }}</span>
 </span>
-<span v-if="data.value.legoName" style="color: grey; font-size: small; margin-left: 20px">
-  [{{ color.externalIds.lego?.extDescrs[0] }}]
+<span
+  *ngIf="color?.externalIds.lego?.extDescrs[0] && !onlyMainColor"
+  style="color: grey; font-size: small; margin-left: 20px">
+  [{{ color?.externalIds.lego?.extDescrs[0] }}]
 </span>

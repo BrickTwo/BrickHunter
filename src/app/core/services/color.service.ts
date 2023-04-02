@@ -11,15 +11,17 @@ export class ColorService {
     private readonly brickhunterApiService: BrickHunterApiService,
     private readonly indexedDbService: IndexedDBService
   ) {
-    this.indexedDbService.colors.toArray().then(colors => {
-      this.colors = colors;
-    });
+    this.loadColors();
     this.brickhunterApiService.getRebrickableColors().subscribe({
       next: colors => {
         this.colors = colors as unknown as IColor[];
         this.indexedDbService.colors.bulkPut(this.colors);
       },
     });
+  }
+
+  private async loadColors() {
+    this.colors = await this.indexedDbService.colors.toArray();
   }
 
   public brickLinkToRebrickable(colorId?: number): number {
@@ -33,8 +35,12 @@ export class ColorService {
     return color ? color.id : -1;
   }
 
-  public getColor(colorId: number | undefined, type: string = null): IColor {
+  public async getColor(colorId: number | undefined, type: string = null): Promise<IColor> {
     if (colorId == undefined) return this.colors[0];
+
+    if (!this.colors) {
+      await this.loadColors();
+    }
 
     const color = this.colors.find(color => {
       switch (type) {

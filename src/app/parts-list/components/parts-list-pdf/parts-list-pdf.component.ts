@@ -30,7 +30,7 @@ export class PartsListPdfComponent {
     this.partsList = this.partsListService.getPartsList(partsListUuid);
   }
 
-  onExport() {
+  async onExport() {
     const columns: ColumnInput[] = [
       { header: 'DesignId', dataKey: 'designId' },
       { header: 'ElementId', dataKey: 'elementId' },
@@ -41,8 +41,8 @@ export class PartsListPdfComponent {
       { header: 'PaB', dataKey: 'pab' },
     ];
 
-    const rows = this.getParts(this.selectedValue).map(part => {
-      const color = this.colorService.getColor(part.color);
+    const rows = this.getParts(this.selectedValue).map(async part => {
+      const color = await this.colorService.getColor(part.color);
 
       return {
         desingId: part.designId,
@@ -64,7 +64,7 @@ export class PartsListPdfComponent {
     const doc = new jsPDF('p', 'px', 'a4');
     autoTable(doc, {
       columns: columns,
-      body: rows,
+      body: await Promise.all(rows),
       startY: 25,
       // didParseCell: data => {
       // if (data.column.dataKey === 'image' && data.cell.section === 'body') {

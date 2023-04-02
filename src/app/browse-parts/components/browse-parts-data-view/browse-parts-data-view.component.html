@@ -1,0 +1,97 @@
+<p-card>
+  <p-dataView #dv [value]="products" [rows]="20" [paginator]="true" paginatorPosition="both" [layout]="layout">
+    <ng-template pTemplate="header">
+      <div class="flex justify-content-end">
+        <p-selectButton [options]="layoutOptions" [(ngModel)]="layout" optionLabel="icon" optionValue="value">
+          <ng-template let-item>
+            <i [class]="item.icon"></i>
+          </ng-template>
+        </p-selectButton>
+      </div>
+    </ng-template>
+    <ng-template let-product pTemplate="listItem">
+      <div class="col-12">
+        <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+          <img
+            class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
+            [src]="'https://brickhunter.blob.core.windows.net' + product.imageUrl"
+            [alt]="product.description" />
+          <div
+            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+            <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+              <div class="text-2xl font-bold text-900">{{ product.description }}</div>
+              <div class="flex align-items-center gap-3">
+                <span class="flex align-items-center gap-2">
+                  <i class="pi pi-tag"></i>
+                  <span class="font-semibold">{{ product.categoryId }}</span>
+                </span>
+              </div>
+            </div>
+            <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+              <span class="text-2xl font-semibold">{{ '$' + product.priceAmount }}</span>
+              <button
+                pButton
+                icon="pi pi-shopping-cart"
+                class="md:align-self-end mb-2 p-button-rounded"
+                [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template let-product pTemplate="gridItem">
+      <div class="col-6 xl:col-3 xxl:col-2 xxxl:col-2 xxxxl:col-1 p-1">
+        <div class="p-2 border-1 surface-border surface-card border-round">
+          <div class="align-items-center" style="height: 120px; cursor: pointer">
+            <div [style]="getImageStyle(product)"></div>
+            <div class="flex justify-content-between" style="position: relative; top: -120px">
+              <p-tag severity="warning" *ngIf="product.deliveryChannel === 'pab'">Bestseller</p-tag>
+              <p-tag severity="info" *ngIf="product.deliveryChannel === 'bap'">Standard</p-tag>
+              <p-tag severity="danger" *ngIf="product.deliveryChannel === 'oos'">Out Of Stock</p-tag>
+            </div>
+            <div class="flex justify-content-end" style="width: 100%; position: relative; top: -152px; right: -10px">
+              <div class="flex justify-content-end flex-column">
+                <p-button
+                  icon="fa fa-heart"
+                  styleClass="p-button-rounded p-button-text p-button-danger text-xl"></p-button>
+                <p-button
+                  icon="fa fa-circle-check"
+                  styleClass="p-button-rounded p-button-text p-button-success text-xl"
+                  class="top-20"></p-button>
+                <p-button
+                  icon="fa fa-solid fa-arrow-up-right-from-square"
+                  styleClass="p-button-rounded p-button-text text-md"
+                  class="top-10"></p-button>
+              </div>
+            </div>
+          </div>
+          <div style="height: 48px; overflow: hidden">
+            <div class="font-bold">{{ product.description }}</div>
+          </div>
+          <div class="flex flex-column gap-1">
+            <div class="flex justify-content-between">
+              <div>Element:</div>
+              <div>{{ product.elementId }}</div>
+            </div>
+            <div class="flex justify-content-between">
+              <div>Design:</div>
+              <div>{{ product.designId }}</div>
+            </div>
+            <div class="flex justify-content-between">
+              <div>ElementId:</div>
+              <div>{{ product.priceAmount }} {{ product.priceCurrency }}</div>
+            </div>
+            <div style="overflow: hidden">
+              <app-color [colorId]="product.colorId" [onlyMainColor]="true"></app-color>
+            </div>
+            <p-button
+              icon="fa fa-plus"
+              label="Add"
+              styleClass="p-button-solid text-md"
+              class="full-width-button"></p-button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
+</p-card>
