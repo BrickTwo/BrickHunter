@@ -1,0 +1,29 @@
+<div class="flex align-items-center justify-content-center">
+  <div>
+    <p-dropdown
+      [options]="options"
+      optionLabel="label"
+      optionValue="value"
+      [(ngModel)]="perPage"
+      (onChange)="onPerPageChange()"></p-dropdown>
+  </div>
+  <div class="flex-1">
+    <p-paginator
+      (onPageChange)="onPageChange($event.page)"
+      [first]="page * perPage"
+      [rows]="perPage"
+      [totalRecords]="totalParts"></p-paginator>
+  </div>
+  <div class="justify-content-end">
+    <p-selectButton
+      [options]="layoutOptions"
+      [ngModel]="layout"
+      optionLabel="icon"
+      optionValue="value"
+      (onChange)="onLayoutChanged($event.value)">
+      <ng-template let-item>
+        <i [class]="item.icon"></i>
+      </ng-template>
+    </p-selectButton>
+  </div>
+</div>

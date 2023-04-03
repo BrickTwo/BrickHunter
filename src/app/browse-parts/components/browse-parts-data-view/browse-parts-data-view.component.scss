@@ -2,6 +2,11 @@
   ::ng-deep.p-ripple .p-ink {
     background: #0a3463;
   }
+
+  ::ng-deep.grid-style{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
 }
 
 .full-width-button {
@@ -18,3 +23,5 @@
   top: -20px;
   position: relative;
 }
+
+

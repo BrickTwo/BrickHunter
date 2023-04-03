@@ -1,13 +1,10 @@
 <p-card>
-  <p-dataView #dv [value]="products" [rows]="20" [paginator]="true" paginatorPosition="both" [layout]="layout">
+  <p-dataView #dv [value]="parts" [layout]="layout" gridStyleClass="grid-style" [lazy]="true">
     <ng-template pTemplate="header">
-      <div class="flex justify-content-end">
-        <p-selectButton [options]="layoutOptions" [(ngModel)]="layout" optionLabel="icon" optionValue="value">
-          <ng-template let-item>
-            <i [class]="item.icon"></i>
-          </ng-template>
-        </p-selectButton>
-      </div>
+      <app-browse-parts-page-settings></app-browse-parts-page-settings>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <app-browse-parts-page-settings></app-browse-parts-page-settings>
     </ng-template>
     <ng-template let-product pTemplate="listItem">
       <div class="col-12">
@@ -39,15 +36,18 @@
         </div>
       </div>
     </ng-template>
-    <ng-template let-product pTemplate="gridItem">
-      <div class="col-6 xl:col-3 xxl:col-2 xxxl:col-2 xxxxl:col-1 p-1">
+    <ng-template let-part pTemplate="gridItem">
+      <!-- <div class="col-6 xl:col-3 xxl:col-2 xxxl:col-2 xxxxl:col-1 p-1"> -->
+      <!-- <div class="flex flex-wrap gap-3"> -->
+      <!-- <div class="p-1" style="width: 0; min-width: 200px; max-width: 300px; flex: 1 1 0px"> -->
+      <div class="p-1">
         <div class="p-2 border-1 surface-border surface-card border-round">
           <div class="align-items-center" style="height: 120px; cursor: pointer">
-            <div [style]="getImageStyle(product)"></div>
+            <div [style]="getImageStyle(part)"></div>
             <div class="flex justify-content-between" style="position: relative; top: -120px">
-              <p-tag severity="warning" *ngIf="product.deliveryChannel === 'pab'">Bestseller</p-tag>
-              <p-tag severity="info" *ngIf="product.deliveryChannel === 'bap'">Standard</p-tag>
-              <p-tag severity="danger" *ngIf="product.deliveryChannel === 'oos'">Out Of Stock</p-tag>
+              <p-tag severity="warning" *ngIf="part.deliveryChannel === 'pab'">Bestseller</p-tag>
+              <p-tag severity="info" *ngIf="part.deliveryChannel === 'bap'">Standard</p-tag>
+              <p-tag severity="danger" *ngIf="part.deliveryChannel === 'oos'">Out Of Stock</p-tag>
             </div>
             <div class="flex justify-content-end" style="width: 100%; position: relative; top: -152px; right: -10px">
               <div class="flex justify-content-end flex-column">
@@ -66,23 +66,28 @@
             </div>
           </div>
           <div style="height: 48px; overflow: hidden">
-            <div class="font-bold">{{ product.description }}</div>
+            <div class="font-bold">{{ part.description }}</div>
           </div>
           <div class="flex flex-column gap-1">
             <div class="flex justify-content-between">
               <div>Element:</div>
-              <div>{{ product.elementId }}</div>
+              <div>{{ part.elementId }}</div>
             </div>
             <div class="flex justify-content-between">
               <div>Design:</div>
-              <div>{{ product.designId }}</div>
+              <div>{{ part.designId }}</div>
             </div>
             <div class="flex justify-content-between">
-              <div>ElementId:</div>
-              <div>{{ product.priceAmount }} {{ product.priceCurrency }}</div>
+              <div>
+                <img
+                  src="/assets/flag_placeholder.png"
+                  [class]="'flag flag-' + part.country.toLowerCase()"
+                  style="width: 18px" />
+              </div>
+              <div>{{ part.priceAmount }} {{ part.priceCurrency }}</div>
             </div>
             <div style="overflow: hidden">
-              <app-color [colorId]="product.colorId" [onlyMainColor]="true"></app-color>
+              <app-color [colorId]="part.colorId" [onlyMainColor]="true"></app-color>
             </div>
             <p-button
               icon="fa fa-plus"

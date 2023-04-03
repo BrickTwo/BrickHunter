@@ -1,23 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-parts.service';
+import { Subscription } from 'dexie';
+import { BrowsePartsPart } from 'src/app/models/browse-parts';
 
 @Component({
   selector: 'app-browse-parts-data-view',
   templateUrl: './browse-parts-data-view.component.html',
   styleUrls: ['./browse-parts-data-view.component.scss'],
 })
-export class BrowsePartsDataViewComponent implements OnInit {
-  layout: string = 'grid';
-  products: Product[];
+export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
+  layout = 'grid';
+  parts: BrowsePartsPart[];
+  filterSubscription: Subscription;
+  partsSubscription: Subscription;
 
-  layoutOptions: any[] = [
-    { icon: 'fa fa-border-all', value: 'grid' },
-    { icon: 'fa fa-bars', value: 'list' },
-  ];
-
-  constructor() {}
+  constructor(private readonly browsePartsService: BrowsePartsService) {}
 
   ngOnInit() {
-    this.products = products;
+    this.filterSubscription = this.browsePartsService.filterState$.subscribe(filterChanged => {
+      switch (filterChanged.property) {
+        case FilterChangedProperty.layout:
+          this.layout = filterChanged.filter.layout;
+      }
+    });
+
+    this.partsSubscription = this.browsePartsService.bricksChanged$.subscribe(parts => {
+      this.parts = parts;
+    });
+
+    this.browsePartsService.sendRequest();
   }
 
   getImageStyle(part: Product) {
@@ -28,6 +39,11 @@ export class BrowsePartsDataViewComponent implements OnInit {
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;`;
+  }
+
+  ngOnDestroy(): void {
+    if (this.filterSubscription) this.filterSubscription.unsubscribe();
+    if (this.partsSubscription) this.partsSubscription.unsubscribe();
   }
 }
 

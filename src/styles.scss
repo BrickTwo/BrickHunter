@@ -83,6 +83,18 @@ h2 {
   content: '\f105';
 }
 
+.pi-angle-left::before {
+  content: '\f104';
+}
+
+.pi-angle-double-right::before {
+  content: '\f101';
+}
+
+.pi-angle-double-left::before {
+  content: '\f100';
+}
+
 .p-datatable .p-sortable-column.p-highlight:hover {
   background-color: black;
 }

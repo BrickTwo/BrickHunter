@@ -10,6 +10,8 @@ import {
   GetRebrickablePartsResponse,
 } from 'src/app/models/brickhunter-api';
 import { GetRebrickableColorResponse } from 'src/app/models/brickhunter-api/_get-rebrickable-color-response.model';
+import { GetPickABrickPartsRequest } from 'src/app/models/brickhunter-api/_get-pickabrick-parts-request.model';
+import { GetPickABrickPartsResponse } from 'src/app/models/brickhunter-api/_get-pickabrick-parts-response.model';
 
 @Injectable()
 export class BrickHunterApiService {
@@ -32,5 +34,9 @@ export class BrickHunterApiService {
 
   getRebrickableColors() {
     return this.http.get<GetRebrickableColorResponse>(this.baseURL + 'rebrickable/colors');
+  }
+
+  getPickABrickParts(request: GetPickABrickPartsRequest) {
+    return this.http.post<GetPickABrickPartsResponse>(this.baseURL + 'pickabrick/parts', request);
   }
 }
