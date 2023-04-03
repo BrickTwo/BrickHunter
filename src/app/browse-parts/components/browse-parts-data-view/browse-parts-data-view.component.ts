@@ -45,6 +45,14 @@ export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
     if (this.filterSubscription) this.filterSubscription.unsubscribe();
     if (this.partsSubscription) this.partsSubscription.unsubscribe();
   }
+
+  onLoad(index) {
+    console.log(index);
+  }
+
+  trackItem(index: number, item: any) {
+    return item ? item.elementId : null;
+  }
 }
 
 interface Product {

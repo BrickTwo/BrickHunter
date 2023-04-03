@@ -3,25 +3,8 @@
     background: #0a3463;
   }
 
-  ::ng-deep.grid-style{
+  ::ng-deep.grid-style {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
-
-.full-width-button {
-  width: 100%;
-  display: grid;
-}
-
-.top-10 {
-  top: -10px;
-  position: relative;
-}
-
-.top-20 {
-  top: -20px;
-  position: relative;
-}
-
-

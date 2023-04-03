@@ -6,6 +6,7 @@ import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DataViewModule } from 'primeng/dataview';
+import { DeferModule } from 'primeng/defer';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
@@ -37,6 +38,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     CheckboxModule,
     ConfirmDialogModule,
     DataViewModule,
+    DeferModule,
     DialogModule,
     DividerModule,
     DropdownModule,

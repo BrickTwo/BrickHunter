@@ -1,0 +1,51 @@
+<div class="p-2 border-1 surface-border surface-card border-round" style="height: 320px" [id]="part.elementId">
+  <div *ngIf="ready">
+    <div class="align-items-center" style="height: 120px; cursor: pointer">
+      <div [style]="getImageStyle(part)"></div>
+      <div class="flex justify-content-between" style="position: relative; top: -120px">
+        <p-tag severity="warning" *ngIf="part.deliveryChannel === 'pab'">Bestseller</p-tag>
+        <p-tag severity="info" *ngIf="part.deliveryChannel === 'bap'">Standard</p-tag>
+        <p-tag severity="danger" *ngIf="part.deliveryChannel === 'oos'">Out Of Stock</p-tag>
+      </div>
+      <div class="flex justify-content-end" style="width: 100%; position: relative; top: -152px; right: -10px">
+        <div class="flex justify-content-end flex-column">
+          <p-button icon="fa fa-heart" styleClass="p-button-rounded p-button-text p-button-danger text-xl"></p-button>
+          <p-button
+            icon="fa fa-circle-check"
+            styleClass="p-button-rounded p-button-text p-button-success text-xl"
+            class="top-20"></p-button>
+          <p-button
+            icon="fa fa-solid fa-arrow-up-right-from-square"
+            styleClass="p-button-rounded p-button-text text-md"
+            class="top-10"></p-button>
+        </div>
+      </div>
+    </div>
+    <div style="height: 48px; overflow: hidden">
+      <div class="font-bold">{{ part.description }}</div>
+    </div>
+    <div class="flex flex-column gap-1">
+      <div class="flex justify-content-between">
+        <div>Element:</div>
+        <div>{{ part.elementId }}</div>
+      </div>
+      <div class="flex justify-content-between">
+        <div>Design:</div>
+        <div>{{ part.designId }}</div>
+      </div>
+      <div class="flex justify-content-between">
+        <div>
+          <img
+            src="/assets/flag_placeholder.png"
+            [class]="'flag flag-' + part.country.toLowerCase()"
+            style="width: 18px" />
+        </div>
+        <div>{{ part.priceAmount }} {{ part.priceCurrency }}</div>
+      </div>
+      <div style="overflow: hidden">
+        <!-- <app-color [colorId]="part.colorId" [onlyMainColor]="true"></app-color> -->
+      </div>
+      <p-button icon="fa fa-plus" label="Add" styleClass="p-button-solid text-md" class="full-width-button"></p-button>
+    </div>
+  </div>
+</div>

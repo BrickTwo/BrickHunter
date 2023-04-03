@@ -247,8 +247,8 @@ export class ImportService {
         const part: IPart = {
           id: String(item.itemNumber),
           externalId: String(item.designId),
-          designId: item.designId,
-          elementId: item.itemNumber,
+          designId: String(item.designId),
+          elementId: Number(item.itemNumber),
           elementIds: [],
           color: 0,
           qty: item.qty.min,
