@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
 import { IndexedDBService } from '../../core/services/indexeddb.service.ts';
-import { IPartsList } from '../../models/parts-list';
+import { IPart, IPartsList } from '../../models/parts-list';
 
 @Injectable({ providedIn: 'root' })
 export class PartsListService {
@@ -9,7 +10,10 @@ export class PartsListService {
 
   private partsLists: IPartsList[] = [];
 
-  constructor(private readonly indexedDBService: IndexedDBService) {
+  constructor(
+    private readonly indexedDBService: IndexedDBService,
+    private readonly gloabSettingsService: GlobalSettingsService
+  ) {
     this.indexedDBService.partsLists.toArray().then(partsLists => {
       this.setPartsLists(partsLists);
     });
@@ -45,5 +49,44 @@ export class PartsListService {
     this.indexedDBService.partsLists.delete(uuid);
     this.partsLists = this.partsLists.filter(p => p.uuid !== uuid);
     this.partsListsChanged.next(this.partsLists.slice());
+  }
+
+  getParts(uuid: string, filter: string) {
+    const partsList = this.getPartsList(uuid);
+
+    switch (filter) {
+      case 'pab':
+      case 'bap':
+        return partsList?.parts?.filter(p => this.pabFilter(p, filter));
+      case 'oos':
+        return partsList?.parts?.filter(p => p.lego?.inStock === false);
+      case 'brickLink':
+        return partsList?.parts?.filter(p => this.brickLinkFilter(p));
+      case 'warning':
+        return partsList?.parts?.filter(p => {
+          if (p.lego?.inStock === false) return true;
+          if (p.lego && p.lego.maxOrderQuantity < p.qty) return true;
+          return false;
+        });
+      default:
+        return partsList?.parts.slice();
+    }
+  }
+
+  private pabFilter(part: IPart, filter: string) {
+    if (!part.lego) return false;
+    if (part.lego.deliveryChannel !== filter) return false;
+    if (!part.lego.inStock) return false;
+    if (!this.gloabSettingsService.ignoreBrickLinkPrices && part.lego.price.amount > (part.maxPrice || 0)) return false;
+    if (this.gloabSettingsService.subtractHaveFromQuantity && part.qty - part.have <= 0) return false;
+    return true;
+  }
+
+  private brickLinkFilter(part: IPart) {
+    if (this.gloabSettingsService.subtractHaveFromQuantity && part.qty - part.have <= 0) return false;
+    if (!part.lego) return true;
+    if (!part.lego.inStock) return true;
+    if (!this.gloabSettingsService.ignoreBrickLinkPrices && part.lego.price.amount > (part.maxPrice || 0)) return true;
+    return false;
   }
 }

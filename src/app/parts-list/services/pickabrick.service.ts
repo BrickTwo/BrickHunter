@@ -199,7 +199,6 @@ export class PickABrickService {
     return chrome.runtime
       .sendMessage(request)
       .then((response: IBackgroundResponse) => {
-        console.log(response);
         if (response.error) throw new Error(response.error.message);
         this.cart = response.success[0] as IBackgroundReadCartResponse;
         return response.success[0] as IBackgroundReadCartResponse;
@@ -217,9 +216,12 @@ export class PickABrickService {
     if (partsToAdd.length === 0) return;
 
     const items = partsToAdd.map(part => {
+      let orderQuantity = Number(part.qty);
+      if (this.gloablSettingsService.subtractHaveFromQuantity) orderQuantity -= part.have || 0;
+
       const item: IAddElementItem = {
         sku: part.lego.elementId.toString(),
-        quantity: Number(part.qty),
+        quantity: orderQuantity,
       };
       return item;
     });
@@ -254,9 +256,12 @@ export class PickABrickService {
     const items = partsToChange.map(part => {
       const itemInCart = this.cart.lineItems.find(item => Number(item.elementVariant.id) === part.lego.elementId);
 
+      let orderQuantity = Number(part.qty);
+      if (this.gloablSettingsService.subtractHaveFromQuantity) orderQuantity -= part.have || 0;
+
       const item: IChangeElementItem = {
         lineItemId: itemInCart.id,
-        quantity: itemInCart.quantity + Number(part.qty),
+        quantity: itemInCart.quantity + orderQuantity,
       };
       return item;
     });
@@ -305,7 +310,10 @@ export class PickABrickService {
         return [];
       }
 
-      if (part.qty > maxPossibleQuantity) {
+      let orderQuantity = Number(part.qty);
+      if (this.gloablSettingsService.subtractHaveFromQuantity) orderQuantity -= part.have || 0;
+
+      if (orderQuantity > maxPossibleQuantity) {
         partsWithWarning.push({ part: { ...part }, cart: inCart });
         part.qty = maxPossibleQuantity;
       }

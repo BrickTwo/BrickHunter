@@ -11,6 +11,7 @@ import { PartsListTransferComponent } from '../../components/parts-list-transfer
 import { TransferWarningComponent } from '../../components/transfer-warning/transfer-warning.component';
 import { PartsListService } from '../../services/parts-list.service';
 import { PickABrickService } from '../../services/pickabrick.service';
+import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
 
 @Component({
   selector: 'app-parts-list-detail',
@@ -32,9 +33,27 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   parts: IPart[];
   pabSubscription: Subscription;
   partsListSubscription: Subscription;
+  globalSettingsSubscription: Subscription;
   pabIsLoading: boolean = false;
   uuid: string;
   cartType = PaBCartType;
+  totals = {
+    bestseller: {
+      lot: 0,
+      pieces: 0,
+      price: '0.00',
+    },
+    standard: {
+      lot: 0,
+      pieces: 0,
+      price: '0.00',
+    },
+    bricklink: {
+      lot: 0,
+      pieces: 0,
+      price: '0.00',
+    },
+  };
 
   @ViewChild(PartsListSettingsComponent, { static: false })
   private partsListSettingsComponent?: PartsListSettingsComponent;
@@ -54,12 +73,14 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly confirmationService: ConfirmationService,
     private readonly messageService: MessageService,
-    private readonly pickabrickService: PickABrickService
+    private readonly pickabrickService: PickABrickService,
+    private readonly gloablSettingsService: GlobalSettingsService
   ) {}
 
   ngOnDestroy(): void {
     if (this.pabSubscription) this.pabSubscription.unsubscribe();
     if (this.partsListSubscription) this.partsListSubscription.unsubscribe();
+    if (this.globalSettingsSubscription) this.globalSettingsSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -86,6 +107,10 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
           this.reloadPartsList();
         }
       });
+
+      this.globalSettingsSubscription = this.gloablSettingsService.settingsChanged$.subscribe(value => {
+        this.reloadPartsList();
+      });
     });
   }
 
@@ -97,7 +122,25 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       loadPab = true;
     }
     this.partsList = partsList;
-    this.parts = this.getParts(String(this.activeItem.id));
+    this.parts = this.partsListService.getParts(this.uuid, this.activeItem.id);
+
+    this.totals = {
+      bestseller: {
+        lot: this.getParts('pab')?.length,
+        pieces: this.getTotalQuantity('pab'),
+        price: this.getTotalPrice('pab'),
+      },
+      standard: {
+        lot: this.getParts('bap')?.length,
+        pieces: this.getTotalQuantity('bap'),
+        price: this.getTotalPrice('bap'),
+      },
+      bricklink: {
+        lot: this.getParts('brickLink')?.length,
+        pieces: this.getTotalQuantity('brickLink'),
+        price: this.getTotalPrice('brickLink'),
+      },
+    };
 
     if (loadPab) {
       this.pabIsLoading = true;
@@ -106,39 +149,49 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   }
 
   onTableChange(selectedTab: MenuItem) {
-    this.parts = this.getParts(String(selectedTab.id));
-  }
-
-  getParts(filter: string): IPart[] {
-    switch (filter) {
-      case 'pab':
-      case 'bap':
-        return this.partsList?.parts?.filter(p => p.lego?.deliveryChannel === filter);
-      case 'oos':
-        return this.partsList?.parts?.filter(p => p.lego?.inStock === false);
-      case 'brickLink':
-        return this.partsList?.parts?.filter(p => !p.lego);
-      case 'warning':
-        return this.partsList?.parts?.filter(p => {
-          if (p.lego?.inStock === false) return true;
-          if (p.lego && p.lego.maxOrderQuantity < p.qty) return true;
-          return false;
-        });
-      default:
-        return this.partsList?.parts;
-    }
+    const parts = this.partsListService.getParts(this.uuid, String(selectedTab.id));
+    this.parts = parts;
   }
 
   getTotalQuantity(filter: string): number {
-    return this.getParts(filter)?.reduce((a, b) => a + b.qty, 0);
+    return this.partsListService
+      .getParts(this.uuid, filter)
+      ?.reduce((a, b) => a + (b.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? b.have || 0 : 0)), 0);
   }
 
   getTotalPrice(filter: string): string {
-    return (
-      Math.round(
-        this.getParts(filter)?.reduce((a, b) => a + b.qty * (!!b.lego?.price.amount ? b.lego.price.amount : 0), 0) * 100
-      ) / 100
-    ).toFixed(2);
+    if (filter === 'brickLink') {
+      return (
+        Math.round(
+          this.partsListService
+            .getParts(this.uuid, filter)
+            ?.reduce(
+              (a, b) =>
+                a +
+                (b.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? b.have || 0 : 0)) * (b.maxPrice || 0),
+              0
+            ) * 100
+        ) / 100
+      ).toFixed(2);
+    } else {
+      return (
+        Math.round(
+          this.partsListService
+            .getParts(this.uuid, filter)
+            ?.reduce(
+              (a, b) =>
+                a +
+                (b.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? b.have || 0 : 0)) *
+                  (b.lego?.price.amount || 0),
+              0
+            ) * 100
+        ) / 100
+      ).toFixed(2);
+    }
+  }
+
+  getParts(filter: string) {
+    return this.partsListService.getParts(this.uuid, filter);
   }
 
   onSetting() {
@@ -156,7 +209,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       icon: 'fa fa-circle-info',
       accept: () => {
         this.partsListService.deletePartsList(this.partsList.uuid);
-        this.router.navigate(['/partslists']);
+        this.router.navigate(['/parts-lists']);
         this.messageService.add({
           severity: 'info',
           summary: 'Confirmed',
@@ -182,6 +235,10 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   }
 
   onTransfer(cartType: PaBCartType) {
-    this.partsListTransferComponent?.start(this.getParts(cartType), cartType, this.transferWarningComponent);
+    this.partsListTransferComponent?.start(
+      this.partsListService.getParts(this.uuid, cartType),
+      cartType,
+      this.transferWarningComponent
+    );
   }
 }

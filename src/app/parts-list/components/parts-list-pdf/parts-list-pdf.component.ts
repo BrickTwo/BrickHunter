@@ -41,7 +41,7 @@ export class PartsListPdfComponent {
       { header: 'PaB', dataKey: 'pab' },
     ];
 
-    const rows = this.getParts(this.selectedValue).map(async part => {
+    const rows = this.partsListService.getParts(this.partsList.uuid, this.selectedValue).map(async part => {
       const color = await this.colorService.getColor(part.color);
 
       return {
@@ -56,7 +56,6 @@ export class PartsListPdfComponent {
 
     var totalPagesExp = '{total_pages_count_string}';
 
-    console.log(this.partsList?.name);
     const partsListTitle = `${this.partsList?.name} - ${
       this.printOptions.find(o => o.value === this.selectedValue).name
     }`;
@@ -103,26 +102,6 @@ export class PartsListPdfComponent {
     }
 
     doc.save(`${this.partsList.name}-${this.printOptions.find(o => o.value === this.selectedValue).name}.pdf`);
-  }
-
-  getParts(filter: string): IPart[] {
-    switch (filter) {
-      case 'pab':
-      case 'bap':
-        return this.partsList?.parts?.filter(p => p.lego?.deliveryChannel === filter);
-      case 'oos':
-        return this.partsList?.parts?.filter(p => p.lego?.inStock === false);
-      case 'brickLink':
-        return this.partsList?.parts?.filter(p => !p.lego);
-      case 'warning':
-        return this.partsList?.parts?.filter(p => {
-          if (p.lego?.inStock === false) return true;
-          if (p.lego && p.lego.maxOrderQuantity < p.qty) return true;
-          return false;
-        });
-      default:
-        return this.partsList?.parts;
-    }
   }
 
   onClose() {

@@ -49,15 +49,15 @@
             <div class="flex justify-content-between" style="height: 41.844px">
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Lot</div>
-                <div>{{ getParts('pab')?.length }}</div>
+                <div>{{ totals.bestseller.lot }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Pieces</div>
-                <div>{{ getTotalQuantity('pab') }}</div>
+                <div>{{ totals.bestseller.pieces }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Price</div>
-                <div>{{ getTotalPrice('pab') }}</div>
+                <div>{{ totals.bestseller.price }}</div>
               </div>
             </div>
             <button
@@ -78,15 +78,15 @@
             <div class="flex justify-content-between vertical-align-middle" style="height: 41.844px">
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Lot</div>
-                <div>{{ getParts('bap')?.length }}</div>
+                <div>{{ totals.standard.lot }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Pieces</div>
-                <div>{{ getTotalQuantity('bap') }}</div>
+                <div>{{ totals.standard.pieces }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Price</div>
-                <div>{{ getTotalPrice('bap') }}</div>
+                <div>{{ totals.standard.price }}</div>
               </div>
             </div>
             <button
@@ -107,15 +107,15 @@
             <div class="flex justify-content-between vertical-align-middle" style="height: 41.844px">
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Lot</div>
-                <div>{{ getParts('brickLink')?.length }}</div>
+                <div>{{ totals.bricklink.lot }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Pieces</div>
-                <div>{{ getTotalQuantity('brickLink') }}</div>
+                <div>{{ totals.bricklink.pieces }}</div>
               </div>
               <div class="flex flex-column justify-content-center">
                 <div class="shortInfoTitle">Price</div>
-                <div>{{ getTotalPrice('brickLink') }}</div>
+                <div>{{ totals.bricklink.price }}</div>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@
   </div>
   <div class="col-12 xl:col xxl:flex-order-0">
     <p-card>
-      <p-tabMenu [model]="items" [activeItem]="activeItem" (activeItemChange)="onTableChange($event)"></p-tabMenu>
+      <p-tabMenu [model]="items" [(activeItem)]="activeItem" (activeItemChange)="onTableChange($event)"></p-tabMenu>
       <app-parts-table [parts]="parts" [pabIsLoading]="pabIsLoading"></app-parts-table>
     </p-card>
   </div>

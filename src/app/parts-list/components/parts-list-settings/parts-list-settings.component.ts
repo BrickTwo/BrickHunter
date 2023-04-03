@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { take } from 'rxjs';
+import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
 import { IPartsList } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 
@@ -10,17 +12,22 @@ import { PartsListService } from '../../services/parts-list.service';
 })
 export class PartsListSettingsComponent implements OnInit, OnChanges {
   display = false;
-  have: boolean;
-  withoutbl: boolean;
+  subtractHaveFromQuantity: boolean;
+  ignoreBrickLinkPrices: boolean;
   bllower: boolean;
 
   form = new FormGroup({
     partsListName: new FormControl(),
+    subtractHaveFromQuantity: new FormControl(),
+    ignoreBrickLinkPrices: new FormControl(),
   });
 
   @Input() partsList: IPartsList;
 
-  constructor(private readonly partsListService: PartsListService) {}
+  constructor(
+    private readonly partsListService: PartsListService,
+    private readonly globalSettingsService: GlobalSettingsService
+  ) {}
 
   ngOnInit(): void {
     // console.log('init', this.partsList?.name, !!this.form);
@@ -34,11 +41,17 @@ export class PartsListSettingsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.partsList) this.form.patchValue({ partsListName: this.partsList.name });
+    this.form.patchValue({ subtractHaveFromQuantity: this.globalSettingsService.subtractHaveFromQuantity });
+    this.form.patchValue({ ignoreBrickLinkPrices: this.globalSettingsService.ignoreBrickLinkPrices });
   }
 
   onSubmit() {
     this.partsList.name = this.form.value.partsListName;
     this.partsListService.updatePartsList(this.partsList);
+
+    this.globalSettingsService.setSubtractHaveFromQuantity(this.form.value.subtractHaveFromQuantity);
+    this.globalSettingsService.setIgnoreBrickLinkPrices(this.form.value.ignoreBrickLinkPrices);
+
     this.display = false;
   }
 }

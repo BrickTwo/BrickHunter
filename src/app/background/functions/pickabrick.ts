@@ -214,8 +214,6 @@ export class PickABrick {
           };
         }
 
-        console.log('bbb', response);
-
         return {
           success: response.data.me.elementCarts.carts as IBackgroundReadCartResponse[],
         };

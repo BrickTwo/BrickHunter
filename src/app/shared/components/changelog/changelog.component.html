@@ -1,4 +1,12 @@
-<p-dialog header="Changelog" [(visible)]="visible" [style]="{ width: '50vw', height: '50vh' }" [modal]="true">
+<p-dialog header="Changelog" [(visible)]="visible" [modal]="true">
+  <section *ngIf="isVersionGreater('2.0.13')">
+    <h2>2.0.13</h2>
+    <h3>Features</h3>
+    <ul>
+      <li>Optional subtract Have from quantity on transfer</li>
+      <li>OPtional ignore BrickLink prices</li>
+    </ul>
+  </section>
   <section *ngIf="isVersionGreater('2.0.12')">
     <h2>2.0.12</h2>
     <h3>Features</h3>

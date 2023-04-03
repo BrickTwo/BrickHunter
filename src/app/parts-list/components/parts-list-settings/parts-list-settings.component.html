@@ -6,15 +6,19 @@
         <label for="partsListName" class="block">Parts List name</label>
         <input id="partsListName" formControlName="partsListName" type="text" pInputText style="width: 100%" />
       </div>
+      <div class="field-checkbox">
+        <p-checkbox
+          formControlName="subtractHaveFromQuantity"
+          [binary]="true"
+          [label]="'Subtract Have from quantity on transfer'"></p-checkbox>
+      </div>
+      <div class="field-checkbox">
+        <p-checkbox
+          formControlName="ignoreBrickLinkPrices"
+          [binary]="true"
+          label="Ignore BrickLink prices"></p-checkbox>
+      </div>
       <!-- <div class="field-checkbox">
-        <p-checkbox [(ngModel)]="have" [binary]="false" inputId="have" name="have"></p-checkbox>
-        <label for="have">Subtract WantedList-Have from number</label>
-      </div>
-      <div class="field-checkbox">
-        <p-checkbox [(ngModel)]="withoutbl" inputId="withoutbl" name="withoutbl"></p-checkbox>
-        <label for="withoutbl">Do not take BrickLink prices into account</label>
-      </div>
-      <div class="field-checkbox">
         <p-checkbox name="bllower" [(ngModel)]="bllower" inputId="bllower" name="bllower"></p-checkbox>
         <label for="bllower">Only add to BrickLink if price is x lower</label>
       </div> -->
