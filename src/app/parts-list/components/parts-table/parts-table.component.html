@@ -43,7 +43,7 @@
           </div>
         </div>
       </td>
-      <td>{{ part.maxPrice }}</td>
+      <td>{{ (part.maxPrice || 0) > 0 ? part.maxPrice : '' }}</td>
       <td>
         <app-pab-price [part]="part"></app-pab-price>
       </td>

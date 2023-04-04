@@ -77,7 +77,19 @@ export class PartsListService {
     if (!part.lego) return false;
     if (part.lego.deliveryChannel !== filter) return false;
     if (!part.lego.inStock) return false;
-    if (!this.gloabSettingsService.ignoreBrickLinkPrices && part.lego.price.amount > (part.maxPrice || 0)) return false;
+    console.log(
+      `${part.lego.price.amount} < ${part.maxPrice || 0} = `,
+      part.lego.price.amount < (part.maxPrice || 0),
+      ' | ',
+      `${part.lego.price.amount} < ${0} = `,
+      part.lego.price.amount < 0
+    );
+    if (
+      !this.gloabSettingsService.ignoreBrickLinkPrices &&
+      (part.maxPrice || 0) > 0 &&
+      part.lego.price.amount > (part.maxPrice || 0)
+    )
+      return false;
     if (this.gloabSettingsService.subtractHaveFromQuantity && part.qty - part.have <= 0) return false;
     return true;
   }
@@ -86,7 +98,12 @@ export class PartsListService {
     if (this.gloabSettingsService.subtractHaveFromQuantity && part.qty - part.have <= 0) return false;
     if (!part.lego) return true;
     if (!part.lego.inStock) return true;
-    if (!this.gloabSettingsService.ignoreBrickLinkPrices && part.lego.price.amount > (part.maxPrice || 0)) return true;
+    if (
+      !this.gloabSettingsService.ignoreBrickLinkPrices &&
+      (part.maxPrice || 0) > 0 &&
+      part.lego.price.amount > (part.maxPrice || 0)
+    )
+      return true;
     return false;
   }
 }
