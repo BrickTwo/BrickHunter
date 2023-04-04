@@ -13,6 +13,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { MenuModule } from 'primeng/menu';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
@@ -45,6 +46,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     FileUploadModule,
     ImageModule,
     InputTextModule,
+    InputSwitchModule,
     MenuModule,
     MessageModule,
     MessagesModule,

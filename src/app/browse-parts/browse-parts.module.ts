@@ -13,6 +13,7 @@ import { BrowsePartsDataViewComponent } from './components/browse-parts-data-vie
 import { BrowsePartsPageSettingsComponent } from './components/browse-parts-page-settings/browse-parts-page-settings.component';
 import { LazyLoadImageModule, LAZYLOAD_IMAGE_HOOKS, ScrollHooks } from 'ng-lazyload-image';
 import { BrowsePartsGridItemComponent } from './components/browse-parts-grid-item/browse-parts-grid-item.component';
+import { BrowsePartsFilterComponent } from './components/browse-parts-filter/browse-parts-filter.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { BrowsePartsGridItemComponent } from './components/browse-parts-grid-ite
     BrowsePartsDataViewComponent,
     BrowsePartsPageSettingsComponent,
     BrowsePartsGridItemComponent,
+    BrowsePartsFilterComponent,
   ],
   imports: [
     PrimengModule,

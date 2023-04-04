@@ -1092,7 +1092,7 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
   color: #0a3463;
 }
 .p-inputgroup-addon {
-  background: #fff;
+  background: #e0e0e1;
   color: rgba(0, 0, 0, 0.6);
   border-top: 1px solid rgba(0, 0, 0, 0.38);
   border-left: 1px solid rgba(0, 0, 0, 0.38);

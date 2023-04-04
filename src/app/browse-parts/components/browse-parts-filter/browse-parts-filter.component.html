@@ -1,0 +1,59 @@
+<p-card>
+  <div class="formgrid grid">
+    <div class="field col-6 p-inputgroup">
+      <span class="p-inputgroup-addon">
+        <i class="fa fa-magnifying-glass"></i>
+      </span>
+      <input type="text" pInputText [(ngModel)]="keyword" />
+    </div>
+    <div class="field col-6 p-inputgroup">
+      <span
+        class="p-inputgroup-addon"
+        (click)="onChangeSortDirection()"
+        style="cursor: pointer"
+        *ngIf="sortDirection === 'DESC'">
+        <i class="fa fa-arrow-up-z-a"></i>
+      </span>
+      <span
+        class="p-inputgroup-addon"
+        (click)="onChangeSortDirection()"
+        style="cursor: pointer"
+        *ngIf="sortDirection === 'ASC'">
+        <i class="fa fa-arrow-down-z-a"></i>
+      </span>
+      <p-dropdown
+        [options]="sortOptions"
+        [(ngModel)]="selectedSort"
+        optionLabel="name"
+        optionValue="value"
+        [style]="{
+          width: '100%',
+          'border-top-left-radius': '0px',
+          'border-bottom-left-radius': '0px'
+        }"></p-dropdown>
+    </div>
+    <div class="field col-12">
+      <div class="flex justify-content-between">
+        <p-selectButton
+          [options]="keywordOptions"
+          [(ngModel)]="keywordOption"
+          [multiple]="true"
+          optionLabel="name"
+          optionValue="value"></p-selectButton>
+        <p-selectButton
+          [options]="deliveryChannelOptions"
+          [(ngModel)]="deliveryChannel"
+          [multiple]="true"
+          optionLabel="name"
+          optionValue="value"></p-selectButton>
+
+        <div class="flex flex-nowrap align-items-center gap-1">
+          <p-inputSwitch [(ngModel)]="onlyPrinted" inputId="onlyPrinted"> </p-inputSwitch>
+          <label for="onlyPrinted">Only Printed</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-browse-parts-color-filter></app-browse-parts-color-filter>
+</p-card>
