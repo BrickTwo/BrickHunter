@@ -21,11 +21,11 @@ export class PartsListService {
 
   setPartsLists(partsLists: IPartsList[]) {
     this.partsLists = partsLists;
-    this.partsListsChanged.next(this.partsLists.slice());
+    this.partsListsChanged.next(this.getPartsLists());
   }
 
   getPartsLists() {
-    return this.partsLists.slice();
+    return this.partsLists.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())).slice();
   }
 
   getPartsList(uuid: string) {
@@ -35,20 +35,20 @@ export class PartsListService {
   addPartsList(partsList: IPartsList) {
     this.indexedDBService.partsLists.add(partsList);
     this.partsLists.push(partsList);
-    this.partsListsChanged.next(this.partsLists.slice());
+    this.partsListsChanged.next(this.getPartsLists());
   }
 
   updatePartsList(newPartsList: IPartsList) {
     let partsList = this.partsLists.find(p => p.uuid === newPartsList.uuid);
     partsList = newPartsList;
     this.indexedDBService.partsLists.put(partsList, partsList.uuid);
-    this.partsListsChanged.next(this.partsLists.slice());
+    this.partsListsChanged.next(this.getPartsLists());
   }
 
   deletePartsList(uuid: string) {
     this.indexedDBService.partsLists.delete(uuid);
     this.partsLists = this.partsLists.filter(p => p.uuid !== uuid);
-    this.partsListsChanged.next(this.partsLists.slice());
+    this.partsListsChanged.next(this.getPartsLists());
   }
 
   getParts(uuid: string, filter: string) {

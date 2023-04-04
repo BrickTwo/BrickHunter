@@ -41,11 +41,14 @@ export class PickABrickService {
 
   getParts(uuid: string) {
     this.pabLoadError = '';
-    this.pabLoading.next(true);
 
     let elementIds: number[] = [];
     const partsList = this.partsListService.getPartsList(uuid);
     partsList.parts.map(item => elementIds.push(...item.elementIds));
+
+    if (!elementIds.length) return;
+
+    this.pabLoading.next(true);
 
     const request: IBackgroundFindBricksRequest = {
       service: BackgroundRequestService.PickaBrick,

@@ -136,6 +136,7 @@ export class ImportService {
       }
 
       part.elementIds = part.elementIds?.map(id => id).sort((a, b) => b - a); // numerical sort desc
+      if (!part.elementIds.length && part.elementId) part.elementIds.push(part.elementId);
       if (source === 'BrickLink') part.elementId = part.elementIds[0];
 
       return part;
