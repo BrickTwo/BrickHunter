@@ -94,9 +94,13 @@ export class ImportService {
   ) {
     const resp = partsList.map(async part => {
       const rebrickableData = rebrickableDatas.find(resp => {
-        return resp.externalIds.find(
-          e => e.externalId === part.externalId && e.source.toLowerCase() === part.source.source.toLowerCase()
-        );
+        if (source === 'Lego') {
+          return resp.elementIds.find(e => e.elementId === part.elementId);
+        } else {
+          return resp.externalIds.find(
+            e => e.externalId === part.externalId && e.source.toLowerCase() === part.source.source.toLowerCase()
+          );
+        }
       });
 
       let color: IColor;
