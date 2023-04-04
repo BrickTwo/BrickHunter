@@ -22,13 +22,15 @@ export class LocaleService {
 
   setCountry(code: string) {
     const country = this.countries.find(c => c.code === code);
-    if (!country) {
-      this.country = this.countries[0];
-    } else {
+    if (country) {
       this.country = country;
+    } else {
+      this.country = this.countries[0];
     }
 
-    if (!this.country.languages.find(l => l.code === this.language.code)) {
+    if (this.country.languages.find(l => l.code === this.language.code)) {
+      this.language = this.country.languages.find(l => l.code === this.language.code);
+    } else {
       this.language = this.country.languages[0];
     }
 
@@ -37,10 +39,10 @@ export class LocaleService {
 
   setLanguage(code: string) {
     const language = this.country.languages.find(l => l.code === code);
-    if (!language) {
-      this.language = this.country.languages[0];
-    } else {
+    if (language) {
       this.language = language;
+    } else {
+      this.language = this.country.languages[0];
     }
 
     this.setLanguageCountryCode();

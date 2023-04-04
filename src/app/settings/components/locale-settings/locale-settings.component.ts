@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { ICountry, ILanguage } from 'src/app/models/global';
 
@@ -8,8 +7,9 @@ import { ICountry, ILanguage } from 'src/app/models/global';
   templateUrl: './locale-settings.component.html',
   styleUrls: ['./locale-settings.component.scss'],
 })
-export class LocaleSettingsComponent implements OnInit {
+export class LocaleSettingsComponent implements OnInit, AfterViewChecked {
   countries: ICountry[];
+  languages: ILanguage[];
 
   selectedCountry: ICountry;
   selectedLanguage: ILanguage;
@@ -19,11 +19,17 @@ export class LocaleSettingsComponent implements OnInit {
   ngOnInit(): void {
     this.countries = this.localeService.countries;
     this.selectedCountry = this.localeService.country;
+    this.languages = this.selectedCountry.languages;
     this.selectedLanguage = this.localeService.language;
+  }
+
+  ngAfterViewChecked(): void {
+    if (!this.selectedLanguage) this.selectedLanguage = this.localeService.language;
   }
 
   onCountrySelect() {
     this.localeService.setCountry(this.selectedCountry.code);
+    this.languages = this.selectedCountry.languages;
     this.selectedLanguage = this.localeService.language;
     this.localeService.store();
   }
