@@ -149,8 +149,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   }
 
   onTableChange(selectedTab: MenuItem) {
-    const parts = this.partsListService.getParts(this.uuid, String(selectedTab.id));
-    this.parts = parts;
+    this.parts = this.partsListService.getParts(this.uuid, String(selectedTab.id));
   }
 
   getTotalQuantity(filter: string): number {

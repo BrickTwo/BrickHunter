@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-parts.service';
 import { BrowsePartsPart } from 'src/app/models/browse-parts';
-import { Observable, Subscription, fromEvent, of } from 'rxjs';
+import { Subscription, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-browse-parts-data-view',
@@ -15,8 +15,11 @@ export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
   partsSubscription: Subscription;
   showFromIndex = 0;
   showToIndex = 0;
+  totalRows = 0;
   rowsTop = 0;
   rowsBottom = 0;
+  gridRef: HTMLElement;
+
   constructor(private readonly browsePartsService: BrowsePartsService) {}
 
   ngOnInit() {
@@ -29,16 +32,19 @@ export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
 
     this.partsSubscription = this.browsePartsService.bricksChanged$.subscribe(parts => {
       this.parts = parts;
+      this.calcVisible('subscribe');
     });
 
-    this.calcVisible();
+    this.gridRef = document.getElementById('pabparts');
+
+    this.calcVisible('init');
 
     fromEvent(window, 'scroll').subscribe((e: Event) => {
-      this.calcVisible();
+      this.calcVisible('scroll');
     });
 
     fromEvent(window, 'resize').subscribe((e: Event) => {
-      this.calcVisible();
+      this.calcVisible('resize');
     });
 
     this.browsePartsService.sendRequest();
@@ -62,38 +68,40 @@ export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
   }
 
   getParts() {
-    console.log(this.parts, this.showFromIndex, this.showToIndex);
     return this.parts?.slice(this.showFromIndex, this.showToIndex);
   }
 
-  calcVisible() {
-    const elref = document.getElementById('pabparts');
-    const rect = elref.getBoundingClientRect();
-    const cols = Math.floor(rect.width / 200);
-    const rows = Math.floor(rect.height / 328);
-    const colsVisible = Math.ceil(window.innerHeight / 328);
+  calcVisible(from: string) {
+    const rowHigh = 328;
+    const colWidth = 200;
+    const rect = this.gridRef.getBoundingClientRect();
+    const cols = Math.floor(rect.width / colWidth);
+    const rows = Math.ceil(this.parts?.length / cols);
+    const colsVisible = Math.ceil(window.innerHeight / rowHigh);
+
+    this.totalRows = rows;
 
     let rowsTop = 0;
     let rowsBottom = 0;
 
     if (Math.floor(rect.top) < 0) {
-      rowsTop = Math.floor((rect.top * -1) / 328);
+      rowsTop = Math.floor((rect.top * -1) / rowHigh);
     }
 
     if (Math.floor(window.innerHeight - rect.bottom) < 0) {
-      rowsBottom = Math.ceil(((window.innerHeight - rect.bottom) * -1) / 328);
+      rowsBottom = Math.ceil(((window.innerHeight - rect.bottom) * -1) / rowHigh);
     }
 
     rowsTop = rowsTop - 1;
-    rowsBottom = rowsBottom;
+    this.rowsTop = rowsTop < 0 ? 0 : rowsTop;
 
-    this.rowsTop = rowsTop;
-    this.rowsBottom = rows - rowsTop - colsVisible - 2;
+    rowsBottom = rows - this.rowsTop - colsVisible - 2;
+    this.rowsBottom = rowsBottom < 0 ? 0 : rowsBottom;
 
     let firstCel = rowsTop * cols;
-    let lastCel = firstCel + (colsVisible + 2) * cols - 1;
+    let lastCel = firstCel + (colsVisible + 2) * cols;
 
-    this.showFromIndex = firstCel;
+    this.showFromIndex = firstCel < 0 ? 0 : firstCel;
     this.showToIndex = lastCel;
   }
 }

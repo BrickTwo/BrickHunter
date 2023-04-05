@@ -18,7 +18,6 @@ export class PartsTableComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.tableHeight = (this.parts ? this.parts?.length : 0) * this.rowHeight + 56;
-    this.tableHeight = 500;
   }
 
   caclImageUrl(part: IPart) {

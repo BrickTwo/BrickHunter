@@ -1,9 +1,9 @@
-<!-- <div *ngIf="parts" [style.height.px]="tableHeight"> -->
 <p-table
   [value]="parts"
   [tableStyle]="{ 'min-width': '50rem' }"
   styleClass="p-datatable-striped"
   scrollHeight="calc(100vh - 210px)"
+  style="height: 200px"
   [scrollable]="true"
   [virtualScroll]="true"
   [virtualScrollItemSize]="rowHeight">
@@ -49,5 +49,9 @@
       </td>
     </tr>
   </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="7">No parts in this list.</td>
+    </tr>
+  </ng-template>
 </p-table>
-<!-- </div> -->
