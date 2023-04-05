@@ -19,11 +19,13 @@ export class BrowsePartsGridItemComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
+    this.ready = true;
+
     const el = document.getElementById(String(this.part.elementId));
     const observer = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
         // el is visible
-        console.log(this.index, 'visible');
+        // console.log(this.index, 'visible');
         interval(this.index).subscribe(e => (this.ready = true));
 
         observer.disconnect();
@@ -33,19 +35,25 @@ export class BrowsePartsGridItemComponent implements OnInit, AfterViewInit {
       }
     });
 
-    observer.observe(el); // Asynchronous call
+    // observer.observe(el); // Asynchronous call
     //interval(1 * this.index).subscribe(e => (this.ready = true));
   }
 
   onLoad() {
-    console.log(this.index);
+    // console.log(this.index);
     this.ready = true;
   }
 
   getImageStyle(part: BrowsePartsPart) {
-    return `background-image: url('https://brickhunter.blob.core.windows.net${part.imageUrl}'),
-            url('placeholder.jpg');
-            width: 100%;
+    // return `background-image: url('https://brickhunter.blob.core.windows.net${part.imageUrl}'),
+    //         url('placeholder.jpg');
+    //         width: 100%;
+    //         height: 120px;
+    //         background-repeat: no-repeat;
+    //         background-size: contain;
+    //         background-position: center;`;
+
+    return `width: 100%;
             height: 120px;
             background-repeat: no-repeat;
             background-size: contain;

@@ -48,7 +48,10 @@
           optionValue="value"></p-selectButton>
 
         <div class="flex flex-nowrap align-items-center gap-1">
-          <p-inputSwitch [(ngModel)]="onlyPrinted" inputId="onlyPrinted"> </p-inputSwitch>
+          <p-inputSwitch
+            [(ngModel)]="onlyPrinted"
+            inputId="onlyPrinted"
+            (onChange)="onChangeOnlyPrinted($event.checked)"></p-inputSwitch>
           <label for="onlyPrinted">Only Printed</label>
         </div>
       </div>

@@ -1,8 +1,15 @@
 <div class="p-2 border-1 surface-border surface-card border-round" style="height: 320px" [id]="part.elementId">
   <div *ngIf="ready">
     <div class="align-items-center" style="height: 120px; cursor: pointer">
-      <div [style]="getImageStyle(part)"></div>
-      <div class="flex justify-content-between" style="position: relative; top: -120px">
+      <div
+        [style]="getImageStyle(part)"
+        [lazyLoad]="'https://brickhunter.blob.core.windows.net' + part.imageUrl"
+        defaultImage="./assets/icons/icon-trans48.png">
+        <p-tag severity="warning" *ngIf="part.deliveryChannel === 'pab'">Bestseller</p-tag>
+        <p-tag severity="info" *ngIf="part.deliveryChannel === 'bap'">Standard</p-tag>
+        <p-tag severity="danger" *ngIf="part.deliveryChannel === 'oos'">Out Of Stock</p-tag>
+      </div>
+      <!-- <div class="flex justify-content-between" style="position: relative; top: -120px">
         <p-tag severity="warning" *ngIf="part.deliveryChannel === 'pab'">Bestseller</p-tag>
         <p-tag severity="info" *ngIf="part.deliveryChannel === 'bap'">Standard</p-tag>
         <p-tag severity="danger" *ngIf="part.deliveryChannel === 'oos'">Out Of Stock</p-tag>
@@ -19,7 +26,7 @@
             styleClass="p-button-rounded p-button-text text-md"
             class="top-10"></p-button>
         </div>
-      </div>
+      </div> -->
     </div>
     <div style="height: 48px; overflow: hidden">
       <div class="font-bold">{{ part.description }}</div>

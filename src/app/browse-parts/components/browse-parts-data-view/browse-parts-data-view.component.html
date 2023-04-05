@@ -1,7 +1,7 @@
 <p-card>
   <app-browse-parts-page-settings></app-browse-parts-page-settings>
   <div class="grid-style">
-    <div class="p-1" *ngFor="let part of parts; index as i; trackBy: trackItem">
+    <div class="p-1" *ngFor="let part of parts$ | async; index as i; trackBy: trackItem">
       <app-browse-parts-grid-item [part]="part" [index]="i"></app-browse-parts-grid-item>
     </div>
   </div>

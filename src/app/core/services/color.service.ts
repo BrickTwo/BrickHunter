@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { IColor } from 'src/app/models/parts-list';
 import { BrickHunterApiService } from '../http/brickhunterapi.service';
 import { IndexedDBService } from './indexeddb.service.ts';
+import { IColor } from 'src/app/models/shared';
 
 @Injectable()
 export class ColorService {

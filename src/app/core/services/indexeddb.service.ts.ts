@@ -1,6 +1,7 @@
 import Dexie, { Table } from 'dexie';
 import { Injectable } from '@angular/core';
-import { IColor, IPartsList } from 'src/app/models/parts-list';
+import { IPartsList } from 'src/app/models/parts-list';
+import { IColor } from 'src/app/models/shared';
 
 @Injectable()
 export class IndexedDBService extends Dexie {

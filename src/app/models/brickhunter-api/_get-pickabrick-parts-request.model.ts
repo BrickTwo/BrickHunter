@@ -8,6 +8,7 @@ export interface GetPickABrickPartsRequest {
   sortField: string;
   sortDir: string;
   showAll: boolean;
+  onlyPrinted: boolean;
   excludeCategoryIds: number[];
   designIds: number[];
   elementIds: number[];

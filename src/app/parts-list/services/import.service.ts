@@ -11,8 +11,9 @@ import {
   GetRebrickablePartsResponse,
 } from 'src/app/models/brickhunter-api';
 import { IBrickLinkWantedListItem } from 'src/app/models/bricklink';
-import { IBrickLinkModel, IColor, IPart, IPartsList, IRebrickableModel } from 'src/app/models/parts-list';
+import { IBrickLinkModel, IPart, IPartsList, IRebrickableModel } from 'src/app/models/parts-list';
 import { PartsListService } from './parts-list.service';
+import { IColor } from 'src/app/models/shared';
 
 @Injectable({
   providedIn: 'root',

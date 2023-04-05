@@ -26,6 +26,7 @@ import { TableModule } from 'primeng/table';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
+import { TreeModule } from 'primeng/tree';
 
 const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
   primeConfig.ripple = true;
@@ -59,6 +60,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     TabMenuModule,
     TagModule,
     ToastModule,
+    TreeModule,
   ],
   providers: [
     {

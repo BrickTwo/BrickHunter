@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { BrickHunterApiService } from 'src/app/core/http/brickhunterapi.service';
 import { GetPickABrickPartsRequest } from 'src/app/models/brickhunter-api';
 import { BrowsePartsPart } from 'src/app/models/browse-parts';
+import { BrowsePartCategory } from 'src/app/models/browse-parts/_browse-parts-vategory.model';
 
 export interface FilterChanged {
   property: FilterChangedProperty;
@@ -14,6 +15,8 @@ export enum FilterChangedProperty {
   page,
   perPage,
   totalParts,
+  category,
+  onlyPrinted,
 }
 
 export interface Filter {
@@ -21,6 +24,8 @@ export interface Filter {
   page: number;
   perPage: number;
   totalParts: number;
+  categoryId: number;
+  onlyPrinted: boolean;
 }
 
 @Injectable({
@@ -34,10 +39,16 @@ export class BrowsePartsService {
     page: 0,
     perPage: 25,
     totalParts: 0,
+    categoryId: 9999,
+    onlyPrinted: false,
   };
   private bricksSubject$ = new Subject<BrowsePartsPart[]>();
   bricksChanged$ = this.bricksSubject$.asObservable();
   bricks: BrowsePartsPart[];
+
+  private categoriesSubject$ = new Subject<BrowsePartCategory[]>();
+  categoriesChanged$ = this.categoriesSubject$.asObservable();
+  categories: BrowsePartCategory[];
 
   constructor(private readonly birckHunterApiService: BrickHunterApiService) {}
 
@@ -52,9 +63,28 @@ export class BrowsePartsService {
     this.sendRequest();
   }
 
+  private resetPage() {
+    this.filter.page = 0;
+    this.filterSubject$.next({ property: FilterChangedProperty.page, filter: { ...this.filter } });
+  }
+
   setPerPage(value: number) {
     this.filter.perPage = value;
     this.filterSubject$.next({ property: FilterChangedProperty.perPage, filter: { ...this.filter } });
+    this.sendRequest();
+  }
+
+  setCategory(value: number) {
+    this.filter.categoryId = value;
+    this.filterSubject$.next({ property: FilterChangedProperty.category, filter: { ...this.filter } });
+    this.resetPage();
+    this.sendRequest();
+  }
+
+  setOnlyPrinted(value: boolean) {
+    this.filter.onlyPrinted = value;
+    this.filterSubject$.next({ property: FilterChangedProperty.onlyPrinted, filter: { ...this.filter } });
+    this.resetPage();
     this.sendRequest();
   }
 
@@ -63,12 +93,13 @@ export class BrowsePartsService {
       page: this.filter.page + 1,
       limit: this.filter.perPage,
       country: 'de',
-      categoryId: null,
+      categoryId: this.filter.categoryId === 9999 ? null : this.filter.categoryId,
       colorId: null,
       keywords: [],
       sortField: '',
       sortDir: '',
       showAll: false,
+      onlyPrinted: this.filter.onlyPrinted,
       excludeCategoryIds: [],
       designIds: [],
       elementIds: [],
@@ -76,8 +107,10 @@ export class BrowsePartsService {
 
     this.birckHunterApiService.getPickABrickParts(request).subscribe(response => {
       this.bricks = response.bricks as BrowsePartsPart[];
+      this.categories = response.categories as BrowsePartCategory[];
       this.filter.totalParts = response.page.total;
       this.bricksSubject$.next(this.bricks.slice());
+      this.categoriesSubject$.next(this.categories.slice());
       this.filterSubject$.next({ property: FilterChangedProperty.totalParts, filter: { ...this.filter } });
     });
   }

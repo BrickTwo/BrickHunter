@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-parts.service';
-import { Subscription } from 'dexie';
 import { BrowsePartsPart } from 'src/app/models/browse-parts';
+import { Observable, Subscription, of } from 'rxjs';
 
 @Component({
   selector: 'app-browse-parts-data-view',
@@ -10,7 +10,7 @@ import { BrowsePartsPart } from 'src/app/models/browse-parts';
 })
 export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
   layout = 'grid';
-  parts: BrowsePartsPart[];
+  parts$: Observable<BrowsePartsPart[]>;
   filterSubscription: Subscription;
   partsSubscription: Subscription;
 
@@ -25,7 +25,7 @@ export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
     });
 
     this.partsSubscription = this.browsePartsService.bricksChanged$.subscribe(parts => {
-      this.parts = parts;
+      this.parts$ = of(parts);
     });
 
     this.browsePartsService.sendRequest();

@@ -1,8 +1,11 @@
-<span style="display: block">
+<span class="flex align-content-start">
   <div
+    class="flex-grow-0 flex-shrink-0"
     style="border: 1px solid black; width: 13px; height: 13px; margin-right: 5px; display: inline-block"
     [style.background-color]="'#' + color?.rgb"></div>
-  <span>{{ color?.externalIds.brickLink?.extDescrs[0] }}</span>
+  <span class="flex-grow-1 flex-shrink-1" style="white-space: nowrap">{{
+    color?.externalIds.brickLink?.extDescrs[0]
+  }}</span>
 </span>
 <span
   *ngIf="color?.externalIds.lego?.extDescrs[0] && !onlyMainColor"

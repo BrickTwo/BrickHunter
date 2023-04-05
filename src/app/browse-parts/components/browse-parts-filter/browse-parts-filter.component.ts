@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-parts.service';
 
 @Component({
   selector: 'app-browse-parts-filter',
   templateUrl: './browse-parts-filter.component.html',
   styleUrls: ['./browse-parts-filter.component.scss'],
 })
-export class BrowsePartsFilterComponent {
+export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
   keyword: string;
 
   sortOptions = [
     {
       value: 'DESCRIPTION',
-      name: 'Description',
+      name: 'Name',
     },
     {
       value: 'ELEMENTID',
@@ -55,6 +57,18 @@ export class BrowsePartsFilterComponent {
   ];
   deliveryChannel = ['pab', 'bap', 'oos'];
   onlyPrinted = false;
+  filterSubscription: Subscription;
+
+  constructor(private readonly browsePartsService: BrowsePartsService) {}
+
+  ngOnInit(): void {
+    this.filterSubscription = this.browsePartsService.filterState$.subscribe(filterChanged => {
+      switch (filterChanged.property) {
+        case FilterChangedProperty.onlyPrinted:
+          this.onlyPrinted = filterChanged.filter.onlyPrinted;
+      }
+    });
+  }
 
   onChangeSortDirection() {
     if (this.sortDirection === 'DESC') {
@@ -62,5 +76,13 @@ export class BrowsePartsFilterComponent {
     } else {
       this.sortDirection = 'DESC';
     }
+  }
+
+  onChangeOnlyPrinted(value: boolean) {
+    this.browsePartsService.setOnlyPrinted(value);
+  }
+
+  ngOnDestroy(): void {
+    if (this.filterSubscription) this.filterSubscription.unsubscribe();
   }
 }
