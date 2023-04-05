@@ -1,10 +1,15 @@
 <p-card>
   <app-browse-parts-page-settings></app-browse-parts-page-settings>
-  <div class="grid-style">
-    <div class="p-1" *ngFor="let part of parts$ | async; index as i; trackBy: trackItem">
-      <app-browse-parts-grid-item [part]="part" [index]="i"></app-browse-parts-grid-item>
+  <div [style]="getTopStyle()" id="rowsTop"></div>
+  <div class="grid-style" id="pabparts">
+    <div class="p-1" *ngFor="let part of getParts(); index as i; trackBy: trackItem">
+      <app-browse-parts-grid-item
+        [part]="part"
+        [index]="i"
+        [ready]="i >= showFromIndex && i <= showToIndex"></app-browse-parts-grid-item>
     </div>
   </div>
+  <div [style]="getBottomStyle()" id="rowsBottom"></div>
   <app-browse-parts-page-settings></app-browse-parts-page-settings>
 
   <!-- <p-dataView #dv [value]="parts" [layout]="layout" gridStyleClass="grid-style" [lazy]="true">

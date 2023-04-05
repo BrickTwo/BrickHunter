@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 import { BrowsePartsPart } from 'src/app/models/browse-parts';
 
@@ -7,7 +7,13 @@ import { BrowsePartsPart } from 'src/app/models/browse-parts';
   templateUrl: './browse-parts-grid-item.component.html',
   styleUrls: ['./browse-parts-grid-item.component.scss'],
 })
-export class BrowsePartsGridItemComponent implements OnInit, AfterViewInit {
+export class BrowsePartsGridItemComponent implements OnInit, AfterViewInit, AfterViewChecked {
+  i = 1;
+
+  ngAfterViewChecked(): void {
+    // console.log(this.index, this.i++);
+  }
+  @Input()
   ready = false;
 
   @Input()
@@ -16,25 +22,25 @@ export class BrowsePartsGridItemComponent implements OnInit, AfterViewInit {
   @Input()
   index: number;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console.log(this.index, 'ngOnInit');
+  }
 
   ngAfterViewInit() {
-    this.ready = true;
-
-    const el = document.getElementById(String(this.part.elementId));
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        // el is visible
-        // console.log(this.index, 'visible');
-        interval(this.index).subscribe(e => (this.ready = true));
-
-        observer.disconnect();
-      } else {
-        this.ready = false;
-        // el is not visible
-      }
-    });
-
+    // console.log(this.index, 'ngAfterViewInit');
+    // this.ready = true;
+    // const el = document.getElementById(String(this.part.elementId));
+    // const observer = new IntersectionObserver(entries => {
+    //   if (entries[0].isIntersecting) {
+    //     // el is visible
+    //     // console.log(this.index, 'visible');
+    //     interval(this.index).subscribe(e => (this.ready = true));
+    //     observer.disconnect();
+    //   } else {
+    //     this.ready = false;
+    //     // el is not visible
+    //   }
+    // });
     // observer.observe(el); // Asynchronous call
     //interval(1 * this.index).subscribe(e => (this.ready = true));
   }
@@ -44,14 +50,16 @@ export class BrowsePartsGridItemComponent implements OnInit, AfterViewInit {
     this.ready = true;
   }
 
-  getImageStyle(part: BrowsePartsPart) {
-    // return `background-image: url('https://brickhunter.blob.core.windows.net${part.imageUrl}'),
-    //         url('placeholder.jpg');
-    //         width: 100%;
-    //         height: 120px;
-    //         background-repeat: no-repeat;
-    //         background-size: contain;
-    //         background-position: center;`;
+  getImageStyle() {
+    return `background-image: url('https://brickhunter.blob.core.windows.net${this.part.imageUrl}'),
+            url('placeholder.jpg');
+            width: 100%;
+            height: 120px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;`;
+
+    console.log(this.index, 'getImageStyle');
 
     return `width: 100%;
             height: 120px;
