@@ -51,17 +51,12 @@ export class BrowsePartsGridItemComponent implements OnInit, AfterViewInit, Afte
   }
 
   getImageStyle() {
-    return `background-image: url('https://brickhunter.blob.core.windows.net${this.part.imageUrl}'),
-            url('placeholder.jpg');
+    return `background-image: url('${
+      !!this.part.imageUrl
+        ? `https://brickhunter.blob.core.windows.net${this.part.imageUrl}`
+        : './assets/icons/icon-trans48.png'
+    }');
             width: 100%;
-            height: 120px;
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: center;`;
-
-    console.log(this.index, 'getImageStyle');
-
-    return `width: 100%;
             height: 120px;
             background-repeat: no-repeat;
             background-size: contain;

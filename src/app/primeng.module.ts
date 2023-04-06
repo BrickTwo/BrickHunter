@@ -12,9 +12,10 @@ import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { MenuModule } from 'primeng/menu';
+import { MenuModule } from './shared/components/menu/menu.component';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { PaginatorModule } from 'primeng/paginator';
@@ -46,6 +47,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     DropdownModule,
     FileUploadModule,
     ImageModule,
+    InputNumberModule,
     InputTextModule,
     InputSwitchModule,
     MenuModule,

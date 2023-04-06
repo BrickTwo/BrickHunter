@@ -32,6 +32,10 @@ export class BrowsePartsCategorySelectionComponent implements OnInit, OnDestroy 
         label: 'All',
         data: categories.reduce((a, b) => a + b.quantity, 0),
       });
+
+      this.selectedCategory = {
+        key: String(this.browsePartsService.filter.categoryId),
+      };
     });
 
     this.filterSubscription = this.browsePartsService.filterState$.subscribe(filterChanged => {

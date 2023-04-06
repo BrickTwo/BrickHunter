@@ -12,7 +12,7 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
 
   sortOptions = [
     {
-      value: 'DESCRIPTION',
+      value: 'NAME',
       name: 'Name',
     },
     {
@@ -40,7 +40,7 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
       name: 'Create Date',
     },
   ];
-  selectedSort = 'DESCRIPTION';
+  selectedSort = 'NAME';
   sortDirection = 'DESC';
 
   keywordOptions = [
@@ -53,9 +53,9 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
     { name: 'Bestseller', value: 'pab' },
     { name: 'Standard', value: 'bap' },
     { name: 'Out Of Stock', value: 'oos' },
-    { name: 'Not Listed', value: 'notListed' },
+    { name: 'Not Listed', value: 'NotListed' },
   ];
-  deliveryChannel = ['pab', 'bap', 'oos'];
+  deliveryChannels = ['pab', 'bap', 'oos'];
   onlyPrinted = false;
   filterSubscription: Subscription;
 
@@ -66,8 +66,26 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
       switch (filterChanged.property) {
         case FilterChangedProperty.onlyPrinted:
           this.onlyPrinted = filterChanged.filter.onlyPrinted;
+          break;
+        case FilterChangedProperty.deliveryChannels:
+          this.deliveryChannels = filterChanged.filter.deliveryChannels;
+          break;
+        case FilterChangedProperty.sort:
+          this.selectedSort = filterChanged.filter.sort;
+          break;
+        case FilterChangedProperty.sortDirection:
+          this.sortDirection = filterChanged.filter.sortDirection;
+          break;
       }
     });
+  }
+
+  onChangeKeyword(value: string) {
+    this.browsePartsService.setKeyword(value);
+  }
+
+  onChangeSort(value: string) {
+    this.browsePartsService.setSort(value);
   }
 
   onChangeSortDirection() {
@@ -76,10 +94,15 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
     } else {
       this.sortDirection = 'DESC';
     }
+    this.browsePartsService.setSortDirection(this.sortDirection);
   }
 
   onChangeOnlyPrinted(value: boolean) {
     this.browsePartsService.setOnlyPrinted(value);
+  }
+
+  onDeliveryChannelsChange(value: string[]) {
+    this.browsePartsService.setDeliveryChannels(value);
   }
 
   ngOnDestroy(): void {

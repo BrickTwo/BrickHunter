@@ -3,6 +3,7 @@ export interface IColor {
   name: string;
   rgb: string;
   isTrans: boolean;
+  categories: string[];
   externalIds: {
     lDraw?: {
       extIds: number[];

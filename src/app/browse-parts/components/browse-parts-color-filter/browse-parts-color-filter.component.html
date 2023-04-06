@@ -1,10 +1,18 @@
-<p-menu #menu [model]="items" [popup]="true"></p-menu>
+<p-menu #menuTrans [model]="trans" [popup]="true"></p-menu>
+<p-menu #menuBlack [model]="black" [popup]="true"></p-menu>
+<p-menu #menuBrown [model]="brown" [popup]="true"></p-menu>
+<p-menu #menuRed [model]="red" [popup]="true"></p-menu>
+<p-menu #menuOrange [model]="orange" [popup]="true"></p-menu>
+<p-menu #menuYellow [model]="yellow" [popup]="true"></p-menu>
+<p-menu #menuGreen [model]="green" [popup]="true"></p-menu>
+<p-menu #menuBlue [model]="blue" [popup]="true"></p-menu>
+<p-menu #menuPurple [model]="purple" [popup]="true"></p-menu>
 <div class="flex flex-row gap-1">
   <button
     pButton
     pRipple
     type="button"
-    (click)="menu.toggle($event)"
+    (click)="setColor(null)"
     class="flex-grow-1"
     style="background-color: #6c757d"
     label="All"></button>
@@ -12,65 +20,73 @@
     pButton
     pRipple
     type="button"
-    (click)="menu.toggle($event)"
+    (click)="menuTrans.toggle($event)"
     class="flex-grow-1 p-button-outlined"
     style="background-color: #f8f9fa; color: black"
-    label="Trans"></button>
-
+    label="Trans"
+    *ngIf="trans?.length"></button>
   <button
     pButton
     pRipple
     type="button"
-    (click)="menu.toggle($event)"
+    (click)="menuBrown.toggle($event)"
     class="flex-grow-1"
-    style="background-color: #343a40"></button>
+    style="background-color: #343a40"
+    *ngIf="black?.length"></button>
   <button
     pButton
     pRipple
     type="button"
-    (click)="menu.toggle($event)"
+    (click)="menuBrown.toggle($event)"
     class="flex-grow-1"
-    style="background-color: #7f1e06"></button>
+    style="background-color: #7f1e06"
+    *ngIf="brown?.length"></button>
   <button
     pButton
     pRipple
     type="button"
-    (click)="menu.toggle($event)"
+    (click)="menuRed.toggle($event)"
     class="flex-grow-1"
-    style="background-color: #dc3545"></button>
+    style="background-color: #dc3545"
+    *ngIf="red?.length"></button>
   <button
     pButton
     pRipple
     type="button"
-    (click)="menu.toggle($event)"
+    (click)="menuOrange.toggle($event)"
     class="flex-grow-1"
-    style="background-color: #fd7e14"></button>
+    style="background-color: #fd7e14"
+    *ngIf="orange?.length"></button>
   <button
     pButton
     pRipple
     type="button"
-    (click)="menu.toggle($event)"
+    (click)="menuYellow.toggle($event)"
     class="flex-grow-1"
-    style="background-color: #ffc107"></button>
+    style="background-color: #ffc107"
+    *ngIf="yellow?.length"></button>
   <button
     pButton
     pRipple
     type="button"
-    (click)="menu.toggle($event)"
+    (click)="menuGreen.toggle($event)"
     class="flex-grow-1"
-    style="background-color: #28a745"></button>
+    style="background-color: #28a745"
+    *ngIf="green?.length"></button>
   <button
     pButton
     pRipple
     type="button"
-    (click)="menu.toggle($event)"
+    (click)="menuBlue.toggle($event)"
     class="flex-grow-1"
-    style="background-color: #007bff"></button>
+    style="background-color: #007bff"
+    *ngIf="blue?.length"></button>
   <button
     pButton
     pRipple
     type="button"
-    (click)="menu.toggle($event)"
+    (click)="menuPurple.toggle($event)"
     class="flex-grow-1"
-    style="background-color: #6f42c1"></button>
+    style="background-color: #6f42c1"
+    *ngIf="purple?.length"></button>
 </div>

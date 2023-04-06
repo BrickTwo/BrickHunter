@@ -8,10 +8,25 @@ import { ProgressIconComponent } from './components/progress-icon/progress-icon.
 import { SideNavigationComponent } from './layout';
 import { LocaleComponent } from './components/locale/locale.component';
 import { FormsModule } from '@angular/forms';
+import { NgModelChangeDebouncedDirective } from './directoves/ng-model-change-debounced.directive';
 
 @NgModule({
-  declarations: [SideNavigationComponent, ProgressIconComponent, ColorComponent, ChangelogComponent, LocaleComponent],
+  declarations: [
+    SideNavigationComponent,
+    ProgressIconComponent,
+    ColorComponent,
+    ChangelogComponent,
+    LocaleComponent,
+    NgModelChangeDebouncedDirective,
+  ],
   imports: [PrimengModule, CommonModule, FontAwesomeModule, FormsModule],
-  exports: [SideNavigationComponent, ProgressIconComponent, ColorComponent, ChangelogComponent, LocaleComponent],
+  exports: [
+    SideNavigationComponent,
+    ProgressIconComponent,
+    ColorComponent,
+    ChangelogComponent,
+    LocaleComponent,
+    NgModelChangeDebouncedDirective,
+  ],
 })
 export class SharedModule {}

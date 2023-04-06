@@ -126,7 +126,11 @@
   <div class="col-12 xl:col xxl:flex-order-0">
     <p-card>
       <p-tabMenu [model]="items" [(activeItem)]="activeItem" (activeItemChange)="onTableChange($event)"></p-tabMenu>
-      <app-parts-table [parts]="parts" [pabIsLoading]="pabIsLoading"></app-parts-table>
+      <app-parts-table
+        [parts]="parts"
+        [pabIsLoading]="pabIsLoading"
+        [partsListUuid]="uuid"
+        [allowEdit]="true"></app-parts-table>
     </p-card>
   </div>
 </div>

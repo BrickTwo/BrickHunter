@@ -4,7 +4,7 @@
       <span class="p-inputgroup-addon">
         <i class="fa fa-magnifying-glass"></i>
       </span>
-      <input pInputText type="text" [(ngModel)]="keyword" />
+      <input pInputText type="text" [(ngModel)]="keyword" (ngModelChangeDebounced)="onChangeKeyword($event)" />
     </div>
     <div class="field col-6 p-inputgroup">
       <span
@@ -30,22 +30,24 @@
           width: '100%',
           'border-top-left-radius': '0px',
           'border-bottom-left-radius': '0px'
-        }"></p-dropdown>
+        }"
+        (onChange)="onChangeSort($event.value)"></p-dropdown>
     </div>
     <div class="field col-12">
       <div class="flex justify-content-between">
-        <p-selectButton
+        <!-- <p-selectButton
           [options]="keywordOptions"
           [(ngModel)]="keywordOption"
           [multiple]="true"
           optionLabel="name"
-          optionValue="value"></p-selectButton>
+          optionValue="value"></p-selectButton> -->
         <p-selectButton
           [options]="deliveryChannelOptions"
-          [(ngModel)]="deliveryChannel"
+          [(ngModel)]="deliveryChannels"
           [multiple]="true"
           optionLabel="name"
-          optionValue="value"></p-selectButton>
+          optionValue="value"
+          (onChange)="onDeliveryChannelsChange($event.value)"></p-selectButton>
 
         <div class="flex flex-nowrap align-items-center gap-1">
           <p-inputSwitch

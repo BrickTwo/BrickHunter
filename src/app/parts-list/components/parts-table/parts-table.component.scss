@@ -21,4 +21,8 @@
     max-width: 60px;
     max-height: 60px;
   }
+
+  ::ng-deep .in-place-edit > .p-inputtext {
+    padding: 2px;
+  }
 }

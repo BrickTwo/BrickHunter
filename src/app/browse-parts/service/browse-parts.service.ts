@@ -17,6 +17,11 @@ export enum FilterChangedProperty {
   totalParts,
   category,
   onlyPrinted,
+  color,
+  deliveryChannels,
+  sort,
+  sortDirection,
+  keyword,
 }
 
 export interface Filter {
@@ -26,6 +31,11 @@ export interface Filter {
   totalParts: number;
   categoryId: number;
   onlyPrinted: boolean;
+  colorId: number;
+  deliveryChannels: string[];
+  sort: string;
+  sortDirection: string;
+  keyword: string;
 }
 
 @Injectable({
@@ -41,6 +51,11 @@ export class BrowsePartsService {
     totalParts: 0,
     categoryId: 9999,
     onlyPrinted: false,
+    colorId: null,
+    deliveryChannels: ['pab', 'bap', 'oos'],
+    sort: 'NAME',
+    sortDirection: 'ASC',
+    keyword: '',
   };
   private bricksSubject$ = new Subject<BrowsePartsPart[]>();
   bricksChanged$ = this.bricksSubject$.asObservable();
@@ -49,6 +64,10 @@ export class BrowsePartsService {
   private categoriesSubject$ = new Subject<BrowsePartCategory[]>();
   categoriesChanged$ = this.categoriesSubject$.asObservable();
   categories: BrowsePartCategory[];
+
+  private colorsSubject$ = new Subject<number[]>();
+  colorsChanged$ = this.colorsSubject$.asObservable();
+  colors: number[];
 
   constructor(private readonly birckHunterApiService: BrickHunterApiService) {}
 
@@ -88,17 +107,52 @@ export class BrowsePartsService {
     this.sendRequest();
   }
 
+  setColor(value: number) {
+    this.filter.colorId = value;
+    this.filterSubject$.next({ property: FilterChangedProperty.color, filter: { ...this.filter } });
+    this.resetPage();
+    this.sendRequest();
+  }
+
+  setDeliveryChannels(value: string[]) {
+    this.filter.deliveryChannels = value;
+    this.filterSubject$.next({ property: FilterChangedProperty.deliveryChannels, filter: { ...this.filter } });
+    this.resetPage();
+    this.sendRequest();
+  }
+
+  setSort(value: string) {
+    this.filter.sort = value;
+    this.filterSubject$.next({ property: FilterChangedProperty.sort, filter: { ...this.filter } });
+    this.resetPage();
+    this.sendRequest();
+  }
+
+  setSortDirection(value: string) {
+    this.filter.sortDirection = value;
+    this.filterSubject$.next({ property: FilterChangedProperty.sortDirection, filter: { ...this.filter } });
+    this.resetPage();
+    this.sendRequest();
+  }
+
+  setKeyword(value: string) {
+    this.filter.keyword = value;
+    this.filterSubject$.next({ property: FilterChangedProperty.keyword, filter: { ...this.filter } });
+    this.resetPage();
+    this.sendRequest();
+  }
+
   sendRequest() {
     const request: GetPickABrickPartsRequest = {
       page: this.filter.page + 1,
       limit: this.filter.perPage,
       country: 'de',
       categoryId: this.filter.categoryId === 9999 ? null : this.filter.categoryId,
-      colorId: null,
-      keywords: [],
-      sortField: '',
-      sortDir: '',
-      showAll: false,
+      colorId: this.filter.colorId,
+      keywords: this.filter.keyword ? this.filter.keyword.split(' ') : [],
+      sortField: this.filter.sort,
+      sortDir: this.filter.sortDirection,
+      deliveryChannels: this.filter.deliveryChannels,
       onlyPrinted: this.filter.onlyPrinted,
       excludeCategoryIds: [],
       designIds: [],
@@ -108,9 +162,11 @@ export class BrowsePartsService {
     this.birckHunterApiService.getPickABrickParts(request).subscribe(response => {
       this.bricks = response.bricks as BrowsePartsPart[];
       this.categories = response.categories as BrowsePartCategory[];
+      this.colors = response.colors;
       this.filter.totalParts = response.page.total;
       this.bricksSubject$.next(this.bricks.slice());
       this.categoriesSubject$.next(this.categories.slice());
+      this.colorsSubject$.next(this.colors.slice());
       this.filterSubject$.next({ property: FilterChangedProperty.totalParts, filter: { ...this.filter } });
     });
   }

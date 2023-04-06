@@ -51,6 +51,17 @@ export class PartsListService {
     this.partsListsChanged.next(this.getPartsLists());
   }
 
+  updatePartsListPart(uuid: string, newPart: IPart) {
+    const partsList = this.partsLists.find(p => p.uuid === uuid);
+    let part = partsList.parts.find(p => p.id === newPart.id);
+    part.qty = newPart.qty;
+    part.have = newPart.have;
+
+    console.log(partsList);
+    this.indexedDBService.partsLists.put(partsList, partsList.uuid);
+    this.partsListsChanged.next(this.getPartsLists());
+  }
+
   getParts(uuid: string, filter: string) {
     const partsList = this.getPartsList(uuid);
 

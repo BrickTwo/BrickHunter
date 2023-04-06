@@ -1,16 +1,25 @@
 <p-dialog header="Changelog" [(visible)]="visible" [modal]="true">
+  <section *ngIf="isVersionGreater('2.0.14')">
+    <h2>2.0.14</h2>
+    <h3>Features</h3>
+    <ul>
+      <li>Edit quantity or have in parts list</li>
+    </ul>
+  </section>
   <section *ngIf="isVersionGreater('2.0.13')">
     <h2>2.0.13</h2>
     <h3>Features</h3>
     <ul>
       <li>Optional subtract Have from quantity on transfer</li>
-      <li>OPtional ignore BrickLink prices</li>
+      <li>Optional ignore BrickLink prices</li>
+      <li>First alpha version of Browse Parts</li>
     </ul>
     <h3>Bug fixed</h3>
     <ul>
       <li>Country/Langugae selection not working</li>
       <li>Error with importing BH json</li>
       <li>Not all possible parts are found at PaB</li>
+      <li>Some minor Bugfixes</li>
     </ul>
   </section>
   <section *ngIf="isVersionGreater('2.0.12')">

@@ -95,6 +95,14 @@ h2 {
   content: '\f100';
 }
 
+.pi-angle-up::before {
+  content: '\f106';
+}
+
+.pi-angle-down::before {
+  content: '\f107';
+}
+
 .p-datatable .p-sortable-column.p-highlight:hover {
   background-color: black;
 }

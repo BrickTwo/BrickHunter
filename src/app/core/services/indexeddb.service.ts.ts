@@ -33,6 +33,7 @@ const colorsInit: IColor[] = [
     name: '[Unknown]',
     rgb: '0033B2',
     isTrans: false,
+    categories: [],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -114,6 +115,7 @@ const colorsInit: IColor[] = [
     name: 'Black',
     rgb: '05131D',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [11],
@@ -138,6 +140,7 @@ const colorsInit: IColor[] = [
     name: 'Blue',
     rgb: '0055BF',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [7],
@@ -162,6 +165,7 @@ const colorsInit: IColor[] = [
     name: 'Green',
     rgb: '237841',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [6],
@@ -186,6 +190,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Turquoise',
     rgb: '008F9B',
     isTrans: false,
+    categories: ['blue', 'green'],
     externalIds: {
       brickLink: {
         extIds: [39],
@@ -210,6 +215,7 @@ const colorsInit: IColor[] = [
     name: 'Red',
     rgb: 'C91A09',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [5],
@@ -234,6 +240,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Pink',
     rgb: 'C870A0',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [47],
@@ -258,6 +265,7 @@ const colorsInit: IColor[] = [
     name: 'Brown',
     rgb: '583927',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [8],
@@ -282,6 +290,7 @@ const colorsInit: IColor[] = [
     name: 'Light Gray',
     rgb: '9BA19D',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [9],
@@ -306,6 +315,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Gray',
     rgb: '6D6E5C',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [10],
@@ -330,6 +340,7 @@ const colorsInit: IColor[] = [
     name: 'Light Blue',
     rgb: 'B4D2E3',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [62],
@@ -354,6 +365,7 @@ const colorsInit: IColor[] = [
     name: 'Bright Green',
     rgb: '4B9F4A',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [36],
@@ -378,6 +390,7 @@ const colorsInit: IColor[] = [
     name: 'Light Turquoise',
     rgb: '55A5AF',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [40],
@@ -402,6 +415,7 @@ const colorsInit: IColor[] = [
     name: 'Salmon',
     rgb: 'F2705E',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [25],
@@ -426,6 +440,7 @@ const colorsInit: IColor[] = [
     name: 'Pink',
     rgb: 'FC97AC',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [23],
@@ -450,6 +465,7 @@ const colorsInit: IColor[] = [
     name: 'Yellow',
     rgb: 'F2CD37',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [3],
@@ -474,6 +490,7 @@ const colorsInit: IColor[] = [
     name: 'White',
     rgb: 'FFFFFF',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [1],
@@ -498,6 +515,7 @@ const colorsInit: IColor[] = [
     name: 'Light Green',
     rgb: 'C2DAB8',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [38],
@@ -522,6 +540,7 @@ const colorsInit: IColor[] = [
     name: 'Light Yellow',
     rgb: 'FBE696',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [33],
@@ -546,6 +565,7 @@ const colorsInit: IColor[] = [
     name: 'Tan',
     rgb: 'E4CD9E',
     isTrans: false,
+    categories: ['yellow', 'brown'],
     externalIds: {
       brickLink: {
         extIds: [2],
@@ -570,6 +590,7 @@ const colorsInit: IColor[] = [
     name: 'Light Violet',
     rgb: 'C9CAE2',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [44],
@@ -594,6 +615,7 @@ const colorsInit: IColor[] = [
     name: 'Glow In Dark Opaque',
     rgb: 'D4D5C9',
     isTrans: false,
+    categories: ['blue', 'purple'],
     externalIds: {
       brickLink: {
         extIds: [46],
@@ -618,6 +640,7 @@ const colorsInit: IColor[] = [
     name: 'Purple',
     rgb: '81007B',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [24],
@@ -642,6 +665,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Blue-Violet',
     rgb: '2032B0',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [109],
@@ -666,6 +690,7 @@ const colorsInit: IColor[] = [
     name: 'Orange',
     rgb: 'FE8A18',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [4],
@@ -690,6 +715,7 @@ const colorsInit: IColor[] = [
     name: 'Magenta',
     rgb: '923978',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [71],
@@ -714,6 +740,7 @@ const colorsInit: IColor[] = [
     name: 'Lime',
     rgb: 'BBE90B',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [34],
@@ -738,6 +765,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Tan',
     rgb: '958A73',
     isTrans: false,
+    categories: ['yellow', 'brown'],
     externalIds: {
       brickLink: {
         extIds: [69],
@@ -762,6 +790,7 @@ const colorsInit: IColor[] = [
     name: 'Bright Pink',
     rgb: 'E4ADC8',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [104],
@@ -786,6 +815,7 @@ const colorsInit: IColor[] = [
     name: 'Medium Lavender',
     rgb: 'AC78BA',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [157],
@@ -810,6 +840,7 @@ const colorsInit: IColor[] = [
     name: 'Lavender',
     rgb: 'E1D5ED',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [154],
@@ -834,6 +865,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Black IR Lens',
     rgb: '635F52',
     isTrans: true,
+    categories: ['trans', 'black'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -858,6 +890,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Dark Blue',
     rgb: '0020A0',
     isTrans: true,
+    categories: ['trans', 'blue'],
     externalIds: {
       brickLink: {
         extIds: [14],
@@ -882,6 +915,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Green',
     rgb: '84B68D',
     isTrans: true,
+    categories: ['trans', 'green'],
     externalIds: {
       brickLink: {
         extIds: [20],
@@ -906,6 +940,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Bright Green',
     rgb: 'D9E4A7',
     isTrans: true,
+    categories: ['trans', 'green'],
     externalIds: {
       brickLink: {
         extIds: [108],
@@ -930,6 +965,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Red',
     rgb: 'C91A09',
     isTrans: true,
+    categories: ['trans', 'red'],
     externalIds: {
       brickLink: {
         extIds: [17],
@@ -954,6 +990,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Black',
     rgb: '635F52',
     isTrans: true,
+    categories: ['trans', 'black'],
     externalIds: {
       brickLink: {
         extIds: [13],
@@ -978,6 +1015,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Light Blue',
     rgb: 'AEEFEC',
     isTrans: true,
+    categories: ['trans', 'blue'],
     externalIds: {
       brickLink: {
         extIds: [15],
@@ -1002,6 +1040,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Neon Green',
     rgb: 'F8F184',
     isTrans: true,
+    categories: ['trans', 'green'],
     externalIds: {
       brickLink: {
         extIds: [16],
@@ -1026,6 +1065,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Very Lt Blue',
     rgb: 'C1DFF0',
     isTrans: true,
+    categories: ['trans', 'blue'],
     externalIds: {
       brickLink: {
         extIds: [113],
@@ -1050,6 +1090,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Dark Pink',
     rgb: 'DF6695',
     isTrans: true,
+    categories: ['trans', 'red'],
     externalIds: {
       brickLink: {
         extIds: [50],
@@ -1074,6 +1115,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Yellow',
     rgb: 'F5CD2F',
     isTrans: true,
+    categories: ['trans', 'yellow'],
     externalIds: {
       brickLink: {
         extIds: [19],
@@ -1098,6 +1140,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Clear',
     rgb: 'FCFCFC',
     isTrans: true,
+    categories: ['trans', 'black'],
     externalIds: {
       brickLink: {
         extIds: [12],
@@ -1122,6 +1165,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Purple',
     rgb: 'A5A5CB',
     isTrans: true,
+    categories: ['trans', 'purple'],
     externalIds: {
       brickLink: {
         extIds: [51],
@@ -1146,6 +1190,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Neon Yellow',
     rgb: 'DAB000',
     isTrans: true,
+    categories: ['trans', 'yellow'],
     externalIds: {
       brickLink: {
         extIds: [121],
@@ -1170,6 +1215,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Neon Orange',
     rgb: 'FF800D',
     isTrans: true,
+    categories: ['trans', 'orange'],
     externalIds: {
       brickLink: {
         extIds: [18],
@@ -1194,6 +1240,7 @@ const colorsInit: IColor[] = [
     name: 'Chrome Antique Brass',
     rgb: '645A4C',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [57],
@@ -1218,6 +1265,7 @@ const colorsInit: IColor[] = [
     name: 'Chrome Blue',
     rgb: '6C96BF',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [52],
@@ -1242,6 +1290,7 @@ const colorsInit: IColor[] = [
     name: 'Chrome Green',
     rgb: '3CB371',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [64],
@@ -1266,6 +1315,7 @@ const colorsInit: IColor[] = [
     name: 'Chrome Pink',
     rgb: 'AA4D8E',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [82],
@@ -1290,6 +1340,7 @@ const colorsInit: IColor[] = [
     name: 'Chrome Black',
     rgb: '1B2A34',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [122],
@@ -1314,6 +1365,7 @@ const colorsInit: IColor[] = [
     name: 'Very Light Orange',
     rgb: 'F3CF9B',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [96],
@@ -1338,6 +1390,7 @@ const colorsInit: IColor[] = [
     name: 'Light Purple',
     rgb: 'CD6298',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [93],
@@ -1362,6 +1415,7 @@ const colorsInit: IColor[] = [
     name: 'Reddish Brown',
     rgb: '582A12',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [88],
@@ -1386,6 +1440,7 @@ const colorsInit: IColor[] = [
     name: 'Light Bluish Gray',
     rgb: 'A0A5A9',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [86],
@@ -1410,6 +1465,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Bluish Gray',
     rgb: '6C6E68',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [85],
@@ -1434,6 +1490,7 @@ const colorsInit: IColor[] = [
     name: 'Medium Blue',
     rgb: '5A93DB',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [42],
@@ -1458,6 +1515,7 @@ const colorsInit: IColor[] = [
     name: 'Medium Green',
     rgb: '73DCA1',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [37],
@@ -1482,6 +1540,7 @@ const colorsInit: IColor[] = [
     name: 'Speckle Black-Copper',
     rgb: '05131D',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [116],
@@ -1506,6 +1565,7 @@ const colorsInit: IColor[] = [
     name: 'Speckle DBGray-Silver',
     rgb: '6C6E68',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [117],
@@ -1530,6 +1590,7 @@ const colorsInit: IColor[] = [
     name: 'Light Pink',
     rgb: 'FECCCF',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [56],
@@ -1554,6 +1615,7 @@ const colorsInit: IColor[] = [
     name: 'Light Nougat',
     rgb: 'F6D7B3',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [90],
@@ -1578,6 +1640,7 @@ const colorsInit: IColor[] = [
     name: 'Milky White',
     rgb: 'FFFFFF',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [60],
@@ -1602,6 +1665,7 @@ const colorsInit: IColor[] = [
     name: 'Metallic Silver',
     rgb: 'A5A9B4',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [67],
@@ -1626,6 +1690,7 @@ const colorsInit: IColor[] = [
     name: 'Metallic Green',
     rgb: '899B5F',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [70],
@@ -1650,6 +1715,7 @@ const colorsInit: IColor[] = [
     name: 'Metallic Gold',
     rgb: 'DBAC34',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [65],
@@ -1674,6 +1740,7 @@ const colorsInit: IColor[] = [
     name: 'Medium Nougat',
     rgb: 'AA7D55',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [150],
@@ -1698,6 +1765,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Purple',
     rgb: '3F3691',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [89],
@@ -1722,6 +1790,7 @@ const colorsInit: IColor[] = [
     name: 'Light Brown',
     rgb: '7C503A',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [91],
@@ -1746,6 +1815,7 @@ const colorsInit: IColor[] = [
     name: 'Royal Blue',
     rgb: '4C61DB',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [97],
@@ -1770,6 +1840,7 @@ const colorsInit: IColor[] = [
     name: 'Nougat',
     rgb: 'D09168',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [28],
@@ -1794,6 +1865,7 @@ const colorsInit: IColor[] = [
     name: 'Light Salmon',
     rgb: 'FEBABD',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [26],
@@ -1818,6 +1890,7 @@ const colorsInit: IColor[] = [
     name: 'Violet',
     rgb: '4354A3',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [43],
@@ -1842,6 +1915,7 @@ const colorsInit: IColor[] = [
     name: 'Medium Bluish Violet',
     rgb: '6874CA',
     isTrans: false,
+    categories: ['blue', 'purple'],
     externalIds: {
       brickLink: {
         extIds: [73],
@@ -1866,6 +1940,7 @@ const colorsInit: IColor[] = [
     name: 'Glitter Trans-Dark Pink',
     rgb: 'DF6695',
     isTrans: true,
+    categories: ['trans', 'red'],
     externalIds: {
       brickLink: {
         extIds: [100],
@@ -1890,6 +1965,7 @@ const colorsInit: IColor[] = [
     name: 'Medium Lime',
     rgb: 'C7D23C',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [76],
@@ -1914,6 +1990,7 @@ const colorsInit: IColor[] = [
     name: 'Glitter Trans-Clear',
     rgb: 'FFFFFF',
     isTrans: true,
+    categories: ['trans', 'black'],
     externalIds: {
       brickLink: {
         extIds: [101],
@@ -1938,6 +2015,7 @@ const colorsInit: IColor[] = [
     name: 'Aqua',
     rgb: 'B3D7D1',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [41],
@@ -1962,6 +2040,7 @@ const colorsInit: IColor[] = [
     name: 'Light Lime',
     rgb: 'D9E4A7',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [35],
@@ -1986,6 +2065,7 @@ const colorsInit: IColor[] = [
     name: 'Light Orange',
     rgb: 'F9BA61',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [32],
@@ -2010,6 +2090,7 @@ const colorsInit: IColor[] = [
     name: 'Glitter Trans-Purple',
     rgb: 'A5A5CB',
     isTrans: true,
+    categories: ['trans', 'purple'],
     externalIds: {
       brickLink: {
         extIds: [102],
@@ -2034,6 +2115,7 @@ const colorsInit: IColor[] = [
     name: 'Speckle Black-Silver',
     rgb: '05131D',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [111],
@@ -2058,6 +2140,7 @@ const colorsInit: IColor[] = [
     name: 'Speckle Black-Gold',
     rgb: '05131D',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [151],
@@ -2082,6 +2165,7 @@ const colorsInit: IColor[] = [
     name: 'Copper',
     rgb: 'AE7A59',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [84],
@@ -2106,6 +2190,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl Light Gray',
     rgb: '9CA3A8',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [66],
@@ -2130,6 +2215,7 @@ const colorsInit: IColor[] = [
     name: 'Metal Blue',
     rgb: '7988A1',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [78],
@@ -2154,6 +2240,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl Light Gold',
     rgb: 'DCBC81',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [61],
@@ -2178,6 +2265,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Medium Blue',
     rgb: 'CFE2F7',
     isTrans: true,
+    categories: ['trans', 'blue'],
     externalIds: {
       brickLink: {
         extIds: [74],
@@ -2202,6 +2290,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl Dark Gray',
     rgb: '575857',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [77],
@@ -2226,6 +2315,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl Very Light Gray',
     rgb: 'ABADAC',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [119],
@@ -2250,6 +2340,7 @@ const colorsInit: IColor[] = [
     name: 'Very Light Bluish Gray',
     rgb: 'E6E3E0',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [99],
@@ -2274,6 +2365,7 @@ const colorsInit: IColor[] = [
     name: 'Yellowish Green',
     rgb: 'DFEEA5',
     isTrans: false,
+    categories: ['yellow', 'green'],
     externalIds: {
       brickLink: {
         extIds: [158],
@@ -2298,6 +2390,7 @@ const colorsInit: IColor[] = [
     name: 'Flat Dark Gold',
     rgb: 'B48455',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [81],
@@ -2322,6 +2415,7 @@ const colorsInit: IColor[] = [
     name: 'Flat Silver',
     rgb: '898788',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [95],
@@ -2346,6 +2440,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Orange',
     rgb: 'F08F1C',
     isTrans: true,
+    categories: ['trans', 'orange'],
     externalIds: {
       brickLink: {
         extIds: [98],
@@ -2370,6 +2465,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl White',
     rgb: 'F2F3F2',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [83],
@@ -2394,6 +2490,7 @@ const colorsInit: IColor[] = [
     name: 'Bright Light Orange',
     rgb: 'F8BB3D',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [110],
@@ -2418,6 +2515,7 @@ const colorsInit: IColor[] = [
     name: 'Bright Light Blue',
     rgb: '9FC3E9',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [105],
@@ -2442,6 +2540,7 @@ const colorsInit: IColor[] = [
     name: 'Rust',
     rgb: 'B31004',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [27],
@@ -2466,6 +2565,7 @@ const colorsInit: IColor[] = [
     name: 'Bright Light Yellow',
     rgb: 'FFF03A',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [103],
@@ -2490,6 +2590,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Pink',
     rgb: 'E4ADC8',
     isTrans: true,
+    categories: ['trans', 'red'],
     externalIds: {
       brickLink: {
         extIds: [107],
@@ -2514,6 +2615,7 @@ const colorsInit: IColor[] = [
     name: 'Sky Blue',
     rgb: '7DBFDD',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [87],
@@ -2538,6 +2640,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Light Purple',
     rgb: '96709F',
     isTrans: true,
+    categories: ['trans', 'purple'],
     externalIds: {
       brickLink: {
         extIds: [114],
@@ -2562,6 +2665,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Blue',
     rgb: '0A3463',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [63],
@@ -2586,6 +2690,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Green',
     rgb: '184632',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [80],
@@ -2610,6 +2715,7 @@ const colorsInit: IColor[] = [
     name: 'Glow In Dark Trans',
     rgb: 'BDC6AD',
     isTrans: true,
+    categories: ['trans', 'green'],
     externalIds: {
       brickLink: {
         extIds: [118],
@@ -2634,6 +2740,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl Gold',
     rgb: 'AA7F2E',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [115],
@@ -2658,6 +2765,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Brown',
     rgb: '352100',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [120],
@@ -2682,6 +2790,7 @@ const colorsInit: IColor[] = [
     name: 'Maersk Blue',
     rgb: '3592C3',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [72],
@@ -2706,6 +2815,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Red',
     rgb: '720E0F',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [59],
@@ -2730,6 +2840,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Azure',
     rgb: '078BC9',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [153],
@@ -2754,6 +2865,7 @@ const colorsInit: IColor[] = [
     name: 'Medium Azure',
     rgb: '36AEBF',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [156],
@@ -2778,6 +2890,7 @@ const colorsInit: IColor[] = [
     name: 'Light Aqua',
     rgb: 'ADC3C0',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [152],
@@ -2802,6 +2915,7 @@ const colorsInit: IColor[] = [
     name: 'Olive Green',
     rgb: '9B9A5A',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [155],
@@ -2826,6 +2940,7 @@ const colorsInit: IColor[] = [
     name: 'Chrome Gold',
     rgb: 'BBA53D',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [21],
@@ -2850,6 +2965,7 @@ const colorsInit: IColor[] = [
     name: 'Sand Red',
     rgb: 'D67572',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [58],
@@ -2874,6 +2990,7 @@ const colorsInit: IColor[] = [
     name: 'Medium Dark Pink',
     rgb: 'F785B1',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [94],
@@ -2898,6 +3015,7 @@ const colorsInit: IColor[] = [
     name: 'Earth Orange',
     rgb: 'FA9C1C',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [29],
@@ -2922,6 +3040,7 @@ const colorsInit: IColor[] = [
     name: 'Sand Purple',
     rgb: '845E84',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [54],
@@ -2946,6 +3065,7 @@ const colorsInit: IColor[] = [
     name: 'Sand Green',
     rgb: 'A0BCAC',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [48],
@@ -2970,6 +3090,7 @@ const colorsInit: IColor[] = [
     name: 'Sand Blue',
     rgb: '6074A1',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [55],
@@ -2994,6 +3115,7 @@ const colorsInit: IColor[] = [
     name: 'Chrome Silver',
     rgb: 'E0E0E0',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [22],
@@ -3018,6 +3140,7 @@ const colorsInit: IColor[] = [
     name: 'Fabuland Brown',
     rgb: 'B67B50',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [106],
@@ -3042,6 +3165,7 @@ const colorsInit: IColor[] = [
     name: 'Medium Orange',
     rgb: 'FFA70B',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [31],
@@ -3066,6 +3190,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Orange',
     rgb: 'A95500',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [68],
@@ -3090,6 +3215,7 @@ const colorsInit: IColor[] = [
     name: 'Very Light Gray',
     rgb: 'E6E3DA',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [49],
@@ -3114,6 +3240,7 @@ const colorsInit: IColor[] = [
     name: 'Glow in Dark White',
     rgb: 'D9D9D9',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [159],
@@ -3138,6 +3265,7 @@ const colorsInit: IColor[] = [
     name: 'Medium Violet',
     rgb: '9391E4',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [245],
@@ -3162,6 +3290,7 @@ const colorsInit: IColor[] = [
     name: 'Glitter Trans-Neon Green',
     rgb: 'C0F500',
     isTrans: true,
+    categories: ['trans', 'green'],
     externalIds: {
       brickLink: {
         extIds: [163],
@@ -3186,6 +3315,7 @@ const colorsInit: IColor[] = [
     name: 'Glitter Trans-Light Blue',
     rgb: '68BCC5',
     isTrans: true,
+    categories: ['trans', 'blue'],
     externalIds: {
       brickLink: {
         extIds: [162],
@@ -3210,6 +3340,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Flame Yellowish Orange',
     rgb: 'FCB76D',
     isTrans: true,
+    categories: ['trans', 'yellow', 'orange'],
     externalIds: {
       brickLink: {
         extIds: [164],
@@ -3234,6 +3365,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Fire Yellow',
     rgb: 'FBE890',
     isTrans: true,
+    categories: ['trans', 'yellow'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -3258,6 +3390,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Light Royal Blue',
     rgb: 'B4D4F7',
     isTrans: true,
+    categories: ['trans', 'blue'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -3282,6 +3415,7 @@ const colorsInit: IColor[] = [
     name: 'Reddish Lilac',
     rgb: '8E5597',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [227],
@@ -3306,6 +3440,7 @@ const colorsInit: IColor[] = [
     name: 'Vintage Blue',
     rgb: '039CBD',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -3330,6 +3465,7 @@ const colorsInit: IColor[] = [
     name: 'Vintage Green',
     rgb: '1E601E',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -3354,6 +3490,7 @@ const colorsInit: IColor[] = [
     name: 'Vintage Red',
     rgb: 'CA1F08',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -3378,6 +3515,7 @@ const colorsInit: IColor[] = [
     name: 'Vintage Yellow',
     rgb: 'F3C305',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -3402,6 +3540,7 @@ const colorsInit: IColor[] = [
     name: 'Fabuland Orange',
     rgb: 'EF9121',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [160],
@@ -3426,6 +3565,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex White',
     rgb: 'F4F4F4',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [123],
@@ -3450,6 +3590,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Light Bluish Gray',
     rgb: 'AfB5C7',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [124],
@@ -3474,6 +3615,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Light Gray',
     rgb: '9C9C9C',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [125],
@@ -3498,6 +3640,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Charcoal Gray',
     rgb: '595D60',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [126],
@@ -3522,6 +3665,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Tile Gray',
     rgb: '6B5A5A',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [127],
@@ -3546,6 +3690,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Black',
     rgb: '4D4C52',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [128],
@@ -3570,6 +3715,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Tile Brown',
     rgb: '330000',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [131],
@@ -3594,6 +3740,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Terracotta',
     rgb: '5C5030',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [134],
@@ -3618,6 +3765,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Brown',
     rgb: '907450',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [132],
@@ -3642,6 +3790,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Buff',
     rgb: 'DEC69C',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [133],
@@ -3666,6 +3815,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Red',
     rgb: 'B52C20',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [129],
@@ -3690,6 +3840,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Pink Red',
     rgb: 'F45C40',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [130],
@@ -3714,6 +3865,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Orange',
     rgb: 'F47B30',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [135],
@@ -3738,6 +3890,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Light Orange',
     rgb: 'F7AD63',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [136],
@@ -3762,6 +3915,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Light Yellow',
     rgb: 'FFE371',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [137],
@@ -3786,6 +3940,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Ochre Yellow',
     rgb: 'FED557',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [138],
@@ -3810,6 +3965,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Lemon',
     rgb: 'BDC618',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [139],
@@ -3834,6 +3990,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Pastel Green',
     rgb: '7DB538',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [141],
@@ -3858,6 +4015,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Olive Green',
     rgb: '7C9051',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [140],
@@ -3882,6 +4040,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Aqua Green',
     rgb: '27867E',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [142],
@@ -3906,6 +4065,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Teal Blue',
     rgb: '467083',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [146],
@@ -3930,6 +4090,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Tile Blue',
     rgb: '0057A6',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [143],
@@ -3954,6 +4115,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Medium Blue',
     rgb: '61AFFF',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [144],
@@ -3978,6 +4140,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Pastel Blue',
     rgb: '68AECE',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [145],
@@ -4002,6 +4165,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Violet',
     rgb: 'BD7D85',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [147],
@@ -4026,6 +4190,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Pink',
     rgb: 'F785B1',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [148],
@@ -4050,6 +4215,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Clear',
     rgb: 'FFFFFF',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [149],
@@ -4074,6 +4240,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Foil Dark Gray',
     rgb: '595D60',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [210],
@@ -4098,6 +4265,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Foil Light Gray',
     rgb: '9C9C9C',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [211],
@@ -4122,6 +4290,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Foil Dark Green',
     rgb: '006400',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [212],
@@ -4146,6 +4315,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Foil Light Green',
     rgb: '7DB538',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [213],
@@ -4170,6 +4340,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Foil Dark Blue',
     rgb: '0057A6',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [214],
@@ -4194,6 +4365,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Foil Light Blue',
     rgb: '68AECE',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [215],
@@ -4218,6 +4390,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Foil Violet',
     rgb: '4B0082',
     isTrans: false,
+    categories: ['purple'],
     externalIds: {
       brickLink: {
         extIds: [216],
@@ -4242,6 +4415,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Foil Red',
     rgb: '8B0000',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [217],
@@ -4266,6 +4440,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Foil Yellow',
     rgb: 'FED557',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [218],
@@ -4290,6 +4465,7 @@ const colorsInit: IColor[] = [
     name: 'Modulex Foil Orange',
     rgb: 'F7AD63',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [219],
@@ -4314,6 +4490,7 @@ const colorsInit: IColor[] = [
     name: 'Coral',
     rgb: 'FF698F',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [220],
@@ -4338,6 +4515,7 @@ const colorsInit: IColor[] = [
     name: 'Pastel Blue',
     rgb: '5AC4DA',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [72],
@@ -4362,6 +4540,7 @@ const colorsInit: IColor[] = [
     name: 'Glitter Trans-Orange',
     rgb: 'F08F1C',
     isTrans: true,
+    categories: ['trans', 'orange'],
     externalIds: {
       brickLink: {
         extIds: [222],
@@ -4386,6 +4565,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Blue Opal',
     rgb: '68BCC5',
     isTrans: true,
+    categories: ['trans', 'blue'],
     externalIds: {
       brickLink: {
         extIds: [223],
@@ -4410,6 +4590,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Medium Reddish Violet Opal',
     rgb: 'CE1D9B',
     isTrans: true,
+    categories: ['trans', 'purple'],
     externalIds: {
       brickLink: {
         extIds: [224],
@@ -4434,6 +4615,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Clear Opal',
     rgb: 'FCFCFC',
     isTrans: true,
+    categories: ['trans', 'black'],
     externalIds: {
       brickLink: {
         extIds: [228],
@@ -4458,6 +4640,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Brown Opal',
     rgb: '583927',
     isTrans: true,
+    categories: ['trans', 'brown'],
     externalIds: {
       brickLink: {
         extIds: [229],
@@ -4482,6 +4665,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Light Bright Green',
     rgb: 'C9E788',
     isTrans: true,
+    categories: ['trans', 'green'],
     externalIds: {
       brickLink: {
         extIds: [226],
@@ -4506,6 +4690,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Light Green',
     rgb: '94E5AB',
     isTrans: true,
+    categories: ['trans', 'green'],
     externalIds: {
       brickLink: {
         extIds: [221],
@@ -4530,6 +4715,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Purple Opal',
     rgb: '8320B7',
     isTrans: true,
+    categories: ['trans', 'purple'],
     externalIds: {
       brickLink: {
         extIds: [230],
@@ -4554,6 +4740,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Green Opal',
     rgb: '84B68D',
     isTrans: true,
+    categories: ['trans', 'green'],
     externalIds: {
       brickLink: {
         extIds: [233],
@@ -4578,6 +4765,7 @@ const colorsInit: IColor[] = [
     name: 'Trans-Dark Blue Opal',
     rgb: '0020A0',
     isTrans: true,
+    categories: ['trans', 'blue'],
     externalIds: {
       brickLink: {
         extIds: [232],
@@ -4602,6 +4790,7 @@ const colorsInit: IColor[] = [
     name: 'Vibrant Yellow',
     rgb: 'EBD800',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [236],
@@ -4626,6 +4815,7 @@ const colorsInit: IColor[] = [
     name: 'Metallic Copper',
     rgb: 'B46A00',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -4650,6 +4840,7 @@ const colorsInit: IColor[] = [
     name: 'Fabuland Red',
     rgb: 'FF8014',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -4674,6 +4865,7 @@ const colorsInit: IColor[] = [
     name: 'Reddish Gold',
     rgb: 'AC8247',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [235],
@@ -4698,6 +4890,7 @@ const colorsInit: IColor[] = [
     name: 'Curry',
     rgb: 'DD982E',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [161],
@@ -4722,6 +4915,7 @@ const colorsInit: IColor[] = [
     name: 'Dark Nougat',
     rgb: 'AD6140',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [225],
@@ -4746,6 +4940,7 @@ const colorsInit: IColor[] = [
     name: 'Reddish Orange',
     rgb: 'EE5434',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [231],
@@ -4770,6 +4965,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl Red',
     rgb: 'D60026',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -4794,6 +4990,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl Blue',
     rgb: '0059A3',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -4818,6 +5015,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl Green',
     rgb: '008E3C',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -4842,6 +5040,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl Brown',
     rgb: '57392C',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -4866,6 +5065,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl Black',
     rgb: '0A1327',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [244],
@@ -4890,6 +5090,7 @@ const colorsInit: IColor[] = [
     name: 'Duplo Blue',
     rgb: '009ECE',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -4914,6 +5115,7 @@ const colorsInit: IColor[] = [
     name: 'Duplo Medium Blue',
     rgb: '3E95B6',
     isTrans: false,
+    categories: ['blue'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -4938,6 +5140,7 @@ const colorsInit: IColor[] = [
     name: 'Duplo Lime',
     rgb: 'FFF230',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -4962,6 +5165,7 @@ const colorsInit: IColor[] = [
     name: 'Fabuland Lime',
     rgb: '78FC78',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [248],
@@ -4986,6 +5190,7 @@ const colorsInit: IColor[] = [
     name: 'Duplo Medium Green',
     rgb: '468A5F',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -5010,6 +5215,7 @@ const colorsInit: IColor[] = [
     name: 'Duplo Light Green',
     rgb: '60BA76',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -5034,6 +5240,7 @@ const colorsInit: IColor[] = [
     name: 'Light Tan',
     rgb: 'F3C988',
     isTrans: false,
+    categories: ['brown', 'yellow'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -5058,6 +5265,7 @@ const colorsInit: IColor[] = [
     name: 'Rust Orange',
     rgb: '872B17',
     isTrans: false,
+    categories: ['orange'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -5082,6 +5290,7 @@ const colorsInit: IColor[] = [
     name: 'Clikits Pink',
     rgb: 'FE78B0',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -5106,6 +5315,7 @@ const colorsInit: IColor[] = [
     name: 'Two-tone Copper',
     rgb: '945148',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [273],
@@ -5130,6 +5340,7 @@ const colorsInit: IColor[] = [
     name: 'Two-tone Gold',
     rgb: 'AB673A',
     isTrans: false,
+    categories: ['yellow'],
     externalIds: {
       brickLink: {
         extIds: [238],
@@ -5154,6 +5365,7 @@ const colorsInit: IColor[] = [
     name: 'Two-tone Silver',
     rgb: '737271',
     isTrans: false,
+    categories: ['black'],
     externalIds: {
       brickLink: {
         extIds: [239],
@@ -5178,6 +5390,7 @@ const colorsInit: IColor[] = [
     name: 'Pearl Lime',
     rgb: '6A7944',
     isTrans: false,
+    categories: ['green'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -5202,6 +5415,7 @@ const colorsInit: IColor[] = [
     name: 'Duplo Pink',
     rgb: 'FF879C',
     isTrans: false,
+    categories: ['red'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -5226,6 +5440,7 @@ const colorsInit: IColor[] = [
     name: 'Medium Brown',
     rgb: '755945',
     isTrans: false,
+    categories: ['brown'],
     externalIds: {
       brickLink: {
         extIds: [240],
@@ -5250,6 +5465,7 @@ const colorsInit: IColor[] = [
     name: 'Warm Tan',
     rgb: 'CCA373',
     isTrans: false,
+    categories: ['brown', 'yellow'],
     externalIds: {
       brickLink: {
         extIds: [241],
@@ -5274,6 +5490,7 @@ const colorsInit: IColor[] = [
     name: 'Duplo Turquoise',
     rgb: '3FB69E',
     isTrans: false,
+    categories: ['blue', 'green'],
     externalIds: {
       brickLink: {
         extIds: [],
@@ -5298,6 +5515,7 @@ const colorsInit: IColor[] = [
     name: '[No Color/Any Color]',
     rgb: '05131D',
     isTrans: false,
+    categories: [],
     externalIds: {
       brickLink: {
         extIds: [0],

@@ -3,5 +3,6 @@ import { GetPickABrickPartsCategoryResponse, GetPickABrickPartsPageResponse, Get
 export interface GetPickABrickPartsResponse {
   bricks: GetPickABrickPartsPartResponse[];
   categories: GetPickABrickPartsCategoryResponse[];
+  colors: number[];
   page: GetPickABrickPartsPageResponse;
 }

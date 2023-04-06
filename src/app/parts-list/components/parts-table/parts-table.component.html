@@ -34,7 +34,44 @@
       <td>
         <app-color [colorId]="part.color"></app-color>
       </td>
-      <td>
+      <td [pEditableColumn] *ngIf="allowEdit">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <span style="display: flex; width: 170px; margin: 2px">
+              <div style="width: 50px">Qty:</div>
+              <p-inputNumber
+                inputId="integeronly"
+                [(ngModel)]="part.qty"
+                (ngModelChange)="onQuantityChange($event, part.id)"
+                [size]="5"
+                styleClass="in-place-edit"
+                [min]="0"
+                [showButtons]="true"></p-inputNumber>
+            </span>
+            <span style="display: flex; width: 170px; margin: 2px">
+              <div style="width: 50px">Have:</div>
+              <p-inputNumber
+                inputId="integeronly"
+                [(ngModel)]="part.have"
+                (ngModelChange)="onHaveChange($event, part.id)"
+                [size]="5"
+                styleClass="in-place-edit"
+                [min]="0"
+                [showButtons]="true"></p-inputNumber>
+            </span>
+          </ng-template>
+          <ng-template pTemplate="output">
+            <div class="flex flex-column">
+              <div>{{ part.qty }}</div>
+              <div *ngIf="part.have" style="color: grey; font-size: 12px">have: {{ part.have }}</div>
+              <div *ngIf="part.lego && part.lego.maxOrderQuantity < part.qty" style="color: red; font-size: 12px">
+                max: {{ part.lego.maxOrderQuantity }}
+              </div>
+            </div>
+          </ng-template>
+        </p-cellEditor>
+      </td>
+      <td [pEditableColumn] *ngIf="!allowEdit">
         <div class="flex flex-column">
           <div>{{ part.qty }}</div>
           <div *ngIf="part.have" style="color: grey; font-size: 12px">have: {{ part.have }}</div>
