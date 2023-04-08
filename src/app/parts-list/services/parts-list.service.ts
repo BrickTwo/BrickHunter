@@ -57,7 +57,6 @@ export class PartsListService {
     part.qty = newPart.qty;
     part.have = newPart.have;
 
-    console.log(partsList);
     this.indexedDBService.partsLists.put(partsList, partsList.uuid);
     this.partsListsChanged.next(this.getPartsLists());
   }
@@ -88,13 +87,6 @@ export class PartsListService {
     if (!part.lego) return false;
     if (part.lego.deliveryChannel !== filter) return false;
     if (!part.lego.inStock) return false;
-    console.log(
-      `${part.lego.price.amount} < ${part.maxPrice || 0} = `,
-      part.lego.price.amount < (part.maxPrice || 0),
-      ' | ',
-      `${part.lego.price.amount} < ${0} = `,
-      part.lego.price.amount < 0
-    );
     if (
       !this.gloabSettingsService.ignoreBrickLinkPrices &&
       (part.maxPrice || 0) > 0 &&
