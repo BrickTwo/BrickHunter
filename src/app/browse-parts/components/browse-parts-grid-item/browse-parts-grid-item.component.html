@@ -1,22 +1,12 @@
 <div class="p-2 border-1 surface-border surface-card border-round" style="height: 320px" [id]="part.elementId">
   <div class="align-items-center" style="height: 120px; cursor: pointer">
-    <div
-      style="
-        width: 100%;
-        height: 120px;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-      "
-      [lazyLoad]="
-        !part.imageUrl ? './assets/icons/icon-trans48.png' : 'https://brickhunter.blob.core.windows.net' + part.imageUrl
-      ">
-      <div [style]="getImageStyle()">
+    <div [style]="getImageStyle()">
+      <div>
         <p-tag severity="warning" *ngIf="part.deliveryChannel === 'pab'">Bestseller</p-tag>
         <p-tag severity="info" *ngIf="part.deliveryChannel === 'bap'">Standard</p-tag>
         <p-tag severity="danger" *ngIf="part.deliveryChannel === 'oos'">Out Of Stock</p-tag>
       </div>
-      <div class="flex justify-content-end" style="width: 100%; position: relative; top: -134px; right: -10px">
+      <div class="flex justify-content-end" style="width: 100%; position: relative; top: -34px; right: -10px">
         <div class="flex justify-content-end flex-column">
           <p-button icon="fa fa-heart" styleClass="p-button-rounded p-button-text p-button-danger text-xl"></p-button>
           <p-button
