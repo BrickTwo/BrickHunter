@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { BrickHunterApiService } from '../http/brickhunterapi.service';
 
 @Injectable({

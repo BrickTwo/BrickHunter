@@ -22,6 +22,7 @@ export enum FilterChangedProperty {
   sort,
   sortDirection,
   keyword,
+  elementIds,
 }
 
 export interface Filter {
@@ -36,6 +37,7 @@ export interface Filter {
   sort: string;
   sortDirection: string;
   keyword: string;
+  elementIds: number[];
 }
 
 @Injectable({
@@ -56,6 +58,7 @@ export class BrowsePartsService {
     sort: 'NAME',
     sortDirection: 'ASC',
     keyword: '',
+    elementIds: [],
   };
   private bricksSubject$ = new Subject<BrowsePartsPart[]>();
   bricksChanged$ = this.bricksSubject$.asObservable();
@@ -69,7 +72,31 @@ export class BrowsePartsService {
   colorsChanged$ = this.colorsSubject$.asObservable();
   colors: number[];
 
+  filterInitialized = false;
+
   constructor(private readonly birckHunterApiService: BrickHunterApiService) {}
+
+  initFilter() {
+    if (!this.filterInitialized) {
+      const browsePartsFilter = localStorage.getItem('browsePartsFilter') || null;
+      if (browsePartsFilter) {
+        this.filter = JSON.parse(browsePartsFilter) as unknown as Filter;
+        this.filterInitialized = true;
+        this.filterSubject$.next({ property: FilterChangedProperty.layout, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.page, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.page, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.perPage, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.category, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.onlyPrinted, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.color, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.deliveryChannels, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.sort, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.sortDirection, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.keyword, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.elementIds, filter: { ...this.filter } });
+      }
+    }
+  }
 
   setLayout(value: 'list' | 'grid') {
     this.filter.layout = value;
@@ -142,7 +169,18 @@ export class BrowsePartsService {
     this.sendRequest();
   }
 
+  setElementIds(values: number[]) {
+    this.filter.elementIds = values;
+    this.filterSubject$.next({ property: FilterChangedProperty.elementIds, filter: { ...this.filter } });
+    this.resetPage();
+    this.sendRequest();
+  }
+
   sendRequest() {
+    this.initFilter();
+
+    localStorage.setItem('browsePartsFilter', JSON.stringify(this.filter));
+
     const request: GetPickABrickPartsRequest = {
       page: this.filter.page + 1,
       limit: this.filter.perPage,
@@ -156,7 +194,7 @@ export class BrowsePartsService {
       onlyPrinted: this.filter.onlyPrinted,
       excludeCategoryIds: [],
       designIds: [],
-      elementIds: [],
+      elementIds: this.filter.elementIds,
     };
 
     this.birckHunterApiService.getPickABrickParts(request).subscribe(response => {

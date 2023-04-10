@@ -20,6 +20,7 @@ import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { SidebarModule } from 'primeng/sidebar';
@@ -55,6 +56,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     MessagesModule,
     PaginatorModule,
     ProgressSpinnerModule,
+    RadioButtonModule,
     RippleModule,
     SelectButtonModule,
     SidebarModule,

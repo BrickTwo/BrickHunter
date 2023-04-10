@@ -4,7 +4,6 @@ import { BrowsePartsService } from '../../service/browse-parts.service';
 import { Subscription } from 'dexie';
 import { ColorService } from 'src/app/core/services/color.service';
 import { IColor } from 'src/app/models/shared';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-browse-parts-color-filter',

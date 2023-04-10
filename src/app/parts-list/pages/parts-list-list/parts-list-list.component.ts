@@ -29,7 +29,7 @@ export class PartsListListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.partsListService.partsListsChanged.subscribe((partsLists: IPartsList[]) => {
+    this.subscription = this.partsListService.partsListsChanged$.subscribe((partsLists: IPartsList[]) => {
       this.partsLists = partsLists;
     });
     this.partsLists = this.partsListService.getPartsLists();

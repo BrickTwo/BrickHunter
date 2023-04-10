@@ -64,7 +64,6 @@ export class BrowsePartsGridItemComponent implements OnInit, AfterViewInit, Afte
   }
 
   isInViewport(element) {
-    console.log(element);
     const rect = element.getBoundingClientRect();
     return (
       rect.top >= 0 &&

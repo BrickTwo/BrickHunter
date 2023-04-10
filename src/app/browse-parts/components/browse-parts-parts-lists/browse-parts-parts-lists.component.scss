@@ -1,0 +1,34 @@
+:host {
+  //   ::ng-deep.p-tree-toggler {
+  //     display: none;
+  //   }
+
+  ::ng-deep.p-tree .p-tree-container {
+    overflow: hidden;
+  }
+
+  ::ng-deep.p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
+    height: 19px;
+    width: 19px;
+  }
+
+  ::ng-deep.p-tree {
+    border: 0;
+    padding: 0;
+  }
+
+  ::ng-deep.p-tree .p-tree-container .p-treenode {
+    padding-left: 0;
+    padding-right: 0;
+    padding: 0;
+  }
+
+  // ::ng-deep.p-inputswitch {
+  //     width: 20px;
+  //     height: 10px;
+  //   }
+  //   ::ng-deep.p-inputswitch .p-inputswitch-slider:before {
+  //     height: 0.75rem;
+  //     width: 0.75rem;
+  //   }
+}

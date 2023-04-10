@@ -1,3 +1,9 @@
+:host {
+  ::ng-deep.not-listed-tag {
+    background-color: grey;
+  }
+}
+
 .full-width-button {
   width: 100%;
   display: grid;

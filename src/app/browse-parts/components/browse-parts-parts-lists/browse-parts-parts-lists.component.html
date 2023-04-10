@@ -1,7 +1,44 @@
 <p-card header="Parts Lists">
-  <p class="m-0">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam
-    deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-    quas!
-  </p>
+  <div style="margin-bottom: 1rem">
+    <i class="fa-solid fa-heart" style="font-size: 20px; color: #d32f2f"></i>
+    <span class="ml-2"
+      >Wish list
+      <span (click)="onShowParts('wish')" *ngIf="show !== 'wish'">
+        <i class="fa-regular fa-eye-slash" style="color: rgba(10, 52, 99, 0.5)"></i>
+      </span>
+      <span (click)="onHideParts()" *ngIf="show === 'wish'">
+        <i class="fa-regular fa-eye" style="color: #0a3463"></i>
+      </span>
+    </span>
+  </div>
+  <div style="margin-bottom: 1rem">
+    <i class="fa-solid fa-circle-check" style="font-size: 20px; color: #689f38"></i>
+    <span class="ml-2"
+      >Have it
+      <span (click)="onShowParts('haveit')" *ngIf="show !== 'haveit'">
+        <i class="fa-regular fa-eye-slash" style="color: rgba(10, 52, 99, 0.5)"></i>
+      </span>
+      <span (click)="onHideParts()" *ngIf="show === 'haveit'">
+        <i class="fa-regular fa-eye" style="color: #0a3463"></i>
+      </span>
+    </span>
+  </div>
+  <div *ngFor="let partsList of partsLists" class="field-checkbox">
+    <p-radioButton
+      [inputId]="partsList.uuid"
+      name="category"
+      [value]="partsList.uuid"
+      [(ngModel)]="selectedList"></p-radioButton>
+    <span class="ml-2">
+      <label [for]="partsList.uuid" style="overflow-wrap: anywhere">
+        {{ partsList.name }}
+      </label>
+      <span (click)="onShowParts(partsList.uuid); $event.stopPropagation()" *ngIf="show !== partsList.uuid">
+        <i class="fa-regular fa-eye-slash" style="color: rgba(10, 52, 99, 0.5)"></i>
+      </span>
+      <span (click)="onHideParts(); $event.stopPropagation()" *ngIf="show === partsList.uuid">
+        <i class="fa-regular fa-eye" style="color: #0a3463"></i>
+      </span>
+    </span>
+  </div>
 </p-card>

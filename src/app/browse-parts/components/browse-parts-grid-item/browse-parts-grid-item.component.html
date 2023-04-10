@@ -5,6 +5,7 @@
         <p-tag severity="warning" *ngIf="part.deliveryChannel === 'pab'">Bestseller</p-tag>
         <p-tag severity="info" *ngIf="part.deliveryChannel === 'bap'">Standard</p-tag>
         <p-tag severity="danger" *ngIf="part.deliveryChannel === 'oos'">Out Of Stock</p-tag>
+        <p-tag severity="primary" styleClass="not-listed-tag" *ngIf="part.deliveryChannel === ''"> Not Listed </p-tag>
       </div>
       <div class="flex justify-content-end" style="width: 100%; position: relative; top: -34px; right: -10px">
         <div class="flex justify-content-end flex-column">

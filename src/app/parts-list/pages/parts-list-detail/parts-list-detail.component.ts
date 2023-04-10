@@ -102,7 +102,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
         this.pabIsLoading = isLoading;
       });
 
-      this.partsListSubscription = this.partsListService.partsListsChanged.subscribe(partsLists => {
+      this.partsListSubscription = this.partsListService.partsListsChanged$.subscribe(partsLists => {
         if (!this.partsList && partsLists) {
           this.reloadPartsList();
         }

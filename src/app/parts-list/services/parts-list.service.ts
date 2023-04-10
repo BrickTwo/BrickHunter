@@ -6,7 +6,8 @@ import { IPart, IPartsList } from '../../models/parts-list';
 
 @Injectable({ providedIn: 'root' })
 export class PartsListService {
-  partsListsChanged = new Subject<IPartsList[]>();
+  partsListsChangedSubject$ = new Subject<IPartsList[]>();
+  partsListsChanged$ = this.partsListsChangedSubject$.asObservable();
 
   private partsLists: IPartsList[] = [];
 
@@ -21,7 +22,7 @@ export class PartsListService {
 
   setPartsLists(partsLists: IPartsList[]) {
     this.partsLists = partsLists;
-    this.partsListsChanged.next(this.getPartsLists());
+    this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
   getPartsLists() {
@@ -35,20 +36,20 @@ export class PartsListService {
   addPartsList(partsList: IPartsList) {
     this.indexedDBService.partsLists.add(partsList);
     this.partsLists.push(partsList);
-    this.partsListsChanged.next(this.getPartsLists());
+    this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
   updatePartsList(newPartsList: IPartsList) {
     let partsList = this.partsLists.find(p => p.uuid === newPartsList.uuid);
     partsList = newPartsList;
     this.indexedDBService.partsLists.put(partsList, partsList.uuid);
-    this.partsListsChanged.next(this.getPartsLists());
+    this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
   deletePartsList(uuid: string) {
     this.indexedDBService.partsLists.delete(uuid);
     this.partsLists = this.partsLists.filter(p => p.uuid !== uuid);
-    this.partsListsChanged.next(this.getPartsLists());
+    this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
   updatePartsListPart(uuid: string, newPart: IPart) {
@@ -58,7 +59,7 @@ export class PartsListService {
     part.have = newPart.have;
 
     this.indexedDBService.partsLists.put(partsList, partsList.uuid);
-    this.partsListsChanged.next(this.getPartsLists());
+    this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
   getParts(uuid: string, filter: string) {
