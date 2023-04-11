@@ -65,12 +65,16 @@ export class BrowsePartsService {
   bricks: BrowsePartsPart[];
 
   private categoriesSubject$ = new Subject<BrowsePartCategory[]>();
-  categoriesChanged$ = this.categoriesSubject$.asObservable();
+  categories$ = this.categoriesSubject$.asObservable();
   categories: BrowsePartCategory[];
 
   private colorsSubject$ = new Subject<number[]>();
-  colorsChanged$ = this.colorsSubject$.asObservable();
+  colors$ = this.colorsSubject$.asObservable();
   colors: number[];
+
+  private selectedPartsListUuidSubject$ = new Subject<string>();
+  selectedPartsListUuid$ = this.selectedPartsListUuidSubject$.asObservable();
+  selectedPartsListUuid: string;
 
   filterInitialized = false;
 
@@ -174,6 +178,11 @@ export class BrowsePartsService {
     this.filterSubject$.next({ property: FilterChangedProperty.elementIds, filter: { ...this.filter } });
     this.resetPage();
     this.sendRequest();
+  }
+
+  setSelectedPartsListUuid(value: string) {
+    this.selectedPartsListUuid = value;
+    this.selectedPartsListUuidSubject$.next(this.selectedPartsListUuid);
   }
 
   sendRequest() {

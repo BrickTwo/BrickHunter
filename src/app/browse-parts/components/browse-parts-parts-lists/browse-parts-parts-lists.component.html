@@ -28,7 +28,8 @@
       [inputId]="partsList.uuid"
       name="category"
       [value]="partsList.uuid"
-      [(ngModel)]="selectedList"></p-radioButton>
+      [(ngModel)]="selectedList"
+      (onClick)="onSelectList($event.value)"></p-radioButton>
     <span class="ml-2">
       <label [for]="partsList.uuid" style="overflow-wrap: anywhere">
         {{ partsList.name }}

@@ -43,7 +43,32 @@
         <div>{{ part.priceAmount }} {{ part.priceCurrency }}</div>
       </div>
       <div style="overflow: hidden"><app-color [colorId]="part.colorId" [onlyMainColor]="true"></app-color></div>
-      <p-button icon="fa fa-plus" label="Add" styleClass="p-button-solid text-md" class="full-width-button"></p-button>
+      <div
+        *ngIf="partsListPart"
+        style="height: 42px; background-color: #ffc107; border-radius: 4px; padding: 8px"
+        class="flex flex-row justify-content-between">
+        <p-inputNumber
+          [(ngModel)]="partsListPart.qty"
+          [showButtons]="true"
+          buttonLayout="horizontal"
+          styleClass="quantity-edit"
+          [size]="4"
+          [min]="0"
+          [inputStyle]="{ 'text-align': 'right' }"
+          decrementButtonClass="quantity-edit-button"
+          incrementButtonClass="quantity-edit-button"
+          incrementButtonIcon="fa fa-plus"
+          decrementButtonIcon="fa fa-minus"></p-inputNumber>
+        <p-button
+          icon="fa fa-trash-can"
+          styleClass="p-button-rounded p-button-danger p-button-text remove-button"></p-button>
+      </div>
+      <p-button
+        icon="fa fa-plus"
+        label="Add"
+        styleClass="p-button-solid text-md"
+        class="full-width-button"
+        *ngIf="!partsListPart"></p-button>
     </div>
   </div>
 </div>

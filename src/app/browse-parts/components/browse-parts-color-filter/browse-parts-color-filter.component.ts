@@ -26,7 +26,7 @@ export class BrowsePartsColorFilterComponent implements OnInit, OnDestroy {
   constructor(private readonly browsePartsService: BrowsePartsService, private readonly colorService: ColorService) {}
 
   ngOnInit() {
-    this.colorSubscription = this.browsePartsService.colorsChanged$.subscribe(colors => {
+    this.colorSubscription = this.browsePartsService.colors$.subscribe(colors => {
       this.colors = colors;
       this.fillColors();
     });

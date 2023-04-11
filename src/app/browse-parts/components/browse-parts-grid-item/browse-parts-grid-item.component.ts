@@ -1,53 +1,41 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { interval } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'dexie';
 import { BrowsePartsPart } from 'src/app/models/browse-parts';
+import { PartsListService } from 'src/app/parts-list/services/parts-list.service';
+import { BrowsePartsService } from '../../service/browse-parts.service';
+import { IPart } from 'src/app/models/parts-list';
 
 @Component({
   selector: 'app-browse-parts-grid-item',
   templateUrl: './browse-parts-grid-item.component.html',
   styleUrls: ['./browse-parts-grid-item.component.scss'],
 })
-export class BrowsePartsGridItemComponent implements OnInit, AfterViewInit, AfterViewChecked {
-  i = 1;
-
-  ngAfterViewChecked(): void {
-    // console.log(this.index, this.i++);
-  }
-  @Input()
-  ready = false;
-
+export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   @Input()
   part: BrowsePartsPart;
 
-  @Input()
-  index: number;
+  partsListPart: IPart;
+
+  partsListSubscription: Subscription;
+
+  constructor(
+    private readonly partsListService: PartsListService,
+    private readonly browsePartsService: BrowsePartsService
+  ) {}
 
   ngOnInit(): void {
-    // console.log(this.index, 'ngOnInit');
+    this.partsListSubscription = this.browsePartsService.selectedPartsListUuid$.subscribe(uuid => {
+      this.partsListPart = this.partsListService
+        .getParts(uuid, 'all')
+        .find(p => p.elementIds.some(el => el === this.part.elementId));
+    });
+    this.partsListPart = this.partsListService
+      .getParts(this.browsePartsService.selectedPartsListUuid, 'all')
+      ?.find(p => p.elementIds.some(el => el === this.part.elementId));
   }
 
-  ngAfterViewInit() {
-    // console.log(this.index, 'ngAfterViewInit');
-    // this.ready = true;
-    // const el = document.getElementById(String(this.part.elementId));
-    // const observer = new IntersectionObserver(entries => {
-    //   if (entries[0].isIntersecting) {
-    //     // el is visible
-    //     // console.log(this.index, 'visible');
-    //     interval(this.index).subscribe(e => (this.ready = true));
-    //     observer.disconnect();
-    //   } else {
-    //     this.ready = false;
-    //     // el is not visible
-    //   }
-    // });
-    // observer.observe(el); // Asynchronous call
-    //interval(1 * this.index).subscribe(e => (this.ready = true));
-  }
-
-  onLoad() {
-    // console.log(this.index);
-    this.ready = true;
+  ngOnDestroy(): void {
+    if (this.partsListSubscription) this.partsListSubscription.unsubscribe();
   }
 
   getImageStyle() {

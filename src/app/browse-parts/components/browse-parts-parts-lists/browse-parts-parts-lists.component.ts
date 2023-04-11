@@ -13,7 +13,7 @@ import { BrowsePartsService } from '../../service/browse-parts.service';
 export class BrowsePartsPartsListsComponent implements OnInit, OnDestroy {
   partsLists: IPartsList[];
   partsListSubscription: Subscription;
-  selectedList: IPartsList;
+  selectedList: string;
   show: string;
 
   constructor(
@@ -24,7 +24,12 @@ export class BrowsePartsPartsListsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.partsListSubscription = this.partsListService.partsListsChanged$.subscribe(partsLists => {
       this.partsLists = partsLists;
+      this.selectedList = this.partsLists[0].uuid;
+      this.browsePartsService.setSelectedPartsListUuid(this.selectedList);
     });
+    this.partsLists = this.partsListService.getPartsLists();
+    this.selectedList = this.partsLists[0].uuid;
+    this.browsePartsService.setSelectedPartsListUuid(this.selectedList);
   }
 
   onShowParts(uuid: string) {
@@ -46,6 +51,10 @@ export class BrowsePartsPartsListsComponent implements OnInit, OnDestroy {
   onHideParts() {
     this.show = null;
     this.browsePartsService.setElementIds([]);
+  }
+
+  onSelectList(value: string) {
+    this.browsePartsService.setSelectedPartsListUuid(value);
   }
 
   ngOnDestroy(): void {

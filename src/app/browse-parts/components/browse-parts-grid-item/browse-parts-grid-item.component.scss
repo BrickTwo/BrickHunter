@@ -2,6 +2,20 @@
   ::ng-deep.not-listed-tag {
     background-color: grey;
   }
+
+  ::ng-deep .quantity-edit > .p-inputtext {
+    padding: 2px;
+  }
+
+  ::ng-deep .quantity-edit > .p-button {
+    padding: 2px;
+    width: 30px;
+  }
+
+  ::ng-deep .remove-button {
+    width: 26px;
+    height: 26px !important;
+  }
 }
 
 .full-width-button {

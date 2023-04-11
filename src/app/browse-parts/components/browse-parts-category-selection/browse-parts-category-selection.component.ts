@@ -17,7 +17,7 @@ export class BrowsePartsCategorySelectionComponent implements OnInit, OnDestroy 
   constructor(private readonly browsePartsService: BrowsePartsService) {}
 
   ngOnInit(): void {
-    this.categoriesSubscription = this.browsePartsService.categoriesChanged$.subscribe(categories => {
+    this.categoriesSubscription = this.browsePartsService.categories$.subscribe(categories => {
       this.categories = categories.map(cat => {
         return {
           label: cat.name,

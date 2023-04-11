@@ -4,7 +4,7 @@
     <div [style]="getTopStyle()" id="rowsTop"></div>
     <div class="grid-style">
       <div class="p-1" *ngFor="let part of getParts(); index as i; trackBy: trackItem">
-        <app-browse-parts-grid-item [part]="part" [index]="i"></app-browse-parts-grid-item>
+        <app-browse-parts-grid-item [part]="part"></app-browse-parts-grid-item>
       </div>
     </div>
     <div [style]="getBottomStyle()" id="rowsBottom"></div>
