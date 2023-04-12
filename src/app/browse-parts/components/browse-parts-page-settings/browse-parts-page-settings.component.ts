@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-parts.service';
 import { Subscription } from 'rxjs';
+import { ICountry } from 'src/app/models/global';
+import { LocaleService } from 'src/app/core/services/locale.service';
+import { BrowsePartCountry } from 'src/app/models/browse-parts';
 
 @Component({
   selector: 'app-browse-parts-page-settings',
@@ -12,6 +15,10 @@ export class BrowsePartsPageSettingsComponent implements OnInit, OnDestroy {
   perPage: number = 25;
   totalParts: number = 0;
   filterSubscription: Subscription;
+  countrySubscirption: Subscription;
+  countries: BrowsePartCountry[];
+  selectedCountry: BrowsePartCountry;
+  timezoneOffset = '+0000';
 
   options = [
     { label: 25, value: 25 },
@@ -28,17 +35,15 @@ export class BrowsePartsPageSettingsComponent implements OnInit, OnDestroy {
     { icon: 'fa fa-bars', value: 'list' },
   ];
 
-  onPageChange(page: number) {
-    this.browsePartsService.setPage(page);
-  }
-
-  constructor(private readonly browsePartsService: BrowsePartsService) {}
+  constructor(private readonly browsePartsService: BrowsePartsService, private readonly localeService: LocaleService) {}
 
   ngOnInit(): void {
+    this.timezoneOffset = new Date().getTimezoneOffset().toString();
     this.layout = this.browsePartsService.filter.layout;
     this.page = this.browsePartsService.filter.page;
     this.totalParts = this.browsePartsService.filter.totalParts;
     this.perPage = this.browsePartsService.filter.perPage;
+    this.countries = this.browsePartsService.countries;
 
     this.browsePartsService.filterState$.subscribe(filterChanged => {
       switch (filterChanged.property) {
@@ -56,6 +61,11 @@ export class BrowsePartsPageSettingsComponent implements OnInit, OnDestroy {
           break;
       }
     });
+
+    this.countrySubscirption = this.browsePartsService.countries$.subscribe(countries => {
+      this.countries = countries;
+      this.selectedCountry = this.countries.find(c => c.countryCode === this.browsePartsService.filter.country);
+    });
   }
 
   onLayoutChanged(layout: 'grid' | 'list') {
@@ -66,7 +76,16 @@ export class BrowsePartsPageSettingsComponent implements OnInit, OnDestroy {
     this.browsePartsService.setPerPage(this.perPage);
   }
 
+  onPageChange(page: number) {
+    this.browsePartsService.setPage(page);
+  }
+
+  onCountrySelect() {
+    this.browsePartsService.setCountry(this.selectedCountry.countryCode);
+  }
+
   ngOnDestroy(): void {
     if (this.filterSubscription) this.filterSubscription.unsubscribe();
+    if (this.countrySubscirption) this.countrySubscirption.unsubscribe();
   }
 }

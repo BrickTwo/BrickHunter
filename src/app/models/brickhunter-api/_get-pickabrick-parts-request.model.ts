@@ -3,7 +3,7 @@ export interface GetPickABrickPartsRequest {
   limit: number;
   country: string;
   categoryId: number;
-  colorId: number;
+  colorIds: number[];
   keywords: string[];
   sortField: string;
   sortDir: string;

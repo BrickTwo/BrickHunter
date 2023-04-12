@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Inject, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +10,10 @@ import { environment } from 'src/environments/environment';
 import { PrimengModule } from './primeng.module';
 import { CoreModule } from './core/core.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeEn from '@angular/common/locales/en';
+import { LocaleService } from './core/services/locale.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +27,22 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     PrimengModule,
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
   ],
-  providers: [ConfirmationService, MessageService],
+  providers: [
+    ConfirmationService,
+    MessageService,
+    {
+      provide: LOCALE_ID,
+      useFactory: (localeService: LocaleService) => {
+        return localeService.languageCountryCode;
+      },
+      deps: [LocaleService],
+    },
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(@Inject(LOCALE_ID) locale: string) {
+    registerLocaleData(localeDe);
+    registerLocaleData(localeEn);
+  }
+}

@@ -16,6 +16,11 @@
     width: 26px;
     height: 26px !important;
   }
+
+  ::ng-deep .special-button {
+    width: 35px;
+    height: 35px !important;
+  }
 }
 
 .full-width-button {

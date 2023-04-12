@@ -1,5 +1,5 @@
 <div class="p-2 border-1 surface-border surface-card border-round" style="height: 320px" [id]="part.elementId">
-  <div class="align-items-center" style="height: 120px; cursor: pointer">
+  <div class="align-items-center" style="height: 120px">
     <div [style]="getImageStyle()">
       <div>
         <p-tag severity="warning" *ngIf="part.deliveryChannel === 'pab'">Bestseller</p-tag>
@@ -11,30 +11,27 @@
         <div class="flex justify-content-end flex-column">
           <p-button
             icon="fa-solid fa-heart"
-            styleClass="p-button-rounded p-button-text p-button-danger text-xl"
+            styleClass="p-button-rounded p-button-text p-button-danger text-xl special-button"
             *ngIf="isInWishList"
             (click)="onRemoveFromWishList()"></p-button>
           <p-button
             icon="fa-regular fa-heart"
-            styleClass="p-button-rounded p-button-text p-button-danger text-xl"
+            styleClass="p-button-rounded p-button-text p-button-danger text-xl special-button"
             *ngIf="!isInWishList"
             (click)="onAddToWishList()"></p-button>
           <p-button
             icon="fa-solid fa-circle-check"
-            styleClass="p-button-rounded p-button-text p-button-success text-xl"
-            class="top-20"
+            styleClass="p-button-rounded p-button-text p-button-success text-xl special-button"
             *ngIf="isInHaveItList"
             (click)="onRemoveFromHaveItList()"></p-button>
           <p-button
             icon="fa-regular fa-circle-check"
-            styleClass="p-button-rounded p-button-text p-button-success text-xl"
-            class="top-20"
+            styleClass="p-button-rounded p-button-text p-button-success text-xl special-button"
             *ngIf="!isInHaveItList"
             (click)="onAddToHaveItList()"></p-button>
-          <p-button
+          <!-- <p-button
             icon="fa fa-solid fa-arrow-up-right-from-square"
-            styleClass="p-button-rounded p-button-text text-md"
-            class="top-10"></p-button>
+            styleClass="p-button-rounded p-button-text text-md"></p-button> -->
         </div>
       </div>
     </div>
@@ -57,7 +54,7 @@
             [class]="'flag flag-' + part.country.toLowerCase()"
             style="width: 18px" />
         </div>
-        <div>{{ part.priceAmount }} {{ part.priceCurrency }}</div>
+        <div>{{ part.priceAmount | currency : part.priceCurrency : 'symbol-narrow' }}</div>
       </div>
       <div style="overflow: hidden"><app-color [colorId]="part.colorId" [onlyMainColor]="true"></app-color></div>
       <div

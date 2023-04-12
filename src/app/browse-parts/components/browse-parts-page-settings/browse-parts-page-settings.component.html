@@ -15,7 +15,7 @@
       [totalRecords]="totalParts"></p-paginator>
   </div>
   <div class="justify-content-end">
-    <p-selectButton
+    <!-- <p-selectButton
       [options]="layoutOptions"
       [ngModel]="layout"
       optionLabel="icon"
@@ -24,6 +24,34 @@
       <ng-template let-item>
         <i [class]="item.icon"></i>
       </ng-template>
-    </p-selectButton>
+    </p-selectButton> -->
+    <p-dropdown
+      id="country"
+      [options]="countries"
+      [(ngModel)]="selectedCountry"
+      placeholder="Select a Country"
+      appendTo="body"
+      autoWidth="false"
+      [style]="{ width: '100%' }"
+      (onChange)="onCountrySelect()">
+      <ng-template pTemplate="selectedItem">
+        <div class="flex align-items-center gap-2" *ngIf="selectedCountry">
+          <img
+            src="/assets/flag_placeholder.png"
+            [class]="'flag flag-' + selectedCountry?.countryCode?.toLowerCase()"
+            style="width: 18px" />
+          <div>{{ selectedCountry.lastUpdate + 'Z' | date : 'short' }}</div>
+        </div>
+      </ng-template>
+      <ng-template let-country pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          <img
+            src="/assets/flag_placeholder.png"
+            [class]="'flag flag-' + country.countryCode.toLowerCase()"
+            style="width: 18px" />
+          <div>{{ country.lastUpdate + 'Z' | date : 'short' }}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
   </div>
 </div>

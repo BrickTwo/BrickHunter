@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BrickHunterApiService } from 'src/app/core/http/brickhunterapi.service';
+import { LocaleService } from 'src/app/core/services/locale.service';
 import { GetPickABrickPartsRequest } from 'src/app/models/brickhunter-api';
-import { BrowsePartsPart } from 'src/app/models/browse-parts';
-import { BrowsePartCategory } from 'src/app/models/browse-parts/_browse-parts-vategory.model';
+import { BrowsePartCategory, BrowsePartCountry, BrowsePartsPart } from 'src/app/models/browse-parts';
 
 export interface FilterChanged {
   property: FilterChangedProperty;
@@ -23,6 +23,7 @@ export enum FilterChangedProperty {
   sortDirection,
   keyword,
   elementIds,
+  country,
 }
 
 export interface Filter {
@@ -38,6 +39,7 @@ export interface Filter {
   sortDirection: string;
   keyword: string;
   elementIds: number[];
+  country: string;
 }
 
 @Injectable({
@@ -59,6 +61,7 @@ export class BrowsePartsService {
     sortDirection: 'ASC',
     keyword: '',
     elementIds: [],
+    country: 'de',
   };
   private bricksSubject$ = new Subject<BrowsePartsPart[]>();
   bricksChanged$ = this.bricksSubject$.asObservable();
@@ -71,6 +74,10 @@ export class BrowsePartsService {
   private colorsSubject$ = new Subject<number[]>();
   colors$ = this.colorsSubject$.asObservable();
   colors: number[];
+
+  private countriesSubject$ = new Subject<BrowsePartCountry[]>();
+  countries$ = this.countriesSubject$.asObservable();
+  countries: BrowsePartCountry[];
 
   private selectedPartsListUuidSubject$ = new Subject<string>();
   selectedPartsListUuid$ = this.selectedPartsListUuidSubject$.asObservable();
@@ -90,9 +97,13 @@ export class BrowsePartsService {
 
   filterInitialized = false;
 
-  constructor(private readonly birckHunterApiService: BrickHunterApiService) {
+  constructor(
+    private readonly birckHunterApiService: BrickHunterApiService,
+    private readonly localeService: LocaleService
+  ) {
     this.wishList = JSON.parse(localStorage.getItem('favorites')) || [];
     this.haveItList = JSON.parse(localStorage.getItem('haveIts')) || [];
+    this.filter.country = this.localeService.country?.code || 'de';
   }
 
   initFilter() {
@@ -100,6 +111,7 @@ export class BrowsePartsService {
       const browsePartsFilter = localStorage.getItem('browsePartsFilter') || null;
       if (browsePartsFilter) {
         this.filter = JSON.parse(browsePartsFilter) as unknown as Filter;
+        this.filter.country = this.localeService.country?.code || 'de';
         this.filterInitialized = true;
         this.filterSubject$.next({ property: FilterChangedProperty.layout, filter: { ...this.filter } });
         this.filterSubject$.next({ property: FilterChangedProperty.page, filter: { ...this.filter } });
@@ -195,6 +207,13 @@ export class BrowsePartsService {
     this.sendRequest();
   }
 
+  setCountry(values: string) {
+    this.filter.country = values;
+    this.filterSubject$.next({ property: FilterChangedProperty.country, filter: { ...this.filter } });
+    this.resetPage();
+    this.sendRequest();
+  }
+
   setSelectedPartsListUuid(value: string) {
     this.selectedPartsListUuid = value;
     this.selectedPartsListUuidSubject$.next(this.selectedPartsListUuid);
@@ -234,9 +253,9 @@ export class BrowsePartsService {
     const request: GetPickABrickPartsRequest = {
       page: this.filter.page + 1,
       limit: this.filter.perPage,
-      country: 'de',
+      country: this.filter.country,
       categoryId: this.filter.categoryId === 9999 ? null : this.filter.categoryId,
-      colorId: this.filter.colorId,
+      colorIds: this.filter.colorId ? [this.filter.colorId] : [],
       keywords: this.filter.keyword ? this.filter.keyword.split(' ') : [],
       sortField: this.filter.sort,
       sortDir: this.filter.sortDirection,
@@ -251,10 +270,12 @@ export class BrowsePartsService {
       this.bricks = response.bricks as BrowsePartsPart[];
       this.categories = response.categories as BrowsePartCategory[];
       this.colors = response.colors;
+      this.countries = response.countries as BrowsePartCountry[];
       this.filter.totalParts = response.page.total;
       this.bricksSubject$.next(this.bricks.slice());
       this.categoriesSubject$.next(this.categories.slice());
       this.colorsSubject$.next(this.colors.slice());
+      this.countriesSubject$.next(this.countries.slice());
       this.filterSubject$.next({ property: FilterChangedProperty.totalParts, filter: { ...this.filter } });
 
       this.isLoading = false;

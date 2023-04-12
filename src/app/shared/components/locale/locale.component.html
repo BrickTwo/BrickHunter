@@ -15,7 +15,7 @@
       appendTo="body"
       autoWidth="false"
       [style]="{ width: '100%' }"
-      (click)="onCountrySelect()">
+      (onChange)="onCountrySelect()">
       <ng-template pTemplate="selectedItem">
         <div class="flex align-items-center gap-2" *ngIf="selectedCountry">
           <img
@@ -47,7 +47,7 @@
       appendTo="body"
       autoWidth="false"
       [style]="{ width: '100%' }"
-      (click)="onLanguageSelect()">
+      (onChange)="onLanguageSelect()">
       <ng-template pTemplate="selectedItem">
         <div class="flex align-items-center gap-2" *ngIf="selectedLanguage">
           <img
