@@ -1,13 +1,35 @@
-<p-card header="Categories">
+<p-card>
+  <div class="flex justify-content-between flex-wrap card-container purple-container">
+    <div class="p-card-title">Categories</div>
+    <p-button
+      icon="fa fa-gear"
+      styleClass="p-button-rounded p-button-text config-button"
+      (click)="configMode = !configMode"></p-button>
+  </div>
   <p-tree
+    *ngIf="!configMode"
     [value]="categories"
     [(selection)]="selectedCategory"
     selectionMode="single"
     (onNodeSelect)="onSelectCategory($event.node.key)">
-    <ng-template let-category pTemplate="default">
-      <!-- <p-inputSwitch [(ngModel)]="category.active" inputId="onlyPrinted" *ngIf="category.key !== '9999'">
-      </p-inputSwitch> -->
-      {{ category.label }} ({{ category.data }})
-    </ng-template>
+    <ng-template let-category pTemplate="default"> {{ category.label }} ({{ category.data }}) </ng-template>
   </p-tree>
+  <div *ngIf="configMode">
+    <div class="flex flex-nowrap align-items-center gap-1 mb-3">
+      <p-inputSwitch
+        [(ngModel)]="excludeSelectedCategoryIds"
+        inputId="onlyPrinted"
+        (onChange)="onChangeExcludeSeclectedCategoryIds($event.checked)"></p-inputSwitch>
+      <label for="onlyPrinted">Ignore selected Categories</label>
+    </div>
+    <p-tree
+      [value]="configCategories"
+      [(selection)]="selectedConfigCategories"
+      selectionMode="checkbox"
+      (onNodeSelect)="onConfigCategory($event.node.key)">
+      <ng-template let-category pTemplate="default">
+        {{ category.label }}
+      </ng-template>
+    </p-tree>
+  </div>
 </p-card>

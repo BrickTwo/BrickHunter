@@ -24,6 +24,8 @@ export enum FilterChangedProperty {
   keyword,
   elementIds,
   country,
+  excludeCategoryIds,
+  excludeSelectedCategoyIds,
 }
 
 export interface Filter {
@@ -40,6 +42,8 @@ export interface Filter {
   keyword: string;
   elementIds: number[];
   country: string;
+  excludeCategoryIds: number[];
+  excludeSelectedCategoyIds: boolean;
 }
 
 @Injectable({
@@ -62,6 +66,8 @@ export class BrowsePartsService {
     keyword: '',
     elementIds: [],
     country: 'de',
+    excludeCategoryIds: [],
+    excludeSelectedCategoyIds: true,
   };
   private bricksSubject$ = new Subject<BrowsePartsPart[]>();
   bricksChanged$ = this.bricksSubject$.asObservable();
@@ -214,6 +220,20 @@ export class BrowsePartsService {
     this.sendRequest();
   }
 
+  setExlcudeCategoryId(values: number[]) {
+    this.filter.excludeCategoryIds = values;
+    this.filterSubject$.next({ property: FilterChangedProperty.excludeCategoryIds, filter: { ...this.filter } });
+    this.resetPage();
+    this.sendRequest();
+  }
+
+  setExcludeSelectedCategoryIds(value: boolean) {
+    this.filter.excludeSelectedCategoyIds = value;
+    this.filterSubject$.next({ property: FilterChangedProperty.excludeSelectedCategoyIds, filter: { ...this.filter } });
+    this.resetPage();
+    this.sendRequest();
+  }
+
   setSelectedPartsListUuid(value: string) {
     this.selectedPartsListUuid = value;
     this.selectedPartsListUuidSubject$.next(this.selectedPartsListUuid);
@@ -261,7 +281,7 @@ export class BrowsePartsService {
       sortDir: this.filter.sortDirection,
       deliveryChannels: this.filter.deliveryChannels,
       onlyPrinted: this.filter.onlyPrinted,
-      excludeCategoryIds: [],
+      excludeCategoryIds: this.filter.excludeSelectedCategoyIds ? this.filter.excludeCategoryIds : [],
       designIds: [],
       elementIds: this.filter.elementIds,
     };

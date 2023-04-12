@@ -22,5 +22,10 @@
     //     height: 0.75rem;
     //     width: 0.75rem;
     //   }
+    ::ng-deep .config-button {
+        width: 1.5rem;
+        height: 1.5rem !important;
+      }
+    
   }
   
