@@ -9,11 +9,28 @@
       </div>
       <div class="flex justify-content-end" style="width: 100%; position: relative; top: -34px; right: -10px">
         <div class="flex justify-content-end flex-column">
-          <p-button icon="fa fa-heart" styleClass="p-button-rounded p-button-text p-button-danger text-xl"></p-button>
           <p-button
-            icon="fa fa-circle-check"
+            icon="fa-solid fa-heart"
+            styleClass="p-button-rounded p-button-text p-button-danger text-xl"
+            *ngIf="isInWishList"
+            (click)="onRemoveFromWishList()"></p-button>
+          <p-button
+            icon="fa-regular fa-heart"
+            styleClass="p-button-rounded p-button-text p-button-danger text-xl"
+            *ngIf="!isInWishList"
+            (click)="onAddToWishList()"></p-button>
+          <p-button
+            icon="fa-solid fa-circle-check"
             styleClass="p-button-rounded p-button-text p-button-success text-xl"
-            class="top-20"></p-button>
+            class="top-20"
+            *ngIf="isInHaveItList"
+            (click)="onRemoveFromHaveItList()"></p-button>
+          <p-button
+            icon="fa-regular fa-circle-check"
+            styleClass="p-button-rounded p-button-text p-button-success text-xl"
+            class="top-20"
+            *ngIf="!isInHaveItList"
+            (click)="onAddToHaveItList()"></p-button>
           <p-button
             icon="fa fa-solid fa-arrow-up-right-from-square"
             styleClass="p-button-rounded p-button-text text-md"
@@ -58,17 +75,21 @@
           decrementButtonClass="quantity-edit-button"
           incrementButtonClass="quantity-edit-button"
           incrementButtonIcon="fa fa-plus"
-          decrementButtonIcon="fa fa-minus"></p-inputNumber>
+          decrementButtonIcon="fa fa-minus"
+          (onBlur)="onChangeQuantity()"
+          (onInput)="onChangeQuantity()"></p-inputNumber>
         <p-button
           icon="fa fa-trash-can"
-          styleClass="p-button-rounded p-button-danger p-button-text remove-button"></p-button>
+          styleClass="p-button-rounded p-button-danger p-button-text remove-button"
+          (click)="onRemovePart()"></p-button>
       </div>
       <p-button
         icon="fa fa-plus"
         label="Add"
         styleClass="p-button-solid text-md"
         class="full-width-button"
-        *ngIf="!partsListPart"></p-button>
+        *ngIf="!partsListPart"
+        (click)="onAddPart()"></p-button>
     </div>
   </div>
 </div>

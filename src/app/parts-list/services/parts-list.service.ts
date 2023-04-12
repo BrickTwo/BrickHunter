@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
 import { IndexedDBService } from '../../core/services/indexeddb.service.ts';
 import { IPart, IPartsList } from '../../models/parts-list';
+import { GuidService } from 'src/app/core/services/guid.service';
 
 @Injectable({ providedIn: 'root' })
 export class PartsListService {
@@ -13,7 +14,8 @@ export class PartsListService {
 
   constructor(
     private readonly indexedDBService: IndexedDBService,
-    private readonly gloabSettingsService: GlobalSettingsService
+    private readonly gloabSettingsService: GlobalSettingsService,
+    private readonly guidService: GuidService
   ) {
     this.indexedDBService.partsLists.toArray().then(partsLists => {
       this.setPartsLists(partsLists);
@@ -39,6 +41,19 @@ export class PartsListService {
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
+  createPartsList(name: string, source: string) {
+    const partList: IPartsList = {
+      uuid: this.guidService.generate(),
+      name: name,
+      source: source,
+      parts: [],
+    };
+
+    this.addPartsList(partList);
+
+    return partList;
+  }
+
   updatePartsList(newPartsList: IPartsList) {
     let partsList = this.partsLists.find(p => p.uuid === newPartsList.uuid);
     partsList = newPartsList;
@@ -52,11 +67,40 @@ export class PartsListService {
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
-  updatePartsListPart(uuid: string, newPart: IPart) {
+  addPartToPartsList(uuid: string, newPart: IPart) {
+    let partsList = this.partsLists.find(p => p.uuid === uuid);
+    partsList.parts.push(newPart);
+
+    if (partsList.source !== newPart.source.source) {
+      partsList.source = 'Mixed';
+    }
+
+    this.indexedDBService.partsLists.put(partsList, partsList.uuid);
+    this.partsListsChangedSubject$.next(this.getPartsLists());
+  }
+
+  updatePartInPartsList(uuid: string, newPart: IPart) {
+    if (newPart.qty <= 0) {
+      this.deletePartInPartsList(uuid, newPart.id);
+      return;
+    }
+
     const partsList = this.partsLists.find(p => p.uuid === uuid);
     let part = partsList.parts.find(p => p.id === newPart.id);
     part.qty = newPart.qty;
     part.have = newPart.have;
+
+    this.indexedDBService.partsLists.put(partsList, partsList.uuid);
+    this.partsListsChangedSubject$.next(this.getPartsLists());
+  }
+
+  deletePartInPartsList(uuid: string, partId: string) {
+    const partsList = this.partsLists.find(p => p.uuid === uuid);
+    partsList.parts = partsList.parts.filter(p => p.id !== partId);
+
+    if (partsList.parts.every(p => p.source.source === partsList.parts[0].source.source)) {
+      partsList.source = partsList.parts[0].source.source;
+    }
 
     this.indexedDBService.partsLists.put(partsList, partsList.uuid);
     this.partsListsChangedSubject$.next(this.getPartsLists());

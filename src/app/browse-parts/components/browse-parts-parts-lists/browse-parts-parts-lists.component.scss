@@ -22,13 +22,9 @@
     padding-right: 0;
     padding: 0;
   }
+}
 
-  // ::ng-deep.p-inputswitch {
-  //     width: 20px;
-  //     height: 10px;
-  //   }
-  //   ::ng-deep.p-inputswitch .p-inputswitch-slider:before {
-  //     height: 0.75rem;
-  //     width: 0.75rem;
-  //   }
+.full-width-button {
+  width: 100%;
+  display: grid;
 }

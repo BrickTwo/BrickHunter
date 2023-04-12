@@ -13,16 +13,24 @@ export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
   parts: BrowsePartsPart[];
   filterSubscription: Subscription;
   partsSubscription: Subscription;
+  isLoadingSubscirption: Subscription;
   showFromIndex = 0;
   showToIndex = 0;
   totalRows = 0;
   rowsTop = 0;
   rowsBottom = 0;
   gridRef: HTMLElement;
+  isLoading: boolean;
 
   constructor(private readonly browsePartsService: BrowsePartsService) {}
 
   ngOnInit() {
+    this.isLoading = this.browsePartsService.isLoading;
+
+    this.isLoadingSubscirption = this.browsePartsService.isLoading$.subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
+
     this.filterSubscription = this.browsePartsService.filterState$.subscribe(filterChanged => {
       switch (filterChanged.property) {
         case FilterChangedProperty.layout:
@@ -53,6 +61,7 @@ export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.filterSubscription) this.filterSubscription.unsubscribe();
     if (this.partsSubscription) this.partsSubscription.unsubscribe();
+    if (this.isLoadingSubscirption) this.isLoadingSubscirption.unsubscribe();
   }
 
   trackItem(index: number, item: any) {

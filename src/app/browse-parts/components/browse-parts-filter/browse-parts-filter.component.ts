@@ -62,6 +62,11 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
   constructor(private readonly browsePartsService: BrowsePartsService) {}
 
   ngOnInit(): void {
+    this.onlyPrinted = this.browsePartsService.filter.onlyPrinted;
+    this.deliveryChannels = this.browsePartsService.filter.deliveryChannels;
+    this.selectedSort = this.browsePartsService.filter.sort;
+    this.sortDirection = this.browsePartsService.filter.sortDirection;
+
     this.filterSubscription = this.browsePartsService.filterState$.subscribe(filterChanged => {
       switch (filterChanged.property) {
         case FilterChangedProperty.onlyPrinted:

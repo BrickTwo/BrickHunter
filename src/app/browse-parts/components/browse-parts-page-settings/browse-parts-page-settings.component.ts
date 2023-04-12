@@ -35,6 +35,11 @@ export class BrowsePartsPageSettingsComponent implements OnInit, OnDestroy {
   constructor(private readonly browsePartsService: BrowsePartsService) {}
 
   ngOnInit(): void {
+    this.layout = this.browsePartsService.filter.layout;
+    this.page = this.browsePartsService.filter.page;
+    this.totalParts = this.browsePartsService.filter.totalParts;
+    this.perPage = this.browsePartsService.filter.perPage;
+
     this.browsePartsService.filterState$.subscribe(filterChanged => {
       switch (filterChanged.property) {
         case FilterChangedProperty.layout:

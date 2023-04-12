@@ -2,7 +2,7 @@
   <div style="margin-bottom: 1rem">
     <i class="fa-solid fa-heart" style="font-size: 20px; color: #d32f2f"></i>
     <span class="ml-2"
-      >Wish list
+      >Wish list ({{ wishList.length }})
       <span (click)="onShowParts('wish')" *ngIf="show !== 'wish'">
         <i class="fa-regular fa-eye-slash" style="color: rgba(10, 52, 99, 0.5)"></i>
       </span>
@@ -14,7 +14,7 @@
   <div style="margin-bottom: 1rem">
     <i class="fa-solid fa-circle-check" style="font-size: 20px; color: #689f38"></i>
     <span class="ml-2"
-      >Have it
+      >Have it ({{ haveItList.length }})
       <span (click)="onShowParts('haveit')" *ngIf="show !== 'haveit'">
         <i class="fa-regular fa-eye-slash" style="color: rgba(10, 52, 99, 0.5)"></i>
       </span>
@@ -28,11 +28,11 @@
       [inputId]="partsList.uuid"
       name="category"
       [value]="partsList.uuid"
-      [(ngModel)]="selectedList"
+      [(ngModel)]="selectedListUuid"
       (onClick)="onSelectList($event.value)"></p-radioButton>
     <span class="ml-2">
       <label [for]="partsList.uuid" style="overflow-wrap: anywhere">
-        {{ partsList.name }}
+        {{ partsList.name }} ({{ partsList.parts.length }})
       </label>
       <span (click)="onShowParts(partsList.uuid); $event.stopPropagation()" *ngIf="show !== partsList.uuid">
         <i class="fa-regular fa-eye-slash" style="color: rgba(10, 52, 99, 0.5)"></i>
@@ -42,4 +42,10 @@
       </span>
     </span>
   </div>
+  <p-button
+    icon="fa fa-plus"
+    label="Create Parts List"
+    styleClass="p-button-solid text-md"
+    class="full-width-button"
+    (click)="onCreatePartsList()"></p-button>
 </p-card>

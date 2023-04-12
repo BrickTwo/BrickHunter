@@ -76,9 +76,24 @@ export class BrowsePartsService {
   selectedPartsListUuid$ = this.selectedPartsListUuidSubject$.asObservable();
   selectedPartsListUuid: string;
 
+  private wishListSubject$ = new Subject<number[]>();
+  wishList$ = this.wishListSubject$.asObservable();
+  wishList: number[];
+
+  private haveItListSubject$ = new Subject<number[]>();
+  haveItList$ = this.haveItListSubject$.asObservable();
+  haveItList: number[];
+
+  private isLoadingSubject$ = new Subject<boolean>();
+  isLoading$ = this.isLoadingSubject$.asObservable();
+  isLoading: boolean;
+
   filterInitialized = false;
 
-  constructor(private readonly birckHunterApiService: BrickHunterApiService) {}
+  constructor(private readonly birckHunterApiService: BrickHunterApiService) {
+    this.wishList = JSON.parse(localStorage.getItem('favorites')) || [];
+    this.haveItList = JSON.parse(localStorage.getItem('haveIts')) || [];
+  }
 
   initFilter() {
     if (!this.filterInitialized) {
@@ -185,7 +200,33 @@ export class BrowsePartsService {
     this.selectedPartsListUuidSubject$.next(this.selectedPartsListUuid);
   }
 
+  addToWishList(value: number) {
+    this.wishList.push(value);
+    localStorage.setItem('favorites', JSON.stringify(this.wishList));
+    this.wishListSubject$.next(this.wishList.slice());
+  }
+
+  removeFromWishList(value: number) {
+    this.wishList = this.wishList.filter(i => i !== value);
+    localStorage.setItem('favorites', JSON.stringify(this.wishList));
+    this.wishListSubject$.next(this.wishList.slice());
+  }
+
+  addToHaveItList(value: number) {
+    this.haveItList.push(value);
+    localStorage.setItem('haveIts', JSON.stringify(this.haveItList));
+    this.haveItListSubject$.next(this.haveItList.slice());
+  }
+
+  removeFromHaveItList(value: number) {
+    this.haveItList = this.haveItList.filter(i => i !== value);
+    localStorage.setItem('haveIts', JSON.stringify(this.haveItList));
+    this.haveItListSubject$.next(this.haveItList.slice());
+  }
+
   sendRequest() {
+    this.isLoading = true;
+    this.isLoadingSubject$.next(true);
     this.initFilter();
 
     localStorage.setItem('browsePartsFilter', JSON.stringify(this.filter));
@@ -215,6 +256,9 @@ export class BrowsePartsService {
       this.categoriesSubject$.next(this.categories.slice());
       this.colorsSubject$.next(this.colors.slice());
       this.filterSubject$.next({ property: FilterChangedProperty.totalParts, filter: { ...this.filter } });
+
+      this.isLoading = false;
+      this.isLoadingSubject$.next(false);
     });
   }
 }

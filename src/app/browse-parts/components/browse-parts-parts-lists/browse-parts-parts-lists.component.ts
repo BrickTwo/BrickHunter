@@ -12,8 +12,13 @@ import { BrowsePartsService } from '../../service/browse-parts.service';
 })
 export class BrowsePartsPartsListsComponent implements OnInit, OnDestroy {
   partsLists: IPartsList[];
+  wishList: number[];
+  haveItList: number[];
   partsListSubscription: Subscription;
-  selectedList: string;
+  browsePartsSubscription: Subscription;
+  wishListSubscription: Subscription;
+  haveItListSubscription: Subscription;
+  selectedListUuid: string;
   show: string;
 
   constructor(
@@ -22,14 +27,31 @@ export class BrowsePartsPartsListsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.partsLists = this.partsListService.getPartsLists();
+    this.selectedListUuid = this.partsLists[0]?.uuid;
+    this.browsePartsService.setSelectedPartsListUuid(this.selectedListUuid);
+    this.wishList = this.browsePartsService.wishList;
+    this.haveItList = this.browsePartsService.haveItList;
+
     this.partsListSubscription = this.partsListService.partsListsChanged$.subscribe(partsLists => {
       this.partsLists = partsLists;
-      this.selectedList = this.partsLists[0].uuid;
-      this.browsePartsService.setSelectedPartsListUuid(this.selectedList);
+      if (!this.selectedListUuid) {
+        this.selectedListUuid = this.partsLists[0].uuid;
+        this.browsePartsService.setSelectedPartsListUuid(this.selectedListUuid);
+      }
     });
-    this.partsLists = this.partsListService.getPartsLists();
-    this.selectedList = this.partsLists[0].uuid;
-    this.browsePartsService.setSelectedPartsListUuid(this.selectedList);
+
+    this.browsePartsSubscription = this.browsePartsService.selectedPartsListUuid$.subscribe(uuid => {
+      this.selectedListUuid = uuid;
+    });
+
+    this.wishListSubscription = this.browsePartsService.wishList$.subscribe(wishList => {
+      this.wishList = wishList;
+    });
+
+    this.haveItListSubscription = this.browsePartsService.haveItList$.subscribe(haveItList => {
+      this.haveItList = haveItList;
+    });
   }
 
   onShowParts(uuid: string) {
@@ -37,8 +59,10 @@ export class BrowsePartsPartsListsComponent implements OnInit, OnDestroy {
 
     switch (uuid) {
       case 'wish':
+        this.browsePartsService.setElementIds(this.browsePartsService.wishList);
         break;
       case 'haveit':
+        this.browsePartsService.setElementIds(this.browsePartsService.haveItList);
         break;
       default:
         const partsList = this.partsListService.getPartsList(uuid);
@@ -57,7 +81,16 @@ export class BrowsePartsPartsListsComponent implements OnInit, OnDestroy {
     this.browsePartsService.setSelectedPartsListUuid(value);
   }
 
+  onCreatePartsList() {
+    const partsList = this.partsListService.createPartsList('Parts List', 'Lego');
+    this.selectedListUuid = partsList.uuid;
+    this.browsePartsService.setSelectedPartsListUuid(partsList.uuid);
+  }
+
   ngOnDestroy(): void {
     if (this.partsListSubscription) this.partsListSubscription.unsubscribe();
+    if (this.browsePartsSubscription) this.browsePartsSubscription.unsubscribe();
+    if (this.wishListSubscription) this.wishListSubscription.unsubscribe();
+    if (this.haveItListSubscription) this.haveItListSubscription.unsubscribe();
   }
 }

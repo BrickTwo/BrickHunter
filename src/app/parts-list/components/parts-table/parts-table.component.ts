@@ -28,13 +28,13 @@ export class PartsTableComponent implements OnChanges {
   onQuantityChange($event, partId) {
     let part: IPart = this.parts.find(p => p.id === partId);
     part.qty = $event;
-    this.partsListService.updatePartsListPart(this.partsListUuid, part);
+    this.partsListService.updatePartInPartsList(this.partsListUuid, part);
   }
 
   onHaveChange($event, partId) {
     let part: IPart = this.parts.find(p => p.id === partId);
     part.have = $event;
-    this.partsListService.updatePartsListPart(this.partsListUuid, part);
+    this.partsListService.updatePartInPartsList(this.partsListUuid, part);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
