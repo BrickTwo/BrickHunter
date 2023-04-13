@@ -25,18 +25,19 @@ export class ColorService {
   }
 
   public brickLinkToRebrickable(colorId?: number): number {
-    if (!colorId) return -1;
+    if (!colorId) return 9999;
     const color = this.colors.find(color => {
       return color.externalIds.brickLink?.extIds.find(id => {
         return id === colorId;
       });
     });
 
-    return color ? color.id : -1;
+    return color ? color.id : 9999;
   }
 
   public async getColor(colorId: number | undefined, type: string = null): Promise<IColor> {
-    if (colorId == undefined) return this.colors[0];
+    if (colorId === -1) colorId = 9999;
+    if (colorId == undefined) return this.colors[this.colors.length - 1];
 
     if (!this.colors) {
       await this.loadColors();
@@ -56,6 +57,6 @@ export class ColorService {
       }
     });
 
-    return color ? color : this.colors[0];
+    return color ? color : this.colors[this.colors.length - 1];
   }
 }

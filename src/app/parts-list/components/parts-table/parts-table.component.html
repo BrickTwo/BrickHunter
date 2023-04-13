@@ -1,11 +1,12 @@
 <p-table
-  [value]="parts"
+  [value]="getParts()"
   [tableStyle]="{ 'min-width': '50rem' }"
   styleClass="p-datatable-striped"
   scrollHeight="calc(100vh - 210px)"
-  [scrollable]="true"
-  [virtualScroll]="true"
-  [virtualScrollItemSize]="rowHeight">
+  #tableRef
+  [scrollable]="false"
+  (sortFunction)="onCustomSort($event)"
+  [customSort]="true">
   <ng-template pTemplate="header">
     <tr>
       <th pRipple pSortableColumn="designId">DesignId<p-sortIcon field="designId"></p-sortIcon></th>
@@ -13,7 +14,7 @@
       <th>Image</th>
       <th pRipple pSortableColumn="color">Color<p-sortIcon field="color"></p-sortIcon></th>
       <th pRipple pSortableColumn="qty">Quantity<p-sortIcon field="qty"></p-sortIcon></th>
-      <th>BrickLink</th>
+      <th pRipple pSortableColumn="maxPrice">BrickLink<p-sortIcon field="maxPrice"></p-sortIcon></th>
       <th pRipple pSortableColumn="lego.price.amount">
         Pick a Brick <p-sortIcon field="lego.price.amount"></p-sortIcon>
         <p-progressSpinner
@@ -21,9 +22,16 @@
           class="vertical-align-middle"
           *ngIf="pabIsLoading"></p-progressSpinner>
       </th>
+      <th>Action</th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-part>
+  <ng-template pTemplate="body" let-part let-rowIndex="rowIndex">
+    <tr [style]="getTopStyle()" *ngIf="rowIndex === 0 && rowsTop > 0">
+      <td colspan="8"></td>
+    </tr>
+    <tr style="height: 91px" *ngIf="rowIndex === 0 && rowsTop % 2 === 0 && rowsTop > 0">
+      <td colspan="8"></td>
+    </tr>
     <tr style="height: 91px">
       <td>{{ part.designId }}</td>
       <td>{{ part.elementId }}</td>
@@ -83,11 +91,20 @@
       <td>
         <app-pab-price [part]="part"></app-pab-price>
       </td>
+      <td>
+        <p-button
+          icon="fa fa-trash-can"
+          styleClass="p-button-rounded p-button-danger p-button-text"
+          (click)="onDeletePart(part)"></p-button>
+      </td>
+    </tr>
+    <tr [style]="getBottomStyle()" *ngIf="rowIndex === rowsVisible - 1 && rowsBottom > 0">
+      <td colspan="8"></td>
     </tr>
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td colspan="7">No parts in this list.</td>
+      <td colspan="8">No parts in this list.</td>
     </tr>
   </ng-template>
 </p-table>

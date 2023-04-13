@@ -7,7 +7,7 @@ import { GuidService } from 'src/app/core/services/guid.service';
 
 @Injectable({ providedIn: 'root' })
 export class PartsListService {
-  partsListsChangedSubject$ = new Subject<IPartsList[]>();
+  private partsListsChangedSubject$ = new Subject<IPartsList[]>();
   partsListsChanged$ = this.partsListsChangedSubject$.asObservable();
 
   private partsLists: IPartsList[] = [];
@@ -98,7 +98,7 @@ export class PartsListService {
     const partsList = this.partsLists.find(p => p.uuid === uuid);
     partsList.parts = partsList.parts.filter(p => p.id !== partId);
 
-    if (partsList.parts.every(p => p.source.source === partsList.parts[0].source.source)) {
+    if (partsList.parts.length && partsList.parts.every(p => p.source.source === partsList.parts[0].source.source)) {
       partsList.source = partsList.parts[0].source.source;
     }
 

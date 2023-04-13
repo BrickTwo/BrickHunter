@@ -22,12 +22,12 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   faClipboardList = faClipboardList;
   partsList: IPartsList;
   items: MenuItem[] = [
-    { label: 'All', id: 'all' },
-    { label: 'PaB Bestseller', id: 'pab' },
-    { label: 'PaB Standard', id: 'bap' },
-    { label: 'PaB Out Of Stock', id: 'oos' },
-    { label: 'BrickLink', id: 'brickLink' },
-    { label: 'Warnings', id: 'warning' },
+    { label: 'All', id: 'all', title: 'All' },
+    { label: 'PaB Bestseller', id: 'pab', title: 'PaB Bestseller' },
+    { label: 'PaB Standard', id: 'bap', title: 'PaB Standard' },
+    { label: 'PaB Out Of Stock', id: 'oos', title: 'PaB Out Of Stock' },
+    { label: 'BrickLink', id: 'brickLink', title: 'BrickLink' },
+    { label: 'Warnings', id: 'warning', title: 'Warnings' },
   ];
   activeItem = this.items[0];
   parts: IPart[];
@@ -103,9 +103,9 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       });
 
       this.partsListSubscription = this.partsListService.partsListsChanged$.subscribe(partsLists => {
-        if (!this.partsList && partsLists) {
-          this.reloadPartsList();
-        }
+        // if (!this.partsList && partsLists) {
+        this.reloadPartsList();
+        // }
       });
 
       this.globalSettingsSubscription = this.gloablSettingsService.settingsChanged$.subscribe(value => {
@@ -121,6 +121,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     if (!this.partsList && partsList) {
       loadPab = true;
     }
+
     this.partsList = partsList;
     this.parts = this.partsListService.getParts(this.uuid, this.activeItem.id);
 
@@ -141,6 +142,11 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
         price: this.getTotalPrice('brickLink'),
       },
     };
+
+    this.items = this.items.map(item => {
+      item.label = `${item.title} (${this.getParts(item.id)?.length})`;
+      return item;
+    });
 
     if (loadPab) {
       this.pabIsLoading = true;

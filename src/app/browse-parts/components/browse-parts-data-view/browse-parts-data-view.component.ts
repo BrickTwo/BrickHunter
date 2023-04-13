@@ -22,6 +22,9 @@ export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
   gridRef: HTMLElement;
   isLoading: boolean;
 
+  scrollSubscription: Subscription;
+  resizeSubscription: Subscription;
+
   constructor(private readonly browsePartsService: BrowsePartsService) {}
 
   ngOnInit() {
@@ -40,19 +43,19 @@ export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
 
     this.partsSubscription = this.browsePartsService.bricksChanged$.subscribe(parts => {
       this.parts = parts;
-      this.calcVisible('subscribe');
+      this.calcVisible();
     });
 
     this.gridRef = document.getElementById('pabparts');
 
-    this.calcVisible('init');
+    this.calcVisible();
 
-    fromEvent(window, 'scroll').subscribe((e: Event) => {
-      this.calcVisible('scroll');
+    this.scrollSubscription = fromEvent(window, 'scroll').subscribe((e: Event) => {
+      this.calcVisible();
     });
 
-    fromEvent(window, 'resize').subscribe((e: Event) => {
-      this.calcVisible('resize');
+    this.resizeSubscription = fromEvent(window, 'resize').subscribe((e: Event) => {
+      this.calcVisible();
     });
 
     this.browsePartsService.sendRequest();
@@ -62,6 +65,8 @@ export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
     if (this.filterSubscription) this.filterSubscription.unsubscribe();
     if (this.partsSubscription) this.partsSubscription.unsubscribe();
     if (this.isLoadingSubscirption) this.isLoadingSubscirption.unsubscribe();
+    if (this.scrollSubscription) this.scrollSubscription.unsubscribe();
+    if (this.resizeSubscription) this.resizeSubscription.unsubscribe();
   }
 
   trackItem(index: number, item: any) {
@@ -80,7 +85,7 @@ export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
     return this.parts?.slice(this.showFromIndex, this.showToIndex);
   }
 
-  calcVisible(from: string) {
+  calcVisible() {
     const rowHigh = 328;
     const colWidth = 200;
     const rect = this.gridRef.getBoundingClientRect();

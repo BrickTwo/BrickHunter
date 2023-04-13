@@ -20,6 +20,7 @@ import { IPart } from 'src/app/models/parts-list';
 import { IAddElementItem, IChangeElementItem, PaBCartType } from 'src/app/models/pick-a-brick';
 import { TransferWarningComponent } from '../components/transfer-warning/transfer-warning.component';
 import { PartsListService } from './parts-list.service';
+import { VersionService } from 'src/app/core/services/version.service';
 
 @Injectable()
 export class PickABrickService {
@@ -36,10 +37,12 @@ export class PickABrickService {
   constructor(
     private readonly partsListService: PartsListService,
     private readonly localeService: LocaleService,
-    private readonly gloablSettingsService: GlobalSettingsService
+    private readonly gloablSettingsService: GlobalSettingsService,
+    private readonly versionService: VersionService
   ) {}
 
   getParts(uuid: string) {
+    if (this.versionService.devmode) return;
     this.pabLoadError = '';
 
     let elementIds: number[] = [];

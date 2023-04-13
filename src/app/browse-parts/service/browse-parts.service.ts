@@ -154,6 +154,7 @@ export class BrowsePartsService {
   setPerPage(value: number) {
     this.filter.perPage = value;
     this.filterSubject$.next({ property: FilterChangedProperty.perPage, filter: { ...this.filter } });
+    this.resetPage();
     this.sendRequest();
   }
 

@@ -8,6 +8,7 @@ import { IndexedDBService } from './indexeddb.service.ts';
 export class VersionService {
   oldVersion = '';
   currentVersion = '';
+  devmode = false;
 
   constructor(private readonly importService: ImportService, private readonly indexedDbService: IndexedDBService) {
     this.oldVersion = this.readVersion();
@@ -16,6 +17,7 @@ export class VersionService {
       this.currentVersion = manifestData.version;
     } catch (err) {
       this.currentVersion = '2.0.12';
+      this.devmode = true;
     }
     this.updateStructure();
   }
