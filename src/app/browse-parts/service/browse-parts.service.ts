@@ -118,7 +118,6 @@ export class BrowsePartsService {
       if (browsePartsFilter) {
         this.filter = JSON.parse(browsePartsFilter) as unknown as Filter;
         this.filter.country = this.localeService.country?.code || 'de';
-        this.filterInitialized = true;
         this.filterSubject$.next({ property: FilterChangedProperty.layout, filter: { ...this.filter } });
         this.filterSubject$.next({ property: FilterChangedProperty.page, filter: { ...this.filter } });
         this.filterSubject$.next({ property: FilterChangedProperty.page, filter: { ...this.filter } });
@@ -132,6 +131,7 @@ export class BrowsePartsService {
         this.filterSubject$.next({ property: FilterChangedProperty.keyword, filter: { ...this.filter } });
         this.filterSubject$.next({ property: FilterChangedProperty.elementIds, filter: { ...this.filter } });
       }
+      this.filterInitialized = true;
     }
   }
 
@@ -275,7 +275,7 @@ export class BrowsePartsService {
       limit: this.filter.perPage,
       country: this.filter.country,
       categoryId: this.filter.categoryId === 9999 ? null : this.filter.categoryId,
-      colorIds: this.filter.colorId ? [this.filter.colorId] : [],
+      colorIds: this.filter.colorId !== null ? [this.filter.colorId] : [],
       keywords: this.filter.keyword ? this.filter.keyword.split(' ') : [],
       sortField: this.filter.sort,
       sortDir: this.filter.sortDirection,

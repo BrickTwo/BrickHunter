@@ -1,4 +1,16 @@
 <p-dialog header="Changelog" [(visible)]="visible" [modal]="true">
+  <section *ngIf="isVersionGreater('2.0.15')">
+    <h2>2.0.15</h2>
+    <h3>Features</h3>
+    <ul>
+      <li>Browse Parts: Add clear button in keyword</li>
+    </ul>
+    <h3>Bug fixed</h3>
+    <ul>
+      <li>Browse Parts: Filtering by the color black</li>
+      <li>Browse Parts: Removing a part from a parts list</li>
+    </ul>
+  </section>
   <section *ngIf="isVersionGreater('2.0.14')">
     <h2>2.0.14</h2>
     <h3>Features</h3>

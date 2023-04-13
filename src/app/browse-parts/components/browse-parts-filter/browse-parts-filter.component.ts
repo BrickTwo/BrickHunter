@@ -62,6 +62,7 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
   constructor(private readonly browsePartsService: BrowsePartsService) {}
 
   ngOnInit(): void {
+    this.keyword = this.browsePartsService.filter.keyword;
     this.onlyPrinted = this.browsePartsService.filter.onlyPrinted;
     this.deliveryChannels = this.browsePartsService.filter.deliveryChannels;
     this.selectedSort = this.browsePartsService.filter.sort;
@@ -69,6 +70,9 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
 
     this.filterSubscription = this.browsePartsService.filterState$.subscribe(filterChanged => {
       switch (filterChanged.property) {
+        case FilterChangedProperty.keyword:
+          this.keyword = filterChanged.filter.keyword;
+          break;
         case FilterChangedProperty.onlyPrinted:
           this.onlyPrinted = filterChanged.filter.onlyPrinted;
           break;

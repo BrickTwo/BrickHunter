@@ -1,10 +1,15 @@
 <p-card>
   <div class="formgrid grid">
-    <div class="field col-6 p-inputgroup">
+    <div class="field col-6 p-inputgroup bh-input-icon-right">
       <span class="p-inputgroup-addon">
         <i class="fa fa-magnifying-glass"></i>
       </span>
-      <input pInputText type="text" [(ngModel)]="keyword" (ngModelChangeDebounced)="onChangeKeyword($event)" />
+      <p-button
+        icon="fa fa-circle-xmark"
+        styleClass="p-button-rounded p-button-text"
+        *ngIf="keyword"
+        (click)="onChangeKeyword('')"></p-button>
+      <input type="text" pInputText [(ngModel)]="keyword" (ngModelChangeDebounced)="onChangeKeyword($event)" />
     </div>
     <div class="field col-6 p-inputgroup">
       <span

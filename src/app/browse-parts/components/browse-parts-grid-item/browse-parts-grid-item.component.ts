@@ -15,7 +15,8 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   part: BrowsePartsPart;
 
   partsListPart: IPart;
-  partsListSubscription: Subscription;
+  partsListUuidSubscription: Subscription;
+  partsListsSubscription: Subscription;
 
   isInWishList = false;
   wishListSubscription: Subscription;
@@ -36,9 +37,15 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
     this.isInWishList = !!this.browsePartsService.wishList.find(w => w === this.part.elementId);
     this.isInHaveItList = !!this.browsePartsService.haveItList.find(w => w === this.part.elementId);
 
-    this.partsListSubscription = this.browsePartsService.selectedPartsListUuid$.subscribe(uuid => {
+    this.partsListUuidSubscription = this.browsePartsService.selectedPartsListUuid$.subscribe(uuid => {
       this.partsListPart = this.partsListService
         .getParts(uuid, 'all')
+        .find(p => p.elementIds.some(el => el === this.part.elementId));
+    });
+
+    this.partsListsSubscription = this.partsListService.partsListsChanged$.subscribe(partsList => {
+      this.partsListPart = this.partsListService
+        .getParts(this.browsePartsService.selectedPartsListUuid, 'all')
         .find(p => p.elementIds.some(el => el === this.part.elementId));
     });
 
@@ -106,7 +113,7 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.partsListSubscription) this.partsListSubscription.unsubscribe();
+    if (this.partsListUuidSubscription) this.partsListUuidSubscription.unsubscribe();
     if (this.wishListSubscription) this.wishListSubscription.unsubscribe();
     if (this.haveItListSubscription) this.haveItListSubscription.unsubscribe();
   }
