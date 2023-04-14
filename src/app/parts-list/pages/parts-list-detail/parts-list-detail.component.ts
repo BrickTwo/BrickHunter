@@ -12,6 +12,9 @@ import { TransferWarningComponent } from '../../components/transfer-warning/tran
 import { PartsListService } from '../../services/parts-list.service';
 import { PickABrickService } from '../../services/pickabrick.service';
 import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
+import { AffiliateService } from 'src/app/core/services/affiliate.service';
+import { LocaleService } from 'src/app/core/services/locale.service';
+import { IAffiliate } from 'src/app/models/global';
 
 @Component({
   selector: 'app-parts-list-detail',
@@ -54,6 +57,9 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       price: '0.00',
     },
   };
+  useAffiliatePaB = true;
+  useAffiliateBaP = true;
+  affiliate: IAffiliate;
 
   @ViewChild(PartsListSettingsComponent, { static: false })
   private partsListSettingsComponent?: PartsListSettingsComponent;
@@ -74,7 +80,9 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     private readonly confirmationService: ConfirmationService,
     private readonly messageService: MessageService,
     private readonly pickabrickService: PickABrickService,
-    private readonly gloablSettingsService: GlobalSettingsService
+    private readonly gloablSettingsService: GlobalSettingsService,
+    private readonly affiliateService: AffiliateService,
+    private readonly localeService: LocaleService
   ) {}
 
   ngOnDestroy(): void {
@@ -112,6 +120,8 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
         this.reloadPartsList();
       });
     });
+
+    this.affiliate = this.affiliateService.getPartnerForCountry(this.localeService.country.code);
   }
 
   private reloadPartsList() {
@@ -240,10 +250,15 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   }
 
   onTransfer(cartType: PaBCartType) {
+    let affiliate: IAffiliate = null;
+    if (cartType === PaBCartType.Bestseller && this.useAffiliatePaB) affiliate = this.affiliate;
+    if (cartType === PaBCartType.Standard && this.useAffiliateBaP) affiliate = this.affiliate;
+
     this.partsListTransferComponent?.start(
       this.partsListService.getParts(this.uuid, cartType),
       cartType,
-      this.transferWarningComponent
+      this.transferWarningComponent,
+      affiliate
     );
   }
 }

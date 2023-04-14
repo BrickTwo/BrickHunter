@@ -5,6 +5,7 @@ import { IPart } from 'src/app/models/parts-list';
 import { PaBCartType } from 'src/app/models/pick-a-brick';
 import { PickABrickService } from '../../services/pickabrick.service';
 import { TransferWarningComponent } from '../transfer-warning/transfer-warning.component';
+import { IAffiliate } from 'src/app/models/global';
 
 @Component({
   selector: 'app-parts-list-transfer',
@@ -19,6 +20,7 @@ export class PartsListTransferComponent implements OnDestroy {
   cartType: PaBCartType;
   errorMessage: string;
   transferWarningComponent: TransferWarningComponent;
+  affiliate: IAffiliate;
 
   constructor(private readonly pickabrickService: PickABrickService, private readonly localeService: LocaleService) {}
 
@@ -31,15 +33,27 @@ export class PartsListTransferComponent implements OnDestroy {
     this.show = false;
   }
 
-  start(parts: IPart[], cartType: PaBCartType, transferWarningComponent: TransferWarningComponent) {
+  start(
+    parts: IPart[],
+    cartType: PaBCartType,
+    transferWarningComponent: TransferWarningComponent,
+    affiliate: IAffiliate
+  ) {
     this.show = true;
     this.errorMessage = '';
     this.parts = parts;
     this.cartType = cartType;
     this.transferWarningComponent = transferWarningComponent;
+    this.affiliate = affiliate;
 
     this.subscription$ = new Observable<number>(subscriber => {
-      this.pickabrickService.transferParts(subscriber, this.parts, this.cartType, this.transferWarningComponent);
+      this.pickabrickService.transferParts(
+        subscriber,
+        this.parts,
+        this.cartType,
+        this.transferWarningComponent,
+        this.affiliate
+      );
     }).subscribe({
       next: step => {
         this.transferStep = step;
@@ -54,16 +68,15 @@ export class PartsListTransferComponent implements OnDestroy {
   }
 
   onRetry() {
-    this.start(this.parts, this.cartType, this.transferWarningComponent);
+    this.start(this.parts, this.cartType, this.transferWarningComponent, this.affiliate);
   }
 
   onOpenLegoWebsite() {
-    let affiliate = '';
     let url = `https://www.lego.com/${this.localeService.languageCountryCode}`;
-    if (affiliate) {
-      // if (affiliate.linkType == "webgains") {
-      //   url = `https://track.webgains.com/click.html?wgcampaignid=${affiliate.wgcampaignid}&wgprogramid=${affiliate.wgprogramid}&clickref=${affiliate.clickref}&wgtarget=${target}`;
-      // }
+    if (this.affiliate) {
+      if (this.affiliate.linkType == 'webgains') {
+        url = `https://track.webgains.com/click.html?wgcampaignid=${this.affiliate.wgcampaignid}&wgprogramid=${this.affiliate.wgprogramid}&clickref=${this.affiliate.clickref}&wgtarget=${url}`;
+      }
     }
     window.open(url, '_blank');
   }

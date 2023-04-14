@@ -21,6 +21,7 @@ import { IAddElementItem, IChangeElementItem, PaBCartType } from 'src/app/models
 import { TransferWarningComponent } from '../components/transfer-warning/transfer-warning.component';
 import { PartsListService } from './parts-list.service';
 import { VersionService } from 'src/app/core/services/version.service';
+import { IAffiliate } from 'src/app/models/global';
 
 @Injectable()
 export class PickABrickService {
@@ -33,6 +34,7 @@ export class PickABrickService {
   cartType: PaBCartType;
   parts: IPart[];
   cart: IBackgroundReadCartResponse;
+  affiliate: IAffiliate;
 
   constructor(
     private readonly partsListService: PartsListService,
@@ -101,12 +103,14 @@ export class PickABrickService {
     transferStep$: Subscriber<number>,
     parts: IPart[],
     cartType: PaBCartType,
-    transferWarningComponent: TransferWarningComponent
+    transferWarningComponent: TransferWarningComponent,
+    affiliate: IAffiliate
   ) {
     this.transferStep$ = transferStep$;
     this.transferWarningComponent = transferWarningComponent;
     this.cartType = cartType;
     this.parts = [...parts];
+    this.affiliate = affiliate;
 
     this.startTransfer();
   }
@@ -297,7 +301,7 @@ export class PickABrickService {
       service: BackgroundRequestService.PickaBrick,
       action: BackgroundRequestAction.OpenPickABrick,
       tabId: tabId,
-      affiliate: null,
+      affiliate: this.affiliate,
       locale: this.localeService.languageCountryCode,
     };
 

@@ -70,6 +70,10 @@
               style="width: 100%"
               [disabled]="pabIsLoading"
               (click)="onTransfer(cartType.Bestseller)"></button>
+            <div class="flex flex-nowrap align-items-center gap-2" *ngIf="!!affiliate">
+              <p-inputSwitch [(ngModel)]="useAffiliatePaB" inputId="useAffiliatePaB"></p-inputSwitch>
+              <label for="useAffiliatePaB">Use Affiliate Link</label>
+            </div>
           </div>
         </div>
         <div class="col-3 xxl:col-12">
@@ -99,6 +103,10 @@
               style="width: 100%"
               [disabled]="pabIsLoading"
               (click)="onTransfer(cartType.Standard)"></button>
+            <div class="flex flex-nowrap align-items-center gap-2" *ngIf="!!affiliate">
+              <p-inputSwitch [(ngModel)]="useAffiliateBaP" inputId="useAffiliateBaP"></p-inputSwitch>
+              <label for="useAffiliateBaP">Use Affiliate Link</label>
+            </div>
           </div>
         </div>
         <div class="col-3 xxl:col-12">

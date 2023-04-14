@@ -5,10 +5,19 @@ import { GuidService } from './services/guid.service';
 import { IndexedDBService } from './services/indexeddb.service.ts';
 import { LocaleService } from './services/locale.service';
 import { VersionService } from './services/version.service';
+import { AffiliateService } from './services/affiliate.service';
 
 @NgModule({
   imports: [],
-  providers: [BrickHunterApiService, ColorService, GuidService, IndexedDBService, LocaleService, VersionService],
+  providers: [
+    BrickHunterApiService,
+    ColorService,
+    GuidService,
+    IndexedDBService,
+    LocaleService,
+    VersionService,
+    AffiliateService,
+  ],
   declarations: [],
 })
 export class CoreModule {
