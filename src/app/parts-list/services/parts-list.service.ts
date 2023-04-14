@@ -14,7 +14,7 @@ export class PartsListService {
 
   constructor(
     private readonly indexedDBService: IndexedDBService,
-    private readonly gloabSettingsService: GlobalSettingsService,
+    private readonly globalSettingsService: GlobalSettingsService,
     private readonly guidService: GuidService
   ) {
     this.indexedDBService.partsLists.toArray().then(partsLists => {
@@ -132,26 +132,40 @@ export class PartsListService {
     if (!part.lego) return false;
     if (part.lego.deliveryChannel !== filter) return false;
     if (!part.lego.inStock) return false;
+    const brickLinkReferencePrice = this.calcTargetBrickLinkReferencePrice(part.maxPrice);
     if (
-      !this.gloabSettingsService.ignoreBrickLinkPrices &&
-      (part.maxPrice || 0) > 0 &&
-      part.lego.price.amount > (part.maxPrice || 0)
+      !this.globalSettingsService.ignoreBrickLinkPrices &&
+      brickLinkReferencePrice != 0 &&
+      part.lego.price.amount > brickLinkReferencePrice
     )
       return false;
-    if (this.gloabSettingsService.subtractHaveFromQuantity && part.qty - part.have <= 0) return false;
+    if (this.globalSettingsService.subtractHaveFromQuantity && part.qty - part.have <= 0) return false;
     return true;
   }
 
   private brickLinkFilter(part: IPart) {
-    if (this.gloabSettingsService.subtractHaveFromQuantity && part.qty - part.have <= 0) return false;
+    if (this.globalSettingsService.subtractHaveFromQuantity && part.qty - part.have <= 0) return false;
     if (!part.lego) return true;
     if (!part.lego.inStock) return true;
+    const brickLinkReferencePrice = this.calcTargetBrickLinkReferencePrice(part.maxPrice);
     if (
-      !this.gloabSettingsService.ignoreBrickLinkPrices &&
-      (part.maxPrice || 0) > 0 &&
-      part.lego.price.amount > (part.maxPrice || 0)
+      !this.globalSettingsService.ignoreBrickLinkPrices &&
+      brickLinkReferencePrice != 0 &&
+      part.lego.price.amount > brickLinkReferencePrice
     )
       return true;
     return false;
+  }
+
+  private calcTargetBrickLinkReferencePrice(value: number) {
+    if (!this.globalSettingsService.subtractBrickLinkPrice) return value || 0;
+    if (this.globalSettingsService.subtractBrickLinkPriceUnit !== 'percentage')
+      return (value || 0) + this.globalSettingsService.subtractBrickLinkPriceAmount;
+
+    return (
+      Math.round(
+        (value || 0) + ((value || 0) / 100) * this.globalSettingsService.subtractBrickLinkPriceAmount * 10000
+      ) / 10000
+    );
   }
 }

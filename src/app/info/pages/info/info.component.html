@@ -1,0 +1,46 @@
+<h2><fa-icon [icon]="faCircleInfo" class="page-title-icon"></fa-icon>Info</h2>
+<div class="flex flex-column gap-3">
+  <p-card header="Donation">
+    <p>If you like BrickHunter I would appreciate a voluntary donation.</p>
+    <a target="_blank" href="https://www.paypal.com/donate?hosted_button_id=MPV9V9JUKRD6N">
+      <img alt="donate" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" style="cursor: pointer" />
+    </a>
+  </p-card>
+  <p-card header="Disclaimer">
+    <p>
+      BrickHunter is a non LEGO authorized browser extension that assists the user with a Pick a Brick or Bricks &
+      Pieces order. No liability is assumed for the execution of the order, this applies in particular to the correct
+      finding and filling of the shopping cart of a part in shape, color, price or quantity. The user is requested to
+      check the order before sending it to the LEGO Shop.
+    </p>
+    <p>
+      BrickHunter is programmed to minimize the amount of automatic background interaction with LEGO. BrickHunter is not
+      liable for possible errors or blockages caused by BrickHunter.
+    </p>
+  </p-card>
+  <p-card header="License">
+    <p>
+      BrickHunter is developed under the
+      <a target="_blank" href="https://github.com/BrickTwo/BrickHunter/blob/master/LICENSE">GPL-3.0</a> License.
+    </p>
+    <p>Source code available on <a target="_blank" href="https://github.com/BrickTwo/BrickHunter">GitHub</a>.</p>
+  </p-card>
+  <p-card header="Affiliate Links">
+    If available for your country, orders placed with BrickHunter will be processed with an affiliate link. There are no
+    additional costs for you, but you support that BrickHunter can still be offered in this form. However, you can
+    switch off the use of an affiliate link before you hand it over to LEGO.
+  </p-card>
+  <p-card header="Contact">
+    <div class="flex flex-column">
+      <span><a href="mailto:info@bricktwo.net">info@bricktwo.net</a></span>
+      <span>Tobias Karth</span>
+      <span>Riehenring 65</span>
+      <span>4058 Basel</span>
+      <span>Switzerland</span>
+    </div>
+  </p-card>
+  <p-card header="BrickHunter Version"> {{ currentVersion }} </p-card>
+  <p-card header="Change Log">
+    <app-changelog [versionCheck]="false"></app-changelog>
+  </p-card>
+</div>

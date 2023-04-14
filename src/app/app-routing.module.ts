@@ -9,6 +9,7 @@ const routes: Routes = [
   },
   { path: 'parts-lists', loadChildren: () => import('./parts-list/parts-list.module').then(m => m.PartsListsModule) },
   { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
+  { path: 'info', loadChildren: () => import('./info/info.module').then(m => m.InfoModule) },
 ];
 
 @NgModule({

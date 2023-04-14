@@ -9,6 +9,7 @@ import { SideNavigationComponent } from './layout';
 import { LocaleComponent } from './components/locale/locale.component';
 import { FormsModule } from '@angular/forms';
 import { NgModelChangeDebouncedDirective } from './directoves/ng-model-change-debounced.directive';
+import { ChangelogDialogComponent } from './components/changelog-dialog/changelog-dialog.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { NgModelChangeDebouncedDirective } from './directoves/ng-model-change-de
     ProgressIconComponent,
     ColorComponent,
     ChangelogComponent,
+    ChangelogDialogComponent,
     LocaleComponent,
     NgModelChangeDebouncedDirective,
   ],
@@ -25,6 +27,7 @@ import { NgModelChangeDebouncedDirective } from './directoves/ng-model-change-de
     ProgressIconComponent,
     ColorComponent,
     ChangelogComponent,
+    ChangelogDialogComponent,
     LocaleComponent,
     NgModelChangeDebouncedDirective,
   ],

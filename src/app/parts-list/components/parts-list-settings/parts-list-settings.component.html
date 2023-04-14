@@ -18,10 +18,29 @@
           [binary]="true"
           label="Ignore BrickLink prices"></p-checkbox>
       </div>
-      <!-- <div class="field-checkbox">
-        <p-checkbox name="bllower" [(ngModel)]="bllower" inputId="bllower" name="bllower"></p-checkbox>
-        <label for="bllower">Only add to BrickLink if price is x lower</label>
-      </div> -->
+      <div class="field-checkbox">
+        <p-checkbox
+          formControlName="subtractBrickLinkPrice"
+          [binary]="true"
+          [label]="'Reduce BrickLink price for comparsion by:'"></p-checkbox>
+      </div>
+      <div class="grid">
+        <div class="col-6">
+          <p-inputNumber
+            inputId="integeronly"
+            formControlName="subtractBrickLinkPriceAmount"
+            mode="decimal"
+            [minFractionDigits]="2"></p-inputNumber>
+        </div>
+        <div class="col-6">
+          <p-dropdown
+            formControlName="subtractBrickLinkPriceUnit"
+            [options]="subtractUnits"
+            appendTo="body"
+            optionLabel="name"
+            inputStyle="width: 100%"></p-dropdown>
+        </div>
+      </div>
       <button pButton pRipple type="submit" label="Save" style="width: 100%"></button>
     </div>
   </form>

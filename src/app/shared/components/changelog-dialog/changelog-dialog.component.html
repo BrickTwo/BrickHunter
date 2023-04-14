@@ -1,0 +1,6 @@
+<p-dialog header="Changelog" [(visible)]="visible" [modal]="true">
+  <app-changelog [versionCheck]="true"></app-changelog>
+  <ng-template pTemplate="footer">
+    <p-button (click)="onClose()" label="Close" styleClass="p-button-solid"></p-button>
+  </ng-template>
+</p-dialog>

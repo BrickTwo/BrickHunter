@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { VersionService } from 'src/app/core/services/version.service';
 
 @Component({
@@ -7,19 +7,12 @@ import { VersionService } from 'src/app/core/services/version.service';
   styleUrls: ['./changelog.component.scss'],
 })
 export class ChangelogComponent {
-  visible = false;
+  @Input() versionCheck = true;
 
-  constructor(private readonly versionService: VersionService) {
-    if (this.versionService.oldVersion != this.versionService.currentVersion) {
-      this.visible = true;
-    }
-  }
-
-  onClose() {
-    this.visible = false;
-  }
+  constructor(private readonly versionService: VersionService) {}
 
   isVersionGreater(version: string) {
+    if (!this.versionCheck) return true;
     return this.versionService.isVersionGreater(this.versionService.oldVersion, version);
   }
 }

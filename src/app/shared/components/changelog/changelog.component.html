@@ -1,78 +1,75 @@
-<p-dialog header="Changelog" [(visible)]="visible" [modal]="true">
-  <section *ngIf="isVersionGreater('2.0.16')">
-    <h2>2.0.16</h2>
-    <h3>Features</h3>
-    <ul>
-      <li>Optional Affiliate Links added</li>
-    </ul>
-  </section>
-  <section *ngIf="isVersionGreater('2.0.15')">
-    <h2>2.0.15</h2>
-    <h3>Features</h3>
-    <ul>
-      <li>Browse Parts: Add clear button in keyword</li>
-      <li>Parts List: Add delete button on row</li>
-    </ul>
-    <h3>Bug fixed</h3>
-    <ul>
-      <li>Browse Parts: Filtering by the color black</li>
-      <li>Browse Parts: Removing a part from a parts list</li>
-    </ul>
-  </section>
-  <section *ngIf="isVersionGreater('2.0.14')">
-    <h2>2.0.14</h2>
-    <h3>Features</h3>
-    <ul>
-      <li>Small Layout changes</li>
-      <li>Parts List: Edit quantity or have in parts list</li>
-      <li>Browse Parts: Support Parts List</li>
-      <li>Browse Parts: Save last set filter</li>
-      <li>Browse Parts: Add Wish List and Have it List</li>
-      <li>Browse Parts: Add Country selection</li>
-      <li>Browse Parts: Add Category exclusion</li>
-    </ul>
-    <h3>Bug fixed</h3>
-    <ul>
-      <li>Parts List: Transfer parts to PaB when cart is empty</li>
-      <li>Browse Parts: Show black colors in black color filter.</li>
-    </ul>
-  </section>
-  <section *ngIf="isVersionGreater('2.0.13')">
-    <h2>2.0.13</h2>
-    <h3>Features</h3>
-    <ul>
-      <li>Optional subtract Have from quantity on transfer</li>
-      <li>Optional ignore BrickLink prices</li>
-      <li>First alpha version of Browse Parts</li>
-    </ul>
-    <h3>Bug fixed</h3>
-    <ul>
-      <li>Country/Langugae selection not working</li>
-      <li>Error with importing BH json</li>
-      <li>Not all possible parts are found at PaB</li>
-      <li>Some minor Bugfixes</li>
-    </ul>
-  </section>
-  <section *ngIf="isVersionGreater('2.0.12')">
-    <h2>2.0.12</h2>
-    <h3>Features</h3>
-    <ul>
-      <li>Check cart step in transfer parts workflow complete</li>
-      <li>Show country selection modal if no country is selected</li>
-      <li>Added basic PDF generation</li>
-      <li>Load Global Settings & latest color informations from BrickHunter Service</li>
-    </ul>
-  </section>
-  <section *ngIf="isVersionGreater('2.0.11')">
-    <h2>2.0.11</h2>
-    <h3>Features</h3>
-    <ul>
-      <li>Check current cart before transfering parts</li>
-      <li>Show changelog</li>
-      <li>Disbale transfer buttons until BaP data are loaded</li>
-    </ul>
-  </section>
-  <ng-template pTemplate="footer">
-    <p-button (click)="onClose()" label="Close" styleClass="p-button-solid"></p-button>
-  </ng-template>
-</p-dialog>
+<section *ngIf="isVersionGreater('2.0.16')">
+  <h2>2.0.16</h2>
+  <h3>Features</h3>
+  <ul>
+    <li>Optional Affiliate Links added</li>
+    <li>Info Page added</li>
+    <li>Parts List: Option "Reduce BrickLink price for comparsion" added</li>
+  </ul>
+</section>
+<section *ngIf="isVersionGreater('2.0.15')">
+  <h2>2.0.15</h2>
+  <h3>Features</h3>
+  <ul>
+    <li>Browse Parts: Add clear button in keyword</li>
+    <li>Parts List: Add delete button on row</li>
+  </ul>
+  <h3>Bug fixed</h3>
+  <ul>
+    <li>Browse Parts: Filtering by the color black</li>
+    <li>Browse Parts: Removing a part from a parts list</li>
+  </ul>
+</section>
+<section *ngIf="isVersionGreater('2.0.14')">
+  <h2>2.0.14</h2>
+  <h3>Features</h3>
+  <ul>
+    <li>Small Layout changes</li>
+    <li>Parts List: Edit quantity or have in parts list</li>
+    <li>Browse Parts: Support Parts List</li>
+    <li>Browse Parts: Save last set filter</li>
+    <li>Browse Parts: Add Wish List and Have it List</li>
+    <li>Browse Parts: Add Country selection</li>
+    <li>Browse Parts: Add Category exclusion</li>
+  </ul>
+  <h3>Bug fixed</h3>
+  <ul>
+    <li>Parts List: Transfer parts to PaB when cart is empty</li>
+    <li>Browse Parts: Show black colors in black color filter.</li>
+  </ul>
+</section>
+<section *ngIf="isVersionGreater('2.0.13')">
+  <h2>2.0.13</h2>
+  <h3>Features</h3>
+  <ul>
+    <li>Optional subtract Have from quantity on transfer</li>
+    <li>Optional ignore BrickLink prices</li>
+    <li>First alpha version of Browse Parts</li>
+  </ul>
+  <h3>Bug fixed</h3>
+  <ul>
+    <li>Country/Langugae selection not working</li>
+    <li>Error with importing BH json</li>
+    <li>Not all possible parts are found at PaB</li>
+    <li>Some minor Bugfixes</li>
+  </ul>
+</section>
+<section *ngIf="isVersionGreater('2.0.12')">
+  <h2>2.0.12</h2>
+  <h3>Features</h3>
+  <ul>
+    <li>Check cart step in transfer parts workflow complete</li>
+    <li>Show country selection modal if no country is selected</li>
+    <li>Added basic PDF generation</li>
+    <li>Load Global Settings & latest color informations from BrickHunter Service</li>
+  </ul>
+</section>
+<section *ngIf="isVersionGreater('2.0.11')">
+  <h2>2.0.11</h2>
+  <h3>Features</h3>
+  <ul>
+    <li>Check current cart before transfering parts</li>
+    <li>Show changelog</li>
+    <li>Disbale transfer buttons until BaP data are loaded</li>
+  </ul>
+</section>
