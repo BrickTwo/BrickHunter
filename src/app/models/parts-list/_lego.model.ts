@@ -1,4 +1,4 @@
-export interface ILegoModel {
+export interface LegoModel {
   elementId: number;
   designNumber: number;
   inStock?: boolean | undefined;

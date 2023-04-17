@@ -1,4 +1,4 @@
-export interface IAddElementItem {
+export interface AddElementItem {
   sku: string;
   quantity: number;
 }

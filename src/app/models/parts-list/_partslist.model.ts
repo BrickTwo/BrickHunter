@@ -1,8 +1,8 @@
-import { IPart } from '.';
+import { Part } from '.';
 
-export interface IPartsList {
+export interface PartsList {
   uuid: string;
   name: string;
   source: string;
-  parts: IPart[];
+  parts: Part[];
 }

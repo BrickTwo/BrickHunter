@@ -1,6 +1,6 @@
 import { BackgroundRequestAction, BackgroundRequestService } from '.';
 
-export interface IBackgroundRequest {
+export interface BackgroundRequest {
   service: BackgroundRequestService;
   action: BackgroundRequestAction;
 }

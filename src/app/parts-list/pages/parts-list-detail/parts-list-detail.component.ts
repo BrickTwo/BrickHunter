@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { IPart, IPartsList } from 'src/app/models/parts-list';
+import { Part, PartsList } from 'src/app/models/parts-list';
 import { PaBCartType } from 'src/app/models/pick-a-brick';
 import { PartsListPdfComponent } from '../../components/parts-list-pdf/parts-list-pdf.component';
 import { PartsListSettingsComponent } from '../../components/parts-list-settings/parts-list-settings.component';
@@ -14,7 +14,7 @@ import { PickABrickService } from '../../services/pickabrick.service';
 import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
 import { AffiliateService } from 'src/app/core/services/affiliate.service';
 import { LocaleService } from 'src/app/core/services/locale.service';
-import { IAffiliate } from 'src/app/models/global';
+import { Affiliate } from 'src/app/models/global';
 
 @Component({
   selector: 'app-parts-list-detail',
@@ -23,7 +23,7 @@ import { IAffiliate } from 'src/app/models/global';
 })
 export class PartsListDetailComponent implements OnInit, OnDestroy {
   faClipboardList = faClipboardList;
-  partsList: IPartsList;
+  partsList: PartsList;
   items: MenuItem[] = [
     { label: 'All', id: 'all', title: 'All' },
     { label: 'PaB Bestseller', id: 'pab', title: 'PaB Bestseller' },
@@ -33,7 +33,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     { label: 'Warnings', id: 'warning', title: 'Warnings' },
   ];
   activeItem = this.items[0];
-  parts: IPart[];
+  parts: Part[];
   pabSubscription: Subscription;
   partsListSubscription: Subscription;
   globalSettingsSubscription: Subscription;
@@ -59,7 +59,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   };
   useAffiliatePaB = true;
   useAffiliateBaP = true;
-  affiliate: IAffiliate;
+  affiliate: Affiliate;
 
   @ViewChild(PartsListSettingsComponent, { static: false })
   private partsListSettingsComponent?: PartsListSettingsComponent;
@@ -250,7 +250,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   }
 
   onTransfer(cartType: PaBCartType) {
-    let affiliate: IAffiliate = null;
+    let affiliate: Affiliate = null;
     if (cartType === PaBCartType.Bestseller && this.useAffiliatePaB) affiliate = this.affiliate;
     if (cartType === PaBCartType.Standard && this.useAffiliateBaP) affiliate = this.affiliate;
 

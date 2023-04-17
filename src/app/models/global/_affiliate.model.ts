@@ -1,4 +1,4 @@
-export interface IAffiliate {
+export interface Affiliate {
   countryCode: string;
   linkType: string;
   wgcampaignid: number;

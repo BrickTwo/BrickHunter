@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ColorService } from 'src/app/core/services/color.service';
-import { IColor } from 'src/app/models/shared';
+import { Color } from 'src/app/models/shared';
 
 @Component({
   selector: 'app-color',
@@ -11,7 +11,7 @@ export class ColorComponent implements OnInit {
   @Input() colorId: number;
   @Input() onlyMainColor = false;
 
-  color: IColor;
+  color: Color;
 
   constructor(private readonly colorService: ColorService) {}
 

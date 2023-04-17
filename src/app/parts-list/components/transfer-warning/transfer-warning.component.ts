@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IReadCartItem } from 'src/app/models/background-message';
-import { IPart } from 'src/app/models/parts-list';
+import { ReadCartItem } from 'src/app/models/background-message';
+import { Part } from 'src/app/models/parts-list';
 import { PickABrickService } from '../../services/pickabrick.service';
 
 @Component({
@@ -10,12 +10,12 @@ import { PickABrickService } from '../../services/pickabrick.service';
 })
 export class TransferWarningComponent {
   show = false;
-  parts: { part: IPart; cart: IReadCartItem | undefined }[];
+  parts: { part: Part; cart: ReadCartItem | undefined }[];
   rowHeight = 91;
 
   constructor(private readonly pickabrickService: PickABrickService) {}
 
-  open(partsWithWarning: { part: IPart; cart: IReadCartItem | undefined }[]) {
+  open(partsWithWarning: { part: Part; cart: ReadCartItem | undefined }[]) {
     this.show = true;
     this.parts = partsWithWarning;
   }
@@ -30,7 +30,7 @@ export class TransferWarningComponent {
     this.show = false;
   }
 
-  caclImageUrl(part: IPart) {
+  caclImageUrl(part: Part) {
     return `https://brickhunter.blob.core.windows.net/parts/pab/${part.lego.elementId}.jpg`;
   }
 }

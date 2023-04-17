@@ -1,9 +1,9 @@
-import { IBrickHunterV1Item } from './_brickhunterv1-item.model';
+import { BrickHunterV1Item } from './_brickhunterv1-item.model';
 
-export interface IBrickHunterV1 {
+export interface BrickHunterV1 {
   id: string;
   name: string;
   source: string;
-  positions: IBrickHunterV1Item[];
+  positions: BrickHunterV1Item[];
   version: string;
 }

@@ -1,8 +1,8 @@
-import { ILanguage } from '.';
+import { Language } from '.';
 
-export interface ICountry {
+export interface Country {
   code: string;
   text: string;
-  languages: ILanguage[];
+  languages: Language[];
   currency: string;
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IPart, IPartsList } from 'src/app/models/parts-list';
+import { Part, PartsList } from 'src/app/models/parts-list';
 
 @Component({
   selector: 'app-parts-list-split',
@@ -8,12 +8,12 @@ import { IPart, IPartsList } from 'src/app/models/parts-list';
 })
 export class PartsListSplitComponent {
   display = false;
-  partsList: IPartsList;
-  splitedPartsList: IPartsList[] = [];
+  partsList: PartsList;
+  splitedPartsList: PartsList[] = [];
   minValue = 13;
   maxLot = 150;
 
-  public open(partsList: IPartsList) {
+  public open(partsList: PartsList) {
     this.display = true;
     this.partsList = { ...partsList };
   }
@@ -42,7 +42,7 @@ export class PartsListSplitComponent {
     if (listCount < listCountStandard) listCount = listCountStandard;
 
     for (let i = 0; i < listCount; i++) {
-      let list: IPartsList = {
+      let list: PartsList = {
         uuid: this.partsList.uuid,
         name: this.partsList.name,
         source: this.partsList.source,
@@ -67,7 +67,7 @@ export class PartsListSplitComponent {
     });
   }
 
-  private mysortfunction(a: IPart, b: IPart) {
+  private mysortfunction(a: Part, b: Part) {
     const aMaxQuantityIntikator = Math.ceil(a.lego?.maxOrderQuantity / a.qty);
     const bMaxQuantityIntikator = Math.ceil(b.lego?.maxOrderQuantity / b.qty);
     const aTotalPrice = a.lego ? a.lego.price.amount * a.qty : 0;

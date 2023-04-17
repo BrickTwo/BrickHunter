@@ -1,4 +1,4 @@
-export interface IBrickHunterV1Item {
+export interface BrickHunterV1Item {
   source: string;
   designId: string;
   itemNumber: number;

@@ -1,9 +1,9 @@
-import { IAddElementItem, PaBCartType } from '.';
+import { AddElementItem, PaBCartType } from '.';
 
-export interface IAddElement {
+export interface AddElement {
   operationName: string;
   variables: {
-    items: IAddElementItem[];
+    items: AddElementItem[];
     cartType: PaBCartType;
   };
   query: string;

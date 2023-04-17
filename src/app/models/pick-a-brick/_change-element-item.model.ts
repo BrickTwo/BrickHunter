@@ -1,4 +1,4 @@
-export interface IChangeElementItem {
+export interface ChangeElementItem {
   lineItemId: string;
   quantity: number;
 }

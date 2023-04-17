@@ -3,9 +3,9 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'dexie';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { IBrickHunterV1 } from 'src/app/models/brickhunter';
-import { IBrickLinkWantedListItem } from 'src/app/models/bricklink';
-import { IPart } from 'src/app/models/parts-list';
+import { BrickHunterV1 } from 'src/app/models/brickhunter';
+import { BrickLinkWantedListItem } from 'src/app/models/bricklink';
+import { Part } from 'src/app/models/parts-list';
 import * as xml2js from 'xml2js';
 import { ImportService } from '../../services/import.service';
 
@@ -18,9 +18,9 @@ export class PartsListImportComponent implements OnDestroy {
   display = false;
   showImportDialog = false;
   importStep = 0;
-  partsList: IPart[];
-  wantedList: IBrickLinkWantedListItem[];
-  brickhunterV1List: IBrickHunterV1;
+  partsList: Part[];
+  wantedList: BrickLinkWantedListItem[];
+  brickhunterV1List: BrickHunterV1;
   source: string;
   subscription$: Subscription;
 
@@ -68,7 +68,7 @@ export class PartsListImportComponent implements OnDestroy {
           break;
         case 'application/json':
           this.source = 'BrickHunterV1';
-          this.brickhunterV1List = JSON.parse(fileContent) as IBrickHunterV1;
+          this.brickhunterV1List = JSON.parse(fileContent) as BrickHunterV1;
           this.form.setValue({ partsListName: this.brickhunterV1List.name });
           break;
         default:
@@ -111,7 +111,7 @@ export class PartsListImportComponent implements OnDestroy {
     });
   }
 
-  private importXml(content: string): IBrickLinkWantedListItem[] {
+  private importXml(content: string): BrickLinkWantedListItem[] {
     const tagNameProcessor = [
       function (name: string) {
         switch (name) {
@@ -158,7 +158,7 @@ export class PartsListImportComponent implements OnDestroy {
         valueProcessors: valueProcessor,
       })
       .then(result => {
-        return result.inventory.item as IBrickLinkWantedListItem[];
+        return result.inventory.item as BrickLinkWantedListItem[];
       })
       .catch(function (err) {
         // Failed

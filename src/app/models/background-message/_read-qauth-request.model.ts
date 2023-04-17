@@ -1,5 +1,5 @@
-import { IBackgroundRequest } from '.';
+import { BackgroundRequest } from '.';
 
-export interface IBackgroundReadQauthRequest extends IBackgroundRequest {
+export interface BackgroundReadQauthRequest extends BackgroundRequest {
   tabId: number;
 }

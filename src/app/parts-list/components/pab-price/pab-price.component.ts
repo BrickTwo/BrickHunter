@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IPart } from 'src/app/models/parts-list';
+import { Part } from 'src/app/models/parts-list';
 
 @Component({
   selector: 'app-pab-price',
@@ -7,5 +7,5 @@ import { IPart } from 'src/app/models/parts-list';
   styleUrls: ['./pab-price.component.scss'],
 })
 export class PabPriceComponent {
-  @Input() part: IPart;
+  @Input() part: Part;
 }

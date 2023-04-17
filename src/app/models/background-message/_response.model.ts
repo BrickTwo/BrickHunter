@@ -1,9 +1,9 @@
-import { IBackgroundReadCartResponse } from '.';
+import { BackgroundReadCartResponse } from '.';
 
-export interface IBackgroundResponse {
+export interface BackgroundResponse {
   error?: {
     status: number;
     message: string;
   };
-  success?: IBackgroundReadCartResponse[];
+  success?: BackgroundReadCartResponse[];
 }

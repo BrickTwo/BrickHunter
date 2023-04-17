@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { catchError, from, map, Subject, Subscriber, switchMap } from 'rxjs';
+import { catchError, from, map, Subscriber, switchMap } from 'rxjs';
 import { BrickHunterApiService } from 'src/app/core/http/brickhunterapi.service';
 import { ColorService } from 'src/app/core/services/color.service';
 import { GuidService } from 'src/app/core/services/guid.service';
-import { IBrickHunterV1 } from 'src/app/models/brickhunter';
+import { BrickHunterV1 } from 'src/app/models/brickhunter';
 import {
   GetBrickLinkPartsRequest,
   GetBrickLinkPartsResponse,
   GetRebrickablePartsRequest,
   GetRebrickablePartsResponse,
 } from 'src/app/models/brickhunter-api';
-import { IBrickLinkWantedListItem } from 'src/app/models/bricklink';
-import { IBrickLinkModel, IPart, IPartsList, IRebrickableModel } from 'src/app/models/parts-list';
+import { BrickLinkWantedListItem } from 'src/app/models/bricklink';
+import { BrickLinkModel, Part, PartsList, RebrickableModel } from 'src/app/models/parts-list';
 import { PartsListService } from './parts-list.service';
-import { IColor } from 'src/app/models/shared';
+import { Color } from 'src/app/models/shared';
 
 @Injectable({
   providedIn: 'root',
@@ -30,16 +30,16 @@ export class ImportService {
     importStep$: Subscriber<number>,
     partsListName: string,
     source: string,
-    parts: IBrickLinkWantedListItem[] | IBrickHunterV1
+    parts: BrickLinkWantedListItem[] | BrickHunterV1
   ) {
     importStep$.next(1);
 
-    let partsList: IPart[];
+    let partsList: Part[];
 
     if (source === 'BrickLink') {
-      partsList = await this.mapWantedListToParts(parts as IBrickLinkWantedListItem[], source);
+      partsList = await this.mapWantedListToParts(parts as BrickLinkWantedListItem[], source);
     } else {
-      const mapResponse = await this.mapBrickHunterV1ToParts(parts as IBrickHunterV1);
+      const mapResponse = await this.mapBrickHunterV1ToParts(parts as BrickHunterV1);
       partsList = mapResponse.parts;
       source = mapResponse.source;
     }
@@ -72,8 +72,8 @@ export class ImportService {
         })
       )
       .subscribe({
-        next: (parts: IPart[]) => {
-          const partsList: IPartsList = {
+        next: (parts: Part[]) => {
+          const partsList: PartsList = {
             uuid: this.guidService.generate(),
             name: partsListName,
             source: source,
@@ -88,11 +88,7 @@ export class ImportService {
       });
   }
 
-  private transformRebrickableData(
-    rebrickableDatas: GetRebrickablePartsResponse[],
-    partsList: IPart[],
-    source: string
-  ) {
+  private transformRebrickableData(rebrickableDatas: GetRebrickablePartsResponse[], partsList: Part[], source: string) {
     const resp = partsList.map(async part => {
       const rebrickableData = rebrickableDatas.find(resp => {
         if (source === 'Lego') {
@@ -104,7 +100,7 @@ export class ImportService {
         }
       });
 
-      let color: IColor;
+      let color: Color;
       if (source === 'Lego' && part.color === 0) {
         var foundElement = rebrickableData?.elementIds.find(e => Number(e.elementId) === part.elementId);
         if (foundElement) {
@@ -124,7 +120,7 @@ export class ImportService {
           .map(item => item.elementId)
           .map(id => Number(id));
 
-        const rebrickable: IRebrickableModel = {
+        const rebrickable: RebrickableModel = {
           partNum: rebrickableData.partNum,
           color: color.id,
           name: rebrickableData.name,
@@ -151,7 +147,7 @@ export class ImportService {
     return Promise.all(resp);
   }
 
-  private transformBrickLinkData(parts: IPart[], brickLinkData: GetBrickLinkPartsResponse[], source: string) {
+  private transformBrickLinkData(parts: Part[], brickLinkData: GetBrickLinkPartsResponse[], source: string) {
     return parts.map(part => {
       const resp = brickLinkData.find(resp => resp.itemNo === part.source.id);
       if (resp) {
@@ -163,7 +159,7 @@ export class ImportService {
           yearToColor = colorInfo.yearTo;
         }
 
-        const brickLink: IBrickLinkModel = {
+        const brickLink: BrickLinkModel = {
           itemId: resp.itemId,
           itemType: resp.itemType,
           itemNo: resp.itemNo,
@@ -200,11 +196,11 @@ export class ImportService {
     });
   }
 
-  private async mapWantedListToParts(wantedList: IBrickLinkWantedListItem[], source: string) {
+  private async mapWantedListToParts(wantedList: BrickLinkWantedListItem[], source: string) {
     const resp = wantedList.map(async item => {
       const color = await this.colorService.getColor(item.color, source);
 
-      const part: IPart = {
+      const part: Part = {
         id: `${item.itemId}+${item.color}`,
         externalId: item.itemId,
         designId: item.itemId,
@@ -231,10 +227,10 @@ export class ImportService {
     return await Promise.all(resp);
   }
 
-  private async mapBrickHunterV1ToParts(brickhunterV1List: IBrickHunterV1) {
+  private async mapBrickHunterV1ToParts(brickhunterV1List: BrickHunterV1) {
     if (brickhunterV1List.source.toLowerCase() === 'bricklink') {
       const wantedList = brickhunterV1List.positions.map(position => {
-        let item: IBrickLinkWantedListItem = {
+        let item: BrickLinkWantedListItem = {
           color: Number(position.color.brickLinkId),
           condition: position.brickLink.wantedList.condition,
           itemId: position.designId,
@@ -252,7 +248,7 @@ export class ImportService {
       return { parts: await this.mapWantedListToParts(wantedList, 'BrickLink'), source: 'BrickLink' };
     } else {
       const parts = brickhunterV1List.positions.map(item => {
-        const part: IPart = {
+        const part: Part = {
           id: String(item.itemNumber),
           externalId: String(item.designId),
           designId: String(item.designId),

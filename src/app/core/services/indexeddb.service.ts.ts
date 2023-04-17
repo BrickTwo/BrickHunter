@@ -1,13 +1,13 @@
 import Dexie, { Table } from 'dexie';
 import { Injectable } from '@angular/core';
-import { IPartsList } from 'src/app/models/parts-list';
-import { IColor } from 'src/app/models/shared';
+import { PartsList } from 'src/app/models/parts-list';
+import { Color } from 'src/app/models/shared';
 
 @Injectable()
 export class IndexedDBService extends Dexie {
-  partsLists!: Table<IPartsList, string>;
+  partsLists!: Table<PartsList, string>;
   partLists!: Table<any, string>;
-  colors!: Table<IColor>;
+  colors!: Table<Color>;
 
   constructor() {
     super('brickhunterDB');
@@ -27,7 +27,7 @@ export class IndexedDBService extends Dexie {
   }
 }
 
-const colorsInit: IColor[] = [
+const colorsInit: Color[] = [
   {
     id: -1,
     name: '[Unknown]',

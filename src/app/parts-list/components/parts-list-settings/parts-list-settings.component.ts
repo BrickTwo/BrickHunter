@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
-import { IPartsList } from 'src/app/models/parts-list';
+import { PartsList } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 import { LocaleService } from 'src/app/core/services/locale.service';
 
@@ -36,7 +36,7 @@ export class PartsListSettingsComponent implements OnChanges {
     }),
   });
 
-  @Input() partsList: IPartsList;
+  @Input() partsList: PartsList;
 
   constructor(
     private readonly partsListService: PartsListService,

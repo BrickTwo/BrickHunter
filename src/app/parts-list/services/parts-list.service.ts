@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
 import { IndexedDBService } from '../../core/services/indexeddb.service.ts';
-import { IPart, IPartsList } from '../../models/parts-list';
+import { Part, PartsList } from '../../models/parts-list';
 import { GuidService } from 'src/app/core/services/guid.service';
 
 @Injectable({ providedIn: 'root' })
 export class PartsListService {
-  private partsListsChangedSubject$ = new Subject<IPartsList[]>();
+  private partsListsChangedSubject$ = new Subject<PartsList[]>();
   partsListsChanged$ = this.partsListsChangedSubject$.asObservable();
 
-  private partsLists: IPartsList[] = [];
+  private partsLists: PartsList[] = [];
 
   constructor(
     private readonly indexedDBService: IndexedDBService,
@@ -22,7 +22,7 @@ export class PartsListService {
     });
   }
 
-  setPartsLists(partsLists: IPartsList[]) {
+  setPartsLists(partsLists: PartsList[]) {
     this.partsLists = partsLists;
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
@@ -35,14 +35,14 @@ export class PartsListService {
     return this.partsLists.find(p => p.uuid === uuid);
   }
 
-  addPartsList(partsList: IPartsList) {
+  addPartsList(partsList: PartsList) {
     this.indexedDBService.partsLists.add(partsList);
     this.partsLists.push(partsList);
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
   createPartsList(name: string, source: string) {
-    const partList: IPartsList = {
+    const partList: PartsList = {
       uuid: this.guidService.generate(),
       name: name,
       source: source,
@@ -54,7 +54,7 @@ export class PartsListService {
     return partList;
   }
 
-  updatePartsList(newPartsList: IPartsList) {
+  updatePartsList(newPartsList: PartsList) {
     let partsList = this.partsLists.find(p => p.uuid === newPartsList.uuid);
     partsList = newPartsList;
     this.indexedDBService.partsLists.put(partsList, partsList.uuid);
@@ -67,7 +67,7 @@ export class PartsListService {
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
-  addPartToPartsList(uuid: string, newPart: IPart) {
+  addPartToPartsList(uuid: string, newPart: Part) {
     let partsList = this.partsLists.find(p => p.uuid === uuid);
     partsList.parts.push(newPart);
 
@@ -79,7 +79,7 @@ export class PartsListService {
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
-  updatePartInPartsList(uuid: string, newPart: IPart) {
+  updatePartInPartsList(uuid: string, newPart: Part) {
     if (newPart.qty <= 0) {
       this.deletePartInPartsList(uuid, newPart.id);
       return;
@@ -128,7 +128,7 @@ export class PartsListService {
     }
   }
 
-  private pabFilter(part: IPart, filter: string) {
+  private pabFilter(part: Part, filter: string) {
     if (!part.lego) return false;
     if (part.lego.deliveryChannel !== filter) return false;
     if (!part.lego.inStock) return false;
@@ -143,7 +143,7 @@ export class PartsListService {
     return true;
   }
 
-  private brickLinkFilter(part: IPart) {
+  private brickLinkFilter(part: Part) {
     if (this.globalSettingsService.subtractHaveFromQuantity && part.qty - part.have <= 0) return false;
     if (!part.lego) return true;
     if (!part.lego.inStock) return true;

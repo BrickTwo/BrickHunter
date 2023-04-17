@@ -2,13 +2,13 @@ import { PickABrick } from './app/background/functions/pickabrick';
 import {
   BackgroudnRequest,
   BackgroundRequestAction,
-  IBackgroundAddElementRequest,
-  IBackgroundChangeElementRequest,
-  IBackgroundFindBricksRequest,
-  IBackgroundOpenBrickABrickRequest,
-  IBackgroundReadCartRequest,
-  IBackgroundReadQauthRequest,
-  IBackgroundRequest,
+  BackgroundAddElementRequest,
+  BackgroundChangeElementRequest,
+  BackgroundFindBricksRequest,
+  BackgroundOpenBrickABrickRequest,
+  BackgroundReadCartRequest,
+  BackgroundReadQauthRequest,
+  BackgroundRequest,
 } from './app/models/background-message';
 
 chrome.action.onClicked.addListener((tab: any) => {
@@ -22,11 +22,11 @@ chrome.runtime.onMessage.addListener((request: BackgroudnRequest, sender, sendRe
   // console.log('background', request.action);
   switch (request.action) {
     case BackgroundRequestAction.FindBricks:
-      const findBricksRequest = request as IBackgroundFindBricksRequest;
+      const findBricksRequest = request as BackgroundFindBricksRequest;
       PickABrick.finBricks(findBricksRequest.elementIds, findBricksRequest.locale).then(resp => sendResponse(resp));
       return true;
     case BackgroundRequestAction.AddElementToCart:
-      const addElementRequest = request as IBackgroundAddElementRequest;
+      const addElementRequest = request as BackgroundAddElementRequest;
       PickABrick.addElementToCart(
         addElementRequest.authorization,
         addElementRequest.items,
@@ -35,7 +35,7 @@ chrome.runtime.onMessage.addListener((request: BackgroudnRequest, sender, sendRe
       ).then(resp => sendResponse(resp));
       return true;
     case BackgroundRequestAction.ChangeElementInCart:
-      const changeElementRequest = request as IBackgroundChangeElementRequest;
+      const changeElementRequest = request as BackgroundChangeElementRequest;
       PickABrick.changeElementInCart(
         changeElementRequest.authorization,
         changeElementRequest.items,
@@ -44,20 +44,20 @@ chrome.runtime.onMessage.addListener((request: BackgroudnRequest, sender, sendRe
       ).then(resp => sendResponse(resp));
       return true;
     case BackgroundRequestAction.ReadCart:
-      const readCartRequest = request as IBackgroundReadCartRequest;
+      const readCartRequest = request as BackgroundReadCartRequest;
       PickABrick.readCart(readCartRequest.authorization, readCartRequest.locale, readCartRequest.deliveryChannels).then(
         resp => sendResponse(resp)
       );
       return true;
     case BackgroundRequestAction.ReadLegoQAuth:
-      const readQauthRequest = request as IBackgroundReadQauthRequest;
+      const readQauthRequest = request as BackgroundReadQauthRequest;
       PickABrick.readQAuth(readQauthRequest.tabId).then(resp => sendResponse(resp));
       return true;
     case BackgroundRequestAction.GetLegoTabId:
       PickABrick.getLegoTab().then(resp => sendResponse(resp));
       return true;
     case BackgroundRequestAction.OpenPickABrick:
-      const openBrickABrickRequest = request as IBackgroundOpenBrickABrickRequest;
+      const openBrickABrickRequest = request as BackgroundOpenBrickABrickRequest;
       PickABrick.openPickABrick(
         openBrickABrickRequest.tabId,
         openBrickABrickRequest.affiliate,

@@ -1,9 +1,9 @@
-import { IBackgroundRequest } from '.';
-import { IChangeElementItem, PaBCartType } from '../pick-a-brick';
+import { BackgroundRequest } from '.';
+import { ChangeElementItem, PaBCartType } from '../pick-a-brick';
 
-export interface IBackgroundChangeElementRequest extends IBackgroundRequest {
+export interface BackgroundChangeElementRequest extends BackgroundRequest {
   authorization: string;
-  items: IChangeElementItem[];
+  items: ChangeElementItem[];
   cartType: PaBCartType;
   locale: string;
 }

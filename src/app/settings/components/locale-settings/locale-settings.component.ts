@@ -1,6 +1,6 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { LocaleService } from 'src/app/core/services/locale.service';
-import { ICountry, ILanguage } from 'src/app/models/global';
+import { Country, Language } from 'src/app/models/global';
 
 @Component({
   selector: 'app-locale-settings',
@@ -8,11 +8,11 @@ import { ICountry, ILanguage } from 'src/app/models/global';
   styleUrls: ['./locale-settings.component.scss'],
 })
 export class LocaleSettingsComponent implements OnInit, AfterViewChecked {
-  countries: ICountry[];
-  languages: ILanguage[];
+  countries: Country[];
+  languages: Language[];
 
-  selectedCountry: ICountry;
-  selectedLanguage: ILanguage;
+  selectedCountry: Country;
+  selectedLanguage: Language;
 
   constructor(private readonly localeService: LocaleService) {}
 

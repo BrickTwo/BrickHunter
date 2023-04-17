@@ -3,7 +3,7 @@ import { Subscription } from 'dexie';
 import { BrowsePartsPart } from 'src/app/models/browse-parts';
 import { PartsListService } from 'src/app/parts-list/services/parts-list.service';
 import { BrowsePartsService } from '../../service/browse-parts.service';
-import { IPart } from 'src/app/models/parts-list';
+import { Part } from 'src/app/models/parts-list';
 
 @Component({
   selector: 'app-browse-parts-grid-item',
@@ -14,7 +14,7 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   @Input()
   part: BrowsePartsPart;
 
-  partsListPart: IPart;
+  partsListPart: Part;
   partsListUuidSubscription: Subscription;
   partsListsSubscription: Subscription;
 

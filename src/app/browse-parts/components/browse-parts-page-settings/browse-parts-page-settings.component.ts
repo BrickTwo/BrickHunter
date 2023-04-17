@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-parts.service';
 import { Subscription } from 'rxjs';
-import { ICountry } from 'src/app/models/global';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { BrowsePartCountry } from 'src/app/models/browse-parts';
 

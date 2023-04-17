@@ -5,23 +5,23 @@ import { LocaleService } from 'src/app/core/services/locale.service';
 import {
   BackgroundRequestAction,
   BackgroundRequestService,
-  IBackgroundAddElementRequest,
-  IBackgroundChangeElementRequest,
-  IBackgroundFindBricksRequest,
-  IBackgroundGetTabIdRequest,
-  IBackgroundOpenBrickABrickRequest,
-  IBackgroundReadCartRequest,
-  IBackgroundReadCartResponse,
-  IBackgroundReadQauthRequest,
-  IBackgroundResponse,
-  IReadCartItem,
+  BackgroundAddElementRequest,
+  BackgroundChangeElementRequest,
+  BackgroundFindBricksRequest,
+  BackgroundGetTabIdRequest,
+  BackgroundOpenBrickABrickRequest,
+  BackgroundReadCartRequest,
+  BackgroundReadCartResponse,
+  BackgroundReadQauthRequest,
+  BackgroundResponse,
+  ReadCartItem,
 } from 'src/app/models/background-message';
-import { IPart } from 'src/app/models/parts-list';
-import { IAddElementItem, IChangeElementItem, PaBCartType } from 'src/app/models/pick-a-brick';
+import { Part } from 'src/app/models/parts-list';
+import { AddElementItem, ChangeElementItem, PaBCartType } from 'src/app/models/pick-a-brick';
 import { TransferWarningComponent } from '../components/transfer-warning/transfer-warning.component';
 import { PartsListService } from './parts-list.service';
 import { VersionService } from 'src/app/core/services/version.service';
-import { IAffiliate } from 'src/app/models/global';
+import { Affiliate } from 'src/app/models/global';
 
 @Injectable()
 export class PickABrickService {
@@ -32,9 +32,9 @@ export class PickABrickService {
   authorization: string;
   tabId: number;
   cartType: PaBCartType;
-  parts: IPart[];
-  cart: IBackgroundReadCartResponse;
-  affiliate: IAffiliate;
+  parts: Part[];
+  cart: BackgroundReadCartResponse;
+  affiliate: Affiliate;
 
   constructor(
     private readonly partsListService: PartsListService,
@@ -55,7 +55,7 @@ export class PickABrickService {
 
     this.pabLoading.next(true);
 
-    const request: IBackgroundFindBricksRequest = {
+    const request: BackgroundFindBricksRequest = {
       service: BackgroundRequestService.PickaBrick,
       action: BackgroundRequestAction.FindBricks,
       elementIds: elementIds,
@@ -67,7 +67,7 @@ export class PickABrickService {
       .then(results => {
         if (results.status) throw new Error(results.message);
 
-        let parts: IPart[] = partsList.parts.map(part => {
+        let parts: Part[] = partsList.parts.map(part => {
           if (!part.elementIds || part.elementIds.length === 0) return { ...part, lego: null };
           const pab = results.find(result => part.elementIds?.find(e => e === Number(result.variant.id)));
           if (!pab) return { ...part, lego: null };
@@ -101,10 +101,10 @@ export class PickABrickService {
 
   async transferParts(
     transferStep$: Subscriber<number>,
-    parts: IPart[],
+    parts: Part[],
     cartType: PaBCartType,
     transferWarningComponent: TransferWarningComponent,
-    affiliate: IAffiliate
+    affiliate: Affiliate
   ) {
     this.transferStep$ = transferStep$;
     this.transferWarningComponent = transferWarningComponent;
@@ -163,7 +163,7 @@ export class PickABrickService {
   }
 
   getTabId() {
-    const request: IBackgroundGetTabIdRequest = {
+    const request: BackgroundGetTabIdRequest = {
       service: BackgroundRequestService.PickaBrick,
       action: BackgroundRequestAction.GetLegoTabId,
     };
@@ -180,7 +180,7 @@ export class PickABrickService {
   }
 
   getQAuth(tabId: number) {
-    const request: IBackgroundReadQauthRequest = {
+    const request: BackgroundReadQauthRequest = {
       service: BackgroundRequestService.PickaBrick,
       action: BackgroundRequestAction.ReadLegoQAuth,
       tabId: tabId,
@@ -198,7 +198,7 @@ export class PickABrickService {
   }
 
   getReadCart(authorization: string, cartType: string) {
-    const request: IBackgroundReadCartRequest = {
+    const request: BackgroundReadCartRequest = {
       service: BackgroundRequestService.PickaBrick,
       action: BackgroundRequestAction.ReadCart,
       authorization: authorization,
@@ -208,10 +208,10 @@ export class PickABrickService {
 
     return chrome.runtime
       .sendMessage(request)
-      .then((response: IBackgroundResponse) => {
+      .then((response: BackgroundResponse) => {
         if (response.error) throw new Error(response.error.message);
-        this.cart = response.success[0] as IBackgroundReadCartResponse;
-        return response.success[0] as IBackgroundReadCartResponse;
+        this.cart = response.success[0] as BackgroundReadCartResponse;
+        return response.success[0] as BackgroundReadCartResponse;
       })
       .catch(e => {
         throw new Error("Couldn't read shopping cart");
@@ -229,14 +229,14 @@ export class PickABrickService {
       let orderQuantity = Number(part.qty);
       if (this.gloablSettingsService.subtractHaveFromQuantity) orderQuantity -= part.have || 0;
 
-      const item: IAddElementItem = {
+      const item: AddElementItem = {
         sku: part.lego.elementId.toString(),
         quantity: orderQuantity,
       };
       return item;
     });
 
-    const request: IBackgroundAddElementRequest = {
+    const request: BackgroundAddElementRequest = {
       service: BackgroundRequestService.PickaBrick,
       action: BackgroundRequestAction.AddElementToCart,
       authorization: this.authorization,
@@ -269,14 +269,14 @@ export class PickABrickService {
       let orderQuantity = Number(part.qty);
       if (this.gloablSettingsService.subtractHaveFromQuantity) orderQuantity -= part.have || 0;
 
-      const item: IChangeElementItem = {
+      const item: ChangeElementItem = {
         lineItemId: itemInCart.id,
         quantity: itemInCart.quantity + orderQuantity,
       };
       return item;
     });
 
-    const request: IBackgroundChangeElementRequest = {
+    const request: BackgroundChangeElementRequest = {
       service: BackgroundRequestService.PickaBrick,
       action: BackgroundRequestAction.ChangeElementInCart,
       authorization: this.authorization,
@@ -297,7 +297,7 @@ export class PickABrickService {
   }
 
   openPickABrick(tabId: number) {
-    const request: IBackgroundOpenBrickABrickRequest = {
+    const request: BackgroundOpenBrickABrickRequest = {
       service: BackgroundRequestService.PickaBrick,
       action: BackgroundRequestAction.OpenPickABrick,
       tabId: tabId,
@@ -308,8 +308,8 @@ export class PickABrickService {
     return chrome.runtime.sendMessage(request);
   }
 
-  private checkCart(cart: IBackgroundReadCartResponse) {
-    let partsWithWarning: { part: IPart; cart: IReadCartItem | undefined }[] = [];
+  private checkCart(cart: BackgroundReadCartResponse) {
+    let partsWithWarning: { part: Part; cart: ReadCartItem | undefined }[] = [];
 
     let newParts = this.parts.flatMap(({ ...part }) => {
       const inCart = cart?.lineItems?.find(li => Number(li.elementVariant.id) === part.lego.elementId);

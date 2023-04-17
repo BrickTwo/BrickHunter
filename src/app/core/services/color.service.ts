@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BrickHunterApiService } from '../http/brickhunterapi.service';
 import { IndexedDBService } from './indexeddb.service.ts';
-import { IColor } from 'src/app/models/shared';
+import { Color } from 'src/app/models/shared';
 
 @Injectable()
 export class ColorService {
-  colors: IColor[];
+  colors: Color[];
 
   constructor(
     private readonly brickhunterApiService: BrickHunterApiService,
@@ -14,7 +14,7 @@ export class ColorService {
     this.loadColors();
     this.brickhunterApiService.getRebrickableColors().subscribe({
       next: colors => {
-        this.colors = colors as unknown as IColor[];
+        this.colors = colors as unknown as Color[];
         this.indexedDbService.colors.bulkPut(this.colors);
       },
     });
@@ -35,7 +35,7 @@ export class ColorService {
     return color ? color.id : 9999;
   }
 
-  public async getColor(colorId: number | undefined, type: string = null): Promise<IColor> {
+  public async getColor(colorId: number | undefined, type: string = null): Promise<Color> {
     if (colorId === -1) colorId = 9999;
     if (colorId == undefined) return this.colors[this.colors.length - 1];
 

@@ -1,6 +1,6 @@
-import { IBackgroundRequest } from '.';
+import { BackgroundRequest } from '.';
 
-export interface IBackgroundReadCartRequest extends IBackgroundRequest {
+export interface BackgroundReadCartRequest extends BackgroundRequest {
   authorization: string;
   locale: string;
   deliveryChannels: string[];

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faList } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { IPartsList } from 'src/app/models/parts-list';
+import { PartsList } from 'src/app/models/parts-list';
 import { PartsListImportComponent } from '../../components/parts-list-import/parts-list-import.component';
 import { PartsListService } from '../../services/parts-list.service';
 
@@ -14,7 +14,7 @@ import { PartsListService } from '../../services/parts-list.service';
 })
 export class PartsListListComponent implements OnInit, OnDestroy {
   faList = faList;
-  partsLists: IPartsList[];
+  partsLists: PartsList[];
   subscription: Subscription;
 
   @ViewChild(PartsListImportComponent, { static: false })
@@ -29,7 +29,7 @@ export class PartsListListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.partsListService.partsListsChanged$.subscribe((partsLists: IPartsList[]) => {
+    this.subscription = this.partsListService.partsListsChanged$.subscribe((partsLists: PartsList[]) => {
       this.partsLists = partsLists;
     });
     this.partsLists = this.partsListService.getPartsLists();
@@ -70,7 +70,7 @@ export class PartsListListComponent implements OnInit, OnDestroy {
     this.partsListImportComponent?.open();
   }
 
-  openPartsList(partsList: IPartsList) {
+  openPartsList(partsList: PartsList) {
     this.router.navigate([partsList.uuid], { relativeTo: this.route });
   }
 

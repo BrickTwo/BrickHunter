@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IBrickHunterV1 } from 'src/app/models/brickhunter';
+import { BrickHunterV1 } from 'src/app/models/brickhunter';
 import { ImportService } from 'src/app/parts-list/services/import.service';
 import { IndexedDBService } from './indexeddb.service.ts';
 
@@ -30,7 +30,7 @@ export class VersionService {
       this.indexedDbService
         .table('partLists')
         .toCollection()
-        .modify((pl: IBrickHunterV1) => {
+        .modify((pl: BrickHunterV1) => {
           const name = pl.name;
           const source = 'BrickHunterV1';
 

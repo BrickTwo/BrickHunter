@@ -1,20 +1,20 @@
-export interface IBackgroundReadCartResponse {
+export interface BackgroundReadCartResponse {
   id: string;
-  lineItems: IReadCartItem[];
+  lineItems: ReadCartItem[];
 }
 
-export interface IReadCartItem {
+export interface ReadCartItem {
   id: string;
   quantity: number;
-  elementVariant: IReadCartItemElementVariant;
+  elementVariant: ReadCartItemElementVariant;
 }
 
-export interface IReadCartItemElementVariant {
+export interface ReadCartItemElementVariant {
   id: string;
-  attributes: IReadCartItemElementVariantAttributes;
+  attributes: ReadCartItemElementVariantAttributes;
 }
 
-export interface IReadCartItemElementVariantAttributes {
+export interface ReadCartItemElementVariantAttributes {
   deliveryChannel: string;
   designNumber: number;
   maxOrderQuantity: 0;

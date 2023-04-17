@@ -1,9 +1,9 @@
-import { IChangeElementItem, PaBCartType } from '.';
+import { ChangeElementItem, PaBCartType } from '.';
 
-export interface IChangeElement {
+export interface ChangeElement {
   operationName: string;
   variables: {
-    elements: IChangeElementItem[];
+    elements: ChangeElementItem[];
     cartType: PaBCartType;
   };
   query: string;

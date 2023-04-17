@@ -1,12 +1,6 @@
-import { IBackgroundReadCartResponse, IBackgroundResponse } from 'src/app/models/background-message';
-import { IAffiliate } from 'src/app/models/global';
-import {
-  IAddElement,
-  IAddElementItem,
-  IChangeElement,
-  IChangeElementItem,
-  PaBCartType,
-} from 'src/app/models/pick-a-brick';
+import { BackgroundReadCartResponse, BackgroundResponse } from 'src/app/models/background-message';
+import { Affiliate } from 'src/app/models/global';
+import { AddElement, AddElementItem, ChangeElement, ChangeElementItem, PaBCartType } from 'src/app/models/pick-a-brick';
 
 const timeout = setTimeout(function () {}, 5000);
 
@@ -85,13 +79,8 @@ export class PickABrick {
     return response.data.elements;
   }
 
-  static async addElementToCart(
-    authorization: string,
-    items: IAddElementItem[],
-    cartType: PaBCartType,
-    locale: string
-  ) {
-    var PickABrickQuery: IAddElement = {
+  static async addElementToCart(authorization: string, items: AddElementItem[], cartType: PaBCartType, locale: string) {
+    var PickABrickQuery: AddElement = {
       operationName: 'AddToElementCart',
       variables: {
         items: items,
@@ -131,11 +120,11 @@ export class PickABrick {
 
   static async changeElementInCart(
     authorization: string,
-    items: IChangeElementItem[],
+    items: ChangeElementItem[],
     cartType: PaBCartType,
     locale: string
   ) {
-    var PickABrickQuery: IChangeElement = {
+    var PickABrickQuery: ChangeElement = {
       operationName: 'ChangeElementLineItem',
       variables: {
         elements: items,
@@ -177,7 +166,7 @@ export class PickABrick {
     authorization: string,
     locale: string,
     deliveryChannels: string[]
-  ): Promise<IBackgroundResponse> {
+  ): Promise<BackgroundResponse> {
     var PickABrickQuery = {
       operationName: 'ElementCartQuery',
       variables: {
@@ -190,7 +179,7 @@ export class PickABrick {
 
     var url = 'https://www.lego.com/api/graphql/ElementCartQuery';
 
-    var response: IBackgroundResponse = await fetch(url, {
+    var response: BackgroundResponse = await fetch(url, {
       method: 'POST',
       cache: 'no-cache',
       headers: {
@@ -215,7 +204,7 @@ export class PickABrick {
         }
 
         return {
-          success: response.data.me.elementCarts.carts as IBackgroundReadCartResponse[],
+          success: response.data.me.elementCarts.carts as BackgroundReadCartResponse[],
         };
       })
       .catch(error => {
@@ -259,7 +248,7 @@ export class PickABrick {
       });
   }
 
-  static openPickABrick(tabId: number, affiliate: IAffiliate, locale: string) {
+  static openPickABrick(tabId: number, affiliate: Affiliate, locale: string) {
     var url = `https://www.lego.com/${locale}/page/static/pick-a-brick`;
     if (affiliate) {
       url =

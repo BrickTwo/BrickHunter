@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'dexie';
-import { TreeNode } from 'primeng/api';
-import { IPartsList } from 'src/app/models/parts-list';
+import { PartsList } from 'src/app/models/parts-list';
 import { PartsListService } from 'src/app/parts-list/services/parts-list.service';
 import { BrowsePartsService } from '../../service/browse-parts.service';
 
@@ -11,7 +10,7 @@ import { BrowsePartsService } from '../../service/browse-parts.service';
   styleUrls: ['./browse-parts-parts-lists.component.scss'],
 })
 export class BrowsePartsPartsListsComponent implements OnInit, OnDestroy {
-  partsLists: IPartsList[];
+  partsLists: PartsList[];
   wishList: number[];
   haveItList: number[];
   partsListSubscription: Subscription;

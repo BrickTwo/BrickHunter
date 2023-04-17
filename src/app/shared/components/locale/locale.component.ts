@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LocaleService } from 'src/app/core/services/locale.service';
-import { ICountry, ILanguage } from 'src/app/models/global';
+import { Country, Language } from 'src/app/models/global';
 
 @Component({
   selector: 'app-locale',
@@ -9,10 +9,10 @@ import { ICountry, ILanguage } from 'src/app/models/global';
 })
 export class LocaleComponent {
   visible = false;
-  countries: ICountry[];
+  countries: Country[];
 
-  selectedCountry: ICountry;
-  selectedLanguage: ILanguage;
+  selectedCountry: Country;
+  selectedLanguage: Language;
 
   constructor(private readonly localeService: LocaleService) {
     this.countries = this.localeService.countries;

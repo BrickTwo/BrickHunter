@@ -3,7 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { BrowsePartsService } from '../../service/browse-parts.service';
 import { Subscription } from 'dexie';
 import { ColorService } from 'src/app/core/services/color.service';
-import { IColor } from 'src/app/models/shared';
+import { Color } from 'src/app/models/shared';
 
 @Component({
   selector: 'app-browse-parts-color-filter',
@@ -84,7 +84,7 @@ export class BrowsePartsColorFilterComponent implements OnInit, OnDestroy {
     this.purple = [];
   }
 
-  private createMenuItem(color: IColor): MenuItem {
+  private createMenuItem(color: Color): MenuItem {
     return {
       label: `
       <style>

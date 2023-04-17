@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ICountry, ILanguage } from 'src/app/models/global';
+import { Country, Language } from 'src/app/models/global';
 
 @Injectable()
 export class LocaleService {
   countries = initializeCountries;
-  country?: ICountry = initializeCountries[0];
-  language: ILanguage = this.country.languages[0];
+  country?: Country = initializeCountries[0];
+  language: Language = this.country.languages[0];
   languageCountryCode = `${this.language.code.toLowerCase()}-${this.country.code.toUpperCase()}`;
   localeNotSet = false;
 
@@ -57,78 +57,78 @@ export class LocaleService {
     localStorage.setItem('language', this.language.code);
   }
 }
-const languageDE: ILanguage = {
+const languageDE: Language = {
   code: 'de',
   text: 'German',
   flag: 'de',
 };
-const languageEN: ILanguage = {
+const languageEN: Language = {
   code: 'en',
   text: 'English',
   flag: 'uk',
 };
-const languageFR: ILanguage = {
+const languageFR: Language = {
   code: 'fr',
   text: 'French',
   flag: 'fr',
 };
-const languageNL: ILanguage = {
+const languageNL: Language = {
   code: 'nl',
   text: 'Dutch',
   flag: 'nl',
 };
-const languageDA: ILanguage = {
+const languageDA: Language = {
   code: 'da',
   text: 'Danish',
   flag: 'dk',
 };
-const languageFI: ILanguage = {
+const languageFI: Language = {
   code: 'fi',
   text: 'Finnish',
   flag: 'fi',
 };
-const languageIT: ILanguage = {
+const languageIT: Language = {
   code: 'it',
   text: 'Italian',
   flag: 'it',
 };
-const languageNO: ILanguage = {
+const languageNO: Language = {
   code: 'no',
   text: 'Norwegian',
   flag: 'no',
 };
-const languagePL: ILanguage = {
+const languagePL: Language = {
   code: 'pl',
   text: 'Polish',
   flag: 'pl',
 };
-const languagePT: ILanguage = {
+const languagePT: Language = {
   code: 'pt',
   text: 'Portugese',
   flag: 'pt',
 };
-const languageSV: ILanguage = {
+const languageSV: Language = {
   code: 'sv',
   text: 'Swedish',
   flag: 'se',
 };
-const languageES: ILanguage = {
+const languageES: Language = {
   code: 'es',
   text: 'Spanish',
   flag: 'es',
 };
-const languageCS: ILanguage = {
+const languageCS: Language = {
   code: 'cs',
   text: 'Czech',
   flag: 'cz',
 };
-const languageHU: ILanguage = {
+const languageHU: Language = {
   code: 'hu',
   text: 'Hungarian',
   flag: 'hu',
 };
 
-const initializeCountries: ICountry[] = [
+const initializeCountries: Country[] = [
   {
     code: 'at',
     text: 'Austria',

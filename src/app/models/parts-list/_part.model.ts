@@ -1,6 +1,6 @@
-import { IBrickLinkModel, ILegoModel, IRebrickableModel } from '.';
+import { BrickLinkModel, LegoModel, RebrickableModel } from '.';
 
-export interface IPart {
+export interface Part {
   id: string;
   externalId: string;
   color: number;
@@ -20,7 +20,7 @@ export interface IPart {
     itemNumber?: number;
     color?: number;
   };
-  rebrickable?: IRebrickableModel | null;
-  brickLink?: IBrickLinkModel | null;
-  lego?: ILegoModel | null;
+  rebrickable?: RebrickableModel | null;
+  brickLink?: BrickLinkModel | null;
+  lego?: LegoModel | null;
 }

@@ -1,11 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { LocaleService } from 'src/app/core/services/locale.service';
-import { IPart } from 'src/app/models/parts-list';
+import { Part } from 'src/app/models/parts-list';
 import { PaBCartType } from 'src/app/models/pick-a-brick';
 import { PickABrickService } from '../../services/pickabrick.service';
 import { TransferWarningComponent } from '../transfer-warning/transfer-warning.component';
-import { IAffiliate } from 'src/app/models/global';
+import { Affiliate } from 'src/app/models/global';
 
 @Component({
   selector: 'app-parts-list-transfer',
@@ -16,11 +16,11 @@ export class PartsListTransferComponent implements OnDestroy {
   transferStep = 0;
   subscription$: Subscription;
   show = false;
-  parts: IPart[];
+  parts: Part[];
   cartType: PaBCartType;
   errorMessage: string;
   transferWarningComponent: TransferWarningComponent;
-  affiliate: IAffiliate;
+  affiliate: Affiliate;
 
   constructor(private readonly pickabrickService: PickABrickService, private readonly localeService: LocaleService) {}
 
@@ -34,10 +34,10 @@ export class PartsListTransferComponent implements OnDestroy {
   }
 
   start(
-    parts: IPart[],
+    parts: Part[],
     cartType: PaBCartType,
     transferWarningComponent: TransferWarningComponent,
-    affiliate: IAffiliate
+    affiliate: Affiliate
   ) {
     this.show = true;
     this.errorMessage = '';

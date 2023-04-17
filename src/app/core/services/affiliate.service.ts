@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IAffiliate } from 'src/app/models/global';
+import { Affiliate } from 'src/app/models/global';
 
 @Injectable()
 export class AffiliateService {
-  partner: IAffiliate[] = [
+  partner: Affiliate[] = [
     {
       countryCode: 'at',
       linkType: 'webgains',

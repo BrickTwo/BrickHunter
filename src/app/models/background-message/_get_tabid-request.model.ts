@@ -1,3 +1,3 @@
-import { IBackgroundRequest } from '.';
+import { BackgroundRequest } from '.';
 
-export interface IBackgroundGetTabIdRequest extends IBackgroundRequest {}
+export interface BackgroundGetTabIdRequest extends BackgroundRequest {}

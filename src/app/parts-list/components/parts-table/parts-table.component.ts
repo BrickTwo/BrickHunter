@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
-import { IPart } from 'src/app/models/parts-list';
+import { Part } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 import { Subscription, fromEvent, interval, take } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { Subscription, fromEvent, interval, take } from 'rxjs';
 })
 export class PartsTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input()
-  parts: IPart[] = [];
+  parts: Part[] = [];
 
   @Input()
   pabIsLoading = false;
@@ -44,13 +44,13 @@ export class PartsTableComponent implements AfterViewInit, OnChanges, OnDestroy 
   }
 
   onQuantityChange($event, partId) {
-    let part: IPart = this.parts.find(p => p.id === partId);
+    let part: Part = this.parts.find(p => p.id === partId);
     part.qty = $event;
     this.partsListService.updatePartInPartsList(this.partsListUuid, part);
   }
 
   onHaveChange($event, partId) {
-    let part: IPart = this.parts.find(p => p.id === partId);
+    let part: Part = this.parts.find(p => p.id === partId);
     part.have = $event;
     this.partsListService.updatePartInPartsList(this.partsListUuid, part);
     this.lastSort = '';
@@ -106,7 +106,7 @@ export class PartsTableComponent implements AfterViewInit, OnChanges, OnDestroy 
     this.calcVisible('changes');
   }
 
-  onDeletePart(part: IPart) {
+  onDeletePart(part: Part) {
     this.parts = this.parts.filter(p => p.id !== part.id);
     this.partsListService.deletePartInPartsList(this.partsListUuid, part.id);
   }
@@ -127,7 +127,7 @@ export class PartsTableComponent implements AfterViewInit, OnChanges, OnDestroy 
     return `height: ${this.rowsBottom * this.rowHeight}px`;
   }
 
-  caclImageUrl(part: IPart) {
+  caclImageUrl(part: Part) {
     if (part.source.source === 'BrickLink')
       return `https://img.bricklink.com/ItemImage/PN/${part.source.color}/${part.source.id}.png`;
     return `https://brickhunter.blob.core.windows.net/parts/pab/${part.elementId}.jpg`;

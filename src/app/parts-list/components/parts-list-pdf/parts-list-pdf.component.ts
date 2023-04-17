@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import autoTable, { Cell, CellDef, ColumnInput } from 'jspdf-autotable';
 import { ColorService } from 'src/app/core/services/color.service';
-import { IPart, IPartsList } from 'src/app/models/parts-list';
+import { PartsList } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { PartsListService } from '../../services/parts-list.service';
 })
 export class PartsListPdfComponent {
   display = false;
-  partsList: IPartsList;
+  partsList: PartsList;
   printOptions: any[] = [
     { name: 'All', value: 'all' },
     { name: 'PaB Bestseller', value: 'pab' },
