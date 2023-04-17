@@ -78,7 +78,6 @@ export class BrowsePartsCategorySelectionComponent implements OnInit, OnDestroy 
   }
 
   onChangeExcludeSeclectedCategoryIds(value: boolean) {
-    console.log(this.excludeSelectedCategoryIds);
     this.browsePartsService.setExcludeSelectedCategoryIds(this.excludeSelectedCategoryIds);
   }
 

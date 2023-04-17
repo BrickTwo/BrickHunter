@@ -52,7 +52,8 @@ export class PartsListCopyOrMoveToComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.selectedParts.map(part => this.partsListService.addPartToPartsList(this.selectedPartsListUuid, part));
+    const targetUuid = this.selectedPartsListUuid;
+    this.selectedParts.map(part => this.partsListService.addPartToPartsList(targetUuid, part));
     if (this.action === 'move') {
       this.selectedParts.map(part => this.partsListService.deletePartInPartsList(this.currentPartListUuid, part.id));
     }

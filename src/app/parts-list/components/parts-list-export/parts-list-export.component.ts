@@ -83,7 +83,6 @@ export class PartsListExportComponent {
   async exportBrickLink() {
     let xmlContent = 'data:text/xml;charset=utf-8,';
     xmlContent += await this.creatXml();
-    console.log(xmlContent);
     const data = encodeURI(xmlContent);
 
     var a = document.createElement('a');
