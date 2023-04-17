@@ -112,6 +112,16 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
     this.browsePartsService.removeFromHaveItList(this.part.elementId);
   }
 
+  onSetKeywordFilter(value: string) {
+    this.browsePartsService.setColor(null, false);
+    this.browsePartsService.setKeyword(value);
+  }
+
+  onSetColorFilter(value: number) {
+    this.browsePartsService.setKeyword('', false);
+    this.browsePartsService.setColor(value);
+  }
+
   ngOnDestroy(): void {
     if (this.partsListUuidSubscription) this.partsListUuidSubscription.unsubscribe();
     if (this.wishListSubscription) this.wishListSubscription.unsubscribe();

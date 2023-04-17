@@ -172,11 +172,11 @@ export class BrowsePartsService {
     this.sendRequest();
   }
 
-  setColor(value: number) {
+  setColor(value: number, sendRequest: boolean = true) {
     this.filter.colorId = value;
     this.filterSubject$.next({ property: FilterChangedProperty.color, filter: { ...this.filter } });
     this.resetPage();
-    this.sendRequest();
+    if (sendRequest) this.sendRequest();
   }
 
   setDeliveryChannels(value: string[]) {
@@ -200,11 +200,11 @@ export class BrowsePartsService {
     this.sendRequest();
   }
 
-  setKeyword(value: string) {
+  setKeyword(value: string, sendRequest: boolean = true) {
     this.filter.keyword = value;
     this.filterSubject$.next({ property: FilterChangedProperty.keyword, filter: { ...this.filter } });
     this.resetPage();
-    this.sendRequest();
+    if (sendRequest) this.sendRequest();
   }
 
   setElementIds(values: number[]) {
