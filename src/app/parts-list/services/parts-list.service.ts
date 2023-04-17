@@ -135,7 +135,7 @@ export class PartsListService {
     const brickLinkReferencePrice = this.calcTargetBrickLinkReferencePrice(part.maxPrice);
     if (
       !this.globalSettingsService.ignoreBrickLinkPrices &&
-      brickLinkReferencePrice != 0 &&
+      brickLinkReferencePrice != -999999 &&
       part.lego.price.amount > brickLinkReferencePrice
     )
       return false;
@@ -150,7 +150,7 @@ export class PartsListService {
     const brickLinkReferencePrice = this.calcTargetBrickLinkReferencePrice(part.maxPrice);
     if (
       !this.globalSettingsService.ignoreBrickLinkPrices &&
-      brickLinkReferencePrice != 0 &&
+      brickLinkReferencePrice != -999999 &&
       part.lego.price.amount > brickLinkReferencePrice
     )
       return true;
@@ -158,7 +158,7 @@ export class PartsListService {
   }
 
   private calcTargetBrickLinkReferencePrice(value: number) {
-    if (!this.globalSettingsService.subtractBrickLinkPrice) return value || 0;
+    if (!this.globalSettingsService.subtractBrickLinkPrice || (value || 0) <= 0) return -999999;
     if (this.globalSettingsService.subtractBrickLinkPriceUnit !== 'percentage')
       return (value || 0) + this.globalSettingsService.subtractBrickLinkPriceAmount;
 
