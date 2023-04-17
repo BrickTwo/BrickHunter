@@ -14,6 +14,7 @@ import { PickABrickService } from './services/pickabrick.service';
 import { PartsListSplitComponent } from './components/parts-list-split/parts-list-split.component';
 import { TransferWarningComponent } from './components/transfer-warning/transfer-warning.component';
 import { PartsListPdfComponent } from './components/parts-list-pdf/parts-list-pdf.component';
+import { PartsListExportComponent } from './components/parts-list-export/parts-list-export.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { PartsListPdfComponent } from './components/parts-list-pdf/parts-list-pd
     PartsListSplitComponent,
     TransferWarningComponent,
     PartsListPdfComponent,
+    PartsListExportComponent,
   ],
   imports: [
     PrimengModule,

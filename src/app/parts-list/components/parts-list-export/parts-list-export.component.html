@@ -1,0 +1,21 @@
+<p-sidebar [(visible)]="display" position="right">
+  <h2>Export</h2>
+  <div class="field">
+    <p-selectButton
+      [options]="filterOptions"
+      [(ngModel)]="selectedFilterValue"
+      optionLabel="name"
+      optionValue="value"></p-selectButton>
+  </div>
+  <div class="field">
+    <label>Export To:</label>
+    <p-selectButton
+      [options]="exportToOptions"
+      [(ngModel)]="selectedExportToValue"
+      optionLabel="name"
+      optionValue="value"></p-selectButton>
+  </div>
+  <div class="field">
+    <button pButton pRipple type="button" label="Export" style="width: 100%" (click)="onExport()"></button>
+  </div>
+</p-sidebar>

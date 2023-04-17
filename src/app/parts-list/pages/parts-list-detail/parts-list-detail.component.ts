@@ -2,19 +2,24 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Part, PartsList } from 'src/app/models/parts-list';
 import { PaBCartType } from 'src/app/models/pick-a-brick';
-import { PartsListPdfComponent } from '../../components/parts-list-pdf/parts-list-pdf.component';
-import { PartsListSettingsComponent } from '../../components/parts-list-settings/parts-list-settings.component';
-import { PartsListTransferComponent } from '../../components/parts-list-transfer/parts-list-transfer.component';
-import { TransferWarningComponent } from '../../components/transfer-warning/transfer-warning.component';
 import { PartsListService } from '../../services/parts-list.service';
 import { PickABrickService } from '../../services/pickabrick.service';
 import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
 import { AffiliateService } from 'src/app/core/services/affiliate.service';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { Affiliate } from 'src/app/models/global';
+import { ImportService } from '../../services/import.service';
+import { BrickHunterV2 } from 'src/app/models/brickhunter';
+import {
+  PartsListExportComponent,
+  PartsListPdfComponent,
+  PartsListSettingsComponent,
+  PartsListTransferComponent,
+  TransferWarningComponent,
+} from '../../components';
 
 @Component({
   selector: 'app-parts-list-detail',
@@ -37,6 +42,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   pabSubscription: Subscription;
   partsListSubscription: Subscription;
   globalSettingsSubscription: Subscription;
+  importSubscription: Subscription;
   pabIsLoading: boolean = false;
   uuid: string;
   cartType = PaBCartType;
@@ -67,11 +73,18 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   @ViewChild(PartsListPdfComponent, { static: false })
   private partsListPdfComponent?: PartsListPdfComponent;
 
+  @ViewChild(PartsListExportComponent, { static: false })
+  private partsListExportComponent?: PartsListExportComponent;
+
   @ViewChild(PartsListTransferComponent, { static: false })
   private partsListTransferComponent?: PartsListTransferComponent;
 
   @ViewChild(TransferWarningComponent, { static: false })
   private transferWarningComponent?: TransferWarningComponent;
+
+  showImportDialog = false;
+  importStep = 0;
+  s;
 
   constructor(
     private readonly partsListService: PartsListService,
@@ -82,13 +95,15 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     private readonly pickabrickService: PickABrickService,
     private readonly gloablSettingsService: GlobalSettingsService,
     private readonly affiliateService: AffiliateService,
-    private readonly localeService: LocaleService
+    private readonly localeService: LocaleService,
+    private readonly importService: ImportService
   ) {}
 
   ngOnDestroy(): void {
     if (this.pabSubscription) this.pabSubscription.unsubscribe();
     if (this.partsListSubscription) this.partsListSubscription.unsubscribe();
     if (this.globalSettingsSubscription) this.globalSettingsSubscription.unsubscribe();
+    if (this.importSubscription) this.importSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -217,6 +232,10 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     this.partsListPdfComponent.open(this.uuid);
   }
 
+  onExport() {
+    this.partsListExportComponent.open(this.uuid);
+  }
+
   onDelete() {
     this.confirmationService.confirm({
       message: 'Do you want to delete this parts list?',
@@ -260,5 +279,37 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       this.transferWarningComponent,
       affiliate
     );
+  }
+
+  onReSync() {
+    this.showImportDialog = true;
+
+    this.importSubscription = new Observable<number>(subscriber => {
+      let syncList: BrickHunterV2 = this.partsList as unknown as BrickHunterV2;
+      syncList.version = '2.0';
+      this.importService.import(subscriber, this.partsList.name, 'BrickHunter', syncList, this.partsList.uuid);
+    }).subscribe({
+      next: step => {
+        this.importStep = step;
+      },
+      complete: () => {
+        this.showImportDialog = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Parts list has been successfully synchronized!',
+        });
+        this.pabIsLoading = true;
+        this.pickabrickService.getParts(this.uuid);
+      },
+      error: error => {
+        this.showImportDialog = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error,
+        });
+      },
+    });
   }
 }

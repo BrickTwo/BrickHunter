@@ -3,7 +3,7 @@ import { catchError, from, map, Subscriber, switchMap } from 'rxjs';
 import { BrickHunterApiService } from 'src/app/core/http/brickhunterapi.service';
 import { ColorService } from 'src/app/core/services/color.service';
 import { GuidService } from 'src/app/core/services/guid.service';
-import { BrickHunterV1 } from 'src/app/models/brickhunter';
+import { BrickHunterV1, BrickHunterV2 } from 'src/app/models/brickhunter';
 import {
   GetBrickLinkPartsRequest,
   GetBrickLinkPartsResponse,
@@ -30,7 +30,8 @@ export class ImportService {
     importStep$: Subscriber<number>,
     partsListName: string,
     source: string,
-    parts: BrickLinkWantedListItem[] | BrickHunterV1
+    parts: BrickLinkWantedListItem[] | BrickHunterV1 | BrickHunterV2,
+    uuid: string = null
   ) {
     importStep$.next(1);
 
@@ -39,9 +40,15 @@ export class ImportService {
     if (source === 'BrickLink') {
       partsList = await this.mapWantedListToParts(parts as BrickLinkWantedListItem[], source);
     } else {
-      const mapResponse = await this.mapBrickHunterV1ToParts(parts as BrickHunterV1);
-      partsList = mapResponse.parts;
-      source = mapResponse.source;
+      if ((parts as BrickHunterV2).version === '2.0') {
+        const mapResponse = await this.mapBrickHunterV2ToParts(parts as BrickHunterV2);
+        partsList = mapResponse.parts;
+        source = mapResponse.source;
+      } else {
+        const mapResponse = await this.mapBrickHunterV1ToParts(parts as BrickHunterV1);
+        partsList = mapResponse.parts;
+        source = mapResponse.source;
+      }
     }
 
     const partIds = partsList.map(item => {
@@ -60,7 +67,10 @@ export class ImportService {
         switchMap(parts => parts),
         switchMap(parts => {
           importStep$.next(3);
-          const request: GetBrickLinkPartsRequest = { itemNumbers: partIds };
+          const externalIds = parts.map(p => {
+            return p.rebrickable?.externalIds.find(e => e.source === 'BrickLink')?.externalId;
+          });
+          const request: GetBrickLinkPartsRequest = { itemNumbers: externalIds };
           return this.brickHunterApiService.getBrickLinkParts(request).pipe(
             map(responseBrickLinkParts => {
               return this.transformBrickLinkData(parts, responseBrickLinkParts, source);
@@ -74,12 +84,12 @@ export class ImportService {
       .subscribe({
         next: (parts: Part[]) => {
           const partsList: PartsList = {
-            uuid: this.guidService.generate(),
+            uuid: uuid ? uuid : this.guidService.generate(),
             name: partsListName,
             source: source,
             parts: parts,
           };
-          this.partsListService.addPartsList(partsList);
+          uuid ? this.partsListService.updatePartsList(partsList) : this.partsListService.addPartsList(partsList);
           importStep$.complete();
         },
         error: err => {
@@ -149,7 +159,7 @@ export class ImportService {
 
   private transformBrickLinkData(parts: Part[], brickLinkData: GetBrickLinkPartsResponse[], source: string) {
     return parts.map(part => {
-      const resp = brickLinkData.find(resp => resp.itemNo === part.source.id);
+      const resp = brickLinkData.find(resp => resp.itemNo === part.externalId);
       if (resp) {
         const colorInfo = resp.colors.find(c => c.colorId === part.color);
         let yearColor = 0;
@@ -273,5 +283,11 @@ export class ImportService {
 
       return { parts: parts, source: 'Lego' };
     }
+  }
+
+  private async mapBrickHunterV2ToParts(brickhunterV2List: BrickHunterV2) {
+    const parts: Part[] = brickhunterV2List.parts.map(item => item);
+
+    return { parts: parts, source: brickhunterV2List.source };
   }
 }

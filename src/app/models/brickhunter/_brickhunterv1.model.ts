@@ -1,4 +1,4 @@
-import { BrickHunterV1Item } from './_brickhunterv1-item.model';
+import { BrickHunterV1Item } from '.';
 
 export interface BrickHunterV1 {
   id: string;

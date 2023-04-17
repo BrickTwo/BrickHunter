@@ -36,6 +36,15 @@
               pButton
               pRipple
               type="button"
+              label="ReSync"
+              class="p-button-outlined"
+              icon="fa fa-arrows-rotate"
+              style="width: 100%"
+              (click)="onReSync()"></button>
+            <button
+              pButton
+              pRipple
+              type="button"
               label="PDF"
               class="p-button-outlined"
               icon="fa fa-print"
@@ -49,7 +58,7 @@
               class="p-button-outlined"
               icon="fa fa-download"
               style="width: 100%"
-              (click)="onPdf()"></button>
+              (click)="onExport()"></button>
           </div>
         </div>
         <div class="col-3 xxl:col-12">
@@ -159,5 +168,27 @@
   rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 <app-parts-list-settings [partsList]="partsList"></app-parts-list-settings>
 <app-parts-list-pdf></app-parts-list-pdf>
+<app-parts-list-export></app-parts-list-export>
 <app-parts-list-transfer></app-parts-list-transfer>
 <app-transfer-warning></app-transfer-warning>
+<p-dialog
+  header="Syncrinize Parts List"
+  [(visible)]="showImportDialog"
+  [style]="{ width: '50vw' }"
+  [closable]="false"
+  [modal]="true">
+  <div class="flex flex-wrap card-container blue-container gap-3">
+    <p-progressSpinner></p-progressSpinner>
+    <div>
+      <p class="align-items-center justify-content-center">
+        <app-progress-icon [step]="1" [currentStep]="importStep"></app-progress-icon> Prepare list
+      </p>
+      <p class="align-items-center justify-content-center">
+        <app-progress-icon [step]="2" [currentStep]="importStep"></app-progress-icon> Get Rebrickable Data
+      </p>
+      <p class="align-items-center justify-content-center">
+        <app-progress-icon [step]="3" [currentStep]="importStep"></app-progress-icon> Get BrickLink Data
+      </p>
+    </div>
+  </div>
+</p-dialog>
