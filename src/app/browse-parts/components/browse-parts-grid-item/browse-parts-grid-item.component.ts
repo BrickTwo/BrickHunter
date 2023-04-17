@@ -32,7 +32,7 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.partsListPart = this.partsListService
       .getParts(this.browsePartsService.selectedPartsListUuid, 'all')
-      ?.find(p => p.elementIds.some(el => el === this.part.elementId));
+      ?.find(p => (p.color !== 9999 ? p.elementIds.some(el => el === this.part.elementId) : false));
 
     this.isInWishList = !!this.browsePartsService.wishList.find(w => w === this.part.elementId);
     this.isInHaveItList = !!this.browsePartsService.haveItList.find(w => w === this.part.elementId);
@@ -40,7 +40,7 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
     this.partsListUuidSubscription = this.browsePartsService.selectedPartsListUuid$.subscribe(uuid => {
       this.partsListPart = this.partsListService
         .getParts(uuid, 'all')
-        .find(p => p.elementIds.some(el => el === this.part.elementId));
+        .find(p => (p.color !== 9999 ? p.elementIds.some(el => el === this.part.elementId) : false));
     });
 
     this.partsListsSubscription = this.partsListService.partsListsChanged$.subscribe(partsList => {

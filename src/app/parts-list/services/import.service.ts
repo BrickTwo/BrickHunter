@@ -120,7 +120,7 @@ export class ImportService {
 
       if (rebrickableData) {
         let elementIds = rebrickableData.elementIds
-          .filter(e => e.colorId == color.id)
+          .filter(e => (color.id !== 9999 ? e.colorId == color.id : 9999))
           .map(item => item.elementId)
           .map(id => Number(id));
 
@@ -143,6 +143,7 @@ export class ImportService {
       part.elementIds = part.elementIds?.map(id => id).sort((a, b) => b - a); // numerical sort desc
       if (!part.elementIds.length && part.elementId) part.elementIds.push(part.elementId);
       if (source === 'BrickLink') part.elementId = part.elementIds[0];
+      if (part.color === 9999) part.elementId = undefined;
 
       return part;
     });
@@ -183,7 +184,7 @@ export class ImportService {
         };
 
         var additionalElementIds = resp.elementIds
-          .filter(el => el.colorId === part.source.color)
+          .filter(el => (part.color !== 9999 ? el.colorId === part.source.color : true))
           .filter(o => !part.elementIds.some(i => i === o.elementId))
           .map(el => el.elementId);
 
@@ -193,6 +194,7 @@ export class ImportService {
 
       part.elementIds = part.elementIds?.map(id => id).sort((a, b) => b - a); // numerical sort desc
       if (source === 'BrickLink') part.elementId = part.elementIds[0];
+      if (part.color === 9999) part.elementId = undefined;
 
       return part;
     });
