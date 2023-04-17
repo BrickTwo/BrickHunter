@@ -1,0 +1,27 @@
+:host {
+    ::ng-deep.p-selectbutton {
+        display: flex;
+      flex-direction: column;
+    }
+
+    ::ng-deep.p-buttonset .p-button:first-of-type {
+        border-top-right-radius: 4px;
+        border-bottom-left-radius: 0
+
+    }
+
+    ::ng-deep.p-buttonset .p-button:not(:last-child) {
+        border-bottom: 0;
+        border-right: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    ::ng-deep.p-buttonset .p-button:last-of-type {
+        border-bottom-left-radius: 4px;
+        border-top-right-radius: 0;
+    }
+
+    ::ng-deep.p-selectbutton .p-button-label {
+        text-align: left;
+    }
+  }
+  

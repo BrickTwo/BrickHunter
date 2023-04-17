@@ -1,0 +1,46 @@
+<p-sidebar [(visible)]="display" position="right">
+  <h2 *ngIf="action === 'copy'">Copy to</h2>
+  <h2 *ngIf="action === 'move'">Move to</h2>
+  <form (ngSubmit)="onCreatePartsList(form)" #form="ngForm">
+    <div class="field">
+      <label for="partsListName" class="block">Parts List name</label>
+      <input id="partsListName" name="partsListName" type="text" pInputText style="width: 100%" ngModel />
+    </div>
+    <div class="field">
+      <button
+        pButton
+        pRipple
+        type="submit"
+        icon="fa fa-plus"
+        label="Create Parts List"
+        styleClass="p-button-solid text-md"
+        style="width: 100%"></button>
+    </div>
+  </form>
+  <div class="field">
+    <label>Target Parts List</label>
+    <p-selectButton
+      [options]="targetPartsLists"
+      [(ngModel)]="selectedPartsListUuid"
+      optionLabel="name"
+      optionValue="uuid"></p-selectButton>
+  </div>
+  <div class="field">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Copy"
+      style="width: 100%"
+      (click)="onSubmit()"
+      *ngIf="action === 'copy'"></button>
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Move"
+      style="width: 100%"
+      (click)="onSubmit()"
+      *ngIf="action === 'move'"></button>
+  </div>
+</p-sidebar>

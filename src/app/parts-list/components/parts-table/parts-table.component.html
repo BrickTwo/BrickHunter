@@ -1,3 +1,4 @@
+<p-menu #bulkMenu [model]="bulkMenuItems" [popup]="true"></p-menu>
 <p-table
   [value]="getParts()"
   [tableStyle]="{ 'min-width': '50rem' }"
@@ -6,9 +7,22 @@
   #tableRef
   [scrollable]="false"
   (sortFunction)="onCustomSort($event)"
-  [customSort]="true">
+  [customSort]="true"
+  [(selection)]="selectedParts">
   <ng-template pTemplate="header">
     <tr>
+      <th style="width: 6rem">
+        <div class="flex flex-row gap-2">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          <button
+            pButton
+            type="button"
+            (click)="bulkMenu.toggle($event)"
+            icon="fa fa-bars"
+            style="padding: 2px"
+            [disabled]="!selectedParts.length"></button>
+        </div>
+      </th>
       <th pRipple pSortableColumn="designId">DesignId<p-sortIcon field="designId"></p-sortIcon></th>
       <th pRipple pSortableColumn="elementId">ElementId<p-sortIcon field="elementId"></p-sortIcon></th>
       <th>Image</th>
@@ -33,6 +47,9 @@
       <td colspan="8"></td>
     </tr>
     <tr style="height: 91px">
+      <td>
+        <p-tableCheckbox [value]="part"></p-tableCheckbox>
+      </td>
       <td>{{ part.designId }}</td>
       <td>{{ part.elementId }}</td>
       <td>
@@ -99,12 +116,12 @@
       </td>
     </tr>
     <tr [style]="getBottomStyle()" *ngIf="rowIndex === rowsVisible - 1 && rowsBottom > 0">
-      <td colspan="8"></td>
+      <td colspan="9"></td>
     </tr>
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td colspan="8">No parts in this list.</td>
+      <td colspan="9">No parts in this list.</td>
     </tr>
   </ng-template>
 </p-table>

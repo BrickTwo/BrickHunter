@@ -1,14 +1,26 @@
-import { AfterViewInit, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Part } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 import { Subscription, fromEvent, interval, take } from 'rxjs';
+import { MenuItem } from 'primeng/api';
+import { BlukAction } from 'src/app/models/shared';
 
 @Component({
   selector: 'app-parts-table',
   templateUrl: './parts-table.component.html',
   styleUrls: ['./parts-table.component.scss'],
 })
-export class PartsTableComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input()
   parts: Part[] = [];
 
@@ -20,6 +32,11 @@ export class PartsTableComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   @Input()
   allowEdit = false;
+
+  selectedParts: Part[] = [];
+
+  @Output()
+  bulkAction = new EventEmitter<BlukAction>();
 
   rowHeight = 91;
   tableHeight = 0;
@@ -36,7 +53,28 @@ export class PartsTableComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   lastSort: string;
 
+  bulkMenuItems: MenuItem[];
+
   constructor(private readonly partsListService: PartsListService) {}
+
+  ngOnInit(): void {
+    this.bulkMenuItems = [
+      {
+        label: 'Copy to',
+        icon: 'fa fa-copy',
+        command: () => {
+          this.onCopyTo();
+        },
+      },
+      {
+        label: 'Move to',
+        icon: 'fa fa-file-import',
+        command: () => {
+          this.onMoveTo();
+        },
+      },
+    ];
+  }
 
   ngAfterViewInit(): void {
     this.registerScrollSubscription();
@@ -54,6 +92,13 @@ export class PartsTableComponent implements AfterViewInit, OnChanges, OnDestroy 
     part.have = $event;
     this.partsListService.updatePartInPartsList(this.partsListUuid, part);
     this.lastSort = '';
+  }
+
+  onCopyTo() {
+    this.bulkAction.emit({ action: 'copy', parts: this.selectedParts });
+  }
+  onMoveTo() {
+    this.bulkAction.emit({ action: 'move', parts: this.selectedParts });
   }
 
   onCustomSort($event) {

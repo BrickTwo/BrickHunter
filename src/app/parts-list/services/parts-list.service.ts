@@ -69,7 +69,13 @@ export class PartsListService {
 
   addPartToPartsList(uuid: string, newPart: Part) {
     let partsList = this.partsLists.find(p => p.uuid === uuid);
-    partsList.parts.push(newPart);
+
+    const foundPart = partsList.parts.find(p => p.elementId === newPart.elementId);
+    if (foundPart) {
+      foundPart.qty += newPart.qty;
+    } else {
+      partsList.parts.push(newPart);
+    }
 
     if (partsList.source !== newPart.source.source) {
       partsList.source = 'Mixed';

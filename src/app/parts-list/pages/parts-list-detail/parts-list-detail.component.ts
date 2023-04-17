@@ -14,12 +14,14 @@ import { Affiliate } from 'src/app/models/global';
 import { ImportService } from '../../services/import.service';
 import { BrickHunterV2 } from 'src/app/models/brickhunter';
 import {
+  PartsListCopyOrMoveToComponent,
   PartsListExportComponent,
   PartsListPdfComponent,
   PartsListSettingsComponent,
   PartsListTransferComponent,
   TransferWarningComponent,
 } from '../../components';
+import { BlukAction } from 'src/app/models/shared';
 
 @Component({
   selector: 'app-parts-list-detail',
@@ -82,9 +84,12 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   @ViewChild(TransferWarningComponent, { static: false })
   private transferWarningComponent?: TransferWarningComponent;
 
+  @ViewChild(PartsListCopyOrMoveToComponent, { static: false })
+  private partsListCopyOrMoveToComponent?: PartsListCopyOrMoveToComponent;
+
   showImportDialog = false;
   importStep = 0;
-  s;
+  selectedParts: Part[];
 
   constructor(
     private readonly partsListService: PartsListService,
@@ -311,5 +316,9 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
         });
       },
     });
+  }
+
+  onBulkAction(value: BlukAction) {
+    this.partsListCopyOrMoveToComponent.open(this.uuid, value.action, value.parts);
   }
 }

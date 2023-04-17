@@ -1,3 +1,4 @@
+export * from './parts-list-copy-or-move-to/parts-list-copy-or-move-to.component';
 export * from './pab-price/pab-price.component';
 export * from './parts-list-export/parts-list-export.component';
 export * from './parts-list-import/parts-list-import.component';

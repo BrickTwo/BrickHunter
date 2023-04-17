@@ -156,7 +156,8 @@
         [parts]="parts"
         [pabIsLoading]="pabIsLoading"
         [partsListUuid]="uuid"
-        [allowEdit]="true"></app-parts-table>
+        [allowEdit]="true"
+        (bulkAction)="onBulkAction($event)"></app-parts-table>
     </p-card>
   </div>
 </div>
@@ -171,6 +172,7 @@
 <app-parts-list-export></app-parts-list-export>
 <app-parts-list-transfer></app-parts-list-transfer>
 <app-transfer-warning></app-transfer-warning>
+<app-parts-list-copy-or-move-to></app-parts-list-copy-or-move-to>
 <p-dialog
   header="Syncrinize Parts List"
   [(visible)]="showImportDialog"
