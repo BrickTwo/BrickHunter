@@ -164,7 +164,8 @@ export class PartsListService {
   }
 
   private calcTargetBrickLinkReferencePrice(value: number) {
-    if (!this.globalSettingsService.subtractBrickLinkPrice || (value || 0) <= 0) return -999999;
+    if (!this.globalSettingsService.subtractBrickLinkPrice && (value || 0) <= 0) return -999999;
+    if (!this.globalSettingsService.subtractBrickLinkPrice && (value || 0) >= 0) return value || 0;
     if (this.globalSettingsService.subtractBrickLinkPriceUnit !== 'percentage')
       return (value || 0) + this.globalSettingsService.subtractBrickLinkPriceAmount;
 

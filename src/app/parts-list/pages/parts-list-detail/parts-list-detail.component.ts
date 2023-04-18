@@ -64,6 +64,11 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       pieces: 0,
       price: '0.00',
     },
+    total: {
+      lot: 0,
+      pieces: 0,
+      price: '0.00',
+    },
   };
   useAffiliatePaB = true;
   useAffiliateBaP = true;
@@ -171,7 +176,18 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
         pieces: this.getTotalQuantity('brickLink'),
         price: this.getTotalPrice('brickLink'),
       },
+      total: {
+        lot: this.getParts('all')?.length,
+        pieces: this.getTotalQuantity('all'),
+        price: '',
+      },
     };
+
+    this.totals['total']['price'] = (
+      Number(this.totals.bestseller.price) +
+      Number(this.totals.standard.price) +
+      Number(this.totals.bricklink.price)
+    ).toFixed(2);
 
     this.items = this.items.map(item => {
       item.label = `${item.title} (${this.getParts(item.id)?.length})`;
