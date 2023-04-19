@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { jsPDF } from 'jspdf';
-import autoTable, { Cell, CellDef, ColumnInput } from 'jspdf-autotable';
+import autoTable, { ColumnInput } from 'jspdf-autotable';
 import { ColorService } from 'src/app/core/services/color.service';
-import { PartsList } from 'src/app/models/parts-list';
+import { Part, PartsList } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 
 @Component({
@@ -34,7 +34,7 @@ export class PartsListPdfComponent {
     const columns: ColumnInput[] = [
       { header: 'DesignId', dataKey: 'designId' },
       { header: 'ElementId', dataKey: 'elementId' },
-      // { header: 'Image', dataKey: 'image' },
+      { header: 'Image', dataKey: 'image' },
       { header: 'Color', dataKey: 'color' },
       { header: 'Quantity', dataKey: 'quantity' },
       { header: 'BrickLink', dataKey: 'bricklink' },
@@ -43,14 +43,18 @@ export class PartsListPdfComponent {
 
     const rows = this.partsListService.getParts(this.partsList.uuid, this.selectedValue).map(async part => {
       const color = await this.colorService.getColor(part.color);
+      const imgUrl = await this.caclImageUrl(part)
+        .then(imgUrl => imgUrl)
+        .catch(e => './assets/placeholder.png');
 
       return {
-        desingId: part.designId,
+        designId: part.designId,
         elementId: part.elementId,
         color: color?.name,
         quantity: part.qty,
         bricklink: part.maxPrice,
-        pab: part.lego?.price.amount,
+        pab: part.lego ? `${part.lego?.price.amount.toFixed(2)} ${part.lego?.price.currencyCode}` : '',
+        imageUrl: imgUrl,
       };
     });
 
@@ -65,17 +69,16 @@ export class PartsListPdfComponent {
       columns: columns,
       body: await Promise.all(rows),
       startY: 25,
-      // didParseCell: data => {
-      // if (data.column.dataKey === 'image' && data.cell.section === 'body') {
-      //   var img =
-      //     this.caclImageUrl(this.partsList.parts[data.row.index]) + '?r=' + Math.floor(Math.random() * 100000);
-      //   var dim = data.cell.height - data.cell.padding('vertical');
-      //   var textPos = data.cell.getTextPos();
-      //   data.cell.contentHeight = 150;
-      //   doc.addImage(img, textPos.x, textPos.y, 10, 10);
-      //   console.log(data);
-      // }
-      // },
+      bodyStyles: { minCellHeight: 35 },
+      rowPageBreak: 'avoid',
+      didDrawCell: function (data) {
+        if (data.column.dataKey === 'image' && data.cell.section === 'body') {
+          const img = data.row.raw['imageUrl'];
+          const dim = data.cell.height - data.cell.padding('vertical');
+          const textPos = data.cell.getTextPos();
+          doc.addImage(img, textPos.x, textPos.y, dim, dim);
+        }
+      },
       didDrawPage: function (data) {
         // Header
         doc.setFontSize(20);
@@ -108,23 +111,25 @@ export class PartsListPdfComponent {
     this.display = false;
   }
 
-  // private caclImageUrl(part: IPart) {
-  //   if (part.source.source === 'BrickLink')
-  //     return `https://img.bricklink.com/ItemImage/PN/${part.source.color}/${part.source.id}.png`;
-  //   return `https://brickhunter.blob.core.windows.net/parts/pab/${part.elementId}.jpg`;
-  // }
+  caclImageUrl(part: Part) {
+    if (part.source.source === 'BrickLink')
+      return this.imageExists(`https://img.bricklink.com/ItemImage/PN/${part.source.color}/${part.source.id}.png`);
+    return this.imageExists(`https://brickhunter.blob.core.windows.net/parts/pab/${part.elementId}.jpg`);
+  }
 
-  // private toDataURL(url: string, callback: Function) {
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.onload = function () {
-  //     var reader = new FileReader();
-  //     reader.onloadend = function () {
-  //       callback(reader.result);
-  //     };
-  //     reader.readAsDataURL(xhr.response);
-  //   };
-  //   xhr.open('GET', url);
-  //   xhr.responseType = 'blob';
-  //   xhr.send();
-  // }
+  imageExists(url: string) {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.onload = () => resolve(url);
+      img.onerror = () => reject();
+      img.src = url;
+    });
+  }
+
+  checkImage(src, good, bad) {
+    var img = new Image();
+    try {
+      img.src = src;
+    } catch (e) {}
+  }
 }

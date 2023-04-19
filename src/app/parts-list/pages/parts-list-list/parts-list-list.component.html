@@ -1,13 +1,18 @@
 <h2><fa-icon [icon]="faList" class="page-title-icon"></fa-icon>Parts Lists</h2>
 <p-card>
-  <button
-    pButton
-    pRipple
-    type="button"
-    label="Import"
-    class="p-button-solid"
-    icon="fa fa-plus"
-    (click)="onImport()"></button>
+  <div class="flex justify-content-between">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Import"
+      class="p-button-solid"
+      icon="fa fa-plus"
+      (click)="onImport()"></button>
+    <a target="_blank" href="https://www.paypal.com/donate?hosted_button_id=MPV9V9JUKRD6N">
+      <img alt="donate" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" style="cursor: pointer" />
+    </a>
+  </div>
   <p-divider></p-divider>
   <p-table
     [value]="partsLists"

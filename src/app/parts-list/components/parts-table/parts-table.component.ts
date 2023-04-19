@@ -120,6 +120,10 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
     });
   }
 
+  onImageError(imgRef: any) {
+    imgRef.src = './assets/placeholder.png';
+  }
+
   resolveFieldData(data: any, field: any): any {
     if (data && field) {
       if (this.isFunction(field)) {

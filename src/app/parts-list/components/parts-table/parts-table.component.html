@@ -53,7 +53,12 @@
       <td>{{ part.designId }}</td>
       <td>{{ part.elementId }}</td>
       <td>
-        <p-image [src]="caclImageUrl(part)" imageClass="part-image" [preview]="true"></p-image>
+        <p-image
+          #imgRef
+          [src]="caclImageUrl(part)"
+          (onImageError)="onImageError(imgRef)"
+          imageClass="part-image"
+          [preview]="true"></p-image>
       </td>
       <td>
         <app-color [colorId]="part.color"></app-color>
