@@ -1,7 +1,7 @@
 <p-sidebar [(visible)]="display" position="right" (onHide)="onHide()">
   <h2>Import</h2>
-  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-    <div class="flex flex-column card-container green-container gap-3">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="field">
       <p-fileUpload
         #fileUpload
         name="myfile[]"
@@ -13,10 +13,16 @@
           <div>Select file or drag below.</div>
         </ng-template>
       </p-fileUpload>
-      <div>
-        <label for="partsListName" class="block">Parts List name</label>
-        <input id="partsListName" name="partsListName" type="text" pInputText style="width: 100%" ngModel />
-      </div>
+    </div>
+    <div class="field">
+      <label for="partsListName" class="block">BrickLink WantedList or BrickHunter Json</label>
+      <textarea pInputTextarea rows="10" style="width: 100%" formControlName="content"></textarea>
+    </div>
+    <div class="field">
+      <label for="partsListName" class="block">Parts List name</label>
+      <input id="partsListName" formControlName="partsListName" type="text" pInputText style="width: 100%" />
+    </div>
+    <div class="field">
       <button pButton pRipple type="submit" label="Import" style="width: 100%"></button>
     </div>
   </form>

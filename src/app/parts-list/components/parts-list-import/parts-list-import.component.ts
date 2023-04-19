@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'dexie';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
@@ -24,8 +24,13 @@ export class PartsListImportComponent implements OnDestroy {
   source: string;
   subscription$: Subscription;
 
-  @ViewChild('form', { static: false }) form: NgForm;
+  // @ViewChild('form', { static: false }) form: NgForm;
   @ViewChild('fileUpload', { static: false }) fileUpload: any;
+
+  form = new FormGroup({
+    partsListName: new FormControl(),
+    content: new FormControl(),
+  });
 
   clear() {
     this.fileUpload.clear();
@@ -42,7 +47,8 @@ export class PartsListImportComponent implements OnDestroy {
 
   onHide() {
     this.importStep = 0;
-    this.form.setValue({ partsListName: '' });
+    this.form.patchValue({ partsListName: '' });
+    this.form.patchValue({ content: '' });
     this.fileUpload.clear();
   }
 
@@ -59,17 +65,18 @@ export class PartsListImportComponent implements OnDestroy {
     const fileReader = new FileReader();
     fileReader.onload = async event => {
       const fileContent = event.target?.result.toString();
+      this.form.patchValue({ content: fileContent });
 
       switch (file.type) {
         case 'text/xml':
-          this.form.setValue({ partsListName: fileName });
+          this.form.patchValue({ partsListName: fileName });
           this.source = 'BrickLink';
           this.wantedList = await this.importXml(fileContent);
           break;
         case 'application/json':
           this.source = 'BrickHunterV1';
           this.brickhunterV1List = JSON.parse(fileContent) as BrickHunterV1;
-          this.form.setValue({ partsListName: this.brickhunterV1List.name });
+          this.form.patchValue({ partsListName: this.brickhunterV1List.name });
           break;
         default:
           return;
@@ -79,14 +86,24 @@ export class PartsListImportComponent implements OnDestroy {
     fileReader.readAsText(file);
   }
 
-  onSubmit(importForm: NgForm) {
+  async onSubmit() {
     this.showImportDialog = true;
+
+    const content = this.form.value.content;
+
+    if (!this.hasJsonStructure(content)) {
+      this.source = 'BrickLink';
+      this.wantedList = await this.importXml(content);
+    } else {
+      this.source = 'BrickHunterV1';
+      this.brickhunterV1List = JSON.parse(content) as BrickHunterV1;
+    }
 
     this.subscription$ = new Observable<number>(subscriber => {
       if (this.source === 'BrickLink') {
-        this.importService.import(subscriber, importForm.value.partsListName, this.source, this.wantedList);
+        this.importService.import(subscriber, this.form.value.partsListName, this.source, this.wantedList);
       } else {
-        this.importService.import(subscriber, importForm.value.partsListName, this.source, this.brickhunterV1List);
+        this.importService.import(subscriber, this.form.value.partsListName, this.source, this.brickhunterV1List);
       }
     }).subscribe({
       next: step => {
@@ -165,5 +182,16 @@ export class PartsListImportComponent implements OnDestroy {
       });
 
     return bb;
+  }
+
+  private hasJsonStructure(str: string) {
+    if (typeof str !== 'string') return false;
+    try {
+      const result = JSON.parse(str);
+      const type = Object.prototype.toString.call(result);
+      return type === '[object Object]' || type === '[object Array]';
+    } catch (err) {
+      return false;
+    }
   }
 }
