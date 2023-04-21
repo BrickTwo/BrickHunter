@@ -127,7 +127,12 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
             this.messageService.add({
               severity: 'error',
               summary: "Couldn't load PaB Data!",
-              detail: 'PLease try again later',
+              detail: 'Please try again later',
+            });
+          } else {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'PaB Data successfully updated',
             });
           }
           this.reloadPartsList();
