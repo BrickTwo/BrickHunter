@@ -6,6 +6,8 @@ import * as xml2js from 'xml2js';
 import { BrickHunterV2, BrickHunterV2Item } from 'src/app/models/brickhunter';
 import autoTable, { ColumnInput } from 'jspdf-autotable';
 import jsPDF from 'jspdf';
+import { ImportService } from '../../services/import.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-parts-list-export',
@@ -34,7 +36,11 @@ export class PartsListExportComponent {
   ];
   selectedExportToValue: string = 'pdf';
 
-  constructor(private readonly partsListService: PartsListService, private readonly colorService: ColorService) {}
+  constructor(
+    private readonly partsListService: PartsListService,
+    private readonly colorService: ColorService,
+    private readonly importService: ImportService
+  ) {}
 
   public open(partsListUuid: string) {
     this.display = true;
@@ -179,15 +185,23 @@ export class PartsListExportComponent {
   }
 
   async exportBrickLink() {
-    let xmlContent = 'data:text/xml;charset=utf-8,';
-    xmlContent += await this.creatXml();
-    const data = encodeURI(xmlContent);
+    new Observable<number>(subscriber => {
+      let syncList: BrickHunterV2 = this.partsList as unknown as BrickHunterV2;
+      syncList.version = '2.0';
+      this.importService.import(subscriber, this.partsList.name, 'BrickHunter', syncList, this.partsList.uuid);
+    }).subscribe({
+      complete: async () => {
+        let xmlContent = 'data:text/xml;charset=utf-8,';
+        xmlContent += await this.creatXml();
+        const data = encodeURI(xmlContent);
 
-    var a = document.createElement('a');
-    a.href = data;
-    a.target = '_blank';
-    a.download = 'WantedList.xml';
-    a.click();
+        var a = document.createElement('a');
+        a.href = data;
+        a.target = '_blank';
+        a.download = 'WantedList.xml';
+        a.click();
+      },
+    });
   }
 
   async creatXml(withHeader = true) {
@@ -211,7 +225,7 @@ export class PartsListExportComponent {
         var item = {
           ITEM: {
             ITEMTYPE: part.brickLink.itemType,
-            ITEMID: part.brickLink.itemId,
+            ITEMID: part.brickLink.itemNo,
             COLOR: part.color !== 9999 ? color.externalIds.brickLink.extIds[0] : '',
             MAXPRICE: part.maxPrice,
             MINQTY: part.qty,

@@ -100,7 +100,7 @@ export class ImportService {
 
   private transformRebrickableData(rebrickableDatas: GetRebrickablePartsResponse[], partsList: Part[], source: string) {
     const resp = partsList.map(async part => {
-      const rebrickableData = rebrickableDatas.find(resp => {
+      let rebrickableData = rebrickableDatas.find(resp => {
         if (source === 'Lego') {
           return resp.elementIds.find(e => e.elementId === part.elementId);
         } else {
@@ -123,6 +123,12 @@ export class ImportService {
       }
 
       part.color = color.id;
+
+      if (!rebrickableData) {
+        rebrickableData = rebrickableDatas.find(resp => {
+          return resp.elementIds.find(e => e.colorId === color.id);
+        });
+      }
 
       if (rebrickableData) {
         let elementIds = rebrickableData.elementIds
@@ -159,7 +165,9 @@ export class ImportService {
 
   private transformBrickLinkData(parts: Part[], brickLinkData: GetBrickLinkPartsResponse[], source: string) {
     return parts.map(part => {
-      const resp = brickLinkData.find(resp => resp.itemNo === part.externalId);
+      const resp = brickLinkData.find(
+        resp => resp.itemNo === part.rebrickable?.externalIds.find(e => e.source === 'BrickLink')?.externalId
+      );
       if (resp) {
         const colorInfo = resp.colors.find(c => c.colorId === part.color);
         let yearColor = 0;
@@ -199,7 +207,7 @@ export class ImportService {
       }
 
       part.elementIds = part.elementIds?.map(id => id).sort((a, b) => b - a); // numerical sort desc
-      if (source === 'BrickLink') part.elementId = part.elementIds[0];
+      if (source === 'BrickLink' || !part.elementId) part.elementId = part.elementIds[0];
       if (part.color === 9999) part.elementId = undefined;
 
       return part;

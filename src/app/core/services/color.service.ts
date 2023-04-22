@@ -46,11 +46,11 @@ export class ColorService {
     const color = this.colors.find(color => {
       switch (type) {
         case 'Lego':
-          return color.externalIds.brickLink?.extIds.find(id => {
+          return color.externalIds.lego?.extIds.find(id => {
             return id === colorId;
           });
         case 'BrickLink':
-          return color.externalIds.lego?.extIds.find(id => {
+          return color.externalIds.brickLink?.extIds.find(id => {
             return id === colorId;
           });
         case 'Rebrickable': {

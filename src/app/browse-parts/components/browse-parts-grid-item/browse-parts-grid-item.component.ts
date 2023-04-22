@@ -4,6 +4,7 @@ import { BrowsePartsPart } from 'src/app/models/browse-parts';
 import { PartsListService } from 'src/app/parts-list/services/parts-list.service';
 import { BrowsePartsService } from '../../service/browse-parts.service';
 import { Part } from 'src/app/models/parts-list';
+import { ColorService } from 'src/app/core/services/color.service';
 
 @Component({
   selector: 'app-browse-parts-grid-item',
@@ -26,7 +27,8 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly partsListService: PartsListService,
-    private readonly browsePartsService: BrowsePartsService
+    private readonly browsePartsService: BrowsePartsService,
+    private readonly colorService: ColorService
   ) {}
 
   ngOnInit(): void {
@@ -58,11 +60,13 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
     });
   }
 
-  onAddPart() {
+  async onAddPart() {
     if (this.partsListService.getPartsLists().length === 0) {
       const partsList = this.partsListService.createPartsList('Parts List', 'Lego');
       this.browsePartsService.setSelectedPartsListUuid(partsList.uuid);
     }
+
+    const color = await this.colorService.getColor(this.part.colorId);
 
     this.partsListPart = {
       id: String(this.part.elementId),
@@ -81,7 +85,7 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
       source: {
         source: 'Lego',
         id: String(this.part.elementId),
-        color: Number(this.part.colorId),
+        color: color.externalIds.lego?.extIds[0],
       },
     };
 
