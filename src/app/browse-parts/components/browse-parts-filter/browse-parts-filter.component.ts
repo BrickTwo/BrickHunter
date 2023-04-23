@@ -27,10 +27,10 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
       value: 'PRICEAMOUNT',
       name: 'Price',
     },
-    {
-      value: 'MAXAMOUNT',
-      name: 'Max Order Quantity',
-    },
+    // {
+    //   value: 'MAXAMOUNT',
+    //   name: 'Max Order Quantity',
+    // },
     {
       value: 'FIRSTSEEN',
       name: 'First Availability',

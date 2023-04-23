@@ -40,7 +40,9 @@
             src="/assets/flag_placeholder.png"
             [class]="'flag flag-' + selectedCountry?.countryCode?.toLowerCase()"
             style="width: 18px" />
-          <div>{{ selectedCountry.lastUpdate + 'Z' | date : 'short' }}</div>
+          <div>
+            {{ selectedCountry.countryCode | uppercase }} {{ selectedCountry.lastUpdate + 'Z' | date : 'short' }}
+          </div>
         </div>
       </ng-template>
       <ng-template let-country pTemplate="item">
@@ -49,7 +51,7 @@
             src="/assets/flag_placeholder.png"
             [class]="'flag flag-' + country.countryCode.toLowerCase()"
             style="width: 18px" />
-          <div>{{ country.lastUpdate + 'Z' | date : 'short' }}</div>
+          <div>{{ country.countryCode | uppercase }} {{ country.lastUpdate + 'Z' | date : 'short' }}</div>
         </div>
       </ng-template>
     </p-dropdown>
