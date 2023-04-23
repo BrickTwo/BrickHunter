@@ -1,6 +1,6 @@
 {
   "name": "BrickHuner 2.0",
-  "version": "1.0",
+  "version": "2.0.14",
   "description": "Build an Extension with Angular",
   "manifest_version": 3,
   "permissions": ["activeTab", "scripting"],
