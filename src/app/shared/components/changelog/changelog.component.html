@@ -1,9 +1,19 @@
+<section *ngIf="isVersionGreater('2.0.18')">
+  <h2>2.0.18</h2>
+  <h3>Features</h3>
+  <h3>Bug fixed</h3>
+  <ul>
+    <li>Parts List: Select "all" rows</li>
+    <li>Browse Parts: Show Parts List shows now only the exact element if source type is "Lego".</li>
+  </ul>
+</section>
 <section *ngIf="isVersionGreater('2.0.17')">
   <h2>2.0.17</h2>
   <h3>Features</h3>
   <ul>
     <li>Parts List: Add Totals</li>
     <li>Parts List: Add images to PDF</li>
+    <li>Parts List: Move PDF to export function</li>
     <li>Parts List: Add Textfield to import from clipboard</li>
   </ul>
   <h3>Bug fixed</h3>

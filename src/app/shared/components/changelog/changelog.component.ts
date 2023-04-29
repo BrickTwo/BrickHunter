@@ -13,6 +13,7 @@ export class ChangelogComponent {
 
   isVersionGreater(version: string) {
     if (!this.versionCheck) return true;
+    if (this.versionService.oldVersion === '0.0.0') return false;
     return this.versionService.isVersionGreater(this.versionService.oldVersion, version);
   }
 }

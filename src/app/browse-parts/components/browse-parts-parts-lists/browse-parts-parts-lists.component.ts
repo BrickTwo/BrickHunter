@@ -66,7 +66,13 @@ export class BrowsePartsPartsListsComponent implements OnInit, OnDestroy {
       default:
         const partsList = this.partsListService.getPartsList(uuid);
         let elementIds: number[] = [];
-        partsList.parts.map(item => elementIds.push(...item.elementIds));
+        partsList.parts.map(item => {
+          if (item.source.source === 'Lego') {
+            elementIds.push(item.elementId);
+          } else {
+            elementIds.push(...item.elementIds);
+          }
+        });
         this.browsePartsService.setElementIds(elementIds);
     }
   }

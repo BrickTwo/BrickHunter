@@ -50,6 +50,7 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
 
   scrollSubscription: Subscription;
   resizeSubscription: Subscription;
+  tableRefResizeObserver: ResizeObserver;
 
   lastSort: string;
 
@@ -183,6 +184,7 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
   }
 
   calcVisible(source: string) {
+    //console.log(source, this.parts);
     if (!this.registerScrollSubscription()) return;
     const rect = this.tableRef.getBoundingClientRect();
     this.rowsVisible = Math.ceil((this.tableWrapperRef.clientHeight - 210) / 91) + 2;
@@ -218,11 +220,17 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
       this.calcVisible('resize');
     });
 
+    this.tableRefResizeObserver = new ResizeObserver(entries => {
+      this.calcVisible('fff');
+    });
+
+    this.tableRefResizeObserver.observe(this.tableRef);
     return true;
   }
 
   ngOnDestroy(): void {
     if (this.scrollSubscription) this.scrollSubscription.unsubscribe();
     if (this.resizeSubscription) this.resizeSubscription.unsubscribe();
+    if (this.tableRefResizeObserver) this.tableRefResizeObserver.unobserve(this.tableRef);
   }
 }

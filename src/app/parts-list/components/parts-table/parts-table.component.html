@@ -1,6 +1,6 @@
 <p-menu #bulkMenu [model]="bulkMenuItems" [popup]="true"></p-menu>
 <p-table
-  [value]="getParts()"
+  [value]="parts"
   [tableStyle]="{ 'min-width': '50rem' }"
   styleClass="p-datatable-striped"
   scrollHeight="calc(100vh - 210px)"
@@ -40,13 +40,16 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-part let-rowIndex="rowIndex">
-    <tr [style]="getTopStyle()" *ngIf="rowIndex === 0 && rowsTop > 0">
+    <!-- <tr [style]="getTopStyle()" *ngIf="rowIndex === 0 && rowsTop > 0">
+      <td colspan="8"></td>
+    </tr> -->
+    <!-- <tr style="height: 91px" *ngIf="rowIndex === 0 && rowsTop % 2 === 0 && rowsTop > 0">
+      <td colspan="8"></td>
+    </tr> -->
+    <tr style="height: 91px" *ngIf="rowIndex <= rowsTop - 1">
       <td colspan="8"></td>
     </tr>
-    <tr style="height: 91px" *ngIf="rowIndex === 0 && rowsTop % 2 === 0 && rowsTop > 0">
-      <td colspan="8"></td>
-    </tr>
-    <tr style="height: 91px">
+    <tr style="height: 91px" *ngIf="rowIndex > rowsTop - 1 && rowIndex < rowsTop + 5 + rowsVisible">
       <td>
         <p-tableCheckbox [value]="part"></p-tableCheckbox>
       </td>
@@ -120,9 +123,12 @@
           (click)="onDeletePart(part)"></p-button>
       </td>
     </tr>
-    <tr [style]="getBottomStyle()" *ngIf="rowIndex === rowsVisible - 1 && rowsBottom > 0">
-      <td colspan="9"></td>
+    <tr style="height: 91px" *ngIf="rowIndex > rowsTop + 5 + rowsVisible">
+      <td colspan="8"></td>
     </tr>
+    <!-- <tr [style]="getBottomStyle()" *ngIf="rowIndex === rowsVisible - 1 && rowsBottom > 0">
+      <td colspan="9"></td>
+    </tr> -->
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>

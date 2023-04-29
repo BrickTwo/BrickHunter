@@ -34,7 +34,7 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.partsListPart = this.partsListService
       .getParts(this.browsePartsService.selectedPartsListUuid, 'all')
-      ?.find(p => (p.color !== 9999 ? p.elementIds.some(el => el === this.part.elementId) : false));
+      ?.find(p => (p.color !== 9999 ? this.isElementId(p) : false));
 
     this.isInWishList = !!this.browsePartsService.wishList.find(w => w === this.part.elementId);
     this.isInHaveItList = !!this.browsePartsService.haveItList.find(w => w === this.part.elementId);
@@ -42,13 +42,13 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
     this.partsListUuidSubscription = this.browsePartsService.selectedPartsListUuid$.subscribe(uuid => {
       this.partsListPart = this.partsListService
         .getParts(uuid, 'all')
-        .find(p => (p.color !== 9999 ? p.elementIds.some(el => el === this.part.elementId) : false));
+        .find(p => (p.color !== 9999 ? this.isElementId(p) : false));
     });
 
     this.partsListsSubscription = this.partsListService.partsListsChanged$.subscribe(partsList => {
       this.partsListPart = this.partsListService
         .getParts(this.browsePartsService.selectedPartsListUuid, 'all')
-        .find(p => p.elementIds.some(el => el === this.part.elementId));
+        .find(p => this.isElementId(p));
     });
 
     this.wishListSubscription = this.browsePartsService.wishList$.subscribe(wishList => {
@@ -153,5 +153,12 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
       rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
+  }
+
+  private isElementId(part: Part) {
+    if (part.source.source === 'Lego') {
+      return part.elementId === this.part.elementId;
+    }
+    return part.elementIds.some(el => el === this.part.elementId);
   }
 }

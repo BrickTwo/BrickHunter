@@ -117,6 +117,7 @@ export class BrowsePartsService {
       const browsePartsFilter = localStorage.getItem('browsePartsFilter') || null;
       if (browsePartsFilter) {
         this.filter = JSON.parse(browsePartsFilter) as unknown as Filter;
+        this.filter.elementIds = [];
         this.filter.country = this.localeService.country?.code || 'de';
         this.filterSubject$.next({ property: FilterChangedProperty.layout, filter: { ...this.filter } });
         this.filterSubject$.next({ property: FilterChangedProperty.page, filter: { ...this.filter } });
