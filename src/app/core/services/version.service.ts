@@ -1,14 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { BrickHunterV1 } from 'src/app/models/brickhunter';
 import { ImportService } from 'src/app/parts-list/services/import.service';
 import { IndexedDBService } from './indexeddb.service.ts';
+
+interface Migration {
+  version2_0_0: {
+    partsListCount: number;
+    partsListMigrated: number;
+    migrationStarted: boolean;
+    migrationEnd: boolean;
+  };
+}
 
 @Injectable()
 export class VersionService {
   oldVersion = '';
   currentVersion = '';
   devmode = false;
+
+  private migrationSubject$ = new Subject<Migration>();
+  migration$ = this.migrationSubject$.asObservable();
 
   constructor(private readonly importService: ImportService, private readonly indexedDbService: IndexedDBService) {
     this.oldVersion = this.readVersion();
@@ -22,11 +34,26 @@ export class VersionService {
     this.updateStructure();
   }
 
-  updateStructure() {
+  async updateStructure() {
     if (this.isVersionGreater(this.oldVersion, '2.0.0')) {
+      const partsList = await this.indexedDbService.table('partLists').toArray();
+      let partsListMigrated = 0;
+
+      let migrationModel = {
+        version2_0_0: {
+          partsListCount: partsList.length,
+          partsListMigrated: 0,
+          migrationStarted: true,
+          migrationEnd: false,
+        },
+      };
+
+      this.migrationSubject$.next(migrationModel);
+
       console.log('update');
       // clean local storage
-      const rowKeys: string[] = [];
+      //const rowKeys: string[] = [];
+
       this.indexedDbService
         .table('partLists')
         .toCollection()
@@ -36,12 +63,29 @@ export class VersionService {
 
           new Observable<number>(subscriber => {
             this.importService.import(subscriber, name, source, pl);
-          });
+          }).subscribe({
+            complete: async () => {
+              partsListMigrated = partsListMigrated + 1;
+              this.indexedDbService.table('partLists').delete(pl.id);
+              this.migrationSubject$.next({
+                ...migrationModel,
+                version2_0_0: {
+                  ...migrationModel.version2_0_0,
+                  partsListMigrated: partsListMigrated,
+                },
+              });
 
-          rowKeys.push(pl.id);
-        })
-        .then(value => {
-          this.indexedDbService.table('partLists').bulkDelete(rowKeys);
+              if (partsList.length === partsListMigrated) {
+                this.migrationSubject$.next({
+                  ...migrationModel,
+                  version2_0_0: {
+                    ...migrationModel.version2_0_0,
+                    migrationEnd: true,
+                  },
+                });
+              }
+            },
+          });
         });
     }
 

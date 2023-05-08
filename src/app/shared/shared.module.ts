@@ -10,6 +10,7 @@ import { LocaleComponent } from './components/locale/locale.component';
 import { FormsModule } from '@angular/forms';
 import { NgModelChangeDebouncedDirective } from './directoves/ng-model-change-debounced.directive';
 import { ChangelogDialogComponent } from './components/changelog-dialog/changelog-dialog.component';
+import { MigrationComponent } from './components/migration/migration.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ChangelogDialogComponent } from './components/changelog-dialog/changelo
     ChangelogDialogComponent,
     LocaleComponent,
     NgModelChangeDebouncedDirective,
+    MigrationComponent,
   ],
   imports: [PrimengModule, CommonModule, FontAwesomeModule, FormsModule],
   exports: [
@@ -30,6 +32,7 @@ import { ChangelogDialogComponent } from './components/changelog-dialog/changelo
     ChangelogDialogComponent,
     LocaleComponent,
     NgModelChangeDebouncedDirective,
+    MigrationComponent,
   ],
 })
 export class SharedModule {}

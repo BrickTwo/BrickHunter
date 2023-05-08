@@ -1,0 +1,13 @@
+<p-dialog
+  header="Data Migration"
+  [(visible)]="showDialog"
+  [style]="{ width: '50vw' }"
+  [closable]="false"
+  [modal]="true">
+  <div class="flex flex-wrap card-container blue-container gap-3">
+    <p-progressSpinner></p-progressSpinner>
+    <div>
+      <p class="align-items-center justify-content-center">{{ migrated }} of {{ counter }} Parts List migrated.</p>
+    </div>
+  </div>
+</p-dialog>

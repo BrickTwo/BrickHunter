@@ -55,7 +55,7 @@ export class BrowsePartsCategorySelectionComponent implements OnInit, OnDestroy 
       };
 
       this.selectedConfigCategories = this.configCategories.filter(c =>
-        this.browsePartsService.filter.excludeCategoryIds.some(id => id === Number(c.key))
+        this.browsePartsService.filter.excludeCategoryIds?.some(id => id === Number(c.key))
       );
     });
 
