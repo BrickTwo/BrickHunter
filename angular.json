@@ -36,9 +36,7 @@
             ],
             "styles": ["src/styles.scss"],
             "scripts": [],
-            "allowedCommonJsDependencies": [
-              "lodash"
-           ]
+            "allowedCommonJsDependencies": ["lodash"]
           },
           "configurations": {
             "production": {

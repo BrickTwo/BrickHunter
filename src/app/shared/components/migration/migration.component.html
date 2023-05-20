@@ -9,5 +9,6 @@
     <div>
       <p class="align-items-center justify-content-center">{{ migrated }} of {{ counter }} Parts List migrated.</p>
     </div>
+    <p-messages [(value)]="warning" [enableService]="false" [closable]="false"></p-messages>
   </div>
 </p-dialog>

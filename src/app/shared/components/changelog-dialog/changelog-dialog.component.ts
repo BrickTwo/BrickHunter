@@ -15,6 +15,7 @@ export class ChangelogDialogComponent {
     if (this.versionService.oldVersion != this.versionService.currentVersion) {
       this.visible = true;
     }
+    if (this.versionService.oldVersion === '0.0.0') this.visible = false;
   }
 
   onClose() {

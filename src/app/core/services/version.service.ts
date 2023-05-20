@@ -44,7 +44,7 @@ export class VersionService {
           partsListCount: partsList.length,
           partsListMigrated: 0,
           migrationStarted: true,
-          migrationEnd: false,
+          migrationEnd: partsList.length ? false : true,
         },
       };
 

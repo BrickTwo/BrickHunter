@@ -73,6 +73,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   useAffiliatePaB = true;
   useAffiliateBaP = true;
   affiliate: Affiliate;
+  permissionLegoCom = false;
 
   @ViewChild(PartsListSettingsComponent, { static: false })
   private partsListSettingsComponent?: PartsListSettingsComponent;
@@ -117,6 +118,8 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.checkPermission();
+
     this.route.params.subscribe((params: Params) => {
       this.uuid = params['id'];
       this.reloadPartsList();
@@ -125,9 +128,11 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
         if (!isLoading && this.pabIsLoading) {
           if (this.pickabrickService.pabLoadError) {
             this.messageService.add({
+              life: 10000,
               severity: 'error',
               summary: "Couldn't load PaB Data!",
-              detail: 'Please try again later',
+              detail:
+                'Permission for accessing lego.com may be not set or there is currently a problem at lego.com itself.',
             });
           } else {
             this.messageService.add({
@@ -199,7 +204,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       return item;
     });
 
-    if (loadPab) {
+    if (loadPab && this.permissionLegoCom) {
       this.pabIsLoading = true;
       this.pickabrickService.getParts(this.uuid);
     }
@@ -341,5 +346,33 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
 
   onBulkAction(value: BlukAction) {
     this.partsListCopyOrMoveToComponent.open(this.uuid, value.action, value.parts);
+  }
+
+  async checkPermission() {
+    const permissions = await chrome.permissions.getAll();
+    console.log(permissions);
+    if (permissions.origins.find(o => o === 'https://*.lego.com/*')) {
+      this.permissionLegoCom = true;
+    } else {
+      this.confirmationService.confirm({
+        message: 'Permission for accessing lego.com needed.',
+        header: 'Missing Permission',
+        icon: 'fa fa-circle-info',
+        accept: async () => {
+          const response = await chrome.permissions.request({
+            origins: ['https://*.lego.com/*'],
+          });
+          console.log(response);
+          if (response == true) {
+            this.permissionLegoCom = true;
+            this.pabIsLoading = true;
+            this.pickabrickService.getParts(this.uuid);
+          }
+          this.checkPermission();
+        },
+        reject: (type: any) => {},
+        key: 'positionDialog',
+      });
+    }
   }
 }

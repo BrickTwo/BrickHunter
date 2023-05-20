@@ -13,5 +13,28 @@ export class AppComponent {
     private readonly versionService: VersionService,
     private readonly gloabSettingsService: GlobalSettingsService,
     private readonly localeService: LocaleService
-  ) {}
+  ) {
+    //this.setPermission();
+  }
+
+  async setPermission() {
+    const permissionsToRequest = {
+      permissions: ['host_permission'],
+      origins: ['https://*.lego.com/*'],
+    };
+
+    function onResponse(response) {
+      if (response) {
+        console.log('Permission was granted');
+      } else {
+        console.log('Permission was refused');
+      }
+      return chrome.permissions.getAll();
+    }
+
+    const response = await chrome.permissions.request(permissionsToRequest);
+    const currentPermissions = await onResponse(response);
+
+    console.log(`Current permissions:`, currentPermissions);
+  }
 }
