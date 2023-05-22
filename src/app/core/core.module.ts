@@ -6,6 +6,7 @@ import { IndexedDBService } from './services/indexeddb.service.ts';
 import { LocaleService } from './services/locale.service';
 import { VersionService } from './services/version.service';
 import { AffiliateService } from './services/affiliate.service';
+import { IndexedDBLegacyService } from './services/indexeddb-legacy.service';
 
 @NgModule({
   imports: [],
@@ -14,6 +15,7 @@ import { AffiliateService } from './services/affiliate.service';
     ColorService,
     GuidService,
     IndexedDBService,
+    IndexedDBLegacyService,
     LocaleService,
     VersionService,
     AffiliateService,

@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { BrickHunterV1 } from 'src/app/models/brickhunter';
 import { ImportService } from 'src/app/parts-list/services/import.service';
 import { IndexedDBService } from './indexeddb.service.ts';
+import { IndexedDBLegacyService } from './indexeddb-legacy.service';
 
 interface Migration {
   version2_0_0: {
@@ -22,21 +23,25 @@ export class VersionService {
   private migrationSubject$ = new Subject<Migration>();
   migration$ = this.migrationSubject$.asObservable();
 
-  constructor(private readonly importService: ImportService, private readonly indexedDbService: IndexedDBService) {
+  constructor(
+    private readonly importService: ImportService,
+    private readonly indexedDbService: IndexedDBService,
+    private readonly indexedDbLegacyService: IndexedDBLegacyService
+  ) {
     this.oldVersion = this.readVersion();
     try {
       var manifestData = chrome.runtime.getManifest();
       this.currentVersion = manifestData.version;
     } catch (err) {
-      this.currentVersion = '2.0.12';
+      this.currentVersion = '2.0.21';
       this.devmode = true;
     }
     this.updateStructure();
   }
 
   async updateStructure() {
-    if (this.isVersionGreater(this.oldVersion, '2.0.0')) {
-      const partsList = await this.indexedDbService.table('partLists').toArray();
+    if (this.isVersionGreater(this.oldVersion, '2.0.21')) {
+      const partsList = await this.indexedDbLegacyService.table('partLists').toArray();
       let partsListMigrated = 0;
 
       let migrationModel = {
@@ -54,7 +59,7 @@ export class VersionService {
       // clean local storage
       //const rowKeys: string[] = [];
 
-      this.indexedDbService
+      this.indexedDbLegacyService
         .table('partLists')
         .toCollection()
         .modify((pl: BrickHunterV1) => {
@@ -66,7 +71,7 @@ export class VersionService {
           }).subscribe({
             complete: async () => {
               partsListMigrated = partsListMigrated + 1;
-              this.indexedDbService.table('partLists').delete(pl.id);
+              this.indexedDbLegacyService.table('partLists').delete(pl.id);
               this.migrationSubject$.next({
                 ...migrationModel,
                 version2_0_0: {
