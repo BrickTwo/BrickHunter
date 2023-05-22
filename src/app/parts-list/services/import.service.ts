@@ -249,7 +249,7 @@ export class ImportService {
     if (brickhunterV1List.source.toLowerCase() === 'bricklink') {
       const wantedList = brickhunterV1List.positions.map(position => {
         let item: BrickLinkWantedListItem = {
-          color: Number(position.color.brickLinkId),
+          color: position.color ? Number(position.color.brickLinkId) : -1,
           condition: position.brickLink.wantedList.condition,
           itemId: position.designId,
           itemType: position.brickLink.wantedList.itemtype,

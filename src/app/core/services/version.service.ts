@@ -40,7 +40,7 @@ export class VersionService {
   }
 
   async updateStructure() {
-    if (this.isVersionGreater(this.oldVersion, '2.0.21')) {
+    if (this.isVersionGreater(this.oldVersion, '2.0.22')) {
       const partsList = await this.indexedDbLegacyService.table('partLists').toArray();
       let partsListMigrated = 0;
 
@@ -64,9 +64,10 @@ export class VersionService {
         .toCollection()
         .modify((pl: BrickHunterV1) => {
           const name = pl.name;
-          const source = 'BrickHunterV1';
+          let source = 'BrickHunterV1';
 
           new Observable<number>(subscriber => {
+            //if (source.toUpperCase() === 'BRICKLINK') source = 'BrickLink';
             this.importService.import(subscriber, name, source, pl);
           }).subscribe({
             complete: async () => {
