@@ -29,7 +29,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "extension@bricktwo.net",
+      "id": "{9f0aa561-40f6-4bf1-bbb3-73e8125430bf}",
       "strict_min_version": "109.0"
     }
   }
