@@ -28,15 +28,19 @@ export class PartsListService {
   }
 
   getPartsLists() {
-    return this.partsLists.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())).slice();
+    return this.partsLists
+      .filter(p => p.uuid !== 'multiple')
+      .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+      .slice();
   }
 
   getPartsList(uuid: string) {
+    console.log(this.partsLists.find(p => p.uuid === uuid));
     return this.partsLists.find(p => p.uuid === uuid);
   }
 
   addPartsList(partsList: PartsList) {
-    this.indexedDBService.partsLists.add(partsList);
+    if (partsList.uuid !== 'multiple') this.indexedDBService.partsLists.add(partsList);
     this.partsLists.push(partsList);
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
@@ -57,12 +61,12 @@ export class PartsListService {
   updatePartsList(newPartsList: PartsList) {
     let partsList = this.partsLists.find(p => p.uuid === newPartsList.uuid);
     partsList = newPartsList;
-    this.indexedDBService.partsLists.put(partsList, partsList.uuid);
+    if (partsList.uuid !== 'multiple') this.indexedDBService.partsLists.put(partsList, partsList.uuid);
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
   deletePartsList(uuid: string) {
-    this.indexedDBService.partsLists.delete(uuid);
+    if (uuid !== 'multiple') this.indexedDBService.partsLists.delete(uuid);
     this.partsLists = this.partsLists.filter(p => p.uuid !== uuid);
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
@@ -81,7 +85,7 @@ export class PartsListService {
       partsList.source = 'Mixed';
     }
 
-    this.indexedDBService.partsLists.put(partsList, partsList.uuid);
+    if (partsList.uuid !== 'multiple') this.indexedDBService.partsLists.put(partsList, partsList.uuid);
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
@@ -96,7 +100,7 @@ export class PartsListService {
     part.qty = newPart.qty;
     part.have = newPart.have;
 
-    this.indexedDBService.partsLists.put(partsList, partsList.uuid);
+    if (partsList.uuid !== 'multiple') this.indexedDBService.partsLists.put(partsList, partsList.uuid);
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 
@@ -108,7 +112,7 @@ export class PartsListService {
       partsList.source = partsList.parts[0].source.source;
     }
 
-    this.indexedDBService.partsLists.put(partsList, partsList.uuid);
+    if (partsList.uuid !== 'multiple') this.indexedDBService.partsLists.put(partsList, partsList.uuid);
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }
 

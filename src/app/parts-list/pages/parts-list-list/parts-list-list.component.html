@@ -14,26 +14,38 @@
     </a>
   </div>
   <p-divider></p-divider>
+
+  <!-- (onRowSelect)="openPartsList($event.data)" -->
+  <p-menu #bulkMenu [model]="bulkMenuItems" [popup]="true"></p-menu>
   <p-table
     [value]="partsLists"
-    selectionMode="single"
-    (onRowSelect)="openPartsList($event.data)"
+    [(selection)]="selectedPartsLists"
     styleClass="p-datatable-striped"
     [tableStyle]="{ 'min-width': '50rem' }"
-    dataKey="id">
+    dataKey="uuid">
     <ng-template pTemplate="header">
       <tr>
+        <th style="width: 50px">
+          <button
+            pButton
+            type="button"
+            (click)="bulkMenu.toggle($event)"
+            icon="fa fa-bars"
+            style="padding: 2px"
+            [disabled]="!selectedPartsLists.length"></button>
+        </th>
         <th>Name</th>
         <th>Type</th>
         <th>Positions</th>
-        <th>Action</th>
+        <th style="width: 150px">Action</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-partsList>
       <tr [pSelectableRow]="partsList">
-        <td>{{ partsList.name }}</td>
-        <td>{{ partsList.source }}</td>
-        <td>{{ partsList.parts.length }}</td>
+        <td><p-tableCheckbox [value]="partsList"></p-tableCheckbox></td>
+        <td (click)="openPartsList(partsList)" style="cursor: pointer">{{ partsList.name }}</td>
+        <td (click)="openPartsList(partsList)" style="cursor: pointer">{{ partsList.source }}</td>
+        <td (click)="openPartsList(partsList)" style="cursor: pointer">{{ partsList.parts.length }}</td>
         <td>
           <button
             pButton

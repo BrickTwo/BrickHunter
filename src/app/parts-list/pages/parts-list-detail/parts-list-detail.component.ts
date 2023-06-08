@@ -22,6 +22,7 @@ import {
   TransferWarningComponent,
 } from '../../components';
 import { BlukAction } from 'src/app/models/shared';
+import { VersionService } from 'src/app/core/services/version.service';
 
 @Component({
   selector: 'app-parts-list-detail',
@@ -107,7 +108,8 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     private readonly gloablSettingsService: GlobalSettingsService,
     private readonly affiliateService: AffiliateService,
     private readonly localeService: LocaleService,
-    private readonly importService: ImportService
+    private readonly importService: ImportService,
+    private readonly versionService: VersionService
   ) {}
 
   ngOnDestroy(): void {
@@ -229,7 +231,8 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
             ?.reduce(
               (a, b) =>
                 a +
-                (b.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? b.have || 0 : 0)) * (b.maxPrice || 0),
+                (b.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? b.have || 0 : 0)) *
+                  (b.maxPrice < 0 ? 0 : b.maxPrice || 0),
               0
             ) * 100
         ) / 100
@@ -349,6 +352,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   }
 
   async checkPermission() {
+    if (this.versionService.devmode) return;
     const permissions = await chrome.permissions.getAll();
     console.log(permissions);
     if (permissions.origins.find(o => o === 'https://*.lego.com/*')) {
