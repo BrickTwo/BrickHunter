@@ -24,14 +24,15 @@
               icon="fa fa-trash-can"
               style="width: 100%"
               (click)="onDelete()"></button>
-            <!-- <button
+            <button
               pButton
               pRipple
               type="button"
-              label="Split"
+              label="Split (Beta)"
               class="p-button-outlined"
               icon="fa fa-scissors"
-              style="width: 100%"></button> -->
+              style="width: 100%"
+              (click)="onSplit()"></button>
             <button
               pButton
               pRipple
@@ -41,15 +42,6 @@
               icon="fa fa-arrows-rotate"
               style="width: 100%"
               (click)="onReSync()"></button>
-            <!-- <button
-              pButton
-              pRipple
-              type="button"
-              label="PDF"
-              class="p-button-outlined"
-              icon="fa fa-print"
-              style="width: 100%"
-              (click)="onPdf()"></button> -->
             <button
               pButton
               pRipple
@@ -185,7 +177,7 @@
   [baseZIndex]="10000"
   rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 <app-parts-list-settings [partsList]="partsList"></app-parts-list-settings>
-<app-parts-list-pdf></app-parts-list-pdf>
+<app-parts-list-split></app-parts-list-split>
 <app-parts-list-export></app-parts-list-export>
 <app-parts-list-transfer></app-parts-list-transfer>
 <app-transfer-warning></app-transfer-warning>

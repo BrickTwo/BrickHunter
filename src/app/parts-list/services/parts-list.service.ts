@@ -35,12 +35,19 @@ export class PartsListService {
   }
 
   getPartsList(uuid: string) {
-    console.log(this.partsLists.find(p => p.uuid === uuid));
     return this.partsLists.find(p => p.uuid === uuid);
   }
 
   addPartsList(partsList: PartsList) {
     if (partsList.uuid !== 'multiple') this.indexedDBService.partsLists.add(partsList);
+
+    partsList.source = partsList.parts[0] ? partsList.parts[0].source.source : 'Mixed';
+    partsList.parts.forEach(part => {
+      if (partsList.source !== part.source.source) {
+        partsList.source = 'Mixed';
+      }
+    });
+
     this.partsLists.push(partsList);
     this.partsListsChangedSubject$.next(this.getPartsLists());
   }

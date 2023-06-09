@@ -16,13 +16,13 @@ import { BrickHunterV2 } from 'src/app/models/brickhunter';
 import {
   PartsListCopyOrMoveToComponent,
   PartsListExportComponent,
-  PartsListPdfComponent,
   PartsListSettingsComponent,
   PartsListTransferComponent,
   TransferWarningComponent,
 } from '../../components';
 import { BlukAction } from 'src/app/models/shared';
 import { VersionService } from 'src/app/core/services/version.service';
+import { PartsListSplitComponent } from '../../components/parts-list-split/parts-list-split.component';
 
 @Component({
   selector: 'app-parts-list-detail',
@@ -79,8 +79,8 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   @ViewChild(PartsListSettingsComponent, { static: false })
   private partsListSettingsComponent?: PartsListSettingsComponent;
 
-  @ViewChild(PartsListPdfComponent, { static: false })
-  private partsListPdfComponent?: PartsListPdfComponent;
+  @ViewChild(PartsListSplitComponent, { static: false })
+  private partsListSplitComponent?: PartsListSplitComponent;
 
   @ViewChild(PartsListExportComponent, { static: false })
   private partsListExportComponent?: PartsListExportComponent;
@@ -262,12 +262,12 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     this.partsListSettingsComponent?.open();
   }
 
-  onPdf() {
-    this.partsListPdfComponent.open(this.uuid);
-  }
-
   onExport() {
     this.partsListExportComponent.open(this.uuid);
+  }
+
+  onSplit() {
+    this.partsListSplitComponent.open(this.partsList);
   }
 
   onDelete() {
