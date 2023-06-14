@@ -1,5 +1,5 @@
 <p-dialog
-  header="Select your location"
+  header="Select Lego PaB Site Settings*"
   [(visible)]="visible"
   [modal]="true"
   [closable]="false"
@@ -67,6 +67,10 @@
         </div>
       </ng-template>
     </p-dropdown>
+  </div>
+  <div class="field">
+    * For checking the availability of parts, showing the price in your currency and it also defines the shopping cart
+    at the Pick a Brick service.
   </div>
   <ng-template pTemplate="footer">
     <p-button (click)="onSave()" label="Save" styleClass="p-button-solid"></p-button>

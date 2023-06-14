@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BrickHunterApiService } from '../http/brickhunterapi.service';
+import { GetBrickHunterGlobalSettingsServiceFeeResponse } from 'src/app/models/brickhunter-api';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,8 @@ export class GlobalSettingsService {
   maxPaBLotPerOrder = 0;
   defaultMaxQuantityPerLot = 0;
   subtractHaveFromQuantity = true;
+  pabServiceFeeUnder: GetBrickHunterGlobalSettingsServiceFeeResponse[] = [];
+  bapServiceFeeUnder: GetBrickHunterGlobalSettingsServiceFeeResponse[] = [];
   ignoreBrickLinkPrices = false;
   subtractBrickLinkPrice = false;
   subtractBrickLinkPriceAmount = 0;
@@ -23,6 +26,8 @@ export class GlobalSettingsService {
       next: settings => {
         this.maxPaBLotPerOrder = settings.maxPaBLotPerOrder;
         this.defaultMaxQuantityPerLot = settings.defaultMaxQuantityPerLot;
+        this.pabServiceFeeUnder = settings.paBServiceFeeUnder;
+        this.bapServiceFeeUnder = settings.baPServiceFeeUnder;
       },
     });
 

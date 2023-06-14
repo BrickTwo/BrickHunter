@@ -4,6 +4,7 @@ import { PartsListService } from '../../services/parts-list.service';
 import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
 import { GuidService } from 'src/app/core/services/guid.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { LocaleService } from 'src/app/core/services/locale.service';
 
 interface Summary {
   pab: SummaryDetail;
@@ -25,15 +26,11 @@ interface SummaryDetail {
 export class PartsListSplitComponent {
   display = false;
   partsList: PartsList;
-  minValue = 13;
-  maxLot = 150;
   counter = 0;
   newPartsLists: { index: number; partsList: PartsList }[] = [];
   newPartsListSummary: Summary[] = [];
   listCountBestseller = 0;
   listCountStandard = 0;
-  minPaBPrice = 13;
-  minBaPPrice = 13;
 
   form = new FormGroup({
     partsListName: new FormControl(),
@@ -42,7 +39,8 @@ export class PartsListSplitComponent {
   constructor(
     private readonly partsListService: PartsListService,
     private readonly globalSettingsService: GlobalSettingsService,
-    private readonly guidService: GuidService
+    private readonly guidService: GuidService,
+    private readonly localeService: LocaleService
   ) {}
 
   public open(partsList: PartsList) {
@@ -202,93 +200,6 @@ export class PartsListSplitComponent {
     });
   }
 
-  // private SplitMethod1(deliveryType: string) {
-  //   const parts = this.partsListService
-  //     .getParts(this.partsList.uuid, deliveryType)
-  //     .sort(this.sortByMaxOrderQuantityAndTotalPrice);
-
-  //   const minPrice = 13;
-  //   let listCount = deliveryType === 'pab' ? this.listCountBestseller : this.listCountStandard;
-
-  //   parts.forEach(part => {
-  //     let partAdded = false;
-
-  //     if (part.qty / part.lego.maxOrderQuantity > 1) {
-  //       let qty = part.qty;
-  //       let i = 0;
-
-  //       const minTargetAmount = Math.ceil(minPrice / part.lego.price.amount);
-
-  //       do {
-  //         let newPart = { ...part, qty: 0 };
-  //         if (qty > part.lego.maxOrderQuantity) {
-  //           newPart.qty = part.lego.maxOrderQuantity;
-  //           qty = qty - part.lego.maxOrderQuantity;
-  //         } else {
-  //           newPart.qty = qty;
-  //           qty = 0;
-  //         }
-
-  //         this.newPartsLists[i].parts.push(newPart);
-  //         const price = newPart.qty * newPart.lego.price.amount;
-  //         // this.addToSummary(deliveryType, i, 1, newPart.qty, price);
-
-  //         i++;
-  //       } while (qty > 0);
-
-  //       const openLots = parts.length - i;
-  //       const freeLots = this.newPartsListSummary.reduce(
-  //         (a, b) => a + this.globalSettingsService.maxPaBLotPerOrder - b[deliveryType].lots,
-  //         0
-  //       );
-
-  //       if (openLots > freeLots) {
-  //         const difference = openLots - freeLots;
-  //         const addCount = Math.ceil(difference / this.globalSettingsService.maxPaBLotPerOrder);
-  //         for (let i = 0; i < this.counter; i++) {
-  //           this.newPartsLists.push({
-  //             uuid: this.guidService.generate(),
-  //             name: 'partsListName',
-  //             source: '',
-  //             parts: [],
-  //           });
-  //         }
-  //         listCount = listCount + addCount;
-  //       }
-
-  //       partAdded = true;
-  //     }
-
-  //     if (!partAdded) {
-  //       for (let i = 0; i < listCount; i++) {
-  //         let price = this.newPartsListSummary[i][deliveryType].price;
-  //         if (price < minPrice) {
-  //           this.newPartsLists[i].parts.push(part);
-  //           price = part.qty * part.lego.price.amount;
-  //           // this.addToSummary(deliveryType, i, 1, part.qty, price);
-
-  //           partAdded = true;
-  //           break;
-  //         }
-  //       }
-  //     }
-
-  //     if (!partAdded) {
-  //       for (let i = 0; i < listCount; i++) {
-  //         let price = 0;
-  //         let lots = this.newPartsListSummary[i][deliveryType].lots;
-
-  //         if (lots < this.globalSettingsService.maxPaBLotPerOrder) {
-  //           this.newPartsLists[i].parts.push(part);
-  //           price = part.qty * part.lego.price.amount;
-  //           // this.addToSummary(deliveryType, i, 1, part.qty, price);
-  //           break;
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
-
   private addToSummary(deliveryType: string, index: number, lots: number, pieces: number, price: number) {
     this.newPartsListSummary[index][deliveryType].pieces =
       this.newPartsListSummary[index][deliveryType].pieces + pieces;
@@ -310,7 +221,12 @@ export class PartsListSplitComponent {
   }
 
   private sortByTopPrioList(a: PartsList, b: PartsList, deliveryType: string) {
-    const minPrice = deliveryType === 'pab' ? this.minPaBPrice : this.minBaPPrice;
+    const minPrice =
+      deliveryType === 'pab'
+        ? this.globalSettingsService.pabServiceFeeUnder.find(e => e.country === this.localeService.country.code)
+            .threshold
+        : this.globalSettingsService.bapServiceFeeUnder.find(e => e.country === this.localeService.country.code)
+            .threshold;
 
     const aTotalPrice = a.parts
       .filter(p => p.lego.deliveryChannel === deliveryType)
@@ -329,12 +245,19 @@ export class PartsListSplitComponent {
     const aTotalLots = a.parts.filter(p => p.lego.deliveryChannel === deliveryType).length;
     const bTotalLots = b.parts.filter(p => p.lego.deliveryChannel === deliveryType).length;
 
-    if (aTotalLots < this.maxLot && bTotalLots < this.maxLot) {
+    if (
+      aTotalLots < this.globalSettingsService.maxPaBLotPerOrder &&
+      bTotalLots < this.globalSettingsService.maxPaBLotPerOrder
+    ) {
       if (aTotalLots < bTotalLots) return 1;
       if (aTotalLots > bTotalLots) return -1;
     }
 
-    if (aTotalLots < this.maxLot && bTotalLots >= this.maxLot) return -1;
+    if (
+      aTotalLots < this.globalSettingsService.maxPaBLotPerOrder &&
+      bTotalLots >= this.globalSettingsService.maxPaBLotPerOrder
+    )
+      return -1;
 
     if (aTotalPrice < bTotalPrice) return 1;
     if (aTotalPrice > bTotalPrice) return -1;
