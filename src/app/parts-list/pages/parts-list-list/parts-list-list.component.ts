@@ -121,6 +121,7 @@ export class PartsListListComponent implements OnInit, OnDestroy {
         this.selectedPartsLists.forEach(partsList => {
           this.partsListService.deletePartsList(partsList.uuid);
         });
+        this.selectedPartsLists = [];
         this.messageService.add({
           severity: 'info',
           summary: 'Confirmed',
