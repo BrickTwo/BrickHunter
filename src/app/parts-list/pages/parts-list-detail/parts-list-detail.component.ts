@@ -47,6 +47,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   globalSettingsSubscription: Subscription;
   importSubscription: Subscription;
   pabIsLoading: boolean = false;
+  pabLoaded: boolean = false;
   uuid: string;
   cartType = PaBCartType;
   totals = {
@@ -209,6 +210,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     if (loadPab && this.permissionLegoCom) {
       this.pabIsLoading = true;
       this.pickabrickService.getParts(this.uuid);
+      this.pabLoaded = true;
     }
   }
 
@@ -354,9 +356,13 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   async checkPermission() {
     if (this.versionService.devmode) return;
     const permissions = await chrome.permissions.getAll();
-    console.log(permissions);
     if (permissions.origins.find(o => o === 'https://*.lego.com/*')) {
       this.permissionLegoCom = true;
+      if (!this.pabLoaded) {
+        this.pabIsLoading = true;
+        this.pickabrickService.getParts(this.uuid);
+        this.pabLoaded = true;
+      }
     } else {
       this.confirmationService.confirm({
         message: 'Permission for accessing lego.com needed.',
@@ -366,11 +372,13 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
           const response = await chrome.permissions.request({
             origins: ['https://*.lego.com/*'],
           });
-          console.log(response);
           if (response == true) {
             this.permissionLegoCom = true;
-            this.pabIsLoading = true;
-            this.pickabrickService.getParts(this.uuid);
+            if (!this.pabLoaded) {
+              this.pabIsLoading = true;
+              this.pickabrickService.getParts(this.uuid);
+              this.pabLoaded = true;
+            }
           }
           this.checkPermission();
         },
