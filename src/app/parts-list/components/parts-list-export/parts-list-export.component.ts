@@ -222,7 +222,7 @@ export class PartsListExportComponent {
       const color = await this.colorService.getColor(part.color);
 
       if (part.brickLink) {
-        var item = {
+        let item = {
           ITEM: {
             ITEMTYPE: part.brickLink.itemType,
             ITEMID: part.brickLink.itemNo,
@@ -235,6 +235,13 @@ export class PartsListExportComponent {
             REMARKS: part.remarks,
           },
         };
+
+        Object.keys(item.ITEM).forEach(key => {
+          if (item.ITEM[key] == null) {
+            delete item.ITEM[key];
+          }
+        });
+
         wantedList.INVENTORY.push(item);
       }
     });

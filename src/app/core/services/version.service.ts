@@ -109,8 +109,17 @@ export class VersionService {
     const newVersionArray = newVersion.split('.');
 
     if (Number(oldVersionArray[0]) < Number(newVersionArray[0])) return true;
-    if (Number(oldVersionArray[1]) < Number(newVersionArray[1])) return true;
-    if (Number(oldVersionArray[2]) < Number(newVersionArray[2])) return true;
+    if (
+      Number(oldVersionArray[0]) === Number(newVersionArray[0]) &&
+      Number(oldVersionArray[1]) < Number(newVersionArray[1])
+    )
+      return true;
+    if (
+      Number(oldVersionArray[0]) === Number(newVersionArray[0]) &&
+      Number(oldVersionArray[1]) === Number(newVersionArray[1]) &&
+      Number(oldVersionArray[2]) < Number(newVersionArray[2])
+    )
+      return true;
     return false;
   }
 }

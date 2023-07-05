@@ -94,7 +94,7 @@ export class PartsListListComponent implements OnInit, OnDestroy {
   }
 
   bulkOpen() {
-    let partsList = this.selectedPartsLists[0];
+    let partsList = JSON.parse(JSON.stringify(this.selectedPartsLists[0]));
     partsList.uuid = 'multiple';
     partsList.name = 'Multiple Parts Lists';
 

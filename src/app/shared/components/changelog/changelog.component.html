@@ -1,16 +1,18 @@
-<section *ngIf="isVersionGreater('2.1.0')">
-  <h2>2.1.0</h2>
+<section *ngIf="isVersionGreater('2.1.1')">
+  <h2>2.1.1</h2>
   <h3>Feature</h3>
   <ul>
     <li>Select multiple Parts Lists for bulk delete or open as a temporary combined Parts List</li>
     <li>
       Added a function for splitting a Parts List to meet the lot limit and max order quantity of pieces per order.
+      (Beta)
     </li>
   </ul>
   <h3>Bugfix</h3>
   <ul>
     <li>BrickLink price calculation leads to negative price</li>
     <li>PaB prices where not autmatically loaded when open a Parts List</li>
+    <li>Exported BrickLink file can't be imported in BrickLink</li>
   </ul>
 </section>
 <section *ngIf="isVersionGreater('2.0.22')">

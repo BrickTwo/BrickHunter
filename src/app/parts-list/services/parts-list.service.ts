@@ -88,9 +88,12 @@ export class PartsListService {
       partsList.parts.push(newPart);
     }
 
-    if (partsList.source !== newPart.source.source) {
-      partsList.source = 'Mixed';
-    }
+    partsList.source = newPart.source.source;
+    partsList.parts.forEach(part => {
+      if (partsList.source !== part.source.source) {
+        partsList.source = 'Mixed';
+      }
+    });
 
     if (partsList.uuid !== 'multiple') this.indexedDBService.partsLists.put(partsList, partsList.uuid);
     this.partsListsChangedSubject$.next(this.getPartsLists());
