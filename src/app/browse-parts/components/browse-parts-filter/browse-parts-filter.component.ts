@@ -57,6 +57,8 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
   ];
   deliveryChannels = ['pab', 'bap', 'oos'];
   onlyPrinted = false;
+  atRiskAfter: Date = null;
+  minDate: Date = new Date(Date.now());
   filterSubscription: Subscription;
 
   constructor(private readonly browsePartsService: BrowsePartsService) {}
@@ -75,6 +77,9 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
           break;
         case FilterChangedProperty.onlyPrinted:
           this.onlyPrinted = filterChanged.filter.onlyPrinted;
+          break;
+        case FilterChangedProperty.atRiskAfter:
+          this.atRiskAfter = new Date(filterChanged.filter.atRiskAfter);
           break;
         case FilterChangedProperty.deliveryChannels:
           this.deliveryChannels = filterChanged.filter.deliveryChannels;
@@ -112,6 +117,14 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
 
   onDeliveryChannelsChange(value: string[]) {
     this.browsePartsService.setDeliveryChannels(value);
+  }
+
+  onChangeAtRiskAfter(value) {
+    const date = `${this.atRiskAfter.getFullYear()}-${(this.atRiskAfter.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}-01`;
+    console.log(date);
+    this.browsePartsService.setAtRiskAfter(date);
   }
 
   ngOnDestroy(): void {

@@ -104,8 +104,8 @@ export class PartsListSplitComponent {
       };
     }
 
-    this.SplitMethod2('pab');
-    this.SplitMethod2('bap');
+    this.calculateNewPartsLists('pab');
+    this.calculateNewPartsLists('bap');
 
     const brickLinkParts = this.partsListService.getParts(this.partsList.uuid, 'brickLink');
     brickLinkParts.forEach(part => {
@@ -139,7 +139,7 @@ export class PartsListSplitComponent {
     return listCount;
   }
 
-  private SplitMethod2(deliveryType: string) {
+  private calculateNewPartsLists(deliveryType: string) {
     const parts = this.partsListService
       .getParts(this.partsList.uuid, deliveryType)
       .sort(this.sortByMaxOrderQuantityAndTotalPrice);

@@ -17,6 +17,7 @@ export enum FilterChangedProperty {
   totalParts,
   category,
   onlyPrinted,
+  atRiskAfter,
   color,
   deliveryChannels,
   sort,
@@ -35,6 +36,7 @@ export interface Filter {
   totalParts: number;
   categoryId: number;
   onlyPrinted: boolean;
+  atRiskAfter: string;
   colorId: number;
   deliveryChannels: string[];
   sort: string;
@@ -59,6 +61,7 @@ export class BrowsePartsService {
     totalParts: 0,
     categoryId: 9999,
     onlyPrinted: false,
+    atRiskAfter: null,
     colorId: null,
     deliveryChannels: ['pab', 'bap', 'oos'],
     sort: 'NAME',
@@ -117,6 +120,7 @@ export class BrowsePartsService {
       const browsePartsFilter = localStorage.getItem('browsePartsFilter') || null;
       if (browsePartsFilter) {
         this.filter = JSON.parse(browsePartsFilter) as unknown as Filter;
+        console.log(this.filter.atRiskAfter);
         this.filter.elementIds = [];
         this.filter.country = this.localeService.country?.code || 'de';
         this.filterSubject$.next({ property: FilterChangedProperty.layout, filter: { ...this.filter } });
@@ -125,6 +129,7 @@ export class BrowsePartsService {
         this.filterSubject$.next({ property: FilterChangedProperty.perPage, filter: { ...this.filter } });
         this.filterSubject$.next({ property: FilterChangedProperty.category, filter: { ...this.filter } });
         this.filterSubject$.next({ property: FilterChangedProperty.onlyPrinted, filter: { ...this.filter } });
+        this.filterSubject$.next({ property: FilterChangedProperty.atRiskAfter, filter: { ...this.filter } });
         this.filterSubject$.next({ property: FilterChangedProperty.color, filter: { ...this.filter } });
         this.filterSubject$.next({ property: FilterChangedProperty.deliveryChannels, filter: { ...this.filter } });
         this.filterSubject$.next({ property: FilterChangedProperty.sort, filter: { ...this.filter } });
@@ -183,6 +188,14 @@ export class BrowsePartsService {
   setDeliveryChannels(value: string[]) {
     this.filter.deliveryChannels = value;
     this.filterSubject$.next({ property: FilterChangedProperty.deliveryChannels, filter: { ...this.filter } });
+    this.resetPage();
+    this.sendRequest();
+  }
+
+  setAtRiskAfter(value: string) {
+    this.filter.atRiskAfter = value;
+    console.log(this.filter.atRiskAfter);
+    this.filterSubject$.next({ property: FilterChangedProperty.atRiskAfter, filter: { ...this.filter } });
     this.resetPage();
     this.sendRequest();
   }
@@ -270,6 +283,7 @@ export class BrowsePartsService {
     this.isLoadingSubject$.next(true);
     this.initFilter();
 
+    console.log(JSON.stringify(this.filter.atRiskAfter));
     localStorage.setItem('browsePartsFilter', JSON.stringify(this.filter));
 
     const request: GetPickABrickPartsRequest = {
@@ -286,6 +300,7 @@ export class BrowsePartsService {
       excludeCategoryIds: this.filter.excludeSelectedCategoyIds ? this.filter.excludeCategoryIds : [],
       designIds: [],
       elementIds: this.filter.elementIds,
+      atRiskAfter: this.filter.atRiskAfter,
     };
 
     this.birckHunterApiService.getPickABrickParts(request).subscribe(response => {

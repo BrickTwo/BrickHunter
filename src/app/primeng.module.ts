@@ -2,6 +2,7 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -38,6 +39,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
   exports: [
     AvatarModule,
     ButtonModule,
+    CalendarModule,
     CardModule,
     CheckboxModule,
     ConfirmDialogModule,

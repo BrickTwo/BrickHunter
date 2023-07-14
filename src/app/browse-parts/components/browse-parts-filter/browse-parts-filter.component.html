@@ -53,7 +53,19 @@
           optionLabel="name"
           optionValue="value"
           (onChange)="onDeliveryChannelsChange($event.value)"></p-selectButton>
-
+        <span
+          >At Risk After:
+          <p-calendar
+            [(ngModel)]="atRiskAfter"
+            view="month"
+            dateFormat="mm/yy"
+            [showClear]="true"
+            [readonlyInput]="true"
+            [showButtonBar]="true"
+            (onSelect)="onChangeAtRiskAfter($event)"
+            (onClearClick)="onChangeAtRiskAfter($event)"
+            [minDate]="minDate"></p-calendar
+        ></span>
         <div class="flex flex-nowrap align-items-center gap-1">
           <p-inputSwitch
             [(ngModel)]="onlyPrinted"

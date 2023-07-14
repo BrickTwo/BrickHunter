@@ -13,4 +13,8 @@
         color: #6c757d;
         z-index: 5;
     }
+    
+    ::ng-deep.p-calendar .p-inputtext {
+        width: 130px;
+    }
 }
