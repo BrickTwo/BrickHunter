@@ -79,6 +79,9 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
           this.onlyPrinted = filterChanged.filter.onlyPrinted;
           break;
         case FilterChangedProperty.atRiskAfter:
+          if (!filterChanged.filter.atRiskAfter) {
+            break;
+          }
           this.atRiskAfter = new Date(filterChanged.filter.atRiskAfter);
           break;
         case FilterChangedProperty.deliveryChannels:
@@ -120,6 +123,11 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
   }
 
   onChangeAtRiskAfter(value) {
+    if (!this.atRiskAfter) {
+      this.browsePartsService.setAtRiskAfter(null);
+      return;
+    }
+
     const date = `${this.atRiskAfter.getFullYear()}-${(this.atRiskAfter.getMonth() + 1)
       .toString()
       .padStart(2, '0')}-01`;
