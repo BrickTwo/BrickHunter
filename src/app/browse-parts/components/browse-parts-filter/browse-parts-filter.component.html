@@ -53,20 +53,29 @@
           optionLabel="name"
           optionValue="value"
           (onChange)="onDeliveryChannelsChange($event.value)"></p-selectButton>
-        <span
-          >At Risk After:
+        <span>
+          <p-overlayPanel #op>
+            Shows parts that are no longer available in any set at the specified time.
+          </p-overlayPanel>
+          <p-button
+            (click)="op.toggle($event)"
+            icon="fa fa-circle-info"
+            label=""
+            styleClass="p-button-text p-button-sm p-button-rounded info-button"
+            style="display: inline-flex"></p-button>
+          At risk as of:
           <p-calendar
-            [(ngModel)]="atRiskAfter"
+            [(ngModel)]="atRiskAsOf"
             view="month"
             dateFormat="mm/yy"
             [showClear]="true"
             [readonlyInput]="true"
             [showButtonBar]="true"
-            (onSelect)="onChangeAtRiskAfter($event)"
-            (onClear)="onChangeAtRiskAfter($event)"
-            (onClearClick)="onChangeAtRiskAfter($event)"
-            [minDate]="minDate"></p-calendar
-        ></span>
+            (onSelect)="onChangeAtRiskAsOf($event)"
+            (onClear)="onChangeAtRiskAsOf($event)"
+            (onClearClick)="onChangeAtRiskAsOf($event)"
+            [minDate]="minDate"></p-calendar>
+        </span>
         <div class="flex flex-nowrap align-items-center gap-1">
           <p-inputSwitch
             [(ngModel)]="onlyPrinted"

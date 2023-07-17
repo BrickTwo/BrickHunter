@@ -19,6 +19,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { MenuModule } from './shared/components/menu/menu.component';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -56,6 +57,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     MenuModule,
     MessageModule,
     MessagesModule,
+    OverlayPanelModule,
     PaginatorModule,
     ProgressSpinnerModule,
     RadioButtonModule,

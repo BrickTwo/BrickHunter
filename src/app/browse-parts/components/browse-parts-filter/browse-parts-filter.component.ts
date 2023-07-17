@@ -57,7 +57,7 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
   ];
   deliveryChannels = ['pab', 'bap', 'oos'];
   onlyPrinted = false;
-  atRiskAfter: Date = null;
+  atRiskAsOf: Date = null;
   minDate: Date = new Date(Date.now());
   filterSubscription: Subscription;
 
@@ -78,11 +78,11 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
         case FilterChangedProperty.onlyPrinted:
           this.onlyPrinted = filterChanged.filter.onlyPrinted;
           break;
-        case FilterChangedProperty.atRiskAfter:
-          if (!filterChanged.filter.atRiskAfter) {
+        case FilterChangedProperty.atRiskAsOf:
+          if (!filterChanged.filter.atRiskAsOf) {
             break;
           }
-          this.atRiskAfter = new Date(filterChanged.filter.atRiskAfter);
+          this.atRiskAsOf = new Date(filterChanged.filter.atRiskAsOf);
           break;
         case FilterChangedProperty.deliveryChannels:
           this.deliveryChannels = filterChanged.filter.deliveryChannels;
@@ -122,17 +122,15 @@ export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
     this.browsePartsService.setDeliveryChannels(value);
   }
 
-  onChangeAtRiskAfter(value) {
-    if (!this.atRiskAfter) {
-      this.browsePartsService.setAtRiskAfter(null);
+  onChangeAtRiskAsOf(value) {
+    if (!this.atRiskAsOf) {
+      this.browsePartsService.setAtRiskAsOf(null);
       return;
     }
 
-    const date = `${this.atRiskAfter.getFullYear()}-${(this.atRiskAfter.getMonth() + 1)
-      .toString()
-      .padStart(2, '0')}-01`;
+    const date = `${this.atRiskAsOf.getFullYear()}-${(this.atRiskAsOf.getMonth() + 1).toString().padStart(2, '0')}-01`;
     console.log(date);
-    this.browsePartsService.setAtRiskAfter(date);
+    this.browsePartsService.setAtRiskAsOf(date);
   }
 
   ngOnDestroy(): void {
