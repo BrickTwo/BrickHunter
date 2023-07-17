@@ -1,6 +1,6 @@
 <div class="p-2 border-1 surface-border surface-card border-round" style="height: 320px" [id]="part.elementId">
   <div class="align-items-center" style="height: 120px">
-    <div [style]="getImageStyle()">
+    <div [style]="getImageStyle()" (click)="onOpenPartDetail()">
       <div>
         <p-tag severity="warning" *ngIf="part.deliveryChannel === 'pab'">Bestseller</p-tag>
         <p-tag severity="info" *ngIf="part.deliveryChannel === 'bap'">Standard</p-tag>
@@ -13,25 +13,26 @@
             icon="fa-solid fa-heart"
             styleClass="p-button-rounded p-button-text p-button-danger text-xl special-button"
             *ngIf="isInWishList"
-            (click)="onRemoveFromWishList()"></p-button>
+            (click)="onRemoveFromWishList(); $event.stopPropagation()"></p-button>
           <p-button
             icon="fa-regular fa-heart"
             styleClass="p-button-rounded p-button-text p-button-danger text-xl special-button"
             *ngIf="!isInWishList"
-            (click)="onAddToWishList()"></p-button>
+            (click)="onAddToWishList(); $event.stopPropagation()"></p-button>
           <p-button
             icon="fa-solid fa-circle-check"
             styleClass="p-button-rounded p-button-text p-button-success text-xl special-button"
             *ngIf="isInHaveItList"
-            (click)="onRemoveFromHaveItList()"></p-button>
+            (click)="onRemoveFromHaveItList(); $event.stopPropagation()"></p-button>
           <p-button
             icon="fa-regular fa-circle-check"
             styleClass="p-button-rounded p-button-text p-button-success text-xl special-button"
             *ngIf="!isInHaveItList"
-            (click)="onAddToHaveItList()"></p-button>
-          <!-- <p-button
+            (click)="onAddToHaveItList(); $event.stopPropagation()"></p-button>
+          <p-button
             icon="fa fa-solid fa-arrow-up-right-from-square"
-            styleClass="p-button-rounded p-button-text text-md"></p-button> -->
+            styleClass="p-button-rounded p-button-text text-xl special-button"
+            (click)="onOpenPartDetail(); $event.stopPropagation()"></p-button>
         </div>
       </div>
     </div>

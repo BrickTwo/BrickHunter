@@ -5,11 +5,14 @@ import { PartsListService } from 'src/app/parts-list/services/parts-list.service
 import { BrowsePartsService } from '../../service/browse-parts.service';
 import { Part } from 'src/app/models/parts-list';
 import { ColorService } from 'src/app/core/services/color.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { BrowsePartsPartDetailComponent } from '../browse-parts-part-detail/browse-parts-part-detail.component';
 
 @Component({
   selector: 'app-browse-parts-grid-item',
   templateUrl: './browse-parts-grid-item.component.html',
   styleUrls: ['./browse-parts-grid-item.component.scss'],
+  providers: [DialogService],
 })
 export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   @Input()
@@ -25,10 +28,13 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   isInHaveItList = false;
   haveItListSubscription: Subscription;
 
+  ref: DynamicDialogRef | undefined;
+
   constructor(
     private readonly partsListService: PartsListService,
     private readonly browsePartsService: BrowsePartsService,
-    private readonly colorService: ColorService
+    private readonly colorService: ColorService,
+    private readonly dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -116,6 +122,16 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
     this.browsePartsService.removeFromHaveItList(this.part.elementId);
   }
 
+  onOpenPartDetail() {
+    this.ref = this.dialogService.open(BrowsePartsPartDetailComponent, {
+      data: {
+        part: this.part,
+      },
+      header: this.part.description,
+      dismissableMask: true,
+    });
+  }
+
   onSetKeywordFilter(value: string) {
     this.browsePartsService.setColor(null, false);
     this.browsePartsService.setKeyword(value);
@@ -142,7 +158,8 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
             height: 120px;
             background-repeat: no-repeat;
             background-size: contain;
-            background-position: center;`;
+            background-position: center;
+            cursor: pointer;`;
   }
 
   isInViewport(element) {

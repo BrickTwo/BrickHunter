@@ -12,5 +12,5 @@ export interface GetPickABrickPartsRequest {
   excludeCategoryIds: number[];
   designIds: number[];
   elementIds: number[];
-  atRiskAfter: string;
+  atRiskAsOf: string;
 }

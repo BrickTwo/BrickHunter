@@ -14,6 +14,7 @@ import { BrowsePartsPageSettingsComponent } from './components/browse-parts-page
 import { LazyLoadImageModule, LAZYLOAD_IMAGE_HOOKS, ScrollHooks } from 'ng-lazyload-image';
 import { BrowsePartsGridItemComponent } from './components/browse-parts-grid-item/browse-parts-grid-item.component';
 import { BrowsePartsFilterComponent } from './components/browse-parts-filter/browse-parts-filter.component';
+import { BrowsePartsPartDetailComponent } from './components/browse-parts-part-detail/browse-parts-part-detail.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { BrowsePartsFilterComponent } from './components/browse-parts-filter/bro
     BrowsePartsPageSettingsComponent,
     BrowsePartsGridItemComponent,
     BrowsePartsFilterComponent,
+    BrowsePartsPartDetailComponent,
   ],
   imports: [
     PrimengModule,

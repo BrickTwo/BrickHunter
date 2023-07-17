@@ -11,6 +11,7 @@ import { DeferModule } from 'primeng/defer';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -19,6 +20,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { MenuModule } from './shared/components/menu/menu.component';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -48,6 +50,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     DialogModule,
     DividerModule,
     DropdownModule,
+    DynamicDialogModule,
     FileUploadModule,
     ImageModule,
     InputNumberModule,
@@ -56,6 +59,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     MenuModule,
     MessageModule,
     MessagesModule,
+    OverlayPanelModule,
     PaginatorModule,
     ProgressSpinnerModule,
     RadioButtonModule,

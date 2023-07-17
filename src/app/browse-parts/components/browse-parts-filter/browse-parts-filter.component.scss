@@ -17,4 +17,10 @@
     ::ng-deep.p-calendar .p-inputtext {
         width: 130px;
     }
+
+    ::ng-deep .info-button {
+        width: 24px;
+        height: 24px !important;
+        padding: 5px;
+      }
 }
