@@ -11,6 +11,7 @@ import { DeferModule } from 'primeng/defer';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -49,6 +50,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
     DialogModule,
     DividerModule,
     DropdownModule,
+    DynamicDialogModule,
     FileUploadModule,
     ImageModule,
     InputNumberModule,

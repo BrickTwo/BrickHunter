@@ -55,7 +55,6 @@ export class VersionService {
 
       this.migrationSubject$.next(migrationModel);
 
-      console.log('update');
       // clean local storage
       //const rowKeys: string[] = [];
 

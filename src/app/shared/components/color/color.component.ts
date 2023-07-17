@@ -10,6 +10,7 @@ import { Color } from 'src/app/models/shared';
 export class ColorComponent implements OnInit {
   @Input() colorId: number;
   @Input() onlyMainColor = false;
+  @Input() colorName = '';
 
   color: Color;
 

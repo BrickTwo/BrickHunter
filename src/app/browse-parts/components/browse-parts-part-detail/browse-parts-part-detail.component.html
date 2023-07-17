@@ -1,0 +1,59 @@
+<div style="text-align: center; margin-bottom: 20px">
+  <img
+    [src]="'https://brickhunter.blob.core.windows.net' + part?.imageUrl"
+    alt=""
+    style="max-width: 250px; max-height: 250px" />
+</div>
+<div class="flex flex-column gap-3">
+  <div>
+    <div class="flex justify-content-between gap-3"><strong>Category:</strong>{{ category.name }}</div>
+    <div class="flex justify-content-between gap-3"><strong>Element Id:</strong> {{ part?.elementId }}</div>
+    <div class="flex justify-content-between gap-3"><strong>Design Id:</strong> {{ part?.designId }}</div>
+    <div class="flex justify-content-between gap-3"><strong>Has Print:</strong> {{ part?.hasPrint }}</div>
+  </div>
+  <div>
+    <div class="flex justify-content-between gap-3">
+      <strong>Lego:</strong> <app-color [colorId]="part.colorId" [onlyMainColor]="true" colorName="Lego"></app-color>
+    </div>
+    <div class="flex justify-content-between gap-3">
+      <strong>BrickLink:</strong>
+      <app-color [colorId]="part.colorId" [onlyMainColor]="true" colorName="BrickLink"></app-color>
+    </div>
+    <div class="flex justify-content-between gap-3">
+      <strong>Rebickable:</strong>
+      <app-color [colorId]="part.colorId" [onlyMainColor]="true" colorName="Rebrickable"></app-color>
+    </div>
+  </div>
+  <div>
+    <div class="flex justify-content-between gap-3"><strong>Max Order Quantity:</strong> {{ maxOrderQuantity }}</div>
+    <div class="flex justify-content-between gap-3">
+      <strong>Delivery Channel:</strong>
+      <p-tag severity="warning" *ngIf="part.deliveryChannel === 'pab'">Bestseller</p-tag>
+      <p-tag severity="info" *ngIf="part.deliveryChannel === 'bap'">Standard</p-tag>
+      <p-tag severity="danger" *ngIf="part.deliveryChannel === 'oos'">Out Of Stock</p-tag>
+      <p-tag severity="primary" styleClass="not-listed-tag" *ngIf="part.deliveryChannel === ''"> Not Listed </p-tag>
+    </div>
+    <div class="flex justify-content-between gap-3">
+      <strong>Price:</strong>
+      <div class="flex justify-content-between gap-1">
+        <div>
+          <img
+            src="/assets/flag_placeholder.png"
+            [class]="'flag flag-' + part.country.toLowerCase()"
+            style="width: 18px" />
+        </div>
+        <div>{{ part.priceAmount | currency : part.priceCurrency : 'symbol-narrow' }}</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="flex justify-content-between gap-3">
+      <strong>First Availability Date:</strong>
+      {{ part?.firstAvailabilityDate + 'Z' | date : 'short' }}
+    </div>
+    <div class="flex justify-content-between gap-3">
+      <strong>Last Availability Date:</strong>
+      {{ part?.lastAvailabilityDate + 'Z' | date : 'short' }}
+    </div>
+  </div>
+</div>
