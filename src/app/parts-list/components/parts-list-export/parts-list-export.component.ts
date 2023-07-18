@@ -142,7 +142,11 @@ export class PartsListExportComponent {
       doc.putTotalPages(totalPagesExp);
     }
 
-    doc.save(`${this.partsList.name}-${this.filterOptions.find(o => o.value === this.selectedFilterValue).name}.pdf`);
+    doc.save(
+      `BrickHunter_${this.partsList.name}-${
+        this.filterOptions.find(o => o.value === this.selectedFilterValue).name
+      }.pdf`
+    );
   }
 
   caclImageUrl(part: Part) {
@@ -180,7 +184,9 @@ export class PartsListExportComponent {
     var a = document.createElement('a');
     a.href = data;
     a.target = '_blank';
-    a.download = `BrickHunter_${this.partsList.name}.json`;
+    a.download = `BrickHunter_${this.partsList.name}-${
+      this.filterOptions.find(o => o.value === this.selectedFilterValue).name
+    }.json`;
     a.click();
   }
 
@@ -198,7 +204,9 @@ export class PartsListExportComponent {
         var a = document.createElement('a');
         a.href = data;
         a.target = '_blank';
-        a.download = 'WantedList.xml';
+        a.download = `WantedList_${this.partsList.name}-${
+          this.filterOptions.find(o => o.value === this.selectedFilterValue).name
+        }.xml`;
         a.click();
       },
     });
@@ -291,7 +299,9 @@ export class PartsListExportComponent {
     var a = document.createElement('a');
     a.href = data;
     a.target = '_blank';
-    a.download = 'BrickHunter.csv';
+    a.download = `BrickHunter_${this.partsList.name}-${
+      this.filterOptions.find(o => o.value === this.selectedFilterValue).name
+    }.csv`;
     a.click();
   }
 
