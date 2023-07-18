@@ -350,6 +350,12 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   }
 
   onBulkAction(value: BlukAction) {
+    if (value.action === 'delete') {
+      value.parts.forEach(part => {
+        this.partsListService.deletePartInPartsList(this.partsList.uuid, part.id);
+      });
+      return;
+    }
     this.partsListCopyOrMoveToComponent.open(this.uuid, value.action, value.parts);
   }
 

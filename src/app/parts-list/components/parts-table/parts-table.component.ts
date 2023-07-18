@@ -12,7 +12,7 @@ import {
 import { Part } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 import { Subscription, fromEvent, interval, take } from 'rxjs';
-import { MenuItem } from 'primeng/api';
+import { ConfirmEventType, ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { BlukAction } from 'src/app/models/shared';
 
 @Component({
@@ -56,7 +56,11 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
 
   bulkMenuItems: MenuItem[];
 
-  constructor(private readonly partsListService: PartsListService) {}
+  constructor(
+    private readonly partsListService: PartsListService,
+    private readonly confirmationService: ConfirmationService,
+    private readonly messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.bulkMenuItems = [
@@ -72,6 +76,13 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
         icon: 'fa fa-file-import',
         command: () => {
           this.onMoveTo();
+        },
+      },
+      {
+        label: 'Delete',
+        icon: 'fa fa-trash-can',
+        command: () => {
+          this.onDelete();
         },
       },
     ];
@@ -98,8 +109,35 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
   onCopyTo() {
     this.bulkAction.emit({ action: 'copy', parts: this.selectedParts });
   }
+
   onMoveTo() {
     this.bulkAction.emit({ action: 'move', parts: this.selectedParts });
+  }
+
+  onDelete() {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete the selected Parts?',
+      header: 'Delete Confirmation',
+      icon: 'fa fa-circle-info',
+      accept: () => {
+        this.bulkAction.emit({ action: 'delete', parts: this.selectedParts });
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Rejected',
+              detail: 'You have rejected',
+            });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      },
+      key: 'positionDialog',
+    });
   }
 
   onCustomSort($event) {
