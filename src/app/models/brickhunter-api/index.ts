@@ -5,6 +5,8 @@ export * from './_get-bricklinkpartelementids-response.model';
 export * from './_get-rebrickableparts-request.model';
 export * from './_get-rebrickableparts-response.model';
 export * from './_get-brickhunter-global-settings-response.model';
+export * from './_get-product-suggestions-request.model';
+export * from './_get-product-suggestions-response.model';
 export * from './_get-pickabrick-parts-request.model';
 export * from './_get-pickabrick-parts-response.model';
 export * from './_get-pickabrick-parts-part-response.model';

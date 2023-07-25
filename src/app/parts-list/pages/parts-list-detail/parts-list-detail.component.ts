@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
-import { Part, PartsList } from 'src/app/models/parts-list';
+import { Part, PartsList, Product } from 'src/app/models/parts-list';
 import { PaBCartType } from 'src/app/models/pick-a-brick';
 import { PartsListService } from '../../services/parts-list.service';
 import { PickABrickService } from '../../services/pickabrick.service';
@@ -23,6 +23,9 @@ import {
 import { BlukAction } from 'src/app/models/shared';
 import { VersionService } from 'src/app/core/services/version.service';
 import { PartsListSplitComponent } from '../../components/parts-list-split/parts-list-split.component';
+import { BrickHunterApiService } from 'src/app/core/http/brickhunterapi.service';
+import { GetProductSuggestionsRequest, GetProductSuggestionsResponse } from 'src/app/models/brickhunter-api';
+import { BackgroundRequestAction } from 'src/app/models/background-message';
 
 @Component({
   selector: 'app-parts-list-detail',
@@ -39,6 +42,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     { label: 'PaB Out Of Stock', id: 'oos', title: 'PaB Out Of Stock' },
     { label: 'BrickLink', id: 'brickLink', title: 'BrickLink' },
     { label: 'Warnings', id: 'warning', title: 'Warnings' },
+    { label: 'Set Suggestions', id: 'setSuggestions', title: 'Set Suggestions' },
   ];
   activeItem = this.items[0];
   parts: Part[];
@@ -47,6 +51,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   globalSettingsSubscription: Subscription;
   importSubscription: Subscription;
   pabIsLoading: boolean = false;
+  setSugestionIsLoading: boolean = false;
   pabLoaded: boolean = false;
   uuid: string;
   cartType = PaBCartType;
@@ -76,6 +81,11 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   useAffiliateBaP = true;
   affiliate: Affiliate;
   permissionLegoCom = false;
+  showImportDialog = false;
+  importStep = 0;
+  selectedParts: Part[];
+  productsResponse: GetProductSuggestionsResponse[];
+  products: Product[];
 
   @ViewChild(PartsListSettingsComponent, { static: false })
   private partsListSettingsComponent?: PartsListSettingsComponent;
@@ -95,10 +105,6 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   @ViewChild(PartsListCopyOrMoveToComponent, { static: false })
   private partsListCopyOrMoveToComponent?: PartsListCopyOrMoveToComponent;
 
-  showImportDialog = false;
-  importStep = 0;
-  selectedParts: Part[];
-
   constructor(
     private readonly partsListService: PartsListService,
     private readonly router: Router,
@@ -110,7 +116,8 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     private readonly affiliateService: AffiliateService,
     private readonly localeService: LocaleService,
     private readonly importService: ImportService,
-    private readonly versionService: VersionService
+    private readonly versionService: VersionService,
+    private readonly BrickHunterApiService: BrickHunterApiService
   ) {}
 
   ngOnDestroy(): void {
@@ -142,6 +149,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
               severity: 'success',
               summary: 'PaB Data successfully updated',
             });
+            this.getSetSuggestions();
           }
           this.reloadPartsList();
         }
@@ -202,16 +210,101 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       Number(this.totals.bricklink.price)
     ).toFixed(2);
 
-    this.items = this.items.map(item => {
-      item.label = `${item.title} (${this.getParts(item.id)?.length})`;
-      return item;
-    });
+    this.recalcTabTitle();
+
+    this.permissionLegoCom = true;
 
     if (loadPab && this.permissionLegoCom) {
       this.pabIsLoading = true;
       this.pickabrickService.getParts(this.uuid);
       this.pabLoaded = true;
     }
+  }
+
+  private recalcTabTitle() {
+    this.items = this.items.map(item => {
+      item.label =
+        item.title +
+        (item.id !== 'setSuggestions'
+          ? `(${this.getParts(item.id) ? this.getParts(item.id)?.length : 0})`
+          : `(${this.products ? this.products.length : 0})`);
+      return item;
+    });
+  }
+
+  private getSetSuggestions() {
+    const productsSuggestionRequest: GetProductSuggestionsRequest = {
+      minQuantityPercentage: 40,
+      elements: this.partsList.parts.map(p => {
+        return {
+          elementId: p.elementId,
+          quantity: p.qty,
+        };
+      }),
+    };
+
+    this.BrickHunterApiService.getProductsSuggestions(productsSuggestionRequest).subscribe({
+      next: products => {
+        this.productsResponse = products;
+        this.products = this.productsResponse.map(product => {
+          return {
+            id: product.id,
+            name: product.name,
+            imageUrl: product.imageUrl,
+            pieceCount: product.pieceCount,
+            containesPieces: 0,
+            containesPercentage: product.containesPercentage,
+            containedPicesPrice: 0,
+            price: product.price,
+            currencyCode: product.currencyCode,
+            parts: [
+              ...this.partsList.parts?.filter(part => {
+                return products
+                  .find(p => p.id === product.id)
+                  .elements.find(element => element.elementId === part.elementId);
+              }),
+            ],
+          };
+        });
+
+        this.recalcSetSuggestion();
+        this.recalcTabTitle();
+      },
+    });
+  }
+
+  private recalcSetSuggestion() {
+    this.products.forEach(product => {
+      product.containesPercentage = Math.round(product.containesPercentage * 10) / 10;
+
+      product.containesPieces = product.parts?.reduce((a, b) => {
+        const inventarQty = this.productsResponse
+          .find(p => p.id === product.id)
+          .elements.find(e => e.elementId === b.elementId).quantity;
+        const qtyToBuy = b.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? b.have || 0 : 0);
+
+        if (inventarQty < qtyToBuy) return a + inventarQty;
+        return a + qtyToBuy;
+      }, 0);
+
+      product.containedPicesPrice =
+        Math.round(
+          product.parts?.reduce((a, b) => {
+            const inventarQty = this.productsResponse
+              .find(p => p.id === product.id)
+              .elements.find(e => e.elementId === b.elementId).quantity;
+            const qtyToBuy = b.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? b.have || 0 : 0);
+
+            if (this.partsListService.brickLinkFilter(b)) {
+              if (inventarQty < qtyToBuy) return a + inventarQty * (b.maxPrice || 0);
+              return a + qtyToBuy * (b.maxPrice || 0);
+            }
+
+            if (inventarQty < qtyToBuy) return a + inventarQty * (b.lego?.price.amount || 0);
+            return a + qtyToBuy * (b.lego?.price.amount || 0);
+          }, 0) * 100
+        ) / 100;
+    });
   }
 
   onTableChange(selectedTab: MenuItem) {

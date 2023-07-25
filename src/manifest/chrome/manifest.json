@@ -4,7 +4,7 @@
   "description": "Fills automatic your Pick a Brick shopping cart from a imported BrickLink wanted list.",
   "manifest_version": 3,
   "permissions": ["activeTab"],
-  "host_permissions": ["https://*.lego.com/*"],
+  "host_permissions": ["https://*.lego.com/*", "https://*.bricklink.com/*"],
   "background": {
     "service_worker": "background.js"
   },

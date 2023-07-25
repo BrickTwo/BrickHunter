@@ -6,6 +6,8 @@ import {
   GetBrickHunterGlobalSettingsResponse,
   GetBrickLinkPartsRequest,
   GetBrickLinkPartsResponse,
+  GetProductSuggestionsRequest,
+  GetProductSuggestionsResponse,
   GetRebrickablePartsRequest,
   GetRebrickablePartsResponse,
 } from 'src/app/models/brickhunter-api';
@@ -38,5 +40,9 @@ export class BrickHunterApiService {
 
   getPickABrickParts(request: GetPickABrickPartsRequest) {
     return this.http.post<GetPickABrickPartsResponse>(this.baseURL + 'pickabrick/parts', request);
+  }
+
+  getProductsSuggestions(request: GetProductSuggestionsRequest) {
+    return this.http.post<GetProductSuggestionsResponse[]>(this.baseURL + 'products/suggestions', request);
   }
 }

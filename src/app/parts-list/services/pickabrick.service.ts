@@ -49,7 +49,7 @@ export class PickABrickService {
 
     let elementIds: number[] = [];
     const partsList = this.partsListService.getPartsList(uuid);
-    partsList.parts.map(item => elementIds.push(...item.elementIds));
+    partsList?.parts?.map(item => elementIds.push(...item.elementIds));
 
     if (!elementIds.length) return;
 

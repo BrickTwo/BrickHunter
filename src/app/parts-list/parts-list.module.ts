@@ -16,6 +16,7 @@ import { TransferWarningComponent } from './components/transfer-warning/transfer
 import { PartsListPdfComponent } from './components/parts-list-pdf/parts-list-pdf.component';
 import { PartsListExportComponent } from './components/parts-list-export/parts-list-export.component';
 import { PartsListCopyOrMoveToComponent } from './components/parts-list-copy-or-move-to/parts-list-copy-or-move-to.component';
+import { PartsProductSuggestionsTableComponent } from './components/parts-product-suggestions-table/parts-product-suggestions-table.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { PartsListCopyOrMoveToComponent } from './components/parts-list-copy-or-
     PartsListPdfComponent,
     PartsListExportComponent,
     PartsListCopyOrMoveToComponent,
+    PartsProductSuggestionsTableComponent,
   ],
   imports: [
     PrimengModule,

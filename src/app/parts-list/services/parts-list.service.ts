@@ -148,7 +148,7 @@ export class PartsListService {
     }
   }
 
-  private pabFilter(part: Part, filter: string) {
+  public pabFilter(part: Part, filter: string) {
     if (!part.lego) return false;
     if (part.lego.deliveryChannel !== filter) return false;
     if (!part.lego.inStock) return false;
@@ -163,7 +163,7 @@ export class PartsListService {
     return true;
   }
 
-  private brickLinkFilter(part: Part) {
+  public brickLinkFilter(part: Part) {
     if (this.globalSettingsService.subtractHaveFromQuantity && part.qty - part.have <= 0) return false;
     if (!part.lego) return true;
     if (!part.lego.inStock) return true;
