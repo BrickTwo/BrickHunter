@@ -1,0 +1,16 @@
+<p-dialog [(visible)]="show" [style]="{ width: '50vw' }" [modal]="true" [closable]="false">
+  <app-parts-table
+    *ngIf="show"
+    [parts]="parts"
+    [scrollHeightSubtraction]="300"
+    [log]="true"
+    [dataTableWrapperIndex]="1"></app-parts-table>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="onClose()"
+      label="Close"
+      styleClass="p-button-outlined p-button-danger"></p-button>
+    <!-- <p-button icon="pi pi-check" (click)="onContinue()" label="Continue" styleClass="p-button-solid"></p-button> -->
+  </ng-template>
+</p-dialog>

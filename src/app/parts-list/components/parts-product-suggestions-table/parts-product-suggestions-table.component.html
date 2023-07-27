@@ -17,7 +17,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-product let-expanded="expanded">
-    <tr>
+    <tr (click)="onOpenDetail(product)" style="cursor: pointer">
       <!-- <td>
         <button
           type="button"
@@ -48,3 +48,4 @@
     </tr>
   </ng-template>
 </p-table>
+<app-parts-product-suggestions-detail></app-parts-product-suggestions-detail>

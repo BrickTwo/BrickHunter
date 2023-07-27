@@ -3,7 +3,7 @@
   [value]="parts"
   [tableStyle]="{ 'min-width': '50rem' }"
   styleClass="p-datatable-striped"
-  scrollHeight="calc(100vh - 210px)"
+  [scrollHeight]="'calc(100vh - ' + scrollHeightSubtraction + 'px)'"
   #tableRef
   [scrollable]="false"
   (sortFunction)="onCustomSort($event)"

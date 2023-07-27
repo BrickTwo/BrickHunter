@@ -33,10 +33,21 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
   @Input()
   allowEdit = false;
 
-  selectedParts: Part[] = [];
+  @Input()
+  scrollHeightSubtraction = 210;
+
+  @Input()
+  dataTableWrapperIndex = 0;
+
+  @Input()
+  log = false;
 
   @Output()
   bulkAction = new EventEmitter<BlukAction>();
+
+  selectedParts: Part[] = [];
+  lastSort: string;
+  bulkMenuItems: MenuItem[];
 
   rowHeight = 91;
   tableHeight = 0;
@@ -51,10 +62,6 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
   scrollSubscription: Subscription;
   resizeSubscription: Subscription;
   tableRefResizeObserver: ResizeObserver;
-
-  lastSort: string;
-
-  bulkMenuItems: MenuItem[];
 
   constructor(
     private readonly partsListService: PartsListService,
@@ -89,8 +96,8 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
   }
 
   ngAfterViewInit(): void {
-    this.registerScrollSubscription();
-    this.calcVisible('init');
+    this.registerScrollSubscription('AfterViewInit');
+    this.calcVisible('AfterViewInit');
   }
 
   onQuantityChange($event, partId) {
@@ -190,6 +197,7 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (this.log) console.log(changes);
     this.tableHeight = (this.parts ? this.parts?.length : 0) * this.rowHeight + 56;
     this.calcVisible('changes');
   }
@@ -222,10 +230,14 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
   }
 
   calcVisible(source: string) {
-    //console.log(source, this.parts);
-    if (!this.registerScrollSubscription()) return;
+    if (this.log) console.log('calcVisible', source, this.parts);
+    if (!this.registerScrollSubscription('calcVisible')) return;
+    if (this.log) console.log('blub');
     const rect = this.tableRef.getBoundingClientRect();
-    this.rowsVisible = Math.ceil((this.tableWrapperRef.clientHeight - 210) / 91) + 2;
+    this.rowsVisible =
+      Math.ceil((this.tableWrapperRef.clientHeight - this.scrollHeightSubtraction) / this.rowHeight) + 2;
+
+    if (this.log) console.log(this.tableWrapperRef.clientHeight, this.rowsVisible);
 
     this.rowsTop = 0;
     this.rowsBottom = 0;
@@ -237,14 +249,28 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
     this.rowsBottom = (this.parts?.length || 0) - this.rowsTop - this.rowsVisible;
   }
 
-  registerScrollSubscription() {
+  registerScrollSubscription(source: string) {
+    if (this.log) console.log('registerScrollSubscription', source, this.parts);
     if (this.scrollSubscription) return true;
-    this.tableWrapperRef = document.getElementsByClassName('p-datatable-wrapper')[0];
-    if (!this.tableWrapperRef) return false;
+    this.tableWrapperRef = document.getElementsByClassName('p-datatable-wrapper')[this.dataTableWrapperIndex];
+    if (this.log)
+      console.log(
+        this.tableWrapperRef,
+        document.getElementsByClassName('p-datatable-wrapper'),
+        document.getElementsByClassName('p-datatable-wrapper').length,
+        this.dataTableWrapperIndex,
+        document.getElementsByClassName('p-datatable-wrapper')[1]
+      );
+    if (!this.tableWrapperRef) {
+      interval(250)
+        .pipe(take(1))
+        .subscribe(() => this.registerScrollSubscription('self'));
+      return false;
+    }
     if (!this.tableWrapperRef.attributes['style']) {
       interval(500)
         .pipe(take(1))
-        .subscribe(() => this.registerScrollSubscription());
+        .subscribe(() => this.registerScrollSubscription('self'));
       return false;
     }
     if (!this.tableRef) this.tableRef = this.tableWrapperRef.getElementsByClassName('p-datatable-table')[0];

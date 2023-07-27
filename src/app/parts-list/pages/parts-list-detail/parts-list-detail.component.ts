@@ -25,7 +25,6 @@ import { VersionService } from 'src/app/core/services/version.service';
 import { PartsListSplitComponent } from '../../components/parts-list-split/parts-list-split.component';
 import { BrickHunterApiService } from 'src/app/core/http/brickhunterapi.service';
 import { GetProductSuggestionsRequest, GetProductSuggestionsResponse } from 'src/app/models/brickhunter-api';
-import { BackgroundRequestAction } from 'src/app/models/background-message';
 
 @Component({
   selector: 'app-parts-list-detail',
