@@ -253,9 +253,7 @@ export class PickABrick {
   static openPickABrick(tabId: number, affiliate: Affiliate, locale: string) {
     var url = `https://www.lego.com/${locale}/page/static/pick-a-brick`;
     if (affiliate) {
-      url =
-        `https://track.webgains.com/click.html?wgcampaignid=${affiliate.wgcampaignid}&wgprogramid=${affiliate.wgprogramid}&clickref=${affiliate.clickref}&wgtarget=` +
-        url;
+      url = `https://click.linksynergy.com/deeplink?id=${affiliate.id}&mid=${affiliate.mid}&u1=${affiliate.clickref}&murl=${url}`;
     }
 
     chrome.tabs

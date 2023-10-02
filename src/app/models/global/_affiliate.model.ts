@@ -1,7 +1,7 @@
 export interface Affiliate {
   countryCode: string;
   linkType: string;
-  wgcampaignid: number;
-  wgprogramid: number;
+  id: string;
+  mid: number;
   clickref: string;
 }

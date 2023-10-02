@@ -120,7 +120,6 @@ export class BrowsePartsService {
       const browsePartsFilter = localStorage.getItem('browsePartsFilter') || null;
       if (browsePartsFilter) {
         this.filter = JSON.parse(browsePartsFilter) as unknown as Filter;
-        console.log(this.filter.atRiskAsOf);
         this.filter.elementIds = [];
         this.filter.country = this.localeService.country?.code || 'de';
         this.filterSubject$.next({ property: FilterChangedProperty.layout, filter: { ...this.filter } });
@@ -194,7 +193,6 @@ export class BrowsePartsService {
 
   setAtRiskAsOf(value: string) {
     this.filter.atRiskAsOf = value;
-    console.log(this.filter.atRiskAsOf);
     this.filterSubject$.next({ property: FilterChangedProperty.atRiskAsOf, filter: { ...this.filter } });
     this.resetPage();
     this.sendRequest();
@@ -283,7 +281,6 @@ export class BrowsePartsService {
     this.isLoadingSubject$.next(true);
     this.initFilter();
 
-    console.log(JSON.stringify(this.filter.atRiskAsOf));
     localStorage.setItem('browsePartsFilter', JSON.stringify(this.filter));
 
     const request: GetPickABrickPartsRequest = {

@@ -18,6 +18,10 @@ export class PartsListService {
     private readonly guidService: GuidService
   ) {
     this.indexedDBService.partsLists.toArray().then(partsLists => {
+      partsLists.map(partsList => {
+        if (!partsList.name) partsList.name = '';
+      });
+
       this.setPartsLists(partsLists);
     });
   }
