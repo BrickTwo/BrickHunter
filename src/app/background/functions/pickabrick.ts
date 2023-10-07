@@ -133,7 +133,7 @@ export class PickABrick {
         cartType: cartType,
       },
       query:
-        'mutation ChangeElementLineItem($cartType: CartType!, $elements: [ChangeElementQuantityLineItem!], $lineItemId: String, $quantity: Int) {\n  changeElementLineItemQuantity(\n    input: {cartType: $cartType, elements: $elements, lineItemId: $lineItemId, quantity: $quantity}\n  ) {\n    ...BrickCartData\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n}',
+        'mutation ChangeElementLineItem($cartType: CartType!, $elements: [ChangeElementQuantityLineItem!]) {\n  changeElementLineItemQuantity(\n    input: {cartType: $cartType, elements: $elements}\n  ) {\n    ...BrickCartData\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n}',
     };
 
     var url = 'https://www.lego.com/api/graphql/ChangeElementLineItem';
