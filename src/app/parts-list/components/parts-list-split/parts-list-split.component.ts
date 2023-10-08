@@ -31,6 +31,7 @@ export class PartsListSplitComponent {
   newPartsListSummary: Summary[] = [];
   listCountBestseller = 0;
   listCountStandard = 0;
+  maxPaBLotPerOrder = 0;
 
   form = new FormGroup({
     partsListName: new FormControl(),
@@ -41,7 +42,9 @@ export class PartsListSplitComponent {
     private readonly globalSettingsService: GlobalSettingsService,
     private readonly guidService: GuidService,
     private readonly localeService: LocaleService
-  ) {}
+  ) {
+    this.maxPaBLotPerOrder = this.globalSettingsService.maxPaBLotPerOrder;
+  }
 
   public open(partsList: PartsList) {
     this.display = true;
@@ -188,12 +191,12 @@ export class PartsListSplitComponent {
         currentPart = partsListSorted[0].partsList.parts.find(p => p.id === part.id);
 
         if (!currentPart) {
-          currentPart = { ...part, qty: 0 };
+          currentPart = { ...part };
           this.newPartsLists[0].partsList.parts.push(currentPart);
           newLot = 1;
         }
-        currentPart.qty = currentPart.qty + 1;
-        this.addToSummary(deliveryType, partsListSorted[0].index, newLot, 1, currentPart.lego.price.amount);
+        //currentPart.qty = currentPart.qty + 1;
+        this.addToSummary(deliveryType, partsListSorted[0].index, newLot, currentPart.qty, currentPart.qty * currentPart.lego.price.amount);
       }
 
       this.newPartsLists.sort((a, b) => a.index - b.index);
@@ -221,6 +224,15 @@ export class PartsListSplitComponent {
   }
 
   private sortByTopPrioList(a: PartsList, b: PartsList, deliveryType: string) {
+    const maxLists = deliveryType === 'pab' ? this.listCountBestseller : this.listCountStandard ;
+    const listsUsed = this.newPartsListSummary.map(pls => {
+      return deliveryType === 'pab' ? pls.pab.lots : pls.bap.lots;
+    }).filter(el => el > 0).length;
+
+    if(maxLists <= listsUsed) {
+    console.log(listsUsed, maxLists);
+    }
+
     const minPrice =
       deliveryType === 'pab'
         ? this.globalSettingsService.pabServiceFeeUnder.find(e => e.country === this.localeService.country.code)
@@ -234,6 +246,12 @@ export class PartsListSplitComponent {
     const bTotalPrice = b.parts
       .filter(p => p.lego.deliveryChannel === deliveryType)
       .reduce((a, b) => a + b.qty * b.lego.price.amount, 0);
+
+    if(maxLists <= listsUsed) {
+      if (aTotalPrice == 0) {
+        return 1;
+      }
+    }
 
     if (aTotalPrice < minPrice && bTotalPrice < minPrice) {
       if (aTotalPrice < bTotalPrice) return 1;
@@ -251,13 +269,19 @@ export class PartsListSplitComponent {
     ) {
       if (aTotalLots < bTotalLots) return 1;
       if (aTotalLots > bTotalLots) return -1;
-    }
+    }  
 
     if (
       aTotalLots < this.globalSettingsService.maxPaBLotPerOrder &&
       bTotalLots >= this.globalSettingsService.maxPaBLotPerOrder
     )
       return -1;
+
+    if (
+      aTotalLots >= this.globalSettingsService.maxPaBLotPerOrder &&
+      bTotalLots < this.globalSettingsService.maxPaBLotPerOrder
+    )
+      return 1;
 
     if (aTotalPrice < bTotalPrice) return 1;
     if (aTotalPrice > bTotalPrice) return -1;
