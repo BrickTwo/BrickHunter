@@ -179,6 +179,10 @@ export class PartsListImportComponent implements OnDestroy {
         valueProcessors: valueProcessor,
       })
       .then(result => {
+        if(!Array.isArray(result.inventory.item)) {
+          return [result.inventory.item] as BrickLinkWantedListItem[];
+        }
+
         return result.inventory.item as BrickLinkWantedListItem[];
       })
       .catch(function (err) {
