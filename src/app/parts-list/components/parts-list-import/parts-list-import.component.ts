@@ -138,8 +138,12 @@ export class PartsListImportComponent implements OnDestroy {
             return 'itemType';
           case 'maxprice':
             return 'maxPrice';
+          case 'price':
+              return 'maxPrice';
           case 'minqty':
             return 'minQty';
+          case 'qty':
+              return 'minQty';
           case 'qtyfilled':
             return 'qtyFilled';
           default:
