@@ -193,7 +193,7 @@ export class PickABrickService {
         this.authorization = response;
       })
       .catch(e => {
-        throw new Error("Couldn't read authentication");
+        throw new Error("Couldn't read authentication. Please close all Tabs in your Browser with lego.com and try again.");
       });
   }
 
@@ -335,7 +335,10 @@ export class PickABrickService {
       item => !this.parts.some(p => p.lego.elementId === Number(item.elementVariant.id))
     ).length;
 
+    let maxPaBLotPerOrderExceeded = false;
+
     if (this.parts.length + differenceAmount > this.gloablSettingsService.maxPaBLotPerOrder) {
+      maxPaBLotPerOrderExceeded = true;
       for (let i = this.parts.length - 1; i >= 0; i--) {
         if (cart?.lineItems?.find(item => Number(item.elementVariant.id) === newParts[i].elementId)) continue;
 
@@ -356,7 +359,7 @@ export class PickABrickService {
     this.parts = newParts;
 
     if (partsWithWarning.length) {
-      this.transferWarningComponent.open(partsWithWarning);
+      this.transferWarningComponent.open(partsWithWarning, maxPaBLotPerOrderExceeded);
       return false;
     }
 

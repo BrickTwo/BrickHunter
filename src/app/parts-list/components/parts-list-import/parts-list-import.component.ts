@@ -138,8 +138,12 @@ export class PartsListImportComponent implements OnDestroy {
             return 'itemType';
           case 'maxprice':
             return 'maxPrice';
+          case 'price':
+              return 'maxPrice';
           case 'minqty':
             return 'minQty';
+          case 'qty':
+              return 'minQty';
           case 'qtyfilled':
             return 'qtyFilled';
           default:
@@ -175,6 +179,10 @@ export class PartsListImportComponent implements OnDestroy {
         valueProcessors: valueProcessor,
       })
       .then(result => {
+        if(!Array.isArray(result.inventory.item)) {
+          return [result.inventory.item] as BrickLinkWantedListItem[];
+        }
+
         return result.inventory.item as BrickLinkWantedListItem[];
       })
       .catch(function (err) {

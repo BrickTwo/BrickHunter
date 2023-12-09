@@ -74,8 +74,8 @@ export class PartsListTransferComponent implements OnDestroy {
   onOpenLegoWebsite() {
     let url = `https://www.lego.com/${this.localeService.languageCountryCode}`;
     if (this.affiliate) {
-      if (this.affiliate.linkType == 'webgains') {
-        url = `https://track.webgains.com/click.html?wgcampaignid=${this.affiliate.wgcampaignid}&wgprogramid=${this.affiliate.wgprogramid}&clickref=${this.affiliate.clickref}&wgtarget=${url}`;
+      if (this.affiliate.linkType == 'rakuten') {
+        url = `https://click.linksynergy.com/deeplink?id=${this.affiliate.id}&mid=${this.affiliate.mid}&u1=${this.affiliate.clickref}&murl=${url}`;
       }
     }
     window.open(url, '_blank');

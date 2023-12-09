@@ -5,6 +5,48 @@
     <li>Parts List is now showin set suggestions.</li>
   </ul>
 </section>
+<section *ngIf="isVersionGreater('2.2.8')">
+  <h2>2.2.8</h2>
+  <h3>Features</h3>
+  <ul>
+    <li>Support WantedList file format exported from BrickStore</li>
+    <li>Improved some warning/info texts</li>
+  </ul>
+  <h3>Bugfix</h3>
+  <ul>
+    <li>WantedLists with only one item aren't imported.</li>
+  </ul>
+</section>
+<section *ngIf="isVersionGreater('2.2.7')">
+  <h2>2.2.7</h2>
+  <h3>Bugfix</h3>
+  <ul>
+    <li>Adjust to API changes when transfering parts to LEGO PaB cart.</li>
+    <li>Split function only adds quantity 1 in some cases.</li>
+  </ul>
+</section>
+<section *ngIf="isVersionGreater('2.2.6')">
+  <h2>2.2.6</h2>
+  <h3>Bugfix</h3>
+  <ul>
+    <li>Error when Parts List name is empty.</li>
+  </ul>
+</section>
+<section *ngIf="isVersionGreater('2.2.5')">
+  <h2>2.2.5</h2>
+  <ul>
+    <li>Compatibility fix for Chrome version.</li>
+  </ul>
+</section>
+<section *ngIf="isVersionGreater('2.2.4')">
+  <h2>2.2.4</h2>
+  <ul>
+    <li>
+      Changed Affiliate Link Partner. Added Affiliate Link (opt-out) for the following countries: Australia, Canada,
+      Czech Republic, Hungary, Poland
+    </li>
+  </ul>
+</section>
 <section *ngIf="isVersionGreater('2.2.3')">
   <h2>2.2.3</h2>
   <h3>Feature</h3>
