@@ -42,6 +42,12 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
   @Input()
   log = false;
 
+  @Input()
+  showSelection = true;
+
+  @Input()
+  showAction = true;
+
   @Output()
   bulkAction = new EventEmitter<BlukAction>();
 

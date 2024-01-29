@@ -1,4 +1,5 @@
 export interface GetProductSuggestionsRequest {
+  countryCode: string;
   minQuantityPercentage: number;
   elements: GetProductSuggestionElementRequest[];
 }

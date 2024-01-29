@@ -50,6 +50,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   globalSettingsSubscription: Subscription;
   importSubscription: Subscription;
   pabIsLoading: boolean = false;
+  setSuggestionsLoaded: boolean = false
   setSugestionIsLoading: boolean = false;
   pabLoaded: boolean = false;
   uuid: string;
@@ -148,7 +149,6 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
               severity: 'success',
               summary: 'PaB Data successfully updated',
             });
-            this.getSetSuggestions();
           }
           this.reloadPartsList();
         }
@@ -231,9 +231,11 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getSetSuggestions() {
+  getSetSuggestions() {
+    this.setSugestionIsLoading = true;
     const productsSuggestionRequest: GetProductSuggestionsRequest = {
-      minQuantityPercentage: 40,
+      countryCode: this.localeService.country?.code || 'de',
+      minQuantityPercentage: 33,
       elements: this.partsList.parts.map(p => {
         return {
           elementId: p.elementId,
@@ -256,18 +258,21 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
             containedPicesPrice: 0,
             price: product.price,
             currencyCode: product.currencyCode,
-            parts: [
-              ...this.partsList.parts?.filter(part => {
-                return products
-                  .find(p => p.id === product.id)
-                  .elements.find(element => element.elementId === part.elementId);
-              }),
+            partsUsed: [
+              ...JSON.parse(JSON.stringify(
+                this.partsList.parts?.filter(part => { 
+                  return product.elements.find(element => element.elementId === part.elementId);
+                })
+              )),
             ],
+            partsNotUsed: []
           };
         });
 
         this.recalcSetSuggestion();
         this.recalcTabTitle();
+        this.setSuggestionsLoaded = true;
+        this.setSugestionIsLoading = false;
       },
     });
   }
@@ -276,34 +281,62 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     this.products.forEach(product => {
       product.containesPercentage = Math.round(product.containesPercentage * 10) / 10;
 
-      product.containesPieces = product.parts?.reduce((a, b) => {
+      product.partsUsed = product.partsUsed?.map(part => {
         const inventarQty = this.productsResponse
-          .find(p => p.id === product.id)
-          .elements.find(e => e.elementId === b.elementId).quantity;
-        const qtyToBuy = b.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? b.have || 0 : 0);
+              .find(p => p.id === product.id)
+              .elements.find(e => e.elementId === part.elementId).quantity;
+        const qtyToBuy = part.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? part.have || 0 : 0);
+        
+        if (inventarQty < qtyToBuy){
+          part.qty = inventarQty;
+        } else {
+          part.qty = qtyToBuy;
+        }
 
-        if (inventarQty < qtyToBuy) return a + inventarQty;
-        return a + qtyToBuy;
+        return part;
+      }, 0);
+
+      product.containesPieces = product.partsUsed?.reduce((a, b) => {
+        return a + b.qty;
       }, 0);
 
       product.containedPicesPrice =
         Math.round(
-          product.parts?.reduce((a, b) => {
-            const inventarQty = this.productsResponse
-              .find(p => p.id === product.id)
-              .elements.find(e => e.elementId === b.elementId).quantity;
-            const qtyToBuy = b.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? b.have || 0 : 0);
-
-            if (this.partsListService.brickLinkFilter(b)) {
-              if (inventarQty < qtyToBuy) return a + inventarQty * (b.maxPrice || 0);
-              return a + qtyToBuy * (b.maxPrice || 0);
-            }
-
-            if (inventarQty < qtyToBuy) return a + inventarQty * (b.lego?.price.amount || 0);
-            return a + qtyToBuy * (b.lego?.price.amount || 0);
+          product.partsUsed?.reduce((a, b) => {
+            return a +  b.qty * (b.lego?.price.amount || 0);
           }, 0) * 100
         ) / 100;
-    });
+      });
+
+
+    //   product.containesPieces = product.partsUsed?.reduce((a, b) => {
+    //     const inventarQty = this.productsResponse
+    //       .find(p => p.id === product.id)
+    //       .elements.find(e => e.elementId === b.elementId).quantity;
+    //     const qtyToBuy = b.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? b.have || 0 : 0);
+
+    //     if (inventarQty < qtyToBuy) return a + inventarQty;
+    //     return a + qtyToBuy;
+    //   }, 0);
+
+    //   product.containedPicesPrice =
+    //     Math.round(
+    //       product.partsUsed?.reduce((a, b) => {
+    //         const inventarQty = this.productsResponse
+    //           .find(p => p.id === product.id)
+    //           .elements.find(e => e.elementId === b.elementId).quantity;
+    //         const qtyToBuy = b.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? b.have || 0 : 0);
+
+    //         if (this.partsListService.brickLinkFilter(b)) {
+    //           if (inventarQty < qtyToBuy) return a + inventarQty * (b.maxPrice || 0);
+    //           return a + qtyToBuy * (b.maxPrice || 0);
+    //         }
+
+    //         if (inventarQty < qtyToBuy) return a + inventarQty * (b.lego?.price.amount || 0);
+    //         return a + qtyToBuy * (b.lego?.price.amount || 0);
+    //       }, 0) * 100
+    //     ) / 100;
+    // });
   }
 
   onTableChange(selectedTab: MenuItem) {
@@ -446,6 +479,15 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       value.parts.forEach(part => {
         this.partsListService.deletePartInPartsList(this.partsList.uuid, part.id);
       });
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Parts are successfully deleted from list.' });
+      return;
+    }
+    if (value.action === 'removePartsFromSelectedSet') {
+      value.parts.forEach(part => {
+        this.partsListService.deletePartInPartsList(this.partsList.uuid, part.id);
+      });
+      this.getSetSuggestions();
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Parts are successfully removed from list.' });
       return;
     }
     this.partsListCopyOrMoveToComponent.open(this.uuid, value.action, value.parts);

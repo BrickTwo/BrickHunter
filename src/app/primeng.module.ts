@@ -1,6 +1,7 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
@@ -41,6 +42,7 @@ const initializeAppFactory = (primeConfig: PrimeNGConfig) => () => {
 @NgModule({
   exports: [
     AvatarModule,
+    BadgeModule,
     ButtonModule,
     CalendarModule,
     CardModule,

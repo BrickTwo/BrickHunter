@@ -1,10 +1,52 @@
-<p-dialog [(visible)]="show" [style]="{ width: '50vw' }" [modal]="true" [closable]="false">
-  <app-parts-table
-    *ngIf="show"
-    [parts]="parts"
-    [scrollHeightSubtraction]="300"
-    [log]="true"
-    [dataTableWrapperIndex]="1"></app-parts-table>
+<p-dialog [(visible)]="show" [style]="{ width: '90vw' }" [modal]="true" [closable]="true">
+  <ng-template pTemplate="header">
+    <h2 style="margin: 0">{{product.id}} - {{product.name}}</h2>
+  </ng-template>
+  <div class="grid" *ngIf="product != null">
+    <div class="col-9">
+      <app-parts-table
+        *ngIf="show"
+        [parts]="product?.partsUsed"
+        [scrollHeightSubtraction]="325"
+        [log]="true"
+        [dataTableWrapperIndex]="1"
+        [showSelection]="false"
+        [showAction]="false"></app-parts-table>
+    </div>
+    <div class="col-3">
+      <div class="flex flex-column gap-2">
+        <div class="flex flex-column gap-2">
+          <p-message *ngIf="currentPartListUuid == 'multiple'" severity="warn" text="Combined Lists are currently not fully supported!"></p-message>
+          <button
+              pButton
+              pRipple
+              type="button"
+              label="Remove parts from Parts List"
+              class="p-button-outlined"
+              icon="fa fa-trash-can"
+              style="width: 100%"
+              [disabled]="currentPartListUuid == 'multiple'"
+              (click)="onRemoveParts()"></button>
+          <button
+              pButton
+              pRipple
+              type="button"
+              label="PDF"
+              class="p-button-outlined"
+              icon="fa fa-file-pdf"
+              style="width: 100%"
+              (click)="onExportPdf()"></button>
+        </div>
+        <img [src]="product.imageUrl" [alt]="product.name" class="productImage" />
+        <div class="shortInfoTitle">Bestseller Price</div>
+        <div>{{getTotalPrice("pab")}}</div>
+        <div class="shortInfoTitle">Standard Price</div>
+        <div>{{getTotalPrice("bap")}}</div>
+        <div class="shortInfoTitle">Total</div>
+        <div>{{(getTotalPrice("all"))}}</div>
+      </div>
+    </div>
+  </div>
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"

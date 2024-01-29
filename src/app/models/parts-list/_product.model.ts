@@ -10,5 +10,7 @@ export interface Product {
   containedPicesPrice: number;
   price: number;
   currencyCode: string;
-  parts: Part[];
+  //parts: Part[];
+  partsUsed: Part[];
+  partsNotUsed: Part[];
 }

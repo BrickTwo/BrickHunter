@@ -41,7 +41,18 @@
               class="p-button-outlined"
               icon="fa fa-arrows-rotate"
               style="width: 100%"
+              [disabled]="pabIsLoading || setSugestionIsLoading"
               (click)="onReSync()"></button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="Check for Sets (Beta)"
+              class="p-button-outlined"
+              icon="fa fa-boxes-stacked"
+              style="width: 100%"
+              [disabled]="pabIsLoading || setSugestionIsLoading"
+              (click)="getSetSuggestions()"></button>
             <button
               pButton
               pRipple
@@ -168,9 +179,23 @@
         [partsListUuid]="uuid"
         [allowEdit]="true"
         (bulkAction)="onBulkAction($event)"></app-parts-table>
+        <p-progressSpinner
+        *ngIf="activeItem.id === 'setSuggestions' && setSugestionIsLoading"
+        [style]="{ width: '25px', height: '25px', margin: '10px' }"
+        class="vertical-align-middle"></p-progressSpinner>
       <app-parts-product-suggestions-table
-        *ngIf="activeItem.id === 'setSuggestions'"
-        [products]="products"></app-parts-product-suggestions-table>
+        *ngIf="activeItem.id === 'setSuggestions' && setSuggestionsLoaded && !setSugestionIsLoading && products?.length > 0"
+        [products]="products"
+        [partsListUuid]="partsList.uuid"
+        (bulkAction)="onBulkAction($event)"></app-parts-product-suggestions-table>
+      <p *ngIf="activeItem.id === 'setSuggestions' && setSuggestionsLoaded && !setSugestionIsLoading && products?.length == 0">
+        
+      </p>
+      <p *ngIf="activeItem.id === 'setSuggestions' && !setSuggestionsLoaded && !setSugestionIsLoading">
+        
+      </p>
+      <p-message *ngIf="activeItem.id === 'setSuggestions' && setSuggestionsLoaded && !setSugestionIsLoading && products?.length == 0" severity="error" text="No sets found!"></p-message>
+      <p-message *ngIf="activeItem.id === 'setSuggestions' && !setSuggestionsLoaded && !setSugestionIsLoading" severity="info" text='Please use "Check for Sets" function.'></p-message>
     </p-card>
   </div>
 </div>

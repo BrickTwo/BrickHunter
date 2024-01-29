@@ -11,7 +11,7 @@
   [(selection)]="selectedParts">
   <ng-template pTemplate="header">
     <tr>
-      <th style="width: 6rem">
+      <th style="width: 6rem" *ngIf="showSelection">
         <div class="flex flex-row gap-2">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           <button
@@ -36,7 +36,7 @@
           class="vertical-align-middle"
           *ngIf="pabIsLoading"></p-progressSpinner>
       </th>
-      <th>Action</th>
+      <th *ngIf="showAction">Action</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-part let-rowIndex="rowIndex">
@@ -50,7 +50,7 @@
       <td colspan="8"></td>
     </tr>
     <tr style="height: 91px" *ngIf="rowIndex > rowsTop - 1 && rowIndex < rowsTop + 5 + rowsVisible">
-      <td>
+      <td *ngIf="showSelection">
         <p-tableCheckbox [value]="part"></p-tableCheckbox>
       </td>
       <td>{{ part.designId }}</td>
@@ -116,7 +116,7 @@
       <td>
         <app-pab-price [part]="part"></app-pab-price>
       </td>
-      <td>
+      <td *ngIf="showAction">
         <p-button
           icon="fa fa-trash-can"
           styleClass="p-button-rounded p-button-danger p-button-text"

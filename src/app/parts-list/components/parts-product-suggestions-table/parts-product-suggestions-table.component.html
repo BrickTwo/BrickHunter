@@ -8,11 +8,11 @@
       <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
       <th pSortableColumn="pieceCount">Pieces <p-sortIcon field="pieceCount"></p-sortIcon></th>
       <th pSortableColumn="containesPercentage">
-        Containes Percentage <p-sortIcon field="containesPercentage"></p-sortIcon>
+        Percentage used<p-sortIcon field="containesPercentage"></p-sortIcon>
       </th>
-      <th pSortableColumn="containesPieces">Containes Pieces <p-sortIcon field="containesPieces"></p-sortIcon></th>
+      <th pSortableColumn="containesPieces">Pieces used<p-sortIcon field="containesPieces"></p-sortIcon></th>
       <th pSortableColumn="containedPicesPrice">
-        Containes Price <p-sortIcon field="containedPicesPrice"></p-sortIcon>
+        PaB Price<p-sortIcon field="containedPicesPrice"></p-sortIcon>
       </th>
     </tr>
   </ng-template>
@@ -31,7 +31,7 @@
       <td>{{ product.id }}</td>
       <td>{{ product.name }}</td>
       <td>
-        <img [src]="product.imageUrl" [alt]="product.name" width="50" class="shadow-4" />
+        <img *ngIf="product.imageUrl" [src]="product.imageUrl" [alt]="product.name" width="50" />
       </td>
       <td>{{ product.price.toFixed(2) | currency : product.currencyCode }}</td>
       <td>{{ product.pieceCount }}</td>
@@ -48,4 +48,4 @@
     </tr>
   </ng-template>
 </p-table>
-<app-parts-product-suggestions-detail></app-parts-product-suggestions-detail>
+<app-parts-product-suggestions-detail (bulkAction)="onBulkAction($event)"></app-parts-product-suggestions-detail>

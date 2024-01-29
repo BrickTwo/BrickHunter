@@ -29,7 +29,7 @@
             "assets": [
               "src/assets",
               {
-                "input": "src/manifest/firefox",
+                "input": "src/manifest/chrome",
                 "output": "",
                 "glob": "manifest.json"
               }
