@@ -107,6 +107,11 @@ const languagePT: Language = {
   text: 'Portugese',
   flag: 'pt',
 };
+const languageSK: Language = {
+  code: 'sk',
+  text: 'Slovak',
+  flag: 'sk',
+};
 const languageSV: Language = {
   code: 'sv',
   text: 'Swedish',
@@ -259,6 +264,12 @@ const initializeCountries: Country[] = [
     code: 'se',
     text: 'Sweden',
     languages: [languageSV, languageEN],
+    currency: 'EUR',
+  },
+  {
+    code: 'sk',
+    text: 'Slovakia',
+    languages: [languageSK, languageEN],
     currency: 'EUR',
   },
   {
