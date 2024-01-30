@@ -1,4 +1,5 @@
 export interface GetRebrickablePartsResponse {
+    source: string;
     partNum: string;
     name: string;
     imageUrl: string;

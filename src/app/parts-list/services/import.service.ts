@@ -51,18 +51,21 @@ export class ImportService {
       }
     }
 
-    const partIds = partsList.map(item => {
+    const partIdsBrickLink = partsList.filter(item => item.source.source === "BrickLink").map(item => {
+      return item.externalId;
+    });
+    const partIdsLego = partsList.filter(item => item.source.source === "Lego").map(item => {
       return item.externalId;
     });
 
     importStep$.next(2);
-    const getRebrickableRequest: GetRebrickablePartsRequest = { source: source, ids: partIds };
+    const getRebrickableRequest: GetRebrickablePartsRequest[] = [{ source: "BrickLink", ids: partIdsBrickLink },{ source: "Lego", ids: partIdsLego }];
 
     this.brickHunterApiService
       .getRebrickableParts(getRebrickableRequest)
       .pipe(
         map(responseRebrickableParts => {
-          return from(this.transformRebrickableData(responseRebrickableParts, partsList, source));
+          return from(this.transformRebrickableData(responseRebrickableParts, partsList));
         }),
         switchMap(parts => parts),
         switchMap(parts => {
@@ -73,7 +76,7 @@ export class ImportService {
           const request: GetBrickLinkPartsRequest = { itemNumbers: externalIds };
           return this.brickHunterApiService.getBrickLinkParts(request).pipe(
             map(responseBrickLinkParts => {
-              return this.transformBrickLinkData(parts, responseBrickLinkParts, source);
+              return this.transformBrickLinkData(parts, responseBrickLinkParts);
             })
           );
         }),
@@ -98,10 +101,10 @@ export class ImportService {
       });
   }
 
-  private transformRebrickableData(rebrickableDatas: GetRebrickablePartsResponse[], partsList: Part[], source: string) {
+  private transformRebrickableData(rebrickableDatas: GetRebrickablePartsResponse[], partsList: Part[]) {
     const resp = partsList.map(async part => {
       let rebrickableData = rebrickableDatas.find(resp => {
-        if (source === 'Lego') {
+        if (resp.source === 'Lego') {
           return resp.elementIds.find(e => e.elementId === part.elementId);
         } else {
           return resp.externalIds.find(
@@ -111,7 +114,7 @@ export class ImportService {
       });
 
       let color: Color;
-      if (source === 'Lego' && part.color === 0) {
+      if (rebrickableData?.source === 'Lego' && part.color === 0) {
         var foundElement = rebrickableData?.elementIds.find(e => Number(e.elementId) === part.elementId);
         if (foundElement) {
           color = await this.colorService.getColor(foundElement.colorId, 'Rebrickable');
@@ -119,7 +122,7 @@ export class ImportService {
           color = await this.colorService.getColor(-1);
         }
       } else {
-        color = await this.colorService.getColor(part.source.color, source);
+        color = await this.colorService.getColor(part.source.color, rebrickableData?.source);
       }
 
       part.color = color.id;
@@ -154,7 +157,7 @@ export class ImportService {
 
       part.elementIds = part.elementIds?.map(id => id).sort((a, b) => b - a); // numerical sort desc
       if (!part.elementIds.length && part.elementId) part.elementIds.push(part.elementId);
-      if (source === 'BrickLink') part.elementId = part.elementIds[0];
+      if (rebrickableData?.source === 'BrickLink') part.elementId = part.elementIds[0];
       if (part.color === 9999) part.elementId = undefined;
 
       return part;
@@ -163,7 +166,7 @@ export class ImportService {
     return Promise.all(resp);
   }
 
-  private transformBrickLinkData(parts: Part[], brickLinkData: GetBrickLinkPartsResponse[], source: string) {
+  private transformBrickLinkData(parts: Part[], brickLinkData: GetBrickLinkPartsResponse[]) {
     return parts.map(part => {
       const resp = brickLinkData.find(
         resp => resp.itemNo === part.rebrickable?.externalIds.find(e => e.source === 'BrickLink')?.externalId
@@ -207,7 +210,7 @@ export class ImportService {
       }
 
       part.elementIds = part.elementIds?.map(id => id).sort((a, b) => b - a); // numerical sort desc
-      if (source === 'BrickLink' || !part.elementId) part.elementId = part.elementIds[0];
+      if (part.source.source === 'BrickLink' || !part.elementId) part.elementId = part.elementIds[0];
       if (part.color === 9999) part.elementId = undefined;
 
       return part;
