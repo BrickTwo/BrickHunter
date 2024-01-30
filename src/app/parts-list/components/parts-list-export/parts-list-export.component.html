@@ -15,6 +15,12 @@
       optionLabel="name"
       optionValue="value"></p-selectButton>
   </div>
+  <div class="field-checkbox" *ngIf="selectedExportToValue == 'brickLink'">
+    <p-checkbox
+      [(ngModel)]="brickLinkExportPrice"
+      [binary]="true"
+      [label]="'Export PaB Price'"></p-checkbox>
+  </div>
   <div class="field">
     <button pButton pRipple type="button" label="Export" style="width: 100%" (click)="onExport()"></button>
   </div>

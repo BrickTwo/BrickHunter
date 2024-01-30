@@ -35,6 +35,7 @@ export class PartsListExportComponent {
     { name: 'CSV', value: 'csv' },
   ];
   selectedExportToValue: string = 'pdf';
+  brickLinkExportPrice: boolean = true;
 
   constructor(
     private readonly partsListService: PartsListService,
@@ -226,6 +227,8 @@ export class PartsListExportComponent {
 
     const parts = this.partsListService.getParts(this.partsList.uuid, this.selectedFilterValue);
 
+    console.log("brickLinkExportPrice", this.brickLinkExportPrice)
+
     parts.map(async part => {
       const color = await this.colorService.getColor(part.color);
 
@@ -235,7 +238,7 @@ export class PartsListExportComponent {
             ITEMTYPE: part.brickLink.itemType,
             ITEMID: part.brickLink.itemNo,
             COLOR: part.color !== 9999 ? color.externalIds.brickLink.extIds[0] : '',
-            MAXPRICE: part.maxPrice,
+            MAXPRICE: this.brickLinkExportPrice ? part.lego?.price?.amount : part.maxPrice,
             MINQTY: part.qty,
             QTYFILLED: part.have,
             CONDITION: part.condition,
