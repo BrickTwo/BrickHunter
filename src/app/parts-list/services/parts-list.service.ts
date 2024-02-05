@@ -133,22 +133,26 @@ export class PartsListService {
   getParts(uuid: string, filter: string) {
     const partsList = this.getPartsList(uuid);
 
+    return this.filterParts(partsList?.parts, filter);
+  }
+
+  filterParts(parts: Part[], filter: string) {
     switch (filter) {
       case 'pab':
       case 'bap':
-        return partsList?.parts?.filter(p => this.pabFilter(p, filter));
+        return parts?.filter(p => this.pabFilter(p, filter));
       case 'oos':
-        return partsList?.parts?.filter(p => p.lego?.inStock === false);
+        return parts?.filter(p => p.lego?.inStock === false);
       case 'brickLink':
-        return partsList?.parts?.filter(p => this.brickLinkFilter(p));
+        return parts?.filter(p => this.brickLinkFilter(p));
       case 'warning':
-        return partsList?.parts?.filter(p => {
+        return parts?.filter(p => {
           if (p.lego?.inStock === false) return true;
           if (p.lego && p.lego.maxOrderQuantity < p.qty) return true;
           return false;
         });
       default:
-        return partsList?.parts.slice();
+        return parts.slice();
     }
   }
 

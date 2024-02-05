@@ -70,7 +70,7 @@ export class PartsProductSuggestionsDetailComponent {
 
   onRemoveParts() {
     this.confirmationService.confirm({
-      message: 'Do you want to remove these parts form the current Parts List?',
+      message: 'Do you want to remove these parts from the current Parts List?',
       header: 'Delete Confirmation',
       icon: 'fa fa-circle-info',
       accept: () => {
