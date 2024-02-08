@@ -72,6 +72,8 @@
     url("./assets/fonts/roboto-v20-latin-ext_latin-700.woff2") format("woff2"),
     url("./assets/fonts/roboto-v20-latin-ext_latin-700.woff") format("woff");
 }
+
+@layer primeng {
 * {
   box-sizing: border-box;
 }
@@ -8929,4 +8931,5 @@ p-multiselect.ng-dirty.ng-invalid .p-multiselect:not(.p-disabled).p-focus {
 .p-splitbutton.p-button-danger.p-button-outlined
   > .p-button:not(button):not(a):not(.p-disabled):active {
   background: rgba(211, 47, 47, 0.16);
+}
 }

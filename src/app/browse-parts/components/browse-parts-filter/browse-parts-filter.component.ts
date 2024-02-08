@@ -9,6 +9,9 @@ import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-
 })
 export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
   keyword: string;
+  stateOptions: any[] = [{label: 'Off', value: 'off'}, {label: 'On', value: 'on'}];
+
+    value: string = 'off';
 
   sortOptions = [
     {

@@ -53,6 +53,9 @@
           optionLabel="name"
           optionValue="value"
           (onChange)="onDeliveryChannelsChange($event.value)"></p-selectButton>
+          <div class="card flex justify-content-center">
+            <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"></p-selectButton>
+        </div>
         <span>
           <p-overlayPanel #op>
             Shows parts that are no longer available in any set at the specified time.
@@ -62,7 +65,7 @@
             icon="fa fa-circle-info"
             label=""
             styleClass="p-button-text p-button-sm p-button-rounded info-button"
-            style="display: inline-flex"></p-button>
+            class="atRiskAsOfButton"></p-button>
           At risk as of:
           <p-calendar
             [(ngModel)]="atRiskAsOf"

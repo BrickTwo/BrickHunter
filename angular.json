@@ -44,7 +44,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "2mb"
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -83,10 +83,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "brickhunter-2_0:build:production"
+              "buildTarget": "brickhunter-2_0:build:production"
             },
             "development": {
-              "browserTarget": "brickhunter-2_0:build:development"
+              "buildTarget": "brickhunter-2_0:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,7 +94,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "brickhunter-2_0:build"
+            "buildTarget": "brickhunter-2_0:build"
           }
         },
         "test": {

@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @use './assets/theme/theme.css';
+//@import "../node_modules/primeng/resources/themes/lara-light-blue/theme.css";
 @use '../node_modules/primeng/resources/primeng.min.css';
 @use '../node_modules/primeflex/primeflex' with (
   $breakpoints: (
@@ -15,127 +16,129 @@
 @use '../node_modules/@fortawesome/fontawesome-free/css/solid.min.css';
 @use './assets/flags.css';
 
-body {
-  background-color: rgb(240, 240, 240);
-  font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
-}
+@layer primeng {
+  body {
+    background-color: rgb(240, 240, 240);
+    font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+  }
 
-.page-title-icon {
-  margin-right: 5px;
-}
+  .page-title-icon {
+    margin-right: 5px;
+  }
 
-h2 {
-  color: #444444;
-}
+  h2 {
+    color: #444444;
+  }
 
-// theme overrides
+  // theme overrides
 
-.pi {
-  font-family: 'Font Awesome 6 Free';
-  font-style: normal;
-}
+  .pi {
+    font-family: 'Font Awesome 6 Free';
+    font-style: normal;
+  }
 
-.pi-times:before {
-  content: '\f00d';
-}
+  .pi-times:before {
+    content: '\f00d';
+  }
 
-.pi-check:before {
-  content: '\f00c';
-}
+  .pi-check:before {
+    content: '\f00c';
+  }
 
-.pi-times-circle:before {
-  content: '\f057';
-}
+  .pi-times-circle:before {
+    content: '\f057';
+  }
 
-.pi-info-circle:before {
-  content: '\f05a';
-}
+  .pi-info-circle:before {
+    content: '\f05a';
+  }
 
-.pi-exclamation-triangle:before {
-  content: '\f071';
-}
+  .pi-exclamation-triangle:before {
+    content: '\f071';
+  }
 
-.pi-plus:before {
-  content: '\f067';
-}
+  .pi-plus:before {
+    content: '\f067';
+  }
 
-.pi-sort-alt:before {
-  content: '\f176';
-}
+  .pi-sort-alt:before {
+    content: '\f176';
+  }
 
-.pi-sort-alt:after {
-  content: '\f175';
-}
+  .pi-sort-alt:after {
+    content: '\f175';
+  }
 
-.pi-sort-amount-up-alt:before {
-  content: '\f885';
-}
+  .pi-sort-amount-up-alt:before {
+    content: '\f885';
+  }
 
-.pi-sort-amount-down:before {
-  content: '\f160';
-}
+  .pi-sort-amount-down:before {
+    content: '\f160';
+  }
 
-.pi-chevron-down:before {
-  content: '\f078';
-}
+  .pi-chevron-down:before {
+    content: '\f078';
+  }
 
-.pi-chevron-left:before {
-  content: '\f053';
-}
+  .pi-chevron-left:before {
+    content: '\f053';
+  }
 
-.pi-chevron-right:before {
-  content: '\f054';
-}
+  .pi-chevron-right:before {
+    content: '\f054';
+  }
 
-.pi-angle-right:before {
-  content: '\f105';
-}
+  .pi-angle-right:before {
+    content: '\f105';
+  }
 
-.pi-angle-left::before {
-  content: '\f104';
-}
+  .pi-angle-left::before {
+    content: '\f104';
+  }
 
-.pi-angle-double-right::before {
-  content: '\f101';
-}
+  .pi-angle-double-right::before {
+    content: '\f101';
+  }
 
-.pi-angle-double-left::before {
-  content: '\f100';
-}
+  .pi-angle-double-left::before {
+    content: '\f100';
+  }
 
-.pi-angle-up::before {
-  content: '\f106';
-}
+  .pi-angle-up::before {
+    content: '\f106';
+  }
 
-.pi-angle-down::before {
-  content: '\f107';
-}
+  .pi-angle-down::before {
+    content: '\f107';
+  }
 
-.p-datatable .p-sortable-column.p-highlight:hover {
-  background-color: black;
-}
+  .p-datatable .p-sortable-column.p-highlight:hover {
+    background-color: black;
+  }
 
-.p-datatable .p-sortable-column:not(.p-highlight):hover {
-  background-color: #f5f5f5;
-}
+  .p-datatable .p-sortable-column:not(.p-highlight):hover {
+    background-color: #f5f5f5;
+  }
 
-.p-datatable .p-sortable-column.p-highlight:hover {
-  background-color: #f5f5f5;
-}
+  .p-datatable .p-sortable-column.p-highlight:hover {
+    background-color: #f5f5f5;
+  }
 
-.p-datatable .p-datatable-tbody > tr {
-  background-color: #f5f5f5;
-}
+  .p-datatable .p-datatable-tbody > tr {
+    background-color: #f5f5f5;
+  }
 
-.p-datatable .p-sortable-column:focus {
-  background-color: #f5f5f5;
-}
+  .p-datatable .p-sortable-column:focus {
+    background-color: #f5f5f5;
+  }
 
-.p-datatable th {
-  z-index: 999;
-}
+  .p-datatable th {
+    z-index: 999;
+  }
 
-.p-datatable .p-datatable-tbody > tr > td {
-  padding-top: 2px;
-  padding-bottom: 2px;
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
 }
