@@ -10,7 +10,7 @@ import { TreeNode } from 'primeng/api';
 })
 export class BrowsePartsCategorySelectionComponent implements OnInit, OnDestroy {
   categories: TreeNode[];
-  selectedCategory: TreeNode<any>;
+  selectedCategory: TreeNode;
   categoriesSubscription: Subscription;
   filterSubscription: Subscription;
   configMode = false;

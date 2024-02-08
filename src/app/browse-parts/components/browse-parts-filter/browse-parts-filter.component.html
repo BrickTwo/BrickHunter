@@ -53,9 +53,6 @@
           optionLabel="name"
           optionValue="value"
           (onChange)="onDeliveryChannelsChange($event.value)"></p-selectButton>
-          <div class="card flex justify-content-center">
-            <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"></p-selectButton>
-        </div>
         <span>
           <p-overlayPanel #op>
             Shows parts that are no longer available in any set at the specified time.
