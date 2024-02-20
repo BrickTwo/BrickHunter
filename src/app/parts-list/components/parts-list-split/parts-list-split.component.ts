@@ -59,10 +59,10 @@ export class PartsListSplitComponent {
     this.display = false;
   }
 
-  async onSubmit() {
+  async onSplit() {
     let index = 1;
     this.newPartsLists.forEach(partsList => {
-      partsList.partsList.name = `${this.form.value.partsListName} ${index}`;
+      partsList.partsList.name = `${this.form.value.partsListName} split (${index})`;
       this.partsListService.addPartsList(partsList.partsList);
       index++;
     });
@@ -118,7 +118,13 @@ export class PartsListSplitComponent {
   }
 
   private calculateAmountOfCarts(deliveryType: string) {
-    const parts = this.partsListService.getParts(this.partsList.uuid, deliveryType);
+    let parts = this.partsListService.getParts(this.partsList.uuid, deliveryType).map(part => {
+      if(part.have > 0) {
+        part.qty = part.qty - part.have
+      }
+      return part;
+    }).filter(part => part.qty > 0);
+
     if (parts.length === 0) return 0;
     let expectedLots = parts.length;
     let listCount = 1;
