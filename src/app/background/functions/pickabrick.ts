@@ -25,7 +25,7 @@ export class PickABrick {
         }
 
         parts.push(...response.results);
-      } while (response.total > page * 500);
+      } while (response.total > page * 400);
       page = 0;
       iteration++;
     } while (elementIds.length > iteration * amountPerIteration);
@@ -40,7 +40,7 @@ export class PickABrick {
         input: {
           includeOutOfStock: true,
           page: page,
-          perPage: 500,
+          perPage: 400,
           query: elementIds.join(' '),
         },
       },
