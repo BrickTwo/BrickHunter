@@ -7,6 +7,7 @@ import { Part } from 'src/app/models/parts-list';
 import { ColorService } from 'src/app/core/services/color.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BrowsePartsPartDetailComponent } from '../browse-parts-part-detail/browse-parts-part-detail.component';
+import { LocaleService } from 'src/app/core/services/locale.service';
 
 @Component({
   selector: 'app-browse-parts-grid-item',
@@ -21,7 +22,8 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   partsListPart: Part;
   partsListUuidSubscription: Subscription;
   partsListsSubscription: Subscription;
-
+  language: string;
+  
   isInWishList = false;
   wishListSubscription: Subscription;
 
@@ -34,10 +36,14 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
     private readonly partsListService: PartsListService,
     private readonly browsePartsService: BrowsePartsService,
     private readonly colorService: ColorService,
-    private readonly dialogService: DialogService
+    private readonly dialogService: DialogService,
+    private readonly localeService: LocaleService
   ) {}
 
   ngOnInit(): void {
+    this.language =
+    this.localeService.languageCountryCode.substring(0, 2) === 'de' ? this.localeService.languageCountryCode : 'en';
+
     this.partsListPart = this.partsListService
       .getParts(this.browsePartsService.selectedPartsListUuid, 'all')
       ?.find(p => (p.color !== 9999 ? this.isElementId(p) : false));

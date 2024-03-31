@@ -55,7 +55,7 @@
             [class]="'flag flag-' + part.country.toLowerCase()"
             style="width: 18px" />
         </div>
-        <div>{{ part.priceAmount | currency : part.priceCurrency : 'symbol-narrow' }}</div>
+        <div>{{ part.priceAmount | currency : part.priceCurrency : 'symbol-narrow' : '1.2-2' : this.language }}</div>
       </div>
       <div style="overflow: hidden; cursor: pointer" (click)="onSetColorFilter(part.colorId)">
         <app-color [colorId]="part.colorId" [onlyMainColor]="true"></app-color>
