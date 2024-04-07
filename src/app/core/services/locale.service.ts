@@ -273,6 +273,12 @@ const initializeCountries: Country[] = [
     currency: 'EUR',
   },
   {
+    code: 'si',
+    text: 'Slovenia',
+    languages: [languageEN],
+    currency: 'EUR',
+  },
+  {
     code: 'us',
     text: 'United States',
     languages: [languageEN],
