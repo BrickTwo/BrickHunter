@@ -5,6 +5,7 @@ export interface ChangeElement {
   variables: {
     elements: ChangeElementItem[];
     cartType: PaBCartType;
+    returnCarts: string[];
   };
   query: string;
 }

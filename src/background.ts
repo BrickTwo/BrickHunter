@@ -23,7 +23,7 @@ chrome.runtime.onMessage.addListener((request: BackgroudnRequest, sender, sendRe
   switch (request.action) {
     case BackgroundRequestAction.FindBricks:
       const findBricksRequest = request as BackgroundFindBricksRequest;
-      PickABrick.finBricks(findBricksRequest.elementIds, findBricksRequest.locale).then(resp => sendResponse(resp));
+      PickABrick.findBricks(findBricksRequest.elementIds, findBricksRequest.locale).then(resp => sendResponse(resp));
       return true;
     case BackgroundRequestAction.AddElementToCart:
       const addElementRequest = request as BackgroundAddElementRequest;

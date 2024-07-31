@@ -69,21 +69,21 @@ export class PickABrickService {
 
         let parts: Part[] = partsList.parts.map(part => {
           if (!part.elementIds || part.elementIds.length === 0) return { ...part, lego: null };
-          const pab = results.find(result => part.elementIds?.find(e => e === Number(result.variant.id)));
+          const pab = results.find(result => part.elementIds?.find(e => e === Number(result.id)));
           if (!pab) return { ...part, lego: null };
 
           part.lego = {
-            elementId: Number(pab.variant.id),
-            designNumber: Number(pab.variant.attributes.designNumber),
+            elementId: Number(pab.id),
+            designNumber: Number(pab.designId),
             price: {
-              currencyCode: String(pab.variant.price.currencyCode),
-              amount: Number(pab.variant.price.centAmount) / 100,
+              currencyCode: String(pab.price.currencyCode),
+              amount: Number(pab.price.centAmount) / 100,
             },
-            colourId: Number(pab.variant.attributes.colourId),
-            deliveryChannel: String(pab.variant.attributes.deliveryChannel),
+            colourId: Number(pab.facets.color.key),
+            deliveryChannel: String(pab.deliveryChannel),
             inStock: Boolean(pab.inStock),
             maxOrderQuantity:
-              pab.variant.attributes.maxOrderQuantity > 0 ? pab.variant.attributes.maxOrderQuantity : 999,
+              pab.maxOrderQuantity > 0 ? pab.maxOrderQuantity : 999,
           };
 
           return part;

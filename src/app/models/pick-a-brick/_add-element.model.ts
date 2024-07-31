@@ -5,6 +5,7 @@ export interface AddElement {
   variables: {
     items: AddElementItem[];
     cartType: PaBCartType;
+    returnCarts: string[];
   };
   query: string;
 }

@@ -5,7 +5,7 @@ import { AddElement, AddElementItem, ChangeElement, ChangeElementItem, PaBCartTy
 const timeout = setTimeout(function () {}, 5000);
 
 export class PickABrick {
-  static async finBricks(elementIds: number[], locale: string) {
+  static async findBricks(elementIds: number[], locale: string) {
     const amountPerIteration = 900;
     let iteration = 0;
     let parts = [];
@@ -45,7 +45,7 @@ export class PickABrick {
         },
       },
       query:
-        'query PickABrickQuery($input: ElementQueryArgs) {\n  __typename\n  elements(input: $input) {\n    count\n    results {\n      ...ElementLeafData\n      __typename\n    }\n    total\n    __typename\n  }\n}\n\nfragment ElementLeafData on Element {\n  id\n  name\n  inStock\n  primaryImage\n  ... on SingleVariantElement {\n    variant {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  ... on MultiVariantElement {\n    variants {\n      ...ElementLeafVariant\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ElementLeafVariant on ElementVariant {\n  id\n  price {\n    currencyCode\n    centAmount\n    formattedAmount\n    __typename\n  }\n  attributes {\n    availabilityStatus\n    canAddToBag\n    colour\n	colourId\n    colourFamily\n    designNumber\n    mainGroup\n    materialGroup\n    materialType\n    maxOrderQuantity\n    showInListing\n    colourId\n    deliveryChannel\n    __typename\n  }\n  __typename\n}\n',
+        'query PickABrickQuery($input: ElementQueryInput!) {\n  searchElements(input: $input) {\n    results {\n      ...ElementLeaf\n    }\n    total\n    count\n  }\n}\n\nfragment ElementLeaf on SearchResultElement {\n  id\n  designId\n  name\n  imageUrl\n  maxOrderQuantity\n  deliveryChannel\n  price {\n    currencyCode\n    centAmount\n    formattedAmount\n    formattedValue\n  }\n  facets {\n    category {\n      ...ElementFacetCategory\n    }\n    subcategory {\n      ...ElementFacetCategory\n    }\n    color {\n      ...ElementFacetCategory\n    }\n    colorFamily {\n      ...ElementFacetCategory\n    }\n    system\n  }\n  inStock\n}\n\nfragment ElementFacetCategory on ElementCategory {\n  name\n  key\n}\n',
     };
 
     var url = 'https://www.lego.com/api/graphql/PickABrickQuery';
@@ -78,18 +78,19 @@ export class PickABrick {
       });
 
     if (response.status) return response;
-    return response.data.elements;
+    return response.data.searchElements;
   }
 
   static async addElementToCart(authorization: string, items: AddElementItem[], cartType: PaBCartType, locale: string) {
     var PickABrickQuery: AddElement = {
-      operationName: 'AddToElementCart',
+      operationName: 'ElementCartsAddToCart',
       variables: {
         items: items,
         cartType: cartType,
+        returnCarts: [],
       },
       query:
-        'mutation AddToElementCart($items: [ElementInput!]!, $cartType: CartType) {\n  addToElementCart(input: {items: $items, cartType: $cartType}) {\n    ...BrickCartData\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n}',
+        'mutation ElementCartsAddToCart($items: [ElementInput!]!, $cartType: CartType!, $returnCarts: [CartType!]!) {\n  elementCartsAddToCart(\n    input: {items: $items, cartType: $cartType, returnCarts: $returnCarts}\n  ) {\n    carts {\n      ...BrickCartData\n    }\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n}\n',
     };
 
     var url = 'https://www.lego.com/api/graphql/AddToElementCart';
@@ -127,13 +128,14 @@ export class PickABrick {
     locale: string
   ) {
     var PickABrickQuery: ChangeElement = {
-      operationName: 'ChangeElementLineItem',
+      operationName: 'ElementCartsChangeLineItemQuantity',
       variables: {
         elements: items,
         cartType: cartType,
+        returnCarts: []
       },
       query:
-        'mutation ChangeElementLineItem($cartType: CartType!, $elements: [ChangeElementQuantityLineItem!]) {\n  changeElementLineItemQuantity(\n    input: {cartType: $cartType, elements: $elements}\n  ) {\n    ...BrickCartData\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n}',
+        'mutation ElementCartsChangeLineItemQuantity($cartType: CartType!, $elements: [ElementLineItemInput!]!, $returnCarts: [CartType!]!) {\n  elementCartsChangeLineItemQuantity(\n    input: {cartType: $cartType, elements: $elements, returnCarts: $returnCarts}\n  ) {\n    carts {\n      ...BrickCartData\n    }\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n}\n',
     };
 
     var url = 'https://www.lego.com/api/graphql/ChangeElementLineItem';
