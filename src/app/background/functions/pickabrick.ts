@@ -178,7 +178,7 @@ export class PickABrick {
         query: '',
       },
       query:
-        'query ElementCartQuery($cartTypes: [CartType]) {\n  me {\n    ... on LegoUser {\n      elementCarts(types: $cartTypes) {\n        carts {\n          ...BrickCartData\n        }\n      }\n    }\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  id\n  lineItems {\n    ...LineItemData\n  }\n}\n\nfragment LineItemData on PABCartLineItem {\n  id\n  quantity\n  elementVariant {\n    id\n    attributes {\n      designNumber\n      deliveryChannel\n      maxOrderQuantity\n    }\n  }\n}',
+        'query ElementCartQuery($cartTypes: [CartType!]!) {\n  elementCarts(types: $cartTypes) {\n    carts {\n      ...ElementCartData\n      ...BrickCartData\n      __typename\n    }\n    ...CartsAmountData\n    __typename\n  }\n}\n\nfragment ElementCartData on ElementCart {\n  id\n  type\n  taxedPrice {\n    totalGross {\n      formattedAmount\n      formattedValue\n      currencyCode\n      __typename\n    }\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    formattedValue\n    currencyCode\n    __typename\n  }\n  subTotal {\n    formattedAmount\n    formattedValue\n    __typename\n  }\n  shippingMethod {\n    price {\n      formattedAmount\n      __typename\n    }\n    shippingRate {\n      formattedAmount\n      __typename\n    }\n    minimumFreeShippingAmount {\n      formattedAmount\n      formattedValue\n      __typename\n    }\n    isFree\n    __typename\n  }\n  __typename\n}\n\nfragment BrickCartData on BrickCart {\n  brickLineItems {\n    ...BrickLineItemData\n    __typename\n  }\n  __typename\n}\n\nfragment BrickLineItemData on BrickCartLineItemElement {\n  id\n  lineItemId\n  name\n  designId\n  imageUrl\n  maxOrderQuantity\n  deliveryChannel\n  price {\n    centAmount\n    currencyCode\n    formattedAmount\n    __typename\n  }\n  quantity\n  totalPrice {\n    formattedAmount\n    __typename\n  }\n  __typename\n}\n\nfragment CartsAmountData on ElementCarts {\n  id\n  orderFee {\n    formattedAmount\n    __typename\n  }\n  subtotal {\n    formattedAmount\n    __typename\n  }\n  totalPrice {\n    formattedAmount\n    __typename\n  }\n  zeroCurrency {\n    formattedAmount\n    __typename\n  }\n  __typename\n}',
     };
 
     var url = 'https://www.lego.com/api/graphql/ElementCartQuery';
@@ -208,7 +208,7 @@ export class PickABrick {
         }
 
         return {
-          success: response.data.me.elementCarts.carts as BackgroundReadCartResponse[],
+          success: response.data.elementCarts.carts as BackgroundReadCartResponse[],
         };
       })
       .catch(error => {

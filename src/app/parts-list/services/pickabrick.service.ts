@@ -220,7 +220,7 @@ export class PickABrickService {
 
   async addElementsToCart() {
     const partsToAdd = this.parts.filter(
-      part => !this.cart?.lineItems.some(item => part.lego.elementId === Number(item.elementVariant.id))
+      part => !this.cart?.lineItems?.some(item => part.lego.elementId === Number(item.elementVariant.id))
     );
 
     if (partsToAdd.length === 0) return;
@@ -258,7 +258,7 @@ export class PickABrickService {
 
   async changeElementsInCart() {
     const partsToChange = this.parts.filter(part =>
-      this.cart?.lineItems.some(item => part.lego.elementId === Number(item.elementVariant.id))
+      this.cart?.lineItems?.some(item => part.lego.elementId === Number(item.elementVariant.id))
     );
 
     if (partsToChange.length === 0) return;
@@ -332,7 +332,7 @@ export class PickABrickService {
     });
 
     const differenceAmount = cart?.lineItems?.filter(
-      item => !this.parts.some(p => p.lego.elementId === Number(item.elementVariant.id))
+      item => !this.parts?.some(p => p.lego.elementId === Number(item.elementVariant.id))
     ).length;
 
     let maxPaBLotPerOrderExceeded = false;
