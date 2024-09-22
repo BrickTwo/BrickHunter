@@ -220,7 +220,7 @@ export class PickABrickService {
 
   async addElementsToCart() {
     const partsToAdd = this.parts.filter(
-      part => !this.cart?.lineItems?.some(item => part.lego.elementId === Number(item.elementVariant.id))
+      part => !this.cart?.brickLineItems?.some(item => part.lego.elementId === Number(item.designId))
     );
 
     if (partsToAdd.length === 0) return;
@@ -258,13 +258,13 @@ export class PickABrickService {
 
   async changeElementsInCart() {
     const partsToChange = this.parts.filter(part =>
-      this.cart?.lineItems?.some(item => part.lego.elementId === Number(item.elementVariant.id))
+      this.cart?.brickLineItems?.some(item => part.lego.elementId === Number(item.designId))
     );
 
     if (partsToChange.length === 0) return;
 
     const items = partsToChange.map(part => {
-      const itemInCart = this.cart?.lineItems.find(item => Number(item.elementVariant.id) === part.lego.elementId);
+      const itemInCart = this.cart?.brickLineItems.find(item => Number(item.designId) === part.lego.elementId);
 
       let orderQuantity = Number(part.qty);
       if (this.gloablSettingsService.subtractHaveFromQuantity) orderQuantity -= part.have || 0;
@@ -312,7 +312,7 @@ export class PickABrickService {
     let partsWithWarning: { part: Part; cart: ReadCartItem | undefined }[] = [];
 
     let newParts = this.parts.flatMap(({ ...part }) => {
-      const inCart = cart?.lineItems?.find(li => Number(li.elementVariant.id) === part.lego.elementId);
+      const inCart = cart?.brickLineItems?.find(li => Number(li.designId) === part.lego.elementId);
 
       const maxPossibleQuantity = part.lego.maxOrderQuantity - (inCart ? inCart.quantity : 0);
       if (maxPossibleQuantity === 0) {
@@ -331,8 +331,8 @@ export class PickABrickService {
       return [part];
     });
 
-    const differenceAmount = cart?.lineItems?.filter(
-      item => !this.parts?.some(p => p.lego.elementId === Number(item.elementVariant.id))
+    const differenceAmount = cart?.brickLineItems?.filter(
+      item => !this.parts?.some(p => p.lego.elementId === Number(item.designId))
     ).length;
 
     let maxPaBLotPerOrderExceeded = false;
@@ -340,7 +340,7 @@ export class PickABrickService {
     if (this.parts.length + differenceAmount > this.gloablSettingsService.maxPaBLotPerOrder) {
       maxPaBLotPerOrderExceeded = true;
       for (let i = this.parts.length - 1; i >= 0; i--) {
-        if (cart?.lineItems?.find(item => Number(item.elementVariant.id) === newParts[i].elementId)) continue;
+        if (cart?.brickLineItems?.find(item => Number(item.designId) === newParts[i].elementId)) continue;
 
         const partWithWarning = partsWithWarning.find(
           item => item.part.lego.elementId === this.parts[i].lego.elementId
