@@ -118,9 +118,10 @@ export class PartsListSplitComponent {
   }
 
   private calculateAmountOfCarts(deliveryType: string) {
-    let parts = this.partsListService.getParts(this.partsList.uuid, deliveryType).map(part => {
+    let parts : Part[] = this.partsListService.getParts(this.partsList.uuid, deliveryType).map(part => {
       if(part.have > 0) {
         part.qty = part.qty - part.have
+        part.have = 0
       }
       return part;
     }).filter(part => part.qty > 0);
@@ -234,10 +235,6 @@ export class PartsListSplitComponent {
     const listsUsed = this.newPartsListSummary.map(pls => {
       return deliveryType === 'pab' ? pls.pab.lots : pls.bap.lots;
     }).filter(el => el > 0).length;
-
-    if(maxLists <= listsUsed) {
-    console.log(listsUsed, maxLists);
-    }
 
     const minPrice =
       deliveryType === 'pab'
