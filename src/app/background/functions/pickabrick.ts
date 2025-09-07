@@ -208,7 +208,7 @@ export class PickABrick {
         }
 
         return {
-          success: response.data.elementCarts.carts[0] as BackgroundReadCartResponse[],
+          success: (response.data.elementCarts.carts[0] ?? []) as BackgroundReadCartResponse[],
         };
       })
       .catch(error => {
