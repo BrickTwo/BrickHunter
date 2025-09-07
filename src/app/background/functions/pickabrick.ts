@@ -178,7 +178,7 @@ export class PickABrick {
         query: '',
       },
       query:
-        'query ElementCartQuery($cartTypes: [CartType!]!) {\n  elementCarts(types: $cartTypes) {\n    carts {\n      ...BrickCartData\n    }\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  brickLineItems {\n    ...BrickLineItemData\n  }\n}\n\nfragment BrickLineItemData on BrickCartLineItemElement {\n  id\n  lineItemId\n  designId\n  maxOrderQuantity\n  deliveryChannel\n  quantity\n}',
+        'query ElementCartQuery($cartTypes: [CartType!]!) {\n  elementCarts(types: $cartTypes) {\n    carts {\n      ...BrickCartData\n    }\n  }\n}\n\nfragment BrickCartData on BrickCart {\n  brickLineItems {\n    ...BrickLineItemData\n  }\n}\n\nfragment BrickLineItemData on BrickCartLineItemElement {\n  id\n  sku\n  designId\n  maxOrderQuantity\n  deliveryChannel\n  quantity\n}',
     };
 
     var url = 'https://www.lego.com/api/graphql/ElementCartQuery';
@@ -208,7 +208,7 @@ export class PickABrick {
         }
 
         return {
-          success: response.data.elementCarts.carts as BackgroundReadCartResponse[],
+          success: response.data.elementCarts.carts[0] as BackgroundReadCartResponse[],
         };
       })
       .catch(error => {

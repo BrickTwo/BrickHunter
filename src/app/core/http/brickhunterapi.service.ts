@@ -18,7 +18,7 @@ import { GetPickABrickPartsResponse } from 'src/app/models/brickhunter-api/_get-
 @Injectable()
 export class BrickHunterApiService {
   baseURL: string = 'https://api.bricktwo.net';
-  //baseURL: string = 'https://localhost:7141';
+  // baseURL: string = 'https://localhost:7141';
 
   constructor(private http: HttpClient) {}
 

@@ -1,13 +1,12 @@
 export interface BackgroundReadCartResponse {
-  id: string;
   brickLineItems: ReadCartItem[];
 }
 
 export interface ReadCartItem {
   id: string;
-  lineItemId: string;
+  sku: string;
   designId: string;
-  maxOrderQuantity: 0;
+  maxOrderQuantity: number;
   deliveryChannel: string;
   quantity: number;
 }
