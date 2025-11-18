@@ -38,14 +38,14 @@ export class PickABrick {
       operationName: 'PickABrickQuery',
       variables: {
         input: {
-          includeOutOfStock: true,
+          availability: ['AVAILABLE','OUT_OF_STOCK'],
           page: page,
           perPage: 400,
           query: elementIds.join(' '),
         },
       },
       query:
-        'query PickABrickQuery($input: ElementQueryInput!) {\n  searchElements(input: $input) {\n    results {\n      ...ElementLeaf\n    }\n    total\n    count\n  }\n}\n\nfragment ElementLeaf on SearchResultElement {\n  id\n  designId\n  name\n  imageUrl\n  maxOrderQuantity\n  deliveryChannel\n  price {\n    currencyCode\n    centAmount\n    formattedAmount\n    formattedValue\n  }\n  facets {\n    category {\n      ...ElementFacetCategory\n    }\n    subcategory {\n      ...ElementFacetCategory\n    }\n    color {\n      ...ElementFacetCategory\n    }\n    colorFamily {\n      ...ElementFacetCategory\n    }\n    system\n  }\n  inStock\n}\n\nfragment ElementFacetCategory on ElementCategory {\n  name\n  key\n}\n',
+        'query PickABrickQuery($input: ElementQueryInput!) {\n  searchElements(input: $input) {\n    results {\n      ...ElementLeaf\n    }\n    total\n    count\n  }\n}\n\nfragment ElementLeaf on SearchResultElement {\n  id\n  designId\n  name\n  imageUrl\n  maxOrderQuantity\n  deliveryChannel\n  price {\n    currencyCode\n    centAmount\n    formattedAmount\n    formattedValue\n  }\n  facets {\n    category {\n      ...ElementFacetCategory\n    }\n    subcategory {\n      ...ElementFacetCategory\n    }\n    color {\n      ...ElementFacetCategory\n    }\n    colorFamily {\n      ...ElementFacetCategory\n    }\n    system\n  }\n  availability\n}\n\nfragment ElementFacetCategory on ElementCategory {\n  name\n  key\n}\n',
     };
 
     var url = 'https://www.lego.com/api/graphql/PickABrickQuery';

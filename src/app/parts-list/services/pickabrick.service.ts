@@ -81,7 +81,7 @@ export class PickABrickService {
             },
             colourId: Number(pab.facets.color.key),
             deliveryChannel: String(pab.deliveryChannel),
-            inStock: Boolean(pab.inStock),
+            inStock: pab.availability === 'AVAILABLE' ? true : false,
             maxOrderQuantity:
               pab.maxOrderQuantity > 0 ? pab.maxOrderQuantity : 999,
           };
