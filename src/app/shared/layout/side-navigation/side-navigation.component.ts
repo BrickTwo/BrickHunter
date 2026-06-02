@@ -6,6 +6,7 @@ import {
   faClockRotateLeft,
   faBook,
   faGear,
+  faPenRuler,
 } from '@fortawesome/free-solid-svg-icons';
 import { VersionService } from 'src/app/core/services/version.service';
 
@@ -19,6 +20,7 @@ export class SideNavigationComponent {
   faList = faList;
   faClockRotateLeft = faClockRotateLeft;
   faGear = faGear;
+  faPenRuler = faPenRuler;
   faCircleInfo = faCircleInfo;
   faCircleQuestion = faCircleQuestion;
   currentVersion: string;

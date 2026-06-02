@@ -1,0 +1,45 @@
+<p-card header="Download BrickLink Studio Part Palette">
+  <div class="field">
+    <label for="country" class="block">Country</label>
+    <p-dropdown
+      id="country"
+      [options]="countries"
+      [(ngModel)]="selectedCountry"
+      placeholder="Select a Country"
+      appendTo="body"
+      autoWidth="false"
+      [style]="{ width: '100%' }">
+      <ng-template pTemplate="selectedItem">
+        <div class="flex align-items-center gap-2" *ngIf="selectedCountry">
+          <img
+            src="/assets/flag_placeholder.png"
+            [class]="'flag flag-' + selectedCountry?.code?.toLowerCase()"
+            style="width: 18px" />
+          <div>
+            {{ selectedCountry.text }}
+          </div>
+        </div>
+      </ng-template>
+      <ng-template let-country pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          <img
+            src="/assets/flag_placeholder.png"
+            [class]="'flag flag-' + country.code.toLowerCase()"
+            style="width: 18px" />
+          <div>{{ country.text }}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+    <div *ngFor="let deliveryChannel of deliveryChannelOptions" class="field-checkbox">
+      <p-checkbox 
+          [(ngModel)]="deliveryChannels"
+          [label]="deliveryChannel.name" 
+          name="deliveryChannels" 
+          [value]="deliveryChannel.value" />
+    </div>
+  </div>
+  <p-button (click)="onDownload()" label="Download" styleClass="p-button-solid"></p-button>
+  <div class="field">
+    https://studiohelp.bricklink.com/hc/en-us/articles/6483161921303-Importing-a-Wanted-List
+  </div>
+</p-card>

@@ -8,6 +8,7 @@ const routes: Routes = [
     loadChildren: () => import('./browse-parts/browse-parts.module').then(m => m.BrowsePartsModule),
   },
   { path: 'parts-lists', loadChildren: () => import('./parts-list/parts-list.module').then(m => m.PartsListsModule) },
+  { path: 'studio', loadChildren: () => import('./studio/studio.module').then(m => m.StudioModule) },
   { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
   { path: 'info', loadChildren: () => import('./info/info.module').then(m => m.InfoModule) },
 ];
