@@ -50,7 +50,8 @@ export async function configureComponentTestBed() {
       ConfirmationService, MessageService, ColorService, GlobalSettingsService, GuidService,
       LocaleService, AffiliateService,
       { provide: BrickHunterApiService, useValue: api },
-      { provide: VersionService, useValue: { currentVersion: '2.4.8', devmode: true, migration$: new Subject() } },
+      { provide: VersionService, useValue: { oldVersion: '2.4.8', currentVersion: '2.4.8', devmode: true,
+        migration$: new Subject(), isVersionGreater: VersionService.prototype.isVersionGreater } },
       { provide: IndexedDBService, useValue: {
         partsLists: { toArray: () => Promise.resolve(structuredClone(lists)),
           add: jasmine.createSpy('add'), put: jasmine.createSpy('put'), delete: jasmine.createSpy('delete') },

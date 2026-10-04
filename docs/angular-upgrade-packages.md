@@ -4,6 +4,8 @@ Abfrage: 4. Oktober 2026, offizielle npm-Registry. Alle 46 direkten Pakete aus p
 
 Die vollständigen Metadaten einschließlich optionaler Peers liegen lokal unter artefacts/angular-upgrade/baseline/package-audit.json. Reproduzierbare Abfrage: node scripts/upgrade/package-audit.cjs. Framework-Pakete werden pro Major zusammen aktualisiert; Engines werden mit der jeweiligen Zwischenruntime geprüft.
 
+Ergänzende Prüfung des neu geplanten Theme-Pakets am 4. Oktober 2026: [`@primeuix/themes` 3.0.1](https://registry.npmjs.org/@primeuix/themes/3.0.1) veröffentlicht weder Engines noch Peer-Abhängigkeiten und verlangt `@primeuix/styled: ^1.0.0`. Das Paket ist noch nicht installiert. Die aktuelle [PrimeNG-Installation](https://primeng.dev/installation) sieht die Einrichtung eines PrimeUI-Lizenzschlüssels vor; der Community-Schlüssel wird vor dem PrimeNG-22-Setup benötigt. Die frühe Angular-17-Patchmigration hängt davon nicht ab. Der tatsächlich gemessene Root-Font beträgt 16 px; das finale Theme muss anhand dieser Referenz gewählt und abgestimmt werden.
+
 | Paket | Gruppe | Lockfile | latest | Engines: Lockfile / latest | Peers von latest |
 | --- | --- | --- | --- | --- | --- |
 | @angular-builders/custom-webpack | dependencies | 17.0.0 | 22.0.1 | {"node":"^14.20.0 \|\| ^16.13.0 \|\| >=18.10.0"} / {"node":"^20.19.0 \|\| ^22.12.0 \|\| >=24.0.0"} | {"rxjs":">=7.0.0","@angular/compiler-cli":"^22.0.0"} |

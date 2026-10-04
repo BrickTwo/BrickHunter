@@ -68,6 +68,11 @@
                 "fonts": true
               }
             },
+            "visual-reference": {
+              "main": "src/testing/visual-main.ts",
+              "tsConfig": "src/testing/tsconfig.visual.json",
+              "outputPath": "artefacts/angular-upgrade/visual-app"
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,

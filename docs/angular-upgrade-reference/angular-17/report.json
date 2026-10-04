@@ -1,0 +1,3315 @@
+{
+  "label": "angular-17-reference",
+  "capturedAt": "2026-10-04T09:01:43.734Z",
+  "browser": "154.0.4258.53",
+  "zoom": "100%",
+  "deviceScaleFactor": 1,
+  "timezone": "Europe/Zurich",
+  "externalRequests": [
+    {
+      "url": "https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300121.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300122.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300123.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300124.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300125.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300126.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300127.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300128.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300121.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300122.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300123.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300124.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300125.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300126.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300127.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300128.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300121.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300122.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300123.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300124.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300125.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300126.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300127.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300128.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300121.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300122.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300123.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300124.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300125.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300126.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300127.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300128.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300121.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300122.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300123.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300124.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300125.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300126.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300128.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300127.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300121.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300122.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300123.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300124.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300125.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300126.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300127.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300128.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/assets/icons/icon128.png",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/assets/icons/icon128.png",
+      "type": "image"
+    },
+    {
+      "url": "https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300121.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300122.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300123.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300124.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300125.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300126.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300127.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300128.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/assets/icons/icon128.png",
+      "type": "image"
+    },
+    {
+      "url": "https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300121.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300122.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300123.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300124.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300125.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300126.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300127.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300128.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/assets/icons/icon128.png",
+      "type": "image"
+    },
+    {
+      "url": "https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300121.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300122.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300123.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300124.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300125.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300126.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300127.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/parts/pab/300128.jpg",
+      "type": "image"
+    },
+    {
+      "url": "https://brickhunter.blob.core.windows.net/assets/icons/icon128.png",
+      "type": "image"
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "knownConsoleErrors": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "url": "http://127.0.0.1:4317/?reference=2#/parts-lists/upgrade-reference",
+      "error": "ERROR RuntimeError: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'. Expression location: PartsTableComponent component. Find more at https://angular.io/errors/NG0100\n    at throwErrorIfNoChangesMode (http://127.0.0.1:4317/vendor.js:32484:9)\n    at bindingUpdated (http://127.0.0.1:4317/vendor.js:38002:9)\n    at Module.ɵɵproperty (http://127.0.0.1:4317/vendor.js:40755:7)\n    at PartsTableComponent_ng_template_5_Template (http://127.0.0.1:4317/src_app_parts-list_parts-list_module_ts.js:3050:61)\n    at executeTemplate (http://127.0.0.1:4317/vendor.js:32831:5)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34013:7)\n    at detectChangesInView (http://127.0.0.1:4317/vendor.js:34231:5)\n    at detectChangesInViewIfAttached (http://127.0.0.1:4317/vendor.js:34194:3)\n    at detectChangesInEmbeddedViews (http://127.0.0.1:4317/vendor.js:34152:7)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34036:5)"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "url": "http://127.0.0.1:4317/?reference=3#/parts-lists/upgrade-reference",
+      "error": "ERROR RuntimeError: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'. Expression location: PartsTableComponent component. Find more at https://angular.io/errors/NG0100\n    at throwErrorIfNoChangesMode (http://127.0.0.1:4317/vendor.js:32484:9)\n    at bindingUpdated (http://127.0.0.1:4317/vendor.js:38002:9)\n    at Module.ɵɵproperty (http://127.0.0.1:4317/vendor.js:40755:7)\n    at PartsTableComponent_ng_template_5_Template (http://127.0.0.1:4317/src_app_parts-list_parts-list_module_ts.js:3050:61)\n    at executeTemplate (http://127.0.0.1:4317/vendor.js:32831:5)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34013:7)\n    at detectChangesInView (http://127.0.0.1:4317/vendor.js:34231:5)\n    at detectChangesInViewIfAttached (http://127.0.0.1:4317/vendor.js:34194:3)\n    at detectChangesInEmbeddedViews (http://127.0.0.1:4317/vendor.js:34152:7)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34036:5)"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "url": "http://127.0.0.1:4317/?reference=4#/parts-lists/upgrade-reference",
+      "error": "ERROR RuntimeError: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'. Expression location: PartsTableComponent component. Find more at https://angular.io/errors/NG0100\n    at throwErrorIfNoChangesMode (http://127.0.0.1:4317/vendor.js:32484:9)\n    at bindingUpdated (http://127.0.0.1:4317/vendor.js:38002:9)\n    at Module.ɵɵproperty (http://127.0.0.1:4317/vendor.js:40755:7)\n    at PartsTableComponent_ng_template_5_Template (http://127.0.0.1:4317/src_app_parts-list_parts-list_module_ts.js:3050:61)\n    at executeTemplate (http://127.0.0.1:4317/vendor.js:32831:5)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34013:7)\n    at detectChangesInView (http://127.0.0.1:4317/vendor.js:34231:5)\n    at detectChangesInViewIfAttached (http://127.0.0.1:4317/vendor.js:34194:3)\n    at detectChangesInEmbeddedViews (http://127.0.0.1:4317/vendor.js:34152:7)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34036:5)"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "url": "http://127.0.0.1:4317/?reference=5#/parts-lists/upgrade-reference",
+      "error": "ERROR RuntimeError: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'. Expression location: PartsTableComponent component. Find more at https://angular.io/errors/NG0100\n    at throwErrorIfNoChangesMode (http://127.0.0.1:4317/vendor.js:32484:9)\n    at bindingUpdated (http://127.0.0.1:4317/vendor.js:38002:9)\n    at Module.ɵɵproperty (http://127.0.0.1:4317/vendor.js:40755:7)\n    at PartsTableComponent_ng_template_5_Template (http://127.0.0.1:4317/src_app_parts-list_parts-list_module_ts.js:3050:61)\n    at executeTemplate (http://127.0.0.1:4317/vendor.js:32831:5)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34013:7)\n    at detectChangesInView (http://127.0.0.1:4317/vendor.js:34231:5)\n    at detectChangesInViewIfAttached (http://127.0.0.1:4317/vendor.js:34194:3)\n    at detectChangesInEmbeddedViews (http://127.0.0.1:4317/vendor.js:34152:7)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34036:5)"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "url": "http://127.0.0.1:4317/?reference=6#/parts-lists/upgrade-reference",
+      "error": "ERROR RuntimeError: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'. Expression location: PartsTableComponent component. Find more at https://angular.io/errors/NG0100\n    at throwErrorIfNoChangesMode (http://127.0.0.1:4317/vendor.js:32484:9)\n    at bindingUpdated (http://127.0.0.1:4317/vendor.js:38002:9)\n    at Module.ɵɵproperty (http://127.0.0.1:4317/vendor.js:40755:7)\n    at PartsTableComponent_ng_template_5_Template (http://127.0.0.1:4317/src_app_parts-list_parts-list_module_ts.js:3050:61)\n    at executeTemplate (http://127.0.0.1:4317/vendor.js:32831:5)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34013:7)\n    at detectChangesInView (http://127.0.0.1:4317/vendor.js:34231:5)\n    at detectChangesInViewIfAttached (http://127.0.0.1:4317/vendor.js:34194:3)\n    at detectChangesInEmbeddedViews (http://127.0.0.1:4317/vendor.js:34152:7)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34036:5)"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "url": "http://127.0.0.1:4317/?reference=7#/parts-lists/upgrade-reference",
+      "error": "ERROR RuntimeError: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'. Expression location: PartsTableComponent component. Find more at https://angular.io/errors/NG0100\n    at throwErrorIfNoChangesMode (http://127.0.0.1:4317/vendor.js:32484:9)\n    at bindingUpdated (http://127.0.0.1:4317/vendor.js:38002:9)\n    at Module.ɵɵproperty (http://127.0.0.1:4317/vendor.js:40755:7)\n    at PartsTableComponent_ng_template_5_Template (http://127.0.0.1:4317/src_app_parts-list_parts-list_module_ts.js:3050:61)\n    at executeTemplate (http://127.0.0.1:4317/vendor.js:32831:5)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34013:7)\n    at detectChangesInView (http://127.0.0.1:4317/vendor.js:34231:5)\n    at detectChangesInViewIfAttached (http://127.0.0.1:4317/vendor.js:34194:3)\n    at detectChangesInEmbeddedViews (http://127.0.0.1:4317/vendor.js:34152:7)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34036:5)"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "url": "http://127.0.0.1:4317/?reference=2#/parts-lists/upgrade-reference",
+      "error": "ERROR RuntimeError: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'. Expression location: PartsTableComponent component. Find more at https://angular.io/errors/NG0100\n    at throwErrorIfNoChangesMode (http://127.0.0.1:4317/vendor.js:32484:9)\n    at bindingUpdated (http://127.0.0.1:4317/vendor.js:38002:9)\n    at Module.ɵɵproperty (http://127.0.0.1:4317/vendor.js:40755:7)\n    at PartsTableComponent_ng_template_5_Template (http://127.0.0.1:4317/src_app_parts-list_parts-list_module_ts.js:3050:61)\n    at executeTemplate (http://127.0.0.1:4317/vendor.js:32831:5)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34013:7)\n    at detectChangesInView (http://127.0.0.1:4317/vendor.js:34231:5)\n    at detectChangesInViewIfAttached (http://127.0.0.1:4317/vendor.js:34194:3)\n    at detectChangesInEmbeddedViews (http://127.0.0.1:4317/vendor.js:34152:7)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34036:5)"
+    },
+    {
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "url": "http://127.0.0.1:4317/?reference=2#/parts-lists/upgrade-reference",
+      "error": "ERROR RuntimeError: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'. Expression location: PartsTableComponent component. Find more at https://angular.io/errors/NG0100\n    at throwErrorIfNoChangesMode (http://127.0.0.1:4317/vendor.js:32484:9)\n    at bindingUpdated (http://127.0.0.1:4317/vendor.js:38002:9)\n    at Module.ɵɵproperty (http://127.0.0.1:4317/vendor.js:40755:7)\n    at PartsTableComponent_ng_template_5_Template (http://127.0.0.1:4317/src_app_parts-list_parts-list_module_ts.js:3050:61)\n    at executeTemplate (http://127.0.0.1:4317/vendor.js:32831:5)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34013:7)\n    at detectChangesInView (http://127.0.0.1:4317/vendor.js:34231:5)\n    at detectChangesInViewIfAttached (http://127.0.0.1:4317/vendor.js:34194:3)\n    at detectChangesInEmbeddedViews (http://127.0.0.1:4317/vendor.js:34152:7)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34036:5)"
+    },
+    {
+      "viewport": {
+        "width": 3200,
+        "height": 1440
+      },
+      "url": "http://127.0.0.1:4317/?reference=2#/parts-lists/upgrade-reference",
+      "error": "ERROR RuntimeError: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'. Expression location: PartsTableComponent component. Find more at https://angular.io/errors/NG0100\n    at throwErrorIfNoChangesMode (http://127.0.0.1:4317/vendor.js:32484:9)\n    at bindingUpdated (http://127.0.0.1:4317/vendor.js:38002:9)\n    at Module.ɵɵproperty (http://127.0.0.1:4317/vendor.js:40755:7)\n    at PartsTableComponent_ng_template_5_Template (http://127.0.0.1:4317/src_app_parts-list_parts-list_module_ts.js:3050:61)\n    at executeTemplate (http://127.0.0.1:4317/vendor.js:32831:5)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34013:7)\n    at detectChangesInView (http://127.0.0.1:4317/vendor.js:34231:5)\n    at detectChangesInViewIfAttached (http://127.0.0.1:4317/vendor.js:34194:3)\n    at detectChangesInEmbeddedViews (http://127.0.0.1:4317/vendor.js:34152:7)\n    at refreshView (http://127.0.0.1:4317/vendor.js:34036:5)"
+    }
+  ],
+  "scenarios": [
+    {
+      "file": "1440x1000-lists.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "lists",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 372.34375,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 344.4375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 101.890625,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 46.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-import-dialog.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "import-dialog",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 372.34375,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 344.4375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 101.890625,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(10, 52, 99, 0.76)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 46.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-table.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "table",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1384.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1356.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 318.5,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-success-message.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "success-message",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1384.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1356.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 318.5,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-table-loading-disabled.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "table-loading-disabled",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1384.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1356.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 318.5,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-table-inline-edit.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "table-inline-edit",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1384.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1356.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 318.5,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-table-selection.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "table-selection",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1384.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1356.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 318.5,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "list-settings",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1384.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1356.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 318.5,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(10, 52, 99, 0.12)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "export-dialog",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1384.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1356.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 318.5,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-transfer-progress.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "transfer-progress",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1384.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1356.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 318.5,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-dialog": {
+          "width": 720,
+          "height": 314,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "0px",
+          "boxShadow": "rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-transfer-warning.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "transfer-warning",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1384.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1356.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 318.5,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-dialog": {
+          "width": 720,
+          "height": 755.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "0px",
+          "boxShadow": "rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-delete-confirmation.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "delete-confirmation",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1384.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1356.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 318.5,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-dialog": {
+          "width": 720,
+          "height": 217.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "0px",
+          "boxShadow": "rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-empty-table.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "empty-table",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 680.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 652.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 318.5,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 1322,
+          "height": 24,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-settings.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "settings",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 431.8125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 403.90625,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-browse.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "browse",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1529.78125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1501.875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 252,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        "app-browse-parts-grid-item > div": {
+          "width": 196.390625,
+          "height": 320,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "4px",
+          "padding": "8px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-filter-hover.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "filter-hover",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1529.78125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1501.875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 252,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        "app-browse-parts-grid-item > div": {
+          "width": 196.390625,
+          "height": 320,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "4px",
+          "padding": "8px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-filter-focus.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "filter-focus",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1529.78125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1501.875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 252,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        "app-browse-parts-grid-item > div": {
+          "width": 196.390625,
+          "height": 320,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "4px",
+          "padding": "8px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-color-menu.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "color-menu",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 1529.78125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 1501.875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 252,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        "app-browse-parts-grid-item > div": {
+          "width": 196.390625,
+          "height": 320,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "4px",
+          "padding": "8px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-empty-search.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "empty-search",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 545.78125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 517.875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 252,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-large-search.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "large-search",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 65817.78125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 65789.875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 252,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        "app-browse-parts-grid-item > div": {
+          "width": 196.390625,
+          "height": 320,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "4px",
+          "padding": "8px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "1440x1000-large-search-scrolled.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "name": "large-search-scrolled",
+      "metrics": {
+        "html": {
+          "width": 1440,
+          "height": 66145.78125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 1424,
+          "height": 66117.875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 1354,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 252,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        "app-browse-parts-grid-item > div": {
+          "width": 196.390625,
+          "height": 320,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "4px",
+          "padding": "8px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1000,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "390x844-lists.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "name": "lists",
+      "metrics": {
+        "html": {
+          "width": 390,
+          "height": 372.34375,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 374,
+          "height": 344.4375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 304,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 101.890625,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 800,
+          "height": 46.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 844,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "390x844-import-dialog.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "name": "import-dialog",
+      "metrics": {
+        "html": {
+          "width": 390,
+          "height": 372.34375,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 374,
+          "height": 344.4375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 304,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 101.890625,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(10, 52, 99, 0.76)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 800,
+          "height": 46.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 844,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "390x844-table.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "name": "table",
+      "metrics": {
+        "html": {
+          "width": 390,
+          "height": 1291.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 374,
+          "height": 1263.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 304,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 64,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 856.296875,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 844,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "390x844-empty-table.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "name": "empty-table",
+      "metrics": {
+        "html": {
+          "width": 390,
+          "height": 790.875,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 374,
+          "height": 762.96875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 304,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 64,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 800,
+          "height": 24,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 844,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "390x844-settings.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "name": "settings",
+      "metrics": {
+        "html": {
+          "width": 390,
+          "height": 498.8125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 374,
+          "height": 470.90625,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 304,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 844,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "390x844-browse.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "name": "browse",
+      "metrics": {
+        "html": {
+          "width": 390,
+          "height": 4533.5,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 374,
+          "height": 4505.59375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 304,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 252,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        "app-browse-parts-grid-item > div": {
+          "width": 194.359375,
+          "height": 320,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "4px",
+          "padding": "8px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 844,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "2560x1440-lists.png",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "name": "lists",
+      "metrics": {
+        "html": {
+          "width": 2560,
+          "height": 372.34375,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 2544,
+          "height": 344.4375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 2474,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 101.890625,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 2442,
+          "height": 46.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "2560x1440-import-dialog.png",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "name": "import-dialog",
+      "metrics": {
+        "html": {
+          "width": 2560,
+          "height": 372.34375,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 2544,
+          "height": 344.4375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 2474,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 101.890625,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(10, 52, 99, 0.76)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 2442,
+          "height": 46.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "2560x1440-table.png",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "name": "table",
+      "metrics": {
+        "html": {
+          "width": 2560,
+          "height": 982.8125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 2544,
+          "height": 954.90625,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 2474,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 272,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 2122,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "2560x1440-empty-table.png",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "name": "empty-table",
+      "metrics": {
+        "html": {
+          "width": 2560,
+          "height": 933.9375,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 2544,
+          "height": 906.03125,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 2474,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 272,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 2122,
+          "height": 24,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "2560x1440-settings.png",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "name": "settings",
+      "metrics": {
+        "html": {
+          "width": 2560,
+          "height": 431.8125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 2544,
+          "height": 403.90625,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 2474,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "2560x1440-browse.png",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "name": "browse",
+      "metrics": {
+        "html": {
+          "width": 2560,
+          "height": 1201.78125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 2544,
+          "height": 1173.875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 2474,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 252,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        "app-browse-parts-grid-item > div": {
+          "width": 206.1875,
+          "height": 320,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "4px",
+          "padding": "8px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "3200x1440-lists.png",
+      "viewport": {
+        "width": 3200,
+        "height": 1440
+      },
+      "name": "lists",
+      "metrics": {
+        "html": {
+          "width": 3200,
+          "height": 372.34375,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 3184,
+          "height": 344.4375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 3114,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 101.890625,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 3082,
+          "height": 46.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "3200x1440-import-dialog.png",
+      "viewport": {
+        "width": 3200,
+        "height": 1440
+      },
+      "name": "import-dialog",
+      "metrics": {
+        "html": {
+          "width": 3200,
+          "height": 372.34375,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 3184,
+          "height": 344.4375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 3114,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 101.890625,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(10, 52, 99, 0.76)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 3082,
+          "height": 46.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "3200x1440-table.png",
+      "viewport": {
+        "width": 3200,
+        "height": 1440
+      },
+      "name": "table",
+      "metrics": {
+        "html": {
+          "width": 3200,
+          "height": 982.8125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 3184,
+          "height": 954.90625,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 3114,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 272,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 2762,
+          "height": 91,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "3200x1440-empty-table.png",
+      "viewport": {
+        "width": 3200,
+        "height": 1440
+      },
+      "name": "empty-table",
+      "metrics": {
+        "html": {
+          "width": 3200,
+          "height": 933.9375,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 3184,
+          "height": 906.03125,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 3114,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 272,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(10, 52, 99)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset"
+        },
+        ".p-datatable-tbody tr": {
+          "width": 2762,
+          "height": 24,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "3200x1440-settings.png",
+      "viewport": {
+        "width": 3200,
+        "height": 1440
+      },
+      "name": "settings",
+      "metrics": {
+        "html": {
+          "width": 3200,
+          "height": 431.8125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 3184,
+          "height": 403.90625,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 3114,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    },
+    {
+      "file": "3200x1440-browse.png",
+      "viewport": {
+        "width": 3200,
+        "height": 1440
+      },
+      "name": "browse",
+      "metrics": {
+        "html": {
+          "width": 3200,
+          "height": 873.78125,
+          "fontSize": "16px",
+          "fontFamily": "\"Times New Roman\"",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "body": {
+          "width": 3184,
+          "height": 845.875,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(0, 0, 0)",
+          "backgroundColor": "rgb(240, 240, 240)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        "h2": {
+          "width": 3114,
+          "height": 29,
+          "fontSize": "24px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(68, 68, 68)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "none"
+        },
+        ".p-button": {
+          "width": 252,
+          "height": 41.84375,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(10, 52, 99)",
+          "borderRadius": "4px",
+          "padding": "11.424px 16px",
+          "boxShadow": "none"
+        },
+        "app-browse-parts-grid-item > div": {
+          "width": 206,
+          "height": 320,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "4px",
+          "padding": "8px",
+          "boxShadow": "none"
+        },
+        ".p-sidebar": {
+          "width": 60,
+          "height": 1440,
+          "fontSize": "16px",
+          "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "boxShadow": "rgb(193, 193, 193) 5px 0px 8px 0px"
+        }
+      }
+    }
+  ],
+  "versions": {
+    "angular": "17.1.2",
+    "primeng": "17.5.0",
+    "playwright": "1.62.1"
+  }
+}

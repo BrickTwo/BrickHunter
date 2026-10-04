@@ -1,6 +1,6 @@
 import { BrowsePartsPart } from '../app/models/browse-parts';
 import { Color } from '../app/models/shared';
-import { PartsList } from '../app/models/parts-list';
+import { Part, PartsList } from '../app/models/parts-list';
 
 // Fixed, synthetic data; no account, API or extension profile is required.
 export const referenceColors: Color[] = [
@@ -36,4 +36,19 @@ export function referenceSearch(count = 2) {
     countries: [{ countryCode: 'de', lastUpdate: new Date('2024-01-01T12:00:00Z') }],
     page: { total: count, page: 1, limit: count || 25 },
   };
+}
+
+export function referenceTableParts(): Part[] {
+  return Array.from({ length: 8 }, (_, index) => ({
+    id: `reference-part-${index}`, externalId: '3001', color: index % 2 ? 1 : 4,
+    qty: index === 2 ? 120 : 10 + index, have: index === 1 ? 3 : 0,
+    itemType: 'P', maxPrice: 0.3, condition: 'N', notify: false,
+    remarks: 'Synthetische Upgrade-Referenz', designId: '3001', elementId: 300121 + index,
+    elementIds: [300121 + index], source: { source: 'Lego', id: '3001' },
+    rebrickable: { partNum: '3001', color: index % 2 ? 1 : 4, name: 'Brick 2 x 4',
+      imageUrl: null, partCatId: 1, yearFrom: 1958, yearTo: 2024, isPrint: false, externalIds: [] },
+    lego: { elementId: 300121 + index, designNumber: 3001, inStock: index !== 3,
+      price: { currencyCode: 'EUR', amount: 0.25 }, colourId: index % 2 ? 23 : 21,
+      deliveryChannel: index % 2 ? 'bap' : 'pab', maxOrderQuantity: 100 },
+  }));
 }

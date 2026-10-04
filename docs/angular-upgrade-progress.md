@@ -105,4 +105,46 @@ git add docs/angular-upgrade-plan.md docs/angular-upgrade-progress.md
 git commit -m "test: establish Angular upgrade regression baseline"
 ```
 
-Nach dem Commit folgen die noch fehlenden visuellen Ausgangsreferenzen einschließlich befüllter Tabellen und Interaktionszustände. Etappe 1 bleibt bis dahin offen. Anschließend folgt der neueste Angular-17-Patchstand mit eigenen Prüfungen und einem weiteren Commit-Punkt. Die Umsetzung hält hier auf Wunsch des Nutzers an.
+Dieser Testabschnitt wurde als `66d2d4d` gesichert. Auf Anweisung des Nutzers wurde mit den visuellen Ausgangsreferenzen fortgefahren. Die Ergebnisse stehen unten.
+
+## Commit-Punkt 3: Visuelle Ausgangsreferenz und befüllte Tabellen
+
+Stand: 4. Oktober 2026. Ausgangscommit dieses Abschnitts: `66d2d4d`. Angular 17.1.2 / PrimeNG 17.5.0 und alle Dependencies bleiben unverändert.
+
+Erfolgreich umgesetzt:
+
+- Eigenen Referenz-Einstieg `src/testing/visual-main.ts` und Build-Konfiguration `development,visual-reference` eingerichtet. `npm run build:visual-reference` erzeugt die Test-App unter `artefacts/angular-upgrade/visual-app`. Reguläre Builds verwenden weiterhin `src/main.ts`.
+- Synthetische Fixtures um acht befüllte Tabelleneinträge ergänzt: zwei Farben, Mengen und vorhandene Mengen, Bestseller/Standard, Out-of-Stock sowie Überschreitung der Bestellhöchstmenge.
+- Separates Screenshot-Skript `scripts/upgrade/capture-visual-reference.cjs` erstellt. Es startet einen localhost-Server, einen temporären Headless-Browserkontext und feste Szenarien; danach schließt es Browser und Server. API-/Datenbankdaten kommen aus Testdoubles. Externe Bildrequests werden mit festen Bildern beantwortet; andere externe Requests werden blockiert. Transfers werden im Referenz-Einstieg simuliert.
+- **39 Screenshots** bei 1440 × 1000, 390 × 844, 2560 × 1440 und 3200 × 1440 erstellt. Navigation, Suche/Filter, Farbmenü, Karten, Tabellen, Inline-Editing, Auswahl, Hover/Fokus, deaktivierte Zustände, Einstellungen, Import/Export, Bestätigung, Erfolgsmeldung, Transferfortschritt/-warnung und große/leere Listen sind enthalten. Interaktionsvarianten wurden am Desktop erfasst.
+- Die 39 PNGs aus zwei vollständigen Aufnahmeläufen über SHA-256 verglichen: **39 byteidentisch, 0 Abweichungen**. Die aufgenommenen Referenzen samt CSS-/Geometriemessungen und Prüfsummen liegen versionierbar in `docs/angular-upgrade-reference/angular-17/`; Details und Reproduktion in [Referenzdokumentation](angular-upgrade-reference/README.md).
+- Stichproben der Aufnahmen visuell geprüft: unter anderem Farbmenü, Tabelleneditor, Transferwarnung, mobile Teileansicht, breite Tabelle und große Liste nach Scrollen. Root-Schriftgröße ist **16 px**, Kartenhöhe **320 px**, Tabellenzeile **91 px**, Navigation **60 px**. Die Primärfarbe entspricht `#0a3463`.
+- Drei zusätzliche Tabellentests prüfen befüllte Zeilen/Warnungen, Aktualisierung der Liste über den echten Inline-Editor inklusive In-Memory-Persistenz und die Übergabe ausgewählter Teile an eine Kopieraktion. Gesamtsuite: **26 SUCCESS, Exitcode 0** mit Node 20.20.2 / Headless Edge 154.0.0.0.
+- Theme-Kandidat `@primeuix/themes` 3.0.1 anhand offizieller npm-Metadaten ergänzend geprüft: Dependency `@primeuix/styled ^1.0.0`, keine veröffentlichten Engines/Peers. Noch nicht installiert. PrimeNGs aktuelle Installationsdokumentation bestätigt das spätere Lizenzschlüssel-Setup.
+
+### Weitere bestehende Fehler und Grenzen der Referenz
+
+Der vollständige App-Lauf zeigt **9 NG0100-Meldungen** aus `PartsTableComponent`: Die nach dem View-Check ausgeführte Sichtbarkeitsberechnung verändert einen Templatewert von false auf true, wenn die Tabelle bereits mit Daten startet. Sie sind unter `knownConsoleErrors` dokumentiert. Es gab **0 unbehandelte Browserfehler und 0 andere Konsolenfehler**. Das Screenshot-Skript akzeptiert ausschließlich diesen konkret erfassten Ausgangsfehler; andere Fehler brechen den Lauf ab. Die Produktionskomponente wurde nicht geändert. Die Komponententests bilden asynchrones Laden ab (erst leere Ansicht, dann Daten).
+
+Die 390-px-Ansicht zeigt bereits horizontale Überbreite. Im Transferwarndialog ist die bestehende Mindestbreite der Tabelle größer als der Dialog. Diese Ausgangsprobleme werden mitgesichert. Die Screenshots belegen Darstellung mit synthetischen Daten; echte Browser-Extension-Kommunikation, Bestandsdatenmigration, PDF/XML und reale Teilebilder bleiben eigene Abnahmepunkte.
+
+Die fehlende Versionsvergleichsmethode im Versions-Testdouble wurde beim Gesamt-App-Lauf gefunden und ergänzt. Dafür wird die unveränderte Methode von `VersionService.prototype` verwendet, ohne den produktiven Konstruktor und dessen Legacy-Migration auszuführen.
+
+### Validierung und Artefakte
+
+Erfolgreiche Prüfbefehle: Referenzbuild, gesamte Karma-Suite, regulärer Produktions-/Entwicklungsbuild, Syntaxprüfung des Screenshot-Skripts, Anwendungstypprüfung und `git diff --check`. Produktionsausgabe `main.js`, `styles.css`, `polyfills.js`, `background.js`, `legocontentscript.js` und Manifest sind gegenüber dem ursprünglichen Produktions-Referenzbuild byteidentisch. Referenz-/Fixture-Code wurde in der Produktionsausgabe nicht gefunden. Budgetgrenzen bleiben unverändert; die bisherigen Warnungen bestehen weiter.
+
+Lokale Build-/Testlogs liegen unter `artefacts/angular-upgrade/test-baseline/`: `build-visual.log`, `visual-capture.log`, `tests-table.log`, `build-production-reference-check.log`, `build-development-reference-check.log` und `theme-metadata.json`. Reguläre Kontrollbuilds liegen unter `artefacts/angular-upgrade/visual-production-check/` und `visual-development-check/`. Fehlgeschlagene Aufnahmeläufe sind ausschließlich temporäre Artefakte, keine freigegebenen Referenzen.
+
+### Jetzt manuell: Zwischencommit
+
+Referenzwerkzeuge, Tests und die etwa 3 MB große Screenshot-Basis vor Paketänderungen sichern:
+
+```powershell
+git add angular.json package.json src/testing scripts/upgrade/capture-visual-reference.cjs
+git add src/app/parts-list/components/parts-table/parts-table.component.spec.ts
+git add docs/angular-upgrade-plan.md docs/angular-upgrade-progress.md docs/angular-upgrade-packages.md docs/angular-upgrade-reference
+git commit -m "test: capture reproducible Angular 17 visual baseline"
+```
+
+Nach dem Commit folgt der neueste Angular-17-Patchstand. Framework-/CLI-Migrationen werden angewendet und mit Builds, Tests und den gesicherten Referenzen geprüft; danach folgt ein eigener Commit-Punkt vor Angular/PrimeNG 18. Der Community-Schlüssel wird erst vor PrimeNG 22 benötigt; falls seine Einrichtung manuell erfolgen muss, wird der Nutzer dann benachrichtigt. Die Umsetzung hält hier auf Wunsch des Nutzers an.

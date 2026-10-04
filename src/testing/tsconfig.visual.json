@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.app.json",
+  "files": ["visual-main.ts", "../background.ts", "../lego-content-script.ts"],
+  "include": ["../**/*.d.ts"]
+}
