@@ -3,6 +3,7 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'dexie';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
+import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
 import { BrickHunterV1 } from 'src/app/models/brickhunter';
 import { BrickLinkWantedListItem } from 'src/app/models/bricklink';
 import { Part } from 'src/app/models/parts-list';
@@ -25,7 +26,7 @@ export class PartsListImportComponent implements OnDestroy {
   subscription$: Subscription;
 
   // @ViewChild('form', { static: false }) form: NgForm;
-  @ViewChild('fileUpload', { static: false }) fileUpload: any;
+  @ViewChild('fileUpload', { static: false }) fileUpload: FileUpload;
 
   form = new FormGroup({
     partsListName: new FormControl(),
@@ -58,8 +59,10 @@ export class PartsListImportComponent implements OnDestroy {
     this.onHide();
   }
 
-  onUpload(ee: any) {
-    const file: File = ee.files[0];
+  onUpload(event: FileSelectEvent) {
+    // onSelect also contains rejected input files; only read accepted selections.
+    const file = event.currentFiles[0];
+    if (!file) return;
     const fileName = file.name.split('.')[0];
 
     const fileReader = new FileReader();

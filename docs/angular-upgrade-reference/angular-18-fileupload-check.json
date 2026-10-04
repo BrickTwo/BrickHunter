@@ -1,0 +1,623 @@
+{
+  "stage": "Angular 18 FileUpload and Drawer geometry and mask alignment; full visual acceptance pending",
+  "startingCommit": "f7df1b9",
+  "angular": "18.2.14",
+  "primeng": "18.0.2",
+  "browser": "154.0.4258.53",
+  "screenshots": 39,
+  "byteIdentical": 0,
+  "pageErrors": 0,
+  "consoleErrors": 0,
+  "knownErrors": 0,
+  "tests": {
+    "total": 44,
+    "publicMenuWrapper": 10,
+    "localImportRegressionTests": 4,
+    "success": 44
+  },
+  "images": [
+    {
+      "file": "1440x1000-lists.png",
+      "baselineSha256": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca",
+      "currentSha256": "a3c218fa23932265d45d8bb37dc73bd7aff35155a9ebff2e067feeb5b7aaec80"
+    },
+    {
+      "file": "1440x1000-import-dialog.png",
+      "baselineSha256": "df949b788d1dcb125f1018505b4565f1c5d97252373bc73ccd970a0f777d4548",
+      "currentSha256": "6d40cd6d6bf9e2d7472653298077dae8313749fd229c40337f3c562bfcecfc63"
+    },
+    {
+      "file": "1440x1000-table.png",
+      "baselineSha256": "1fba567d71c355a096753665ae526e57d60f8614c2ae5f8864cfa8da629f13fe",
+      "currentSha256": "a7357be22215aecaf93bbce485e8412942fb417a8eb0af0cbd42259a5ac36ac8"
+    },
+    {
+      "file": "1440x1000-success-message.png",
+      "baselineSha256": "9a55cc2deaa9fe8432bd46b0fb43d6fc451e788f437c0355a310ab87f9aa636a",
+      "currentSha256": "c3d84cabfdc7729bb4ca1469ecec5a9507c6b1da1083933e77bbb7f414a80cf0"
+    },
+    {
+      "file": "1440x1000-table-loading-disabled.png",
+      "baselineSha256": "fdd38268cc9877af9156b9c12d7cb459a4f4fbfb1eb97e666973288a590a3550",
+      "currentSha256": "69b8f24cbd20ed524fc16de6feab4ee55e95d571e6568ca1e51d3ddc48ef195b"
+    },
+    {
+      "file": "1440x1000-table-inline-edit.png",
+      "baselineSha256": "602983fe139a13fffa811047dc7e2665eaa496f2eaf50c4fd60aec3b5ed4973b",
+      "currentSha256": "63e96c5e8106f7f40d960ec78f0e82050b9fdc8f94bff61950e37d5976f2ef16"
+    },
+    {
+      "file": "1440x1000-table-selection.png",
+      "baselineSha256": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325",
+      "currentSha256": "9a06225e73780dbc52ce9290c846148a655785907641d3b8d936a9f1f2f68729"
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "baselineSha256": "6c0ce8b12894a6cd5f552d0f7688d4f384fb289f4fb29780d681107ff6bc8445",
+      "currentSha256": "2c3588d32ab79db5ed95b0c963844e68ad5205e56018aaccfaa13c809989a859"
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "baselineSha256": "de7a5fef1ee65d8f3a3b1b2b3f4df492eff597aac04463476a83bcf58d5742a2",
+      "currentSha256": "1d66cc0936dfeb1e5ea7407c455e21cf2a4629835191c5e156c731fce9cfe78c"
+    },
+    {
+      "file": "1440x1000-transfer-progress.png",
+      "baselineSha256": "a0327d8420760b8e84484ddffdeca8a3dba07acb2764ef8bc7e6596bd0d56421",
+      "currentSha256": "ca7cc78adbd382204637553e11e01948c15062f46d77c1799589689544e61f52"
+    },
+    {
+      "file": "1440x1000-transfer-warning.png",
+      "baselineSha256": "31731f05874f484460240abcf45532c5bcb641866ca295e31f85ed44965f9c23",
+      "currentSha256": "ce554f39ee313ebc091ed66dfe6a3bf80062b2e5bcbafcb93c5c3e7750dd9af9"
+    },
+    {
+      "file": "1440x1000-delete-confirmation.png",
+      "baselineSha256": "4dc06aac4c8941689cdea61fd5be926d43bb6b38b171318beb0814522b29b779",
+      "currentSha256": "511ff0f47ff526af373ef8682f54b91821efd758e7557cbcab0bff0c8282c72a"
+    },
+    {
+      "file": "1440x1000-empty-table.png",
+      "baselineSha256": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e",
+      "currentSha256": "36e74e0f66b78501db1be3827058d002c9bf2a3b288f8763183470732abdc281"
+    },
+    {
+      "file": "1440x1000-settings.png",
+      "baselineSha256": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726",
+      "currentSha256": "37c247f6fc47594a573545aa1cf810aecc2d073455190c19a0dc1a24c75c2fa7"
+    },
+    {
+      "file": "1440x1000-browse.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "cf843b06e000c4480354453e7e5707dd7babc7f82ce8a448552b15449032f7fd"
+    },
+    {
+      "file": "1440x1000-filter-hover.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "daf9b24fbf0af95a0218fc0d1e7c35cb9d2866e1d7e6cce4308ad315533c06a7"
+    },
+    {
+      "file": "1440x1000-filter-focus.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "daf9b24fbf0af95a0218fc0d1e7c35cb9d2866e1d7e6cce4308ad315533c06a7"
+    },
+    {
+      "file": "1440x1000-color-menu.png",
+      "baselineSha256": "2a6fd447f668e8fe973f2125fa5c710f1ee5c4b670705de9ca86e4d7cef0adc5",
+      "currentSha256": "78fbf17634217a55e3f0b0f349d4aa251e61e810691f75b49969413808534a13"
+    },
+    {
+      "file": "1440x1000-empty-search.png",
+      "baselineSha256": "19385cb4107fa2141de7037d79eba06de66355f410f08061981c08b2e97fd354",
+      "currentSha256": "f9288e34f6dbaf648970b28228a255159fb683bbb05888b214396394db9f5d6d"
+    },
+    {
+      "file": "1440x1000-large-search.png",
+      "baselineSha256": "915eabe4d98c5a4a2c44c65684ce487d735e25d73e9906037fd0c4a4a5bf63eb",
+      "currentSha256": "40519eb38b22efd43f64f415ec8512713a02f7919d6dd8fcb91343586ad57429"
+    },
+    {
+      "file": "1440x1000-large-search-scrolled.png",
+      "baselineSha256": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb",
+      "currentSha256": "b89faff55b0c46cb1b22ed550806eac5e36e23eefd98022df882800232625425"
+    },
+    {
+      "file": "390x844-lists.png",
+      "baselineSha256": "4f52f34d250550ee1a32c37c8aa003f39022768ab811de84fc9e2ef1678fc4c6",
+      "currentSha256": "beb9403467b7678c930ae7db77b7e7892575a21c413fc38fd727eda99e6d9648"
+    },
+    {
+      "file": "390x844-import-dialog.png",
+      "baselineSha256": "6f8dc0eb5e33b9269adc02ed62708b59a3c8851aeb87816f112e72b5fa2fa05c",
+      "currentSha256": "665e14fd0c82b0578c5d825f7d402464044604513db459b7a69f9739a05724ac"
+    },
+    {
+      "file": "390x844-table.png",
+      "baselineSha256": "525be948636a7fd23d83939daa566f055a99094d149b542d64a24d738778a3a4",
+      "currentSha256": "1b31959d8e615bc594d570e43da2f4078ce33c9102e0b2699c542acb389f48d9"
+    },
+    {
+      "file": "390x844-empty-table.png",
+      "baselineSha256": "76160d69839acf2a83b701ad34b9355cefa527ca033a5a9fbf73b187664e1c2e",
+      "currentSha256": "5bfbdf30e12615bd34cde56f6e00b529faf9b67319177ef39ad51d9a0515c798"
+    },
+    {
+      "file": "390x844-settings.png",
+      "baselineSha256": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719",
+      "currentSha256": "fa7a28699d5ad3dbe8fbeaa93ff4ad58ff7e9c8cfba6015aee06af4cb5a27d2a"
+    },
+    {
+      "file": "390x844-browse.png",
+      "baselineSha256": "b19a1ea429919cb7030850594de63008ace6390f37c3326fa383917bdaf89ea7",
+      "currentSha256": "a04525bf124b2257031f6182d429e82c3a94c455966da2c57e11ec2213b82897"
+    },
+    {
+      "file": "2560x1440-lists.png",
+      "baselineSha256": "8fef4acc75550e7c4b3b1563ac8b8950d63e10f6d98d6eac226ba2261e8c65a5",
+      "currentSha256": "0cbae709bd28d1a9c46f87207845e98c34eb21b2c2cf11c4efb604ae64bdd17a"
+    },
+    {
+      "file": "2560x1440-import-dialog.png",
+      "baselineSha256": "4b558e5f1ad65de965245420fca15fefd3cc083205cbcc23dbf9772c91bffc95",
+      "currentSha256": "84470b27e5922e33e94c51717344f947fd5ce62026b04a9354df7aa279722582"
+    },
+    {
+      "file": "2560x1440-table.png",
+      "baselineSha256": "9d0448f7dd1d90d6871b521c2e868dda4d17d57105fde8ea86bbcdcd6fe2cb19",
+      "currentSha256": "1226fa16e0ba0ed6dfb8d43714fb0ad8b490a17b18cabae1504ec9561294f644"
+    },
+    {
+      "file": "2560x1440-empty-table.png",
+      "baselineSha256": "fb206cdf3fa3e4cdfaeabab3486d13260f425f048cc80dc5330cb81a4f6d9fe9",
+      "currentSha256": "f7020517b52ac350b8f8878b7bde9d2c3a7d5dbcf5743d35cd9a7f8679f8e438"
+    },
+    {
+      "file": "2560x1440-settings.png",
+      "baselineSha256": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4",
+      "currentSha256": "f3bacfc46d20dd9e97cd5ed6c4d3f251a183850a0f653bfc09e0722ca1b68151"
+    },
+    {
+      "file": "2560x1440-browse.png",
+      "baselineSha256": "fd1445ea80927fb9bde3a42352bac72f128c8fd2fe75dc7a70a10c8f256d7fc9",
+      "currentSha256": "2250601fe1bf7fab86be9a5ca482f07d9e816c2ea8f1b5d7e0ba906141bf6204"
+    },
+    {
+      "file": "3200x1440-lists.png",
+      "baselineSha256": "db1d513274b920f9eea5fdf1eddaf22408c0492d54e07ce660a1637c8484f7b3",
+      "currentSha256": "00d0695dc3c94641260ef12ba394591b9c3ee17afb246333dd3a6ac52db2dcc5"
+    },
+    {
+      "file": "3200x1440-import-dialog.png",
+      "baselineSha256": "1da658b9739f4aa9079c15236b21c1786dcbcae41a975446ae8e164e830e9186",
+      "currentSha256": "571ddd90b30a91228954b59a1aad4a2b445d24b4296bd4e473483bb9589f8b08"
+    },
+    {
+      "file": "3200x1440-table.png",
+      "baselineSha256": "ce9425beb28b804451a5b0b8fc06dd4b77d7ffd9ff9bdab8dd224775cfc08806",
+      "currentSha256": "c5dea5e99db41d70f3192b081554b6743728ae213abb16f2ffdac00944e35a65"
+    },
+    {
+      "file": "3200x1440-empty-table.png",
+      "baselineSha256": "c9cc38d70cb0c8715e738bf14477ca90a50f19675b67231d3e80b64d600d5019",
+      "currentSha256": "e33be3175484172ddeee0cc7574311fabbe7e16703605a28eb461f08fc86eb5a"
+    },
+    {
+      "file": "3200x1440-settings.png",
+      "baselineSha256": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33",
+      "currentSha256": "3631b0a558cdda32c0c900a1b23c81c357efb77b5a512c7dda610e640eb8afc8"
+    },
+    {
+      "file": "3200x1440-browse.png",
+      "baselineSha256": "373f583e6fa6095ce98ac069fa27b4e7159c990e62698148c54c717866263d1d",
+      "currentSha256": "5ec5191abdc4fce04f87e4f417defb67cefc064521589dadc6f857cd2964e979"
+    }
+  ],
+  "referenceMeasurements": {
+    "button": {
+      "before": {
+        "width": 252,
+        "height": 41.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgb(255, 255, 255)",
+        "backgroundColor": "rgb(10, 52, 99)",
+        "borderRadius": "4px",
+        "padding": "11.424px 16px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 252,
+        "height": 41.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgb(255, 255, 255)",
+        "backgroundColor": "rgb(10, 52, 99)",
+        "borderRadius": "4px",
+        "padding": "11.424px 16px",
+        "boxShadow": "none"
+      }
+    },
+    "card": {
+      "before": {
+        "width": 196.390625,
+        "height": 320,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "8px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 196.390625,
+        "height": 320,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "8px",
+        "boxShadow": "none"
+      }
+    },
+    "partRow": {
+      "before": {
+        "width": 1322,
+        "height": 91,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 1322,
+        "height": 91,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none"
+      }
+    },
+    "navigationWidth": {
+      "before": 60,
+      "after": 60
+    },
+    "cardContent": {
+      "width": 252,
+      "height": 220.84375,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "16px 0px",
+      "boxShadow": "none"
+    },
+    "tag": {
+      "width": 71.046875,
+      "height": 22,
+      "fontSize": "12px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(33, 37, 41)",
+      "backgroundColor": "rgb(251, 192, 45)",
+      "borderRadius": "4px",
+      "padding": "4px 6.4px",
+      "boxShadow": "none"
+    },
+    "inputGroup": {
+      "width": 503,
+      "height": 53,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none"
+    }
+  },
+  "extensionOutputs": {
+    "production": {
+      "requiredFilesPresent": true,
+      "manifestUnchanged": true,
+      "standaloneExtensionEntries": true,
+      "fixtureAndPrototypeMarkersAbsent": true
+    },
+    "development": {
+      "requiredFilesPresent": true,
+      "manifestUnchanged": true,
+      "standaloneExtensionEntries": true,
+      "fixtureAndPrototypeMarkersAbsent": true
+    }
+  },
+  "pending": [
+    "Pixel capture repeatability and small raster differences",
+    "Full public menu hover, focus and disabled visual acceptance",
+    "Remaining overlay/toast and selected-file visual state details",
+    "Remaining icons, select details and complete state comparison"
+  ],
+  "interactionChecks": {
+    "categorySelection": true,
+    "onlyPrintedToggle": true,
+    "deliveryChannelSelection": true,
+    "paginatorPageSelection": true,
+    "publicColorMenuSelection": true,
+    "publicListBulkMenuCommand": true,
+    "publicPartsBulkMenuCommand": true,
+    "importFileChooserJson": true,
+    "importCancelAndCloseReset": true,
+    "importXmlDrop": true
+  },
+  "currentControlMeasurements": {
+    ".p-tree-node-content": {
+      "width": 252,
+      "height": 35,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(10, 52, 99)",
+      "backgroundColor": "rgba(10, 52, 99, 0.12)",
+      "borderRadius": "4px",
+      "padding": "8px",
+      "boxShadow": "none"
+    },
+    ".p-togglebutton": {
+      "width": 105.484375,
+      "height": 43.84375,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgb(224, 224, 225)",
+      "borderRadius": "4px 0px 0px 4px",
+      "padding": "11.424px 16px",
+      "boxShadow": "none"
+    },
+    ".p-toggleswitch-slider": {
+      "width": 44,
+      "height": 16,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0.38)",
+      "borderRadius": "8px",
+      "padding": "0px",
+      "boxShadow": "none"
+    },
+    ".p-checkbox-box": {
+      "width": 18,
+      "height": 18,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgb(255, 255, 255)",
+      "borderRadius": "2px",
+      "padding": "0px",
+      "boxShadow": "none"
+    },
+    ".p-paginator-page": {
+      "width": 48,
+      "height": 48,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(10, 52, 99)",
+      "backgroundColor": "rgba(10, 52, 99, 0.12)",
+      "borderRadius": "50%",
+      "padding": "0px",
+      "boxShadow": "none"
+    }
+  },
+  "migratedComponents": {
+    "fileUploadGeometryAligned": true,
+    "drawerHeaderGeometryAligned": true,
+    "drawerMaskAnimationsAligned": true,
+    "rejectedSelectionsIgnored": true
+  },
+  "overlayMeasurements": {
+    "warningDialog": {
+      "before": {
+        "width": 720,
+        "height": 755.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgb(0, 0, 0)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "4px",
+        "padding": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px"
+      },
+      "after": {
+        "width": 720,
+        "height": 755.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px"
+      }
+    },
+    "warningMessage": {
+      "width": 672,
+      "height": 78,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(127, 96, 3)",
+      "backgroundColor": "rgb(255, 236, 179)",
+      "borderRadius": "4px",
+      "padding": "0px",
+      "boxShadow": "none"
+    },
+    "tab": {
+      "width": 87.140625,
+      "height": 52,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(10, 52, 99)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "4px 4px 0px 0px",
+      "padding": "16px 24px",
+      "boxShadow": "none"
+    }
+  },
+  "menuMeasurements": {
+    ".bh-menu-panel": {
+      "width": 200,
+      "height": 64,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgb(255, 255, 255)",
+      "borderRadius": "4px",
+      "padding": "0px",
+      "boxShadow": "rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px"
+    },
+    ".bh-menu-panel .p-menu-item-link": {
+      "width": 200,
+      "height": 48,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "16px",
+      "boxShadow": "none"
+    },
+    ".bh-menu-swatch": {
+      "width": 13,
+      "height": 13,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgb(201, 26, 9)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none"
+    }
+  },
+  "previousCheckpointComparison": {
+    "directory": "artefacts/angular-upgrade/visual/angular-18-public-menu-verified",
+    "byteIdentical": 0,
+    "changedImages": [
+      "1440x1000-lists.png",
+      "1440x1000-import-dialog.png",
+      "1440x1000-table.png",
+      "1440x1000-success-message.png",
+      "1440x1000-table-loading-disabled.png",
+      "1440x1000-table-inline-edit.png",
+      "1440x1000-table-selection.png",
+      "1440x1000-list-settings.png",
+      "1440x1000-export-dialog.png",
+      "1440x1000-transfer-progress.png",
+      "1440x1000-transfer-warning.png",
+      "1440x1000-delete-confirmation.png",
+      "1440x1000-empty-table.png",
+      "1440x1000-settings.png",
+      "1440x1000-browse.png",
+      "1440x1000-filter-hover.png",
+      "1440x1000-filter-focus.png",
+      "1440x1000-color-menu.png",
+      "1440x1000-empty-search.png",
+      "1440x1000-large-search.png",
+      "1440x1000-large-search-scrolled.png",
+      "390x844-lists.png",
+      "390x844-import-dialog.png",
+      "390x844-table.png",
+      "390x844-empty-table.png",
+      "390x844-settings.png",
+      "390x844-browse.png",
+      "2560x1440-lists.png",
+      "2560x1440-import-dialog.png",
+      "2560x1440-table.png",
+      "2560x1440-empty-table.png",
+      "2560x1440-settings.png",
+      "2560x1440-browse.png",
+      "3200x1440-lists.png",
+      "3200x1440-import-dialog.png",
+      "3200x1440-table.png",
+      "3200x1440-empty-table.png",
+      "3200x1440-settings.png",
+      "3200x1440-browse.png"
+    ]
+  },
+  "importMeasurements": {
+    ".p-drawer-mask": {
+      "width": 1440,
+      "height": 1000,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(226, 232, 240)",
+      "backgroundColor": "rgba(0, 0, 0, 0.32)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none"
+    },
+    ".p-fileupload-header": {
+      "width": 666,
+      "height": 92.84375,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "16px",
+      "boxShadow": "none"
+    },
+    ".p-fileupload-content": {
+      "width": 666,
+      "height": 65,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "32px 16px",
+      "boxShadow": "none"
+    },
+    "app-parts-list-import textarea": {
+      "width": 668,
+      "height": 156,
+      "fontSize": "13.3333px",
+      "fontFamily": "monospace",
+      "color": "rgb(0, 0, 0)",
+      "backgroundColor": "rgb(255, 255, 255)",
+      "borderRadius": "0px",
+      "padding": "2px",
+      "boxShadow": "none"
+    },
+    ".p-fileupload-choose-button": {
+      "width": 108.390625,
+      "height": 41.84375,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgb(10, 52, 99)",
+      "borderRadius": "4px",
+      "padding": "11.424px 16px",
+      "boxShadow": "none"
+    }
+  },
+  "additionalScreenshots": [
+    {
+      "file": "1440x1000-import-selected-json.png",
+      "sha256": "f45cbdf1a6aeaf30a359e169be10966ea9aacd8593065b3f050cb2171dd6cc1e"
+    },
+    {
+      "file": "1440x1000-import-dropped-xml.png",
+      "sha256": "58136005be8228df5b4444fdb00c33062d26d8249a06d0aad0f59c1b0468a1df"
+    }
+  ],
+  "pixelCaptureRepeatability": {
+    "diagnosticDirectory": "artefacts/angular-upgrade/visual/angular-18-fileupload-final",
+    "repeatedDesktopScreenshots": 21,
+    "byteIdentical": 0,
+    "acceptedAsReference": false,
+    "investigationPending": true
+  }
+}

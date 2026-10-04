@@ -96,7 +96,9 @@ async function main() {
             '.p-card-content', '.p-tag', '.p-inputgroup', '.p-inputgroupaddon', '.p-datatable-thead tr',
             '.p-tree-node-content', '.p-togglebutton', '.p-toggleswitch-slider', '.p-checkbox-box', '.p-paginator-page',
             '.p-tab', '.p-message', '.p-dialog-header', '.p-dialog-footer',
-            '.bh-menu-panel', '.bh-menu-panel .p-menu-item-link', '.bh-menu-swatch'];
+            '.bh-menu-panel', '.bh-menu-panel .p-menu-item-link', '.bh-menu-swatch',
+            '.p-drawer-mask', '.p-drawer-header', '.p-fileupload-header', '.p-fileupload-content',
+            'app-parts-list-import textarea', '.p-fileupload-choose-button'];
           const values = {};
           for (const selector of selectors) {
             const element = document.querySelector(selector);
@@ -212,6 +214,32 @@ async function main() {
         await page.locator('.bh-menu-panel .p-menu-item-link').filter({ hasText: /^Copy to$/ }).click();
         await page.locator('app-parts-list-copy-or-move-to .p-drawer').waitFor();
         report.interactionChecks.publicPartsBulkMenuCommand = true;
+        await open('parts-lists');
+        await page.getByRole('button', { name: 'Import', exact: true }).click();
+        const importDrawer = page.locator('app-parts-list-import .p-drawer');
+        const [chooser] = await Promise.all([
+          page.waitForEvent('filechooser'),
+          importDrawer.locator('button.p-fileupload-choose-button').click(),
+        ]);
+        await chooser.setFiles({ name: 'list.json', mimeType: 'application/json', buffer: Buffer.from('{"name":"Browser JSON","parts":[]}') });
+        await page.waitForFunction(() => document.querySelector('app-parts-list-import #partsListName')?.value === 'Browser JSON');
+        await page.screenshot({ path: path.join(output, '1440x1000-import-selected-json.png'), animations: 'disabled' });
+        await importDrawer.getByRole('button', { name: 'Cancel', exact: true }).click();
+        if (await importDrawer.locator('.p-fileupload-file').count()) throw new Error('Cancel did not clear the file selection');
+        await importDrawer.locator('.p-drawer-header button').click();
+        await page.getByRole('button', { name: 'Import', exact: true }).click();
+        if (await importDrawer.locator('textarea').inputValue() !== '') throw new Error('Import form was not reset on close');
+        await importDrawer.locator('.p-fileupload-content').evaluate(element => {
+          const transfer = new DataTransfer();
+          transfer.items.add(new File(['<INVENTORY><ITEM><ITEMID>3001</ITEMID><ITEMTYPE>P</ITEMTYPE><COLOR>5</COLOR><MINQTY>3</MINQTY></ITEM></INVENTORY>'], 'wanted.xml', { type: 'text/xml' }));
+          element.dispatchEvent(new DragEvent('drop', { dataTransfer: transfer, bubbles: true, cancelable: true }));
+        });
+        await page.waitForFunction(() => document.querySelector('app-parts-list-import #partsListName')?.value === 'wanted');
+        await page.screenshot({ path: path.join(output, '1440x1000-import-dropped-xml.png'), animations: 'disabled' });
+        report.additionalScreenshots = ['1440x1000-import-selected-json.png', '1440x1000-import-dropped-xml.png'];
+        report.interactionChecks.importFileChooserJson = true;
+        report.interactionChecks.importCancelAndCloseReset = true;
+        report.interactionChecks.importXmlDrop = true;
       }
       await context.close();
     }

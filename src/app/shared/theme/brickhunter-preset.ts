@@ -157,7 +157,19 @@ export const BrickHunterPreset = definePreset(Material, {
       css: `
         .p-drawer { border: 0; }
         .p-drawer-header:has(.p-button) { justify-content: flex-end; }
-        .p-drawer .p-drawer-header .p-button { min-width: 0; width: 2rem; height: 2rem; padding: 0; }
+        .p-drawer .p-drawer-header .p-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
+      `,
+    },
+    fileupload: {
+      root: { borderColor: '#e0e0e0', borderRadius: '4px' },
+      header: { padding: '1rem', gap: '0' },
+      content: { padding: '2rem 1rem', gap: '0' },
+      css: `
+        .p-fileupload-header { display: block; }
+        .p-fileupload-header .p-button { margin-right: 0.5rem; }
+        .p-fileupload-header .p-button svg { width: 0.875rem; height: 0.875rem; }
+        .p-fileupload-header .p-button:disabled { opacity: 0.38; }
+        .p-fileupload-content { border: 0; border-top: 1px solid #e0e0e0; position: relative; }
       `,
     },
   },

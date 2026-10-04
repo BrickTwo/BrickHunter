@@ -1,4 +1,4 @@
-<p-drawer [maskStyle]="{ backgroundColor: 'rgba(0, 0, 0, 0.32)' }" [appendTo]="null" [(visible)]="display" position="right">
+<p-drawer [appendTo]="null" [(visible)]="display" position="right">
   <h2 *ngIf="action === 'copy'">Copy to</h2>
   <h2 *ngIf="action === 'move'">Move to</h2>
   <form (ngSubmit)="onCreatePartsList(form)" #form="ngForm">

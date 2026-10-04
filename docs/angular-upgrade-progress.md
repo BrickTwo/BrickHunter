@@ -419,3 +419,39 @@ git commit -m "refactor: use public PrimeNG menu for filters and bulk actions"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+## Commit-Punkt 11: FileUpload und Drawer-Geometrie/-Maske
+
+Ausgangspunkt: Commit **`f7df1b9`**, der den produktiven Menü-Wrapper (Commit-Punkt 10) sichert. Paketversionen und Lockfile bleiben unverändert auf Angular **18.2.14** / PrimeNG **18.0.2**.
+
+### Erfolgreich umgesetzt
+
+- FileUpload-Preset an die Ausgangsdarstellung angeglichen: Hinweis wieder unter den Buttons, Header-Padding **16 px**, Dropbereich-Padding **32 px / 16 px**, Trennlinie, Icongröße und Disabled-Transparenz. Gemessener Choose-Button **108.390625 × 41.84375 px**, Upload-Header **92.84375 px** und leerer Dropbereich **65 px** hoch. Die Desktop-Aufnahme zeigt Überschrift, Upload-Bereich, Textarea, Namensfeld und Importbutton wieder an den Referenzpositionen.
+- Drawer-Schließen-Buttons von 32 auf die ursprünglichen **40 × 40 px** und die bisherige graue Farbe korrigiert; dadurch stimmen die vertikalen Inhaltsabstände der modalen Drawer wieder. Die Navigation ohne Schließen-Button bleibt von dieser Regel ausgenommen.
+- Maskenfarbe **rgba(0, 0, 0, 0.32)** einschließlich Ein-/Ausblendanimation wiederhergestellt. PrimeNG **18.0.2** schreibt `maskStyle` über `setAttribute` direkt auf die Maske, wodurch die zuvor verwendeten Objekt-Bindings wirkungslos waren; zusätzlich überschreiben fest eingebaute Keyframes die Hintergrundfarbe mit 0.4. Die sechs Bindings sind entfernt. Begrenzte Regeln für `.p-drawer-mask` und eigene Masken-Keyframes liegen bewusst außerhalb der Theme-Layer, passend zur ungeschichteten Hersteller-Struktur-CSS. Im Browserabschlusslauf ist die tatsächliche Maskenfarbe **0.32** gemessen; andere Overlay-Arten erhalten diese Regeln nicht.
+- FileUpload-ViewChild und Auswahlereignis auf die öffentlichen Typen **FileUpload / FileSelectEvent** umgestellt. `onSelect` liefert neben akzeptierten auch abgewiesene Dateien; die lokale Verarbeitung liest jetzt nur `currentFiles` und lässt das Formular bei einer vollständig abgewiesenen Auswahl unverändert. XML-/JSON-Verarbeitung und der bisherige Unterschied zwischen Cancel (Dateiauswahl leeren) und Drawer-Schließen (Formular zurücksetzen) bleiben erhalten.
+- Vier neue Regressionstests prüfen echte Input-Dateiauswahl mit XML-Konvertierung, JSON-Drag-and-drop, abgewiesene Dateitypen sowie Cancel und Schließen. Die Tests warten ausdrücklich auf FileReader; Angulars Stabilitätsprüfung allein wartet darauf nicht.
+- Browserprüfung erweitert: echter Dateidialog über Choose mit JSON-Datei, Cancel/Schließen/Wiederöffnen und XML-Drop. Zwei zusätzliche PNGs zeigen ausgewählte Dateien und die befüllten Formulare; die ursprünglichen 39 Referenzszenarien bleiben erhalten. Die exakte Namenssuche nach Choose musste im Diagnose-Lauf auf den eindeutigen FileUpload-Button geändert werden, weil PrimeNGs SVG-Icon den zugänglichen Namen ergänzt. Der tatsächliche Dateidialog öffnet im Abschlusslauf erfolgreich.
+
+API-Grundlage: [PrimeNG 18 FileUpload](https://v18.primeng.org/fileupload). Maskenimplementierung, DOM und Style-Reihenfolge wurden anhand der installierten PrimeNG-18-Quellen geprüft.
+
+### Validierung und verbleibende Arbeit
+
+- **44 Tests erfolgreich** mit Headless Edge, Exitcode 0; Anwendungstypprüfung und `git diff --check` erfolgreich.
+- Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang **2.33 MB**, unter der unveränderten 3-MB-Fehlergrenze; bisherige Budget-/CommonJS-Warnungen bestehen fort.
+- Reguläre Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden; Chrome-Manifest byteidentisch zur Quelle; standalone Extension-Einstiege ohne `webpackChunk`-Verweise; keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Abschlusslauf: **39 Referenzszenarien plus zwei zusätzliche Datei-Aufnahmen**, alle **zehn Browser-Interaktionsprüfungen** erfolgreich; **0 Konsolenfehler / 0 unbehandelte Browserfehler / 0 bekannte NG0100-Meldungen** in diesen kontrollierten Szenarien. Import-Desktop, schmale Ansicht und die ausgewählte JSON-Datei wurden zusätzlich visuell angesehen. Die schon in der Referenz abgeschnittene schmale 700-px-Drawer-Darstellung bleibt dokumentiert.
+- Weiterhin **0/39 byteidentische Referenzbilder**. Auch die 21 wiederholt aufgenommenen Desktop-Bilder zwischen Diagnose- und Abschlusslauf sind nicht byteidentisch; eine Pixelanalyse zeigt bei der normalen Listenübersicht überwiegend kleine Raster-/Schattenunterschiede. Deren Ursache und die Wiederholbarkeit der Pixelaufnahme sind vor der vollständigen visuellen Abnahme zu klären. Das wird nicht als neue Referenz akzeptiert.
+- Buttonhöhe **41.84375 px**, Karten **196.390625 × 320 px / 8 px Padding**, Tabellenzeilen **91 px** und Navigation **60 px** bleiben erhalten. Messwerte, Prüfsummen, Zusatzaufnahmen und Output-/Interaktionsprüfungen: [angular-18-fileupload-check.json](angular-upgrade-reference/angular-18-fileupload-check.json).
+
+Noch offen: Toasts, übrige Select-/Icon-/Button-Details und vollständiger Hover-/Fokus-/Disabled-Abgleich, Menü- und Overlay-Abnahme einschließlich ausgewählter FileUpload-Zustände sowie die Wiederholbarkeit der Pixelaufnahme. Echte Import-Service-/Datenbank-End-to-End-Abnahme gehört weiterhin zu den späteren Integrationsprüfungen; dieser Abschnitt prüft Dateilesen, Konvertierung und Formularbindung. **Angular 19 bleibt bis zur vollständigen Abnahme auf Version 18 zurückgestellt.**
+
+Logs: `artefacts/angular-upgrade/angular-18/fileupload-*.log`; abschließend geprüfte Outputs: `artefacts/angular-upgrade/angular-18/fileupload-final/{production,development}/`; abschließende Bilder: `artefacts/angular-upgrade/visual/angular-18-fileupload-verified/`. `angular-18-fileupload-final/` und die `debug-*`-Aufnahmen sind Diagnose-Zwischenstände, keine Referenzbasis.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: restore FileUpload and drawer geometry on PrimeNG 18"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
