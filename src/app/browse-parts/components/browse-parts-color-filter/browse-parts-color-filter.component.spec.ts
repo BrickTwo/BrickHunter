@@ -50,4 +50,21 @@ describe('BrowsePartsColorFilterComponent', () => {
     expect(component.red).toEqual([]);
     expect(component.blue).toEqual([]);
   });
+
+  it('opens an asynchronously populated public menu and applies its color command', async () => {
+    const browse = TestBed.inject(BrowsePartsService);
+    const api = TestBed.inject(BrickHunterApiService) as jasmine.SpyObj<BrickHunterApiService>;
+    browse.sendRequest();
+    fixture.detectChanges(); // Bind the initially empty model before color lookup resolves.
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const buttons: HTMLButtonElement[] = Array.from(fixture.nativeElement.querySelectorAll('button'));
+    buttons.find(button => button.style.backgroundColor === 'rgb(220, 53, 69)').click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const link = fixture.nativeElement.querySelector('.p-menu-item-link');
+    expect(link.textContent).toContain('Red');
+    link.click();
+    expect(api.getPickABrickParts.calls.mostRecent().args[0].colorIds).toEqual([4]);
+  });
 });

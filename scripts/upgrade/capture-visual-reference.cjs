@@ -95,7 +95,8 @@ async function main() {
             'app-browse-parts-grid-item > div', '.p-dialog', '.p-sidebar, .p-drawer',
             '.p-card-content', '.p-tag', '.p-inputgroup', '.p-inputgroupaddon', '.p-datatable-thead tr',
             '.p-tree-node-content', '.p-togglebutton', '.p-toggleswitch-slider', '.p-checkbox-box', '.p-paginator-page',
-            '.p-tab', '.p-message', '.p-dialog-header', '.p-dialog-footer'];
+            '.p-tab', '.p-message', '.p-dialog-header', '.p-dialog-footer',
+            '.bh-menu-panel', '.bh-menu-panel .p-menu-item-link', '.bh-menu-swatch'];
           const values = {};
           for (const selector of selectors) {
             const element = document.querySelector(selector);
@@ -172,6 +173,8 @@ async function main() {
           buttons.find(button => button.style.backgroundColor === 'rgb(220, 53, 69)').click();
         });
         await capture('color-menu');
+        await page.locator('.bh-menu-panel .p-menu-item-link').filter({ hasText: 'Red' }).click();
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-browse-parts-color-filter')).browsePartsService.filter.colorId === 4);
         await open('browse-parts');
         await page.evaluate(() => window.brickHunterReference.setSearchCount(0));
         await capture('empty-search');
@@ -196,6 +199,19 @@ async function main() {
         await page.locator('.p-paginator-page').filter({ hasText: /^\s*2\s*$/ }).first().click();
         await page.waitForFunction(() => document.querySelector('.p-paginator-page-selected')?.textContent.trim() === '2');
         report.interactionChecks = { categorySelection: true, onlyPrintedToggle: true, deliveryChannelSelection: true, paginatorPageSelection: true };
+        report.interactionChecks.publicColorMenuSelection = true;
+        await open('parts-lists');
+        await page.locator('.p-datatable-tbody .p-checkbox').first().click();
+        await page.locator('.p-datatable-thead button').first().click();
+        await page.locator('.bh-menu-panel .p-menu-item-link').filter({ hasText: /^Delete$/ }).click();
+        await page.getByRole('alertdialog').filter({ hasText: 'Do you want to delete the selected Parts Lists?' }).waitFor();
+        report.interactionChecks.publicListBulkMenuCommand = true;
+        await open('parts-lists/upgrade-reference');
+        await page.locator('app-parts-table .p-datatable-tbody .p-checkbox').first().click();
+        await page.locator('app-parts-table .p-datatable-thead button').first().click();
+        await page.locator('.bh-menu-panel .p-menu-item-link').filter({ hasText: /^Copy to$/ }).click();
+        await page.locator('app-parts-list-copy-or-move-to .p-drawer').waitFor();
+        report.interactionChecks.publicPartsBulkMenuCommand = true;
       }
       await context.close();
     }

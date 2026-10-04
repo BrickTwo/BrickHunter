@@ -1,180 +1,226 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { configureComponentTestBed } from 'src/testing/component-test-bed';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { providePrimeNG } from 'primeng/config';
+import { BrickHunterPreset } from '../../theme/brickhunter-preset';
 import { MenuComponent } from './menu.component';
 
-describe('BrickHunter menu regression reference', () => {
+describe('BrickHunter public menu wrapper', () => {
   let fixture: ComponentFixture<MenuComponent>;
-  let menu: MenuComponent;
   let command: jasmine.Spy;
 
   beforeEach(async () => {
-    await configureComponentTestBed();
+    await TestBed.configureTestingModule({
+      imports: [MenuComponent, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+      providers: [providePrimeNG({ theme: { preset: BrickHunterPreset, options: { darkModeSelector: false } } })],
+    }).compileComponents();
     fixture = TestBed.createComponent(MenuComponent);
-    menu = fixture.componentInstance;
     command = jasmine.createSpy('command');
-    menu.model = [
+    fixture.componentRef.setInput('model', [
       { label: 'Red', swatch: { rgb: '#C91A09' }, command },
       { label: 'Disabled', disabled: true, command },
       { label: 'Hidden', visible: false, command },
+      { separator: true },
       { label: 'Last', badge: '2', command },
-    ];
-    fixture.detectChanges();
-  });
-
-  it('renders template color labels, badges and hidden states', () => {
-    expect(fixture.nativeElement.querySelector('.p-menuitem-text').textContent.trim()).toBe('Red');
-    expect(fixture.nativeElement.querySelector('.bh-menu-swatch').style.backgroundColor).toBe('rgb(201, 26, 9)');
-    expect(fixture.nativeElement.querySelector('.p-menuitem-badge').textContent).toBe('2');
-    expect(fixture.nativeElement.querySelectorAll('.p-hidden').length).toBe(1);
-  });
-
-  it('renders label markup as text without creating HTML or style elements', () => {
-    fixture.componentRef.setInput('model', [{ label: '<style>body { display: none; }</style><b>Red</b>', escape: false }]);
-    fixture.detectChanges();
-    const label = fixture.nativeElement.querySelector('.p-menuitem-text');
-    expect(label.textContent).toContain('<b>Red</b>');
-    expect(label.querySelector('b, style')).toBeNull();
-  });
-
-  it('skips disabled, hidden and separator entries in both keyboard directions', () => {
-    fixture.componentRef.setInput('model', [menu.model[0], menu.model[1], { separator: true }, menu.model[2], menu.model[3]]);
-    fixture.detectChanges();
-    const links = fixture.nativeElement.querySelectorAll('[role="menuitem"]');
-    links[0].focus();
-    links[0].dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowDown', bubbles: true }));
-    expect(document.activeElement).toBe(links[3]);
-    links[3].dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowUp', bubbles: true }));
-    expect(document.activeElement).toBe(links[0]);
-    links[0].dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowUp', bubbles: true }));
-    expect(document.activeElement).toBe(links[0]);
-  });
-
-  it('prevents Enter and Space from running disabled or hidden commands', () => {
-    const links = fixture.nativeElement.querySelectorAll('[role="menuitem"]');
-    for (const code of ['Enter', 'Space']) {
-      links[1].dispatchEvent(new KeyboardEvent('keydown', { code, bubbles: true }));
-      links[2].dispatchEvent(new KeyboardEvent('keydown', { code, bubbles: true }));
-    }
-    expect(command).not.toHaveBeenCalled();
-    links[0].dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter', bubbles: true }));
-    expect(command).toHaveBeenCalledTimes(1);
-    expect(links[1].getAttribute('aria-disabled')).toBe('true');
-  });
-
-  it('keeps group labels, icons, badges and router links while skipping hidden groups', () => {
-    fixture.componentRef.setInput('model', [
-      { label: 'Colors', items: [menu.model[0]] },
-      { label: 'Hidden group', visible: false, items: [{ label: 'Hidden child' }] },
-      { label: 'Actions', items: [{ label: 'Lists', icon: 'fa fa-list', badge: '2', routerLink: '/parts-list' }] },
     ]);
     fixture.detectChanges();
-    const links = fixture.nativeElement.querySelectorAll('[role="menuitem"]');
-    expect(fixture.nativeElement.querySelector('.p-submenu-header').textContent).toContain('Colors');
-    expect(links[2].getAttribute('href')).toBe('/parts-list');
-    expect(links[2].querySelector('.p-menuitem-icon').classList.contains('fa-list')).toBeTrue();
-    expect(links[2].querySelector('.p-menuitem-badge').textContent).toBe('2');
-    links[0].focus();
-    links[0].dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowDown', bubbles: true }));
-    expect(document.activeElement).toBe(links[2]);
+    await fixture.whenStable();
   });
 
-  it('closes a popup with Escape and returns focus to its trigger', async () => {
+  const key = (element: HTMLElement, code: string) =>
+    element.dispatchEvent(new KeyboardEvent('keydown', { code, bubbles: true }));
+
+  it('renders structured swatches and badges and executes one enabled command', () => {
+    const first = fixture.nativeElement.querySelector('.p-menu-item-link');
+    expect(first.querySelector('.bh-menu-swatch').style.backgroundColor).toBe('rgb(201, 26, 9)');
+    expect(fixture.nativeElement.querySelector('.bh-menu-badge').textContent).toBe('2');
+    first.click();
+    expect(command).toHaveBeenCalledTimes(1);
+    fixture.nativeElement.querySelectorAll('.p-menu-item-link')[1].click();
+    expect(command).toHaveBeenCalledTimes(1);
+  });
+
+  it('uses public keyboard navigation without activating disabled, hidden or separator entries', () => {
+    const list = fixture.nativeElement.querySelector('[role="menu"]');
+    list.focus();
+    key(list, 'ArrowDown');
+    key(list, 'ArrowDown');
+    fixture.detectChanges();
+    const active = fixture.nativeElement.querySelector('.p-menu-item.p-focus');
+    expect(active.textContent).toContain('Last');
+    key(list, 'Enter');
+    expect(command).toHaveBeenCalledTimes(1);
+    expect(command.calls.mostRecent().args[0].item.label).toBe('Last');
+    key(list, 'ArrowUp');
+    key(list, 'Space');
+    expect(command).toHaveBeenCalledTimes(2);
+    expect(command.calls.mostRecent().args[0].item.label).toBe('Red');
+  });
+
+  it('keeps grouped safe text, router links and icons while removing hidden groups', () => {
+    fixture.componentRef.setInput('model', [
+      { label: '<b>Colors</b>', items: [{ label: '<style>Red</style>', escape: false }] },
+      { label: 'Hidden group', visible: false, items: [{ label: 'Hidden child' }] },
+      { label: 'Actions', items: [{ label: 'Lists', icon: 'fa fa-list', routerLink: '/parts-list' }] },
+    ]);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('<b>Colors</b>');
+    expect(fixture.nativeElement.textContent).toContain('<style>Red</style>');
+    expect(fixture.nativeElement.textContent).not.toContain('Hidden child');
+    expect(fixture.nativeElement.querySelector('b, style')).toBeNull();
+    expect(fixture.nativeElement.querySelectorAll('a')[1].getAttribute('href')).toBe('/parts-list');
+    expect(fixture.nativeElement.querySelector('.fa-list')).not.toBeNull();
+  });
+
+  it('renders untrusted item labels as text and preserves link metadata', () => {
+    fixture.componentRef.setInput('model', [
+      {
+        label: '<b>Red</b>',
+        escape: false,
+        url: 'https://example.com/',
+        target: '_blank',
+        title: 'Color details',
+        automationId: 'red',
+        icon: 'fa fa-list',
+        iconClass: 'extra-icon',
+        iconStyle: { color: 'red' },
+      },
+    ]);
+    fixture.detectChanges();
+    const link = fixture.nativeElement.querySelector('a');
+    expect(link.textContent).toContain('<b>Red</b>');
+    expect(link.querySelector('b')).toBeNull();
+    expect(link.getAttribute('href')).toBe('https://example.com/');
+    expect(link.getAttribute('target')).toBe('_blank');
+    expect(link.getAttribute('title')).toBe('Color details');
+    expect(link.getAttribute('data-automationid')).toBe('red');
+    expect(link.querySelector('.extra-icon').style.color).toBe('red');
+  });
+
+  it('does not mutate the source model when filtering hidden children and replacing it', () => {
+    const child = { label: 'Hidden child', visible: false };
+    const source = [{ label: 'Colors', items: [child, { label: 'Red' }] }];
+    fixture.componentRef.setInput('model', source);
+    fixture.detectChanges();
+    expect(source[0].items.length).toBe(2);
+    expect(fixture.componentInstance.visibleModel[0].items.length).toBe(1);
+    fixture.componentRef.setInput('model', null);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelectorAll('[role="menuitem"]').length).toBe(0);
+  });
+
+  it('uses Home and End to reach enabled entries and retains their command identity', () => {
+    const list = fixture.nativeElement.querySelector('[role="menu"]');
+    list.focus();
+    key(list, 'End');
+    key(list, 'Enter');
+    expect(command.calls.mostRecent().args[0].item).toBe(fixture.componentInstance.visibleModel[3]);
+    key(list, 'Home');
+    key(list, 'Space');
+    expect(command.calls.mostRecent().args[0].item).toBe(fixture.componentInstance.visibleModel[0]);
+    expect(command).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not execute disabled or hidden commands when no enabled item exists', () => {
+    fixture.componentRef.setInput('model', [
+      { label: 'Disabled', disabled: true, command },
+      { label: 'Hidden', visible: false, command },
+      { separator: true },
+    ]);
+    fixture.detectChanges();
+    const list = fixture.nativeElement.querySelector('[role="menu"]');
+    list.focus();
+    for (const code of ['ArrowDown', 'Enter', 'Space', 'Home', 'End', 'Enter']) key(list, code);
+    fixture.nativeElement.querySelector('.p-menu-item-link').click();
+    expect(command).not.toHaveBeenCalled();
+  });
+
+  it('forwards toggle, hide and popup lifecycle events through the wrapper', async () => {
     const trigger = document.createElement('button');
     document.body.appendChild(trigger);
+    const shown = jasmine.createSpy('shown');
+    const hidden = jasmine.createSpy('hidden');
+    fixture.componentInstance.onShow.subscribe(shown);
+    fixture.componentInstance.onHide.subscribe(hidden);
     try {
       fixture.componentRef.setInput('popup', true);
       fixture.detectChanges();
       await fixture.whenStable();
-      menu.show({ currentTarget: trigger });
+      shown.calls.reset();
+      hidden.calls.reset();
+      fixture.componentInstance.toggle({ currentTarget: trigger } as unknown as Event);
       fixture.detectChanges();
       await fixture.whenStable();
-      const link = fixture.nativeElement.querySelector('[role="menuitem"]');
-      link.focus();
-      link.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape', bubbles: true }));
-      expect(menu.visible).toBeFalse();
-      expect(document.activeElement).toBe(trigger);
+      expect(fixture.componentInstance.menu.visible).toBeTrue();
+      expect(shown).toHaveBeenCalledTimes(1);
+      fixture.componentInstance.hide();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      expect(hidden).toHaveBeenCalledTimes(1);
     } finally {
+      fixture.destroy();
       trigger.remove();
     }
   });
 
-  it('positions an appended popup above overlays and closes it on parent scroll or resize', async () => {
+  async function open(trigger: HTMLElement) {
+    fixture.componentRef.setInput('popup', true);
+    fixture.componentRef.setInput('appendTo', 'body');
+    fixture.componentRef.setInput('baseZIndex', 2000);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.componentInstance.show({ currentTarget: trigger } as unknown as Event);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    return document.body.querySelector<HTMLElement>('.p-menu-overlay');
+  }
+
+  it('appends and positions a popup above overlays and returns focus on Escape', async () => {
+    const trigger = document.createElement('button');
+    document.body.appendChild(trigger);
+    try {
+      const panel = await open(trigger);
+      expect(panel.parentElement).toBe(document.body);
+      expect(Number(panel.style.zIndex)).toBeGreaterThan(2000);
+      expect(panel.style.top).not.toBe('');
+      key(panel.querySelector('[role="menu"]'), 'Escape');
+      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      expect(document.activeElement).toBe(trigger);
+    } finally {
+      fixture.destroy();
+      trigger.remove();
+    }
+  });
+
+  it('closes on outside clicks, parent scroll and resize and cleans up the appended panel', async () => {
     const parent = document.createElement('div');
     parent.style.overflow = 'auto';
     const trigger = document.createElement('button');
     parent.appendChild(trigger);
     document.body.appendChild(parent);
     try {
-      fixture.componentRef.setInput('popup', true);
-      fixture.componentRef.setInput('appendTo', 'body');
-      fixture.componentRef.setInput('baseZIndex', 2000);
-      fixture.detectChanges();
-      await fixture.whenStable();
-      const open = async () => {
-        menu.show({ currentTarget: trigger });
-        fixture.detectChanges();
-        await fixture.whenStable();
-      };
-      await open();
-      const panel = document.body.querySelector<HTMLElement>('.bh-menu-panel');
-      expect(panel.parentElement).toBe(document.body);
-      expect(Number(panel.style.zIndex)).toBeGreaterThan(2000);
-      expect(panel.style.top).not.toBe('');
+      await open(trigger);
+      document.body.click();
+      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      await open(trigger);
       parent.dispatchEvent(new Event('scroll'));
-      expect(menu.visible).toBeFalse();
-      fixture.detectChanges();
-      await fixture.whenStable();
-      await open();
+      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      await open(trigger);
       window.dispatchEvent(new Event('resize'));
-      expect(menu.visible).toBeFalse();
+      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      await open(trigger);
       fixture.destroy();
       await fixture.whenRenderingDone();
-      // Angular keeps the fixture's host in the test DOM; the appended panel must return to that host.
-      expect(document.body.querySelector(':scope > .bh-menu-panel')).toBeNull();
-      expect(menu.container.parentElement).toBe(fixture.nativeElement);
-      expect(menu.documentResizeListener).toBeNull();
-      expect(menu.scrollHandler).toBeNull();
+      // Angular retains the test host; no panel may remain appended directly to body.
+      expect(document.body.querySelector(':scope > .p-menu-overlay')).toBeNull();
+      expect(() => {
+        parent.dispatchEvent(new Event('scroll'));
+        window.dispatchEvent(new Event('resize'));
+      }).not.toThrow();
     } finally {
+      if (!fixture.componentRef.hostView.destroyed) fixture.destroy();
       parent.remove();
     }
-  });
-
-  it('runs enabled commands and prevents disabled commands', () => {
-    const links = fixture.nativeElement.querySelectorAll('[role="menuitem"]');
-    links[1].click();
-    expect(command).not.toHaveBeenCalled();
-    links[0].click();
-    expect(command).toHaveBeenCalledTimes(1);
-    expect(command.calls.mostRecent().args[0].item).toBe(menu.model[0]);
-  });
-
-  it('moves keyboard focus between enabled entries', () => {
-    fixture.componentRef.setInput('model', [menu.model[0], menu.model[3]]);
-    fixture.detectChanges();
-    const links = fixture.nativeElement.querySelectorAll('[role="menuitem"]');
-    links[0].focus();
-    links[0].dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowDown', bubbles: true }));
-    expect(document.activeElement).toBe(links[1]);
-    links[1].dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowUp', bubbles: true }));
-    expect(document.activeElement).toBe(links[0]);
-  });
-
-  it('closes a popup on outside click and releases document listeners on destruction', async () => {
-    fixture.componentRef.setInput('popup', true);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    menu.show({ currentTarget: fixture.nativeElement });
-    fixture.detectChanges();
-    await fixture.whenStable();
-    expect(menu.visible).toBeTrue();
-    expect(menu.documentClickListener).toBeTruthy();
-    // The opening event is ignored once; the next outside click closes it.
-    document.body.click();
-    document.body.click();
-    expect(menu.visible).toBeFalse();
-    fixture.destroy();
-    expect(menu.documentClickListener).toBeNull();
-    expect(menu.documentResizeListener).toBeNull();
-    expect(menu.scrollHandler).toBeNull();
   });
 });

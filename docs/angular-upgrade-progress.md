@@ -384,3 +384,38 @@ git commit -m "refactor: migrate PrimeNG tabs and warning messages"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+## Commit-Punkt 10: Öffentlicher Menü-Wrapper produktiv integriert
+
+Ausgangspunkt: Commit **`fa92c15`**, der den Tabs-/Message-Abschnitt (Commit-Punkt 9) sichert. Sein Commit-Titel wiederholt den Titel des Auswahlkomponenten-Abschnitts; der enthaltene Stand ist anhand des Quellcodes geprüft. Paketversionen und Lockfile bleiben unverändert auf Angular **18.2.14** / PrimeNG **18.0.2**.
+
+### Erfolgreich umgesetzt
+
+- **`bh-menu` verwendet jetzt produktiv die öffentliche `Menu`-/`MenuModule`-API von PrimeNG.** Farbfilter und Sammelaktionen behalten den bestehenden Selektor und die Methoden `toggle`, `show`, `hide`. Popup-, AppendTo-, Z-Index-, Style-, Animations- und Lifecycle-Einstellungen werden an PrimeNG weitergereicht. Der eigene Overlay-, Positionierungs-, Listener- und Tastatur-Nachbau einschließlich direkter DomHandler-/ZIndexUtils-/OverlayService-Anbindung ist entfernt.
+- Strukturierte Farbfelder, Icons, Badges und Textlabels bleiben eigene öffentliche Item-Templates. Routerlinks samt Query-/Fragment-/State-Optionen und externe URLs werden über getrennte Anchor-Templates gerendert: Eine leere RouterLink-Bindung entfernte im ersten Testlauf den externen `href`; das ist korrigiert. Labels und Gruppenüberschriften bleiben Text, auch bei `escape: false`.
+- Unsichtbare Gruppen und Einträge werden aus dem dargestellten Modell gefiltert, damit die öffentliche Tastatursteuerung sie nicht erreichen kann. Die Ursprungsmodelle werden dabei nicht verändert. Deaktivierte Einträge bleiben sichtbar und inaktiv. Die asynchron aufgebauten Farbgruppen setzen jetzt neue Array-Referenzen, damit der Wrapper nach dem initial leeren Modell die geladenen Farben erhält.
+- Begrenzte `.bh-menu-panel`-Styles passen die neue öffentliche DOM-Struktur an die bisherigen Maße an. Gemessenes Farb-Popup: **200 × 64 px**, Menüaktion **200 × 48 px / 16 px Padding**, Farbfeld **13 × 13 px**, Roboto **16 px**, Radius **4 px** und bisheriger Popup-Schatten. Die erste vollständige visuelle Gegenprüfung ist erfolgt; Positionierung und sämtliche Interaktionszustände sind noch nicht vollständig abgenommen.
+- Der isolierte Prototyp samt eigener Tests und das ungenutzte HTML-Platzhaltertemplate sind entfernt. Dessen fünf Verhaltenstests sind in die produktive Wrapper-Suite übernommen und durch weitere Prüfungen ergänzt. Zehn Tests prüfen jetzt den produktiven Wrapper statt des alten Nachbaus und des separaten Experiments. Ein zusätzlicher Integrationstest öffnet den asynchron befüllten Farbfilter und bestätigt den tatsächlichen Such-API-Aufruf.
+- Das Aufnahmeskript misst Menüpanel, Menüaktion und Farbfeld. Nach den unveränderten Bildszenarien prüft es zusätzlich den Farbmenü-Klick sowie die produktiven Sammelaktionen **Listen löschen → Bestätigung anzeigen** und **Teile kopieren → Drawer anzeigen**. Eine Löschbestätigung wird nicht akzeptiert. Das Prüfziel für den Bestätigungsdialog wurde im Diagnose-Lauf auf die tatsächliche Rolle `alertdialog` korrigiert.
+
+API-Grundlage: [PrimeNG 18 Menu](https://v18.primeng.org/menu). Verhalten und Templates wurden zusätzlich gegen die installierten PrimeNG-18-Quellen geprüft.
+
+### Validierung und verbleibende Arbeit
+
+- **40 Tests erfolgreich** mit Headless Edge, Exitcode 0. Die bisher 44 Tests bestehen nach Zusammenführung der zehn alten Menütests und fünf isolierten Prototyp-Tests aus zehn produktiven Wrapper-Tests plus einem neuen Farbmenü-Integrationstest und den übrigen unveränderten Tests. Anwendungstypprüfung erfolgreich.
+- Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang **2.33 MB**, unter der unveränderten 3-MB-Fehlergrenze; bisherige Budget-/CommonJS-Warnungen bestehen fort.
+- Reguläre Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden; Chrome-Manifest byteidentisch zur Quelle; standalone Extension-Einstiege ohne `webpackChunk`-Verweise; keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Abschlusslauf: **39 Screenshots**, alle **sieben Browser-Interaktionsprüfungen** erfolgreich; **0 Konsolenfehler / 0 unbehandelte Browserfehler / 0 bekannte NG0100-Meldungen** in diesen kontrollierten Szenarien.
+- Gegen Commit-Punkt 9 sind **37/39 PNGs byteidentisch**. Farbmenü und Löschbestätigung unterscheiden sich in den Prüfsummen und wurden visuell angesehen. Gegen die ursprüngliche Angular-17-Referenz bleiben **0/39 PNGs byteidentisch**; eine vollständige UI-Abnahme ist damit weiterhin offen. Buttonhöhe **41.84375 px**, Karten **196.390625 × 320 px / 8 px Padding**, Tabellenzeilen **91 px** und Navigation **60 px** bleiben erhalten. Bericht: [angular-18-public-menu-check.json](angular-upgrade-reference/angular-18-public-menu-check.json).
+
+Der produktive Menüumbau ist funktional geprüft. Noch offen: vollständiger visueller Menü-/Hover-/Fokus-/Disabled-Abgleich, FileUpload-Layout, Drawer-Inhaltsabstände und Maskendarstellung, Toasts sowie weitere Select-/Icon-/Button-Zustände. **Angular 19 bleibt bis zur vollständigen Abnahme auf Version 18 zurückgestellt.**
+
+Logs: `artefacts/angular-upgrade/angular-18/public-menu-*.log`; abschließend geprüfte Outputs: `artefacts/angular-upgrade/angular-18/public-menu-final/{production,development}/`; abschließende Bilder: `artefacts/angular-upgrade/visual/angular-18-public-menu-verified/`. Die Aufnahme `angular-18-public-menu-final/` ist ein Diagnose-Lauf mit falschem Alertdialog-Prüfziel und ersetzt weder den Abschlusslauf noch die ursprüngliche Referenzbasis.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "refactor: use public PrimeNG menu for filters and bulk actions"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

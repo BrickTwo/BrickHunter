@@ -1,66 +1,55 @@
-.bh-menu-panel.p-menu-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
+// Only BrickHunter's public Menu instances receive these reference geometry rules.
+.bh-menu-panel.p-menu {
+  width: 12.5rem;
+  border-color: #e5e5e5;
+  border-radius: 4px;
+  font: inherit;
 
-.bh-menu-panel ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
+  &.p-menu-overlay {
+    border: 0;
+    box-shadow:
+      0 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0 4px 5px 0 rgba(0, 0, 0, 0.14),
+      0 1px 10px 0 rgba(0, 0, 0, 0.12);
+  }
 
-.bh-menu-panel .p-submenu-header{
-    align-items: center;
-}
-
-.bh-menu-panel .p-menuitem-link {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    overflow: hidden;
-    position: relative;
-}
-
-.bh-menu-panel .p-menuitem-text {
+  .p-menu-list {
+    padding: 0.5rem 0;
+    gap: 0;
+  }
+  .p-menu-item-content {
+    border-radius: 0;
+  }
+  .p-menu-item-link {
+    padding: 1rem;
+    gap: 0;
+  }
+  .p-menu-item-label {
     line-height: 1;
-}
+    white-space: nowrap;
+  }
+  .p-menu-item-icon {
+    margin-right: 0.5rem;
+  }
+  .p-menu-submenu-label {
+    padding: 1rem;
+    font-weight: 400;
+  }
+  .p-menu-separator {
+    margin: 0.5rem 0;
+  }
+  .p-menu-item.p-focus .p-menu-item-content {
+    background: rgba(0, 0, 0, 0.12);
+  }
+  .p-menu-item:not(.p-disabled) .p-menu-item-content:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
 
-.bh-menu-panel .bh-menu-swatch {
+  .bh-menu-swatch {
     border: 1px solid black;
     width: 13px;
     height: 13px;
     margin-right: 5px;
-    display: inline-block;
-}
-
-// This is BrickHunter's own component, so PrimeNG does not inject a Menu theme for it.
-.bh-menu-panel {
-    padding: 0.5rem 0;
-    width: 12.5rem;
-    background: var(--p-content-background);
-    color: var(--p-content-color);
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-
-    &.p-menu-overlay {
-        border: 0;
-        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
-    }
-
-    .p-menuitem-link {
-        padding: 1rem;
-        color: inherit;
-        user-select: none;
-
-        &:not(.p-disabled):hover { background: rgba(0, 0, 0, 0.04); }
-        &:focus { outline: 0; box-shadow: none; background: rgba(0, 0, 0, 0.12); }
-    }
-
-    .p-menuitem-icon { color: var(--p-text-muted-color); margin-right: 0.5rem; }
-    .p-submenu-header { padding: 1rem; color: var(--p-text-muted-color); font-weight: 400; }
-    .p-menu-separator { border-top: 1px solid var(--p-content-border-color); margin: 0.5rem 0; }
-    .p-hidden { display: none; }
-    .p-disabled { opacity: 0.38; cursor: default; pointer-events: none; }
+    flex-shrink: 0;
+  }
 }

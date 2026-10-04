@@ -41,31 +41,31 @@ export class BrowsePartsColorFilterComponent implements OnInit, OnDestroy {
       color.categories.map(category => {
         switch (category.toLowerCase()) {
           case 'trans':
-            this.trans.push(this.createMenuItem(color));
+            this.trans = [...this.trans, this.createMenuItem(color)];
             break;
           case 'black':
-            this.black.push(this.createMenuItem(color));
+            this.black = [...this.black, this.createMenuItem(color)];
             break;
           case 'brown':
-            this.brown.push(this.createMenuItem(color));
+            this.brown = [...this.brown, this.createMenuItem(color)];
             break;
           case 'red':
-            this.red.push(this.createMenuItem(color));
+            this.red = [...this.red, this.createMenuItem(color)];
             break;
           case 'orange':
-            this.orange.push(this.createMenuItem(color));
+            this.orange = [...this.orange, this.createMenuItem(color)];
             break;
           case 'yellow':
-            this.yellow.push(this.createMenuItem(color));
+            this.yellow = [...this.yellow, this.createMenuItem(color)];
             break;
           case 'green':
-            this.green.push(this.createMenuItem(color));
+            this.green = [...this.green, this.createMenuItem(color)];
             break;
           case 'blue':
-            this.blue.push(this.createMenuItem(color));
+            this.blue = [...this.blue, this.createMenuItem(color)];
             break;
           case 'purple':
-            this.purple.push(this.createMenuItem(color));
+            this.purple = [...this.purple, this.createMenuItem(color)];
             break;
         }
       });
