@@ -1,31 +1,29 @@
 :host {
-    ::ng-deep.p-tree-toggler{
-        display: none;
-    }
-
-    ::ng-deep.p-tree{
-        border: 0;
-        padding: 0;
-    }
-
-    ::ng-deep.p-tree .p-tree-container .p-treenode{
-        padding-left: 0;
-        padding-right: 0;
-        padding: 0;
-    }
-
-    // ::ng-deep.p-inputswitch {
-    //     width: 20px;
-    //     height: 10px;
-    //   }
-    //   ::ng-deep.p-inputswitch .p-inputswitch-slider:before {
-    //     height: 0.75rem;
-    //     width: 0.75rem;
-    //   }
-    ::ng-deep .config-button {
-        width: 1.5rem;
-        height: 1.5rem !important;
-      }
-    
+  ::ng-deep.p-tree-node-toggle-button {
+    display: none;
   }
-  
+
+  ::ng-deep.p-tree {
+    border: 0;
+    padding: 0;
+  }
+
+  ::ng-deep.p-tree .p-tree-root-children .p-tree-node {
+    padding-left: 0;
+    padding-right: 0;
+    padding: 0;
+  }
+
+  // ::ng-deep.p-inputswitch {
+  //     width: 20px;
+  //     height: 10px;
+  //   }
+  //   ::ng-deep.p-inputswitch .p-inputswitch-slider:before {
+  //     height: 0.75rem;
+  //     width: 0.75rem;
+  //   }
+  ::ng-deep .config-button {
+    width: 1.5rem;
+    height: 1.5rem !important;
+  }
+}

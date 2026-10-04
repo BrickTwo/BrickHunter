@@ -52,6 +52,8 @@ Der erste Theme-Geometrieabschnitt auf Angular 18 stellt die gemessene **41.8437
 
 Aus dem Repository-Stamm mit Node 20 und Playwright 1.62.1. Playwright wird hier aus dem vorhandenen Codex-Runtime-Bundle geladen; für andere Rechner muss `NODE_PATH` auf eine entsprechende separate Toolinstallation zeigen. `CHROME_BIN` kann den passenden Browserpfad vorgeben. Für Pixelvergleiche denselben Edge-/Windows-Stand und die aufgeführten Aufnahmebedingungen verwenden.
 
+Der folgende Auswahlkomponenten-Abschnitt gleicht Kategoriezeilen, SelectButton-/ToggleSwitch-Farben, Checkbox-Rahmen, Disabled-Buttons und die Paginator-Geometrie/-Schrift an. **39 Tests**, **39 Bildszenarien** und vier echte Auswahl-/Toggle-/Seitenschalter-Prüfungen sind erfolgreich. Die vollständige UI-Abnahme bleibt offen (**0/39 byteidentische Bilder**). Bilder: `artefacts/angular-upgrade/visual/angular-18-selection-controls-accepted-section/`; Bericht: [angular-18-selection-controls-check.json](angular-18-selection-controls-check.json).
+
 ```powershell
 $env:PATH = "$PWD\tmp\upgrade-runtime\node-v20.20.2-win-x64;$env:PATH"
 $env:NODE_PATH = 'C:\Users\Tobias\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\node_modules'

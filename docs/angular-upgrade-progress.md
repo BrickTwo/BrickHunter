@@ -311,3 +311,41 @@ git commit -m "fix: restore initial PrimeNG 18 component geometry"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers an einem separaten Commit-Punkt an. Nach dem Commit und `weiter` folgt die verbleibende UI-Angleichung auf Version 18.
+
+Dieser Basisgeometrieabschnitt wurde als `6854981` gesichert. Auf Anweisung des Nutzers wurde anschließend der Kategorie-/Auswahlkomponenten-Abgleich umgesetzt.
+
+## Commit-Punkt 8: Kategorien, Auswahlkomponenten und Paginator
+
+Stand: 4. Oktober 2026. Ausgangscommit: `6854981`; Arbeitsverzeichnis zu Beginn sauber. Angular/PrimeNG bleiben auf **18.2.14 / 18.0.2**, Paketversionen und Lockfile unverändert. Die vollständige UI-Abnahme bleibt offen.
+
+### Erfolgreich umgesetzt
+
+- Kategorie- und Teilelisten-Tree-Styles an die neuen Klassen **`.p-tree-root-children`, `.p-tree-node`, `.p-tree-node-content`, `.p-tree-node-toggle-button`** angepasst. Im Kategoriebaum sind die bisherigen ausgeblendeten Toggles wieder ausgeblendet; Node-Padding **8 px**, Radius **4 px** und Root-Gap **0** stehen im Preset. Die Kategoriezeilen messen jetzt **35 px** statt der zuvor größeren Abstände. Das Kategorienpanel besitzt im geprüften Desktopbild wieder die ursprüngliche Geometrie.
+- **SelectButton verwendet nun ToggleButton** als innere Komponente. Dessen Padding auf **11.424 px / 16 px**, Rahmen auf `rgba(0,0,0,0.12)` und ausgewählten Hintergrund auf **`#e0e0e1`** gesetzt. Hover-/Fokusfarben berücksichtigen ausgewählte und nicht ausgewählte Zustände entsprechend dem bisherigen Theme. FormField-Textfarbe explizit auf **`rgba(0,0,0,0.87)`** gesetzt, damit die Material-Palette nicht einen abweichenden Textfarbton liefert.
+- **ToggleSwitch** mit dem ursprünglichen 44×16-px-Track, **8-px-Radius**, ohne zusätzlichen Rahmen und mit Handle-Ausgangsposition **−1 px**. Unausgewählt wieder `rgba(0,0,0,0.38)`, ausgewählt `rgba(10,52,99,0.5)`; vorhandene Material-Handle-/Hover-/Fokusschatten bleiben erhalten.
+- **Paginator-Seitenschalter wieder 48×48 px**, ursprünglicher Margin **0.143 rem**, kein zusätzlicher Gap sowie bisherige Navigationsfarben. Die Seitenschalter erben explizit die Anwendungsschrift: Der PrimeNG-18-Button fiel sonst auf Arial **13.3333 px** zurück; jetzt wieder Roboto **16 px**. Die erste Teilekartenreihe sitzt damit im geprüften Desktop-Suchbild wieder auf der ursprünglichen vertikalen Position.
+- Unausgewählte Checkbox-Rahmen wieder **`#757575`** einschließlich Hover/Fokus. Die 18×18-px-Geometrie und 2-px-Radien bleiben erhalten. Deaktivierte Buttons verwenden wieder den bisherigen grauen Hintergrund/Text ohne zusätzliche Gesamttransparenz; deaktivierte Text-/Outlined-Buttons bleiben transparent.
+- Screenshot-Bericht um Tree-Node, ToggleButton, ToggleSwitch-Track, Checkbox-Box und Paginator-Seitenschalter ergänzt. Zusätzlich werden nach den Bildaufnahmen echte Klicks auf **Kategorie**, **Only Printed**, **Lieferkanal** und **Seite 2** geprüft. Die ursprünglichen 39 Bildszenarien bleiben erhalten. Im Diagnose-Lauf musste die Seitenauswahl-Prüfung auf passende Testdaten sowie Leerzeichen um die Seitennummer korrigiert werden; dies erforderte keine Änderung am Produktverhalten.
+
+Die Token-Struktur und die geladenen Styles wurden gegen die installierten PrimeNG-/Material-18-Quellen geprüft. Grundlage des Preset-Abgleichs: [PrimeNG 18 Theming](https://v18.primeng.org/theming). Das alte vollständige Theme wird weiterhin nicht geladen.
+
+### Validierung und verbleibende Arbeit
+
+- **39 Tests erfolgreich**, Headless Edge, Exitcode 0. Anwendungstypprüfung und `git diff --check` erfolgreich. Keine neuen Tests für reine CSS-Werte; die ergänzten Browseraktionen prüfen die tatsächlichen Klickziele nach dem DOM-/Geometrieabgleich.
+- Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang **2.33 MB**, unter der unveränderten 3-MB-Fehlergrenze; bisherige Budget-/CommonJS-Warnungen bestehen fort.
+- Reguläre Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden; Chrome-Manifest byteidentisch zur Quelle; standalone Extension-Einstiege ohne `webpackChunk`-Verweise; keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Abschließender Browserlauf: **39 Screenshots**, alle vier ergänzten Interaktionsprüfungen erfolgreich; **0 neue Konsolenfehler / 0 unbehandelte Browserfehler**, unverändert **9 bekannte Tabellen-NG0100-Meldungen**. **0 von 39 Bildern byteidentisch** zur Angular-17-Referenz. Die Desktop-Suche wurde zusätzlich visuell mit dem Original verglichen; eine vollständige visuelle Abnahme ist damit noch nicht erreicht.
+- Buttonhöhe **41.84375 px**, Teilekarten **196.390625×320 px / 8 px Padding**, Teiletabellenzeilen **91 px** und Navigation **60 px** bleiben erhalten. Messwerte, Prüfsummen, Interaktions- und Output-Prüfungen: [angular-18-selection-controls-check.json](angular-upgrade-reference/angular-18-selection-controls-check.json).
+
+Weitere Arbeit auf Version 18: Dialoge und Meldungen einschließlich Messages-/TabMenu-Ablösung; produktive Integration des öffentlichen Menü-Wrappers; übrige Select-/Icon-Details und vollständiger Hover-/Fokus-/Disabled-Abgleich. Insbesondere sind die SVG-Glyphen und sämtliche Checkbox-/Kategorie-Konfigurationszustände noch nicht visuell vollständig abgenommen. **Angular 19 bleibt zurückgestellt.**
+
+Logs: `artefacts/angular-upgrade/angular-18/selection-controls-*.log`; abschließend geprüfte Outputs: `artefacts/angular-upgrade/angular-18/selection-controls-final/{production,development}/`; abschließende Bilder: `artefacts/angular-upgrade/visual/angular-18-selection-controls-accepted-section/`. Frühere `selection-controls`-/`selection-controls-verified`-/`selection-controls-final`-Aufnahmen sind Diagnose-Zwischenstände, keine neue Referenzbasis.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: align PrimeNG 18 selection controls and paginator"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt die weitere UI-Angleichung auf Version 18.

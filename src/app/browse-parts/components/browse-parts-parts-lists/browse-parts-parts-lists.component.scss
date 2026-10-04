@@ -3,11 +3,11 @@
   //     display: none;
   //   }
 
-  ::ng-deep.p-tree .p-tree-container {
+  ::ng-deep.p-tree .p-tree-root-children {
     overflow: hidden;
   }
 
-  ::ng-deep.p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
+  ::ng-deep.p-tree .p-tree-root-children .p-tree-node .p-tree-node-content .p-tree-node-toggle-button {
     height: 19px;
     width: 19px;
   }
@@ -17,7 +17,7 @@
     padding: 0;
   }
 
-  ::ng-deep.p-tree .p-tree-container .p-treenode {
+  ::ng-deep.p-tree .p-tree-root-children .p-tree-node {
     padding-left: 0;
     padding-right: 0;
     padding: 0;

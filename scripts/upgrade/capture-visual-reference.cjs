@@ -93,7 +93,8 @@ async function main() {
         const metrics = await page.evaluate(() => {
           const selectors = ['html', 'body', 'h2', '.p-button', '.p-datatable-tbody tr',
             'app-browse-parts-grid-item > div', '.p-dialog', '.p-sidebar, .p-drawer',
-            '.p-card-content', '.p-tag', '.p-inputgroup', '.p-inputgroupaddon', '.p-datatable-thead tr'];
+            '.p-card-content', '.p-tag', '.p-inputgroup', '.p-inputgroupaddon', '.p-datatable-thead tr',
+            '.p-tree-node-content', '.p-togglebutton', '.p-toggleswitch-slider', '.p-checkbox-box', '.p-paginator-page'];
           const values = {};
           for (const selector of selectors) {
             const element = document.querySelector(selector);
@@ -177,6 +178,23 @@ async function main() {
         await capture('large-search');
         await page.evaluate(() => window.scrollTo(0, 1400));
         await capture('large-search-scrolled');
+        // Verify actual input targets after geometry/DOM changes, without changing reference images.
+        await open('browse-parts');
+        const category = page.locator('app-browse-parts-category-selection .p-tree-node-content').filter({ hasText: 'Bricks' }).first();
+        await category.click();
+        if (!(await category.getAttribute('class')).includes('p-tree-node-selected')) throw new Error('Category selection failed');
+        const printed = page.getByLabel('Only Printed', { exact: true });
+        await printed.check();
+        if (!(await printed.isChecked())) throw new Error('Only Printed toggle failed');
+        await printed.uncheck();
+        const standard = page.locator('app-browse-parts-filter .p-selectbutton button').filter({ hasText: 'Standard' });
+        const wasPressed = await standard.getAttribute('aria-pressed');
+        await standard.click();
+        if (await standard.getAttribute('aria-pressed') === wasPressed) throw new Error('Delivery-channel selection failed');
+        await page.evaluate(() => window.brickHunterReference.setSearchCount(1000));
+        await page.locator('.p-paginator-page').filter({ hasText: /^\s*2\s*$/ }).first().click();
+        await page.waitForFunction(() => document.querySelector('.p-paginator-page-selected')?.textContent.trim() === '2');
+        report.interactionChecks = { categorySelection: true, onlyPrintedToggle: true, deliveryChannelSelection: true, paginatorPageSelection: true };
       }
       await context.close();
     }

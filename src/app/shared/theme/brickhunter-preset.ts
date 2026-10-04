@@ -26,6 +26,7 @@ export const BrickHunterPreset = definePreset(Material, {
         },
         formField: {
           background: '#ffffff',
+          color: 'rgba(0, 0, 0, 0.87)',
           borderColor: 'rgba(0, 0, 0, 0.38)',
           hoverBorderColor: 'rgba(0, 0, 0, 0.87)',
           focusBorderColor: '#0a3463',
@@ -50,6 +51,8 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-button-label { flex: 1 1 auto; }
         .p-button-icon-only { min-width: auto; }
         .p-button-outlined { box-shadow: inset 0 0 0 1px; }
+        .p-button:disabled { background: rgba(0, 0, 0, 0.12); color: rgba(0, 0, 0, 0.38); opacity: 1; }
+        .p-button:disabled.p-button-text, .p-button:disabled.p-button-outlined { background: transparent; }
       `,
     },
     card: {
@@ -61,8 +64,50 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-card-footer { padding: 1rem 0 0; }
       `,
     },
-    inputgroup: { addon: { background: '#e0e0e1', color: 'rgba(0, 0, 0, 0.6)', padding: '1rem', minWidth: '2.357rem' } },
+    inputgroup: {
+      addon: { background: '#e0e0e1', color: 'rgba(0, 0, 0, 0.6)', padding: '1rem', minWidth: '2.357rem' },
+    },
     divider: { horizontal: { margin: '1.25rem 0', padding: '0 1.25rem' } },
+    tree: {
+      root: { gap: '0' },
+      node: { padding: '0.5rem', borderRadius: '4px', gap: '0' },
+    },
+    checkbox: { root: { borderColor: '#757575', hoverBorderColor: '#757575', focusBorderColor: '#757575' } },
+    togglebutton: {
+      root: { padding: '0.714rem 1rem', borderColor: 'rgba(0, 0, 0, 0.12)', checkedBorderColor: '#e0e0e1' },
+      colorScheme: { light: { root: { hoverBackground: '#f6f6f6', checkedBackground: '#e0e0e1' } } },
+      css: `
+        .p-togglebutton.p-togglebutton-checked:not(:disabled):hover,
+        .p-togglebutton.p-togglebutton-checked:focus { background: #d9d8d9; border-color: #d9d8d9; }
+        .p-togglebutton:not(.p-togglebutton-checked):focus { background: #e0e0e1; border-color: #e0e0e1; }
+      `,
+    },
+    toggleswitch: {
+      root: { borderWidth: '0', borderRadius: '0.5rem', gap: '-1px' },
+      colorScheme: {
+        light: {
+          root: {
+            background: 'rgba(0, 0, 0, 0.38)',
+            hoverBackground: 'rgba(0, 0, 0, 0.38)',
+            checkedBackground: 'rgba(10, 52, 99, 0.5)',
+            checkedHoverBackground: 'rgba(10, 52, 99, 0.5)',
+          },
+        },
+      },
+    },
+    paginator: {
+      root: { gap: '0' },
+      navButton: {
+        width: '3rem',
+        height: '3rem',
+        color: 'rgba(0, 0, 0, 0.6)',
+        hoverColor: 'rgba(0, 0, 0, 0.6)',
+        hoverBackground: 'rgba(0, 0, 0, 0.04)',
+      },
+      css: `
+        .p-paginator-page, .p-paginator-first, .p-paginator-prev, .p-paginator-next, .p-paginator-last { margin: 0.143rem; font: inherit; }
+      `,
+    },
     datatable: { headerCell: { padding: '1rem' }, columnTitle: { fontWeight: '500' } },
     tag: {
       root: { fontSize: '0.75rem', padding: '0.25rem 0.4rem' },
