@@ -54,3 +54,19 @@ Ergänzende Prüfung des neu geplanten Theme-Pakets am 4. Oktober 2026: [`@prime
 | postcss | devDependencies | 8.4.34 | 8.5.28 | {"node":"^10 \|\| ^12 \|\| >=14"} / {"node":"^10 \|\| ^12 \|\| >=14"} | {} |
 | prettier | devDependencies | 3.2.5 | 3.9.9 | {"node":">=14"} / {"node":">=14"} | {} |
 | typescript | devDependencies | 5.3.3 | 7.0.2 | {"node":">=14.17"} / {"node":">=16.20.0"} | {} |
+
+## Geprüfter Zwischenstand: Angular 17
+
+Die Tabelle oben dokumentiert die ursprüngliche Abfrage vor Paketänderungen. Am 4. Oktober 2026 wurde folgender Zwischenstand installiert und durch `npm ci`, `npm ls --all`, drei Builds, 26 Tests und 39 byteidentische UI-Aufnahmen bestätigt:
+
+| Paketgruppe | Gelockter Zwischenstand | Kompatibilität / Entscheidung |
+| --- | --- | --- |
+| Angular Framework, Compiler-CLI, Localize | 17.3.12 | Neuester stabiler 17er-Stand laut offizieller npm-Registry; Framework-Pakete konsistent. |
+| CLI, Build-Devkit | 17.3.17 | Neuester stabiler 17er-Stand; Node 20.20.2 kompatibel. |
+| CDK | 17.3.10 | Neuester stabiler 17er-Stand; Core/Common-Peers `^17.0.0 \|\| ^18.0.0`. |
+| Custom-Webpack | 17.0.0 | Beibehalten; Compiler-CLI-17-Peer gültig. Verfügbarer 17.0.2-Patch in diesem Abschnitt nicht benötigt. |
+| PrimeNG / NgRx | 17.5.0 / 17.1.0 | Beibehalten; keine ungültigen Peers, UI unverändert. |
+| TypeScript / Zone.js | 5.3.3 / 0.14.3 | Beibehalten; innerhalb der Angular-17.3-Anforderungen. |
+| Autoprefixer / PostCSS | 10.4.17 / 8.4.34 | Direkte Ausgangsversionen und Versionsbereiche beibehalten; CSS-Ausgabe byteidentisch. |
+
+Alle übrigen direkten gelockten Versionen bleiben unverändert. Transitive Toolchain-Pakete wurden durch den Angular-Installer angepasst. Einzelheiten und Commit-Punkt: [Fortschrittsprotokoll](angular-upgrade-progress.md).

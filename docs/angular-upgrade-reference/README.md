@@ -42,6 +42,8 @@ Die Referenzen sichern die UI mit kontrollierten Testdaten. Sie sind noch keine 
 
 ## Reproduktion
 
+Der Upgrade-Zwischenstand Angular **17.3.12** / CLI **17.3.17** / CDK **17.3.10** wurde ebenfalls geprüft: **39 von 39 PNGs byteidentisch**, alle Szenarienmessungen identisch, keine neuen Browser-/Konsolenfehler. Die einzelnen SHA-256-Vergleiche stehen in [angular-17-patch-check.json](angular-17-patch-check.json). Die Ausgangsbilder unter `angular-17/` bleiben die Referenz für weitere Stufen.
+
 Aus dem Repository-Stamm mit Node 20 und Playwright 1.62.1. Playwright wird hier aus dem vorhandenen Codex-Runtime-Bundle geladen; für andere Rechner muss `NODE_PATH` auf eine entsprechende separate Toolinstallation zeigen. `CHROME_BIN` kann den passenden Browserpfad vorgeben. Für Pixelvergleiche denselben Edge-/Windows-Stand und die aufgeführten Aufnahmebedingungen verwenden.
 
 ```powershell

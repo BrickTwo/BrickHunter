@@ -148,3 +148,37 @@ git commit -m "test: capture reproducible Angular 17 visual baseline"
 ```
 
 Nach dem Commit folgt der neueste Angular-17-Patchstand. Framework-/CLI-Migrationen werden angewendet und mit Builds, Tests und den gesicherten Referenzen geprüft; danach folgt ein eigener Commit-Punkt vor Angular/PrimeNG 18. Der Community-Schlüssel wird erst vor PrimeNG 22 benötigt; falls seine Einrichtung manuell erfolgen muss, wird der Nutzer dann benachrichtigt. Die Umsetzung hält hier auf Wunsch des Nutzers an.
+
+Dieser Referenzabschnitt wurde als `9156e81` gesichert. Auf Anweisung des Nutzers wurde anschließend mit dem Angular-17-Patchstand fortgefahren.
+
+## Commit-Punkt 4: Neuester Angular-17-Patchstand
+
+Stand: 4. Oktober 2026. Ausgangscommit: `9156e81`; Arbeitsverzeichnis zu Beginn sauber. Runtime weiterhin Node **20.20.2**, npm **10.8.2**.
+
+Erfolgreich umgesetzt:
+
+- Neueste stabile 17er-Versionen in der offiziellen npm-Registry geprüft: Angular Framework/Compiler/Localize **17.3.12**, CLI/Build-Devkit **17.3.17**, CDK **17.3.10**. Mit `npm exec -- ng update @angular/core@17.3.12 @angular/cli@17.3.17 @angular/cdk@17.3.10` installiert. Das Tool verwendete vorübergehend CLI 17.3.17 für die Migration.
+- Die Angular-Core-Migration prüfte ungültige Two-Way-Binding-Ausdrücke und schloss ohne erforderliche Änderungen ab. Es waren keine Änderungen an Anwendungscode oder Build-Konfiguration nötig. Keine Peer-Konflikte mit `--force` oder `--legacy-peer-deps` übergangen.
+- Nur **13 direkte Angular-Pakete** haben neue gelockte Versionen. Die vom Installer nebenbei veränderten direkten CSS-Werkzeuge wurden auf Autoprefixer **10.4.17** und PostCSS **8.4.34** zurückgesetzt. PrimeNG **17.5.0**, NgRx **17.1.0**, TypeScript **5.3.3**, Zone.js **0.14.3** und Custom-Webpack **17.0.0** bleiben auf dem Ausgangsstand. Custom-Webpack 17.0.2 existiert, ist für diese kompatible Zwischenkombination aber nicht erforderlich.
+- Saubere Installation mit `npm ci --no-audit --no-fund`: **962 Pakete**, Exitcode 0. `npm ls --all --json`: Exitcode 0, keine ungültigen Peer-Abhängigkeiten.
+- Produktions-, Entwicklungs- und visueller Referenzbuild: jeweils Exitcode 0. Produktionsbundle weiterhin rund **2.05 MB**; 3-MB-Fehlergrenze eingehalten. Bestehende Budget-/CommonJS-Warnungen bleiben bestehen; keine Budgetanpassung.
+- Gesamte Karma-Suite: **26 SUCCESS**, Exitcode 0 im temporären Headless-Edge-Testprofil.
+- Alle **39 Screenshots byteidentisch** zur committed Angular-17.1.2-Referenz; sämtliche aufgezeichneten CSS-/Geometriemessungen ebenfalls identisch. Browser **154.0.4258.53**, PrimeNG unverändert. Prüfsummen und Ergebnis sind in [angular-17-patch-check.json](angular-upgrade-reference/angular-17-patch-check.json) versionierbar dokumentiert.
+- Referenzlauf: **0 unbehandelte Browserfehler, 0 neue Konsolenfehler**, weiterhin die **9 bekannten NG0100-Meldungen** der befüllten Tabelle. Ausgangsprobleme bleiben unverändert und dokumentiert.
+- In beiden regulären Outputs sind `background.js`, `legocontentscript.js`, Manifest, UI-Einstieg, JS und Styles vorhanden. Manifest und `index.html` sowie `styles.css` sind gegenüber der jeweiligen ursprünglichen Referenz byteidentisch. Die beiden Extension-Einstiege enthalten keinen `webpackChunk`-Verweis auf einen gemeinsamen Runtime-Chunk; Referenz-Fixture-Marker sind in keinem regulären JS-Bundle enthalten. JavaScript-Bundles haben nach dem Toolchain-Update neue Prüfsummen. Diese Ausgabeprüfung ersetzt nicht die spätere echte Extension-/Messaging-Abnahme.
+- `git diff --check` erfolgreich.
+
+Logs, Paketänderungen, Metadaten und Build-Ausgaben liegen unter `artefacts/angular-upgrade/angular-17-patch/`; die neue Screenshot-Serie unter `artefacts/angular-upgrade/visual/angular-17-patch/`. Die ursprünglichen Screenshots wurden nicht überschrieben. Historische transitive npm-Pakete melden weiterhin Deprecation-Warnungen; deren Ablösung erfolgt mit den folgenden Toolchain-Stufen.
+
+### Jetzt manuell: Zwischencommit
+
+Den geprüften Angular-17-Stand vor dem größeren Angular-/PrimeNG-18- und Theme-Umbau sichern:
+
+```powershell
+git add package.json package-lock.json
+git add docs/angular-upgrade-plan.md docs/angular-upgrade-progress.md docs/angular-upgrade-packages.md
+git add docs/angular-upgrade-reference/README.md docs/angular-upgrade-reference/angular-17-patch-check.json
+git commit -m "chore: upgrade Angular to latest 17 patch"
+```
+
+Weitere manuelle Einrichtung ist in diesem Abschnitt nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers an. Nach dem Commit und `weiter` folgt die kompatible Angular-/PrimeNG-18-Kombination mit eigenem Theme und Menü-Abgleich.
