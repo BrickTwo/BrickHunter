@@ -3,7 +3,7 @@
     {{ part.lego.price.amount | currency : part.lego.price.currencyCode : 'symbol-narrow' : '1.2-2' : this.language }}
   </div>
   <div style="color: grey; font-size: 12px">[{{ part.lego.designNumber }} {{ part.lego.elementId }}]</div>
-  <p-tag severity="warning" *ngIf="part.lego.deliveryChannel === 'pab'">Bestseller</p-tag>
+  <p-tag severity="warn" *ngIf="part.lego.deliveryChannel === 'pab'">Bestseller</p-tag>
   <p-tag severity="info" *ngIf="part.lego.deliveryChannel === 'bap'">Standard</p-tag>
   <p-tag severity="danger" *ngIf="!part.lego.inStock">Out Of Stock</p-tag>
 </div>

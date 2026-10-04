@@ -16,6 +16,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { MenuModule } from './shared/components/menu/menu.component';
 import { MessageModule } from 'primeng/message';
@@ -51,6 +53,8 @@ import { TreeTableModule } from 'primeng/treetable';
     ImageModule,
     InputNumberModule,
     InputTextModule,
+    InputGroupModule,
+    InputGroupAddonModule,
     ToggleSwitchModule,
     MenuModule,
     MessageModule,

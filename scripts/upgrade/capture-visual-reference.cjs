@@ -92,7 +92,8 @@ async function main() {
         await page.screenshot({ path: path.join(output, file), animations: 'disabled' });
         const metrics = await page.evaluate(() => {
           const selectors = ['html', 'body', 'h2', '.p-button', '.p-datatable-tbody tr',
-            'app-browse-parts-grid-item > div', '.p-dialog', '.p-sidebar, .p-drawer'];
+            'app-browse-parts-grid-item > div', '.p-dialog', '.p-sidebar, .p-drawer',
+            '.p-card-content', '.p-tag', '.p-inputgroup', '.p-inputgroupaddon', '.p-datatable-thead tr'];
           const values = {};
           for (const selector of selectors) {
             const element = document.querySelector(selector);

@@ -48,6 +48,8 @@ Auch die Menüvorbereitung (`bh-menu`, strukturierte Farbtemplates, Tastaturkorr
 
 Die **Angular-/PrimeNG-18-Grundmigration ist noch nicht visuell abgenommen**. Alle 39 Szenarien laufen ohne neue Browser-/Konsolenfehler, aber alle 39 Bilder unterscheiden sich von der Referenz. Erste Token-Werte stimmen bereits; unter anderem Buttonhöhe und Inhaltsabstände müssen noch angeglichen werden. Messwerte und Prüfsummen: [angular-18-foundation-check.json](angular-18-foundation-check.json). Die ursprünglichen Bilder bleiben unverändert die Abnahmebasis.
 
+Der erste Theme-Geometrieabschnitt auf Angular 18 stellt die gemessene **41.84375-px-Buttonhöhe**, Karteninhaltsabstände, verbundene Filterfelder und Bestseller-Tag-Farben/-Schrift wieder her. Alle 39 Szenarien laufen ohne neue Browserfehler; weiterhin **0/39 byteidentische Bilder** und daher keine vollständige visuelle Abnahme. Ein öffentlicher Menü-Wrapper wurde isoliert funktional geprüft, aber noch nicht produktiv eingebunden oder visuell freigegeben. Abschließende Aufnahmen: `artefacts/angular-upgrade/visual/angular-18-theme-geometry-verified/`; Prüfsummen/Messwerte: [angular-18-theme-geometry-check.json](angular-18-theme-geometry-check.json). Der Bericht misst jetzt zusätzlich Card-Content, Tag, InputGroup/Addon und Tabellenkopf.
+
 Aus dem Repository-Stamm mit Node 20 und Playwright 1.62.1. Playwright wird hier aus dem vorhandenen Codex-Runtime-Bundle geladen; für andere Rechner muss `NODE_PATH` auf eine entsprechende separate Toolinstallation zeigen. `CHROME_BIN` kann den passenden Browserpfad vorgeben. Für Pixelvergleiche denselben Edge-/Windows-Stand und die aufgeführten Aufnahmebedingungen verwenden.
 
 ```powershell

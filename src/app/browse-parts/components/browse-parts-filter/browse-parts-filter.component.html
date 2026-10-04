@@ -1,42 +1,38 @@
 <p-card>
   <div class="formgrid grid">
-    <div class="field col-6 p-inputgroup bh-input-icon-right">
-      <span class="p-inputgroup-addon">
-        <i class="fa fa-magnifying-glass"></i>
-      </span>
-      <p-button
-        icon="fa fa-circle-xmark"
-        styleClass="p-button-rounded p-button-text"
-        *ngIf="keyword"
-        (click)="onChangeKeyword('')"></p-button>
-      <input type="text" pInputText [(ngModel)]="keyword" (ngModelChangeDebounced)="onChangeKeyword($event)" />
+    <div class="field col-6">
+      <p-inputgroup class="bh-input-icon-right">
+        <p-inputgroup-addon>
+          <i class="fa fa-magnifying-glass"></i>
+        </p-inputgroup-addon>
+        <p-button
+          icon="fa fa-circle-xmark"
+          styleClass="p-button-rounded p-button-text"
+          *ngIf="keyword"
+          (click)="onChangeKeyword('')"></p-button>
+        <input type="text" pInputText [(ngModel)]="keyword" (ngModelChangeDebounced)="onChangeKeyword($event)" />
+      </p-inputgroup>
     </div>
-    <div class="field col-6 p-inputgroup">
-      <span
-        class="p-inputgroup-addon"
-        (click)="onChangeSortDirection()"
-        style="cursor: pointer"
-        *ngIf="sortDirection === 'DESC'">
-        <i class="fa fa-arrow-up-z-a"></i>
-      </span>
-      <span
-        class="p-inputgroup-addon"
-        (click)="onChangeSortDirection()"
-        style="cursor: pointer"
-        *ngIf="sortDirection === 'ASC'">
-        <i class="fa fa-arrow-down-z-a"></i>
-      </span>
-      <p-select
-        [options]="sortOptions"
-        [(ngModel)]="selectedSort"
-        optionLabel="name"
-        optionValue="value"
-        [style]="{
-          width: '100%',
-          'border-top-left-radius': '0px',
-          'border-bottom-left-radius': '0px'
-        }"
-        (onChange)="onChangeSort($event.value)"></p-select>
+    <div class="field col-6">
+      <p-inputgroup>
+        <p-inputgroup-addon (click)="onChangeSortDirection()" style="cursor: pointer" *ngIf="sortDirection === 'DESC'">
+          <i class="fa fa-arrow-up-z-a"></i>
+        </p-inputgroup-addon>
+        <p-inputgroup-addon (click)="onChangeSortDirection()" style="cursor: pointer" *ngIf="sortDirection === 'ASC'">
+          <i class="fa fa-arrow-down-z-a"></i>
+        </p-inputgroup-addon>
+        <p-select
+          [options]="sortOptions"
+          [(ngModel)]="selectedSort"
+          optionLabel="name"
+          optionValue="value"
+          [style]="{
+            width: '100%',
+            'border-top-left-radius': '0px',
+            'border-bottom-left-radius': '0px'
+          }"
+          (onChange)="onChangeSort($event.value)"></p-select>
+      </p-inputgroup>
     </div>
     <div class="field col-12">
       <div class="flex justify-content-between">
@@ -54,9 +50,7 @@
           optionValue="value"
           (onChange)="onDeliveryChannelsChange($event.value)"></p-selectButton>
         <span>
-          <p-popover #op>
-            Shows parts that are no longer available in any set at the specified time.
-          </p-popover>
+          <p-popover #op> Shows parts that are no longer available in any set at the specified time. </p-popover>
           <p-button
             (click)="op.toggle($event)"
             icon="fa fa-circle-info"

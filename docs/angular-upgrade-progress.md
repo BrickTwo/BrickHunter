@@ -265,3 +265,49 @@ git commit -m "chore: establish Angular and PrimeNG 18 migration foundation"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier am technisch überprüften Zwischencommit an. Nach dem Commit und `weiter` wird die UI-Angleichung auf Angular/PrimeNG 18 fortgesetzt.
+
+Dieser Grundmigrationsabschnitt wurde als `0215538` gesichert. Auf Anweisung des Nutzers wurde anschließend der erste Teil der UI-Angleichung umgesetzt.
+
+## Commit-Punkt 7: Basisgeometrie und öffentlicher Menü-Prototyp
+
+Stand: 4. Oktober 2026. Ausgangscommit: `0215538`; Arbeitsverzeichnis zu Beginn sauber. Paketversionen und Lockfile unverändert. Dieser Abschnitt schließt einen ersten Teil des Theme-Abgleichs ab; die vollständige visuelle Abnahme von Angular/PrimeNG 18 bleibt offen.
+
+### Erfolgreich umgesetzt
+
+- Such- und Sortierfilter auf **`p-inputgroup` / `p-inputgroup-addon`** samt öffentlichen Modulen umgestellt. Die alten Klassen allein liefern unter PrimeNG 18 keine Gruppenstruktur mehr: Das Suchfeld blieb schmal und der Sortierauslöser stand oberhalb des Selects. Die neue Struktur verbindet Addon und Feld wieder über die gesamte Filterspalte. Addon-Farbe, Padding und Mindestbreite im Preset auf die ursprünglichen Werte gesetzt. Bestehende Such-, Lösch- und Sortierhandler bleiben angebunden. Quelle: [PrimeNG 18 InputGroup](https://v18.primeng.org/inputgroup).
+- **Karteninhalt wieder mit `1rem 0` Padding**, Titel-/Untertitelabstand mit `0.5rem` und Footer-Abstand ergänzt. PrimeNG 18 bietet für das entfernte Content-Padding keinen entsprechenden Token; die begrenzten Strukturregeln liegen deshalb im Card-Abschnitt des Presets. Die Filterkarte und die Teilelistenkarte besitzen damit wieder die ursprünglichen Innenabstände.
+- **Buttons ohne zusätzlichen 1-px-Rahmen**, mit der bisherigen flexiblen Labelausrichtung, kleinen/großen Padding- und Schriftwerten sowie dem ursprünglichen inset-Rahmen für Outlined-Buttons. Die zusätzlichen Preset-Regeln ergänzen die vorhandenen Material-State-Regeln, statt deren CSS-Funktion zu ersetzen. Im 1440-px-Suchszenario ist die gemessene Höhe wieder exakt **41.84375 px** statt **43.84375 px**, Padding **11.424 px / 16 px**, Radius **4 px**, Primärfarbe **`#0a3463`**.
+- Divider-Abstand und Tabellenkopf-Padding/-Gewicht auf die alten Werte gesetzt. Weitere Tabellen- und Button-Zustände sind noch Teil der ausstehenden Detailprüfung.
+- Drei Bestseller-Verwendungen von dem nicht mehr gültigen **`severity="warning"`** auf **`"warn"`** umgestellt. Tag-Tokens auf **12 px**, Padding **4 px / 6.4 px**, Hintergrund **`#fbc02d`**, Text **`#212529`** gesetzt. Die globale `.p-component`-Schriftgrößenregel aus der Grundmigration entfernt: Als ungelayerte Regel überschrieb sie auch die spezifischen Tag-Tokens. Die lokale Roboto-Schrift bleibt erhalten.
+- Den Screenshot-Bericht um Messungen von Card-Content, Tag, InputGroup/Addon und Tabellenkopf ergänzt; die gesicherten Ausgangsbilder bleiben unverändert.
+
+### Öffentlicher Menü-Wrapper: funktionales Experiment
+
+Ein **isolierter Prototyp unter `src/testing/public-menu-prototype.ts`** verwendet ausschließlich das öffentliche `p-menu`, `item`-/`submenuheader`-Templates sowie dessen `show()`-Methode. Eigene DOM-/ZIndex-/Overlay-/Animationsimplementierungen sind dafür nicht nötig. Der Prototyp wird noch **nicht** von der Anwendung importiert; alle elf produktiven `bh-menu`-Verwendungen bleiben beim bisherigen Nachbau.
+
+Fünf neue Prüfungen bestehen: strukturierte Farbfelder/Badges und genau ein aktivierter Command; Tastaturnavigation und Enter/Leertaste ohne deaktivierte/ausgeblendete Einträge oder Separatoren; sichere Textlabels/Gruppen sowie Router-Link/Icon; an `body` angehängtes und positioniertes Popup mit Z-Index über 2000 sowie Escape/Fokusrückgabe; Außenklick, Scroll, Resize und Cleanup beim Zerstören. Bei der Cleanup-Prüfung wird nach dem Renderabschluss kontrolliert, dass kein Popup direkt an `body` zurückbleibt; Angular behält den Testhost selbst im Test-DOM.
+
+Der Prototyp entfernt unsichtbare Gruppen und Kinder rekursiv aus dem präsentierten Modell, weil PrimeNG 18s Tastatur-DOM-Suche auch CSS-versteckte Einträge erfasst. Dies ist ein gezielter Adapter im Prototyp. Die bisherigen Inline-Mutationen der produktiven Menümodelle, sämtliche weitergereichten Inputs/Events, die endgültigen Styles und der Bildvergleich müssen bei der produktiven Integration gesondert geprüft werden. Das Experiment bestätigt die funktionale Machbarkeit, noch keine vollständige Gleichwertigkeit oder Freigabe zur Ablösung. Quelle: [PrimeNG 18 Menu/Templates](https://v18.primeng.org/menu).
+
+### Validierung und offene UI-Abnahme
+
+- Gesamtsuite **39 SUCCESS**, Exitcode 0, Headless Edge; einschließlich der fünf Prototyp-Prüfungen. Anwendungstypprüfung und `git diff --check` erfolgreich.
+- Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang weiterhin **2.32 MB**, bestehende Budgetgrenzen unverändert. Bisherige Budget-/CommonJS-Warnungen bestehen fort.
+- Beide regulären Outputs: alle geprüften UI-/Extension-Dateien vorhanden, Chrome-Manifest byteidentisch zur Quelle, keine `webpackChunk`-Verweise in den standalone Extension-Einstiegen. Keine Referenz-Fixture- oder Prototyp-Marker in regulären JS-Bundles. Dies ersetzt weiterhin keine echte Extension-/Messaging-Abnahme.
+- **39 von 39 Referenzszenarien** erfolgreich, **0 unbehandelte Browserfehler, 0 neue Konsolenfehler**, unverändert **9 bekannte NG0100-Meldungen** aus der Tabelle. **0 von 39 Screenshots byteidentisch**; keine vollständige visuelle Abnahme. Such- und Listenübersicht wurden zusätzlich direkt gegen die Ausgangsbilder angesehen.
+- Teilekarten weiterhin **196.390625 × 320 px** mit **8 px** Padding, befüllte Teiletabellenzeilen weiterhin **91 px**, Navigation weiterhin **60 px**. Prüfsummen, Messwerte und Output-Prüfungen: [angular-18-theme-geometry-check.json](angular-upgrade-reference/angular-18-theme-geometry-check.json).
+
+Noch offen auf Version 18: Kategorie-/Tree-Geometrie; SelectButton, ToggleSwitch, Checkbox und Disabled-Zustände; Paginator-/Icon-Details; Dialoge und Meldungen; Messages-/TabMenu-Ablösung; produktiver Menü-Wrapper einschließlich UI-Vergleich. Beispielsweise sitzt die erste Teilekartenreihe noch höher als in der Referenz, und die Kategorieeinträge haben größere Abstände. **Angular 19 wird noch nicht begonnen.**
+
+Logs: `artefacts/angular-upgrade/angular-18/theme-geometry-*.log`. Abschließend geprüfte reguläre Outputs: `artefacts/angular-upgrade/angular-18/theme-geometry-verified/{production,development}/`; abschließende Aufnahmen: `artefacts/angular-upgrade/visual/angular-18-theme-geometry-verified/`. Die vorherigen `theme-geometry`-/`theme-geometry-final`-Aufnahmen sind Diagnose-Zwischenstände.
+
+### Jetzt manuell: Zwischencommit
+
+Die geprüften Basiskorrekturen und den isolierten Menü-Prototyp vor der weiteren Komponenten-Angleichung sichern:
+
+```powershell
+git add src scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: restore initial PrimeNG 18 component geometry"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers an einem separaten Commit-Punkt an. Nach dem Commit und `weiter` folgt die verbleibende UI-Angleichung auf Version 18.

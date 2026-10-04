@@ -1,0 +1,347 @@
+{
+  "stage": "Angular 18 basic component geometry and public menu functional experiment; full visual acceptance pending",
+  "startingCommit": "0215538",
+  "angular": "18.2.14",
+  "primeng": "18.0.2",
+  "browser": "154.0.4258.53",
+  "screenshots": 39,
+  "byteIdentical": 0,
+  "pageErrors": 0,
+  "consoleErrors": 0,
+  "knownErrors": 9,
+  "tests": {
+    "total": 39,
+    "publicMenuPrototype": 5,
+    "success": 39
+  },
+  "images": [
+    {
+      "file": "1440x1000-lists.png",
+      "baselineSha256": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca",
+      "currentSha256": "95533a300dfec6cb4c8fdf6a1f5f8fb6db4e479f63260a70c214fbd9a777fa24"
+    },
+    {
+      "file": "1440x1000-import-dialog.png",
+      "baselineSha256": "df949b788d1dcb125f1018505b4565f1c5d97252373bc73ccd970a0f777d4548",
+      "currentSha256": "30f731b9ea0c1bc25c33456bf67b808565f2839b4b375d28499f050500c84773"
+    },
+    {
+      "file": "1440x1000-table.png",
+      "baselineSha256": "1fba567d71c355a096753665ae526e57d60f8614c2ae5f8864cfa8da629f13fe",
+      "currentSha256": "9ea9f0a985a694d487acc0ee2be56ab089a0faf017845638f541acfec1543833"
+    },
+    {
+      "file": "1440x1000-success-message.png",
+      "baselineSha256": "9a55cc2deaa9fe8432bd46b0fb43d6fc451e788f437c0355a310ab87f9aa636a",
+      "currentSha256": "d6f5669bd56f036d7c2e7cb7ab776661c72ec75c1516b911e9c690249e8bb657"
+    },
+    {
+      "file": "1440x1000-table-loading-disabled.png",
+      "baselineSha256": "fdd38268cc9877af9156b9c12d7cb459a4f4fbfb1eb97e666973288a590a3550",
+      "currentSha256": "d5752b51ee52506f483ed66201842d8b891d1ddd9a20dc9565ebdc62ca812a70"
+    },
+    {
+      "file": "1440x1000-table-inline-edit.png",
+      "baselineSha256": "602983fe139a13fffa811047dc7e2665eaa496f2eaf50c4fd60aec3b5ed4973b",
+      "currentSha256": "27476cacb06fb4a977a1232e4a8f8f62cd3f09a69ff4ef87ef7feefbde4db5fe"
+    },
+    {
+      "file": "1440x1000-table-selection.png",
+      "baselineSha256": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325",
+      "currentSha256": "f2565dd1797dfab36bd65916c23a4e241d8f312a3fdb218fb343791cb4332bb5"
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "baselineSha256": "6c0ce8b12894a6cd5f552d0f7688d4f384fb289f4fb29780d681107ff6bc8445",
+      "currentSha256": "c0b03f66e081ed2200cc94933bb3a93d26deb65e2875f0f86b80050ced131141"
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "baselineSha256": "de7a5fef1ee65d8f3a3b1b2b3f4df492eff597aac04463476a83bcf58d5742a2",
+      "currentSha256": "a95ad8c53295a7bc442d2945e6d7620d3925d6513331a4fce79c14874cdf17d3"
+    },
+    {
+      "file": "1440x1000-transfer-progress.png",
+      "baselineSha256": "a0327d8420760b8e84484ddffdeca8a3dba07acb2764ef8bc7e6596bd0d56421",
+      "currentSha256": "039948d7aa53e81f68cf6268fe14c79e726497bf799948353a83906d917511b4"
+    },
+    {
+      "file": "1440x1000-transfer-warning.png",
+      "baselineSha256": "31731f05874f484460240abcf45532c5bcb641866ca295e31f85ed44965f9c23",
+      "currentSha256": "9b030c2e04375ebd2424be0ffd523a6593f97af2e39e6601cc662811796bb21b"
+    },
+    {
+      "file": "1440x1000-delete-confirmation.png",
+      "baselineSha256": "4dc06aac4c8941689cdea61fd5be926d43bb6b38b171318beb0814522b29b779",
+      "currentSha256": "c6189456efea36f7ac6ed16d0315ea6e3e0d06d515384d0176fbb31bdf86617e"
+    },
+    {
+      "file": "1440x1000-empty-table.png",
+      "baselineSha256": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e",
+      "currentSha256": "d763352cfdfc15bdccde7b1d2da9a4e8449799a691830c7d3bbb8be7b5e7ace7"
+    },
+    {
+      "file": "1440x1000-settings.png",
+      "baselineSha256": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726",
+      "currentSha256": "ff17dfe87e5ba794df89959f006ccaf53f85dea5a1b3c97e957b3f47593f7a1e"
+    },
+    {
+      "file": "1440x1000-browse.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "89c50d19f45b4421b313faefdab4035d15324329b62e08dc87cd4b7e914fe021"
+    },
+    {
+      "file": "1440x1000-filter-hover.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "2fc867a1f2e33bfb7bca7b0b44a249ecb5dfc2bdbb8bf19d797f3d8c08dce576"
+    },
+    {
+      "file": "1440x1000-filter-focus.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "2fc867a1f2e33bfb7bca7b0b44a249ecb5dfc2bdbb8bf19d797f3d8c08dce576"
+    },
+    {
+      "file": "1440x1000-color-menu.png",
+      "baselineSha256": "2a6fd447f668e8fe973f2125fa5c710f1ee5c4b670705de9ca86e4d7cef0adc5",
+      "currentSha256": "af86459ed87b494ebffa99c632c5ac6cea73c2f0e967854808ade4c9974cbefa"
+    },
+    {
+      "file": "1440x1000-empty-search.png",
+      "baselineSha256": "19385cb4107fa2141de7037d79eba06de66355f410f08061981c08b2e97fd354",
+      "currentSha256": "1fea42a826bc282502759f689410fce1f52734ecb4719a0debe6b65d9d1e643b"
+    },
+    {
+      "file": "1440x1000-large-search.png",
+      "baselineSha256": "915eabe4d98c5a4a2c44c65684ce487d735e25d73e9906037fd0c4a4a5bf63eb",
+      "currentSha256": "92f03450bd3226ee3ff399f032ae752d148a4eb4b249911609644aa673563a40"
+    },
+    {
+      "file": "1440x1000-large-search-scrolled.png",
+      "baselineSha256": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb",
+      "currentSha256": "bb006605265aa7f8048a29fea52a11fc65c8cb09448cd0fea39ed8d076629f97"
+    },
+    {
+      "file": "390x844-lists.png",
+      "baselineSha256": "4f52f34d250550ee1a32c37c8aa003f39022768ab811de84fc9e2ef1678fc4c6",
+      "currentSha256": "5c1af09a9997e928006d468c4dddc3810178f842e16723b50d3b0b57d86dfd45"
+    },
+    {
+      "file": "390x844-import-dialog.png",
+      "baselineSha256": "6f8dc0eb5e33b9269adc02ed62708b59a3c8851aeb87816f112e72b5fa2fa05c",
+      "currentSha256": "a7820d75bb90c310467cbaf556c76423d106e0f73e34999acae46c79d068f51b"
+    },
+    {
+      "file": "390x844-table.png",
+      "baselineSha256": "525be948636a7fd23d83939daa566f055a99094d149b542d64a24d738778a3a4",
+      "currentSha256": "2bb447909188069935c8fd01f7a26b904e945842ed250881615950b61a9950ea"
+    },
+    {
+      "file": "390x844-empty-table.png",
+      "baselineSha256": "76160d69839acf2a83b701ad34b9355cefa527ca033a5a9fbf73b187664e1c2e",
+      "currentSha256": "6c8f49e7ff41990ff277fab92e95887b2bc4176e3c02a5c4c0a45a7f8d30ece4"
+    },
+    {
+      "file": "390x844-settings.png",
+      "baselineSha256": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719",
+      "currentSha256": "d1b7efa0516ccc385be43b4db7ec2f35ba1065bc5d182cf014aa778217acaa8e"
+    },
+    {
+      "file": "390x844-browse.png",
+      "baselineSha256": "b19a1ea429919cb7030850594de63008ace6390f37c3326fa383917bdaf89ea7",
+      "currentSha256": "3665696aef03f06d4800f53992f4ab22ce8c390f32d46fb42907e3e898be161f"
+    },
+    {
+      "file": "2560x1440-lists.png",
+      "baselineSha256": "8fef4acc75550e7c4b3b1563ac8b8950d63e10f6d98d6eac226ba2261e8c65a5",
+      "currentSha256": "35c7a2379cf855a2d322d5d235b91316484eadef97d4f31f2c74ca2d40bab579"
+    },
+    {
+      "file": "2560x1440-import-dialog.png",
+      "baselineSha256": "4b558e5f1ad65de965245420fca15fefd3cc083205cbcc23dbf9772c91bffc95",
+      "currentSha256": "5a8545d00d962b7eac0a0e97e9639bd53a2d65ab11a0e6b770a5aefc269f96fe"
+    },
+    {
+      "file": "2560x1440-table.png",
+      "baselineSha256": "9d0448f7dd1d90d6871b521c2e868dda4d17d57105fde8ea86bbcdcd6fe2cb19",
+      "currentSha256": "ec8f0ce99e4939ef0b9f44c433d651257905deaa06ab6fadd75c8a4d30fdfac8"
+    },
+    {
+      "file": "2560x1440-empty-table.png",
+      "baselineSha256": "fb206cdf3fa3e4cdfaeabab3486d13260f425f048cc80dc5330cb81a4f6d9fe9",
+      "currentSha256": "1fca05b648a382da1099a45018613a990851a563effc1b17e7d221d9013b0d41"
+    },
+    {
+      "file": "2560x1440-settings.png",
+      "baselineSha256": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4",
+      "currentSha256": "f22742a975f7ad9abeacb1936b2652773e1ab1d0aa97c97ddf30c4043c5882c0"
+    },
+    {
+      "file": "2560x1440-browse.png",
+      "baselineSha256": "fd1445ea80927fb9bde3a42352bac72f128c8fd2fe75dc7a70a10c8f256d7fc9",
+      "currentSha256": "4c9e711280f768dd4331c68ef736a5f04973fd28bfbcac19cca9e2a2d9cfc095"
+    },
+    {
+      "file": "3200x1440-lists.png",
+      "baselineSha256": "db1d513274b920f9eea5fdf1eddaf22408c0492d54e07ce660a1637c8484f7b3",
+      "currentSha256": "34961f4d5116bed0a249599e1c3d25b28497d07ee7d2e85a8f96e4fdd2af8072"
+    },
+    {
+      "file": "3200x1440-import-dialog.png",
+      "baselineSha256": "1da658b9739f4aa9079c15236b21c1786dcbcae41a975446ae8e164e830e9186",
+      "currentSha256": "27895499c207d83caeb89481abba658d3270da7ded7e8524d34c5edbef145730"
+    },
+    {
+      "file": "3200x1440-table.png",
+      "baselineSha256": "ce9425beb28b804451a5b0b8fc06dd4b77d7ffd9ff9bdab8dd224775cfc08806",
+      "currentSha256": "2ae9a7215c825d4a973b1f70e486520e2db87d82e84c815028666c5b11f407a5"
+    },
+    {
+      "file": "3200x1440-empty-table.png",
+      "baselineSha256": "c9cc38d70cb0c8715e738bf14477ca90a50f19675b67231d3e80b64d600d5019",
+      "currentSha256": "759a9f1e9368d7ae0d07776fffa00f78f6a51daa6e0f7ead64d615bd1be35e27"
+    },
+    {
+      "file": "3200x1440-settings.png",
+      "baselineSha256": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33",
+      "currentSha256": "3597cabd9f87dd3991d4793a9b0f03e2aa014eb746465c956dbf30cd364149a0"
+    },
+    {
+      "file": "3200x1440-browse.png",
+      "baselineSha256": "373f583e6fa6095ce98ac069fa27b4e7159c990e62698148c54c717866263d1d",
+      "currentSha256": "2487b344ba16481eaf4b6d2936d9be2ba6c1563e74324a9a1c8f4c764cb1974d"
+    }
+  ],
+  "referenceMeasurements": {
+    "button": {
+      "before": {
+        "width": 252,
+        "height": 41.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgb(255, 255, 255)",
+        "backgroundColor": "rgb(10, 52, 99)",
+        "borderRadius": "4px",
+        "padding": "11.424px 16px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 252,
+        "height": 41.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgb(255, 255, 255)",
+        "backgroundColor": "rgb(10, 52, 99)",
+        "borderRadius": "4px",
+        "padding": "11.424px 16px",
+        "boxShadow": "none"
+      }
+    },
+    "card": {
+      "before": {
+        "width": 196.390625,
+        "height": 320,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "8px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 196.390625,
+        "height": 320,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "8px",
+        "boxShadow": "none"
+      }
+    },
+    "partRow": {
+      "before": {
+        "width": 1322,
+        "height": 91,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 1322,
+        "height": 91,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none"
+      }
+    },
+    "navigationWidth": {
+      "before": 60,
+      "after": 60
+    },
+    "cardContent": {
+      "width": 252,
+      "height": 220.84375,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "16px 0px",
+      "boxShadow": "none"
+    },
+    "tag": {
+      "width": 71.046875,
+      "height": 22,
+      "fontSize": "12px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(33, 37, 41)",
+      "backgroundColor": "rgb(251, 192, 45)",
+      "borderRadius": "4px",
+      "padding": "4px 6.4px",
+      "boxShadow": "none"
+    },
+    "inputGroup": {
+      "width": 503,
+      "height": 53,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none"
+    }
+  },
+  "extensionOutputs": {
+    "production": {
+      "requiredFilesPresent": true,
+      "manifestUnchanged": true,
+      "standaloneExtensionEntries": true,
+      "fixtureAndPrototypeMarkersAbsent": true
+    },
+    "development": {
+      "requiredFilesPresent": true,
+      "manifestUnchanged": true,
+      "standaloneExtensionEntries": true,
+      "fixtureAndPrototypeMarkersAbsent": true
+    }
+  },
+  "pending": [
+    "Categories/tree geometry",
+    "SelectButton/ToggleSwitch/Checkbox and disabled states",
+    "Paginator and icons",
+    "Dialogs and messages",
+    "Messages/TabMenu replacement",
+    "Public menu production integration and visual comparison"
+  ]
+}
