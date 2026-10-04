@@ -206,6 +206,7 @@ export const BrickHunterPreset = definePreset(Material, {
     datatable: {
       headerCell: {
         padding: '1rem',
+        borderColor: '#e4e4e4',
         selectedBackground: '#ffffff',
         selectedColor: 'rgba(0, 0, 0, 0.87)',
       },
@@ -213,6 +214,9 @@ export const BrickHunterPreset = definePreset(Material, {
       columnTitle: { fontWeight: '500' },
       // SortIcon in 18.0.2 still emits the legacy class, unlike Table's own CSS.
       css: options => `${Material.components.datatable.css(options)}
+        .p-datatable p-sorticon .p-iconwrapper { display: inline; }
+        /* BaseIcon 18 emits unlayered baseline alignment; restore the legacy table alignment. */
+        .p-datatable p-sorticon svg.p-sortable-column-icon { vertical-align: middle !important; }
         .p-datatable .p-sortable-column-icon { color: rgba(0, 0, 0, 0.6); margin-left: 0.5rem; vertical-align: middle; width: 0.875rem; height: 0.875rem; }
         .p-datatable .p-datatable-column-sorted .p-sortable-column-icon { color: rgba(0, 0, 0, 0.87); }
         .p-datatable-thead .p-button { min-height: 1.4375rem; }

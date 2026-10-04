@@ -639,3 +639,38 @@ git commit -m "fix: restore ToggleSwitch geometry and interaction states"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 17: Tabellenkopf und Sortiericon-Ausrichtung
+
+Ausgangspunkt: Commit **`f4d5976`**, der ToggleSwitch-Geometrie und Zustandsdarstellung (Commit-Punkt 16) sichert. Paketversionen und Lockfile bleiben unverändert auf Angular **18.2.14** / PrimeNG **18.0.2**.
+
+### Erfolgreich umgesetzt
+
+- Untere Tabellenkopf-Rahmenfarbe über den öffentlichen **`headerCell.borderColor`-Token** wieder auf **#e4e4e4** gesetzt. Die bisherige Material-Vorgabe **#e0e0e0** verursachte in der Desktopaufnahme eine abweichende Linie von **1.322 Pixeln**. Rahmenbreite und Tabellengeometrie bleiben erhalten.
+- Die bisherige Inline-Ausrichtung der Sortiericons wiederhergestellt. PrimeNG 17 verwendete `.p-icon-wrapper` mit einer Inline-Regel für Tabellen; PrimeNG 18 verwendet `.p-iconwrapper` mit Inline-Flex. Der neue Wrapper erhält deshalb ausschließlich innerhalb von `p-sorticon` einer Tabelle wieder `display: inline`.
+- Das Sortier-SVG verwendet ausdrücklich die bisherige `vertical-align: middle`-Ausrichtung. PrimeNG 18 lädt für BaseIcon eine Regel außerhalb der Theme-Layer, deshalb ist an diesem begrenzten SVG-Selektor `!important` erforderlich. Die Korrektur ersetzt keine Glyphen, sondern stellt die ursprüngliche Platzierung wieder her. Die sechs unsortierten SVGs bleiben **14 × 14 px** mit **8 px** Abstand und bisheriger Farbe; sortierte Zustände behalten ihre vorhandene Farbe.
+- Eine neue Browserprüfung ergänzt die bisherigen 29: Tabellenkopfhöhe **56 px**, untere Rahmenfarbe und Größe/Ausrichtung aller sechs Sortiericons. Der Bericht erfasst zusätzlich Icon-Positionen und Wrapper-Display. Bestehende Browserprüfungen sortieren weiterhin per Enter auf- und absteigend und prüfen die sortierte Hover-/Fokus-Darstellung.
+
+API-Grundlage: [PrimeNG 18 Table](https://v18.primeng.org/table). Token, Wrapper und BaseIcon-Regeln wurden gegen die installierten 18.0.2-Quellen sowie den erhaltenen Angular-17-Entwicklungsbuild geprüft.
+
+### Validierung und verbleibende Arbeit
+
+- **45 Tests erfolgreich** mit Headless Edge, Exitcode 0. Die abschließenden CSS-Ausrichtungskorrekturen sind zusätzlich durch die folgenden Builds und Browserläufe geprüft. Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang **2.34 MB**, unter der unveränderten 3-MB-Fehlergrenze; bisherige Budget-/CommonJS-Warnungen bestehen fort.
+- Reguläre Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden; Chrome-Manifest byteidentisch zur Quelle; standalone Extension-Einstiege ohne `webpackChunk`-Verweise; keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Zwei Abschlussläufe mit jeweils **39 Hauptszenarien plus 28 Zusatzbildern**, **30 erfolgreichen Browserprüfungen**, ohne aufgezeichnete Konsolen-/Browserfehler oder bekannte NG0100-Meldungen. Die vorhandenen Sortier-/Hover-/Fokusprüfungen laufen weiterhin erfolgreich; es wurden keine neuen Zusatzbilder benötigt.
+- Wiederholung insgesamt **64/67 PNGs byteidentisch** (**36/39 Hauptbilder**, **28/28 Zusatzbilder**). Drei Hauptbilder unterscheiden sich ausschließlich in jeweils **vier Pixeln** am rechten Ende der Tabs-Unterstreichung: Transferfortschritt bei 1440 px, leere Tabelle bei 390 px und Tabelle bei 3200 px. Renderer, GPU-Compositing und Rasterization stimmen vor/nach beiden Läufen überein. Die kleine Restabweichung bleibt dokumentiert und wird nicht ausgeblendet.
+- Zur Originalreferenz sind im ersten Abschlusslauf **5/39 Hauptbilder byteidentisch**: die vier Settings-Seiten und die Tabelle bei 3200 px. Im Wiederholungslauf hat diese 3200-px-Tabelle die erwähnte Vier-Pixel-Abweichung; ihre allgemeine Byteidentität ist daher nicht nachgewiesen. Gegen Commit-Punkt 16 bleiben **15/39 Hauptbilder unverändert**.
+- Die Desktop-Teiletabelle bei 1440 px hat nun nur noch **4** statt **1.890** unterschiedliche Pixel zur Originalreferenz, ausschließlich an der Tab-Unterstreichung. Der Tabellenkopf im dokumentierten **1.322 × 56-px-Rechteck** ist pixelgleich, einschließlich der Sortierpfeile und Rahmenlinie. Die übrigen Szenarien sind weiterhin keine vollständige UI-Abnahme. Standardbutton **41.84375 px**, Karten **196.390625 × 320 px / 8 px Padding**, Tabellenkopf **56 px**, Teilezeilen **91 px**, Navigation **60 px** und Transferwarndialog **720 × 755.84375 px** bleiben erhalten. Erfolgstoast weiterhin im dokumentierten **400 × 86-px-Bereich pixelgleich**. Prüfsummen, Vergleichsrechtecke, Header-/Icon-Messwerte und Output-/Interaktionsprüfungen: [angular-18-header-check.json](angular-upgrade-reference/angular-18-header-check.json). Originalbilder bleiben unverändert.
+
+Noch offen: übrige Icon- und Auswahlkomponenten-Zustände, vollständige Menü-/Overlay-/Dateiauswahl-Abnahme, vollständiger Button-Abgleich und übrige Referenzabweichungen einschließlich gelegentlicher Rasterunterschiede an der Tabs-Unterstreichung. **Angular 19 bleibt bis zur vollständigen UI-Abnahme auf Version 18 zurückgestellt.**
+
+Logs: `artefacts/angular-upgrade/angular-18/header-tests.log`, `header-visual-build-complete.log`, `header-production-complete.log`, `header-development-complete.log`, `header-capture-complete.log` und `header-capture-complete-repeat.log`. Outputs: `artefacts/angular-upgrade/angular-18/header-verified/{production,development}/`. Abschlussbilder: `artefacts/angular-upgrade/visual/angular-18-header-complete/` und `angular-18-header-complete-repeat/`. Accepted-/Verified-Aufnahmen dieses Abschnitts sind Diagnose-Zwischenstände.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src/app/shared/theme/brickhunter-preset.ts scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: align table header borders and sort icons"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

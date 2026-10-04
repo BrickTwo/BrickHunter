@@ -112,6 +112,7 @@ async function main() {
             '.p-toast', '.p-toast-message', '.p-toast-message-content', '.p-toast-message-icon',
             '.p-toast-message-text', '.p-toast-summary', '.p-toast-detail', '.p-toast-close-button',
             '.p-tablist', '.p-tablist-active-bar', '.p-sortable-column-icon',
+            '.p-datatable-thead th',
             '.p-datatable-tbody tr:nth-child(2)', 'app-pab-price .p-tag',
             'app-pab-price .p-tag-info', 'app-pab-price .p-tag-danger',
             '.p-select', '.p-select-label', '.p-select-dropdown', '.p-select-overlay', '.p-select-option'];
@@ -301,6 +302,21 @@ async function main() {
           }
         }
         const quantityHeader = page.locator('app-parts-table th[pSortableColumn="qty"]');
+        report.tableHeaderMeasurements = await page.locator('app-parts-table .p-datatable-thead').evaluate(header => {
+          const row = header.querySelector('tr'), cell = header.querySelector('th');
+          return { height: row.getBoundingClientRect().height, borderColor: getComputedStyle(cell).borderBottomColor,
+            icons: [...header.querySelectorAll('p-sorticon svg.p-sortable-column-icon')].map(icon => {
+              const rect = icon.getBoundingClientRect();
+              return { wrapperDisplay: getComputedStyle(icon.parentElement).display,
+                verticalAlign: getComputedStyle(icon).verticalAlign, width: rect.width, height: rect.height,
+                x: rect.x, y: rect.y, color: getComputedStyle(icon).color };
+            }) };
+        });
+        const headerMeasurement = report.tableHeaderMeasurements;
+        if (headerMeasurement.height !== 56 || headerMeasurement.borderColor !== 'rgb(228, 228, 228)' ||
+          headerMeasurement.icons.length !== 6 || headerMeasurement.icons.some(icon => icon.wrapperDisplay !== 'inline' || icon.verticalAlign !== 'middle' || icon.width !== 14 || icon.height !== 14))
+          throw new Error('Table header border, geometry or sort icon alignment changed');
+        report.interactionChecks.tableHeaderBorderAndSortIconAlignment = true;
         await quantityHeader.press('Enter');
         await page.waitForFunction(() => {
           const table = window.ng.getComponent(document.querySelector('app-parts-table'));
