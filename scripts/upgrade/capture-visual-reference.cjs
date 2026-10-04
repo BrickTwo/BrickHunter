@@ -707,6 +707,107 @@ async function main() {
         if (remainingListeners !== 0) throw new Error(`Destroyed menu left ${remainingListeners} audited listeners`);
         report.menuMeasurements.listenerAudit = { registeredListeners, remainingListeners };
         report.interactionChecks.menuRouteDestroyRemovesListenersAndKeyboardNavigation = true;
+
+        report.checkboxMeasurements = {};
+        async function checkboxStyle(input, name, checked, disabled = false, halo) {
+          await page.waitForTimeout(250);
+          const style = await input.evaluate(element => {
+            const root = element.closest('.p-checkbox'), box = root.querySelector('.p-checkbox-box');
+            const rect = box.getBoundingClientRect(), css = getComputedStyle(box);
+            const icon = box.querySelector('svg'), iconRect = icon?.getBoundingClientRect();
+            return { width: rect.width, height: rect.height, borderWidth: css.borderTopWidth,
+              borderRadius: css.borderRadius, borderColor: css.borderTopColor, background: css.backgroundColor,
+              opacity: getComputedStyle(root).opacity, shadow: getComputedStyle(root).boxShadow,
+              pseudoContent: getComputedStyle(box, '::before').content,
+              iconWidth: iconRect?.width, iconHeight: iconRect?.height, iconColor: icon && getComputedStyle(icon).color,
+              checked: element.checked, disabled: element.disabled };
+          });
+          report.checkboxMeasurements[name] = style;
+          const expected = { width: 18, height: 18, borderWidth: '2px', borderRadius: '2px',
+            borderColor: checked ? 'rgb(10, 52, 99)' : 'rgb(117, 117, 117)',
+            background: checked ? 'rgb(10, 52, 99)' : 'rgb(255, 255, 255)',
+            opacity: disabled ? '0.38' : '1', pseudoContent: 'none', checked, disabled };
+          if (checked) Object.assign(expected, { iconWidth: 14, iconHeight: 14, iconColor: 'rgb(255, 255, 255)' });
+          for (const [property, value] of Object.entries(expected)) {
+            if (style[property] !== value) throw new Error(`${name}: ${property}=${style[property]}, expected ${value}`);
+          }
+          if (halo ? !style.shadow.includes(halo) : style.shadow !== 'none')
+            throw new Error(`${name}: unexpected checkbox shadow ${style.shadow}`);
+        }
+        async function openCheckboxSettings() {
+          await open('parts-lists/upgrade-reference');
+          await page.getByRole('button', { name: 'Settings', exact: true }).click();
+          await page.locator('app-parts-list-settings .p-drawer').waitFor();
+          await settle();
+        }
+        await openCheckboxSettings();
+        const settingsCheckbox = page.locator('#ignoreBrickLinkPrices');
+        await page.mouse.move(600, 60);
+        await checkboxStyle(settingsCheckbox, 'off-rest', false);
+        await settingsCheckbox.hover();
+        await checkboxStyle(settingsCheckbox, 'off-hover', false, false, 'rgba(0, 0, 0, 0.04)');
+        await additionalCapture('checkbox-off-hover');
+        await settingsCheckbox.focus();
+        await checkboxStyle(settingsCheckbox, 'off-focus-hover', false, false, 'rgba(0, 0, 0, 0.12)');
+        await additionalCapture('checkbox-off-focus');
+        await settingsCheckbox.press('Space');
+        if (!await page.evaluate(() => window.ng.getComponent(document.querySelector('app-parts-list-settings')).form.value.ignoreBrickLinkPrices === true))
+          throw new Error('Checkbox Space did not update the settings form');
+        await checkboxStyle(settingsCheckbox, 'on-focus-hover', true, false, 'rgba(10, 52, 99, 0.12)');
+        await additionalCapture('checkbox-on-focus');
+        await settingsCheckbox.evaluate(element => element.blur());
+        await settingsCheckbox.hover();
+        await checkboxStyle(settingsCheckbox, 'on-hover', true, false, 'rgba(10, 52, 99, 0.04)');
+        await additionalCapture('checkbox-on-hover');
+        await settingsCheckbox.click();
+        if (await settingsCheckbox.isChecked()) throw new Error('Checkbox mouse click did not clear the value');
+        await page.locator('label[for="ignoreBrickLinkPrices"]').click();
+        if (!await settingsCheckbox.isChecked()) throw new Error('Checkbox label did not set the value');
+        await page.locator('app-parts-list-settings').getByRole('button', { name: 'Save', exact: true }).click();
+        await page.locator('app-parts-list-settings .p-drawer').waitFor({ state: 'hidden' });
+        await page.getByRole('button', { name: 'Settings', exact: true }).click();
+        await page.locator('app-parts-list-settings .p-drawer').waitFor();
+        if (!await settingsCheckbox.isChecked() || !await page.evaluate(() => window.ng.getComponent(document.querySelector('app-parts-list-settings')).globalSettingsService.ignoreBrickLinkPrices === true))
+          throw new Error('Checkbox settings value was not persisted');
+        report.interactionChecks.checkboxMouseSpaceLabelAndSettingsSave = true;
+
+        for (const checked of [false, true]) {
+          await openCheckboxSettings();
+          await page.evaluate(checked => {
+            const settings = window.ng.getComponent(document.querySelector('app-parts-list-settings'));
+            settings.form.controls.ignoreBrickLinkPrices.setValue(checked);
+            settings.form.controls.ignoreBrickLinkPrices.disable();
+            window.ng.applyChanges(settings);
+          }, checked);
+          await settingsCheckbox.hover({ force: true });
+          await checkboxStyle(settingsCheckbox, `${checked ? 'on' : 'off'}-disabled`, checked, true);
+          await settingsCheckbox.click({ force: true });
+          await page.locator('label[for="ignoreBrickLinkPrices"]').click({ force: true });
+          await checkboxStyle(settingsCheckbox, `${checked ? 'on' : 'off'}-disabled-after-click-and-label`, checked, true);
+          if (!await page.evaluate(checked => window.ng.getComponent(document.querySelector('app-parts-list-settings')).form.getRawValue().ignoreBrickLinkPrices === checked, checked))
+            throw new Error('Disabled checkbox changed its form value');
+          await additionalCapture(`checkbox-${checked ? 'on' : 'off'}-disabled`);
+        }
+        report.interactionChecks.checkboxDisabledOnOffBlocksInputAndLabel = true;
+
+        await open('parts-lists/upgrade-reference');
+        const rowCheckbox = page.locator('app-parts-table .p-datatable-tbody input[type="checkbox"]').first();
+        const headerCheckbox = page.locator('app-parts-table .p-datatable-thead input[type="checkbox"]');
+        await rowCheckbox.press('Space');
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-table')).selectedParts.length === 1);
+        await checkboxStyle(rowCheckbox, 'table-row-selected', true, false, 'rgba(10, 52, 99, 0.12)');
+        await headerCheckbox.press('Space');
+        await page.waitForFunction(() => {
+          const table = window.ng.getComponent(document.querySelector('app-parts-table'));
+          return table.selectedParts.length === table.parts.length;
+        });
+        if ((await page.locator('app-parts-table .p-datatable-tbody input[type="checkbox"]').evaluateAll(inputs => inputs.filter(input => input.checked).length)) !== 8)
+          throw new Error('Header checkbox did not select all eight fixture parts');
+        await headerCheckbox.press('Space');
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-table')).selectedParts.length === 0);
+        if (await page.locator('app-parts-table .p-datatable-tbody input[type="checkbox"]').evaluateAll(inputs => inputs.some(input => input.checked)))
+          throw new Error('Header checkbox did not clear the row selections');
+        report.interactionChecks.checkboxTableRowAndHeaderSpaceSelection = true;
       }
       await context.close();
     }

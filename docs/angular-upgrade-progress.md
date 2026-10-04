@@ -709,3 +709,39 @@ git commit -m "fix: preserve menu focus and close popups on window scroll"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 19: Checkbox-Häkchen, Host-Geometrie und Zustände
+
+Ausgangspunkt: Commit **`616faec`** (Menüfokus und Fenster-Scrollen). Paketversionen und Lockfile bleiben auf Angular **18.2.14** / PrimeNG **18.0.2**.
+
+### Erfolgreich umgesetzt
+
+- Das Material-18-CSS-Häkchen durch das weiterhin öffentlich gerenderte **CheckIcon-SVG mit 14 × 14 px** abgelöst: Die Checkbox-CSS-Erweiterung des Presets wird gezielt ersetzt, damit sie das SVG nicht versteckt und kein größeres Pseudo-Häkchen erzeugt. Der SVG-Pfad stimmt mit dem erhaltenen PrimeNG-17-Bundle überein. Root/Box bleiben **18 × 18 px**, Rahmen **2 px**, Radius **2 px**.
+- Die im PrimeNG-17-Komponentenstil vorhandene Host-Regel für `p-checkbox` wiederhergestellt: **inline-flex**, vertikale Ausrichtung **bottom**, zentrierte Items. PrimeNG 18 liefert diese Host-Regel nicht mehr. Damit wird die zusätzliche Inline-Zeilenbox der Checkbox-Hosts entfernt und die 1-px-Verschiebung der folgenden Settings-Felder korrigiert. Die Listenübersicht wird dadurch nicht vollständig angeglichen.
+- Hover-/Fokus-Halos wieder mit den ursprünglichen schwarzen/blauen Farben und **0.04/0.12** Deckkraft. Fokus gilt auch nach Mausklick und bleibt bei gleichzeitigem Hover sichtbar. Disabled verwendet wieder **0.38** Deckkraft am gesamten Checkbox-Root; ausgeschaltet weiße Box/grauer Rahmen, eingeschaltet blaue Box/blauer Rahmen mit weißem SVG. Disabled erhält keinen Halo.
+- Drei Browserprüfungen ergänzt: Maus/Space/Label mit Reactive-Form-Modell und Speichern/Wiederöffnen; deaktivierte Checkbox an/aus mit tatsächlichem Klickversuch auf Input und Label ohne Wertänderung; einzelne Tabellenzeile sowie Auswahl aller acht Testteile und vollständiges Abwählen per Space am Tabellenkopf. Disabled wird ausschließlich über die öffentliche FormControl-API in der isolierten Fixture gesetzt.
+- Sechs Zusatzbilder sichern Hover, Fokus und Disabled jeweils an/aus; der Bericht erfasst Boxmaße, Rahmen, Farben, Schatten, Deckkraft, SVG-Maße und tatsächliche Inputzustände. Die ursprünglichen Referenzbilder bleiben erhalten.
+
+Quellengrundlage: ursprüngliche Theme-Datei und erhaltener Angular-17-Entwicklungsbuild; aktuelle Checkbox-/CheckIcon-Quellen und Material-Preset aus den installierten PrimeNG-18.0.2-Paketen.
+
+### Validierung und verbleibende Arbeit
+
+- **46 Tests erfolgreich**, Exitcode 0. Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich; die abschließende Host-CSS-Korrektur ist zusätzlich durch alle drei Builds und beide Browserläufe geprüft. Produktionsumfang **2.34 MB**, Budgets unverändert; bestehende Budget-/CommonJS-Warnungen bleiben bestehen.
+- Reguläre Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden, Chrome-Manifest byteidentisch, standalone Extension-Einstiege ohne `webpackChunk`-Verweise und keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Zwei Abschlussläufe mit jeweils **39 Hauptszenarien plus 36 Zusatzbildern**, **39 erfolgreichen Browserprüfungen**, ohne aufgezeichnete Browser-/Konsolenfehler oder bekannte NG0100-Meldungen. Alle sechs neuen Checkbox-Zustandsbilder sind byteidentisch; eingeschalteter Disabled-Zustand wurde zusätzlich visuell geprüft.
+- Wiederholung **67/75 PNGs byteidentisch** (**33/39 Hauptbilder**, **34/36 Zusatzbilder**). Acht andere Bilder unterscheiden sich ausschließlich in jeweils **vier Pixeln** am Ende der Tabs-Unterstreichung; Pixelgrenzen stehen im Bericht. D3D11-Renderer, GPU-Compositing und Rasterization stimmen vor/nach beiden Läufen überein.
+- Zur Originalreferenz **7/39 Hauptbilder byteidentisch**: vier Settings-Seiten sowie leere Teiletabelle bei 1440, 2560 und 3200 px. Gegen Commit-Punkt 18 **31/39 Hauptbilder unverändert**. Das Desktop-Auswahlbild hat nun **884** statt **2.317** unterschiedliche Pixel. Das ausgewählte Tabellen-Häkchen ist im geprüften **18 × 18-px-Rechteck** pixelgleich; im kompletten Auswahlbild bleiben **880 Pixel im Hover-/Fokusbereich** und vier Pixel an der Tabs-Unterstreichung. Beim Drawer-Häkchen verbleiben im geprüften 18-px-Rechteck vier Eckpixel. Diese Restabweichungen werden nicht als abgenommen behandelt.
+- Die Desktop-Teiletabelle ohne Auswahl hat weiterhin nur vier unterschiedliche Pixel; ihr Tabellenkopf im dokumentierten Rechteck und der Erfolgstoast bleiben pixelgleich. Die Listenübersicht hat unverändert **11.030** unterschiedliche Pixel; die Settings-Drawer-Aufnahme **100.363** statt **105.244**. Eine vollständige Gleichheit dieser Ansichten ist damit nicht nachgewiesen. Messwerte, Prüfsummen, Vergleichsrechtecke und Output-/Interaktionsprüfungen: [angular-18-checkbox-check.json](angular-upgrade-reference/angular-18-checkbox-check.json).
+
+Noch offen vor Angular 19: Tabellencheckbox-Hover/Fokus bei Mausbedienung und vier Drawer-Checkbox-Eckpixel, übrige Icon-/Auswahlkomponenten-Zustände, verbleibender Menü-/Overlay-/Dateiauswahl-Abgleich, vollständiger Button-Abgleich und übrige Referenzabweichungen. Die funktionalen Checkbox-Prüfungen und die hier dokumentierten Zustandswerte sind erfolgreich; die vollständige UI-Abnahme bleibt offen. **Angular 19 wird noch nicht gestartet.**
+
+Logs: `artefacts/angular-upgrade/angular-18/checkbox-tests.log`, `checkbox-visual-build-complete.log`, `checkbox-production-complete.log`, `checkbox-development-complete.log`, `checkbox-capture-final.log`, `checkbox-capture-final-repeat.log` und `checkbox-comparison.log`. Outputs: `artefacts/angular-upgrade/angular-18/checkbox-verified/{production,development}/`. Abschlussbilder: `artefacts/angular-upgrade/visual/angular-18-checkbox-final/` und `angular-18-checkbox-final-repeat/`. Verified-/Complete-Aufnahmen dieses Abschnitts sind Diagnose-Zwischenstände: zunächst verweigerte Playwright den Labelklick einer deaktivierten Checkbox; danach wurde eine Aufnahme durch den währenddessen erneuerten Referenzbuild unterbrochen. Beide Abschlussläufe sind ohne diese Fehler erfolgreich.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src/app/shared/theme/brickhunter-preset.ts scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: restore checkbox SVG and interaction states"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

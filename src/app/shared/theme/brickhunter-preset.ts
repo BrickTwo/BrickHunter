@@ -153,7 +153,25 @@ export const BrickHunterPreset = definePreset(Material, {
       root: { gap: '0' },
       node: { padding: '0.5rem', borderRadius: '4px', gap: '0' },
     },
-    checkbox: { root: { borderColor: '#757575', hoverBorderColor: '#757575', focusBorderColor: '#757575' } },
+    checkbox: {
+      root: {
+        borderColor: '#757575', hoverBorderColor: '#757575', focusBorderColor: '#757575',
+        disabledBackground: '#ffffff', checkedDisabledBorderColor: '#757575',
+      },
+      // Keep the public CheckIcon SVG used in 17 instead of Material 18's larger CSS tick.
+      css: `
+        p-checkbox { display: inline-flex; vertical-align: bottom; align-items: center; }
+        .p-checkbox { border-radius: 50%; transition: box-shadow 0.2s; }
+        .p-checkbox-box { border-width: 2px; }
+        .p-checkbox:not(.p-disabled):has(.p-checkbox-input:hover) { box-shadow: 0 0 1px 10px rgba(0, 0, 0, 0.04); }
+        .p-checkbox.p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:hover) { box-shadow: 0 0 1px 10px rgba(10, 52, 99, 0.04); }
+        .p-checkbox:not(.p-disabled):has(.p-checkbox-input:focus) { box-shadow: 0 0 1px 10px rgba(0, 0, 0, 0.12); }
+        .p-checkbox.p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:focus) { box-shadow: 0 0 1px 10px rgba(10, 52, 99, 0.12); }
+        .p-checkbox.p-disabled { opacity: 0.38; }
+        .p-checkbox.p-checkbox-checked.p-disabled .p-checkbox-box { background: #0a3463; border-color: #0a3463; }
+        .p-checkbox.p-checkbox-checked.p-disabled .p-checkbox-icon { color: #ffffff; }
+      `,
+    },
     togglebutton: {
       root: { padding: '0.714rem 1rem', borderColor: 'rgba(0, 0, 0, 0.12)', checkedBorderColor: '#e0e0e1' },
       colorScheme: { light: { root: { hoverBackground: '#f6f6f6', checkedBackground: '#e0e0e1' } } },
