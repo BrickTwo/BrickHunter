@@ -26,7 +26,7 @@
         *ngIf="sortDirection === 'ASC'">
         <i class="fa fa-arrow-down-z-a"></i>
       </span>
-      <p-dropdown
+      <p-select
         [options]="sortOptions"
         [(ngModel)]="selectedSort"
         optionLabel="name"
@@ -36,7 +36,7 @@
           'border-top-left-radius': '0px',
           'border-bottom-left-radius': '0px'
         }"
-        (onChange)="onChangeSort($event.value)"></p-dropdown>
+        (onChange)="onChangeSort($event.value)"></p-select>
     </div>
     <div class="field col-12">
       <div class="flex justify-content-between">
@@ -54,9 +54,9 @@
           optionValue="value"
           (onChange)="onDeliveryChannelsChange($event.value)"></p-selectButton>
         <span>
-          <p-overlayPanel #op>
+          <p-popover #op>
             Shows parts that are no longer available in any set at the specified time.
-          </p-overlayPanel>
+          </p-popover>
           <p-button
             (click)="op.toggle($event)"
             icon="fa fa-circle-info"
@@ -64,7 +64,7 @@
             styleClass="p-button-text p-button-sm p-button-rounded info-button"
             class="atRiskAsOfButton"></p-button>
           At risk as of:
-          <p-calendar
+          <p-datepicker
             [(ngModel)]="atRiskAsOf"
             view="month"
             dateFormat="mm/yy"
@@ -74,13 +74,13 @@
             (onSelect)="onChangeAtRiskAsOf($event)"
             (onClear)="onChangeAtRiskAsOf($event)"
             (onClearClick)="onChangeAtRiskAsOf($event)"
-            [minDate]="minDate"></p-calendar>
+            [minDate]="minDate"></p-datepicker>
         </span>
         <div class="flex flex-nowrap align-items-center gap-1">
-          <p-inputSwitch
+          <p-toggleswitch
             [(ngModel)]="onlyPrinted"
             inputId="onlyPrinted"
-            (onChange)="onChangeOnlyPrinted($event.checked)"></p-inputSwitch>
+            (onChange)="onChangeOnlyPrinted($event.checked)"></p-toggleswitch>
           <label for="onlyPrinted">Only Printed</label>
         </div>
       </div>

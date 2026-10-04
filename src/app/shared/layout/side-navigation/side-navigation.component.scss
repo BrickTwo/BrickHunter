@@ -1,20 +1,20 @@
 :host {
-  ::ng-deep.p-sidebar-left {
+  ::ng-deep.p-drawer-left {
     width: 60px;
     transition: 200ms;
   }
 
-  ::ng-deep.p-sidebar-left:hover {
+  ::ng-deep.p-drawer-left:hover {
     width: 250px;
     transition: 100ms;
   }
 
-  ::ng-deep.p-sidebar-content {
+  ::ng-deep.p-drawer-content {
     padding: 0px;
     overflow: hidden;
   }
 
-  ::ng-deep.p-sidebar-header {
+  ::ng-deep.p-drawer-header {
     padding: 0px;
     overflow: hidden;
   }
@@ -23,7 +23,7 @@
     background: #0a3463;
   }
 
-  ::ng-deep.p-sidebar {
+  ::ng-deep.p-drawer {
     background: #fff;
     color: rgba(0, 0, 0, 0.87);
     border: 0 none;

@@ -87,3 +87,7 @@ Erneute offizielle npm-Abfrage am 4. Oktober 2026. Noch **nicht installiert**. D
 | TypeScript / Zone.js | 5.5.4 / 0.14.10 |
 
 Node 20.20.2 erfüllt die Angular-18-Anforderungen. Alle Framework-Pakete einschließlich Platform-Browser-Dynamic müssen gemeinsam aktualisiert werden. Das Theme und die geänderte PrimeNG-Konfiguration werden im selben Migrationsabschnitt umgesetzt; Details im [Fortschrittsprotokoll](angular-upgrade-progress.md).
+
+### Installierter Grundmigrationsstand
+
+Die oben genannten 18er-Kandidaten sind inzwischen installiert. Zusätzlich durch die offizielle Migration ergänzt: **`@ngrx/operators` 18.1.1**. Tooling-Auflösung: **tslib 2.6.3**, **Autoprefixer 10.4.20**, **PostCSS 8.4.41**. Aktuell 48 direkte Pakete. `npm ci` und `npm ls --all`, Produktions-/Entwicklungs-/Referenzbuild sowie 34 Tests sind erfolgreich. Der erste Token-Preset ist aktiv; **die visuelle Abnahme steht noch aus**, 39 von 39 Aufnahmen unterscheiden sich von der Angular-17-Basis. Einzelheiten: Commit-Punkt 6 im [Fortschrittsprotokoll](angular-upgrade-progress.md).

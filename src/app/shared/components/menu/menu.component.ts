@@ -19,7 +19,8 @@ import {
 import { trigger, style, transition, animate, AnimationEvent } from '@angular/animations';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { DomHandler, ConnectedOverlayScrollHandler } from 'primeng/dom';
-import { MenuItem, OverlayService, PrimeNGConfig } from 'primeng/api';
+import { MenuItem, OverlayService } from 'primeng/api';
+import { PrimeNG } from 'primeng/config';
 import { ZIndexUtils } from 'primeng/utils';
 import { RouterModule } from '@angular/router';
 import { RippleModule } from 'primeng/ripple';
@@ -306,7 +307,7 @@ export class MenuComponent implements OnDestroy {
     public el: ElementRef,
     public renderer: Renderer2,
     private cd: ChangeDetectorRef,
-    public config: PrimeNGConfig,
+    public config: PrimeNG,
     public overlayService: OverlayService
   ) {}
 

@@ -1,6 +1,8 @@
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject } from 'rxjs';
@@ -47,6 +49,7 @@ export async function configureComponentTestBed() {
     imports: [SharedModule, BrowsePartsModule, PartsListsModule, SettingsModule,
       RouterTestingModule.withRoutes([]), NoopAnimationsModule],
     providers: [
+      provideHttpClient(), provideHttpClientTesting(),
       ConfirmationService, MessageService, ColorService, GlobalSettingsService, GuidService,
       LocaleService, AffiliateService,
       { provide: BrickHunterApiService, useValue: api },

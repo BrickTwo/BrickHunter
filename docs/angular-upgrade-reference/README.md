@@ -46,6 +46,8 @@ Der Upgrade-Zwischenstand Angular **17.3.12** / CLI **17.3.17** / CDK **17.3.10*
 
 Auch die Menüvorbereitung (`bh-menu`, strukturierte Farbtemplates, Tastaturkorrektur) bleibt visuell identisch: **39 von 39 PNGs** und alle Szenarienmessungen unverändert, keine neuen Browser-/Konsolenfehler. Siehe [menu-preparation-check.json](menu-preparation-check.json). Der zuvor dokumentierte Fehler beim Überspringen deaktivierter/ausgeblendeter Menüeinträge wurde in diesem Abschnitt korrigiert und ist durch Regressionstests abgedeckt; die übrigen Ausgangsprobleme bestehen fort.
 
+Die **Angular-/PrimeNG-18-Grundmigration ist noch nicht visuell abgenommen**. Alle 39 Szenarien laufen ohne neue Browser-/Konsolenfehler, aber alle 39 Bilder unterscheiden sich von der Referenz. Erste Token-Werte stimmen bereits; unter anderem Buttonhöhe und Inhaltsabstände müssen noch angeglichen werden. Messwerte und Prüfsummen: [angular-18-foundation-check.json](angular-18-foundation-check.json). Die ursprünglichen Bilder bleiben unverändert die Abnahmebasis.
+
 Aus dem Repository-Stamm mit Node 20 und Playwright 1.62.1. Playwright wird hier aus dem vorhandenen Codex-Runtime-Bundle geladen; für andere Rechner muss `NODE_PATH` auf eine entsprechende separate Toolinstallation zeigen. `CHROME_BIN` kann den passenden Browserpfad vorgeben. Für Pixelvergleiche denselben Edge-/Windows-Stand und die aufgeführten Aufnahmebedingungen verwenden.
 
 ```powershell

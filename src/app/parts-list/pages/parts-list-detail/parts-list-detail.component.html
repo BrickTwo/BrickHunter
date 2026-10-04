@@ -92,7 +92,7 @@
               [disabled]="pabIsLoading"
               (click)="onTransfer(cartType.Bestseller)"></button>
             <div class="flex flex-nowrap align-items-center gap-2" *ngIf="!!affiliate">
-              <p-inputSwitch [(ngModel)]="useAffiliatePaB" inputId="useAffiliatePaB"></p-inputSwitch>
+              <p-toggleswitch [(ngModel)]="useAffiliatePaB" inputId="useAffiliatePaB"></p-toggleswitch>
               <label for="useAffiliatePaB">Use Affiliate Link</label>
             </div>
           </div>
@@ -125,7 +125,7 @@
               [disabled]="pabIsLoading"
               (click)="onTransfer(cartType.Standard)"></button>
             <div class="flex flex-nowrap align-items-center gap-2" *ngIf="!!affiliate">
-              <p-inputSwitch [(ngModel)]="useAffiliateBaP" inputId="useAffiliateBaP"></p-inputSwitch>
+              <p-toggleswitch [(ngModel)]="useAffiliateBaP" inputId="useAffiliateBaP"></p-toggleswitch>
               <label for="useAffiliateBaP">Use Affiliate Link</label>
             </div>
           </div>

@@ -222,3 +222,46 @@ git commit -m "refactor: prepare BrickHunter menu for PrimeNG upgrade"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht nötig. Die Umsetzung hält hier auf Wunsch des Nutzers am separaten Commit-Punkt an.
+
+Dieser Menüabschnitt wurde als `6fadb3a` gesichert. Auf Anweisung des Nutzers wurde anschließend die eigentliche Angular-/PrimeNG-18-Migration begonnen.
+
+## Commit-Punkt 6: Angular-/PrimeNG-18-Grundmigration und Token-Basis
+
+Stand: 4. Oktober 2026. Ausgangscommit: `6fadb3a`; Arbeitsverzeichnis zu Beginn sauber. Dieser Abschnitt ist **technisch lauffähig**, die **visuelle Angleichung ist noch offen**. Angular 19 wird noch nicht begonnen.
+
+### Erfolgreich umgesetzt
+
+- Angular Framework/Compiler/Localize und CDK **18.2.14**, CLI/Build-Devkit **18.2.21**, Custom-Webpack **18.0.0**, NgRx Store/Effects/Devtools/Operators **18.1.1**, Angular-FontAwesome **0.15.0**, PrimeNG/`@primeng/themes` **18.0.2**, PrimeFlex **4.0.0**, TypeScript **5.5.4** und Zone.js **0.14.10** installiert. Runtime weiterhin Node **20.20.2** / npm **10.8.2**.
+- Der erste `ng update`-Aufruf wurde vor Änderungen wegen inkonsistenter automatischer Paketgruppenauflösung auf Angular 19 abgebrochen. Mit expliziten 18er-Versionen für alle vorhandenen Framework-, Compiler- und Build-Pakete lief die Migration erfolgreich. Keine Verwendung von `--force` oder `--legacy-peer-deps`.
+- Offizielle Migrationen angewendet: CDK-18-Prüfung; Angular-Prüfungen für Two-Way-Bindings, afterRender und Server-Bootstrap ohne Änderungen; HTTP-Module in `AppModule` durch `provideHttpClient(withInterceptorsFromDi())` ersetzt. NgRx Effects ergänzte `@ngrx/operators`; TypedAction-Migration ohne Quellcodeänderung. Die optionale Application-Builder-Migration wurde entsprechend dem Plan nicht ausgeführt. NgModules, Zone, Animationen und Custom-Webpack-Entries bleiben erhalten.
+- `PrimeNGConfig` durch `PrimeNG` ersetzt; Initialisierung über **`providePrimeNG`** mit Ripple, ausschließlich hellem Theme und expliziter Layer-Reihenfolge **`primeng, brickhunter`**. Erstes **`BrickHunterPreset`** auf dem Material-Preset angelegt: Primärfarbe `#0a3463`, Text-/Hintergrundfarben, 4-px-Radien, Eingabefeld-/Button-Padding und erste Card-/Dialog-/Drawer-Werte stammen aus der alten Referenz.
+- Imports der alten vollständigen `theme.css` und `primeng/resources/primeng.min.css` entfernt. `brickhunter-base.scss` erhält lokale Roboto-Fonts, Basisregeln und die bisherigen Root-Variablen für vorhandene App-/Utility-Verwendungen. Das alte vollständige Theme wird nicht mehr geladen. Der eigene Menü-Nachbau benötigt explizit begrenzte Struktur-/Darstellungsregeln, da er selbst keine PrimeNG-Menu-Styles injiziert; diese liegen unter `.bh-menu-panel`.
+- Calendar, Dropdown, InputSwitch, OverlayPanel und Sidebar auf **DatePicker, Select, ToggleSwitch, Popover und Drawer** samt Importpfaden, Selektoren und betroffenen App-Styles umgestellt. Drawer explizit mit **`[appendTo]="null"`** im bisherigen lokalen DOM belassen: Der neue `body`-Default löste sonst insbesondere die Navigation aus ihren begrenzten Styles und blockierte UI-Klicks. Unbenutztes DeferModule sowie der nicht mehr exportierte DynamicDialogModule-Import entfernt; bestehender DialogService bleibt erhalten.
+- Entfernte Checkbox-Label-Inputs durch echte, über `inputId`/`for` verknüpfte Labels ersetzt. Message-Datentyp auf **ToastMessageOptions** umgestellt. Der neue Tabellen-Scrollcontainer **`.p-datatable-table-container`** ersetzt die alte `.p-datatable-wrapper`-Anbindung; damit beendet sich die Initialisierung wieder und die Scroll-/Sichtbarkeitslogik erhält ihr Element.
+- Die TabMenu-Initialisierung kann bereits vor dem Laden einer Teileliste ein Ereignis liefern. `PartsListService.getParts()` verarbeitet in diesem Fall eine leere Liste. Ein neuer Regressionstest sichert dieses Verhalten. Ein weiterer Test prüft alle drei migrierten Checkbox-Labels über echte Klicks auf das Label und die zugehörigen Reactive-Form-Werte.
+- Test-Infrastruktur auf explizite HTTP-Provider mit **HttpClientTesting** umgestellt. Abschließende Gesamtsuite: **34 SUCCESS**, Exitcode 0, Headless Edge. Keine zusätzlichen Unknown-Element-/Property-Schemas eingeführt.
+- `npm ci --no-audit --no-fund`: Exitcode 0, **1008 Pakete**. Windows ließ einen unvollständigen optionalen `nice-napi`-Ordner zurück; dieser wurde nach Pfadprüfung gezielt bereinigt. Abschließendes `npm ls --all --json`: Exitcode 0, keine ungültigen Peers. Nebenbei aufgelöste direkte Tooling-Patches: **tslib 2.6.3, Autoprefixer 10.4.20, PostCSS 8.4.41**; übrige unabhängige direkte Pakete bleiben auf ihren Ausgangsversionen.
+- Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang nun **2.32 MB**, unter der bestehenden 3-MB-Fehlergrenze. Budgetwerte wurden nicht verändert; Budget-/CommonJS-Warnungen bestehen fort. Das historische Theme-Paket meldet seine inzwischen erfolgte Deprecation; seine spätere Ablösung durch `@primeuix/themes` bleibt Teil des Plans.
+- Beide regulären Outputs enthalten Manifest, UI-Einstieg, JS/Styles und die beiden Extension-Einstiege. Chrome-Manifest byteidentisch zur Quelldatei; keine `webpackChunk`-Verweise in den standalone Extension-Einstiegen und keine Fixture-Marker in regulären JS-Bundles. Dies ist eine Ausgabeprüfung, noch keine echte Extension-/Messaging-Abnahme.
+- Anwendungstypprüfung und `git diff --check` erfolgreich. `AppModule` nach der Migration formatiert.
+
+### UI-Prüfung und nächste Arbeit
+
+Der ursprüngliche vollständige Referenzlauf scheiterte an der verschobenen Navigation; nach der Drawer-Anpassung liefen alle **39 Szenarien** einschließlich Dialogen, Farbmenü, Inline-Editing, Auswahl und großen/leeren Listen erfolgreich. Browser **154.0.4258.53**, **0 unbehandelte Browserfehler, 0 neue Konsolenfehler**, weiterhin die **9 bekannten NG0100-Meldungen** der befüllten Tabelle. Der Screenshot-Messer erkennt jetzt auch `.p-drawer`.
+
+**0 von 39 Bildern sind byteidentisch** zur gesicherten Angular-17-Referenz. Root-Schriftgröße **16 px**, Roboto, Primärfarbe, Kartenbreite/-höhe/-Padding, **91-px-Teilezeile** und **60-px-Navigation** stimmen bereits. Beispielsweise ist der erste Button in der Suche nun **43.84375 px** statt **41.84375 px** hoch; Card-/Inhaltsabstände, Formelemente, Tabellen-/Dialogdetails und weitere Komponenten unterscheiden sich. Ein Screenshot wurde visuell geprüft; die verbleibenden Unterschiede sind nicht freigegeben und die Ausgangsbilder wurden nicht ersetzt. Prüfsummen, Messwerte und Ausgabeprüfungen: [angular-18-foundation-check.json](angular-upgrade-reference/angular-18-foundation-check.json).
+
+Als nächster eigener Abschnitt auf **Version 18**: Theme-Tokens vervollständigen, verbleibende App-Overrides am neuen DOM ausrichten, Button-/Icon-/Form-/Dialoggeometrie und Hover/Fokus angleichen, Messages/TabMenu kontrolliert ablösen und den öffentlichen Menü-Wrapper prototypisch gegen die Referenz prüfen. Danach erneut funktional und visuell abnehmen. Erst dann folgt Angular 19.
+
+Logs, Metadaten, Paketänderungen und reguläre Outputs liegen unter `artefacts/angular-upgrade/angular-18/`; vollständige neue Aufnahmen unter `artefacts/angular-upgrade/visual/angular-18-functional/`. `angular-18-initial/` ist ein fehlgeschlagener Diagnose-Lauf, keine Referenz. Quellen für die notwendigen API-/Theme-Änderungen: [PrimeNG-18-Migration](https://v18.primeng.org/guides/migration), [Theming](https://v18.primeng.org/theming).
+
+### Jetzt manuell: Zwischencommit
+
+Die erfolgreiche Grundmigration mit ausdrücklich noch offener visueller Abnahme vor den umfangreicheren UI-Korrekturen sichern:
+
+```powershell
+git add package.json package-lock.json src scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "chore: establish Angular and PrimeNG 18 migration foundation"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier am technisch überprüften Zwischencommit an. Nach dem Commit und `weiter` wird die UI-Angleichung auf Angular/PrimeNG 18 fortgesetzt.

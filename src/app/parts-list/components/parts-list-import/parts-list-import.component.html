@@ -1,4 +1,4 @@
-<p-sidebar [(visible)]="display" position="right" (onHide)="onHide()">
+<p-drawer [appendTo]="null" [(visible)]="display" position="right" (onHide)="onHide()">
   <h2>Import</h2>
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="field">
@@ -26,7 +26,7 @@
       <button pButton pRipple type="submit" label="Import" style="width: 100%"></button>
     </div>
   </form>
-</p-sidebar>
+</p-drawer>
 <p-dialog
   header="Importing new Parts List"
   [(visible)]="showImportDialog"

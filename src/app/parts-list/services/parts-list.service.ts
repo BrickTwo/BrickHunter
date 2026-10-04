@@ -133,7 +133,7 @@ export class PartsListService {
   getParts(uuid: string, filter: string) {
     const partsList = this.getPartsList(uuid);
 
-    return this.filterParts(partsList?.parts, filter);
+    return this.filterParts(partsList?.parts || [], filter);
   }
 
   filterParts(parts: Part[], filter: string) {

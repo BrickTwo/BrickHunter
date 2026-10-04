@@ -1,7 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@use './assets/theme/theme.css';
-//@import "../node_modules/primeng/resources/themes/lara-light-blue/theme.css";
-@use '../node_modules/primeng/resources/primeng.min.css';
+@use './assets/theme/brickhunter-base';
 @use '../node_modules/primeflex/primeflex' with (
   $breakpoints: (
     'sm': 576px,
@@ -16,7 +14,9 @@
 @use '../node_modules/@fortawesome/fontawesome-free/css/solid.min.css';
 @use './assets/flags.css';
 
-@layer primeng {
+@layer primeng, brickhunter;
+
+@layer brickhunter {
   body {
     background-color: rgb(240, 240, 240);
     font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VersionService } from 'src/app/core/services/version.service';
-import { Message } from 'primeng/api';
+import { ToastMessageOptions } from 'primeng/api';
 
 @Component({
   selector: 'app-migration',
@@ -11,7 +11,7 @@ export class MigrationComponent implements OnInit {
   showDialog = false;
   counter: number = 0;
   migrated: number = 0;
-  warning: Message[] = [
+  warning: ToastMessageOptions[] = [
     {
       severity: 'warn',
       summary: 'Warning',

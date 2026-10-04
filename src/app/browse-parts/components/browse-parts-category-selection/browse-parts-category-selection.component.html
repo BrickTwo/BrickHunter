@@ -16,10 +16,10 @@
   </p-tree>
   <div *ngIf="configMode">
     <div class="flex flex-nowrap align-items-center gap-1 mb-3">
-      <p-inputSwitch
+      <p-toggleswitch
         [(ngModel)]="excludeSelectedCategoryIds"
         inputId="onlyPrinted"
-        (onChange)="onChangeExcludeSeclectedCategoryIds($event.checked)"></p-inputSwitch>
+        (onChange)="onChangeExcludeSeclectedCategoryIds($event.checked)"></p-toggleswitch>
       <label for="onlyPrinted">Ignore selected Categories</label>
     </div>
     <p-tree

@@ -3,7 +3,7 @@ import { ReadCartItem } from 'src/app/models/background-message';
 import { Part } from 'src/app/models/parts-list';
 import { PickABrickService } from '../../services/pickabrick.service';
 import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
-import { Message } from 'primeng/api';
+import { ToastMessageOptions } from 'primeng/api';
 
 @Component({
   selector: 'app-transfer-warning',
@@ -15,7 +15,7 @@ export class TransferWarningComponent {
   parts: { part: Part; cart: ReadCartItem | undefined }[];
   rowHeight = 91;
   maxPaBLotPerOrder = 0;
-  warningMaxPaBLotPerOrder: Message[];
+  warningMaxPaBLotPerOrder: ToastMessageOptions[];
 
   constructor(private readonly pickabrickService: PickABrickService, private readonly globalSettingsService: GlobalSettingsService) {
     this.maxPaBLotPerOrder = this.globalSettingsService.maxPaBLotPerOrder;

@@ -258,14 +258,14 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
   registerScrollSubscription(source: string) {
     if (this.log) console.log('registerScrollSubscription', source, this.parts);
     if (this.scrollSubscription) return true;
-    this.tableWrapperRef = document.getElementsByClassName('p-datatable-wrapper')[this.dataTableWrapperIndex];
+    this.tableWrapperRef = document.getElementsByClassName('p-datatable-table-container')[this.dataTableWrapperIndex];
     if (this.log)
       console.log(
         this.tableWrapperRef,
-        document.getElementsByClassName('p-datatable-wrapper'),
-        document.getElementsByClassName('p-datatable-wrapper').length,
+        document.getElementsByClassName('p-datatable-table-container'),
+        document.getElementsByClassName('p-datatable-table-container').length,
         this.dataTableWrapperIndex,
-        document.getElementsByClassName('p-datatable-wrapper')[1]
+        document.getElementsByClassName('p-datatable-table-container')[1]
       );
     if (!this.tableWrapperRef) {
       interval(250)

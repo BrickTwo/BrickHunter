@@ -1,11 +1,11 @@
 <div class="flex align-items-center justify-content-center">
   <div>
-    <p-dropdown
+    <p-select
       [options]="options"
       optionLabel="label"
       optionValue="value"
       [(ngModel)]="perPage"
-      (onChange)="onPerPageChange()"></p-dropdown>
+      (onChange)="onPerPageChange()"></p-select>
   </div>
   <div class="flex-1">
     <p-paginator
@@ -25,7 +25,7 @@
         <i [class]="item.icon"></i>
       </ng-template>
     </p-selectButton> -->
-    <p-dropdown
+    <p-select
       id="country"
       [options]="countries"
       [(ngModel)]="selectedCountry"
@@ -54,6 +54,6 @@
           <div>{{ country.countryCode | uppercase }} {{ country.lastUpdate + 'Z' | date : 'short' }}</div>
         </div>
       </ng-template>
-    </p-dropdown>
+    </p-select>
   </div>
 </div>

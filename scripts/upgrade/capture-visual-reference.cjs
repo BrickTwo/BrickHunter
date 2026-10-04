@@ -92,7 +92,7 @@ async function main() {
         await page.screenshot({ path: path.join(output, file), animations: 'disabled' });
         const metrics = await page.evaluate(() => {
           const selectors = ['html', 'body', 'h2', '.p-button', '.p-datatable-tbody tr',
-            'app-browse-parts-grid-item > div', '.p-dialog', '.p-sidebar'];
+            'app-browse-parts-grid-item > div', '.p-dialog', '.p-sidebar, .p-drawer'];
           const values = {};
           for (const selector of selectors) {
             const element = document.querySelector(selector);

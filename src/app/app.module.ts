@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
@@ -17,12 +17,12 @@ import { LocaleService } from './core/services/locale.service';
 
 @NgModule({
   declarations: [AppComponent],
+  bootstrap: [AppComponent],
   imports: [
     CoreModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule,
     SharedModule,
     PrimengModule,
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
@@ -37,8 +37,8 @@ import { LocaleService } from './core/services/locale.service';
       },
       deps: [LocaleService],
     },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(@Inject(LOCALE_ID) locale: string) {

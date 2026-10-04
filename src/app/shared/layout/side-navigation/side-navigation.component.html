@@ -1,4 +1,4 @@
-<p-sidebar class="sideNav" [visible]="true" [transitionOptions]="'0ms'" [showCloseIcon]="false" [modal]="false">
+<p-drawer [appendTo]="null" class="sideNav" [visible]="true" [transitionOptions]="'0ms'" [showCloseIcon]="false" [modal]="false">
   <ng-template pTemplate="header">
     <div style="margin-top: 5px">
       <p-image src="./assets/logo.png" width="237"></p-image>
@@ -48,4 +48,4 @@
   <ng-template pTemplate="footer">
     <p style="color: grey; font-size: 0.7rem">{{ currentVersion }}</p>
   </ng-template>
-</p-sidebar>
+</p-drawer>

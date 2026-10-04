@@ -18,4 +18,10 @@ describe('PartsListDetailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('handles the initial tab event before a parts list is available', () => {
+    component.uuid = 'not-yet-loaded';
+    component.onTableChange({ id: 'all' });
+    expect(component.parts).toEqual([]);
+  });
 });

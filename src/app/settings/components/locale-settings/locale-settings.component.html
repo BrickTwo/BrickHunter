@@ -1,7 +1,7 @@
 <p-card header="Select Lego PaB Site Settings*">
   <div class="field">
     <label for="country" class="block">Country</label>
-    <p-dropdown
+    <p-select
       id="country"
       [options]="countries"
       [(ngModel)]="selectedCountry"
@@ -29,11 +29,11 @@
           <div>{{ country.text }}</div>
         </div>
       </ng-template>
-    </p-dropdown>
+    </p-select>
   </div>
   <div class="field">
     <label for="language" class="block">Language</label>
-    <p-dropdown
+    <p-select
       id="language"
       [options]="languages"
       [(ngModel)]="selectedLanguage"
@@ -61,7 +61,7 @@
           <div>{{ language.text }}</div>
         </div>
       </ng-template>
-    </p-dropdown>
+    </p-select>
   </div>
   <div class="field">
     * For checking the availability of parts, showing the price in your currency and it also defines the shopping cart
