@@ -674,3 +674,38 @@ git commit -m "fix: align table header borders and sort icons"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 18: Menüfokus und Popup-Lifecycle
+
+Ausgangspunkt: Commit **`a17682b`**, der Tabellenkopf und Sortiericon-Ausrichtung (Commit-Punkt 17) sichert. Paketversionen und Lockfile bleiben unverändert auf Angular **18.2.14** / PrimeNG **18.0.2**.
+
+### Erfolgreich umgesetzt
+
+- Menüfokus bleibt bei gleichzeitigem Hover sichtbar: Die auf BrickHunter-Menüs begrenzte Fokusregel steht nach der Hoverregel und verwendet den ursprünglichen Hintergrund **rgba(0, 0, 0, 0.12)**. Hover ohne Fokus bleibt bei **0.04**; deaktivierte Einträge werden ausgeschlossen. Die Werte sind gegen die erhaltene ursprüngliche Theme-Datei geprüft.
+- Echte Fenster-Scrollprüfung mit der vorhandenen **1.000-Teile-Fixture** ergänzt. Sie hat gezeigt, dass PrimeNG 18 nur scrollbare Elternelemente überwacht und das Popup beim Fenster-Scrolling dieser Seite geöffnet ließ. Der Wrapper registriert deshalb über Angulars **Renderer2** einen Fenster-Scrolllistener ausschließlich für ein geöffnetes Popup. Er schließt über die öffentliche `hide()`-API und wird bei `onHide` sowie beim Zerstören entfernt. Öffentliche Show-/Hide-Events werden weiterhin weitergegeben.
+- Ein gezielter Regressionstest prüft Fenster-Scrolling, Schließen und das Entfernen des Listeners nach Hide und Destroy. Die vorhandenen Tests für Gruppen, sichere Labels/Farbkästchen, Disabled-/Hidden-Einträge, Tastatur, Router-Metadaten, Append-to-body, Eltern-Scrollen und Resize bleiben erfolgreich.
+- Sechs neue Browserprüfungen: Fokus bei Hover; Escape mit Rückkehr zum Auslöser; Klick außerhalb und Trigger-Toggle; echtes Fenster-Scrollen, Resize und Wiederöffnen mit Home/Space-Farbauswahl; Home/End/Space im Listen-Aktionsmenü samt Z-Index über dem Tabellenkopf; Navigation per Enter zur Settings-Seite mit Listener-Cleanup beim Zerstören.
+- Listener-Audit auf der isolierten Browserseite beobachtet reale Registrierung/Entfernung von Click-/Resize-/Scrolllistenern an Document, Window und Body und ruft die ursprünglichen Methoden unverändert weiter auf. Im Abschlusslauf **3 registriert, 0 verbleibend** nach dem Seitenwechsel. Das ist eine gezielte Prüfung dieser Ziele; kein pauschaler Nachweis für beliebige Overlay- oder Elternkonfigurationen.
+- Zwei neue, visuell geprüfte Zusatzbilder zeigen den Farbmenü-Fokus bei Hover sowie den per End fokussierten Delete-Eintrag. Farbpopup **200 × 64 px**, Farbfeld **13 px**; Aktionsmenü-Z-Index **2104**, Tabellenkopf **999**.
+
+### Validierung und verbleibende Arbeit
+
+- **46 Tests erfolgreich**, Exitcode 0. Produktions-, Entwicklungs- und visueller Referenzbuild nach der Scrollkorrektur erfolgreich. Produktionsumfang **2.34 MB**, unter der unveränderten 3-MB-Fehlergrenze; bestehende Budget-/CommonJS-Warnungen bleiben dokumentiert.
+
+- Reguläre Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden; Chrome-Manifest byteidentisch zur Quelle; standalone Extension-Einstiege ohne `webpackChunk`-Verweise; keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Zwei Abschlussläufe mit jeweils **39 Hauptszenarien plus 30 Zusatzbildern** und **36 erfolgreichen Browserprüfungen**, ohne aufgezeichnete Browser-/Konsolenfehler oder bekannte NG0100-Meldungen. Listener-Audit auch im Wiederholungslauf **3 registriert, 0 verbleibend**. Die beiden neuen Menü-Zustandsbilder sind byteidentisch.
+- Wiederholung insgesamt **64/69 PNGs byteidentisch** (**36/39 Hauptbilder**, **28/30 Zusatzbilder**). Die fünf anderen Bilder unterscheiden sich ausschließlich in jeweils **vier Pixeln** am rechten Ende der Tabs-Unterstreichung: Transferfortschritt und Löschbestätigung bei 1440 px, Tabelle bei 390 px sowie zwei Button-Fokusbilder. Renderer, GPU-Compositing und Rasterization stimmen vor/nach beiden Läufen überein. Die Restabweichung wird nicht ausgeblendet.
+- Zur Originalreferenz **4/39 vollständige Hauptbilder byteidentisch** (vier Settings-Seiten). Gegen Commit-Punkt 17 **38/39 Hauptbilder unverändert**. Die Desktop-Teiletabelle hat weiterhin nur **4 abweichende Pixel** an der Tabs-Unterstreichung; der Tabellenkopf im dokumentierten **1.322 × 56-px-Rechteck** sowie der Erfolgstoast im **400 × 86-px-Rechteck** bleiben pixelgleich zur Originalreferenz. Die übrigen Szenarien sind weiterhin keine vollständige UI-Abnahme. Messwerte, Prüfsummen, Wiederholung und Output-/Interaktionsprüfungen: [angular-18-menu-acceptance-check.json](angular-upgrade-reference/angular-18-menu-acceptance-check.json). Originalbilder bleiben unverändert.
+
+Noch offen: übrige Icon- und Auswahlkomponenten-Zustände, verbleibender Menü-/Overlay-/Dateiauswahl-Abgleich, vollständiger Button-Abgleich und übrige Referenzabweichungen einschließlich des korrekt dargestellten EUR-Werts und der gelegentlichen Tabs-Rasterabweichung. Menü-Lifecycle und die hier aufgeführten Tastatur-/Fokusabläufe sind geprüft; nicht alle Menü-/Overlay-Konfigurationen und Zustände sind visuell abgenommen. **Angular 19 bleibt bis zur vollständigen UI-Abnahme auf Version 18 zurückgestellt.**
+
+Logs: `artefacts/angular-upgrade/angular-18/menu-tests-complete.log`, `menu-visual-build-complete.log`, `menu-production-complete.log`, `menu-development-complete.log`, `menu-capture-complete-final.log`, `menu-capture-complete-repeat.log` und `menu-comparison.log`. Reguläre Outputs: `artefacts/angular-upgrade/angular-18/menu-acceptance-verified/{production,development}/`. Abschlussbilder: `artefacts/angular-upgrade/visual/angular-18-menu-lifecycle-complete/` und `angular-18-menu-lifecycle-complete-repeat/`. Frühere Verified-/Complete-/Final-/Accepted-Aufnahmen dieses Abschnitts sind Diagnose-Zwischenstände; sie gelten nicht als Abschlussabnahme.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src/app/shared/components/menu scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: preserve menu focus and close popups on window scroll"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

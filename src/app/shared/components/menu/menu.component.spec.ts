@@ -193,6 +193,29 @@ describe('BrickHunter public menu wrapper', () => {
     }
   });
 
+  it('closes on window scrolling and removes that listener after hiding and destruction', async () => {
+    const trigger = document.createElement('button');
+    document.body.appendChild(trigger);
+    const hide = spyOn(fixture.componentInstance, 'hide').and.callThrough();
+    try {
+      await open(trigger);
+      window.dispatchEvent(new Event('scroll'));
+      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      fixture.detectChanges();
+      await fixture.whenRenderingDone();
+      expect(hide).toHaveBeenCalledTimes(1);
+      window.dispatchEvent(new Event('scroll'));
+      expect(hide).toHaveBeenCalledTimes(1);
+      await open(trigger);
+      fixture.destroy();
+      window.dispatchEvent(new Event('scroll'));
+      expect(hide).toHaveBeenCalledTimes(1);
+    } finally {
+      if (!fixture.componentRef.hostView.destroyed) fixture.destroy();
+      trigger.remove();
+    }
+  });
+
   it('closes on outside clicks, parent scroll and resize and cleans up the appended panel', async () => {
     const parent = document.createElement('div');
     parent.style.overflow = 'auto';

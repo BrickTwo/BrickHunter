@@ -593,6 +593,120 @@ async function main() {
           if (!await input.isChecked()) throw new Error(`${id}: label click did not toggle`);
         }
         report.interactionChecks.toggleAffiliateSpaceAndLabelBinding = true;
+
+        await open('browse-parts');
+        const colorButtons = page.locator('app-browse-parts-color-filter button');
+        const redIndex = await colorButtons.evaluateAll(buttons => buttons.findIndex(button => button.style.backgroundColor === 'rgb(220, 53, 69)'));
+        if (redIndex < 0) throw new Error('Red menu trigger missing');
+        const redTrigger = colorButtons.nth(redIndex);
+        const popup = page.locator('.bh-menu-panel:visible');
+        const menuList = popup.locator('[role="menu"]');
+        async function openRedMenu() {
+          await redTrigger.click();
+          await popup.waitFor();
+          await settle();
+        }
+        await openRedMenu();
+        await menuList.press('Home');
+        const redItem = popup.locator('.p-menu-item-content').first();
+        await redItem.hover();
+        await page.waitForTimeout(250);
+        report.menuMeasurements = await popup.evaluate(panel => {
+          const rect = panel.getBoundingClientRect(), item = panel.querySelector('.p-menu-item-content');
+          return { width: rect.width, height: rect.height, x: rect.x, y: rect.y,
+            focusAndHoverBackground: getComputedStyle(item).backgroundColor,
+            activeDescendant: panel.querySelector('[role="menu"]').getAttribute('aria-activedescendant'),
+            swatchWidth: panel.querySelector('.bh-menu-swatch').getBoundingClientRect().width };
+        });
+        if (report.menuMeasurements.focusAndHoverBackground !== 'rgba(0, 0, 0, 0.12)' ||
+          report.menuMeasurements.width !== 200 || report.menuMeasurements.swatchWidth !== 13)
+          throw new Error('Color menu focus/hover state or geometry differs from reference');
+        await additionalCapture('menu-color-focus-hover');
+        report.interactionChecks.menuColorFocusSurvivesHover = true;
+        await menuList.press('Escape');
+        await popup.waitFor({ state: 'hidden' });
+        if (!await redTrigger.evaluate(element => document.activeElement === element)) throw new Error('Menu Escape did not return focus to trigger');
+        report.interactionChecks.menuEscapeReturnsTriggerFocus = true;
+        await openRedMenu();
+        await page.locator('h2').click();
+        await popup.waitFor({ state: 'hidden' });
+        await openRedMenu();
+        await redTrigger.click();
+        await popup.waitFor({ state: 'hidden' });
+        report.interactionChecks.menuOutsideClickAndTriggerToggleClose = true;
+        await page.evaluate(() => window.brickHunterReference.setSearchCount(1000));
+        await settle();
+        await openRedMenu();
+        await page.evaluate(() => window.scrollTo(0, 400));
+        await page.waitForFunction(() => window.scrollY === 400);
+        await popup.waitFor({ state: 'hidden' });
+        await open('browse-parts');
+        await openRedMenu();
+        await page.setViewportSize({ width: 1400, height: 1000 });
+        await popup.waitFor({ state: 'hidden' });
+        await page.setViewportSize(viewport);
+        await openRedMenu();
+        const popupBounds = await popup.boundingBox();
+        if (!popupBounds || popupBounds.x < 0 || popupBounds.x + popupBounds.width > viewport.width)
+          throw new Error('Reopened color popup is outside the viewport after resize');
+        await menuList.press('Home');
+        await menuList.press('Space');
+        await popup.waitFor({ state: 'hidden' });
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-browse-parts-color-filter')).browsePartsService.filter.colorId === 4);
+        report.interactionChecks.menuScrollResizeReopenAndSpaceSelection = true;
+
+        await open('parts-lists');
+        await page.locator('.p-datatable-tbody .p-checkbox').first().click();
+        await page.locator('.p-datatable-thead button').first().click();
+        await popup.waitFor();
+        await settle();
+        const bulkZIndex = await popup.evaluate(panel => Number(getComputedStyle(panel).zIndex));
+        const headerZIndex = await page.locator('.p-datatable-thead th').first().evaluate(header => Number(getComputedStyle(header).zIndex));
+        if (bulkZIndex <= headerZIndex) throw new Error('Bulk menu is not above the table header');
+        await menuList.press('Home');
+        if (!await popup.locator('.p-menu-item.p-focus').textContent().then(text => text.includes('Open Combined')))
+          throw new Error('Home did not focus the first bulk action');
+        await menuList.press('End');
+        if (!await popup.locator('.p-menu-item.p-focus').textContent().then(text => text.includes('Delete')))
+          throw new Error('End did not focus the last bulk action');
+        report.menuMeasurements.bulkZIndex = bulkZIndex;
+        report.menuMeasurements.headerZIndex = headerZIndex;
+        await additionalCapture('menu-bulk-keyboard-focus');
+        await menuList.press('Space');
+        await popup.waitFor({ state: 'hidden' });
+        await page.getByRole('alertdialog').filter({ hasText: 'Do you want to delete the selected Parts Lists?' }).waitFor();
+        report.interactionChecks.menuBulkHomeEndSpaceAndTableZIndex = true;
+
+        await open('browse-parts');
+        // Audit real listener registration/removal on the disposable page, without
+        // inspecting PrimeNG's private fields or replacing its listener behavior.
+        await page.evaluate(() => {
+          const registrations = new Map(), originals = [];
+          for (const [target, types] of [[document, ['click']], [window, ['resize', 'scroll']], [document.body, ['scroll']]]) {
+            const add = target.addEventListener, remove = target.removeEventListener;
+            originals.push(() => { target.addEventListener = add; target.removeEventListener = remove; });
+            target.addEventListener = function(type, listener, options) {
+              if (types.includes(type)) registrations.set(listener, { target, type });
+              return add.call(this, type, listener, options);
+            };
+            target.removeEventListener = function(type, listener, options) {
+              if (types.includes(type)) registrations.delete(listener);
+              return remove.call(this, type, listener, options);
+            };
+          }
+          window.brickHunterMenuAudit = { count: () => registrations.size, restore: () => originals.forEach(restore => restore()) };
+        });
+        await openRedMenu();
+        const registeredListeners = await page.evaluate(() => window.brickHunterMenuAudit.count());
+        if (registeredListeners < 2) throw new Error('Menu listener audit did not capture click and resize listeners');
+        await page.locator('app-side-navigation a').nth(2).press('Enter');
+        await page.waitForURL('**#/settings');
+        await popup.waitFor({ state: 'hidden' });
+        const remainingListeners = await page.evaluate(() => window.brickHunterMenuAudit.count());
+        await page.evaluate(() => window.brickHunterMenuAudit.restore());
+        if (remainingListeners !== 0) throw new Error(`Destroyed menu left ${remainingListeners} audited listeners`);
+        report.menuMeasurements.listenerAudit = { registeredListeners, remainingListeners };
+        report.interactionChecks.menuRouteDestroyRemovesListenersAndKeyboardNavigation = true;
       }
       await context.close();
     }

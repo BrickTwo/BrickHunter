@@ -38,11 +38,12 @@
   .p-menu-separator {
     margin: 0.5rem 0;
   }
-  .p-menu-item.p-focus .p-menu-item-content {
-    background: rgba(0, 0, 0, 0.12);
-  }
   .p-menu-item:not(.p-disabled) .p-menu-item-content:hover {
     background: rgba(0, 0, 0, 0.04);
+  }
+  // Focus must remain visible when the pointer also hovers the active item.
+  .p-menu-item.p-focus:not(.p-disabled) .p-menu-item-content {
+    background: rgba(0, 0, 0, 0.12);
   }
 
   .bh-menu-swatch {

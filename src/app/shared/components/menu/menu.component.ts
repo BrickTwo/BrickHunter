@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, NgModule, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, NgModule, OnDestroy, Output, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Menu, MenuModule as PrimeMenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
@@ -28,8 +28,8 @@ export interface BrickHunterMenuItem extends MenuItem {
       [hideTransitionOptions]="hideTransitionOptions"
       [ariaLabel]="ariaLabel"
       [ariaLabelledBy]="ariaLabelledBy"
-      (onShow)="onShow.emit($event)"
-      (onHide)="onHide.emit($event)">
+      (onShow)="handleShow($event)"
+      (onHide)="handleHide($event)">
       <ng-template pTemplate="item" let-item>
         <a
           *ngIf="item.routerLink; else externalLink"
@@ -81,7 +81,7 @@ export interface BrickHunterMenuItem extends MenuItem {
   styleUrls: ['./menu.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MenuComponent {
+export class MenuComponent implements OnDestroy {
   @Input() popup = false;
   @Input() appendTo: string | HTMLElement | null = null;
   @Input() baseZIndex = 0;
@@ -94,6 +94,33 @@ export class MenuComponent {
   @Input() ariaLabelledBy: string | undefined;
   @Output() onShow = new EventEmitter<Event>();
   @Output() onHide = new EventEmitter<Event>();
+
+  private removeWindowScrollListener?: () => void;
+
+  constructor(private readonly renderer: Renderer2) {}
+
+  handleShow(event: Event) {
+    // PrimeNG watches scrollable parents; document scrolling also needs to close
+    // the popup when none of the trigger's parents has overflow auto/scroll.
+    if (this.popup && !this.removeWindowScrollListener) {
+      this.removeWindowScrollListener = this.renderer.listen('window', 'scroll', () => this.hide());
+    }
+    this.onShow.emit(event);
+  }
+
+  handleHide(event: Event) {
+    this.clearWindowScrollListener();
+    this.onHide.emit(event);
+  }
+
+  ngOnDestroy() {
+    this.clearWindowScrollListener();
+  }
+
+  private clearWindowScrollListener() {
+    this.removeWindowScrollListener?.();
+    this.removeWindowScrollListener = undefined;
+  }
 
   toggle(event: Event) {
     this.menu.toggle(event);
