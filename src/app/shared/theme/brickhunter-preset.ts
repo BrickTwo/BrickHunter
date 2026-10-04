@@ -7,6 +7,7 @@ const buttonVariants = Object.fromEntries(Object.entries(buttonColors).map(([sev
   color: `rgb(${rgb})`, borderColor: `rgb(${rgb})`,
   hoverBackground: `rgba(${rgb}, 0.04)`, activeBackground: `rgba(${rgb}, 0.16)`,
 }]));
+const switchHandleShadow = '0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)';
 
 // Measured Angular-17 reference values. Component geometry is verified separately.
 export const BrickHunterPreset = definePreset(Material, {
@@ -163,17 +164,31 @@ export const BrickHunterPreset = definePreset(Material, {
       `,
     },
     toggleswitch: {
-      root: { borderWidth: '0', borderRadius: '0.5rem', gap: '-1px' },
+      root: { borderWidth: '1px', borderRadius: '0.5rem', gap: '0px' },
       colorScheme: {
         light: {
           root: {
             background: 'rgba(0, 0, 0, 0.38)',
+            disabledBackground: 'rgba(0, 0, 0, 0.38)',
             hoverBackground: 'rgba(0, 0, 0, 0.38)',
             checkedBackground: 'rgba(10, 52, 99, 0.5)',
             checkedHoverBackground: 'rgba(10, 52, 99, 0.5)',
           },
+          handle: { background: '#ffffff', disabledBackground: '#ffffff', hoverBackground: '#ffffff' },
         },
       },
+      css: `
+        .p-toggleswitch-handle { box-shadow: ${switchHandleShadow}; }
+        /* Legacy slider border (+1px) cancels the handle's -1px start; translation is 24px. */
+        .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-handle { inset-inline-start: 1.5rem; }
+        .p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover) .p-toggleswitch-handle { box-shadow: ${switchHandleShadow}, 0 0 1px 10px rgba(0, 0, 0, 0.04); }
+        .p-toggleswitch.p-toggleswitch-checked:not(.p-disabled):has(.p-toggleswitch-input:hover) .p-toggleswitch-handle { box-shadow: 0 0 1px 10px rgba(10, 52, 99, 0.04), ${switchHandleShadow}; }
+        .p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:focus) .p-toggleswitch-handle { box-shadow: 0 0 1px 10px rgba(0, 0, 0, 0.12), ${switchHandleShadow}; }
+        .p-toggleswitch.p-toggleswitch-checked:not(.p-disabled):has(.p-toggleswitch-input:focus) .p-toggleswitch-handle { box-shadow: 0 0 1px 10px rgba(10, 52, 99, 0.12), ${switchHandleShadow}; }
+        .p-toggleswitch.p-disabled { opacity: 0.38; }
+        .p-toggleswitch.p-toggleswitch-checked.p-disabled .p-toggleswitch-slider { background: rgba(10, 52, 99, 0.5); }
+        .p-toggleswitch.p-toggleswitch-checked.p-disabled .p-toggleswitch-handle { background: #0a3463; }
+      `,
     },
     paginator: {
       root: { gap: '0' },

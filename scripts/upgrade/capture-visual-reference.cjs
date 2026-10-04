@@ -503,6 +503,80 @@ async function main() {
         await haveIt.press('Enter');
         await page.waitForFunction(() => JSON.parse(localStorage.getItem('haveIts')).length === 1);
         report.interactionChecks.buttonSuccessStatesAndEnterPersistsHaveIt = true;
+
+        report.toggleMeasurements = {};
+        async function toggleStyle(input, name, checked, disabled = false, halo) {
+          await page.waitForTimeout(250);
+          const style = await input.evaluate(element => {
+            const root = element.closest('.p-toggleswitch'), handle = root.querySelector('.p-toggleswitch-handle');
+            const rect = root.getBoundingClientRect(), grip = handle.getBoundingClientRect();
+            const css = getComputedStyle(handle);
+            return { width: rect.width, height: rect.height, handleWidth: grip.width, handleHeight: grip.height,
+              handleOffset: grip.x - rect.x, handleBackground: css.backgroundColor, handleShadow: css.boxShadow,
+              trackBackground: getComputedStyle(root.querySelector('.p-toggleswitch-slider')).backgroundColor,
+              opacity: getComputedStyle(root).opacity, disabled: element.disabled, checked: element.checked };
+          });
+          report.toggleMeasurements[name] = style;
+          const expected = { width: 44, height: 16, handleWidth: 24, handleHeight: 24,
+            handleOffset: checked ? 24 : 0, handleBackground: checked ? 'rgb(10, 52, 99)' : 'rgb(255, 255, 255)',
+            trackBackground: checked ? 'rgba(10, 52, 99, 0.5)' : 'rgba(0, 0, 0, 0.38)',
+            opacity: disabled ? '0.38' : '1', checked, disabled };
+          for (const [property, value] of Object.entries(expected)) {
+            if (style[property] !== value) throw new Error(`${name}: ${property}=${style[property]}, expected ${value}`);
+          }
+          if (halo && !style.handleShadow.includes(halo)) throw new Error(`${name}: wrong hover/focus shadow ${style.handleShadow}`);
+        }
+        await open('browse-parts');
+        const printedSwitch = page.getByLabel('Only Printed', { exact: true });
+        await page.mouse.move(600, 60);
+        await toggleStyle(printedSwitch, 'printed-off', false);
+        await printedSwitch.hover();
+        await toggleStyle(printedSwitch, 'printed-off-hover', false, false, 'rgba(0, 0, 0, 0.04)');
+        await additionalCapture('toggle-off-hover');
+        await page.mouse.move(600, 60);
+        await printedSwitch.focus();
+        await toggleStyle(printedSwitch, 'printed-off-focus', false, false, 'rgba(0, 0, 0, 0.12)');
+        await additionalCapture('toggle-off-focus');
+        await printedSwitch.press('Space');
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-browse-parts-filter')).browsePartsService.filter.onlyPrinted === true);
+        await toggleStyle(printedSwitch, 'printed-on-focus', true, false, 'rgba(10, 52, 99, 0.12)');
+        await additionalCapture('toggle-on-focus');
+        await printedSwitch.evaluate(element => element.blur());
+        await printedSwitch.hover();
+        await toggleStyle(printedSwitch, 'printed-on-hover', true, false, 'rgba(10, 52, 99, 0.04)');
+        await additionalCapture('toggle-on-hover');
+        await printedSwitch.click();
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-browse-parts-filter')).browsePartsService.filter.onlyPrinted === false);
+        report.interactionChecks.togglePrintedMouseSpaceBindingAndStates = true;
+
+        for (const checked of [false, true]) {
+          await open('browse-parts');
+          if (checked) await printedSwitch.check();
+          await printedSwitch.evaluate(element => element.blur());
+          await page.evaluate(() => {
+            const toggle = window.ng.getComponent(document.querySelector('p-toggleswitch'));
+            toggle.disabled = true;
+            window.ng.applyChanges(toggle);
+          });
+          await printedSwitch.hover({ force: true });
+          await toggleStyle(printedSwitch, `printed-${checked ? 'on' : 'off'}-disabled`, checked, true);
+          await printedSwitch.click({ force: true });
+          await toggleStyle(printedSwitch, `printed-${checked ? 'on' : 'off'}-disabled-after-click`, checked, true);
+          await additionalCapture(`toggle-${checked ? 'on' : 'off'}-disabled`);
+        }
+        report.interactionChecks.toggleDisabledOnOffBlocksClick = true;
+        await open('parts-lists/upgrade-reference');
+        for (const [id, model] of [['useAffiliatePaB', 'useAffiliatePaB'], ['useAffiliateBaP', 'useAffiliateBaP']]) {
+          const input = page.locator(`#${id}`);
+          await toggleStyle(input, `${id}-on`, true);
+          await input.press('Space');
+          if (!await page.evaluate(model => window.ng.getComponent(document.querySelector('app-parts-list-detail'))[model] === false, model))
+            throw new Error(`${id}: Space did not update the affiliate model`);
+          await toggleStyle(input, `${id}-off-focus`, false, false, 'rgba(0, 0, 0, 0.12)');
+          await page.locator(`label[for="${id}"]`).click();
+          if (!await input.isChecked()) throw new Error(`${id}: label click did not toggle`);
+        }
+        report.interactionChecks.toggleAffiliateSpaceAndLabelBinding = true;
       }
       await context.close();
     }

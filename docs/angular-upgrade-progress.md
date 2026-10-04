@@ -603,3 +603,39 @@ git commit -m "fix: restore button colors and prevent hover geometry changes"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 16: ToggleSwitch-Geometrie und Zustandsdarstellung
+
+Ausgangspunkt: Commit **`e18922f`**, der Buttonfarben und Hover-Geometrie (Commit-Punkt 15) sichert. Paketversionen und Lockfile bleiben unverändert auf Angular **18.2.14** / PrimeNG **18.0.2**.
+
+### Erfolgreich umgesetzt
+
+- Die Struktur des bisherigen InputSwitch anhand der erhaltenen Angular-17-Bundles geprüft: Der Slider hatte einen **1-px-Rahmen** mit transparenter Farbe. Zusammen mit dem damaligen Griffstart **-1 px** ergibt das **0 px** Abstand vom Root im ausgeschalteten und **24 px** nach der Verschiebung im eingeschalteten Zustand. PrimeNG 18 berechnet die Position des eigenen Handle-Elements anders. Rahmen, Start und eingeschaltete Position sind im begrenzten ToggleSwitch-Preset entsprechend wiederhergestellt. Root **44 × 16 px**, Griff **24 × 24 px**; der bestehende Root-Radius **8 px** bleibt erhalten.
+- Hover- und Fokus-Schatten aus der ursprünglichen Theme-Datei übernommen. Ausgeschaltet: schwarzer Halo mit **0.04** bei Hover und **0.12** bei Fokus; eingeschaltet dieselben Abstufungen mit **#0a3463**. Der bisherige dreiteilige Griffschatten bleibt erhalten. Die Fokusregel gilt auch nach Mausklick und gewinnt bei gleichzeitigem Hover, entsprechend dem bisherigen Theme. Es wird kein zusätzlicher äußerer Fokusrahmen eingeführt.
+- Disabled-Darstellung wieder mit **0.38** Deckkraft des gesamten Schalters. Ausgeschaltet bleiben der weiße Griff und die schwarze Trackfarbe mit **0.38** Deckkraft erhalten; eingeschaltet der blaue Griff und die blaue Trackfarbe mit **0.5** Deckkraft. Die neuen grauen Disabled-Farben überdecken diese Zustände nicht mehr. Deaktivierte Schalter erhalten keinen Hover-Halo.
+- Drei Browserprüfungen ergänzen die bisherigen 26: Only Printed per Space und Maus mit tatsächlicher Filteränderung sowie Hover/Fokus an/aus; deaktivierter Schalter an/aus mit direktem Klick ohne Wertänderung; beide Affiliate-Schalter per Space mit Modellprüfung und per Labelklick. Die öffentliche Disabled-Eigenschaft wird ausschließlich in der isolierten Fixture gesetzt; das produktive Modell bleibt unverändert.
+- Sechs neue Zusatzbilder sichern Hover, Fokus und Disabled jeweils an/aus. Der Bericht erfasst Root-/Griffmaße, Griffposition, Farben, Schatten, Deckkraft sowie tatsächliche Inputwerte. Die ursprünglichen 39 Hauptszenarien und Referenzbilder bleiben erhalten.
+
+API-Grundlage: [PrimeNG 18 ToggleSwitch](https://v18.primeng.org/toggleswitch). Tokens/DOM wurden gegen die installierten 18.0.2-Quellen, Strukturregeln gegen den erhaltenen Angular-17-Entwicklungsbuild und Zustandswerte gegen die ursprüngliche Theme-Datei geprüft.
+
+### Validierung und verbleibende Arbeit
+
+- **45 Tests erfolgreich** mit Headless Edge, Exitcode 0. Die abschließende Rahmen-/Positionskorrektur ist zusätzlich durch die folgenden Builds und Browserläufe geprüft. Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang **2.34 MB**, unter der unveränderten 3-MB-Fehlergrenze; bisherige Budget-/CommonJS-Warnungen bestehen fort.
+- Reguläre Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden; Chrome-Manifest byteidentisch zur Quelle; standalone Extension-Einstiege ohne `webpackChunk`-Verweise; keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Zwei Abschlussläufe mit jeweils **39 Hauptszenarien plus 28 Zusatzbildern**, **29 erfolgreichen Browserprüfungen**, ohne aufgezeichnete Konsolen-/Browserfehler oder bekannte NG0100-Meldungen. Eingeschalteter Disabled-Schalter zusätzlich visuell geprüft. Die sechs neuen Toggle-Aufnahmen sind jeweils byteidentisch im Wiederholungspaar.
+- Wiederholung insgesamt **56/67 PNGs byteidentisch** (**37/39 Hauptbilder**, **19/28 Zusatzbilder**). Elf andere Bilder unterscheiden sich ausschließlich in jeweils **vier Pixeln** am rechten Ende der Tabs-Unterstreichung; Grenzen stehen im Bericht. Renderer, GPU-Compositing und Rasterization stimmen vor/nach beiden Läufen überein. Die Restabweichung bleibt ausdrücklich dokumentiert.
+- Zur Originalreferenz weiterhin **4/39 Hauptbilder byteidentisch**. Gegen Commit-Punkt 15 bleiben **15/39 Hauptbilder unverändert**. Die Desktop-Teiletabelle weist nun **1.890** statt **3.100** unterschiedliche Pixel auf. Beide Affiliate-Schalter sind in den dokumentierten **60 × 37-px-Rechtecken pixelgleich** zur ursprünglichen Referenz. Der gesamte obere Bereich dieser Aufnahme vor y=471 sowie der sichtbare Tabellenkörper ab y=609 sind ebenfalls pixelgleich; die restlichen Abweichungen liegen im Tabellenkopf und in vier Pixeln der Tab-Unterstreichung. Diese Aussagen gelten für die konkrete Aufnahme, nicht für alle Zustände/Viewports.
+- Standardbutton **41.84375 px**, Karten **196.390625 × 320 px / 8 px Padding**, Tabellenkopf **56 px**, Teilezeilen **91 px** ab **y=608.875**, Navigation **60 px** und Transferwarndialog **720 × 755.84375 px** bleiben erhalten. Erfolgstoast weiterhin im dokumentierten **400 × 86-px-Bereich pixelgleich**. Prüfsummen, Vergleichsrechtecke, Toggle-Messwerte und Output-/Interaktionsprüfungen: [angular-18-toggle-check.json](angular-upgrade-reference/angular-18-toggle-check.json). Originalbilder bleiben unverändert.
+
+Noch offen: übrige Icon- und Auswahlkomponenten-Zustände, vollständige Menü-/Overlay-/Dateiauswahl-Abnahme, vollständiger Button-Abgleich und übrige Referenzabweichungen einschließlich gelegentlicher Rasterunterschiede an der Tabs-Unterstreichung. **Angular 19 bleibt bis zur vollständigen UI-Abnahme auf Version 18 zurückgestellt.**
+
+Logs: `artefacts/angular-upgrade/angular-18/toggle-tests.log`, `toggle-visual-build-final.log`, `toggle-production-final.log`, `toggle-development-final.log`, `toggle-capture-accepted.log` und `toggle-capture-accepted-repeat.log`. Outputs: `artefacts/angular-upgrade/angular-18/toggle-verified/{production,development}/`. Abschlussbilder: `artefacts/angular-upgrade/visual/angular-18-toggle-accepted/` und `angular-18-toggle-accepted-repeat/`. Preview-Aufnahmen sind Diagnose-Zwischenstände.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src/app/shared/theme/brickhunter-preset.ts scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: restore ToggleSwitch geometry and interaction states"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
