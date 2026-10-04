@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { configureComponentTestBed } from 'src/testing/component-test-bed';
 
 import { TransferWarningComponent } from './transfer-warning.component';
 
@@ -7,10 +8,7 @@ describe('TransferWarningComponent', () => {
   let fixture: ComponentFixture<TransferWarningComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ TransferWarningComponent ]
-    })
-    .compileComponents();
+    await configureComponentTestBed();
 
     fixture = TestBed.createComponent(TransferWarningComponent);
     component = fixture.componentInstance;

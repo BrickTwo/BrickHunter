@@ -2,7 +2,7 @@
 
 ## Umsetzungsstatus
 
-Die Umsetzung wurde am 4. Oktober 2026 auf `feature/upgrade-code-base` begonnen. Der erste Zwischenabschnitt (Referenzinstallation, Builds, Erfassung bestehender Testfehler und vollständige direkte Paketprüfung) ist dokumentiert in [angular-upgrade-progress.md](angular-upgrade-progress.md). Die [ergänzende Paketmatrix](angular-upgrade-packages.md) enthält alle 46 direkten Pakete. Etappe 1 ist noch nicht vollständig abgeschlossen; Testdaten, UI-Referenzen und die freigegebene Installationskombination sind offen. Vor Paketänderungen wird am Commit-Punkt 1 angehalten.
+Die Umsetzung wurde am 4. Oktober 2026 auf `feature/upgrade-code-base` begonnen. Referenzinstallation, Builds, Paketprüfung und die inzwischen reparierte Testbasis sind dokumentiert in [angular-upgrade-progress.md](angular-upgrade-progress.md). Die [ergänzende Paketmatrix](angular-upgrade-packages.md) enthält alle 46 direkten Pakete. Etappe 1 ist noch nicht vollständig abgeschlossen; vollständige UI-Referenzen und die freigegebene Installationskombination sind offen. Commit-Punkt 1 wurde als `0251b91` gesichert. Aktuell wird am Commit-Punkt 2 mit 23 erfolgreichen Tests und synthetischen Referenzdaten angehalten.
 
 Planungsstand vor Beginn der Umsetzung: 4. Oktober 2026. Planung auf Basis des Quellcodes, des vorhandenen Lockfiles, offizieller Migrationsdokumentation und live abgefragter npm-Metadaten. Zum Planungszeitpunkt wurden keine Abhängigkeiten installiert, keine Anwendung geändert und keine Builds oder Laufzeittests ausgeführt. Die genannten Versionen sind Kandidaten mit geprüften Paketmetadaten, noch keine durch Tests bestätigte Projektkombination. Ergebnisse der begonnenen Umsetzung stehen im oben verlinkten Fortschrittsprotokoll.
 
