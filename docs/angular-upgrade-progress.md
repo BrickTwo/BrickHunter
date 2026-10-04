@@ -455,3 +455,39 @@ git commit -m "fix: restore FileUpload and drawer geometry on PrimeNG 18"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 12: Toasts und Aufnahme-Renderer
+
+Ausgangspunkt: Commit **`ed358fb`**, der FileUpload und Drawer (Commit-Punkt 11) sichert. Paketversionen und Lockfile bleiben unverändert auf Angular **18.2.14** / PrimeNG **18.0.2**.
+
+### Erfolgreich umgesetzt
+
+- Toast-Preset an die Ausgangsdarstellung angeglichen: vier Severity-Farben, Roboto **16 px**, Summary **700**, Detail **400**, Containerbreite **400 px**, Radius **4 px**, Innenabstand **24 px**, bisherige Icon-/Textpositionen, **32 × 32-px-Schließen-Button**, Schatten und **0.9** Deckkraft. Die schmale Darstellung verwendet weiterhin PrimeNGs vorhandene responsive Regel.
+- Der bisherige Erfolgstoast misst wieder **400 × 86 px**. Der Vergleich des gesamten Toast-Rechtecks **x=1020, y=20, 400 × 86 px** zur unveränderten Angular-17-Aufnahme ergibt **0 unterschiedliche Pixel**. PrimeNGs `backdrop-filter: blur(0)` verursachte trotz gleicher Farbwerte kleine Compositing-Abweichungen; `backdrop-filter: none` stellt die ursprüngliche Darstellung wieder her. Der Nachweis gilt für dieses Rechteck, nicht für das vollständige Bild oder sämtliche Interaktionszustände.
+- Die visuelle Fixture unterstützt vier Severity-Werte und Detailtext. Vier zusätzliche Toast-Bilder ergänzen die bereits vorhandenen JSON-/XML-Dateiaufnahmen. Browserprüfungen bestätigen Darstellung und Schließen aller vier Severities sowie Enter zum Schließen der ersten von zwei Meldungen, während die zweite erhalten bleibt. Reguläre Anwendungseinstiege verwenden diese Fixture weiterhin nicht.
+- Wiederholbarkeit untersucht: Die Listenaufnahme aus Commit-Punkt 11 ist byteidentisch zu einer gezielten Aufnahme mit deaktivierter GPU. Separate D3D11-Diagnosen stimmen mit den früheren GPU-Aufnahmen überein. Das deutet auf unterschiedliche Renderer als Ursache der flächigen Rasterabweichungen hin; warum damals Software-Rendering verwendet wurde, ist ohne damalige GPU-Telemetrie nicht nachgewiesen.
+- Das Aufnahmeskript startet Edge nun ausdrücklich mit **D3D11**, protokolliert Renderer und GPU-Compositing/-Rasterization zu Beginn und Ende und bricht bei Software-Fallback oder Pipelinewechsel ab. Damit werden inkompatible Aufnahmebedingungen sichtbar. Die Windows-/Browser-/GPU-/Treiberbedingungen bleiben für die Pixelabnahme relevant.
+
+API-Grundlage: [PrimeNG 18 Toast](https://v18.primeng.org/toast), [Chrome DevTools SystemInfo](https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo/). Theme-Tokens, SVG-Größen und Styles wurden zusätzlich anhand der installierten Quellen und im Browser geprüft.
+
+### Validierung und verbleibende Arbeit
+
+- **44 Tests erfolgreich** mit Headless Edge, Exitcode 0; Anwendungstypprüfung erfolgreich. Die abschließenden CSS-Anpassungen sind zusätzlich durch die folgenden Browserläufe und Builds geprüft.
+- Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang **2.33 MB**, unter der unveränderten 3-MB-Fehlergrenze. Bisherige Budget-/CommonJS-Warnungen bestehen fort.
+- Beide regulären Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden; Chrome-Manifest byteidentisch zur Quelle; standalone Extension-Einstiege ohne `webpackChunk`-Verweise; keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Zwei abschließende Browserläufe mit jeweils **39 Referenzszenarien plus sechs Zusatzbildern** und **zwölf erfolgreichen Interaktionsprüfungen**: **0 Konsolenfehler / 0 unbehandelte Browserfehler / 0 bekannte NG0100-Meldungen** in diesen kontrollierten Szenarien. Beide Läufe protokollieren unverändert denselben AMD-D3D11-Renderer mit aktiviertem GPU-Compositing und Rasterization. Die Warnmeldung mit Detailtext wurde zusätzlich visuell geprüft.
+- Wiederholung: **40/45 PNGs byteidentisch**, davon **38/39 ursprüngliche Szenarien** und **2/6 Zusatzbilder**. Transferwarnung und vier Toast-Zusatzbilder unterscheiden sich jeweils nur in **vier Pixeln bei x=179–180 / y=553–554**, am rechten Ende der Tabs-Unterstreichung. Diese kleine Restabweichung wird nicht ausgeblendet und bleibt vor vollständiger Pixelabnahme zu klären. Die Toast-Bereiche dieser Bilder liegen außerhalb der Abweichung.
+- Zur ursprünglichen Angular-17-Referenz bleiben **0/39 vollständige Bilder byteidentisch**. Buttonhöhe **41.84375 px**, Karten **196.390625 × 320 px / 8 px Padding**, Tabellenzeilen **91 px** und Navigation **60 px** bleiben erhalten. Bericht mit Prüfsummen, Pixelgrenzen, Renderer, Messwerten und Output-/Interaktionsprüfungen: [angular-18-toast-check.json](angular-upgrade-reference/angular-18-toast-check.json).
+
+Noch offen: übrige Select-/Icon-/Button-Details, vollständiger Hover-/Fokus-/Disabled-Abgleich, Menü-/Overlay-/ausgewählte FileUpload-Zustände und die kleine verbleibende Tabs-Rasterabweichung. Echte Import-Service-/Datenbank-End-to-End-Abnahme gehört weiterhin zu den späteren Integrationsprüfungen. **Angular 19 bleibt bis zur vollständigen Abnahme auf Version 18 zurückgestellt.**
+
+Logs: `artefacts/angular-upgrade/angular-18/toast-tests.log`, `toast-build-accepted.log`, `toast-production-accepted.log`, `toast-development-accepted.log`, `toast-capture-accepted.log` und `toast-capture-accepted-repeat.log`. Outputs: `artefacts/angular-upgrade/angular-18/toast-accepted/{production,development}/`. Abschließende Bilder: `artefacts/angular-upgrade/visual/angular-18-toast-accepted/` und `angular-18-toast-accepted-repeat/`. Übrige Toast-/Raster-Diagnosen ersetzen die ursprüngliche Referenzbasis nicht.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: align PrimeNG toasts and stabilize reference rendering"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

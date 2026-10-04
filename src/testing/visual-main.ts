@@ -69,8 +69,9 @@ class VisualReferenceModule {
   constructor(injector: Injector, zone: NgZone, app: ApplicationRef) {
     (window as any).brickHunterReference = {
       clearMessages: () => zone.run(() => injector.get(MessageService).clear()),
-      showMessage: () => zone.run(() => injector.get(MessageService).add({
-        severity: 'success', summary: 'PaB Data successfully updated', sticky: true,
+      showMessage: (severity: 'success' | 'info' | 'warn' | 'error' = 'success',
+        summary = 'PaB Data successfully updated', detail?: string) => zone.run(() => injector.get(MessageService).add({
+        severity, summary, detail, sticky: true,
       })),
       setSearchCount: (count: number) => zone.run(() => {
         if (!Number.isInteger(count) || count < 0 || count > 1000) throw new Error('Invalid reference count');

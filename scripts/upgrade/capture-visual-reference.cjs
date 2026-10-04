@@ -39,8 +39,18 @@ async function main() {
     consoleErrors: [], knownConsoleErrors: [], scenarios: [] };
   try {
     browser = await chromium.launch({ executablePath: process.env.CHROME_BIN ||
-      'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe', headless: true });
+      'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe', headless: true,
+      args: ['--use-angle=d3d11'] });
     report.browser = browser.version();
+    const gpuSession = await browser.newBrowserCDPSession();
+    async function rendererStatus() {
+      const { gpu } = await gpuSession.send('SystemInfo.getInfo');
+      return { renderer: gpu.auxAttributes.glRenderer, compositing: gpu.featureStatus.gpu_compositing,
+        rasterization: gpu.featureStatus.rasterization };
+    }
+    report.renderer = await rendererStatus();
+    if (!report.renderer.renderer.includes('Direct3D11') || report.renderer.compositing !== 'enabled' || report.renderer.rasterization !== 'enabled')
+      throw new Error('Reference capture requires the D3D11 GPU pipeline; software fallback would change reference pixels');
     for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 },
       { width: 2560, height: 1440 }, { width: 3200, height: 1440 }]) {
       const context = await browser.newContext({ viewport, deviceScaleFactor: 1,
@@ -98,7 +108,9 @@ async function main() {
             '.p-tab', '.p-message', '.p-dialog-header', '.p-dialog-footer',
             '.bh-menu-panel', '.bh-menu-panel .p-menu-item-link', '.bh-menu-swatch',
             '.p-drawer-mask', '.p-drawer-header', '.p-fileupload-header', '.p-fileupload-content',
-            'app-parts-list-import textarea', '.p-fileupload-choose-button'];
+            'app-parts-list-import textarea', '.p-fileupload-choose-button',
+            '.p-toast', '.p-toast-message', '.p-toast-message-content', '.p-toast-message-icon',
+            '.p-toast-message-text', '.p-toast-summary', '.p-toast-detail', '.p-toast-close-button'];
           const values = {};
           for (const selector of selectors) {
             const element = document.querySelector(selector);
@@ -240,9 +252,34 @@ async function main() {
         report.interactionChecks.importFileChooserJson = true;
         report.interactionChecks.importCancelAndCloseReset = true;
         report.interactionChecks.importXmlDrop = true;
+        await open('parts-lists/upgrade-reference');
+        for (const severity of ['success', 'info', 'warn', 'error']) {
+          await page.evaluate(severity => window.brickHunterReference.showMessage(severity, 'Reference notification', 'Detail text for the notification.'), severity);
+          await settle();
+          const toast = page.locator('.p-toast-message');
+          await toast.filter({ hasText: 'Detail text for the notification.' }).waitFor();
+          const file = `1440x1000-toast-${severity}.png`;
+          await page.screenshot({ path: path.join(output, file), animations: 'disabled' });
+          report.additionalScreenshots.push(file);
+          await toast.locator('.p-toast-close-button').click();
+          await toast.waitFor({ state: 'detached' });
+        }
+        report.interactionChecks.toastSeverityDisplayAndClose = true;
+        await page.evaluate(() => {
+          window.brickHunterReference.showMessage('warn', 'First message');
+          window.brickHunterReference.showMessage('error', 'Second message');
+        });
+        await page.locator('.p-toast-message').first().locator('.p-toast-close-button').press('Enter');
+        await page.waitForFunction(() => document.querySelectorAll('.p-toast-message').length === 1 && document.querySelector('.p-toast-message').textContent.includes('Second message'));
+        await page.evaluate(() => window.brickHunterReference.clearMessages());
+        report.interactionChecks.toastKeyboardClosePreservesOtherMessage = true;
       }
       await context.close();
     }
+    report.rendererAtEnd = await rendererStatus();
+    await gpuSession.detach();
+    if (JSON.stringify(report.rendererAtEnd) !== JSON.stringify(report.renderer))
+      throw new Error('GPU pipeline changed during reference capture');
     if (report.pageErrors.length || report.consoleErrors.length)
       throw new Error(`Reference app emitted ${report.pageErrors.length} browser errors and ${report.consoleErrors.length} console errors`);
   } finally {

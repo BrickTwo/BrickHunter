@@ -35,6 +35,33 @@ export const BrickHunterPreset = definePreset(Material, {
     },
   },
   components: {
+    toast: {
+      root: { width: '25rem', borderRadius: '4px', borderWidth: '0' },
+      content: { padding: '1.5rem', gap: '0' },
+      text: { gap: '0.5rem' },
+      summary: { fontWeight: '700', fontSize: '1rem' },
+      detail: { fontWeight: '400', fontSize: '1rem' },
+      icon: { size: '2rem' },
+      closeButton: { width: '2rem', height: '2rem' },
+      closeIcon: { size: '0.875rem' },
+      colorScheme: {
+        light: {
+          info: { background: '#b3e5fc', color: '#01579b', detailColor: '#01579b' },
+          success: { background: '#c8e6c9', color: '#1b5e20', detailColor: '#1b5e20' },
+          warn: { background: '#ffecb3', color: '#7f6003', detailColor: '#7f6003' },
+          error: { background: '#ffcdd2', color: '#b71c1c', detailColor: '#b71c1c' },
+        },
+      },
+      css: `
+        .p-toast { opacity: 0.9; }
+        .p-toast-message { backdrop-filter: none; box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12); }
+        .p-toast-message-text { margin-left: 1rem; }
+        .p-toast-message-icon { width: 0.875rem; height: auto; }
+        .p-toast-message-icon svg { width: 0.875rem; height: 0.875rem; }
+        .p-toast .p-toast-close-button { min-width: 0; width: 2rem; height: 2rem; margin: 0; right: 0; padding: 0; color: inherit; }
+        .p-toast-close-button:hover { background: rgba(255, 255, 255, 0.3); }
+      `,
+    },
     button: {
       root: {
         paddingX: '1rem',
