@@ -1,5 +1,5 @@
 <p-dialog [(visible)]="show" [style]="{ width: '50vw' }" [modal]="true" [closable]="false">
-  <p-messages [(value)]="warningMaxPaBLotPerOrder" [enableService]="false" [closable]="false"></p-messages>
+  <bh-messages [messages]="warningMaxPaBLotPerOrder"></bh-messages>
   <p-table
     [value]="parts"
     [tableStyle]="{ 'min-width': '50rem' }"

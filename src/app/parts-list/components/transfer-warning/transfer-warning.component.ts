@@ -15,23 +15,26 @@ export class TransferWarningComponent {
   parts: { part: Part; cart: ReadCartItem | undefined }[];
   rowHeight = 91;
   maxPaBLotPerOrder = 0;
-  warningMaxPaBLotPerOrder: ToastMessageOptions[];
+  warningMaxPaBLotPerOrder: ToastMessageOptions[] = [];
 
-  constructor(private readonly pickabrickService: PickABrickService, private readonly globalSettingsService: GlobalSettingsService) {
+  constructor(
+    private readonly pickabrickService: PickABrickService,
+    private readonly globalSettingsService: GlobalSettingsService
+  ) {
     this.maxPaBLotPerOrder = this.globalSettingsService.maxPaBLotPerOrder;
   }
 
   open(partsWithWarning: { part: Part; cart: ReadCartItem | undefined }[], maxPaBLotPerOrderExceeded: boolean) {
     this.show = true;
     this.parts = partsWithWarning;
+    this.warningMaxPaBLotPerOrder = [];
 
-    if(maxPaBLotPerOrderExceeded) {
+    if (maxPaBLotPerOrderExceeded) {
       this.warningMaxPaBLotPerOrder = [
         {
           severity: 'warn',
           summary: 'Warning',
-          detail:
-            `It is not possible to order more than ${this.maxPaBLotPerOrder} lots for each Bestseller and Standard parts per order. You may want to try the split function first.`,
+          detail: `It is not possible to order more than ${this.maxPaBLotPerOrder} lots for each Bestseller and Standard parts per order. You may want to try the split function first.`,
         },
       ];
     }

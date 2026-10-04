@@ -62,3 +62,7 @@ node scripts/upgrade/capture-visual-reference.cjs angular-17-new-run
 ```
 
 Ausgabe: `artefacts/angular-upgrade/visual/angular-17-new-run/`. Der Szenarienname muss neu sein: Das Skript überschreibt keine vorhandenen Referenzen. Der reguläre `build`-/`build-dev`-Einstieg bleibt `src/main.ts`; nur die explizite Konfiguration `development,visual-reference` verwendet `src/testing/visual-main.ts`.
+
+## Tabs-/Message-Abschnitt auf Angular 18
+
+TabMenu und Messages sind durch die öffentlichen Tabs-/Message-Komponenten ersetzt. **44 Tests**, drei Builds, **39 Bildszenarien** und vier Browser-Interaktionsprüfungen sind erfolgreich. Im Abschlusslauf wurden **keine Konsolen-/Browserfehler und keine bekannten NG0100-Meldungen** aufgezeichnet; dies gilt für die kontrollierten Szenarien dieses Laufs. Die Referenzbilder bleiben unverändert, die vollständige UI-Abnahme bleibt offen (**0/39 byteidentische Bilder**). Unter anderem FileUpload, Overlay-/Icon-/Button-Zustände und die produktive Menüintegration stehen noch aus. Bilder: `artefacts/angular-upgrade/visual/angular-18-tabs-messages-final/`; Bericht: [angular-18-tabs-messages-check.json](angular-18-tabs-messages-check.json). Zusätzliche Messungen erfassen Tabs, Messages und Dialog-Header/-Footer.

@@ -21,7 +21,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { MenuModule } from './shared/components/menu/menu.component';
 import { MessageModule } from 'primeng/message';
-import { MessagesModule } from 'primeng/messages';
+import { MessagesComponent } from './shared/components/messages/messages.component';
 import { PopoverModule } from 'primeng/popover';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -30,13 +30,14 @@ import { RippleModule } from 'primeng/ripple';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DrawerModule } from 'primeng/drawer';
 import { TableModule } from 'primeng/table';
-import { TabMenuModule } from 'primeng/tabmenu';
+import { TabsModule } from 'primeng/tabs';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { TreeModule } from 'primeng/tree';
 import { TreeTableModule } from 'primeng/treetable';
 
 @NgModule({
+  imports: [MessagesComponent],
   exports: [
     AvatarModule,
     BadgeModule,
@@ -58,7 +59,7 @@ import { TreeTableModule } from 'primeng/treetable';
     ToggleSwitchModule,
     MenuModule,
     MessageModule,
-    MessagesModule,
+    MessagesComponent,
     PopoverModule,
     PaginatorModule,
     ProgressSpinnerModule,
@@ -67,7 +68,7 @@ import { TreeTableModule } from 'primeng/treetable';
     SelectButtonModule,
     DrawerModule,
     TableModule,
-    TabMenuModule,
+    TabsModule,
     TagModule,
     ToastModule,
     TreeModule,

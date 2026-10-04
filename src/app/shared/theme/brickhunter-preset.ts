@@ -113,7 +113,52 @@ export const BrickHunterPreset = definePreset(Material, {
       root: { fontSize: '0.75rem', padding: '0.25rem 0.4rem' },
       colorScheme: { light: { warn: { background: '#fbc02d', color: '#212529' } } },
     },
-    dialog: { header: { padding: '1.5rem' }, title: { fontWeight: '500' }, content: { padding: '0 1.5rem 1.5rem' } },
-    drawer: { header: { padding: '1rem' }, content: { padding: '0 1rem 1rem' } },
+    tabs: {
+      tab: {
+        padding: '1rem 1.5rem',
+        fontWeight: '500',
+        color: 'rgba(0, 0, 0, 0.6)',
+        hoverColor: 'rgba(0, 0, 0, 0.6)',
+        hoverBackground: 'rgba(10, 52, 99, 0.04)',
+        activeBorderColor: 'rgba(0, 0, 0, 0.12)',
+      },
+      tabpanel: { padding: '0' },
+      css: options => `${Material.components.tabs.css(options)}
+        .p-tab { font-family: inherit; font-size: 1rem; border-top-left-radius: 4px; border-top-right-radius: 4px; }
+        .p-tabpanels { padding: 0; }
+      `,
+    },
+    message: {
+      content: { padding: '0.75rem', gap: '0.5rem' },
+      text: { fontWeight: '400' },
+      icon: { size: '1rem' },
+      colorScheme: {
+        light: {
+          warn: { background: '#ffecb3', color: '#7f6003' },
+          info: { background: '#b3e5fc', color: '#01579b' },
+          error: { background: '#ffcdd2', color: '#b71c1c' },
+          success: { background: '#c8e6c9', color: '#1b5e20' },
+        },
+      },
+    },
+    dialog: {
+      header: { padding: '1.5rem' },
+      title: { fontWeight: '500' },
+      content: { padding: '0 1.5rem 1.5rem' },
+      footer: { padding: '1rem 1.5rem' },
+      css: `
+        .p-dialog { border: 0; }
+        .p-dialog .p-dialog-header .p-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; }
+      `,
+    },
+    drawer: {
+      header: { padding: '1rem' },
+      content: { padding: '0 1rem 1rem' },
+      css: `
+        .p-drawer { border: 0; }
+        .p-drawer-header:has(.p-button) { justify-content: flex-end; }
+        .p-drawer .p-drawer-header .p-button { min-width: 0; width: 2rem; height: 2rem; padding: 0; }
+      `,
+    },
   },
 });

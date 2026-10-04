@@ -171,31 +171,62 @@
   </div>
   <div class="col-12 xl:col xxl:flex-order-0">
     <p-card>
-      <p-tabMenu [model]="items" [(activeItem)]="activeItem" (activeItemChange)="onTableChange($event)"></p-tabMenu>
-      <app-parts-table
-        *ngIf="activeItem.id != 'setSuggestions'"
-        [parts]="parts"
-        [pabIsLoading]="pabIsLoading"
-        [partsListUuid]="uuid"
-        [allowEdit]="true"
-        (bulkAction)="onBulkAction($event)"></app-parts-table>
-        <p-progressSpinner
-        *ngIf="activeItem.id === 'setSuggestions' && setSugestionIsLoading"
-        [style]="{ width: '25px', height: '25px', margin: '10px' }"
-        class="vertical-align-middle"></p-progressSpinner>
-      <app-parts-product-suggestions-table
-        *ngIf="activeItem.id === 'setSuggestions' && setSuggestionsLoaded && !setSugestionIsLoading && products?.length > 0"
-        [products]="products"
-        [partsListUuid]="partsList.uuid"
-        (bulkAction)="onBulkAction($event)"></app-parts-product-suggestions-table>
-      <p *ngIf="activeItem.id === 'setSuggestions' && setSuggestionsLoaded && !setSugestionIsLoading && products?.length == 0">
-        
-      </p>
-      <p *ngIf="activeItem.id === 'setSuggestions' && !setSuggestionsLoaded && !setSugestionIsLoading">
-        
-      </p>
-      <p-message *ngIf="activeItem.id === 'setSuggestions' && setSuggestionsLoaded && !setSugestionIsLoading && products?.length == 0" severity="error" text="No sets found!"></p-message>
-      <p-message *ngIf="activeItem.id === 'setSuggestions' && !setSuggestionsLoaded && !setSugestionIsLoading" severity="info" text='Please use "Check for Sets" function.'></p-message>
+      <p-tabs [value]="activeItem.id" (valueChange)="onTabChange($event)">
+        <p-tablist>
+          <p-tab *ngFor="let item of items" [value]="item.id" [disabled]="item.disabled || false">{{
+            item.label
+          }}</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+          <p-tabpanel [value]="activeItem.id">
+            <app-parts-table
+              *ngIf="activeItem.id != 'setSuggestions'"
+              [parts]="parts"
+              [pabIsLoading]="pabIsLoading"
+              [partsListUuid]="uuid"
+              [allowEdit]="true"
+              (bulkAction)="onBulkAction($event)"></app-parts-table>
+            <p-progressSpinner
+              *ngIf="activeItem.id === 'setSuggestions' && setSugestionIsLoading"
+              [style]="{ width: '25px', height: '25px', margin: '10px' }"
+              class="vertical-align-middle"></p-progressSpinner>
+            <app-parts-product-suggestions-table
+              *ngIf="
+                activeItem.id === 'setSuggestions' &&
+                setSuggestionsLoaded &&
+                !setSugestionIsLoading &&
+                products?.length > 0
+              "
+              [products]="products"
+              [partsListUuid]="partsList.uuid"
+              (bulkAction)="onBulkAction($event)"></app-parts-product-suggestions-table>
+            <p
+              *ngIf="
+                activeItem.id === 'setSuggestions' &&
+                setSuggestionsLoaded &&
+                !setSugestionIsLoading &&
+                products?.length == 0
+              "></p>
+            <p *ngIf="activeItem.id === 'setSuggestions' && !setSuggestionsLoaded && !setSugestionIsLoading"></p>
+            <p-message
+              *ngIf="
+                activeItem.id === 'setSuggestions' &&
+                setSuggestionsLoaded &&
+                !setSugestionIsLoading &&
+                products?.length == 0
+              "
+              severity="error"
+              text="No sets found!"></p-message>
+            <p-message
+              *ngIf="activeItem.id === 'setSuggestions' && !setSuggestionsLoaded && !setSugestionIsLoading"
+              severity="info"
+              text='Please use "Check for Sets" function.'></p-message>
+          </p-tabpanel>
+          <ng-container *ngFor="let item of items">
+            <p-tabpanel *ngIf="item.id !== activeItem.id" [value]="item.id"></p-tabpanel>
+          </ng-container>
+        </p-tabpanels>
+      </p-tabs>
     </p-card>
   </div>
 </div>

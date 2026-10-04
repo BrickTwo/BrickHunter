@@ -343,6 +343,13 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
     this.parts = this.partsListService.getParts(this.uuid, String(selectedTab.id));
   }
 
+  onTabChange(value: string | number) {
+    const selectedTab = this.items.find(item => item.id === value && !item.disabled);
+    if (!selectedTab) return;
+    this.activeItem = selectedTab;
+    this.onTableChange(selectedTab);
+  }
+
   getTotalQuantity(filter: string): number {
     return this.partsListService
       .getParts(this.uuid, filter)

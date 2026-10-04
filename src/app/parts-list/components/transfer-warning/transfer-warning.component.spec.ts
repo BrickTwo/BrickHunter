@@ -18,4 +18,15 @@ describe('TransferWarningComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('clears a previous lot-limit warning when reopened without an exceeded limit', () => {
+    component.open([], true);
+    fixture.detectChanges();
+    expect(component.warningMaxPaBLotPerOrder.length).toBe(1);
+    expect(fixture.nativeElement.textContent).toContain('It is not possible to order more than');
+    component.open([], false);
+    fixture.detectChanges();
+    expect(component.warningMaxPaBLotPerOrder).toEqual([]);
+    expect(fixture.nativeElement.textContent).not.toContain('It is not possible to order more than');
+  });
 });

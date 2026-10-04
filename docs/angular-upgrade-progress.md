@@ -349,3 +349,38 @@ git commit -m "fix: align PrimeNG 18 selection controls and paginator"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt die weitere UI-Angleichung auf Version 18.
+
+## Commit-Punkt 9: Öffentliche Tabs und Message, erste Overlay-Korrekturen
+
+Ausgangspunkt: Commit **`41e28e0`**, der den Auswahlkomponenten-/Paginator-Abschnitt (Commit-Punkt 8) sichert. Paketversionen und Lockfile bleiben unverändert auf Angular **18.2.14** / PrimeNG **18.0.2**.
+
+### Erfolgreich umgesetzt
+
+- **TabMenuModule und MessagesModule vollständig aus dem Anwendungscode entfernt.** Die Teilelistenansicht verwendet jetzt die öffentliche `TabsModule`-API mit Tabs, TabList und TabPanel. Klicks und Tastaturaktivierung übernehmen weiterhin den bisherigen Filter und laden die passenden Teile. Unbekannte oder deaktivierte Tabwerte werden ignoriert. Ein aktives Inhaltspanel erhält die Tabelleninstanz bei normalen Filterwechseln; zusätzliche leere Panels sorgen dafür, dass alle sieben `aria-controls`-Verweise gültige Ziele haben.
+- Der kleine eigene **`bh-messages`-Wrapper** rendert die vorhandenen Meldungsarrays über die öffentliche `p-message`-Komponente. Severity, Icon, Summary und Detail bleiben unterstützt. Summary und Detail werden als Text gebunden; HTML wird nicht interpretiert. Migration und Transferwarnung verwenden diesen Wrapper. Alte Lot-Warnungen werden vor jedem erneuten Öffnen des Transferdialogs zurückgesetzt.
+- **Fünf zusätzliche Regressionstests** prüfen Meldungsdarstellung und sichere Textbindung, das Leeren von Meldungen, Tabwechsel/Panel-Verknüpfungen, Tastaturaktivierung, ungültige/deaktivierte Tabwerte sowie das Wiederöffnen ohne veraltete Lot-Warnung. Insgesamt **44 Tests** erfolgreich.
+- Das Material-basierte BrickHunter-Preset ergänzt Tabs-Schrift/-Abstände, Message-Farben sowie Dialog-Footer und Dialog-/Drawer-Schließen-Buttons. Die Schließen-Buttons erhalten die vorgesehenen Maße auch gegenüber später geladenen Button-Regeln. Die sechs modalen rechten Drawer setzen den bisherigen Maskenfarbwert explizit über den öffentlichen `maskStyle`-Input. Die Navigation bleibt von der bedingten Header-Ausrichtung ausgenommen.
+- Der Screenshot-Bericht erfasst zusätzlich Tabs, Messages und Dialog-Header/-Footer. Die Angular-17-Referenzen bleiben unverändert.
+
+API-Grundlage: [PrimeNG 18 Tabs](https://v18.primeng.org/tabs), [PrimeNG 18 Message](https://v18.primeng.org/message). Die konkrete Implementierung und Style-Reihenfolge wurden zusätzlich anhand der installierten PrimeNG-18-Quellen geprüft.
+
+### Validierung und verbleibende Arbeit
+
+- **44 Tests erfolgreich** mit Headless Edge, Exitcode 0. Anwendungstypprüfung und `git diff --check` erfolgreich.
+- Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang **2.31 MB**, unter der unveränderten 3-MB-Fehlergrenze; bisherige Budget-/CommonJS-Warnungen bestehen fort.
+- Reguläre Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden; Chrome-Manifest byteidentisch zur Quelle; standalone Extension-Einstiege ohne `webpackChunk`-Verweise; keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Abschließender Browserlauf: **39 Screenshots**, alle vier Auswahl-/Toggle-/Seitenschalter-Prüfungen erfolgreich; **0 Konsolenfehler / 0 unbehandelte Browserfehler / 0 bekannte NG0100-Meldungen**. Das beschreibt diesen kontrollierten Lauf und ist kein allgemeiner Nachweis, dass sämtliche bisherigen Lifecycle-Probleme in allen produktiven Zuständen behoben sind.
+- **0 von 39 Bildern byteidentisch** zur Angular-17-Referenz. Transferwarnung und Import-Drawer wurden zusätzlich visuell verglichen. Der Transferwarndialog behält die gemessenen **720 × 755.84375 px**; Warnbanner: **672 × 78 px**, erstes Tab: **87.140625 × 52 px**. Buttonhöhe **41.84375 px**, Teilekarten **196.390625 × 320 px / 8 px Padding**, Teiletabellenzeilen **91 px** und Navigation **60 px** bleiben erhalten. Messwerte, Prüfsummen und Interaktions-/Output-Prüfungen: [angular-18-tabs-messages-check.json](angular-upgrade-reference/angular-18-tabs-messages-check.json).
+
+Die API-Ablösung ist abgeschlossen, die vollständige visuelle Angleichung der Overlays noch nicht. Offen bleiben insbesondere FileUpload-Layout und Drawer-Inhaltsabstände, Maskendarstellung im Bildvergleich, Warn-/Tabellenicons, einzelne Button-Zustände, Toasts sowie übrige Select-/Hover-/Fokus-/Disabled-Details. Der öffentliche Menü-Wrapper ist weiterhin nur isoliert geprüft und muss produktiv integriert werden. **Angular 19 bleibt bis zur vollständigen Abnahme auf Version 18 zurückgestellt.**
+
+Logs: `artefacts/angular-upgrade/angular-18/tabs-messages-*.log`; abschließend geprüfte Outputs: `artefacts/angular-upgrade/angular-18/tabs-messages-final/{production,development}/`; abschließende Bilder: `artefacts/angular-upgrade/visual/angular-18-tabs-messages-final/`. Diagnose-Zwischenstände ersetzen die ursprüngliche Referenzbasis nicht.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "refactor: migrate PrimeNG tabs and warning messages"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

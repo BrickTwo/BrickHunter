@@ -94,7 +94,8 @@ async function main() {
           const selectors = ['html', 'body', 'h2', '.p-button', '.p-datatable-tbody tr',
             'app-browse-parts-grid-item > div', '.p-dialog', '.p-sidebar, .p-drawer',
             '.p-card-content', '.p-tag', '.p-inputgroup', '.p-inputgroupaddon', '.p-datatable-thead tr',
-            '.p-tree-node-content', '.p-togglebutton', '.p-toggleswitch-slider', '.p-checkbox-box', '.p-paginator-page'];
+            '.p-tree-node-content', '.p-togglebutton', '.p-toggleswitch-slider', '.p-checkbox-box', '.p-paginator-page',
+            '.p-tab', '.p-message', '.p-dialog-header', '.p-dialog-footer'];
           const values = {};
           for (const selector of selectors) {
             const element = document.querySelector(selector);

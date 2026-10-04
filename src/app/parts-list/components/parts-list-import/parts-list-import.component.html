@@ -1,4 +1,4 @@
-<p-drawer [appendTo]="null" [(visible)]="display" position="right" (onHide)="onHide()">
+<p-drawer [maskStyle]="{ backgroundColor: 'rgba(0, 0, 0, 0.32)' }" [appendTo]="null" [(visible)]="display" position="right" (onHide)="onHide()">
   <h2>Import</h2>
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="field">
