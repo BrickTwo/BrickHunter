@@ -43,6 +43,35 @@ export const BrickHunterPreset = definePreset(Material, {
     },
   },
   components: {
+    progressspinner: { colorScheme: { light: { root: {
+      'color.1': '#d62d20', 'color.2': '#0057e7', 'color.3': '#008744', 'color.4': '#ffa700',
+    } } } },
+    radiobutton: {
+      root: { borderColor: '#757575', hoverBorderColor: '#757575', focusBorderColor: '#757575' },
+      css: `
+        .p-radiobutton { border-radius: 50%; transition: box-shadow 0.2s; }
+        .p-radiobutton-box { border-width: 2px; }
+        .p-radiobutton:not(.p-disabled):has(.p-radiobutton-input:hover) { box-shadow: 0 0 1px 10px rgba(0, 0, 0, 0.04); }
+        .p-radiobutton:not(.p-disabled):has(.p-radiobutton-input:focus) { box-shadow: 0 0 1px 10px rgba(0, 0, 0, 0.12); }
+        .p-radiobutton.p-radiobutton-checked:not(.p-disabled):has(.p-radiobutton-input:hover) { box-shadow: 0 0 1px 10px rgba(10, 52, 99, 0.04); }
+        .p-radiobutton.p-radiobutton-checked:not(.p-disabled):has(.p-radiobutton-input:focus) { box-shadow: 0 0 1px 10px rgba(10, 52, 99, 0.12); }
+        .p-radiobutton.p-disabled { opacity: 0.38; }
+      `,
+    },
+    inputnumber: {
+      button: { width: '3rem' },
+      colorScheme: { light: { button: { background: '#0a3463', hoverBackground: 'rgba(10, 52, 99, 0.92)',
+        activeBackground: 'rgba(10, 52, 99, 0.68)', color: '#ffffff', hoverColor: '#ffffff', activeColor: '#ffffff' } } },
+      css: `
+        .p-inputnumber-stacked .p-inputnumber-button-group { position: static; height: auto; z-index: auto; }
+        .p-inputnumber-stacked .p-inputnumber-button { min-height: 19px; }
+        .p-inputnumber-stacked .p-inputnumber-input { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+        .p-inputnumber-stacked .p-inputnumber-increment-button { border-top-right-radius: 4px; }
+        .p-inputnumber-stacked .p-inputnumber-decrement-button { border-bottom-right-radius: 4px; }
+        .p-inputnumber-button svg { width: 0.875rem; height: 0.875rem; }
+        .p-inputnumber-button { font: inherit; vertical-align: bottom; }
+      `,
+    },
     select: {
       root: { disabledBackground: '#ffffff', disabledColor: 'rgba(0, 0, 0, 0.87)', focusRing: { width: '0', shadow: 'none' } },
       dropdown: { width: '2.357rem', color: 'rgba(0, 0, 0, 0.6)' },
@@ -91,7 +120,7 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-toast-message-text { margin-left: 1rem; }
         .p-toast-message-icon { width: 0.875rem; height: auto; }
         .p-toast-message-icon svg { width: 0.875rem; height: 0.875rem; }
-        .p-toast .p-toast-close-button { min-width: 0; width: 2rem; height: 2rem; margin: 0; right: 0; padding: 0; color: inherit; }
+        .p-toast .p-toast-close-button { min-width: 0; width: 2rem; height: 2rem; margin: 0; right: 0; padding: 0; color: inherit; justify-content: center; }
         .p-toast-close-button:hover { background: rgba(255, 255, 255, 0.3); }
       `,
     },
@@ -100,7 +129,7 @@ export const BrickHunterPreset = definePreset(Material, {
         paddingX: '1rem',
         paddingY: '0.714rem',
         borderRadius: '4px',
-        gap: '0.5rem',
+        gap: '0',
         label: { fontWeight: '500' },
         focusRing: { width: '0', shadow: 'none' },
         sm: { fontSize: '0.875rem', paddingX: '0.875rem', paddingY: '0.62475rem' },
@@ -119,10 +148,15 @@ export const BrickHunterPreset = definePreset(Material, {
       },
       css: options => `${Material.components.button.css(options)}
         /* PrimeNG 17 aligned inline buttons to the line bottom, including table cells. */
-        .p-button { border: 0; min-width: 4rem; vertical-align: bottom; }
+        .p-button { border: 0; min-width: 4rem; vertical-align: bottom; justify-content: normal; }
         .p-button.p-button:not(:disabled):hover, .p-button.p-button:not(:disabled):active { border: 0; }
         .p-button-label { flex: 1 1 auto; }
-        .p-button-icon-only { min-width: auto; padding: 0.714rem; }
+        .p-button .p-button-icon-left { margin-right: 0.5rem; }
+        .p-button .p-button-icon-right { margin-left: 0.5rem; }
+        .p-button .p-button-icon-top { margin-bottom: 0.5rem; }
+        .p-button .p-button-icon-bottom { margin-top: 0.5rem; }
+        .p-button.p-button-icon-only .p-button-icon { margin: 0; }
+        .p-button-icon-only { min-width: auto; padding: 0.714rem; justify-content: center; }
         .p-button-outlined { box-shadow: inset 0 0 0 1px; }
         ${Object.entries(buttonColors).map(([severity, rgb]) => {
           const selector = severity === 'primary' ? '.p-button' : `.p-button.p-button-${severity}`;
@@ -187,6 +221,15 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-togglebutton:not(.p-togglebutton-checked):focus { background: #e0e0e1; border-color: #e0e0e1; }
       `,
     },
+    selectbutton: {
+      css: `
+        /* Legacy inline flow wraps whole choices on narrow screens. */
+        .p-selectbutton { display: inline-block; }
+        .p-selectbutton p-togglebutton { display: inline-block; vertical-align: bottom; }
+        .p-selectbutton .p-togglebutton { vertical-align: bottom; border-left-width: 1px; }
+        .p-selectbutton p-togglebutton:not(:last-child) .p-togglebutton { border-right-width: 0; }
+      `,
+    },
     toggleswitch: {
       root: { borderWidth: '1px', borderRadius: '0.5rem', gap: '0px' },
       colorScheme: {
@@ -225,6 +268,7 @@ export const BrickHunterPreset = definePreset(Material, {
       },
       css: `
         .p-paginator-page, .p-paginator-first, .p-paginator-prev, .p-paginator-next, .p-paginator-last { margin: 0.143rem; font: inherit; }
+        .p-paginator svg { width: 0.875rem; height: 0.875rem; }
       `,
     },
     datatable: {
@@ -256,6 +300,7 @@ export const BrickHunterPreset = definePreset(Material, {
           success: { background: '#689f38', color: '#ffffff' },
         },
       },
+      css: `.p-tag-label:empty { display: none; }`,
     },
     tabs: {
       tab: {
@@ -272,6 +317,7 @@ export const BrickHunterPreset = definePreset(Material, {
       css: options => `${Material.components.tabs.css(options)}
         .p-tab { font-family: inherit; font-size: 1rem; line-height: 1; border-top-left-radius: 4px; border-top-right-radius: 4px; }
         .p-tabpanels { padding: 0; }
+        .p-tablist-content:not(.p-tablist-viewport) { overflow: hidden; }
       `,
     },
     message: {
@@ -293,7 +339,15 @@ export const BrickHunterPreset = definePreset(Material, {
       content: { padding: '0 1.5rem 1.5rem' },
       footer: { padding: '1rem 1.5rem' },
       css: `
-        .p-dialog { border: 0; }
+        .p-dialog { position: relative; border: 0; background: transparent; color: initial; }
+        .p-dialog-header, .p-dialog-content, .p-dialog-footer { background: #ffffff; color: rgba(0, 0, 0, 0.87); }
+        .p-dialog-header { border-top-left-radius: 4px; border-top-right-radius: 4px; }
+        .p-dialog-footer { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; display: block; text-align: right; }
+        .p-dialog-footer button { margin: 0 0.5rem 0 0; }
+        .p-confirmdialog .p-dialog-footer svg { width: 0.875rem; height: 0.875rem; }
+        .p-dialog-content:last-of-type { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
+        /* ConfirmDialog 18.0.2 drops its style inputs when creating the body overlay. */
+        .p-confirmdialog { width: 50vw; }
         .p-dialog .p-dialog-header .p-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
         .p-dialog .p-dialog-header .p-button svg { width: 0.875rem; height: 0.875rem; }
         .p-dialog .p-dialog-header .p-button:enabled:focus,
@@ -306,6 +360,9 @@ export const BrickHunterPreset = definePreset(Material, {
       content: { padding: '0 1rem 1rem' },
       css: `
         .p-drawer { border: 0; }
+        /* PrimeNG 17 clears the transform after opening. Preserve animations,
+           then restore its stable shadow/text rasterization and containing block. */
+        .p-drawer-active:not(.ng-animating) { transform: none !important; }
         .p-drawer-header:has(.p-button) { justify-content: flex-end; }
         .p-drawer .p-drawer-header .p-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
         .p-drawer .p-drawer-header .p-button svg { width: 0.875rem; height: 0.875rem; }
@@ -321,7 +378,7 @@ export const BrickHunterPreset = definePreset(Material, {
       css: `
         .p-fileupload-header { display: block; }
         .p-fileupload-header .p-button { margin-right: 0.5rem; }
-        .p-fileupload-header .p-button svg { width: 0.875rem; height: 0.875rem; }
+        .p-fileupload-header .p-button svg { width: 0.875rem; height: 0.875rem; margin-right: 0.5rem; }
         .p-fileupload-header .p-button:disabled { opacity: 0.38; }
         .p-fileupload-content { border: 0; border-top: 1px solid #e0e0e0; position: relative; }
       `,

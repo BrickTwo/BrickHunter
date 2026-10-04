@@ -16,6 +16,9 @@
 
 @layer primeng, brickhunter;
 
+// PrimeFlex 4 uses the new surface palette; preserve the app's legacy border utility.
+.surface-border { border-color: var(--surface-border) !important; }
+
 @layer brickhunter {
   body {
     background-color: rgb(240, 240, 240);

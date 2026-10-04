@@ -22,7 +22,11 @@
     max-height: 60px;
   }
 
-  ::ng-deep .in-place-edit > .p-inputtext {
+  ::ng-deep .in-place-edit.p-inputnumber {
+    position: static;
+  }
+
+  ::ng-deep .in-place-edit .p-inputtext {
     padding: 2px;
   }
 }

@@ -3,13 +3,16 @@
     background-color: grey;
   }
 
-  ::ng-deep .quantity-edit > .p-inputtext {
+  ::ng-deep .quantity-edit.p-inputnumber { position: static; }
+
+  ::ng-deep .quantity-edit .p-inputtext {
     padding: 2px;
   }
 
-  ::ng-deep .quantity-edit > .p-button {
+  ::ng-deep .quantity-edit .p-inputnumber-button {
     padding: 2px;
     width: 30px;
+    border: 0;
   }
 
   ::ng-deep .remove-button {

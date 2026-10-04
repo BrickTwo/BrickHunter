@@ -12,6 +12,7 @@ import { NgModelChangeDebouncedDirective } from './directoves/ng-model-change-de
 import { ChangelogDialogComponent } from './components/changelog-dialog/changelog-dialog.component';
 import { MigrationComponent } from './components/migration/migration.component';
 import { SelectEscapeDirective } from './directives/select-escape.directive';
+import { ConfirmDialogFocusDirective } from './directives/confirm-dialog-focus.directive';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { SelectEscapeDirective } from './directives/select-escape.directive';
     LocaleComponent,
     NgModelChangeDebouncedDirective,
     SelectEscapeDirective,
+    ConfirmDialogFocusDirective,
     MigrationComponent,
   ],
   imports: [PrimengModule, CommonModule, FontAwesomeModule, FormsModule],
@@ -35,6 +37,7 @@ import { SelectEscapeDirective } from './directives/select-escape.directive';
     LocaleComponent,
     NgModelChangeDebouncedDirective,
     SelectEscapeDirective,
+    ConfirmDialogFocusDirective,
     MigrationComponent,
   ],
 })

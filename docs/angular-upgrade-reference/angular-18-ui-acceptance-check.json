@@ -1,0 +1,2246 @@
+{
+  "status": "ui-acceptance-complete-with-documented-rendering-and-fixture-differences",
+  "visualAcceptance": true,
+  "angular19UiGateSatisfied": true,
+  "baseCommit": "7d776d9",
+  "angular": "18.2.14",
+  "primeng": "18.0.2",
+  "unitTestsPassed": 50,
+  "captureLabels": [
+    "angular-18-ui-accepted-complete",
+    "angular-18-ui-accepted-complete-repeat"
+  ],
+  "browser": "154.0.4258.53",
+  "renderer": {
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+    "compositing": "enabled",
+    "rasterization": "enabled"
+  },
+  "rendererUnchangedAcrossBothRuns": true,
+  "mainScreenshotsPerRun": 39,
+  "additionalScreenshotsPerRun": 49,
+  "browserChecksPerRun": 56,
+  "originalReferenceByteIdentical": 14,
+  "repeatByteIdentical": 65,
+  "noPixelFiltering": true,
+  "originalReferenceUnchanged": true,
+  "interactionChecks": {
+    "categorySelection": true,
+    "onlyPrintedToggle": true,
+    "deliveryChannelSelection": true,
+    "paginatorPageSelection": true,
+    "publicColorMenuSelection": true,
+    "publicListBulkMenuCommand": true,
+    "publicPartsBulkMenuCommand": true,
+    "importFileChooserJson": true,
+    "importCancelAndCloseReset": true,
+    "importXmlDrop": true,
+    "toastSeverityDisplayAndClose": true,
+    "toastKeyboardClosePreservesOtherMessage": true,
+    "tableHeaderBorderAndSortIconAlignment": true,
+    "tableKeyboardSortAscendingDescending": true,
+    "tableSortedHeaderHover": true,
+    "tableTabKeyboardFilter": true,
+    "selectUnitMouseSaveAndReopen": true,
+    "selectUnitKeyboardAndEscape": true,
+    "selectDisabledBlocksPopup": true,
+    "selectNestedPopupAndDrawerEscape": true,
+    "selectLocaleLabelsMouseKeyboardAndSave": true,
+    "buttonDangerMouseFocusActiveAndSpaceDelete": true,
+    "buttonOutlinedHoverFocusAndEnterOpensDrawer": true,
+    "buttonSolidHoverFocusActiveAndSpaceTransfer": true,
+    "buttonDisabledBlocksCommand": true,
+    "buttonDangerOutlinedStates": true,
+    "buttonListHeaderGeometryBulkStatesAndSpaceMenu": true,
+    "buttonSuccessStatesAndEnterPersistsHaveIt": true,
+    "togglePrintedMouseSpaceBindingAndStates": true,
+    "toggleDisabledOnOffBlocksClick": true,
+    "toggleAffiliateSpaceAndLabelBinding": true,
+    "menuColorFocusSurvivesHover": true,
+    "menuEscapeReturnsTriggerFocus": true,
+    "menuOutsideClickAndTriggerToggleClose": true,
+    "menuScrollResizeReopenAndSpaceSelection": true,
+    "menuBulkHomeEndSpaceAndTableZIndex": true,
+    "menuRouteDestroyRemovesListenersAndKeyboardNavigation": true,
+    "checkboxMouseSpaceLabelAndSettingsSave": true,
+    "checkboxDisabledOnOffBlocksInputAndLabel": true,
+    "checkboxTableRowAndHeaderSpaceSelection": true,
+    "checkboxTableMouseHoverAndKeyboardFocus": true,
+    "overlayDrawerMasksNavigationAndDismissRestoresClicks": true,
+    "overlayNestedSelectAboveDrawerAndEscapeCleanup": true,
+    "overlayDialogMasksNavigationAndCancelRemovesMask": true,
+    "closeDrawerMouseSpaceStatesAndMaskCleanup": true,
+    "closeDialogMouseSpaceStatesAndMaskCleanup": true,
+    "quantityGeometryMouseAndKeyboard": true,
+    "confirmationDefaultAcceptFocusSvgAndKeyboardCancel": true,
+    "warningPreservesInitialFocusAndKeyboardCancel": true,
+    "verticalExportMouseKeyboardAndJsonDownload": true,
+    "radioMouseSpaceExclusiveSelectionAndGeometry": true,
+    "browseQuantityContainedMouseAndKeyboard": true,
+    "copyTargetVerticalLeftAlignmentAndKeyboardSelection": true,
+    "pdfVerticalOptionKeyboardSelectionAndDownload": true,
+    "mobileBrowseQuantityContainedInCard": true,
+    "mobileTabsWheelScrollWithoutNavigator": true
+  },
+  "measurements": {
+    "quantity": {
+      "width": 68,
+      "height": 38,
+      "padding": "2px",
+      "totalWidth": 116
+    },
+    "confirmation": {
+      "width": 720,
+      "focusedLabel": "Yes",
+      "icons": [
+        {
+          "width": 14,
+          "height": 14
+        },
+        {
+          "width": 14,
+          "height": 14
+        }
+      ]
+    },
+    "export": {
+      "choices": [
+        {
+          "x": 1136,
+          "y": 140.8125,
+          "width": 288,
+          "height": 42.84375
+        },
+        {
+          "x": 1136,
+          "y": 183.65625,
+          "width": 288,
+          "height": 42.84375
+        },
+        {
+          "x": 1136,
+          "y": 226.5,
+          "width": 288,
+          "height": 42.84375
+        },
+        {
+          "x": 1136,
+          "y": 269.34375,
+          "width": 288,
+          "height": 42.84375
+        },
+        {
+          "x": 1136,
+          "y": 312.1875,
+          "width": 288,
+          "height": 42.84375
+        },
+        {
+          "x": 1136,
+          "y": 355.03125,
+          "width": 288,
+          "height": 43.84375
+        }
+      ],
+      "filename": "BrickHunter_Upgrade-Referenz-All.json",
+      "parts": 8
+    },
+    "radio": {
+      "width": 20,
+      "height": 20,
+      "borderWidth": "2px",
+      "borderColor": "rgb(10, 52, 99)"
+    },
+    "browseQuantity": {
+      "width": 60,
+      "height": 26,
+      "totalWidth": 120,
+      "padding": "2px",
+      "buttonWidths": [
+        30,
+        30
+      ],
+      "containedInCard": true
+    },
+    "copyTargets": [
+      {
+        "width": 288,
+        "labelInset": 17,
+        "textAlign": "left"
+      },
+      {
+        "width": 288,
+        "labelInset": 17,
+        "textAlign": "left"
+      }
+    ],
+    "pdf": {
+      "filename": "BrickHunter_Upgrade-Referenz-All.pdf",
+      "bytes": 172093
+    },
+    "mobileBrowseQuantity": {
+      "width": 120,
+      "containedInCard": true
+    },
+    "mobileTabs": {
+      "width": 272,
+      "contentWidth": 1073,
+      "scroll": 0,
+      "scrollAfterWheel": 801
+    }
+  },
+  "outputChecks": {
+    "production": {
+      "requiredFilesPresent": true,
+      "chromeManifestByteIdentical": true,
+      "standaloneExtensionEntries": true,
+      "noReferenceFixtureMarkers": true,
+      "manifestSha256": "8fe9c39a291a0e8c7aa3573ab9535c0b8191f887030e416295cfe67ddea11d54"
+    },
+    "development": {
+      "requiredFilesPresent": true,
+      "chromeManifestByteIdentical": true,
+      "standaloneExtensionEntries": true,
+      "noReferenceFixtureMarkers": true,
+      "manifestSha256": "8fe9c39a291a0e8c7aa3573ab9535c0b8191f887030e416295cfe67ddea11d54"
+    }
+  },
+  "main": [
+    {
+      "file": "1440x1000-lists.png",
+      "originalReference": {
+        "sha256A": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca",
+        "sha256B": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca",
+        "sha256B": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-import-dialog.png",
+      "originalReference": {
+        "sha256A": "df949b788d1dcb125f1018505b4565f1c5d97252373bc73ccd970a0f777d4548",
+        "sha256B": "3d8e66e1c46f595f022aa20afbe5968fde00fe64e9d50892e4dfa00150eb7b13",
+        "byteIdentical": false,
+        "differentPixels": 25,
+        "channelDeltaAtMostOne": 6,
+        "maximumChannelDelta": 8,
+        "bounds": [
+          756,
+          141,
+          1423,
+          300
+        ]
+      },
+      "repeat": {
+        "sha256A": "3d8e66e1c46f595f022aa20afbe5968fde00fe64e9d50892e4dfa00150eb7b13",
+        "sha256B": "3d8e66e1c46f595f022aa20afbe5968fde00fe64e9d50892e4dfa00150eb7b13",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-table.png",
+      "originalReference": {
+        "sha256A": "1fba567d71c355a096753665ae526e57d60f8614c2ae5f8864cfa8da629f13fe",
+        "sha256B": "a7f71a31f6e2f610eff1caadbd5e8ebef2e55b6c829ac1f9ea1515078056cc42",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      "repeat": {
+        "sha256A": "a7f71a31f6e2f610eff1caadbd5e8ebef2e55b6c829ac1f9ea1515078056cc42",
+        "sha256B": "a7f71a31f6e2f610eff1caadbd5e8ebef2e55b6c829ac1f9ea1515078056cc42",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-success-message.png",
+      "originalReference": {
+        "sha256A": "9a55cc2deaa9fe8432bd46b0fb43d6fc451e788f437c0355a310ab87f9aa636a",
+        "sha256B": "39ffdd314ae0532b6766abd43b1b3e2c2c938ceca54bf686e3e3f34e3e8ea298",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      "repeat": {
+        "sha256A": "39ffdd314ae0532b6766abd43b1b3e2c2c938ceca54bf686e3e3f34e3e8ea298",
+        "sha256B": "39ffdd314ae0532b6766abd43b1b3e2c2c938ceca54bf686e3e3f34e3e8ea298",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-table-loading-disabled.png",
+      "originalReference": {
+        "sha256A": "fdd38268cc9877af9156b9c12d7cb459a4f4fbfb1eb97e666973288a590a3550",
+        "sha256B": "3e61924e424d37732dbbff1e313446713c87b969e642e92a983c97358aa12a4c",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      "repeat": {
+        "sha256A": "3e61924e424d37732dbbff1e313446713c87b969e642e92a983c97358aa12a4c",
+        "sha256B": "3e61924e424d37732dbbff1e313446713c87b969e642e92a983c97358aa12a4c",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-table-inline-edit.png",
+      "originalReference": {
+        "sha256A": "602983fe139a13fffa811047dc7e2665eaa496f2eaf50c4fd60aec3b5ed4973b",
+        "sha256B": "03f3aee7a8b840a792cbc5566b06e0de363d47b28c982ed35cf4979499a17b74",
+        "byteIdentical": false,
+        "differentPixels": 52,
+        "channelDeltaAtMostOne": 16,
+        "maximumChannelDelta": 199,
+        "bounds": [
+          110,
+          615,
+          890,
+          935
+        ]
+      },
+      "repeat": {
+        "sha256A": "03f3aee7a8b840a792cbc5566b06e0de363d47b28c982ed35cf4979499a17b74",
+        "sha256B": "e3dfa435a073e2b9a75f1534276048998adc5d092749ed4143e6a42a48f7223f",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-table-selection.png",
+      "originalReference": {
+        "sha256A": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325",
+        "sha256B": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325",
+        "sha256B": "9ba64e752684e9506fa3103aef3eeac28620fb8d636b571b1abbede2977d98ee",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "originalReference": {
+        "sha256A": "6c0ce8b12894a6cd5f552d0f7688d4f384fb289f4fb29780d681107ff6bc8445",
+        "sha256B": "d7328909849f79c3cbba723c7fe7aefd8815bdb0015cd1d2f398a8bae8c2ca06",
+        "byteIdentical": false,
+        "differentPixels": 647,
+        "channelDeltaAtMostOne": 2,
+        "maximumChannelDelta": 222,
+        "bounds": [
+          1288,
+          420,
+          1423,
+          459
+        ]
+      },
+      "repeat": {
+        "sha256A": "d7328909849f79c3cbba723c7fe7aefd8815bdb0015cd1d2f398a8bae8c2ca06",
+        "sha256B": "8458a6a87e72e1a439ddd149eb43822bc423d43757043a91b4b9d384516a0510",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "originalReference": {
+        "sha256A": "de7a5fef1ee65d8f3a3b1b2b3f4df492eff597aac04463476a83bcf58d5742a2",
+        "sha256B": "a63881771dfa46f622953ab252b6dee865df38176fbed6e468189480e4f2dea6",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      "repeat": {
+        "sha256A": "a63881771dfa46f622953ab252b6dee865df38176fbed6e468189480e4f2dea6",
+        "sha256B": "a63881771dfa46f622953ab252b6dee865df38176fbed6e468189480e4f2dea6",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-transfer-progress.png",
+      "originalReference": {
+        "sha256A": "a0327d8420760b8e84484ddffdeca8a3dba07acb2764ef8bc7e6596bd0d56421",
+        "sha256B": "fe42d27cd3ba7ba9d968972ee70d6e21dc3bd044ab9b3abbda80e61e25edb000",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      "repeat": {
+        "sha256A": "fe42d27cd3ba7ba9d968972ee70d6e21dc3bd044ab9b3abbda80e61e25edb000",
+        "sha256B": "fe42d27cd3ba7ba9d968972ee70d6e21dc3bd044ab9b3abbda80e61e25edb000",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-transfer-warning.png",
+      "originalReference": {
+        "sha256A": "31731f05874f484460240abcf45532c5bcb641866ca295e31f85ed44965f9c23",
+        "sha256B": "ad6cfb7d952570c09e6950c3618466531e05ef725752abb216069e0c8b5ed2ef",
+        "byteIdentical": false,
+        "differentPixels": 3596,
+        "channelDeltaAtMostOne": 87,
+        "maximumChannelDelta": 176,
+        "bounds": [
+          179,
+          218,
+          1055,
+          551
+        ]
+      },
+      "repeat": {
+        "sha256A": "ad6cfb7d952570c09e6950c3618466531e05ef725752abb216069e0c8b5ed2ef",
+        "sha256B": "ad6cfb7d952570c09e6950c3618466531e05ef725752abb216069e0c8b5ed2ef",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-delete-confirmation.png",
+      "originalReference": {
+        "sha256A": "4dc06aac4c8941689cdea61fd5be926d43bb6b38b171318beb0814522b29b779",
+        "sha256B": "255fc3d43b2ddb36ab19322092bc7fd8506e5c30b3bbb055f6b1fb8a259ca961",
+        "byteIdentical": false,
+        "differentPixels": 5007,
+        "channelDeltaAtMostOne": 5003,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          60,
+          0,
+          180,
+          999
+        ]
+      },
+      "repeat": {
+        "sha256A": "255fc3d43b2ddb36ab19322092bc7fd8506e5c30b3bbb055f6b1fb8a259ca961",
+        "sha256B": "b6c7cab5291b9e99f600c43003324da1ae989fb961f26af96b668cf076d39aef",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-empty-table.png",
+      "originalReference": {
+        "sha256A": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e",
+        "sha256B": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e",
+        "sha256B": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-settings.png",
+      "originalReference": {
+        "sha256A": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726",
+        "sha256B": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726",
+        "sha256B": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-browse.png",
+      "originalReference": {
+        "sha256A": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+        "sha256B": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+        "byteIdentical": false,
+        "differentPixels": 14,
+        "channelDeltaAtMostOne": 10,
+        "maximumChannelDelta": 3,
+        "bounds": [
+          394,
+          170,
+          397,
+          213
+        ]
+      },
+      "repeat": {
+        "sha256A": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+        "sha256B": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-filter-hover.png",
+      "originalReference": {
+        "sha256A": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+        "sha256B": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+        "byteIdentical": false,
+        "differentPixels": 14,
+        "channelDeltaAtMostOne": 10,
+        "maximumChannelDelta": 3,
+        "bounds": [
+          394,
+          170,
+          397,
+          213
+        ]
+      },
+      "repeat": {
+        "sha256A": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+        "sha256B": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-filter-focus.png",
+      "originalReference": {
+        "sha256A": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+        "sha256B": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+        "byteIdentical": false,
+        "differentPixels": 14,
+        "channelDeltaAtMostOne": 10,
+        "maximumChannelDelta": 3,
+        "bounds": [
+          394,
+          170,
+          397,
+          213
+        ]
+      },
+      "repeat": {
+        "sha256A": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+        "sha256B": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-color-menu.png",
+      "originalReference": {
+        "sha256A": "2a6fd447f668e8fe973f2125fa5c710f1ee5c4b670705de9ca86e4d7cef0adc5",
+        "sha256B": "b24d80c8c3158a206e7556fb287cc3c779c9a4990c956cf70557793436a59972",
+        "byteIdentical": false,
+        "differentPixels": 62,
+        "channelDeltaAtMostOne": 10,
+        "maximumChannelDelta": 255,
+        "bounds": [
+          394,
+          170,
+          777,
+          318
+        ]
+      },
+      "repeat": {
+        "sha256A": "b24d80c8c3158a206e7556fb287cc3c779c9a4990c956cf70557793436a59972",
+        "sha256B": "b24d80c8c3158a206e7556fb287cc3c779c9a4990c956cf70557793436a59972",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-empty-search.png",
+      "originalReference": {
+        "sha256A": "19385cb4107fa2141de7037d79eba06de66355f410f08061981c08b2e97fd354",
+        "sha256B": "9f50a5ec3a49bbe9480537d9f695639558ebe7234e8607762f85199d73eaf3f0",
+        "byteIdentical": false,
+        "differentPixels": 14,
+        "channelDeltaAtMostOne": 10,
+        "maximumChannelDelta": 3,
+        "bounds": [
+          394,
+          170,
+          397,
+          213
+        ]
+      },
+      "repeat": {
+        "sha256A": "9f50a5ec3a49bbe9480537d9f695639558ebe7234e8607762f85199d73eaf3f0",
+        "sha256B": "9f50a5ec3a49bbe9480537d9f695639558ebe7234e8607762f85199d73eaf3f0",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-large-search.png",
+      "originalReference": {
+        "sha256A": "915eabe4d98c5a4a2c44c65684ce487d735e25d73e9906037fd0c4a4a5bf63eb",
+        "sha256B": "6259be225741b2362c99437089b3b85677062c3f2f02a50cae6254bc1475f98c",
+        "byteIdentical": false,
+        "differentPixels": 14,
+        "channelDeltaAtMostOne": 10,
+        "maximumChannelDelta": 3,
+        "bounds": [
+          394,
+          170,
+          397,
+          213
+        ]
+      },
+      "repeat": {
+        "sha256A": "6259be225741b2362c99437089b3b85677062c3f2f02a50cae6254bc1475f98c",
+        "sha256B": "6259be225741b2362c99437089b3b85677062c3f2f02a50cae6254bc1475f98c",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-large-search-scrolled.png",
+      "originalReference": {
+        "sha256A": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb",
+        "sha256B": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb",
+        "sha256B": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "390x844-lists.png",
+      "originalReference": {
+        "sha256A": "4f52f34d250550ee1a32c37c8aa003f39022768ab811de84fc9e2ef1678fc4c6",
+        "sha256B": "4f52f34d250550ee1a32c37c8aa003f39022768ab811de84fc9e2ef1678fc4c6",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "4f52f34d250550ee1a32c37c8aa003f39022768ab811de84fc9e2ef1678fc4c6",
+        "sha256B": "4f52f34d250550ee1a32c37c8aa003f39022768ab811de84fc9e2ef1678fc4c6",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "390x844-import-dialog.png",
+      "originalReference": {
+        "sha256A": "6f8dc0eb5e33b9269adc02ed62708b59a3c8851aeb87816f112e72b5fa2fa05c",
+        "sha256B": "5474abcbea53138735166b7ef41534ae3f4b52f74524980132f6893372dd58a8",
+        "byteIdentical": false,
+        "differentPixels": 12,
+        "channelDeltaAtMostOne": 3,
+        "maximumChannelDelta": 8,
+        "bounds": [
+          370,
+          141,
+          373,
+          300
+        ]
+      },
+      "repeat": {
+        "sha256A": "5474abcbea53138735166b7ef41534ae3f4b52f74524980132f6893372dd58a8",
+        "sha256B": "5474abcbea53138735166b7ef41534ae3f4b52f74524980132f6893372dd58a8",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "390x844-table.png",
+      "originalReference": {
+        "sha256A": "525be948636a7fd23d83939daa566f055a99094d149b542d64a24d738778a3a4",
+        "sha256B": "680eca4af2cdccf96b462838bc5531f2eb079e640bbda8eb4a0781f90a68d975",
+        "byteIdentical": false,
+        "differentPixels": 12,
+        "channelDeltaAtMostOne": 8,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          110,
+          607,
+          180,
+          825
+        ]
+      },
+      "repeat": {
+        "sha256A": "680eca4af2cdccf96b462838bc5531f2eb079e640bbda8eb4a0781f90a68d975",
+        "sha256B": "680eca4af2cdccf96b462838bc5531f2eb079e640bbda8eb4a0781f90a68d975",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "390x844-empty-table.png",
+      "originalReference": {
+        "sha256A": "76160d69839acf2a83b701ad34b9355cefa527ca033a5a9fbf73b187664e1c2e",
+        "sha256B": "76160d69839acf2a83b701ad34b9355cefa527ca033a5a9fbf73b187664e1c2e",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "76160d69839acf2a83b701ad34b9355cefa527ca033a5a9fbf73b187664e1c2e",
+        "sha256B": "76160d69839acf2a83b701ad34b9355cefa527ca033a5a9fbf73b187664e1c2e",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "390x844-settings.png",
+      "originalReference": {
+        "sha256A": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719",
+        "sha256B": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719",
+        "sha256B": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "390x844-browse.png",
+      "originalReference": {
+        "sha256A": "b19a1ea429919cb7030850594de63008ace6390f37c3326fa383917bdaf89ea7",
+        "sha256B": "06ab0a19276fa6e702955bbabdc05018653f67cabc429a75f9da115141465ffc",
+        "byteIdentical": false,
+        "differentPixels": 12,
+        "channelDeltaAtMostOne": 6,
+        "maximumChannelDelta": 3,
+        "bounds": [
+          94,
+          663,
+          97,
+          706
+        ]
+      },
+      "repeat": {
+        "sha256A": "06ab0a19276fa6e702955bbabdc05018653f67cabc429a75f9da115141465ffc",
+        "sha256B": "06ab0a19276fa6e702955bbabdc05018653f67cabc429a75f9da115141465ffc",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "2560x1440-lists.png",
+      "originalReference": {
+        "sha256A": "8fef4acc75550e7c4b3b1563ac8b8950d63e10f6d98d6eac226ba2261e8c65a5",
+        "sha256B": "8fef4acc75550e7c4b3b1563ac8b8950d63e10f6d98d6eac226ba2261e8c65a5",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "8fef4acc75550e7c4b3b1563ac8b8950d63e10f6d98d6eac226ba2261e8c65a5",
+        "sha256B": "8fef4acc75550e7c4b3b1563ac8b8950d63e10f6d98d6eac226ba2261e8c65a5",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "2560x1440-import-dialog.png",
+      "originalReference": {
+        "sha256A": "4b558e5f1ad65de965245420fca15fefd3cc083205cbcc23dbf9772c91bffc95",
+        "sha256B": "5af0f5c32377dba378420e68cb5e8c0506ce06d7100b4ee50eaf8b921d406706",
+        "byteIdentical": false,
+        "differentPixels": 25,
+        "channelDeltaAtMostOne": 6,
+        "maximumChannelDelta": 8,
+        "bounds": [
+          1876,
+          141,
+          2543,
+          300
+        ]
+      },
+      "repeat": {
+        "sha256A": "5af0f5c32377dba378420e68cb5e8c0506ce06d7100b4ee50eaf8b921d406706",
+        "sha256B": "5af0f5c32377dba378420e68cb5e8c0506ce06d7100b4ee50eaf8b921d406706",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "2560x1440-table.png",
+      "originalReference": {
+        "sha256A": "9d0448f7dd1d90d6871b521c2e868dda4d17d57105fde8ea86bbcdcd6fe2cb19",
+        "sha256B": "20e377e40c9766c46683292e951e5dfe900c30d65b4818bd391422daadd819bf",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          148,
+          180,
+          149
+        ]
+      },
+      "repeat": {
+        "sha256A": "20e377e40c9766c46683292e951e5dfe900c30d65b4818bd391422daadd819bf",
+        "sha256B": "20e377e40c9766c46683292e951e5dfe900c30d65b4818bd391422daadd819bf",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "2560x1440-empty-table.png",
+      "originalReference": {
+        "sha256A": "fb206cdf3fa3e4cdfaeabab3486d13260f425f048cc80dc5330cb81a4f6d9fe9",
+        "sha256B": "fb206cdf3fa3e4cdfaeabab3486d13260f425f048cc80dc5330cb81a4f6d9fe9",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "fb206cdf3fa3e4cdfaeabab3486d13260f425f048cc80dc5330cb81a4f6d9fe9",
+        "sha256B": "fb206cdf3fa3e4cdfaeabab3486d13260f425f048cc80dc5330cb81a4f6d9fe9",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "2560x1440-settings.png",
+      "originalReference": {
+        "sha256A": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4",
+        "sha256B": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4",
+        "sha256B": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "2560x1440-browse.png",
+      "originalReference": {
+        "sha256A": "fd1445ea80927fb9bde3a42352bac72f128c8fd2fe75dc7a70a10c8f256d7fc9",
+        "sha256B": "fb4ed184676582ec63c3ba07a8b5f1a2c2e23c4948f30765196c73e6207117f3",
+        "byteIdentical": false,
+        "differentPixels": 14,
+        "channelDeltaAtMostOne": 10,
+        "maximumChannelDelta": 3,
+        "bounds": [
+          394,
+          170,
+          397,
+          213
+        ]
+      },
+      "repeat": {
+        "sha256A": "fb4ed184676582ec63c3ba07a8b5f1a2c2e23c4948f30765196c73e6207117f3",
+        "sha256B": "fb4ed184676582ec63c3ba07a8b5f1a2c2e23c4948f30765196c73e6207117f3",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "3200x1440-lists.png",
+      "originalReference": {
+        "sha256A": "db1d513274b920f9eea5fdf1eddaf22408c0492d54e07ce660a1637c8484f7b3",
+        "sha256B": "db1d513274b920f9eea5fdf1eddaf22408c0492d54e07ce660a1637c8484f7b3",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "db1d513274b920f9eea5fdf1eddaf22408c0492d54e07ce660a1637c8484f7b3",
+        "sha256B": "db1d513274b920f9eea5fdf1eddaf22408c0492d54e07ce660a1637c8484f7b3",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "3200x1440-import-dialog.png",
+      "originalReference": {
+        "sha256A": "1da658b9739f4aa9079c15236b21c1786dcbcae41a975446ae8e164e830e9186",
+        "sha256B": "4c11f024ac1318dfbef29d4df4004d0c17e510d3c4ddacf6f3905ec5d30f909b",
+        "byteIdentical": false,
+        "differentPixels": 25,
+        "channelDeltaAtMostOne": 6,
+        "maximumChannelDelta": 8,
+        "bounds": [
+          2516,
+          141,
+          3183,
+          300
+        ]
+      },
+      "repeat": {
+        "sha256A": "4c11f024ac1318dfbef29d4df4004d0c17e510d3c4ddacf6f3905ec5d30f909b",
+        "sha256B": "4c11f024ac1318dfbef29d4df4004d0c17e510d3c4ddacf6f3905ec5d30f909b",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "3200x1440-table.png",
+      "originalReference": {
+        "sha256A": "ce9425beb28b804451a5b0b8fc06dd4b77d7ffd9ff9bdab8dd224775cfc08806",
+        "sha256B": "cb2ac70587ba18bf0adca865e7618b54b3f344bdbe024c384f156cd1d93749cc",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          148,
+          180,
+          149
+        ]
+      },
+      "repeat": {
+        "sha256A": "cb2ac70587ba18bf0adca865e7618b54b3f344bdbe024c384f156cd1d93749cc",
+        "sha256B": "cb2ac70587ba18bf0adca865e7618b54b3f344bdbe024c384f156cd1d93749cc",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "3200x1440-empty-table.png",
+      "originalReference": {
+        "sha256A": "c9cc38d70cb0c8715e738bf14477ca90a50f19675b67231d3e80b64d600d5019",
+        "sha256B": "c9cc38d70cb0c8715e738bf14477ca90a50f19675b67231d3e80b64d600d5019",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "c9cc38d70cb0c8715e738bf14477ca90a50f19675b67231d3e80b64d600d5019",
+        "sha256B": "c9cc38d70cb0c8715e738bf14477ca90a50f19675b67231d3e80b64d600d5019",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "3200x1440-settings.png",
+      "originalReference": {
+        "sha256A": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33",
+        "sha256B": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      },
+      "repeat": {
+        "sha256A": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33",
+        "sha256B": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "3200x1440-browse.png",
+      "originalReference": {
+        "sha256A": "373f583e6fa6095ce98ac069fa27b4e7159c990e62698148c54c717866263d1d",
+        "sha256B": "e1fedbd91a5231fe54c52af4cd1bec5dc99014d28f69aa3b86816ad6ee5e63d0",
+        "byteIdentical": false,
+        "differentPixels": 14,
+        "channelDeltaAtMostOne": 10,
+        "maximumChannelDelta": 3,
+        "bounds": [
+          394,
+          170,
+          397,
+          213
+        ]
+      },
+      "repeat": {
+        "sha256A": "e1fedbd91a5231fe54c52af4cd1bec5dc99014d28f69aa3b86816ad6ee5e63d0",
+        "sha256B": "e1fedbd91a5231fe54c52af4cd1bec5dc99014d28f69aa3b86816ad6ee5e63d0",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    }
+  ],
+  "extra": [
+    {
+      "file": "1440x1000-import-selected-json.png",
+      "repeat": {
+        "sha256A": "4b8c68a5d3c598ca1f4f8a81172883d917508b1a7705148bf48866c0e52cd485",
+        "sha256B": "4b8c68a5d3c598ca1f4f8a81172883d917508b1a7705148bf48866c0e52cd485",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-import-dropped-xml.png",
+      "repeat": {
+        "sha256A": "92f7a761c0342957ddaeab80378f95c555ada758ddf067fbd686e4f152dd3b74",
+        "sha256B": "92f7a761c0342957ddaeab80378f95c555ada758ddf067fbd686e4f152dd3b74",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-toast-success.png",
+      "repeat": {
+        "sha256A": "b564ab039685b862dffb22c3de41e42a217148e701ce0a34a5c3d0a54e534ef4",
+        "sha256B": "9f5311c2f6087380cfb44ccf00433191f51db43381f5f1da60cff192b2d632be",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-toast-info.png",
+      "repeat": {
+        "sha256A": "c1de0cddfb1545e70b97504e84eb61e91e8fe78fa3d0606801d998d0cb0b012a",
+        "sha256B": "31dd3ac636f932236fcadf902190e686c215c416e1f9790a809f884a1437bbea",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-toast-warn.png",
+      "repeat": {
+        "sha256A": "2511d012b80aa7e6ad2f65eca064ea0775551e54e9b1019c7d52dbe3b3511acf",
+        "sha256B": "2672dd3f8d7d42d4fc719049c81a972767113520389793f8a29d0f45bafe76c8",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-toast-error.png",
+      "repeat": {
+        "sha256A": "27c851763eef8a6302a9aa6aa0963a2a9988fe269e43e72e8ceb37382504068e",
+        "sha256B": "8f7e424859ff686df45b34868490c236785e04b52e20e5be17c047e2ac577f0e",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-table-sort-ascending.png",
+      "repeat": {
+        "sha256A": "1f7418c6d8ca3ecd2f40746ad3c1a21388a1b33bf110c403f9fa5657c1cc00bb",
+        "sha256B": "1f7418c6d8ca3ecd2f40746ad3c1a21388a1b33bf110c403f9fa5657c1cc00bb",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-table-sort-descending.png",
+      "repeat": {
+        "sha256A": "f8e76a84dea5f790b3f45332f839676081a48a1701380c5397c93fa220d14311",
+        "sha256B": "f8e76a84dea5f790b3f45332f839676081a48a1701380c5397c93fa220d14311",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-table-header-hover.png",
+      "repeat": {
+        "sha256A": "f8e76a84dea5f790b3f45332f839676081a48a1701380c5397c93fa220d14311",
+        "sha256B": "f8e76a84dea5f790b3f45332f839676081a48a1701380c5397c93fa220d14311",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-table-tab-keyboard.png",
+      "repeat": {
+        "sha256A": "2fa84c636dd4cb8afb39f814630745d188cd7882eeee065028715e9b5936f1a7",
+        "sha256B": "2fa84c636dd4cb8afb39f814630745d188cd7882eeee065028715e9b5936f1a7",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-select-unit-popup.png",
+      "repeat": {
+        "sha256A": "cd25b535582fe2ae419423cb26a86a455adaca7ac98410000e91a116385069b7",
+        "sha256B": "cd25b535582fe2ae419423cb26a86a455adaca7ac98410000e91a116385069b7",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-select-unit-selected.png",
+      "repeat": {
+        "sha256A": "285219ad37d7fb8d4757db2810f15e89165ab06c2935899e394ad5fa784798c3",
+        "sha256B": "285219ad37d7fb8d4757db2810f15e89165ab06c2935899e394ad5fa784798c3",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-select-unit-disabled.png",
+      "repeat": {
+        "sha256A": "7b69e5c75c09954f2c5a27178b034ff2ff7c68489bb9acf42425845c2b8c8f9a",
+        "sha256B": "7b69e5c75c09954f2c5a27178b034ff2ff7c68489bb9acf42425845c2b8c8f9a",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-select-locale-dialog.png",
+      "repeat": {
+        "sha256A": "1e4fe0185a7ac9104a1f0763ac74a3b3608c9dee2e170f665c2b9823ca86041f",
+        "sha256B": "1e4fe0185a7ac9104a1f0763ac74a3b3608c9dee2e170f665c2b9823ca86041f",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-select-country-popup.png",
+      "repeat": {
+        "sha256A": "b634f7786b7ae922355cc437d57dd4783d032c69d8a1922b4aed9d8ea65fa7fb",
+        "sha256B": "b634f7786b7ae922355cc437d57dd4783d032c69d8a1922b4aed9d8ea65fa7fb",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-select-language-popup.png",
+      "repeat": {
+        "sha256A": "fec169692e77ec0b354a61ab07e6cf7f667f77938b40dee64411d5c375cdd5f4",
+        "sha256B": "fec169692e77ec0b354a61ab07e6cf7f667f77938b40dee64411d5c375cdd5f4",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-button-danger-hover.png",
+      "repeat": {
+        "sha256A": "ba03366470f94b52252f9dbf469a1b95ad9cdfe0043bf30314b15b68dce46b64",
+        "sha256B": "5f090db5f93bb996169419827447ce19b97fd9451f108dc9c92d83128b94f869",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-button-danger-focus.png",
+      "repeat": {
+        "sha256A": "71429f4587049aee51c3cd0d3b12469e2d04a504d20d86f9479966811a1b8d86",
+        "sha256B": "a2f89d7897a6b633784e6aeabffb736e127e5ffc5e78db890166f871429cd35a",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-button-outlined-focus.png",
+      "repeat": {
+        "sha256A": "05e16bc16bafed1a0863378cb4d5ef07628619f7bba5240ccfee52c09074ec99",
+        "sha256B": "c0fee8ce77e4be690030a7f046eeb8a648f21952ff35aab6af4004796c9bf6d6",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-button-solid-focus.png",
+      "repeat": {
+        "sha256A": "903981faf763d721eabcfdf3b43e0d803498c3e3403dda99705fb85875fe3704",
+        "sha256B": "f06c7469ea74774a369daad085f7b62aa8acb8bb59d539a19a6e8fae9c7a61f0",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          376,
+          180,
+          377
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-button-danger-outlined-focus.png",
+      "repeat": {
+        "sha256A": "945913b0c5bd94a83ca5f7859bd8bcae2383f040d33e92a3d2bbdc300893aa44",
+        "sha256B": "945913b0c5bd94a83ca5f7859bd8bcae2383f040d33e92a3d2bbdc300893aa44",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-button-list-bulk-focus.png",
+      "repeat": {
+        "sha256A": "f89e9aa127ae33f933d926592fe2af6594dcfacaa869155713b5dd69a96b054e",
+        "sha256B": "f89e9aa127ae33f933d926592fe2af6594dcfacaa869155713b5dd69a96b054e",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-button-success-focus.png",
+      "repeat": {
+        "sha256A": "30d40c4f4cf9d65a2f6cb86be5b416888f7ec587375a9fd3fb4d69bea07e7889",
+        "sha256B": "30d40c4f4cf9d65a2f6cb86be5b416888f7ec587375a9fd3fb4d69bea07e7889",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-toggle-off-hover.png",
+      "repeat": {
+        "sha256A": "0549a55ca91e790038bc1ac8d14bb2d6726190123b24c92899e337279c8705a2",
+        "sha256B": "0549a55ca91e790038bc1ac8d14bb2d6726190123b24c92899e337279c8705a2",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-toggle-off-focus.png",
+      "repeat": {
+        "sha256A": "a8eca34d9048808c894a2ed3fed73398b72a1d52ebabd5a059294220095994cf",
+        "sha256B": "a8eca34d9048808c894a2ed3fed73398b72a1d52ebabd5a059294220095994cf",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-toggle-on-focus.png",
+      "repeat": {
+        "sha256A": "ae46b31cb6c27bc4a8b9f3f67f1c31bcecd9c0fbc5485783f0cd21e0f049945c",
+        "sha256B": "ae46b31cb6c27bc4a8b9f3f67f1c31bcecd9c0fbc5485783f0cd21e0f049945c",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-toggle-on-hover.png",
+      "repeat": {
+        "sha256A": "4484f16d64baf722759d167925c6cfd96e4e2f6e30a829da89609e00e2a83837",
+        "sha256B": "4484f16d64baf722759d167925c6cfd96e4e2f6e30a829da89609e00e2a83837",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-toggle-off-disabled.png",
+      "repeat": {
+        "sha256A": "93a59d8baed6ff6cbdac63278d71bfa2372b2223132ba2b8d69582d573d2dbe4",
+        "sha256B": "93a59d8baed6ff6cbdac63278d71bfa2372b2223132ba2b8d69582d573d2dbe4",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-toggle-on-disabled.png",
+      "repeat": {
+        "sha256A": "80d391d49ae945e4a942deed43773f679c3604c7a5893f2abe6c74577718b7f7",
+        "sha256B": "80d391d49ae945e4a942deed43773f679c3604c7a5893f2abe6c74577718b7f7",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-menu-color-focus-hover.png",
+      "repeat": {
+        "sha256A": "6e164af06b08331ff2fc9bc5f43e557e3424157388637c565b27f66c6baa8f28",
+        "sha256B": "6e164af06b08331ff2fc9bc5f43e557e3424157388637c565b27f66c6baa8f28",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-menu-bulk-keyboard-focus.png",
+      "repeat": {
+        "sha256A": "29152cf8ee45419d9463c93d43543895d0d301c8bb6afcb6b2341f6fd6b13c9a",
+        "sha256B": "29152cf8ee45419d9463c93d43543895d0d301c8bb6afcb6b2341f6fd6b13c9a",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-checkbox-off-hover.png",
+      "repeat": {
+        "sha256A": "0702d7a9294da9cf17e66a2551c5b0dd16b999f06cfae0ebefdd23255a3c6815",
+        "sha256B": "a44a08c5fa8028c5e283f45ac0c3f4373576c9f6be9dbf77a5a5607028609967",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-checkbox-off-focus.png",
+      "repeat": {
+        "sha256A": "5c8fb6877e6867b33e2765eecc689d8367964e136060226f9d3751112e59a55f",
+        "sha256B": "1be09dec2f48138d83a3ac6b26b6278e6e50b2011d361d961aec4ec2be47f3c9",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-checkbox-on-focus.png",
+      "repeat": {
+        "sha256A": "f9d85560f7e4d1da4e4456989648e6e0295df6776766a02a7bc6cc2dfcb0c7db",
+        "sha256B": "1c6480033a6ab158ad2c6ba0095797c17428836fbddd25d9b1e046e4add357ed",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-checkbox-on-hover.png",
+      "repeat": {
+        "sha256A": "bfcba7d3d444ad0ef1ac3d941fed5bd3b5c32320d4e741472cf0884df9ecc834",
+        "sha256B": "95e368135b24a4c4858c60695bace2104156caf5cb87369db455fafac13d7d27",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-checkbox-off-disabled.png",
+      "repeat": {
+        "sha256A": "e7cab734fdecf516f08f2769a435077bc32b3a9cbbed993b324602670660296f",
+        "sha256B": "e7cab734fdecf516f08f2769a435077bc32b3a9cbbed993b324602670660296f",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-checkbox-on-disabled.png",
+      "repeat": {
+        "sha256A": "3e64a8ee1d040f00ba3d87e85a9e082d0e14fad26d509cdecbe225b63e2014ed",
+        "sha256B": "55d60f9ecc8fd08c0e9350444d9264006616a28a498906ea851f683919abb94b",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-checkbox-table-selected-mouse.png",
+      "repeat": {
+        "sha256A": "9ba64e752684e9506fa3103aef3eeac28620fb8d636b571b1abbede2977d98ee",
+        "sha256B": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-checkbox-table-selected-keyboard.png",
+      "repeat": {
+        "sha256A": "0818a850e6fb57b21ceb19a871ccf0ae5c534fe935f0969a4ed1d46ef602f1e3",
+        "sha256B": "17f7f56bfe0a9531a5845742465829a158c09f70bd0a71c02b6f242b5bf83a22",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 245,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-overlay-drawer-navigation-mask.png",
+      "repeat": {
+        "sha256A": "78bc230eb4d9675ceb724b06f016d067ee08e189e650cd3206f4e12205842001",
+        "sha256B": "795c48982e0468531c3274a8170a03f70e1ef40e0341439b2fa5d28b9fa4c7f3",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-overlay-dialog-navigation-mask.png",
+      "repeat": {
+        "sha256A": "b6b87633ea1fd04b57a9bdc62e9e9a4e508ab751e4e901e511830ee592e2ac57",
+        "sha256B": "ad6cfb7d952570c09e6950c3618466531e05ef725752abb216069e0c8b5ed2ef",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-close-drawer-hover.png",
+      "repeat": {
+        "sha256A": "bb0b20921f9a3a03df2db9285e628231e05b921c83e43fea95518695bb5d77ba",
+        "sha256B": "bb0b20921f9a3a03df2db9285e628231e05b921c83e43fea95518695bb5d77ba",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-close-drawer-focus.png",
+      "repeat": {
+        "sha256A": "180b6edcd39c609fdd7c0d7a9b2bec3e0a085ce5e79958003f1ffb09216049eb",
+        "sha256B": "180b6edcd39c609fdd7c0d7a9b2bec3e0a085ce5e79958003f1ffb09216049eb",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-close-dialog-hover.png",
+      "repeat": {
+        "sha256A": "4f1ff3f7d7390ff6fa00fb881d624c931f717bc95508a54cf34672f629c060e4",
+        "sha256B": "4f1ff3f7d7390ff6fa00fb881d624c931f717bc95508a54cf34672f629c060e4",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-close-dialog-focus.png",
+      "repeat": {
+        "sha256A": "ab61ccbb94bb9c57a6adc89adf1bd1ee40bb332d14c7669504b72dbd02795784",
+        "sha256B": "ab61ccbb94bb9c57a6adc89adf1bd1ee40bb332d14c7669504b72dbd02795784",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-radio-keyboard-selection.png",
+      "repeat": {
+        "sha256A": "9e67a91db502fd1c7d6aedad296e95b92b4801e70592aa55dc31dcd81bc81b39",
+        "sha256B": "9e67a91db502fd1c7d6aedad296e95b92b4801e70592aa55dc31dcd81bc81b39",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-copy-target-keyboard-selection.png",
+      "repeat": {
+        "sha256A": "c0b38940bc0fab954035efe290e09f6ad5d764661e953de966399ef123ca847d",
+        "sha256B": "2155fb878f968b072a1f6d57e6008708c9b5128a3a5f3afea0ef3063529dc9f9",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-pdf-option-keyboard-selection.png",
+      "repeat": {
+        "sha256A": "80a485e5cf73a9195efb1e0149b5b51cc016208fe762809c44efdfddb89caebd",
+        "sha256B": "6f57715ffa571924deb466859f74a647c7a77a4afb22a630987d411ff3d5a7df",
+        "byteIdentical": false,
+        "differentPixels": 4,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 166,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "390x844-browse-selected-list.png",
+      "repeat": {
+        "sha256A": "bdf172f1b79178f213a8dabf589dcfb0e8574fcf20f6834efb7f1288360da85c",
+        "sha256B": "bdf172f1b79178f213a8dabf589dcfb0e8574fcf20f6834efb7f1288360da85c",
+        "byteIdentical": true,
+        "differentPixels": 0,
+        "channelDeltaAtMostOne": 0,
+        "maximumChannelDelta": 0,
+        "bounds": null
+      }
+    }
+  ],
+  "acceptedDifferences": [
+    {
+      "scope": "Tabs underline",
+      "reason": "Repeated captures can differ at four pixels in the same 2 by 2 underline corner. Raw values are retained."
+    },
+    {
+      "scope": "Rounded checkbox/selectbutton/upload borders and SVG strokes",
+      "reason": "Small bounded raster/stroke differences remain after matching measured dimensions, borders, colors and interaction states. No blanket pixel tolerance is applied."
+    },
+    {
+      "scope": "Confirmation navigation shadow",
+      "reason": "The stable navigation shadow differs by one RGB channel value under the confirmation mask. Mask opacity, shadow CSS, geometry and stacking are unchanged; dialog content and actions match."
+    },
+    {
+      "scope": "Transfer warning foreground text",
+      "reason": "LCD subpixel versus grayscale rasterization remains. A controlled Angular 17/18 run with identical color data confirms identical positions, widths, heights, 16px fonts and rgba(0,0,0,0.87) color for all nine header/body columns."
+    },
+    {
+      "scope": "Settings EUR selection",
+      "reason": "The original synthetic screenshot captured an empty label. Valid EUR data produces the populated label and 53px Select in both the retained Angular 17 build and Angular 18. The valid selected currency is preserved and tested by save/reopen."
+    }
+  ],
+  "limitations": [
+    "Synthetic offline UI acceptance; live LEGO account/cart transfers are outside this checkpoint.",
+    "Original PNGs are preserved. Raw differences remain in this report; visual acceptance is not a claim of full pixel identity.",
+    "PrimeNG 18.0.2 confirmation width/focus workarounds must be reevaluated during the next major migration."
+  ],
+  "controlledLegacyWarningGeometry": {
+    "old": {
+      "app-transfer-warning table": [
+        {
+          "text": " DesignId ElementIdImageColorQuantityIn CartMax Order Quantity Pick a Brick Warning3001300123 Red  [Bright red]\n120100 0,25 € [3001 300123]BestsellerNot transfered",
+          "x": 384,
+          "y": 280.078125,
+          "width": 830.921875,
+          "height": 181,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        }
+      ],
+      "app-transfer-warning th": [
+        {
+          "text": " DesignId",
+          "x": 384,
+          "y": 280.078125,
+          "width": 94.90625,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": " ElementId",
+          "x": 478.90625,
+          "y": 280.078125,
+          "width": 104,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Image",
+          "x": 582.90625,
+          "y": 280.078125,
+          "width": 92,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Color",
+          "x": 674.90625,
+          "y": 280.078125,
+          "width": 89.796875,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Quantity",
+          "x": 764.703125,
+          "y": 280.078125,
+          "width": 92.015625,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "In Cart",
+          "x": 856.71875,
+          "y": 280.078125,
+          "width": 62.4375,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Max Order Quantity",
+          "x": 919.15625,
+          "y": 280.078125,
+          "width": 92,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": " Pick a Brick ",
+          "x": 1011.15625,
+          "y": 280.078125,
+          "width": 99.046875,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Warning",
+          "x": 1110.203125,
+          "y": 280.078125,
+          "width": 104.71875,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        }
+      ],
+      "app-transfer-warning tbody td": [
+        {
+          "text": "3001",
+          "x": 384,
+          "y": 370.078125,
+          "width": 94.90625,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "300123",
+          "x": 478.90625,
+          "y": 370.078125,
+          "width": 104,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "",
+          "x": 582.90625,
+          "y": 370.078125,
+          "width": 92,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": " Red  [Bright red]\n",
+          "x": 674.90625,
+          "y": 370.078125,
+          "width": 89.796875,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "120",
+          "x": 764.703125,
+          "y": 370.078125,
+          "width": 92.015625,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "",
+          "x": 856.71875,
+          "y": 370.078125,
+          "width": 62.4375,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "100",
+          "x": 919.15625,
+          "y": 370.078125,
+          "width": 92,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": " 0,25 € [3001 300123]Bestseller",
+          "x": 1011.15625,
+          "y": 370.078125,
+          "width": 99.046875,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Not transfered",
+          "x": 1110.203125,
+          "y": 370.078125,
+          "width": 104.71875,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        }
+      ]
+    },
+    "current": {
+      "app-transfer-warning table": [
+        {
+          "text": " DesignId ElementIdImageColorQuantityIn CartMax Order Quantity Pick a Brick Warning3001300123 Red  [Bright red]\n120100 0,25 € [3001 300123]BestsellerNot transfered",
+          "x": 384,
+          "y": 280.078125,
+          "width": 830.921875,
+          "height": 181,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        }
+      ],
+      "app-transfer-warning th": [
+        {
+          "text": " DesignId",
+          "x": 384,
+          "y": 280.078125,
+          "width": 94.90625,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": " ElementId",
+          "x": 478.90625,
+          "y": 280.078125,
+          "width": 104,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Image",
+          "x": 582.90625,
+          "y": 280.078125,
+          "width": 92,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Color",
+          "x": 674.90625,
+          "y": 280.078125,
+          "width": 89.796875,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Quantity",
+          "x": 764.703125,
+          "y": 280.078125,
+          "width": 92.015625,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "In Cart",
+          "x": 856.71875,
+          "y": 280.078125,
+          "width": 62.4375,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Max Order Quantity",
+          "x": 919.15625,
+          "y": 280.078125,
+          "width": 92,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": " Pick a Brick ",
+          "x": 1011.15625,
+          "y": 280.078125,
+          "width": 99.046875,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Warning",
+          "x": 1110.203125,
+          "y": 280.078125,
+          "width": 104.71875,
+          "height": 90,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        }
+      ],
+      "app-transfer-warning tbody td": [
+        {
+          "text": "3001",
+          "x": 384,
+          "y": 370.078125,
+          "width": 94.90625,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "300123",
+          "x": 478.90625,
+          "y": 370.078125,
+          "width": 104,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "",
+          "x": 582.90625,
+          "y": 370.078125,
+          "width": 92,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": " Red  [Bright red]\n",
+          "x": 674.90625,
+          "y": 370.078125,
+          "width": 89.796875,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "120",
+          "x": 764.703125,
+          "y": 370.078125,
+          "width": 92.015625,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "",
+          "x": 856.71875,
+          "y": 370.078125,
+          "width": 62.4375,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "100",
+          "x": 919.15625,
+          "y": 370.078125,
+          "width": 92,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": " 0,25 € [3001 300123]Bestseller",
+          "x": 1011.15625,
+          "y": 370.078125,
+          "width": 99.046875,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        },
+        {
+          "text": "Not transfered",
+          "x": 1110.203125,
+          "y": 370.078125,
+          "width": 104.71875,
+          "height": 91,
+          "fontSize": "16px",
+          "color": "rgba(0, 0, 0, 0.87)"
+        }
+      ]
+    }
+  }
+}

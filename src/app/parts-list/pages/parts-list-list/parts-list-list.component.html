@@ -61,9 +61,15 @@
   </p-table>
 </p-card>
 <p-confirmDialog
+  bhConfirmDialogFocus
+  acceptIcon="pi pi-check"
+  rejectIcon="pi pi-times"
   [style]="{ width: '50vw' }"
   key="positionDialog"
   position="top"
   [baseZIndex]="10000"
-  rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+  rejectButtonStyleClass="p-button-outlined">
+  <ng-template pTemplate="accepticon"><CheckIcon styleClass="p-button-icon p-button-icon-left" /></ng-template>
+  <ng-template pTemplate="rejecticon"><TimesIcon styleClass="p-button-icon p-button-icon-left" /></ng-template>
+</p-confirmDialog>
 <app-parts-list-import></app-parts-list-import>

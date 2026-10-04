@@ -4,6 +4,7 @@ import { BrickHunterPreset } from './shared/theme/brickhunter-preset';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
+import { CheckIcon, TimesIcon } from 'primeng/icons';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -37,11 +38,13 @@ import { TreeModule } from 'primeng/tree';
 import { TreeTableModule } from 'primeng/treetable';
 
 @NgModule({
-  imports: [MessagesComponent],
+  imports: [MessagesComponent, CheckIcon, TimesIcon],
   exports: [
     AvatarModule,
     BadgeModule,
     ButtonModule,
+    CheckIcon,
+    TimesIcon,
     DatePickerModule,
     CardModule,
     CheckboxModule,

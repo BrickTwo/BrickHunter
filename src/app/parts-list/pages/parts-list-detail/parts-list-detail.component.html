@@ -171,7 +171,7 @@
   </div>
   <div class="col-12 xl:col xxl:flex-order-0">
     <p-card>
-      <p-tabs [value]="activeItem.id" (valueChange)="onTabChange($event)">
+      <p-tabs [value]="activeItem.id" (valueChange)="onTabChange($event)" [scrollable]="true" [showNavigators]="false">
         <p-tablist>
           <p-tab *ngFor="let item of items" [value]="item.id" [disabled]="item.disabled || false">{{
             item.label
@@ -231,11 +231,17 @@
   </div>
 </div>
 <p-confirmDialog
+  bhConfirmDialogFocus
+  acceptIcon="pi pi-check"
+  rejectIcon="pi pi-times"
   [style]="{ width: '50vw' }"
   key="positionDialog"
   position="top"
   [baseZIndex]="10000"
-  rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+  rejectButtonStyleClass="p-button-outlined">
+  <ng-template pTemplate="accepticon"><CheckIcon styleClass="p-button-icon p-button-icon-left" /></ng-template>
+  <ng-template pTemplate="rejecticon"><TimesIcon styleClass="p-button-icon p-button-icon-left" /></ng-template>
+</p-confirmDialog>
 <app-parts-list-settings [partsList]="partsList"></app-parts-list-settings>
 <app-parts-list-split></app-parts-list-split>
 <app-parts-list-export></app-parts-list-export>

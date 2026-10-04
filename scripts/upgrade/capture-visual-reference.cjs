@@ -69,7 +69,9 @@ async function main() {
         report.externalRequests.push({ url: request.url(), type: request.resourceType() });
         if (request.url() === 'https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif')
           await route.fulfill({ contentType: 'image/gif', body: donate });
-        else if (request.resourceType() === 'image') await route.fulfill({ contentType: 'image/png', body: placeholder });
+        else if (request.resourceType() === 'image' || (request.resourceType() === 'xhr' &&
+          request.url().startsWith('https://brickhunter.blob.core.windows.net/parts/pab/')))
+          await route.fulfill({ contentType: 'image/png', body: placeholder }); // jsPDF also reads the image URL through XHR.
         else await route.abort('blockedbyclient');
       });
       const page = await context.newPage();
@@ -984,6 +986,175 @@ async function main() {
         await dialogClose.click();
         await page.locator('app-changelog-dialog .p-dialog-mask').waitFor({ state: 'detached' });
         report.interactionChecks.closeDialogMouseSpaceStatesAndMaskCleanup = true;
+
+        // Final migration checks use real input events and disposable fixture data.
+        report.uiAcceptanceMeasurements = {};
+        await open('parts-lists/upgrade-reference');
+        await page.locator('app-parts-table td.p-editable-column').first().click();
+        const quantity = page.getByRole('spinbutton').first();
+        const quantityGeometry = await quantity.evaluate(element => {
+          const box = element.getBoundingClientRect(), css = getComputedStyle(element);
+          return { width: box.width, height: box.height, padding: css.padding,
+            totalWidth: element.parentElement.getBoundingClientRect().width };
+        });
+        if (quantityGeometry.width !== 68 || quantityGeometry.height !== 38 ||
+          quantityGeometry.padding !== '2px' || quantityGeometry.totalWidth !== 116)
+          throw new Error(`Quantity geometry changed: ${JSON.stringify(quantityGeometry)}`);
+        await page.locator('.p-inputnumber-increment-button').first().click();
+        if (await quantity.inputValue() !== '11') throw new Error('Quantity increment failed');
+        await quantity.click(); await quantity.press('ControlOrMeta+A'); await quantity.press('8');
+        if (await quantity.inputValue() !== '8') throw new Error('Quantity keyboard input failed');
+        await quantity.press('Tab');
+        report.uiAcceptanceMeasurements.quantity = quantityGeometry;
+        report.interactionChecks.quantityGeometryMouseAndKeyboard = true;
+
+        await open('parts-lists/upgrade-reference');
+        await page.getByRole('button', { name: 'Delete', exact: true }).first().click();
+        await page.locator('.p-confirmdialog').waitFor(); await settle();
+        const confirmation = await page.locator('.p-confirmdialog').evaluate(element => ({
+          width: element.getBoundingClientRect().width,
+          focusedLabel: document.activeElement?.textContent.trim(),
+          icons: [...element.querySelectorAll('.p-dialog-footer svg')].map(icon => ({
+            width: icon.getBoundingClientRect().width, height: icon.getBoundingClientRect().height }))
+        }));
+        if (confirmation.width !== 720 || confirmation.focusedLabel !== 'Yes' ||
+          confirmation.icons.length !== 2 || confirmation.icons.some(icon => icon.width !== 14 || icon.height !== 14))
+          throw new Error(`Confirmation defaults changed: ${JSON.stringify(confirmation)}`);
+        await page.getByRole('button', { name: 'No', exact: true }).focus();
+        await page.keyboard.press('Space');
+        await page.locator('.p-confirmdialog').waitFor({ state: 'detached' });
+        report.uiAcceptanceMeasurements.confirmation = confirmation;
+        report.interactionChecks.confirmationDefaultAcceptFocusSvgAndKeyboardCancel = true;
+
+        await open('parts-lists/upgrade-reference');
+        await component('app-transfer-warning', 'open', [[{ part: referenceWarningPart(), cart: undefined }], true]);
+        await page.locator('app-transfer-warning .p-dialog').waitFor(); await settle();
+        const warningCancel = page.locator('app-transfer-warning').getByRole('button', { name: /Cancel Transfer/ });
+        if (await warningCancel.evaluate(element => element === document.activeElement))
+          throw new Error('Transfer warning unexpectedly autofocuses Cancel');
+        await warningCancel.focus(); await page.keyboard.press('Space');
+        await page.locator('app-transfer-warning .p-dialog-mask').waitFor({ state: 'detached' });
+        report.interactionChecks.warningPreservesInitialFocusAndKeyboardCancel = true;
+
+        await open('parts-lists/upgrade-reference');
+        await page.getByRole('button', { name: 'Export', exact: true }).first().click();
+        const exportPanel = page.locator('app-parts-list-export .p-drawer');
+        const exportButtons = exportPanel.locator('.p-selectbutton').first().locator('button');
+        const exportGeometry = await exportButtons.evaluateAll(elements => elements.map(element => {
+          const r = element.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height };
+        }));
+        if (exportGeometry.length !== 6 || exportGeometry.some((box, index) =>
+          box.width !== 288 || box.x !== exportGeometry[0].x ||
+          (index > 0 && box.y !== exportGeometry[index - 1].y + exportGeometry[index - 1].height)))
+          throw new Error(`Export choices are not contiguous: ${JSON.stringify(exportGeometry)}`);
+        await exportButtons.nth(1).focus(); await page.keyboard.press('Space');
+        if (await exportButtons.nth(1).getAttribute('aria-pressed') !== 'true')
+          throw new Error('Export filter keyboard selection failed');
+        await exportButtons.first().click();
+        await exportPanel.getByRole('button', { name: 'BrickHunter', exact: true }).click();
+        const downloadPromise = page.waitForEvent('download');
+        await exportPanel.getByRole('button', { name: 'Export', exact: true }).click();
+        const download = await downloadPromise;
+        const exported = JSON.parse(await fs.readFile(await download.path(), 'utf8'));
+        if (!download.suggestedFilename().endsWith('.json') || exported.version !== '2.0' || exported.parts.length !== 8)
+          throw new Error('BrickHunter JSON export is invalid');
+        report.uiAcceptanceMeasurements.export = { choices: exportGeometry, filename: download.suggestedFilename(), parts: exported.parts.length };
+        report.interactionChecks.verticalExportMouseKeyboardAndJsonDownload = true;
+
+        await open('browse-parts');
+        const listRadios = page.locator('app-browse-parts-parts-lists input[type="radio"]');
+        await listRadios.first().check();
+        if (!await listRadios.first().isChecked()) throw new Error('List radio mouse selection failed');
+        await listRadios.nth(1).focus(); await page.keyboard.press('Space');
+        if (!await listRadios.nth(1).isChecked() || await listRadios.first().isChecked())
+          throw new Error('List radio keyboard selection is not exclusive');
+        const radioGeometry = await page.locator('app-browse-parts-parts-lists .p-radiobutton-box').first().evaluate(element => {
+          const r = element.getBoundingClientRect(), css = getComputedStyle(element);
+          return { width: r.width, height: r.height, borderWidth: css.borderWidth, borderColor: css.borderColor };
+        });
+        if (radioGeometry.width !== 20 || radioGeometry.height !== 20 || radioGeometry.borderWidth !== '2px')
+          throw new Error(`Radio geometry changed: ${JSON.stringify(radioGeometry)}`);
+        await additionalCapture('radio-keyboard-selection');
+        report.uiAcceptanceMeasurements.radio = radioGeometry;
+        report.interactionChecks.radioMouseSpaceExclusiveSelectionAndGeometry = true;
+        const browseQuantity = page.locator('app-browse-parts-grid-item input.p-inputnumber-input').first();
+        const browseQuantityGeometry = await browseQuantity.evaluate(element => {
+          const host = element.closest('.p-inputnumber'), card = element.closest('app-browse-parts-grid-item');
+          const r = element.getBoundingClientRect(), h = host.getBoundingClientRect(), c = card.getBoundingClientRect();
+          return { width: r.width, height: r.height, totalWidth: h.width, padding: getComputedStyle(element).padding,
+            buttonWidths: [...host.querySelectorAll('button')].map(button=>button.getBoundingClientRect().width),
+            containedInCard: h.x >= c.x && h.right <= c.right };
+        });
+        if (browseQuantityGeometry.width !== 60 || browseQuantityGeometry.totalWidth !== 120 ||
+          browseQuantityGeometry.padding !== '2px' || browseQuantityGeometry.buttonWidths.some(width=>width !== 30) || !browseQuantityGeometry.containedInCard)
+          throw new Error(`Browse quantity overflows: ${JSON.stringify(browseQuantityGeometry)}`);
+        const browseValue = Number(await browseQuantity.inputValue());
+        await page.locator('app-browse-parts-grid-item .p-inputnumber-increment-button').first().click();
+        if (Number(await browseQuantity.inputValue()) !== browseValue + 1) throw new Error('Browse quantity increment failed');
+        await browseQuantity.click(); await browseQuantity.press('ControlOrMeta+A'); await browseQuantity.press('7'); await browseQuantity.press('Tab');
+        if (await browseQuantity.inputValue() !== '7') throw new Error('Browse quantity keyboard input failed');
+        report.uiAcceptanceMeasurements.browseQuantity = browseQuantityGeometry;
+        report.interactionChecks.browseQuantityContainedMouseAndKeyboard = true;
+
+        await open('parts-lists/upgrade-reference');
+        await component('app-parts-list-copy-or-move-to', 'open', ['upgrade-reference', 'copy', []]);
+        const copyChoices = page.locator('app-parts-list-copy-or-move-to .p-selectbutton button');
+        await copyChoices.nth(1).focus(); await page.keyboard.press('Space');
+        if (await copyChoices.nth(1).getAttribute('aria-pressed') !== 'true') throw new Error('Copy target keyboard selection failed');
+        const copyGeometry = await copyChoices.evaluateAll(elements => elements.map(element => {
+          const r = element.getBoundingClientRect(), label = element.querySelector('.p-togglebutton-label');
+          return { width: r.width, labelInset: label.getBoundingClientRect().x - r.x, textAlign: getComputedStyle(label).textAlign };
+        }));
+        if (copyGeometry.some(box => box.width !== 288 || box.textAlign !== 'left' || box.labelInset < 16 || box.labelInset > 17))
+          throw new Error(`Copy target layout changed: ${JSON.stringify(copyGeometry)}`);
+        await additionalCapture('copy-target-keyboard-selection');
+        report.uiAcceptanceMeasurements.copyTargets = copyGeometry;
+        report.interactionChecks.copyTargetVerticalLeftAlignmentAndKeyboardSelection = true;
+
+        await open('parts-lists/upgrade-reference');
+        // The separate PDF component is no longer mounted; the live Export panel
+        // provides the PDF workflow and shares the vertical option styles.
+        await page.getByRole('button', { name: 'Export', exact: true }).first().click();
+        const pdfPanel = page.locator('app-parts-list-export .p-drawer');
+        const pdfOption = pdfPanel.getByRole('button', { name: 'PDF', exact: true });
+        await pdfPanel.getByRole('button', { name: 'CSV', exact: true }).click();
+        await pdfOption.focus(); await page.keyboard.press('Space');
+        if (await pdfOption.getAttribute('aria-pressed') !== 'true') throw new Error('PDF option keyboard selection failed');
+        await additionalCapture('pdf-option-keyboard-selection');
+        const pdfDownloadPromise = page.waitForEvent('download');
+        await pdfPanel.getByRole('button', { name: 'Export', exact: true }).click();
+        const pdfDownload = await pdfDownloadPromise;
+        const pdfData = await fs.readFile(await pdfDownload.path());
+        if (!pdfDownload.suggestedFilename().endsWith('.pdf') || pdfData.subarray(0, 5).toString() !== '%PDF-')
+          throw new Error('PDF download is invalid');
+        report.uiAcceptanceMeasurements.pdf = { filename: pdfDownload.suggestedFilename(), bytes: pdfData.length };
+        report.interactionChecks.pdfVerticalOptionKeyboardSelectionAndDownload = true;
+      }
+      if (viewport.width === 390) {
+        await open('browse-parts');
+        await page.locator('app-browse-parts-parts-lists input[type="radio"]').nth(1).check();
+        const mobileBrowseQuantity = await page.locator('app-browse-parts-grid-item .quantity-edit').first().evaluate(element => {
+          const r = element.getBoundingClientRect(), card = element.closest('app-browse-parts-grid-item').getBoundingClientRect();
+          return { width: r.width, containedInCard: r.x >= card.x && r.right <= card.right };
+        });
+        if (mobileBrowseQuantity.width !== 120 || !mobileBrowseQuantity.containedInCard)
+          throw new Error(`Mobile browse quantity overflows: ${JSON.stringify(mobileBrowseQuantity)}`);
+        await settle();
+        const mobileBrowseFile = '390x844-browse-selected-list.png';
+        await page.screenshot({ path: path.join(output, mobileBrowseFile), animations: 'disabled' });
+        report.additionalScreenshots.push(mobileBrowseFile);
+        report.uiAcceptanceMeasurements.mobileBrowseQuantity = mobileBrowseQuantity;
+        report.interactionChecks.mobileBrowseQuantityContainedInCard = true;
+        await open('parts-lists/upgrade-reference');
+        const tabViewport = page.locator('.p-tablist-content');
+        if (await page.locator('.p-tablist-next-button, .p-tablist-prev-button').count())
+          throw new Error('Mobile tabs unexpectedly show new navigator buttons');
+        const before = await tabViewport.evaluate(element => ({ width: element.clientWidth, contentWidth: element.scrollWidth, scroll: element.scrollLeft }));
+        await tabViewport.hover(); await page.mouse.wheel(1800, 0); await page.waitForTimeout(250);
+        const after = await tabViewport.evaluate(element => element.scrollLeft);
+        if (before.contentWidth <= before.width || after <= before.scroll) throw new Error('Mobile tabs cannot scroll horizontally');
+        report.uiAcceptanceMeasurements.mobileTabs = { ...before, scrollAfterWheel: after };
+        report.interactionChecks.mobileTabsWheelScrollWithoutNavigator = true;
       }
       await context.close();
     }
