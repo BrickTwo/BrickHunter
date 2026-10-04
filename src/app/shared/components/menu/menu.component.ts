@@ -24,10 +24,13 @@ import { ZIndexUtils } from 'primeng/utils';
 import { RouterModule } from '@angular/router';
 import { RippleModule } from 'primeng/ripple';
 import { TooltipModule } from 'primeng/tooltip';
-import { DomSanitizer } from '@angular/platform-browser';
+
+export interface BrickHunterMenuItem extends MenuItem {
+  swatch?: { rgb: string };
+}
 
 @Component({
-  selector: '[pMenuItemContent]',
+  selector: '[bhMenuItemContent]',
   template: `
     <a
       *ngIf="!item.routerLink"
@@ -40,6 +43,7 @@ import { DomSanitizer } from '@angular/platform-browser';
       [attr.title]="item.title"
       [attr.id]="item.id"
       [ngClass]="{ 'p-disabled': item.disabled }"
+      [attr.aria-disabled]="item.disabled || null"
       (click)="menu.itemClick($event, item)"
       role="menuitem"
       [target]="item.target">
@@ -49,8 +53,7 @@ import { DomSanitizer } from '@angular/platform-browser';
         [ngClass]="item.icon"
         [class]="item.iconClass"
         [ngStyle]="item.iconStyle"></span>
-      <span class="p-menuitem-text" *ngIf="item.escape !== false; else htmlLabel">{{ item.label }}</span>
-      <ng-template #htmlLabel><span class="p-menuitem-text" [innerHTML]="transform(item.label)"></span></ng-template>
+      <ng-container *ngTemplateOutlet="label"></ng-container>
       <span class="p-menuitem-badge" *ngIf="item.badge" [ngClass]="item.badgeStyleClass">{{ item.badge }}</span>
     </a>
     <a
@@ -67,6 +70,7 @@ import { DomSanitizer } from '@angular/platform-browser';
       [attr.tabindex]="item.disabled ? null : '0'"
       [attr.title]="item.title"
       [ngClass]="{ 'p-disabled': item.disabled }"
+      [attr.aria-disabled]="item.disabled || null"
       (click)="menu.itemClick($event, item)"
       role="menuitem"
       pRipple
@@ -77,12 +81,18 @@ import { DomSanitizer } from '@angular/platform-browser';
       [replaceUrl]="item.replaceUrl"
       [state]="item.state">
       <span class="p-menuitem-icon" *ngIf="item.icon" [ngClass]="item.icon"></span>
-      <span class="p-menuitem-text" *ngIf="item.escape !== false; else htmlRouteLabel">{{ item.label }}</span>
-      <ng-template #htmlRouteLabel
-        ><span class="p-menuitem-text" [innerHTML]="transform(item.label)"></span
-      ></ng-template>
+      <ng-container *ngTemplateOutlet="label"></ng-container>
       <span class="p-menuitem-badge" *ngIf="item.badge" [ngClass]="item.badgeStyleClass">{{ item.badge }}</span>
     </a>
+    <ng-template #label>
+      <span class="p-menuitem-text">
+        <span *ngIf="item.swatch; else textLabel" class="flex align-content-start">
+          <div class="flex-grow-0 flex-shrink-0 bh-menu-swatch" [style.background-color]="item.swatch.rgb"></div>
+          <span class="flex-grow-1 flex-shrink-1" style="white-space: nowrap">{{ item.label }}</span>
+        </span>
+        <ng-template #textLabel>{{ item.label }}</ng-template>
+      </span>
+    </ng-template>
   `,
   encapsulation: ViewEncapsulation.None,
   host: {
@@ -90,16 +100,12 @@ import { DomSanitizer } from '@angular/platform-browser';
   },
 })
 export class MenuItemContent {
-  @Input('pMenuItemContent') item: MenuItem;
+  @Input('bhMenuItemContent') item: BrickHunterMenuItem;
 
   menu: MenuComponent;
 
-  constructor(private sanitized: DomSanitizer, @Inject(forwardRef(() => MenuComponent)) menu) {
+  constructor(@Inject(forwardRef(() => MenuComponent)) menu) {
     this.menu = menu as MenuComponent;
-  }
-
-  transform(value) {
-    return this.sanitized.bypassSecurityTrustHtml(value);
   }
 
   onItemKeyDown(event) {
@@ -109,7 +115,7 @@ export class MenuItemContent {
       case 'ArrowDown':
         var nextItem = this.findNextItem(listItem);
         if (nextItem) {
-          nextItem.children[0].focus();
+          nextItem.querySelector<HTMLElement>('[role="menuitem"]')?.focus();
         }
 
         event.preventDefault();
@@ -118,7 +124,7 @@ export class MenuItemContent {
       case 'ArrowUp':
         var prevItem = this.findPrevItem(listItem);
         if (prevItem) {
-          prevItem.children[0].focus();
+          prevItem.querySelector<HTMLElement>('[role="menuitem"]')?.focus();
         }
 
         event.preventDefault();
@@ -126,11 +132,19 @@ export class MenuItemContent {
 
       case 'Space':
       case 'Enter':
-        if (listItem && !DomHandler.hasClass(listItem, 'p-disabled')) {
+        if (listItem && !this.item.disabled && this.item.visible !== false) {
           listItem.children[0].click();
         }
 
         event.preventDefault();
+        break;
+
+      case 'Escape':
+        if (this.menu.popup) {
+          this.menu.target?.focus();
+          this.menu.hide();
+          event.preventDefault();
+        }
         break;
 
       default:
@@ -138,33 +152,34 @@ export class MenuItemContent {
     }
   }
 
-  findNextItem(item) {
-    let nextItem = item.nextElementSibling;
-
-    if (nextItem)
-      return DomHandler.hasClass(nextItem, 'p-disabled') || !DomHandler.hasClass(nextItem, 'p-menuitem')
-        ? this.findNextItem(nextItem)
-        : nextItem;
-    else return null;
+  findNextItem(item: HTMLElement): HTMLElement | null {
+    return this.findFocusableItem(item, 'nextElementSibling');
   }
 
-  findPrevItem(item) {
-    let prevItem = item.previousElementSibling;
+  findPrevItem(item: HTMLElement): HTMLElement | null {
+    return this.findFocusableItem(item, 'previousElementSibling');
+  }
 
-    if (prevItem)
-      return DomHandler.hasClass(prevItem, 'p-disabled') || !DomHandler.hasClass(prevItem, 'p-menuitem')
-        ? this.findPrevItem(prevItem)
-        : prevItem;
-    else return null;
+  private findFocusableItem(item: HTMLElement, direction: 'nextElementSibling' | 'previousElementSibling'): HTMLElement | null {
+    let candidate = item[direction] as HTMLElement | null;
+    while (candidate) {
+      const link = candidate.querySelector<HTMLElement>('[role="menuitem"]');
+      if (candidate.classList.contains('p-menuitem') && !candidate.classList.contains('p-hidden') &&
+          link && link.getAttribute('aria-disabled') !== 'true') {
+        return candidate;
+      }
+      candidate = candidate[direction] as HTMLElement | null;
+    }
+    return null;
   }
 }
 
 @Component({
-  selector: 'p-menu',
+  selector: 'bh-menu',
   template: `
     <div
       #container
-      [ngClass]="{ 'p-menu p-component': true, 'p-menu-overlay': popup }"
+      [ngClass]="{ 'bh-menu-panel p-menu p-component': true, 'p-menu-overlay': popup }"
       [class]="styleClass"
       [ngStyle]="style"
       *ngIf="!popup || visible"
@@ -191,8 +206,7 @@ export class MenuItemContent {
             pTooltip
             [tooltipOptions]="submenu.tooltipOptions"
             role="none">
-            <span *ngIf="submenu.escape !== false; else htmlSubmenuLabel">{{ submenu.label }}</span>
-            <ng-template #htmlSubmenuLabel><span [innerHTML]="transform(submenu.label)"></span></ng-template>
+            <span>{{ submenu.label }}</span>
           </li>
           <ng-template ngFor let-item [ngForOf]="submenu.items">
             <li
@@ -203,7 +217,7 @@ export class MenuItemContent {
             <li
               class="p-menuitem"
               *ngIf="!item.separator"
-              [pMenuItemContent]="item"
+              [bhMenuItemContent]="item"
               [ngClass]="{ 'p-hidden': item.visible === false || submenu.visible === false }"
               [ngStyle]="item.style"
               [class]="item.styleClass"
@@ -221,7 +235,7 @@ export class MenuItemContent {
           <li
             class="p-menuitem"
             *ngIf="!item.separator"
-            [pMenuItemContent]="item"
+            [bhMenuItemContent]="item"
             [ngClass]="{ 'p-hidden': item.visible === false }"
             [ngStyle]="item.style"
             [class]="item.styleClass"
@@ -246,7 +260,7 @@ export class MenuItemContent {
   },
 })
 export class MenuComponent implements OnDestroy {
-  @Input() model: MenuItem[];
+  @Input() model: BrickHunterMenuItem[];
 
   @Input() popup: boolean;
 
@@ -293,8 +307,7 @@ export class MenuComponent implements OnDestroy {
     public renderer: Renderer2,
     private cd: ChangeDetectorRef,
     public config: PrimeNGConfig,
-    public overlayService: OverlayService,
-    private sanitized: DomSanitizer
+    public overlayService: OverlayService
   ) {}
 
   toggle(event) {
@@ -302,10 +315,6 @@ export class MenuComponent implements OnDestroy {
     else this.show(event);
 
     this.preventDocumentDefault = true;
-  }
-
-  transform(value) {
-    return this.sanitized.bypassSecurityTrustHtml(value);
   }
 
   show(event) {
@@ -385,7 +394,7 @@ export class MenuComponent implements OnDestroy {
   }
 
   itemClick(event: MouseEvent, item: MenuItem) {
-    if (item.disabled) {
+    if (item.disabled || item.visible === false) {
       event.preventDefault();
       return;
     }

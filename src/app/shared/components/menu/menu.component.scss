@@ -1,20 +1,20 @@
-.p-menu-overlay {
+.bh-menu-panel.p-menu-overlay {
     position: absolute;
     top: 0;
     left: 0;
 }
 
-.p-menu ul {
+.bh-menu-panel ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.p-menu .p-submenu-header{
+.bh-menu-panel .p-submenu-header{
     align-items: center;
 }
 
-.p-menu .p-menuitem-link {
+.bh-menu-panel .p-menuitem-link {
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -23,6 +23,14 @@
     position: relative;
 }
 
-.p-menu .p-menuitem-text {
+.bh-menu-panel .p-menuitem-text {
     line-height: 1;
+}
+
+.bh-menu-panel .bh-menu-swatch {
+    border: 1px solid black;
+    width: 13px;
+    height: 13px;
+    margin-right: 5px;
+    display: inline-block;
 }

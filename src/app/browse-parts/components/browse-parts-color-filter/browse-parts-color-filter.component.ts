@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { BrickHunterMenuItem } from 'src/app/shared/components/menu/menu.component';
 import { BrowsePartsService } from '../../service/browse-parts.service';
 import { Subscription } from 'dexie';
 import { ColorService } from 'src/app/core/services/color.service';
@@ -13,15 +13,15 @@ import { Color } from 'src/app/models/shared';
 export class BrowsePartsColorFilterComponent implements OnInit, OnDestroy {
   colorSubscription: Subscription;
   colors: number[];
-  trans: MenuItem[];
-  black: MenuItem[];
-  brown: MenuItem[];
-  red: MenuItem[];
-  orange: MenuItem[];
-  yellow: MenuItem[];
-  green: MenuItem[];
-  blue: MenuItem[];
-  purple: MenuItem[];
+  trans: BrickHunterMenuItem[];
+  black: BrickHunterMenuItem[];
+  brown: BrickHunterMenuItem[];
+  red: BrickHunterMenuItem[];
+  orange: BrickHunterMenuItem[];
+  yellow: BrickHunterMenuItem[];
+  green: BrickHunterMenuItem[];
+  blue: BrickHunterMenuItem[];
+  purple: BrickHunterMenuItem[];
 
   constructor(private readonly browsePartsService: BrowsePartsService, private readonly colorService: ColorService) {}
 
@@ -84,27 +84,10 @@ export class BrowsePartsColorFilterComponent implements OnInit, OnDestroy {
     this.purple = [];
   }
 
-  private createMenuItem(color: Color): MenuItem {
+  private createMenuItem(color: Color): BrickHunterMenuItem {
     return {
-      label: `
-      <style>
-      .color${color.id} {
-        border: 1px solid black;
-        width: 13px;
-        height: 13px;
-        margin-right: 5px;
-        display: inline-block;
-        background-color: #${color.rgb}
-      }
-      </style>
-      <span class="flex align-content-start">
-      <div
-        class="flex-grow-0 flex-shrink-0 color${color.id}"></div>
-      <span class="flex-grow-1 flex-shrink-1" style="white-space: nowrap">
-        ${color?.externalIds.brickLink?.extDescrs[0]}
-      </span>
-    </span>`,
-      escape: false,
+      label: color.externalIds.brickLink?.extDescrs[0],
+      swatch: { rgb: `#${color.rgb}` },
       command: () => {
         this.setColor(color.id);
       },

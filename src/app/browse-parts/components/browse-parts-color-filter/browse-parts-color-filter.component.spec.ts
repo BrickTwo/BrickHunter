@@ -32,7 +32,7 @@ describe('BrowsePartsColorFilterComponent', () => {
     expect(component.red.length).toBe(1);
     expect(component.blue.length).toBe(1);
     expect(component.red[0].label).toContain('Red');
-    expect(component.red[0].label).toContain('#C91A09');
+    expect(component.red[0].swatch.rgb).toBe('#C91A09');
     component.red[0].command({});
     expect(api.getPickABrickParts.calls.mostRecent().args[0].colorIds).toEqual([4]);
     component.setColor(null);

@@ -70,3 +70,20 @@ Die Tabelle oben dokumentiert die ursprüngliche Abfrage vor Paketänderungen. A
 | Autoprefixer / PostCSS | 10.4.17 / 8.4.34 | Direkte Ausgangsversionen und Versionsbereiche beibehalten; CSS-Ausgabe byteidentisch. |
 
 Alle übrigen direkten gelockten Versionen bleiben unverändert. Transitive Toolchain-Pakete wurden durch den Angular-Installer angepasst. Einzelheiten und Commit-Punkt: [Fortschrittsprotokoll](angular-upgrade-progress.md).
+
+## Vorbereitete Kandidatenkombination: Angular / PrimeNG 18
+
+Erneute offizielle npm-Abfrage am 4. Oktober 2026. Noch **nicht installiert**. Die direkten Peer-Metadaten der 46 bestehenden Pakete und des neuen Theme-Pakets ergeben gegenüber der vollständigen Kandidatenkombination keine Konflikte bei vorhandenen/ausgewählten Peer-Paketen. Installation, transitive Auflösung, Migrationen und Laufzeit-/UI-Prüfungen stehen noch aus.
+
+| Paketgruppe | Kandidat |
+| --- | --- |
+| Angular Framework, Compiler-CLI, Localize / CDK | 18.2.14 |
+| CLI / Build-Devkit | 18.2.21 |
+| Custom-Webpack | 18.0.0 |
+| NgRx Store / Effects / Devtools | 18.1.1 |
+| Angular-FontAwesome | 0.15.0 |
+| PrimeNG / `@primeng/themes` | 18.0.2 |
+| PrimeFlex | 4.0.0 |
+| TypeScript / Zone.js | 5.5.4 / 0.14.10 |
+
+Node 20.20.2 erfüllt die Angular-18-Anforderungen. Alle Framework-Pakete einschließlich Platform-Browser-Dynamic müssen gemeinsam aktualisiert werden. Das Theme und die geänderte PrimeNG-Konfiguration werden im selben Migrationsabschnitt umgesetzt; Details im [Fortschrittsprotokoll](angular-upgrade-progress.md).

@@ -182,3 +182,43 @@ git commit -m "chore: upgrade Angular to latest 17 patch"
 ```
 
 Weitere manuelle Einrichtung ist in diesem Abschnitt nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers an. Nach dem Commit und `weiter` folgt die kompatible Angular-/PrimeNG-18-Kombination mit eigenem Theme und Menü-Abgleich.
+
+Dieser Angular-17-Abschnitt wurde als `a0f2cc2` gesichert. Auf Anweisung des Nutzers wurde anschließend mit der Vorbereitung des Angular-/PrimeNG-18-Übergangs fortgefahren.
+
+## Commit-Punkt 5: Eigenes Menü vor dem Theme-Wechsel vorbereiten
+
+Stand: 4. Oktober 2026. Ausgangscommit: `a0f2cc2`; Arbeitsverzeichnis zu Beginn sauber. Die Dependencies und das Lockfile bleiben unverändert: Angular **17.3.12**, PrimeNG **17.5.0**, Node **20.20.2**.
+
+Der Theme-Wechsel und die Bewertung eines Wrappers um das öffentliche PrimeNG-Menü benötigen einen eindeutig abgegrenzten Menüvertrag. Dieser Vorbereitungsschritt wurde deshalb vor der Paketinstallation als eigener prüfbarer Abschnitt umgesetzt:
+
+- Eigene Selektoren auf **`bh-menu`** / **`bhMenuItemContent`** umgestellt. Alle elf Menüverwendungen in Farbfilter, Teileliste und Tabellenaktionen angepasst. Eigene Strukturregeln sind über **`.bh-menu-panel`** begrenzt, auch wenn das Popup an `body` angehängt wird. Der öffentliche PrimeNG-Selektor `p-menu` ist jetzt frei für den geplanten Prototyp.
+- Farblabels enthalten jetzt einen Textwert und strukturierte `swatch.rgb`-Daten. Die bisherigen dynamischen HTML-/Style-Strings und alle `bypassSecurityTrustHtml`-/`innerHTML`-Verwendungen des eigenen Menüs entfernt. Farbfelder werden als Angular-Template mit gebundener Hintergrundfarbe dargestellt; auch gewöhnliche und Gruppenlabels sind Text. Produktionsseitig wurden keine weiteren HTML-Label-Verwendungen gefunden.
+- Den dokumentierten Tastaturfehler korrigiert: Pfeiltasten überspringen deaktivierte/ausgeblendete Einträge, Separatoren und Gruppenüberschriften. Deaktivierte Links erhalten `aria-disabled`; Enter/Leertaste führen keine deaktivierten oder ausgeblendeten Commands aus. **Escape** schließt ein Popup und fokussiert dessen Auslöser.
+- Sechs zusätzliche Regressionstests sichern Text-/Farblabels ohne HTML-Ausführung, Tastaturnavigation und Aktivierung, Gruppen/Router-Links/Icons/Badges, Escape/Fokusrückgabe sowie an `body` angehängte Popup-Positionierung, Z-Index, Scrollen, Resize und Listener-Cleanup. Bestehende Farbfiltertests auf den strukturierten Vertrag angepasst. Gesamtsuite: **32 SUCCESS**, Exitcode 0.
+- Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang weiter rund **2.05 MB**, Budgets unverändert; die bisherigen Warnungen bleiben bestehen. Extension-Einstiege und Manifest sind in beiden regulären Outputs byteidentisch zum Angular-17-Patchabschnitt. Alle erwarteten Ausgabedateien vorhanden, keine Referenz-Fixture-Marker in regulären JS-Bundles.
+- **39 von 39 Screenshots byteidentisch**, alle aufgezeichneten Szenarien-/CSS-Messungen identisch zur ursprünglichen Referenz. **0 neue Konsolen-/Browserfehler**; die 9 bereits bekannten Tabellen-NG0100-Meldungen bleiben unverändert. Prüfsummen: [menu-preparation-check.json](angular-upgrade-reference/menu-preparation-check.json).
+- `git diff --check` erfolgreich. Keine Paketinstallation oder Änderung an Theme, PrimeFlex, Angular-Konfiguration, Persistenz oder Extension-Kommunikation in diesem Vorbereitungsschritt.
+
+Logs und reguläre Outputs: `artefacts/angular-upgrade/menu-preparation/`; UI-Aufnahmen: `artefacts/angular-upgrade/visual/menu-preparation/`.
+
+### Angular-/PrimeNG-18-Kombination und noch offene Arbeit
+
+Offizielle npm-Metadaten bestätigen die Kandidaten Angular **18.2.14**, CLI/Build-Devkit **18.2.21**, CDK **18.2.14**, Custom-Webpack **18.0.0**, NgRx **18.1.1**, Angular-FontAwesome **0.15.0**, PrimeNG/`@primeng/themes` **18.0.2**, PrimeFlex **4.0.0**, TypeScript **5.5.4** und Zone.js **0.14.10**. Die direkten Peer-Anforderungen aller 46 bestehenden Pakete plus des Theme-Pakets wurden mit dieser vollständigen Kandidatenkombination verglichen: **0 Konflikte** bei den vorhandenen/ausgewählten Peer-Paketen. Das ist eine Metadatenprüfung, noch keine installierte oder durch Laufzeittests bestätigte Kombination. Artefakte: `artefacts/angular-upgrade/angular-18/metadata.json` und `direct-peer-candidate-check.json`.
+
+Die eigentliche 18er-Migration bleibt der nächste Abschnitt: `ng update` einschließlich Angular-gebundener Pakete, `providePrimeNG` statt `PrimeNGConfig`, neues BrickHunter-Token-Preset, Entfernung der alten vollständigen Theme-/Resource-Imports, DOM-/Icon-/Komponentenabgleich und wiederholte UI-Abnahme. Die Entscheidung über öffentlichen Menü-Wrapper oder weiteren eigenen Nachbau bleibt bis zum Prototyp unter PrimeNG 18 offen. Die jetzige Komponente nutzt weiterhin die historischen PrimeNG-DOM-/ZIndex-/Overlay-Helfer und eigene Angular-Animationen; diese Kopplungen sind im Folgeabschnitt zu behandeln. Quelle: [PrimeNG-18-Migration](https://v18.primeng.org/guides/migration), [Theming](https://v18.primeng.org/theming), [Angular-Kompatibilität](https://angular.dev/reference/versions).
+
+### Jetzt manuell: Zwischencommit
+
+Die visuell unveränderte Menüvorbereitung vor den Paket- und Theme-Änderungen sichern:
+
+```powershell
+git add src/app/shared/components/menu
+git add src/app/browse-parts/components/browse-parts-color-filter
+git add src/app/parts-list/components/parts-table/parts-table.component.html
+git add src/app/parts-list/pages/parts-list-list/parts-list-list.component.html
+git add docs/angular-upgrade-plan.md docs/angular-upgrade-progress.md docs/angular-upgrade-packages.md
+git add docs/angular-upgrade-reference/README.md docs/angular-upgrade-reference/menu-preparation-check.json
+git commit -m "refactor: prepare BrickHunter menu for PrimeNG upgrade"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht nötig. Die Umsetzung hält hier auf Wunsch des Nutzers am separaten Commit-Punkt an.

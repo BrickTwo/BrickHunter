@@ -16,7 +16,7 @@
   <p-divider></p-divider>
 
   <!-- (onRowSelect)="openPartsList($event.data)" -->
-  <p-menu #bulkMenu [model]="bulkMenuItems" [popup]="true"></p-menu>
+  <bh-menu #bulkMenu [model]="bulkMenuItems" [popup]="true"></bh-menu>
   <p-table
     [value]="partsLists"
     [(selection)]="selectedPartsLists"

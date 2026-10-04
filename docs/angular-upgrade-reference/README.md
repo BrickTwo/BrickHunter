@@ -36,13 +36,15 @@ Bei allen vier Viewports: Navigation/Listenübersicht, Importdialog, befüllte T
 
 Der vollständige Ausgangslauf enthält **9 protokollierte NG0100-Konsolenmeldungen** aus `PartsTableComponent`: Beim ersten Rendern befüllter Tabellen ändern Sichtbarkeitsberechnungen nach dem View-Check einen Templatewert von false auf true. Das ist ein bestehender Lifecycle-Fehler, kein Ergebnis eines Paketupgrades. Nur dieser konkret geprüfte Fehlertyp wird unter `knownConsoleErrors` erfasst; andere Browser-/Konsolenfehler führen zum Abbruch. Die neuen Tabellentests laden wie eine asynchrone Datenquelle zunächst die leere Ansicht und dann die Daten.
 
-Die vorhandene schmale Darstellung hat horizontale Überbreite; der Transferwarndialog schneidet bei 1440 px Tabelleninhalt ab. Die Aufnahmen dokumentieren diese Ausgangssituation. Das bereits erfasste Tastaturproblem mit deaktivierten/ausgeblendeten Menüeinträgen bleibt ebenfalls offen. Diese Fehler sind bei der Migration separat zu behandeln.
+Die vorhandene schmale Darstellung hat horizontale Überbreite; der Transferwarndialog schneidet bei 1440 px Tabelleninhalt ab. Die Aufnahmen dokumentieren diese Ausgangssituation. Zum Ausgangsstand gehörte außerdem das Tastaturproblem mit deaktivierten/ausgeblendeten Menüeinträgen; dieses wurde inzwischen in der Menüvorbereitung behoben. Die übrigen Fehler sind bei der Migration separat zu behandeln.
 
 Die Referenzen sichern die UI mit kontrollierten Testdaten. Sie sind noch keine Abnahme echter Extension-Kommunikation, IndexedDB-Upgrades, PDF/XML-Dateien oder echter Teilebilder. Weitere Browserprofile und konkrete Interaktionen werden im jeweiligen Upgradeabschnitt ergänzt.
 
 ## Reproduktion
 
 Der Upgrade-Zwischenstand Angular **17.3.12** / CLI **17.3.17** / CDK **17.3.10** wurde ebenfalls geprüft: **39 von 39 PNGs byteidentisch**, alle Szenarienmessungen identisch, keine neuen Browser-/Konsolenfehler. Die einzelnen SHA-256-Vergleiche stehen in [angular-17-patch-check.json](angular-17-patch-check.json). Die Ausgangsbilder unter `angular-17/` bleiben die Referenz für weitere Stufen.
+
+Auch die Menüvorbereitung (`bh-menu`, strukturierte Farbtemplates, Tastaturkorrektur) bleibt visuell identisch: **39 von 39 PNGs** und alle Szenarienmessungen unverändert, keine neuen Browser-/Konsolenfehler. Siehe [menu-preparation-check.json](menu-preparation-check.json). Der zuvor dokumentierte Fehler beim Überspringen deaktivierter/ausgeblendeter Menüeinträge wurde in diesem Abschnitt korrigiert und ist durch Regressionstests abgedeckt; die übrigen Ausgangsprobleme bestehen fort.
 
 Aus dem Repository-Stamm mit Node 20 und Playwright 1.62.1. Playwright wird hier aus dem vorhandenen Codex-Runtime-Bundle geladen; für andere Rechner muss `NODE_PATH` auf eine entsprechende separate Toolinstallation zeigen. `CHROME_BIN` kann den passenden Browserpfad vorgeben. Für Pixelvergleiche denselben Edge-/Windows-Stand und die aufgeführten Aufnahmebedingungen verwenden.
 
