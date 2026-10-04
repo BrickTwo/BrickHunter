@@ -68,6 +68,7 @@ const pickABrick = {
 class VisualReferenceModule {
   constructor(injector: Injector, zone: NgZone, app: ApplicationRef) {
     (window as any).brickHunterReference = {
+      runInAngular: (action: () => void) => zone.run(action),
       clearMessages: () => zone.run(() => injector.get(MessageService).clear()),
       showMessage: (severity: 'success' | 'info' | 'warn' | 'error' = 'success',
         summary = 'PaB Data successfully updated', detail?: string) => zone.run(() => injector.get(MessageService).add({

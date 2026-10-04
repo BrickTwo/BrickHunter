@@ -107,7 +107,7 @@ async function main() {
             '.p-tree-node-content', '.p-togglebutton', '.p-toggleswitch-slider', '.p-checkbox-box', '.p-paginator-page',
             '.p-tab', '.p-message', '.p-dialog-header', '.p-dialog-footer',
             '.bh-menu-panel', '.bh-menu-panel .p-menu-item-link', '.bh-menu-swatch',
-            '.p-drawer-mask', '.p-drawer-header', '.p-fileupload-header', '.p-fileupload-content',
+            '.p-drawer-mask', '.p-dialog-mask', '.p-drawer-header', '.p-fileupload-header', '.p-fileupload-content',
             'app-parts-list-import textarea', '.p-fileupload-choose-button',
             '.p-toast', '.p-toast-message', '.p-toast-message-content', '.p-toast-message-icon',
             '.p-toast-message-text', '.p-toast-summary', '.p-toast-detail', '.p-toast-close-button',
@@ -125,7 +125,7 @@ async function main() {
             values[selector] = { width: rect.width, height: rect.height, fontSize: css.fontSize,
               fontFamily: css.fontFamily, color: css.color, backgroundColor: css.backgroundColor,
               borderRadius: css.borderRadius, padding: css.padding, boxShadow: css.boxShadow,
-              x: rect.x, y: rect.y, lineHeight: css.lineHeight };
+              x: rect.x, y: rect.y, lineHeight: css.lineHeight, zIndex: css.zIndex };
           }
           return values;
         });
@@ -135,8 +135,12 @@ async function main() {
         await page.evaluate(({ selector, action, args }) => {
           const element = document.querySelector(selector);
           const instance = window.ng.getComponent(element);
-          instance[action](...args);
-          window.ng.applyChanges(instance);
+          // Model real application calls inside Angular's zone, including async
+          // rendering of populated dialogs after the initial change detection.
+          window.brickHunterReference.runInAngular(() => {
+            instance[action](...args);
+            window.ng.applyChanges(instance);
+          });
         }, { selector, action, args });
       }
 
@@ -824,6 +828,64 @@ async function main() {
         await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-table')).selectedParts.length === 0);
         await checkboxStyle(rowCheckbox, 'table-row-cleared-keyboard-hover', false, false, 'rgba(0, 0, 0, 0.12)');
         report.interactionChecks.checkboxTableMouseHoverAndKeyboardFocus = true;
+        report.overlayMeasurements = {};
+        async function overlayLayers(name, panelSelector, maskSelector) {
+          await settle();
+          const layers = await page.evaluate(({ panelSelector, maskSelector }) => {
+            const nav = document.querySelector('app-side-navigation .p-drawer');
+            const panel = document.querySelector(panelSelector), mask = document.querySelector(maskSelector);
+            const ownPanelZIndex = getComputedStyle(panel).zIndex, maskZIndex = Number(getComputedStyle(mask).zIndex);
+            const maskContainsPanel = mask.contains(panel);
+            return { navigationZIndex: Number(getComputedStyle(nav).zIndex),
+              panelZIndex: ownPanelZIndex === 'auto' && maskContainsPanel ? maskZIndex : Number(ownPanelZIndex),
+              ownPanelZIndex, maskZIndex, maskContainsPanel,
+              maskBackground: getComputedStyle(mask).backgroundColor,
+              navigationCovered: document.elementFromPoint(20, 500)?.closest('.p-overlay-mask') === mask };
+          }, { panelSelector, maskSelector });
+          if (layers.maskBackground !== 'rgba(0, 0, 0, 0.32)' || layers.navigationZIndex !== 1000 ||
+            !Number.isFinite(layers.panelZIndex) || layers.maskZIndex <= layers.navigationZIndex ||
+            (!layers.maskContainsPanel && layers.panelZIndex <= layers.maskZIndex) || !layers.navigationCovered)
+            throw new Error(`${name}: modal mask or stacking differs from reference: ${JSON.stringify(layers)}`);
+          report.overlayMeasurements[name] = layers;
+        }
+        await openCheckboxSettings();
+        await overlayLayers('settingsDrawer', 'app-parts-list-settings .p-drawer', '.p-drawer-mask');
+        await additionalCapture('overlay-drawer-navigation-mask');
+        await page.mouse.click(20, 500);
+        await page.locator('app-parts-list-settings .p-drawer').waitFor({ state: 'hidden' });
+        await page.locator('.p-drawer-mask').waitFor({ state: 'detached' });
+        if (!page.url().endsWith('#/parts-lists/upgrade-reference')) throw new Error('Drawer mask click activated background navigation');
+        await page.locator('app-side-navigation a').first().click({ position: { x: 30, y: 16 } });
+        await page.waitForURL('**#/parts-lists');
+        report.interactionChecks.overlayDrawerMasksNavigationAndDismissRestoresClicks = true;
+
+        await openCheckboxSettings();
+        const nestedUnit = page.getByRole('combobox', { name: 'Price reduction unit', exact: true });
+        await nestedUnit.click();
+        await page.getByRole('listbox').waitFor();
+        await settle();
+        const nestedZIndex = await page.locator('.p-select-overlay').evaluate(element => Number(getComputedStyle(element.closest('.p-overlay') || element).zIndex));
+        const drawerZIndex = await page.locator('app-parts-list-settings .p-drawer').evaluate(element => Number(getComputedStyle(element).zIndex));
+        if (!Number.isFinite(nestedZIndex) || nestedZIndex <= drawerZIndex) throw new Error('Nested Select popup is below the modal Drawer');
+        report.overlayMeasurements.nestedSelect = { popupZIndex: nestedZIndex, drawerZIndex };
+        await nestedUnit.press('Escape');
+        await page.getByRole('listbox').waitFor({ state: 'hidden' });
+        if (!await page.locator('app-parts-list-settings .p-drawer').isVisible()) throw new Error('Nested popup Escape closed the Drawer');
+        await page.locator('app-parts-list-settings .p-drawer').press('Escape');
+        await page.locator('.p-drawer-mask').waitFor({ state: 'detached' });
+        report.interactionChecks.overlayNestedSelectAboveDrawerAndEscapeCleanup = true;
+
+        await open('parts-lists/upgrade-reference');
+        await component('app-transfer-warning', 'open', [[{ part: referenceWarningPart(), cart: undefined }], true]);
+        await page.locator('app-transfer-warning .p-dialog').waitFor();
+        await overlayLayers('warningDialog', 'app-transfer-warning .p-dialog', '.p-dialog-mask');
+        await additionalCapture('overlay-dialog-navigation-mask');
+        await page.mouse.click(20, 500);
+        if (!await page.locator('app-transfer-warning .p-dialog').isVisible() || !page.url().endsWith('#/parts-lists/upgrade-reference'))
+          throw new Error('Nondismissible dialog mask allowed a background action');
+        await page.locator('app-transfer-warning').getByRole('button', { name: /Cancel Transfer/ }).click();
+        await page.locator('app-transfer-warning .p-dialog-mask').waitFor({ state: 'detached' });
+        report.interactionChecks.overlayDialogMasksNavigationAndCancelRemovesMask = true;
       }
       await context.close();
     }

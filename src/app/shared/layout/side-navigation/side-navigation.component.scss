@@ -24,6 +24,9 @@
   }
 
   ::ng-deep.p-drawer {
+    // Keep permanent navigation above table headers (999) and below modal masks.
+    // Drawer 18 derives mask z-index from the first active Drawer, including this nonmodal one.
+    z-index: 1000 !important;
     background: #fff;
     color: rgba(0, 0, 0, 0.87);
     border: 0 none;

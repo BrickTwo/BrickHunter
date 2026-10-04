@@ -778,3 +778,39 @@ git commit -m "fix: restore table checkbox mouse and keyboard halos"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 21: Modal-Masken und Ebenenreihenfolge der Navigation
+
+Ausgangspunkt: Commit **`7d489ac`** (Tabellencheckbox-Halos). Angular **18.2.14** / PrimeNG **18.0.2**, Paketdateien und Lockfile bleiben unverändert.
+
+### Erfolgreich umgesetzt
+
+- Ursache der zu dunklen Dialog-Hintergründe geprüft: PrimeNG 18.0.2 injiziert mit Drawer globale Masken-Keyframes mit **0.4** Deckkraft außerhalb der Theme-Layer. Die generische Enter-/Leave-Animation wird auch von Dialogen verwendet; ihr abschließender Frame überdeckt den eigentlichen Material-Masken-Token **0.32**. Die bestehenden BrickHunter-Regeln und Keyframes für Drawer-Masken gelten deshalb gezielt auch für Dialog-Masken. Enter/Leave behalten transparente bzw. **rgba(0, 0, 0, 0.32)** Endpunkte.
+- Ursache der ungedimmten, anklickbaren Navigation bei geöffnetem Drawer geprüft: Drawer 18 berechnet den Masken-Z-Index anhand des ersten aktiven Drawers und berücksichtigt dabei die dauerhafte, nichtmodale Navigation. Die Navigation erhält daher ausschließlich in ihrem eigenen Komponentenstil den tatsächlichen Z-Index **1000**: über dem Tabellenkopf (**999**), unter den automatisch verwalteten Modal-Masken. Die begrenzte wichtige Regel überstimmt PrimeNGs automatisch geschriebenen Inline-Z-Index. PrimeNG-Komponenten, Masken und deren Listener werden weiterverwendet.
+- Drei zusätzliche Browserprüfungen erfassen Abdunklung und tatsächlichen Hit-Test über der linken Navigation; Drawer-Außenklick ohne Hintergrundnavigation mit anschließend wieder funktionierendem Navigationsklick; Select-Popup über dem Drawer mit isoliertem Escape und Masken-Cleanup; nicht wegklickbaren Transferdialog mit blockiertem Hintergrundklick und Abbrechen über den tatsächlichen Button.
+- Zwei zusätzliche Bilder sichern Settings-Drawer und Transferdialog mit abgedeckter Navigation. In den Hauptszenarien werden Dialogmasken und Z-Indizes zusätzlich gemessen. Der Vergleichsbericht prüft alle darin vorhandenen Modal-Masken auf **0.32** Deckkraft, volle Viewport-Abdeckung und Lage über der Navigation.
+- Referenzhelfer korrigiert: direkte Komponentenaufrufe erfolgen innerhalb der Angular-Zone. Der bisherige Aufruf außerhalb der Zone ließ beim gefüllten Transferdialog nach einer Screenshot-Aufnahme `show = false` ohne aktualisierten Dialog-Input stehen. Der isolierte Vergleich mit und ohne Screenshot sowie mit Aufruf innerhalb der Zone bestätigt die Ursache; die Abbruchprüfung klickt weiterhin den tatsächlichen Button, ohne nachträgliche erzwungene Aktualisierung. Dieser Helfer bleibt ausschließlich im lokalen Referenz-Einstieg.
+
+Quellengrundlage: ursprüngliche Theme-Datei, installierte PrimeNG-18.0.2-Drawer-/Dialog-/Base-Quellen und Material-Masken-Token. Keine Änderung an `node_modules`.
+
+### Validierung und verbleibende Arbeit
+- **46 Tests**, Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich, Exitcode 0. Der Referenzbuild wurde nach der Zone-Korrektur erneut erfolgreich erstellt. Produktionsumfang **2.34 MB**, Budgets unverändert; bestehende Budget-/CommonJS-Warnungen bleiben bestehen.
+- Reguläre Outputs geprüft: erforderliche Extension-/UI-Dateien vorhanden, Chrome-Manifest byteidentisch, standalone Extension-Einstiege ohne `webpackChunk`-Verweise und keine Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Zwei Abschlussläufe mit jeweils **39 Hauptszenarien plus 40 Zusatzbildern**, **43 erfolgreichen Browserprüfungen**, ohne aufgezeichnete Browser-/Konsolenfehler oder bekannte NG0100-Meldungen. Beide neuen Maskenbilder sind visuell geprüft. Pro Lauf sind zusätzlich alle **neun** gemessenen Masken der Hauptszenarien mit **0.32** Deckkraft, vollständiger Viewport-Abdeckung und Z-Index über **1000** geprüft.
+- Gemessene Ebenen im zusätzlichen Ablauf: Navigation **1000**, Settings-Maske **1101**, Drawer **1104**, verschachtelter Select **2106**, Warnungsmaske **1103**, Dialog **1104**. Hit-Tests bestätigen die Abdeckung der Navigation. Außenklick schließt den Settings-Drawer ohne Hintergrundnavigation; anschließend funktioniert die Navigation wieder. Escape schließt zunächst nur den Select und danach den Drawer. Der Transferdialog bleibt bei Außenklick offen und entfernt seine Maske beim Abbrechen.
+- Wiederholung **62/79 PNGs byteidentisch** (**37/39 Hauptbilder**, **25/40 Zusatzbilder**). Die übrigen 17 Bilder unterscheiden sich ausschließlich in jeweils vier Pixeln an der Tabs-Unterstreichung. Das neue Dialogbild ist byteidentisch; das neue Drawerbild hat diese vier Tabs-Pixel. D3D11-Renderer, GPU-Compositing und Rasterization sind vor/nach beiden Läufen identisch. Diese Rasterabweichungen werden nicht ausgefiltert.
+- Zur Originalreferenz jetzt **8/39 Hauptbilder byteidentisch**. Der gesamte Navigationsbereich **60 × 1000 px** ist in Settings-Drawer, Exportdialog und Transferwarnung jetzt pixelgleich, zuvor je **60.000** abweichende Pixel. Vollständiges Settings-Bild **30.373** statt **100.363**, Exportdialog **71.743** statt **141.733**, Transferwarnung **16.885** statt **907.500** abweichende Pixel. Diese Bilder sind weiterhin nicht vollständig pixelgleich.
+- Tabellencheckbox-Halo und Tabellenkopf bleiben in den dokumentierten Rechtecken pixelgleich. Vier Drawer-Häkchen-Eckpixel mit je einem Blaukanalwert Unterschied bleiben bestehen. Gegenüber Commit-Punkt 20 sind **30/39 Hauptbilder byteidentisch**; die übrigen sind im Bericht aufgelistet. Messwerte, Pixelvergleiche und Prüfsummen: [angular-18-overlay-check.json](angular-upgrade-reference/angular-18-overlay-check.json). Originalreferenzen bleiben unverändert.
+
+Noch offen vor Angular 19: vier Drawer-Häkchen-Eckpixel, übrige Icon-/Auswahlkomponenten-Zustände, weiterer Menü-/Overlay-/Dateiauswahl-Abgleich, vollständiger Button-Abgleich und übrige Referenzabweichungen. Die hier geprüften Modal-Masken, Hintergrundklicks, verschachtelten Select-/Escape-Abläufe und Cleanup sind erfolgreich. **Angular 19 beginnt erst nach der vollständigen UI-Abnahme auf Version 18.**
+
+Logs: `artefacts/angular-upgrade/angular-18/overlay-tests.log`, `overlay-visual-build.log`, `overlay-visual-zone-build.log`, `overlay-production.log`, `overlay-development.log`, `overlay-capture-final.log`, `overlay-capture-final-repeat.log` und `overlay-comparison.log`. Reguläre Outputs: `artefacts/angular-upgrade/angular-18/overlay-verified/{production,development}/`. Abschlussbilder: `artefacts/angular-upgrade/visual/angular-18-overlay-final/` und `angular-18-overlay-final-repeat/`. Verified-/Complete-Aufnahmen sind fehlgeschlagene Diagnose-Zwischenstände vor Korrektur des Referenzhelfers und der Button-/Select-Lokatoren; sie sind keine Abschlussnachweise.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src/assets/theme/brickhunter-base.scss src/app/shared/layout/side-navigation/side-navigation.component.scss src/testing/visual-main.ts scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: restore modal mask opacity and navigation stacking"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
