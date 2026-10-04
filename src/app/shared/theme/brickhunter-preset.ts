@@ -35,6 +35,31 @@ export const BrickHunterPreset = definePreset(Material, {
     },
   },
   components: {
+    select: {
+      root: { disabledBackground: '#ffffff', disabledColor: 'rgba(0, 0, 0, 0.87)', focusRing: { width: '0', shadow: 'none' } },
+      dropdown: { width: '2.357rem', color: 'rgba(0, 0, 0, 0.6)' },
+      overlay: {
+        borderColor: 'transparent',
+        shadow: '0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)',
+      },
+      list: { padding: '0', gap: '0' },
+      option: {
+        padding: '1rem',
+        borderRadius: '0',
+        color: 'rgba(0, 0, 0, 0.87)',
+        focusColor: 'rgba(0, 0, 0, 0.87)',
+        focusBackground: 'rgba(0, 0, 0, 0.04)',
+        selectedColor: '#0a3463',
+        selectedFocusColor: '#0a3463',
+        selectedBackground: 'rgba(10, 52, 99, 0.12)',
+        selectedFocusBackground: 'rgba(10, 52, 99, 0.12)',
+      },
+      css: options => `${Material.components.select.css(options)}
+        .p-select-overlay { border: 0; }
+        .p-select.p-disabled { opacity: 0.38; }
+        .p-select-dropdown svg { width: 0.875rem; height: 0.875rem; }
+      `,
+    },
     toast: {
       root: { width: '25rem', borderRadius: '4px', borderWidth: '0' },
       content: { padding: '1.5rem', gap: '0' },

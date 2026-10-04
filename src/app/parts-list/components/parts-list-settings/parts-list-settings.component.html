@@ -37,11 +37,14 @@
         </div>
         <div class="col-6">
           <p-select
+            bhSelectEscape
             formControlName="subtractBrickLinkPriceUnit"
             [options]="subtractUnits"
             appendTo="body"
             optionLabel="name"
-            inputStyle="width: 100%"></p-select>
+            dataKey="code"
+            ariaLabel="Price reduction unit"
+            [style]="{ width: '100%' }"></p-select>
         </div>
       </div>
       <button pButton pRipple type="submit" label="Save" style="width: 100%"></button>

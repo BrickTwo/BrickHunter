@@ -3,7 +3,7 @@ import { configureComponentTestBed } from 'src/testing/component-test-bed';
 import { referenceLists } from 'src/testing/upgrade-fixtures';
 import { PartsListSettingsComponent } from './parts-list-settings.component';
 
-describe('PartsListSettingsComponent Angular 18 checkbox labels', () => {
+describe('PartsListSettingsComponent Angular 18 form controls', () => {
   let fixture: ComponentFixture<PartsListSettingsComponent>;
 
   beforeEach(async () => {
@@ -28,6 +28,30 @@ describe('PartsListSettingsComponent Angular 18 checkbox labels', () => {
       label.click();
       fixture.detectChanges();
       expect(control.value).withContext(name).toBeFalse();
+    }
+  });
+
+  it('handles Escape in the open unit popup and passes it to the enclosing overlay when closed', async () => {
+    const combo: HTMLElement = fixture.nativeElement.querySelector('[role="combobox"]');
+    combo.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(combo.getAttribute('aria-expanded')).toBe('true');
+    const bubbledEscape = jasmine.createSpy('document Escape');
+    document.addEventListener('keydown', bubbledEscape);
+    try {
+      combo.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', bubbles: true, cancelable: true }));
+      fixture.detectChanges();
+      await fixture.whenStable();
+      expect(combo.getAttribute('aria-expanded')).toBe('false');
+      expect(fixture.componentInstance.display).toBeTrue();
+      expect(bubbledEscape).not.toHaveBeenCalled();
+      fixture.detectChanges();
+      combo.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', bubbles: true, cancelable: true }));
+      fixture.detectChanges();
+      expect(bubbledEscape).toHaveBeenCalledTimes(1);
+    } finally {
+      document.removeEventListener('keydown', bubbledEscape);
     }
   });
 });

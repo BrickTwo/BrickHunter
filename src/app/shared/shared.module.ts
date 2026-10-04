@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModelChangeDebouncedDirective } from './directoves/ng-model-change-debounced.directive';
 import { ChangelogDialogComponent } from './components/changelog-dialog/changelog-dialog.component';
 import { MigrationComponent } from './components/migration/migration.component';
+import { SelectEscapeDirective } from './directives/select-escape.directive';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MigrationComponent } from './components/migration/migration.component';
     ChangelogDialogComponent,
     LocaleComponent,
     NgModelChangeDebouncedDirective,
+    SelectEscapeDirective,
     MigrationComponent,
   ],
   imports: [PrimengModule, CommonModule, FontAwesomeModule, FormsModule],
@@ -32,6 +34,7 @@ import { MigrationComponent } from './components/migration/migration.component';
     ChangelogDialogComponent,
     LocaleComponent,
     NgModelChangeDebouncedDirective,
+    SelectEscapeDirective,
     MigrationComponent,
   ],
 })

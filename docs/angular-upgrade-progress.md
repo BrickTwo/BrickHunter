@@ -529,3 +529,42 @@ git commit -m "fix: restore table styling and compact price tags on PrimeNG 18"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 14: Select-Felder und verschachteltes Escape
+
+Ausgangspunkt: Commit **`67c9060`**, der Tabellen und Preis-Tags (Commit-Punkt 13) sichert. Paketversionen und Lockfile bleiben unverändert auf Angular **18.2.14** / PrimeNG **18.0.2**.
+
+### Erfolgreich umgesetzt
+
+- Select-Preset an die bisherigen Dropdown-Werte angeglichen: Pfeilbereich **2.357 rem / 37.703125 px**, SVG-Icon **14 × 14 px**, Popup ohne Rahmen mit bisherigem Schatten, Liste ohne zusätzlichen Randabstand oder Gap, Optionen mit **16 px Padding**, ohne einzelnen Radius. Auswahlfarbe **#0a3463** auf **rgba(10, 52, 99, 0.12)**; Fokus einer nicht ausgewählten Option **rgba(0, 0, 0, 0.04)**. Deaktivierte Felder behalten die weiße Fläche und **0.38** Deckkraft. Material-Styles für die Filled-Variante bleiben im Preset erhalten.
+- Land und Sprache verwenden `inputId`, explizite `ariaLabelledBy`-Verweise auf die vorhandenen Labels sowie `dataKey="code"`. Der Browser findet die Comboboxen unter **Country** und **Language**. Die alten `autoWidth`-Attribute sind entfernt. Die Preiseinheit verwendet einen stabilen Schlüssel, den zugänglichen Namen **Price reduction unit** und den öffentlichen Style-Input statt des überholten `inputStyle`-Attributs.
+- Die Browserprüfung hat einen echten Escape-Fehler sichtbar gemacht: PrimeNG 18.0.2 schließt das Select-Popup, lässt Escape aber zum umgebenden Drawer weiterlaufen. Die begrenzte **`bhSelectEscape`-Direktive** an den drei Feldern erfasst den offenen Zustand in der Capture-Phase, ruft `Select.hide(true)` auf und hält dieses Escape-Ereignis im Popup. Bei geschlossenem Popup greift sie nicht ein. Der Listener wird beim Zerstören der Direktive entfernt. Verzögerte Popup-Ereignisse reichen für diese schnelle Tastaturfolge nicht aus; die Umsetzung verwendet deshalb den offenen Zustand des öffentlichen Select-Typs unmittelbar beim Tastendruck.
+- Ein neuer Regressionstest prüft echtes Öffnen des Selects, Popup-Schließen ohne Drawer-Schließen und Weitergabe von Escape bei geschlossenem Popup. Die vollständige Anwendung prüft zusätzlich, dass Escape anschließend den Drawer weiterhin schließen kann. Insgesamt **45 Tests** erfolgreich.
+- Fünf Browserprüfungen ergänzen die bisherigen 15: Preiseinheit per Maus wählen, speichern und wieder öffnen; per Tastatur wählen und Escape ohne Wertänderung; deaktiviertes Select öffnet auch beim direkten Klick kein Popup; verschachteltes Popup-/Drawer-Escape; Schweiz per Maus und Französisch per Tastatur wählen und beide Codes speichern. Keyboard-Prüfungen warten auf die Popup-Initialisierung, damit die automatische anfängliche Fokussierung den nächsten Tastendruck nicht überholt.
+- Sechs neue Zusatzbilder sichern Einheiten-Popup, gespeicherte Prozent-Auswahl, deaktiviertes Feld, Locale-Dialog, Länder-Popup und fokussierte Sprachoption. Messungen der Select-Roots, Labels, Pfeilbereiche, Overlays und Optionen stehen separat im Browserbericht. Die ursprünglichen 39 Hauptszenarien bleiben erhalten.
+
+API-Grundlage: [PrimeNG 18 Select](https://v18.primeng.org/select). Typdefinition, Escape-Handler, DOM und Theme-Tokens wurden gegen die installierten 18.0.2-Quellen geprüft; bisherige Werte gegen die unveränderte alte Theme-Datei.
+
+### Validierung und verbleibende Arbeit
+
+- **45 Tests erfolgreich** mit Headless Edge, Exitcode 0; Anwendungstypprüfung erfolgreich. Die abschließende Disabled-CSS-Korrektur ist zusätzlich durch die abschließenden Browserläufe und Builds geprüft.
+- Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang **2.33 MB**, unter der unveränderten 3-MB-Fehlergrenze. Bisherige Budget-/CommonJS-Warnungen bestehen fort.
+- Reguläre Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden; Chrome-Manifest byteidentisch zur Quelle; standalone Extension-Einstiege ohne `webpackChunk`-Verweise; keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Abschlussläufe: jeweils **39 Hauptszenarien plus 16 Zusatzbilder**, **20 erfolgreiche Browser-Interaktionsprüfungen**, keine aufgezeichneten Konsolen-/Browserfehler oder bekannten NG0100-Meldungen in den kontrollierten Szenarien. Einheiten-Popup und Tastaturfokus der Sprachoption wurden zusätzlich visuell geprüft. Gemessenes Einheiten-Popup **136 × 102 px**, zwei **51-px-Optionen**; Sprach-Popup **252 × 153 px**, drei **51-px-Optionen**.
+- Der bereits seit der Angular-18-Grundmigration sichtbare Einheitenwert **EUR** bleibt erhalten. Die ursprüngliche Angular-17-Aufnahme zeigt an dieser Stelle ein leeres, entsprechend niedrigeres Feld. Der aktuelle Formwert wird nicht zur Herstellung einer identischen Aufnahme ausgeblendet; diese bestehende Referenzabweichung bleibt für die vollständige UI-Abnahme ausdrücklich dokumentiert.
+- Prüfsummen, Wiederholungsvergleich, Renderer, Select-Messwerte und Output-/Interaktionsprüfungen: [angular-18-select-check.json](angular-upgrade-reference/angular-18-select-check.json). Die ursprünglichen Referenzbilder bleiben unverändert.
+- Im Abschlussvergleich sind **46/55 PNGs byteidentisch** (**37/39 Hauptszenarien**, **9/16 Zusatzbilder**), einschließlich aller sechs neuen Select-Zusatzbilder. Neun andere Bilder unterscheiden sich jeweils ausschließlich in **vier Pixeln** am rechten Ende der Tabs-Unterstreichung; genaue Grenzen stehen im Bericht. Die protokollierte D3D11-Pipeline ist vor/nach beiden Läufen identisch. Diese Restabweichung wird nicht ausgeblendet.
+- Zur ursprünglichen Angular-17-Referenz sind nun die **vier Settings-Seitenaufnahmen byteidentisch**, insgesamt **4/39 Hauptbilder**. Gegen Commit-Punkt 13 bleiben **24/39 Hauptbilder unverändert**. Teiletabellenhöhe und -zeilen bleiben erhalten; die Desktop-Teiletabelle hat weiterhin **3.812 abweichende Pixel** zur ursprünglichen Referenz. Buttonhöhe **41.84375 px**, Karten **196.390625 × 320 px / 8 px Padding**, Navigation **60 px**, Transferwarndialog **720 × 755.84375 px** und der pixelgleiche Erfolgstoast-Bereich bleiben erhalten. Das ist weiterhin keine vollständige UI-Abnahme.
+
+Noch offen: übrige Icon-/Button-/Toggle-/Hover-/Fokus-/Disabled-Details, vollständige Menü-/Overlay-/Dateiauswahl-Abnahme sowie übrige Referenzabweichungen einschließlich gelegentlicher Rasterunterschiede an der Tabs-Unterstreichung. **Angular 19 bleibt bis zur vollständigen UI-Abnahme auf Version 18 zurückgestellt.**
+
+Logs: `artefacts/angular-upgrade/angular-18/select-tests-final.log`, `select-build-verified-final.log`, `select-production-verified.log`, `select-development-verified.log`, `select-capture-verified.log` und `select-capture-verified-repeat.log`. Outputs: `artefacts/angular-upgrade/angular-18/select-verified/{production,development}/`. Abschließende Bilder: `artefacts/angular-upgrade/visual/angular-18-select-verified/` und `angular-18-select-verified-repeat/`. Andere Select-Aufnahmen sind Diagnose-Zwischenstände, keine Referenzbasis.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: align Select controls and isolate popup Escape handling"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

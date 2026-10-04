@@ -5,15 +5,17 @@
   [closable]="false"
   [style]="{ width: '300px' }">
   <div class="field">
-    <label for="country" class="block">Country</label>
+    <label id="country-label" for="country" class="block">Country</label>
     <p-select
-      id="country"
+      bhSelectEscape
+      inputId="country"
+      ariaLabelledBy="country-label"
       [options]="countries"
       [(ngModel)]="selectedCountry"
       optionLabel="text"
+      dataKey="code"
       placeholder="Select a Country"
       appendTo="body"
-      autoWidth="false"
       [style]="{ width: '100%' }"
       (onChange)="onCountrySelect()">
       <ng-template pTemplate="selectedItem">
@@ -37,15 +39,17 @@
     </p-select>
   </div>
   <div class="field">
-    <label for="language" class="block">Language</label>
+    <label id="language-label" for="language" class="block">Language</label>
     <p-select
-      id="language"
+      bhSelectEscape
+      inputId="language"
+      ariaLabelledBy="language-label"
       [options]="selectedCountry.languages"
       [(ngModel)]="selectedLanguage"
       optionLabel="text"
+      dataKey="code"
       placeholder="Select a Language"
       appendTo="body"
-      autoWidth="false"
       [style]="{ width: '100%' }"
       (onChange)="onLanguageSelect()">
       <ng-template pTemplate="selectedItem">

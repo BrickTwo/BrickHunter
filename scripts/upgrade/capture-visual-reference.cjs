@@ -113,7 +113,8 @@ async function main() {
             '.p-toast-message-text', '.p-toast-summary', '.p-toast-detail', '.p-toast-close-button',
             '.p-tablist', '.p-tablist-active-bar', '.p-sortable-column-icon',
             '.p-datatable-tbody tr:nth-child(2)', 'app-pab-price .p-tag',
-            'app-pab-price .p-tag-info', 'app-pab-price .p-tag-danger'];
+            'app-pab-price .p-tag-info', 'app-pab-price .p-tag-danger',
+            '.p-select', '.p-select-label', '.p-select-dropdown', '.p-select-overlay', '.p-select-option'];
           const values = {};
           for (const selector of selectors) {
             const element = document.querySelector(selector);
@@ -283,6 +284,21 @@ async function main() {
           const file = `1440x1000-${name}.png`;
           await page.screenshot({ path: path.join(output, file), animations: 'disabled' });
           report.additionalScreenshots.push(file);
+          if (name.startsWith('select-')) {
+            report.selectMeasurements ||= {};
+            report.selectMeasurements[file] = await page.evaluate(() => {
+              const selectors = ['.p-select', '.p-select-label', '.p-select-dropdown', '.p-select-overlay',
+                '.p-select-list', '.p-select-option', '.p-select-option-selected', '.p-select-option.p-focus'];
+              return Object.fromEntries(selectors.map(selector => {
+                const element = document.querySelector(selector);
+                if (!element) return [selector, null];
+                const rect = element.getBoundingClientRect(), css = getComputedStyle(element);
+                return [selector, { width: rect.width, height: rect.height, x: rect.x, y: rect.y,
+                  padding: css.padding, color: css.color, backgroundColor: css.backgroundColor,
+                  borderRadius: css.borderRadius, boxShadow: css.boxShadow, opacity: css.opacity }];
+              }));
+            });
+          }
         }
         const quantityHeader = page.locator('app-parts-table th[pSortableColumn="qty"]');
         await quantityHeader.press('Enter');
@@ -321,6 +337,76 @@ async function main() {
         });
         await additionalCapture('table-tab-keyboard');
         report.interactionChecks.tableTabKeyboardFilter = true;
+        await open('parts-lists/upgrade-reference');
+        await page.getByRole('button', { name: 'Settings', exact: true }).click();
+        const unit = page.getByRole('combobox', { name: 'Price reduction unit', exact: true });
+        await unit.click();
+        await page.getByRole('listbox').waitFor();
+        await additionalCapture('select-unit-popup');
+        await page.getByRole('option', { name: '%', exact: true }).click();
+        await page.locator('app-parts-list-settings').getByRole('button', { name: 'Save', exact: true }).click();
+        await page.getByRole('button', { name: 'Settings', exact: true }).click();
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-list-settings')).form.value.subtractBrickLinkPriceUnit.code === 'percentage');
+        if (await unit.textContent() !== '%') throw new Error('Select did not restore the saved unit label');
+        await additionalCapture('select-unit-selected');
+        report.interactionChecks.selectUnitMouseSaveAndReopen = true;
+        await unit.press('ArrowDown');
+        await page.getByRole('listbox').waitFor();
+        await settle();
+        await unit.press('Home');
+        await unit.press('Enter');
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-list-settings')).form.value.subtractBrickLinkPriceUnit.code === 'absolute');
+        await unit.press('ArrowDown');
+        await page.getByRole('listbox').waitFor();
+        await settle();
+        await unit.press('ArrowDown');
+        await unit.press('Escape');
+        if (await unit.getAttribute('aria-expanded') !== 'false' ||
+          !await page.evaluate(() => window.ng.getComponent(document.querySelector('app-parts-list-settings')).form.value.subtractBrickLinkPriceUnit.code === 'absolute'))
+          throw new Error('Escape changed the selected unit or left the popup open');
+        report.interactionChecks.selectUnitKeyboardAndEscape = true;
+        await page.evaluate(() => {
+          const settings = window.ng.getComponent(document.querySelector('app-parts-list-settings'));
+          settings.form.controls.subtractBrickLinkPriceUnit.disable();
+          window.ng.applyChanges(settings);
+        });
+        if (await unit.getAttribute('aria-disabled') !== 'true') throw new Error('Disabled Select is not exposed as disabled');
+        await page.locator('app-parts-list-settings .p-select').click({ force: true });
+        if (await page.getByRole('listbox').count() !== 0) throw new Error('Disabled Select opened its popup');
+        await additionalCapture('select-unit-disabled');
+        report.interactionChecks.selectDisabledBlocksPopup = true;
+        await page.keyboard.press('Escape');
+        await page.waitForFunction(() => !window.ng.getComponent(document.querySelector('app-parts-list-settings')).display);
+        report.interactionChecks.selectNestedPopupAndDrawerEscape = true;
+        await open('parts-lists');
+        await page.evaluate(() => {
+          const locale = window.ng.getComponent(document.querySelector('app-locale'));
+          locale.visible = true;
+          window.ng.applyChanges(locale);
+        });
+        await additionalCapture('select-locale-dialog');
+        const country = page.getByRole('combobox', { name: 'Country', exact: true });
+        const language = page.getByRole('combobox', { name: 'Language', exact: true });
+        await country.click();
+        await page.getByRole('listbox').waitFor();
+        await additionalCapture('select-country-popup');
+        await page.getByRole('option', { name: 'Switzerland', exact: true }).click();
+        await settle();
+        await language.press('ArrowDown');
+        await page.getByRole('listbox').waitFor();
+        await settle();
+        await language.press('Home');
+        await language.press('ArrowDown');
+        await additionalCapture('select-language-popup');
+        await language.press('Enter');
+        await page.waitForFunction(() => {
+          const locale = window.ng.getComponent(document.querySelector('app-locale'));
+          return locale.selectedCountry.code === 'ch' && locale.selectedLanguage.code === 'fr';
+        });
+        await page.getByRole('dialog').getByRole('button', { name: 'Save', exact: true }).click();
+        if (!await page.evaluate(() => localStorage.getItem('country') === 'ch' && localStorage.getItem('language') === 'fr'))
+          throw new Error('Locale Select values were not persisted');
+        report.interactionChecks.selectLocaleLabelsMouseKeyboardAndSave = true;
       }
       await context.close();
     }
