@@ -112,7 +112,8 @@ async function main() {
             '.p-toast', '.p-toast-message', '.p-toast-message-content', '.p-toast-message-icon',
             '.p-toast-message-text', '.p-toast-summary', '.p-toast-detail', '.p-toast-close-button',
             '.p-tablist', '.p-tablist-active-bar', '.p-sortable-column-icon',
-            '.p-datatable-thead th',
+            '.p-datatable-thead th', '.p-drawer-header .p-button', '.p-drawer-header svg',
+            '.p-dialog-header .p-button', '.p-dialog-header svg',
             '.p-datatable-tbody tr:nth-child(2)', 'app-pab-price .p-tag',
             'app-pab-price .p-tag-info', 'app-pab-price .p-tag-danger',
             '.p-select', '.p-select-label', '.p-select-dropdown', '.p-select-overlay', '.p-select-option'];
@@ -917,6 +918,72 @@ async function main() {
         await page.locator('app-transfer-warning').getByRole('button', { name: /Cancel Transfer/ }).click();
         await page.locator('app-transfer-warning .p-dialog-mask').waitFor({ state: 'detached' });
         report.interactionChecks.overlayDialogMasksNavigationAndCancelRemovesMask = true;
+
+        report.closeButtonMeasurements = {};
+        async function closeButtonStyle(button, name, background, focused = false) {
+          await page.waitForTimeout(250);
+          const actual = await button.evaluate(element => {
+            const css = getComputedStyle(element), rect = element.getBoundingClientRect();
+            const icon = element.querySelector('svg').getBoundingClientRect();
+            return { width: rect.width, height: rect.height, iconWidth: icon.width, iconHeight: icon.height,
+              color: css.color, background: css.backgroundColor, outlineWidth: css.outlineWidth, shadow: css.boxShadow };
+          });
+          report.closeButtonMeasurements[name] = actual;
+          if (actual.width !== 40 || actual.height !== 40 || actual.iconWidth !== 14 || actual.iconHeight !== 14 ||
+            actual.color !== 'rgba(0, 0, 0, 0.6)' || actual.background !== background || actual.shadow !== 'none' ||
+            (focused && actual.outlineWidth !== '0px'))
+            throw new Error(`${name}: close button differs from legacy theme: ${JSON.stringify(actual)}`);
+        }
+        await openCheckboxSettings();
+        const drawerClose = page.locator('app-parts-list-settings .p-drawer-header button');
+        await page.mouse.move(600, 60);
+        await closeButtonStyle(drawerClose, 'drawer-rest', 'rgba(0, 0, 0, 0)');
+        await drawerClose.hover();
+        await closeButtonStyle(drawerClose, 'drawer-hover', 'rgba(0, 0, 0, 0.04)');
+        await additionalCapture('close-drawer-hover');
+        await drawerClose.focus();
+        await closeButtonStyle(drawerClose, 'drawer-hover-focus', 'rgba(0, 0, 0, 0.04)', true);
+        await page.mouse.move(600, 60);
+        await closeButtonStyle(drawerClose, 'drawer-focus', 'rgba(0, 0, 0, 0)', true);
+        await additionalCapture('close-drawer-focus');
+        await page.keyboard.down('Space');
+        await closeButtonStyle(drawerClose, 'drawer-active', 'rgba(0, 0, 0, 0)', true);
+        await page.keyboard.up('Space');
+        await page.locator('.p-drawer-mask').waitFor({ state: 'detached' });
+        await openCheckboxSettings();
+        await drawerClose.click();
+        await page.locator('.p-drawer-mask').waitFor({ state: 'detached' });
+        report.interactionChecks.closeDrawerMouseSpaceStatesAndMaskCleanup = true;
+
+        async function openChangelog() {
+          await open('parts-lists');
+          await page.evaluate(() => window.brickHunterReference.runInAngular(() => {
+            const changelog = window.ng.getComponent(document.querySelector('app-changelog-dialog'));
+            changelog.visible = true;
+            window.ng.applyChanges(changelog);
+          }));
+          await page.locator('app-changelog-dialog .p-dialog').waitFor();
+        }
+        await openChangelog();
+        const dialogClose = page.locator('app-changelog-dialog .p-dialog-header button');
+        await page.mouse.move(600, 60);
+        await closeButtonStyle(dialogClose, 'dialog-rest', 'rgba(0, 0, 0, 0)');
+        await dialogClose.hover();
+        await closeButtonStyle(dialogClose, 'dialog-hover', 'rgba(0, 0, 0, 0.04)');
+        await additionalCapture('close-dialog-hover');
+        await dialogClose.focus();
+        await closeButtonStyle(dialogClose, 'dialog-hover-focus', 'rgba(0, 0, 0, 0.04)', true);
+        await page.mouse.move(600, 60);
+        await closeButtonStyle(dialogClose, 'dialog-focus', 'rgba(0, 0, 0, 0)', true);
+        await additionalCapture('close-dialog-focus');
+        await page.keyboard.down('Space');
+        await closeButtonStyle(dialogClose, 'dialog-active', 'rgba(0, 0, 0, 0)', true);
+        await page.keyboard.up('Space');
+        await page.locator('app-changelog-dialog .p-dialog-mask').waitFor({ state: 'detached' });
+        await openChangelog();
+        await dialogClose.click();
+        await page.locator('app-changelog-dialog .p-dialog-mask').waitFor({ state: 'detached' });
+        report.interactionChecks.closeDialogMouseSpaceStatesAndMaskCleanup = true;
       }
       await context.close();
     }

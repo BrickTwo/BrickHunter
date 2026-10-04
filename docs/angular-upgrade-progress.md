@@ -847,3 +847,36 @@ git commit -m "fix: restore inline button alignment and list header geometry"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 23: Schließen-Icons und Zustände in Drawer-/Dialog-Headern
+
+Ausgangspunkt: Commit **`533879c`** (Inline-Button-Ausrichtung). Angular **18.2.14** / PrimeNG **18.0.2**, Paketdateien und Lockfile bleiben unverändert.
+
+### Erfolgreich umgesetzt
+
+- Schließen-Buttons mit der erhaltenen Theme-Datei abgeglichen: bisher **40 × 40 px**, Icon **14 × 14 px**, Farbe **rgba(0, 0, 0, 0.6)** und Hover-Hintergrund **rgba(0, 0, 0, 0.04)**. PrimeNG 18 verwendet öffentliche Button-Komponenten mit Secondary/Text-Zuständen und einem **16 × 16-px-Icon**. Gemessener Hover war **rgb(248, 250, 252)** mit **rgb(71, 85, 105)** Text; Tastaturfokus/Active übernahmen **rgba(10, 52, 99, 0.12/0.16)** aus den generischen Button-Regeln.
+- Innerhalb der Drawer-/Dialog-Header-Regeln die ursprünglichen Icon-Abmessungen und grauen Farben wiederhergestellt. Hover bleibt schwarz mit **0.04** Deckkraft, Tastaturfokus/Active ohne Hover bleiben transparent und ohne Outline/Shadow. Gleichzeitiger Hover und Fokus behält den Hover-Hintergrund, wie im alten Theme. Normale Formular- und Footer-Buttons verwenden weiter die vorhandenen Button-Regeln.
+- Zwei zusätzliche Browserprüfungen erfassen Settings-Drawer und Changelog-Dialog: Rest, Hover, gleichzeitiger Hover/Fokus, Fokus ohne Hover und gedrückte Space-Taste. Nach Space sowie nach echtem Mausklick muss die jeweilige Maske entfernt sein. Vier neue Zusatzbilder sichern Hover und Fokus; Hauptszenarien messen zusätzlich Header-Buttons und SVGs.
+
+### Validierung und verbleibende Arbeit
+
+- **46 Tests**, Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich, Exitcode 0. Produktionsumfang **2.34 MB**, Budgets unverändert; bestehende Budget-/CommonJS-Warnungen bleiben bestehen.
+- Reguläre Outputs geprüft: erforderliche UI-/Extension-Dateien vorhanden, Chrome-Manifest byteidentisch, standalone Extension-Einstiege ohne `webpackChunk`-Verweise und keine Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Zwei Abschlussläufe mit jeweils **39 Hauptszenarien plus 45 Zusatzbildern**, **46 erfolgreichen Browserprüfungen**, ohne aufgezeichnete Browser-/Konsolenfehler oder bekannte NG0100-Meldungen. Alle vier neuen Zustandsbilder sind visuell geprüft und im Wiederholungspaar byteidentisch. Beide Schließen-Buttons bleiben in allen geprüften Zuständen **40 × 40 px**, Icons **14 × 14 px**. Maus- und Space-Abbruch entfernen jeweils die Maske.
+- Wiederholung **73/84 PNGs byteidentisch** (**35/39 Hauptbilder**, **38/45 Zusatzbilder**). Elf andere Bilder unterscheiden sich ausschließlich in jeweils vier Pixeln an der Tabs-Unterstreichung. D3D11-Renderer, GPU-Compositing und Rasterization sind vor/nach beiden Läufen identisch; die vier Pixel werden nicht ausgefiltert.
+- Schließen-Bereich **40 × 40 px bei x = 1384, y = 16** in Desktop-Import, Settings-Drawer und Export jetzt pixelgleich zur Originalreferenz, zuvor jeweils **54** abweichende Pixel. Vollständiges Settings-Bild **30.319** statt **30.373**, Export **71.689** statt **71.743** abweichende Pixel; die übrigen Unterschiede bleiben offen.
+- Listenübersicht bleibt in beiden Läufen auf allen vier Referenzgrößen vollständig pixelgleich. Tabellenkopf, Checkbox-Halo und Modal-Navigation bleiben in den dokumentierten Rechtecken pixelgleich. Vier Drawer-Häkchen-Eckpixel mit je einem Blaukanalwert Unterschied bleiben bestehen.
+- Zur Originalreferenz im ersten Abschlusslauf **11/39 Hauptbilder byteidentisch**; gegenüber Commit-Punkt 22 **28/39 Hauptbilder unverändert**. Die Änderung von zuvor 12 auf 11 Referenzidentitäten entsteht aus den bereits bekannten Tabs-Pixeln: die 2560-/3200-Teiletabelle hat nun jeweils vier Unterschiede, die 3200-Leertabelle ist jetzt pixelgleich. Diese Wechsel sind zusätzlich unter `referenceIdentityChanges` dokumentiert. Messwerte, Vergleiche und Prüfsummen: [angular-18-close-buttons-check.json](angular-upgrade-reference/angular-18-close-buttons-check.json). Originalbilder bleiben unverändert.
+
+Noch offen vor Angular 19: vier Drawer-Häkchen-Eckpixel, weitere Icon-/Auswahlkomponenten-Zustände, weiterer Menü-/Overlay-/Dateiauswahl-Abgleich, übriger Button-Abgleich und verbleibende Referenzabweichungen. Schließen-Buttons der geprüften Header sind in Größe, Farben und Bedienung abgeglichen. **Angular 19 beginnt erst nach der vollständigen UI-Abnahme auf Version 18.**
+
+Logs: `artefacts/angular-upgrade/angular-18/close-buttons-tests.log`, `close-buttons-visual-build.log`, `close-buttons-production.log`, `close-buttons-development.log`, `close-buttons-capture.log`, `close-buttons-capture-repeat.log` und `close-buttons-comparison.log`. Reguläre Outputs: `artefacts/angular-upgrade/angular-18/close-buttons-verified/{production,development}/`. Abschlussbilder: `artefacts/angular-upgrade/visual/angular-18-close-buttons-final/` und `angular-18-close-buttons-final-repeat/`.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src/app/shared/theme/brickhunter-preset.ts scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: restore modal close icon size and interaction states"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

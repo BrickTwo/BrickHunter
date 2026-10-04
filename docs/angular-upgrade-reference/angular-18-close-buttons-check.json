@@ -1,0 +1,3388 @@
+{
+  "closeHeaderReferenceRegions": [
+    {
+      "file": "1440x1000-import-dialog.png",
+      "rectangle": {
+        "x": 1384,
+        "y": 16,
+        "width": 40,
+        "height": 40
+      },
+      "previous": {
+        "differentPixels": 54,
+        "bounds": [
+          1397,
+          29,
+          1410,
+          42
+        ]
+      },
+      "current": {
+        "differentPixels": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "rectangle": {
+        "x": 1384,
+        "y": 16,
+        "width": 40,
+        "height": 40
+      },
+      "previous": {
+        "differentPixels": 54,
+        "bounds": [
+          1397,
+          29,
+          1410,
+          42
+        ]
+      },
+      "current": {
+        "differentPixels": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "rectangle": {
+        "x": 1384,
+        "y": 16,
+        "width": 40,
+        "height": 40
+      },
+      "previous": {
+        "differentPixels": 54,
+        "bounds": [
+          1397,
+          29,
+          1410,
+          42
+        ]
+      },
+      "current": {
+        "differentPixels": 0,
+        "bounds": null
+      }
+    }
+  ],
+  "listReferenceComparisons": [
+    {
+      "file": "1440x1000-lists.png",
+      "previous": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "current": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "header": {
+        "width": 1322,
+        "height": 56,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 182.65625,
+        "lineHeight": "normal",
+        "zIndex": "auto",
+        "verticalAlign": "middle"
+      },
+      "row": {
+        "width": 1322,
+        "height": 46.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 238.65625,
+        "lineHeight": "normal",
+        "zIndex": "auto",
+        "verticalAlign": "middle"
+      }
+    },
+    {
+      "file": "390x844-lists.png",
+      "previous": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "current": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "header": {
+        "width": 800,
+        "height": 56,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 182.65625,
+        "lineHeight": "normal",
+        "zIndex": "auto",
+        "verticalAlign": "middle"
+      },
+      "row": {
+        "width": 800,
+        "height": 46.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 238.65625,
+        "lineHeight": "normal",
+        "zIndex": "auto",
+        "verticalAlign": "middle"
+      }
+    },
+    {
+      "file": "2560x1440-lists.png",
+      "previous": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "current": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "header": {
+        "width": 2442,
+        "height": 56,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 182.65625,
+        "lineHeight": "normal",
+        "zIndex": "auto",
+        "verticalAlign": "middle"
+      },
+      "row": {
+        "width": 2442,
+        "height": 46.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 238.65625,
+        "lineHeight": "normal",
+        "zIndex": "auto",
+        "verticalAlign": "middle"
+      }
+    },
+    {
+      "file": "3200x1440-lists.png",
+      "previous": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "current": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "header": {
+        "width": 3082,
+        "height": 56,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 182.65625,
+        "lineHeight": "normal",
+        "zIndex": "auto",
+        "verticalAlign": "middle"
+      },
+      "row": {
+        "width": 3082,
+        "height": 46.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 238.65625,
+        "lineHeight": "normal",
+        "zIndex": "auto",
+        "verticalAlign": "middle"
+      }
+    }
+  ],
+  "stage": "Angular 18 Drawer and Dialog close icon size and interaction states; full visual acceptance pending",
+  "startingCommit": "533879c",
+  "angular": "18.2.14",
+  "primeng": "18.0.2",
+  "browser": "154.0.4258.53",
+  "screenshots": 39,
+  "byteIdentical": 11,
+  "images": [
+    {
+      "file": "1440x1000-lists.png",
+      "baselineSha256": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca",
+      "currentSha256": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca"
+    },
+    {
+      "file": "1440x1000-import-dialog.png",
+      "baselineSha256": "df949b788d1dcb125f1018505b4565f1c5d97252373bc73ccd970a0f777d4548",
+      "currentSha256": "a6481455f4b9dbf63b40e3ad4b2d4e0b0624ae8823176a943fcd97886f7048ef"
+    },
+    {
+      "file": "1440x1000-table.png",
+      "baselineSha256": "1fba567d71c355a096753665ae526e57d60f8614c2ae5f8864cfa8da629f13fe",
+      "currentSha256": "a7f71a31f6e2f610eff1caadbd5e8ebef2e55b6c829ac1f9ea1515078056cc42"
+    },
+    {
+      "file": "1440x1000-success-message.png",
+      "baselineSha256": "9a55cc2deaa9fe8432bd46b0fb43d6fc451e788f437c0355a310ab87f9aa636a",
+      "currentSha256": "39ffdd314ae0532b6766abd43b1b3e2c2c938ceca54bf686e3e3f34e3e8ea298"
+    },
+    {
+      "file": "1440x1000-table-loading-disabled.png",
+      "baselineSha256": "fdd38268cc9877af9156b9c12d7cb459a4f4fbfb1eb97e666973288a590a3550",
+      "currentSha256": "4d8f279f2368d49559979ee5a069b7da109778e04d07100a78dcde5e3cb5dbb3"
+    },
+    {
+      "file": "1440x1000-table-inline-edit.png",
+      "baselineSha256": "602983fe139a13fffa811047dc7e2665eaa496f2eaf50c4fd60aec3b5ed4973b",
+      "currentSha256": "5985a541d31b731f19ee797bfe023c1f2c9110ac794896750586d214e759070e"
+    },
+    {
+      "file": "1440x1000-table-selection.png",
+      "baselineSha256": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325",
+      "currentSha256": "9ba64e752684e9506fa3103aef3eeac28620fb8d636b571b1abbede2977d98ee"
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "baselineSha256": "6c0ce8b12894a6cd5f552d0f7688d4f384fb289f4fb29780d681107ff6bc8445",
+      "currentSha256": "e9dfa9d14093488ada6b732c19670214ce3d23c9d0dd06d7fd8e2a7f6a87966b"
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "baselineSha256": "de7a5fef1ee65d8f3a3b1b2b3f4df492eff597aac04463476a83bcf58d5742a2",
+      "currentSha256": "04d41b9071bd8ecf6d94586ab32b84ff152233c4a741c10112163409847b9345"
+    },
+    {
+      "file": "1440x1000-transfer-progress.png",
+      "baselineSha256": "a0327d8420760b8e84484ddffdeca8a3dba07acb2764ef8bc7e6596bd0d56421",
+      "currentSha256": "0f9e68f9b3e0a6741aba444eff116700bd1d408840da6d54a82f7f87f10a701a"
+    },
+    {
+      "file": "1440x1000-transfer-warning.png",
+      "baselineSha256": "31731f05874f484460240abcf45532c5bcb641866ca295e31f85ed44965f9c23",
+      "currentSha256": "26d057e3c604b081c816c535328aa5353e9fc9c57f5406db2777c11e01f959ba"
+    },
+    {
+      "file": "1440x1000-delete-confirmation.png",
+      "baselineSha256": "4dc06aac4c8941689cdea61fd5be926d43bb6b38b171318beb0814522b29b779",
+      "currentSha256": "c0c69c1978393cd34da3dcf520106ff1a063d65f23860c2ab343a2eb9e55a1bf"
+    },
+    {
+      "file": "1440x1000-empty-table.png",
+      "baselineSha256": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e",
+      "currentSha256": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e"
+    },
+    {
+      "file": "1440x1000-settings.png",
+      "baselineSha256": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726",
+      "currentSha256": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726"
+    },
+    {
+      "file": "1440x1000-browse.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "1f56a3ff493c93012be60666cdc853593f4122c84ebf073596063874e1f61ef2"
+    },
+    {
+      "file": "1440x1000-filter-hover.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "1f56a3ff493c93012be60666cdc853593f4122c84ebf073596063874e1f61ef2"
+    },
+    {
+      "file": "1440x1000-filter-focus.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "1f56a3ff493c93012be60666cdc853593f4122c84ebf073596063874e1f61ef2"
+    },
+    {
+      "file": "1440x1000-color-menu.png",
+      "baselineSha256": "2a6fd447f668e8fe973f2125fa5c710f1ee5c4b670705de9ca86e4d7cef0adc5",
+      "currentSha256": "5c018c9ccb837ae1d7be7f2196b2b16421e1fca20b463a57bc06b6be17baba08"
+    },
+    {
+      "file": "1440x1000-empty-search.png",
+      "baselineSha256": "19385cb4107fa2141de7037d79eba06de66355f410f08061981c08b2e97fd354",
+      "currentSha256": "45075bd20e78bf490d9aa40750b231a999d6b2806df07cf5676b6c13cf73966c"
+    },
+    {
+      "file": "1440x1000-large-search.png",
+      "baselineSha256": "915eabe4d98c5a4a2c44c65684ce487d735e25d73e9906037fd0c4a4a5bf63eb",
+      "currentSha256": "d64ff9678fc426a8943d49ff9a8758a8d39b15c68ac260571bdafac0020dd787"
+    },
+    {
+      "file": "1440x1000-large-search-scrolled.png",
+      "baselineSha256": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb",
+      "currentSha256": "9cd73dd8c69e790d07d426c348747e6745032b52bd2c4c65575d29176daf4337"
+    },
+    {
+      "file": "390x844-lists.png",
+      "baselineSha256": "4f52f34d250550ee1a32c37c8aa003f39022768ab811de84fc9e2ef1678fc4c6",
+      "currentSha256": "4f52f34d250550ee1a32c37c8aa003f39022768ab811de84fc9e2ef1678fc4c6"
+    },
+    {
+      "file": "390x844-import-dialog.png",
+      "baselineSha256": "6f8dc0eb5e33b9269adc02ed62708b59a3c8851aeb87816f112e72b5fa2fa05c",
+      "currentSha256": "0cee67971e2159c53eed80c1fa6b04fcc70307b80008556574bc76af88227ca2"
+    },
+    {
+      "file": "390x844-table.png",
+      "baselineSha256": "525be948636a7fd23d83939daa566f055a99094d149b542d64a24d738778a3a4",
+      "currentSha256": "effc9a4c4ae0ac8050e6dfdfccc631bc78239d46a0c53a0c43691369cb7544ee"
+    },
+    {
+      "file": "390x844-empty-table.png",
+      "baselineSha256": "76160d69839acf2a83b701ad34b9355cefa527ca033a5a9fbf73b187664e1c2e",
+      "currentSha256": "13ecaf131fd35db03a8654528d962f3f1255600c9de06f9c79f65595d7e3ec17"
+    },
+    {
+      "file": "390x844-settings.png",
+      "baselineSha256": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719",
+      "currentSha256": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719"
+    },
+    {
+      "file": "390x844-browse.png",
+      "baselineSha256": "b19a1ea429919cb7030850594de63008ace6390f37c3326fa383917bdaf89ea7",
+      "currentSha256": "fe7900e4fc4f68da3e8d45680ee5cdbf99b78074baf6e56625cfcb769792a96a"
+    },
+    {
+      "file": "2560x1440-lists.png",
+      "baselineSha256": "8fef4acc75550e7c4b3b1563ac8b8950d63e10f6d98d6eac226ba2261e8c65a5",
+      "currentSha256": "8fef4acc75550e7c4b3b1563ac8b8950d63e10f6d98d6eac226ba2261e8c65a5"
+    },
+    {
+      "file": "2560x1440-import-dialog.png",
+      "baselineSha256": "4b558e5f1ad65de965245420fca15fefd3cc083205cbcc23dbf9772c91bffc95",
+      "currentSha256": "acca04cc6def274a9f329a46a25962a1e73c57ed1e296afb4808acfadb78c633"
+    },
+    {
+      "file": "2560x1440-table.png",
+      "baselineSha256": "9d0448f7dd1d90d6871b521c2e868dda4d17d57105fde8ea86bbcdcd6fe2cb19",
+      "currentSha256": "20e377e40c9766c46683292e951e5dfe900c30d65b4818bd391422daadd819bf"
+    },
+    {
+      "file": "2560x1440-empty-table.png",
+      "baselineSha256": "fb206cdf3fa3e4cdfaeabab3486d13260f425f048cc80dc5330cb81a4f6d9fe9",
+      "currentSha256": "fb206cdf3fa3e4cdfaeabab3486d13260f425f048cc80dc5330cb81a4f6d9fe9"
+    },
+    {
+      "file": "2560x1440-settings.png",
+      "baselineSha256": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4",
+      "currentSha256": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4"
+    },
+    {
+      "file": "2560x1440-browse.png",
+      "baselineSha256": "fd1445ea80927fb9bde3a42352bac72f128c8fd2fe75dc7a70a10c8f256d7fc9",
+      "currentSha256": "dec8faeab965089efeaeb619b45c89a9676706c4101e32afc04e9a705d6a7d06"
+    },
+    {
+      "file": "3200x1440-lists.png",
+      "baselineSha256": "db1d513274b920f9eea5fdf1eddaf22408c0492d54e07ce660a1637c8484f7b3",
+      "currentSha256": "db1d513274b920f9eea5fdf1eddaf22408c0492d54e07ce660a1637c8484f7b3"
+    },
+    {
+      "file": "3200x1440-import-dialog.png",
+      "baselineSha256": "1da658b9739f4aa9079c15236b21c1786dcbcae41a975446ae8e164e830e9186",
+      "currentSha256": "935b27529cde72934dd828e49bb979deb693e8cc10787febe5fccad420a286f7"
+    },
+    {
+      "file": "3200x1440-table.png",
+      "baselineSha256": "ce9425beb28b804451a5b0b8fc06dd4b77d7ffd9ff9bdab8dd224775cfc08806",
+      "currentSha256": "cb2ac70587ba18bf0adca865e7618b54b3f344bdbe024c384f156cd1d93749cc"
+    },
+    {
+      "file": "3200x1440-empty-table.png",
+      "baselineSha256": "c9cc38d70cb0c8715e738bf14477ca90a50f19675b67231d3e80b64d600d5019",
+      "currentSha256": "c9cc38d70cb0c8715e738bf14477ca90a50f19675b67231d3e80b64d600d5019"
+    },
+    {
+      "file": "3200x1440-settings.png",
+      "baselineSha256": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33",
+      "currentSha256": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33"
+    },
+    {
+      "file": "3200x1440-browse.png",
+      "baselineSha256": "373f583e6fa6095ce98ac069fa27b4e7159c990e62698148c54c717866263d1d",
+      "currentSha256": "40fe6e51a935fa940f162e82c9744144e3c9031c81d1def8133781dc9eb1d785"
+    }
+  ],
+  "pageErrors": 0,
+  "consoleErrors": 0,
+  "knownErrors": 0,
+  "tests": {
+    "total": 46,
+    "success": 46
+  },
+  "interactionChecks": {
+    "categorySelection": true,
+    "onlyPrintedToggle": true,
+    "deliveryChannelSelection": true,
+    "paginatorPageSelection": true,
+    "publicColorMenuSelection": true,
+    "publicListBulkMenuCommand": true,
+    "publicPartsBulkMenuCommand": true,
+    "importFileChooserJson": true,
+    "importCancelAndCloseReset": true,
+    "importXmlDrop": true,
+    "toastSeverityDisplayAndClose": true,
+    "toastKeyboardClosePreservesOtherMessage": true,
+    "tableHeaderBorderAndSortIconAlignment": true,
+    "tableKeyboardSortAscendingDescending": true,
+    "tableSortedHeaderHover": true,
+    "tableTabKeyboardFilter": true,
+    "selectUnitMouseSaveAndReopen": true,
+    "selectUnitKeyboardAndEscape": true,
+    "selectDisabledBlocksPopup": true,
+    "selectNestedPopupAndDrawerEscape": true,
+    "selectLocaleLabelsMouseKeyboardAndSave": true,
+    "buttonDangerMouseFocusActiveAndSpaceDelete": true,
+    "buttonOutlinedHoverFocusAndEnterOpensDrawer": true,
+    "buttonSolidHoverFocusActiveAndSpaceTransfer": true,
+    "buttonDisabledBlocksCommand": true,
+    "buttonDangerOutlinedStates": true,
+    "buttonListHeaderGeometryBulkStatesAndSpaceMenu": true,
+    "buttonSuccessStatesAndEnterPersistsHaveIt": true,
+    "togglePrintedMouseSpaceBindingAndStates": true,
+    "toggleDisabledOnOffBlocksClick": true,
+    "toggleAffiliateSpaceAndLabelBinding": true,
+    "menuColorFocusSurvivesHover": true,
+    "menuEscapeReturnsTriggerFocus": true,
+    "menuOutsideClickAndTriggerToggleClose": true,
+    "menuScrollResizeReopenAndSpaceSelection": true,
+    "menuBulkHomeEndSpaceAndTableZIndex": true,
+    "menuRouteDestroyRemovesListenersAndKeyboardNavigation": true,
+    "checkboxMouseSpaceLabelAndSettingsSave": true,
+    "checkboxDisabledOnOffBlocksInputAndLabel": true,
+    "checkboxTableRowAndHeaderSpaceSelection": true,
+    "checkboxTableMouseHoverAndKeyboardFocus": true,
+    "overlayDrawerMasksNavigationAndDismissRestoresClicks": true,
+    "overlayNestedSelectAboveDrawerAndEscapeCleanup": true,
+    "overlayDialogMasksNavigationAndCancelRemovesMask": true,
+    "closeDrawerMouseSpaceStatesAndMaskCleanup": true,
+    "closeDialogMouseSpaceStatesAndMaskCleanup": true
+  },
+  "renderer": {
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+    "compositing": "enabled",
+    "rasterization": "enabled"
+  },
+  "rendererAtEnd": {
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+    "compositing": "enabled",
+    "rasterization": "enabled"
+  },
+  "repeatCapture": {
+    "directory": "artefacts/angular-upgrade/visual/angular-18-close-buttons-final-repeat",
+    "total": 84,
+    "byteIdentical": 73,
+    "referenceScenarioByteIdentical": 35,
+    "additionalByteIdentical": 38,
+    "changedImages": [
+      {
+        "file": "1440x1000-table-inline-edit.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-table-selection.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-list-settings.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-export-dialog.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-button-danger-hover.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-button-danger-focus.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-button-outlined-focus.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-button-solid-focus.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          376,
+          180,
+          377
+        ]
+      },
+      {
+        "file": "1440x1000-checkbox-off-disabled.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-checkbox-on-disabled.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-overlay-drawer-navigation-mask.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    ],
+    "renderer": {
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+      "compositing": "enabled",
+      "rasterization": "enabled"
+    },
+    "rendererAtEnd": {
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+      "compositing": "enabled",
+      "rasterization": "enabled"
+    },
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "knownErrors": 0,
+    "closeButtonMeasurements": {
+      "drawer-rest": {
+        "width": 40,
+        "height": 40,
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "color": "rgba(0, 0, 0, 0.6)",
+        "background": "rgba(0, 0, 0, 0)",
+        "outlineWidth": "3px",
+        "shadow": "none"
+      },
+      "drawer-hover": {
+        "width": 40,
+        "height": 40,
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "color": "rgba(0, 0, 0, 0.6)",
+        "background": "rgba(0, 0, 0, 0.04)",
+        "outlineWidth": "3px",
+        "shadow": "none"
+      },
+      "drawer-hover-focus": {
+        "width": 40,
+        "height": 40,
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "color": "rgba(0, 0, 0, 0.6)",
+        "background": "rgba(0, 0, 0, 0.04)",
+        "outlineWidth": "0px",
+        "shadow": "none"
+      },
+      "drawer-focus": {
+        "width": 40,
+        "height": 40,
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "color": "rgba(0, 0, 0, 0.6)",
+        "background": "rgba(0, 0, 0, 0)",
+        "outlineWidth": "0px",
+        "shadow": "none"
+      },
+      "drawer-active": {
+        "width": 40,
+        "height": 40,
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "color": "rgba(0, 0, 0, 0.6)",
+        "background": "rgba(0, 0, 0, 0)",
+        "outlineWidth": "0px",
+        "shadow": "none"
+      },
+      "dialog-rest": {
+        "width": 40,
+        "height": 40,
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "color": "rgba(0, 0, 0, 0.6)",
+        "background": "rgba(0, 0, 0, 0)",
+        "outlineWidth": "3px",
+        "shadow": "none"
+      },
+      "dialog-hover": {
+        "width": 40,
+        "height": 40,
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "color": "rgba(0, 0, 0, 0.6)",
+        "background": "rgba(0, 0, 0, 0.04)",
+        "outlineWidth": "3px",
+        "shadow": "none"
+      },
+      "dialog-hover-focus": {
+        "width": 40,
+        "height": 40,
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "color": "rgba(0, 0, 0, 0.6)",
+        "background": "rgba(0, 0, 0, 0.04)",
+        "outlineWidth": "0px",
+        "shadow": "none"
+      },
+      "dialog-focus": {
+        "width": 40,
+        "height": 40,
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "color": "rgba(0, 0, 0, 0.6)",
+        "background": "rgba(0, 0, 0, 0)",
+        "outlineWidth": "0px",
+        "shadow": "none"
+      },
+      "dialog-active": {
+        "width": 40,
+        "height": 40,
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "color": "rgba(0, 0, 0, 0.6)",
+        "background": "rgba(0, 0, 0, 0)",
+        "outlineWidth": "0px",
+        "shadow": "none"
+      }
+    },
+    "buttonListGeometry": {
+      "headerHeight": 56,
+      "rowHeight": 46.84375
+    },
+    "overlayMeasurements": {
+      "settingsDrawer": {
+        "navigationZIndex": 1000,
+        "panelZIndex": 1104,
+        "ownPanelZIndex": "1104",
+        "maskZIndex": 1101,
+        "maskContainsPanel": false,
+        "maskBackground": "rgba(0, 0, 0, 0.32)",
+        "navigationCovered": true
+      },
+      "nestedSelect": {
+        "popupZIndex": 2106,
+        "drawerZIndex": 1104
+      },
+      "warningDialog": {
+        "navigationZIndex": 1000,
+        "panelZIndex": 1104,
+        "ownPanelZIndex": "1104",
+        "maskZIndex": 1103,
+        "maskContainsPanel": true,
+        "maskBackground": "rgba(0, 0, 0, 0.32)",
+        "navigationCovered": true
+      }
+    },
+    "checkboxMeasurements": {
+      "off-rest": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(117, 117, 117)",
+        "background": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "shadow": "none",
+        "pseudoContent": "none",
+        "iconColor": null,
+        "checked": false,
+        "disabled": false
+      },
+      "off-hover": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(117, 117, 117)",
+        "background": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "shadow": "rgba(0, 0, 0, 0.04) 0px 0px 1px 10px",
+        "pseudoContent": "none",
+        "iconColor": null,
+        "checked": false,
+        "disabled": false
+      },
+      "off-focus-hover": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(117, 117, 117)",
+        "background": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "shadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px",
+        "pseudoContent": "none",
+        "iconColor": null,
+        "checked": false,
+        "disabled": false
+      },
+      "on-focus-hover": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(10, 52, 99)",
+        "background": "rgb(10, 52, 99)",
+        "opacity": "1",
+        "shadow": "rgba(10, 52, 99, 0.12) 0px 0px 1px 10px",
+        "pseudoContent": "none",
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "iconColor": "rgb(255, 255, 255)",
+        "checked": true,
+        "disabled": false
+      },
+      "on-hover": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(10, 52, 99)",
+        "background": "rgb(10, 52, 99)",
+        "opacity": "1",
+        "shadow": "rgba(10, 52, 99, 0.04) 0px 0px 1px 10px",
+        "pseudoContent": "none",
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "iconColor": "rgb(255, 255, 255)",
+        "checked": true,
+        "disabled": false
+      },
+      "off-disabled": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(117, 117, 117)",
+        "background": "rgb(255, 255, 255)",
+        "opacity": "0.38",
+        "shadow": "none",
+        "pseudoContent": "none",
+        "iconColor": null,
+        "checked": false,
+        "disabled": true
+      },
+      "off-disabled-after-click-and-label": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(117, 117, 117)",
+        "background": "rgb(255, 255, 255)",
+        "opacity": "0.38",
+        "shadow": "none",
+        "pseudoContent": "none",
+        "iconColor": null,
+        "checked": false,
+        "disabled": true
+      },
+      "on-disabled": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(10, 52, 99)",
+        "background": "rgb(10, 52, 99)",
+        "opacity": "0.38",
+        "shadow": "none",
+        "pseudoContent": "none",
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "iconColor": "rgb(255, 255, 255)",
+        "checked": true,
+        "disabled": true
+      },
+      "on-disabled-after-click-and-label": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(10, 52, 99)",
+        "background": "rgb(10, 52, 99)",
+        "opacity": "0.38",
+        "shadow": "none",
+        "pseudoContent": "none",
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "iconColor": "rgb(255, 255, 255)",
+        "checked": true,
+        "disabled": true
+      },
+      "table-row-selected": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(10, 52, 99)",
+        "background": "rgb(10, 52, 99)",
+        "opacity": "1",
+        "shadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px",
+        "pseudoContent": "none",
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "iconColor": "rgb(255, 255, 255)",
+        "checked": true,
+        "disabled": false
+      },
+      "table-header-selected-keyboard": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(10, 52, 99)",
+        "background": "rgb(10, 52, 99)",
+        "opacity": "1",
+        "shadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px",
+        "pseudoContent": "none",
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "iconColor": "rgb(255, 255, 255)",
+        "checked": true,
+        "disabled": false
+      },
+      "table-row-selected-mouse": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(10, 52, 99)",
+        "background": "rgb(10, 52, 99)",
+        "opacity": "1",
+        "shadow": "rgba(0, 0, 0, 0.04) 0px 0px 1px 10px",
+        "pseudoContent": "none",
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "iconColor": "rgb(255, 255, 255)",
+        "checked": true,
+        "disabled": false
+      },
+      "table-row-selected-keyboard-hover": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(10, 52, 99)",
+        "background": "rgb(10, 52, 99)",
+        "opacity": "1",
+        "shadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px",
+        "pseudoContent": "none",
+        "iconWidth": 14,
+        "iconHeight": 14,
+        "iconColor": "rgb(255, 255, 255)",
+        "checked": true,
+        "disabled": false
+      },
+      "table-row-cleared-keyboard-hover": {
+        "width": 18,
+        "height": 18,
+        "borderWidth": "2px",
+        "borderRadius": "2px",
+        "borderColor": "rgb(117, 117, 117)",
+        "background": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "shadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px",
+        "pseudoContent": "none",
+        "iconColor": null,
+        "checked": false,
+        "disabled": false
+      }
+    },
+    "menuMeasurements": {
+      "width": 200,
+      "height": 64,
+      "x": 748.546875,
+      "y": 280.8125,
+      "focusAndHoverBackground": "rgba(0, 0, 0, 0.12)",
+      "activeDescendant": "pn_id_15_0",
+      "swatchWidth": 13,
+      "bulkZIndex": 2104,
+      "headerZIndex": 999,
+      "listenerAudit": {
+        "registeredListeners": 3,
+        "remainingListeners": 0
+      }
+    },
+    "interactionChecks": {
+      "categorySelection": true,
+      "onlyPrintedToggle": true,
+      "deliveryChannelSelection": true,
+      "paginatorPageSelection": true,
+      "publicColorMenuSelection": true,
+      "publicListBulkMenuCommand": true,
+      "publicPartsBulkMenuCommand": true,
+      "importFileChooserJson": true,
+      "importCancelAndCloseReset": true,
+      "importXmlDrop": true,
+      "toastSeverityDisplayAndClose": true,
+      "toastKeyboardClosePreservesOtherMessage": true,
+      "tableHeaderBorderAndSortIconAlignment": true,
+      "tableKeyboardSortAscendingDescending": true,
+      "tableSortedHeaderHover": true,
+      "tableTabKeyboardFilter": true,
+      "selectUnitMouseSaveAndReopen": true,
+      "selectUnitKeyboardAndEscape": true,
+      "selectDisabledBlocksPopup": true,
+      "selectNestedPopupAndDrawerEscape": true,
+      "selectLocaleLabelsMouseKeyboardAndSave": true,
+      "buttonDangerMouseFocusActiveAndSpaceDelete": true,
+      "buttonOutlinedHoverFocusAndEnterOpensDrawer": true,
+      "buttonSolidHoverFocusActiveAndSpaceTransfer": true,
+      "buttonDisabledBlocksCommand": true,
+      "buttonDangerOutlinedStates": true,
+      "buttonListHeaderGeometryBulkStatesAndSpaceMenu": true,
+      "buttonSuccessStatesAndEnterPersistsHaveIt": true,
+      "togglePrintedMouseSpaceBindingAndStates": true,
+      "toggleDisabledOnOffBlocksClick": true,
+      "toggleAffiliateSpaceAndLabelBinding": true,
+      "menuColorFocusSurvivesHover": true,
+      "menuEscapeReturnsTriggerFocus": true,
+      "menuOutsideClickAndTriggerToggleClose": true,
+      "menuScrollResizeReopenAndSpaceSelection": true,
+      "menuBulkHomeEndSpaceAndTableZIndex": true,
+      "menuRouteDestroyRemovesListenersAndKeyboardNavigation": true,
+      "checkboxMouseSpaceLabelAndSettingsSave": true,
+      "checkboxDisabledOnOffBlocksInputAndLabel": true,
+      "checkboxTableRowAndHeaderSpaceSelection": true,
+      "checkboxTableMouseHoverAndKeyboardFocus": true,
+      "overlayDrawerMasksNavigationAndDismissRestoresClicks": true,
+      "overlayNestedSelectAboveDrawerAndEscapeCleanup": true,
+      "overlayDialogMasksNavigationAndCancelRemovesMask": true,
+      "closeDrawerMouseSpaceStatesAndMaskCleanup": true,
+      "closeDialogMouseSpaceStatesAndMaskCleanup": true
+    }
+  },
+  "previousCheckpointComparison": {
+    "directory": "artefacts/angular-upgrade/visual/angular-18-button-alignment-final",
+    "byteIdentical": 28,
+    "changedImages": [
+      "1440x1000-import-dialog.png",
+      "1440x1000-list-settings.png",
+      "1440x1000-export-dialog.png",
+      "1440x1000-transfer-warning.png",
+      "1440x1000-delete-confirmation.png",
+      "390x844-import-dialog.png",
+      "2560x1440-import-dialog.png",
+      "2560x1440-table.png",
+      "3200x1440-import-dialog.png",
+      "3200x1440-table.png",
+      "3200x1440-empty-table.png"
+    ]
+  },
+  "referenceMeasurements": {
+    "button": {
+      "before": {
+        "width": 252,
+        "height": 41.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgb(255, 255, 255)",
+        "backgroundColor": "rgb(10, 52, 99)",
+        "borderRadius": "4px",
+        "padding": "11.424px 16px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 252,
+        "height": 41.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgb(255, 255, 255)",
+        "backgroundColor": "rgb(10, 52, 99)",
+        "borderRadius": "4px",
+        "padding": "11.424px 16px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 284.8125,
+        "lineHeight": "normal",
+        "zIndex": "auto",
+        "verticalAlign": "bottom"
+      }
+    },
+    "card": {
+      "before": {
+        "width": 196.390625,
+        "height": 320,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "8px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 196.390625,
+        "height": 320,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "8px",
+        "boxShadow": "none",
+        "x": 398,
+        "y": 433.21875,
+        "lineHeight": "normal",
+        "zIndex": "auto",
+        "verticalAlign": "baseline"
+      }
+    },
+    "partRow": {
+      "before": {
+        "width": 1322,
+        "height": 91,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 1322,
+        "height": 91,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 608.875,
+        "lineHeight": "normal",
+        "zIndex": "auto",
+        "verticalAlign": "middle"
+      }
+    },
+    "navigationWidth": {
+      "before": 60,
+      "after": 60
+    },
+    "warningDialog": {
+      "before": {
+        "width": 720,
+        "height": 755.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgb(0, 0, 0)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "4px",
+        "padding": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px"
+      },
+      "after": {
+        "width": 720,
+        "height": 755.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px",
+        "x": 360,
+        "y": 122.078125,
+        "lineHeight": "normal",
+        "zIndex": "1104",
+        "verticalAlign": "baseline"
+      }
+    }
+  },
+  "tableMeasurements": {
+    ".p-datatable-thead tr": {
+      "width": 1322,
+      "height": 56,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 552.875,
+      "lineHeight": "normal",
+      "zIndex": "auto",
+      "verticalAlign": "middle"
+    },
+    ".p-datatable-tbody tr": {
+      "width": 1322,
+      "height": 91,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgb(245, 245, 245)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 608.875,
+      "lineHeight": "normal",
+      "zIndex": "auto",
+      "verticalAlign": "middle"
+    },
+    ".p-datatable-tbody tr:nth-child(2)": {
+      "width": 1322,
+      "height": 91,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0.02)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 699.875,
+      "lineHeight": "normal",
+      "zIndex": "auto",
+      "verticalAlign": "middle"
+    },
+    ".p-sortable-column-icon": {
+      "width": 14,
+      "height": 14,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.6)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 286.90625,
+      "y": 574.640625,
+      "lineHeight": "normal",
+      "zIndex": "auto",
+      "verticalAlign": "middle"
+    },
+    "app-pab-price .p-tag": {
+      "width": 67.046875,
+      "height": 22,
+      "fontSize": "12px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(33, 37, 41)",
+      "backgroundColor": "rgb(251, 192, 45)",
+      "borderRadius": "4px",
+      "padding": "4px 6.4px",
+      "boxShadow": "none",
+      "x": 1135.890625,
+      "y": 659.375,
+      "lineHeight": "normal",
+      "zIndex": "auto",
+      "verticalAlign": "baseline"
+    },
+    "app-pab-price .p-tag-info": {
+      "width": 61.59375,
+      "height": 22,
+      "fontSize": "12px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgb(33, 150, 243)",
+      "borderRadius": "4px",
+      "padding": "4px 6.4px",
+      "boxShadow": "none",
+      "x": 1135.890625,
+      "y": 750.375,
+      "lineHeight": "normal",
+      "zIndex": "auto",
+      "verticalAlign": "baseline"
+    },
+    "app-pab-price .p-tag-danger": {
+      "width": 81.109375,
+      "height": 22,
+      "fontSize": "12px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgb(211, 47, 47)",
+      "borderRadius": "4px",
+      "padding": "4px 6.4px",
+      "boxShadow": "none",
+      "x": 1135.890625,
+      "y": 943.375,
+      "lineHeight": "normal",
+      "zIndex": "auto",
+      "verticalAlign": "baseline"
+    },
+    ".p-tab": {
+      "width": 87.140625,
+      "height": 49,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(10, 52, 99)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "4px 4px 0px 0px",
+      "padding": "16px 24px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 502.875,
+      "lineHeight": "16px",
+      "zIndex": "auto",
+      "verticalAlign": "baseline"
+    },
+    ".p-tablist": {
+      "width": 1322,
+      "height": 50,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 502.875,
+      "lineHeight": "normal",
+      "zIndex": "auto",
+      "verticalAlign": "baseline"
+    },
+    ".p-tablist-active-bar": {
+      "width": 87,
+      "height": 2,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgb(10, 52, 99)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 549.875,
+      "lineHeight": "normal",
+      "zIndex": "1",
+      "verticalAlign": "baseline"
+    }
+  },
+  "tablePixelComparison": {
+    "file": "1440x1000-table.png",
+    "previous": {
+      "differentPixels": 4,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ]
+    },
+    "current": {
+      "differentPixels": 4,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ]
+    }
+  },
+  "successToastReferenceRegion": {
+    "file": "1440x1000-success-message.png",
+    "rectangle": {
+      "x": 1020,
+      "y": 20,
+      "width": 400,
+      "height": 86
+    },
+    "differentPixels": 0,
+    "bounds": null
+  },
+  "closeButtonMeasurements": {
+    "drawer-rest": {
+      "width": 40,
+      "height": 40,
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "color": "rgba(0, 0, 0, 0.6)",
+      "background": "rgba(0, 0, 0, 0)",
+      "outlineWidth": "3px",
+      "shadow": "none"
+    },
+    "drawer-hover": {
+      "width": 40,
+      "height": 40,
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "color": "rgba(0, 0, 0, 0.6)",
+      "background": "rgba(0, 0, 0, 0.04)",
+      "outlineWidth": "3px",
+      "shadow": "none"
+    },
+    "drawer-hover-focus": {
+      "width": 40,
+      "height": 40,
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "color": "rgba(0, 0, 0, 0.6)",
+      "background": "rgba(0, 0, 0, 0.04)",
+      "outlineWidth": "0px",
+      "shadow": "none"
+    },
+    "drawer-focus": {
+      "width": 40,
+      "height": 40,
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "color": "rgba(0, 0, 0, 0.6)",
+      "background": "rgba(0, 0, 0, 0)",
+      "outlineWidth": "0px",
+      "shadow": "none"
+    },
+    "drawer-active": {
+      "width": 40,
+      "height": 40,
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "color": "rgba(0, 0, 0, 0.6)",
+      "background": "rgba(0, 0, 0, 0)",
+      "outlineWidth": "0px",
+      "shadow": "none"
+    },
+    "dialog-rest": {
+      "width": 40,
+      "height": 40,
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "color": "rgba(0, 0, 0, 0.6)",
+      "background": "rgba(0, 0, 0, 0)",
+      "outlineWidth": "3px",
+      "shadow": "none"
+    },
+    "dialog-hover": {
+      "width": 40,
+      "height": 40,
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "color": "rgba(0, 0, 0, 0.6)",
+      "background": "rgba(0, 0, 0, 0.04)",
+      "outlineWidth": "3px",
+      "shadow": "none"
+    },
+    "dialog-hover-focus": {
+      "width": 40,
+      "height": 40,
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "color": "rgba(0, 0, 0, 0.6)",
+      "background": "rgba(0, 0, 0, 0.04)",
+      "outlineWidth": "0px",
+      "shadow": "none"
+    },
+    "dialog-focus": {
+      "width": 40,
+      "height": 40,
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "color": "rgba(0, 0, 0, 0.6)",
+      "background": "rgba(0, 0, 0, 0)",
+      "outlineWidth": "0px",
+      "shadow": "none"
+    },
+    "dialog-active": {
+      "width": 40,
+      "height": 40,
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "color": "rgba(0, 0, 0, 0.6)",
+      "background": "rgba(0, 0, 0, 0)",
+      "outlineWidth": "0px",
+      "shadow": "none"
+    }
+  },
+  "buttonListGeometry": {
+    "headerHeight": 56,
+    "rowHeight": 46.84375
+  },
+  "overlayMeasurements": {
+    "settingsDrawer": {
+      "navigationZIndex": 1000,
+      "panelZIndex": 1104,
+      "ownPanelZIndex": "1104",
+      "maskZIndex": 1101,
+      "maskContainsPanel": false,
+      "maskBackground": "rgba(0, 0, 0, 0.32)",
+      "navigationCovered": true
+    },
+    "nestedSelect": {
+      "popupZIndex": 2106,
+      "drawerZIndex": 1104
+    },
+    "warningDialog": {
+      "navigationZIndex": 1000,
+      "panelZIndex": 1104,
+      "ownPanelZIndex": "1104",
+      "maskZIndex": 1103,
+      "maskContainsPanel": true,
+      "maskBackground": "rgba(0, 0, 0, 0.32)",
+      "navigationCovered": true
+    }
+  },
+  "checkboxMeasurements": {
+    "off-rest": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(117, 117, 117)",
+      "background": "rgb(255, 255, 255)",
+      "opacity": "1",
+      "shadow": "none",
+      "pseudoContent": "none",
+      "iconColor": null,
+      "checked": false,
+      "disabled": false
+    },
+    "off-hover": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(117, 117, 117)",
+      "background": "rgb(255, 255, 255)",
+      "opacity": "1",
+      "shadow": "rgba(0, 0, 0, 0.04) 0px 0px 1px 10px",
+      "pseudoContent": "none",
+      "iconColor": null,
+      "checked": false,
+      "disabled": false
+    },
+    "off-focus-hover": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(117, 117, 117)",
+      "background": "rgb(255, 255, 255)",
+      "opacity": "1",
+      "shadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px",
+      "pseudoContent": "none",
+      "iconColor": null,
+      "checked": false,
+      "disabled": false
+    },
+    "on-focus-hover": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(10, 52, 99)",
+      "background": "rgb(10, 52, 99)",
+      "opacity": "1",
+      "shadow": "rgba(10, 52, 99, 0.12) 0px 0px 1px 10px",
+      "pseudoContent": "none",
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "iconColor": "rgb(255, 255, 255)",
+      "checked": true,
+      "disabled": false
+    },
+    "on-hover": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(10, 52, 99)",
+      "background": "rgb(10, 52, 99)",
+      "opacity": "1",
+      "shadow": "rgba(10, 52, 99, 0.04) 0px 0px 1px 10px",
+      "pseudoContent": "none",
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "iconColor": "rgb(255, 255, 255)",
+      "checked": true,
+      "disabled": false
+    },
+    "off-disabled": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(117, 117, 117)",
+      "background": "rgb(255, 255, 255)",
+      "opacity": "0.38",
+      "shadow": "none",
+      "pseudoContent": "none",
+      "iconColor": null,
+      "checked": false,
+      "disabled": true
+    },
+    "off-disabled-after-click-and-label": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(117, 117, 117)",
+      "background": "rgb(255, 255, 255)",
+      "opacity": "0.38",
+      "shadow": "none",
+      "pseudoContent": "none",
+      "iconColor": null,
+      "checked": false,
+      "disabled": true
+    },
+    "on-disabled": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(10, 52, 99)",
+      "background": "rgb(10, 52, 99)",
+      "opacity": "0.38",
+      "shadow": "none",
+      "pseudoContent": "none",
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "iconColor": "rgb(255, 255, 255)",
+      "checked": true,
+      "disabled": true
+    },
+    "on-disabled-after-click-and-label": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(10, 52, 99)",
+      "background": "rgb(10, 52, 99)",
+      "opacity": "0.38",
+      "shadow": "none",
+      "pseudoContent": "none",
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "iconColor": "rgb(255, 255, 255)",
+      "checked": true,
+      "disabled": true
+    },
+    "table-row-selected": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(10, 52, 99)",
+      "background": "rgb(10, 52, 99)",
+      "opacity": "1",
+      "shadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px",
+      "pseudoContent": "none",
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "iconColor": "rgb(255, 255, 255)",
+      "checked": true,
+      "disabled": false
+    },
+    "table-header-selected-keyboard": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(10, 52, 99)",
+      "background": "rgb(10, 52, 99)",
+      "opacity": "1",
+      "shadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px",
+      "pseudoContent": "none",
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "iconColor": "rgb(255, 255, 255)",
+      "checked": true,
+      "disabled": false
+    },
+    "table-row-selected-mouse": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(10, 52, 99)",
+      "background": "rgb(10, 52, 99)",
+      "opacity": "1",
+      "shadow": "rgba(0, 0, 0, 0.04) 0px 0px 1px 10px",
+      "pseudoContent": "none",
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "iconColor": "rgb(255, 255, 255)",
+      "checked": true,
+      "disabled": false
+    },
+    "table-row-selected-keyboard-hover": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(10, 52, 99)",
+      "background": "rgb(10, 52, 99)",
+      "opacity": "1",
+      "shadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px",
+      "pseudoContent": "none",
+      "iconWidth": 14,
+      "iconHeight": 14,
+      "iconColor": "rgb(255, 255, 255)",
+      "checked": true,
+      "disabled": false
+    },
+    "table-row-cleared-keyboard-hover": {
+      "width": 18,
+      "height": 18,
+      "borderWidth": "2px",
+      "borderRadius": "2px",
+      "borderColor": "rgb(117, 117, 117)",
+      "background": "rgb(255, 255, 255)",
+      "opacity": "1",
+      "shadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px",
+      "pseudoContent": "none",
+      "iconColor": null,
+      "checked": false,
+      "disabled": false
+    }
+  },
+  "menuMeasurements": {
+    "width": 200,
+    "height": 64,
+    "x": 748.546875,
+    "y": 280.8125,
+    "focusAndHoverBackground": "rgba(0, 0, 0, 0.12)",
+    "activeDescendant": "pn_id_15_0",
+    "swatchWidth": 13,
+    "bulkZIndex": 2104,
+    "headerZIndex": 999,
+    "listenerAudit": {
+      "registeredListeners": 3,
+      "remainingListeners": 0
+    }
+  },
+  "selectMeasurements": {
+    "1440x1000-select-unit-popup.png": {
+      ".p-select": {
+        "width": 136,
+        "height": 53,
+        "x": 1288,
+        "y": 406.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-label": {
+        "width": 96.296875,
+        "height": 51,
+        "x": 1289,
+        "y": 407.8125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 1385.296875,
+        "y": 407.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": {
+        "width": 136,
+        "height": 102,
+        "x": 1288,
+        "y": 459.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px",
+        "opacity": "1"
+      },
+      ".p-select-list": {
+        "width": 136,
+        "height": 102,
+        "x": 1288,
+        "y": 459.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option": {
+        "width": 136,
+        "height": 51,
+        "x": 1288,
+        "y": 459.8125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option-selected": {
+        "width": 136,
+        "height": 51,
+        "x": 1288,
+        "y": 459.8125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option.p-focus": {
+        "width": 136,
+        "height": 51,
+        "x": 1288,
+        "y": 459.8125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      }
+    },
+    "1440x1000-select-unit-selected.png": {
+      ".p-select": {
+        "width": 136,
+        "height": 53,
+        "x": 1288,
+        "y": 406.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-label": {
+        "width": 96.296875,
+        "height": 51,
+        "x": 1289,
+        "y": 407.8125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 1385.296875,
+        "y": 407.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": null,
+      ".p-select-list": null,
+      ".p-select-option": null,
+      ".p-select-option-selected": null,
+      ".p-select-option.p-focus": null
+    },
+    "1440x1000-select-unit-disabled.png": {
+      ".p-select": {
+        "width": 136,
+        "height": 53,
+        "x": 1288,
+        "y": 406.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "0.38"
+      },
+      ".p-select-label": {
+        "width": 96.296875,
+        "height": 51,
+        "x": 1289,
+        "y": 407.8125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 1385.296875,
+        "y": 407.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": null,
+      ".p-select-list": null,
+      ".p-select-option": null,
+      ".p-select-option-selected": null,
+      ".p-select-option.p-focus": null
+    },
+    "1440x1000-select-locale-dialog.png": {
+      ".p-select": {
+        "width": 252,
+        "height": 53,
+        "x": 594,
+        "y": 374.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-label": {
+        "width": 212.296875,
+        "height": 51,
+        "x": 595,
+        "y": 375.578125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 807.296875,
+        "y": 375.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": null,
+      ".p-select-list": null,
+      ".p-select-option": null,
+      ".p-select-option-selected": null,
+      ".p-select-option.p-focus": null
+    },
+    "1440x1000-select-country-popup.png": {
+      ".p-select": {
+        "width": 252,
+        "height": 53,
+        "x": 594,
+        "y": 374.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-label": {
+        "width": 212.296875,
+        "height": 51,
+        "x": 595,
+        "y": 375.578125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 807.296875,
+        "y": 375.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": {
+        "width": 252,
+        "height": 200,
+        "x": 594,
+        "y": 427.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px",
+        "opacity": "1"
+      },
+      ".p-select-list": {
+        "width": 252,
+        "height": 1275,
+        "x": 594,
+        "y": 427.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 427.578125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option-selected": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 733.578125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option.p-focus": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 733.578125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      }
+    },
+    "1440x1000-select-language-popup.png": {
+      ".p-select": {
+        "width": 252,
+        "height": 53,
+        "x": 594,
+        "y": 374.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-label": {
+        "width": 212.296875,
+        "height": 51,
+        "x": 595,
+        "y": 375.578125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 807.296875,
+        "y": 375.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": {
+        "width": 252,
+        "height": 153,
+        "x": 594,
+        "y": 523.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px",
+        "opacity": "1"
+      },
+      ".p-select-list": {
+        "width": 252,
+        "height": 153,
+        "x": 594,
+        "y": 523.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 523.578125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option-selected": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 523.578125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option.p-focus": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 574.578125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0.04)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      }
+    }
+  },
+  "buttonMeasurements": {
+    "danger-text-rest": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 48,
+      "height": 48,
+      "padding": "11.424px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "danger-text-hover": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(211, 47, 47, 0.04)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 48,
+      "height": 48,
+      "padding": "11.424px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "danger-text-focus": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(211, 47, 47, 0.12)",
+      "boxShadow": "none",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 48,
+      "height": 48,
+      "padding": "11.424px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "danger-text-active": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(211, 47, 47, 0.16)",
+      "boxShadow": "none",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 48,
+      "height": 48,
+      "padding": "11.424px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "primary-outlined-hover": {
+      "color": "rgb(10, 52, 99)",
+      "backgroundColor": "rgba(10, 52, 99, 0.04)",
+      "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "primary-outlined-focus": {
+      "color": "rgb(10, 52, 99)",
+      "backgroundColor": "rgba(10, 52, 99, 0.12)",
+      "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "primary-solid-hover": {
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgba(10, 52, 99, 0.92)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "primary-solid-focus": {
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgba(10, 52, 99, 0.76)",
+      "boxShadow": "none",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "primary-solid-active": {
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgba(10, 52, 99, 0.68)",
+      "boxShadow": "none",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "primary-outlined-disabled-hover": {
+      "color": "rgba(0, 0, 0, 0.38)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "boxShadow": "rgba(0, 0, 0, 0.38) 0px 0px 0px 1px inset",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "danger-outlined-rest": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "boxShadow": "rgb(211, 47, 47) 0px 0px 0px 1px inset",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 99.625,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "danger-outlined-hover": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(211, 47, 47, 0.04)",
+      "boxShadow": "rgb(211, 47, 47) 0px 0px 0px 1px inset",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 99.625,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "danger-outlined-focus": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(211, 47, 47, 0.12)",
+      "boxShadow": "rgb(211, 47, 47) 0px 0px 0px 1px inset",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 99.625,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "list-bulk-disabled": {
+      "color": "rgba(0, 0, 0, 0.38)",
+      "backgroundColor": "rgba(0, 0, 0, 0.12)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 48,
+      "height": 23,
+      "padding": "2px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "list-bulk-hover": {
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgba(10, 52, 99, 0.92)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 48,
+      "height": 23,
+      "padding": "2px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "list-bulk-focus": {
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgba(10, 52, 99, 0.76)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 48,
+      "height": 23,
+      "padding": "2px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "list-bulk-active": {
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgba(10, 52, 99, 0.68)",
+      "boxShadow": "none",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 48,
+      "height": 23,
+      "padding": "2px",
+      "fontSize": "16px",
+      "verticalAlign": "bottom"
+    },
+    "success-text-rest": {
+      "color": "rgb(104, 159, 56)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 35,
+      "height": 35,
+      "padding": "11.424px",
+      "fontSize": "20px",
+      "verticalAlign": "bottom"
+    },
+    "success-text-hover": {
+      "color": "rgb(104, 159, 56)",
+      "backgroundColor": "rgba(104, 159, 56, 0.04)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 35,
+      "height": 35,
+      "padding": "11.424px",
+      "fontSize": "20px",
+      "verticalAlign": "bottom"
+    },
+    "success-text-focus": {
+      "color": "rgb(104, 159, 56)",
+      "backgroundColor": "rgba(104, 159, 56, 0.12)",
+      "boxShadow": "none",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 35,
+      "height": 35,
+      "padding": "11.424px",
+      "fontSize": "20px",
+      "verticalAlign": "bottom"
+    }
+  },
+  "toggleMeasurements": {
+    "printed-off": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 0,
+      "handleBackground": "rgb(255, 255, 255)",
+      "handleShadow": "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(0, 0, 0, 0.38)",
+      "opacity": "1",
+      "disabled": false,
+      "checked": false
+    },
+    "printed-off-hover": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 0,
+      "handleBackground": "rgb(255, 255, 255)",
+      "handleShadow": "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px, rgba(0, 0, 0, 0.04) 0px 0px 1px 10px",
+      "trackBackground": "rgba(0, 0, 0, 0.38)",
+      "opacity": "1",
+      "disabled": false,
+      "checked": false
+    },
+    "printed-off-focus": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 0,
+      "handleBackground": "rgb(255, 255, 255)",
+      "handleShadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(0, 0, 0, 0.38)",
+      "opacity": "1",
+      "disabled": false,
+      "checked": false
+    },
+    "printed-on-focus": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 24,
+      "handleBackground": "rgb(10, 52, 99)",
+      "handleShadow": "rgba(10, 52, 99, 0.12) 0px 0px 1px 10px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(10, 52, 99, 0.5)",
+      "opacity": "1",
+      "disabled": false,
+      "checked": true
+    },
+    "printed-on-hover": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 24,
+      "handleBackground": "rgb(10, 52, 99)",
+      "handleShadow": "rgba(10, 52, 99, 0.04) 0px 0px 1px 10px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(10, 52, 99, 0.5)",
+      "opacity": "1",
+      "disabled": false,
+      "checked": true
+    },
+    "printed-off-disabled": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 0,
+      "handleBackground": "rgb(255, 255, 255)",
+      "handleShadow": "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(0, 0, 0, 0.38)",
+      "opacity": "0.38",
+      "disabled": true,
+      "checked": false
+    },
+    "printed-off-disabled-after-click": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 0,
+      "handleBackground": "rgb(255, 255, 255)",
+      "handleShadow": "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(0, 0, 0, 0.38)",
+      "opacity": "0.38",
+      "disabled": true,
+      "checked": false
+    },
+    "printed-on-disabled": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 24,
+      "handleBackground": "rgb(10, 52, 99)",
+      "handleShadow": "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(10, 52, 99, 0.5)",
+      "opacity": "0.38",
+      "disabled": true,
+      "checked": true
+    },
+    "printed-on-disabled-after-click": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 24,
+      "handleBackground": "rgb(10, 52, 99)",
+      "handleShadow": "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(10, 52, 99, 0.5)",
+      "opacity": "0.38",
+      "disabled": true,
+      "checked": true
+    },
+    "useAffiliatePaB-on": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 24,
+      "handleBackground": "rgb(10, 52, 99)",
+      "handleShadow": "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(10, 52, 99, 0.5)",
+      "opacity": "1",
+      "disabled": false,
+      "checked": true
+    },
+    "useAffiliatePaB-off-focus": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 0,
+      "handleBackground": "rgb(255, 255, 255)",
+      "handleShadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(0, 0, 0, 0.38)",
+      "opacity": "1",
+      "disabled": false,
+      "checked": false
+    },
+    "useAffiliateBaP-on": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 24,
+      "handleBackground": "rgb(10, 52, 99)",
+      "handleShadow": "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(10, 52, 99, 0.5)",
+      "opacity": "1",
+      "disabled": false,
+      "checked": true
+    },
+    "useAffiliateBaP-off-focus": {
+      "width": 44,
+      "height": 16,
+      "handleWidth": 24,
+      "handleHeight": 24,
+      "handleOffset": 0,
+      "handleBackground": "rgb(255, 255, 255)",
+      "handleShadow": "rgba(0, 0, 0, 0.12) 0px 0px 1px 10px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
+      "trackBackground": "rgba(0, 0, 0, 0.38)",
+      "opacity": "1",
+      "disabled": false,
+      "checked": false
+    }
+  },
+  "tableHeaderMeasurements": {
+    "height": 56,
+    "borderColor": "rgb(228, 228, 228)",
+    "icons": [
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 286.90625,
+        "y": 574.640625,
+        "color": "rgba(0, 0, 0, 0.6)"
+      },
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 451.765625,
+        "y": 574.640625,
+        "color": "rgba(0, 0, 0, 0.6)"
+      },
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 708.59375,
+        "y": 574.640625,
+        "color": "rgba(0, 0, 0, 0.6)"
+      },
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 891.40625,
+        "y": 574.640625,
+        "color": "rgba(0, 0, 0, 0.6)"
+      },
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 1049.828125,
+        "y": 574.640625,
+        "color": "rgba(0, 0, 0, 0.6)"
+      },
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 1232.078125,
+        "y": 574.640625,
+        "color": "rgba(0, 0, 0, 0.6)"
+      }
+    ]
+  },
+  "additionalScreenshots": [
+    {
+      "file": "1440x1000-import-selected-json.png",
+      "sha256": "6e7851b61e588e8719282c0662fe0dbbbcfcd7164edc30b074bc53b2e2b473e2"
+    },
+    {
+      "file": "1440x1000-import-dropped-xml.png",
+      "sha256": "931c36492b67f297d695f8eafdac6471c5e04191fb620f276617fdad8d74e33f"
+    },
+    {
+      "file": "1440x1000-toast-success.png",
+      "sha256": "b564ab039685b862dffb22c3de41e42a217148e701ce0a34a5c3d0a54e534ef4"
+    },
+    {
+      "file": "1440x1000-toast-info.png",
+      "sha256": "c1de0cddfb1545e70b97504e84eb61e91e8fe78fa3d0606801d998d0cb0b012a"
+    },
+    {
+      "file": "1440x1000-toast-warn.png",
+      "sha256": "2511d012b80aa7e6ad2f65eca064ea0775551e54e9b1019c7d52dbe3b3511acf"
+    },
+    {
+      "file": "1440x1000-toast-error.png",
+      "sha256": "27c851763eef8a6302a9aa6aa0963a2a9988fe269e43e72e8ceb37382504068e"
+    },
+    {
+      "file": "1440x1000-table-sort-ascending.png",
+      "sha256": "1f7418c6d8ca3ecd2f40746ad3c1a21388a1b33bf110c403f9fa5657c1cc00bb"
+    },
+    {
+      "file": "1440x1000-table-sort-descending.png",
+      "sha256": "f8e76a84dea5f790b3f45332f839676081a48a1701380c5397c93fa220d14311"
+    },
+    {
+      "file": "1440x1000-table-header-hover.png",
+      "sha256": "f8e76a84dea5f790b3f45332f839676081a48a1701380c5397c93fa220d14311"
+    },
+    {
+      "file": "1440x1000-table-tab-keyboard.png",
+      "sha256": "2fa84c636dd4cb8afb39f814630745d188cd7882eeee065028715e9b5936f1a7"
+    },
+    {
+      "file": "1440x1000-select-unit-popup.png",
+      "sha256": "87a1ba68dd14fdb9f43f2fe750149b2d812c88d21c7c79f0edc8e05a3d7d19ca"
+    },
+    {
+      "file": "1440x1000-select-unit-selected.png",
+      "sha256": "eaf890a16f3578db0ee1a929955a13e0dbfbc0f21e03c1b250b4a09d421e7995"
+    },
+    {
+      "file": "1440x1000-select-unit-disabled.png",
+      "sha256": "6e9587344d99ebbe432e426ec5e1be3da546cfa1ca95f3803898bad7a43eb6cb"
+    },
+    {
+      "file": "1440x1000-select-locale-dialog.png",
+      "sha256": "b2c4e1f73e23e6891405b44396362497620ff6afebec94185c9794fcdf8eaeb6"
+    },
+    {
+      "file": "1440x1000-select-country-popup.png",
+      "sha256": "27845c5ac15b35a104d9223aa19bf1bfac6769c8fde5ce0c7a32acecc6489191"
+    },
+    {
+      "file": "1440x1000-select-language-popup.png",
+      "sha256": "b454cc276517b9eef176abe9347ca3cd6e38d3a4eabfdfb86942baa7f3c14c2c"
+    },
+    {
+      "file": "1440x1000-button-danger-hover.png",
+      "sha256": "5f090db5f93bb996169419827447ce19b97fd9451f108dc9c92d83128b94f869"
+    },
+    {
+      "file": "1440x1000-button-danger-focus.png",
+      "sha256": "a2f89d7897a6b633784e6aeabffb736e127e5ffc5e78db890166f871429cd35a"
+    },
+    {
+      "file": "1440x1000-button-outlined-focus.png",
+      "sha256": "05e16bc16bafed1a0863378cb4d5ef07628619f7bba5240ccfee52c09074ec99"
+    },
+    {
+      "file": "1440x1000-button-solid-focus.png",
+      "sha256": "903981faf763d721eabcfdf3b43e0d803498c3e3403dda99705fb85875fe3704"
+    },
+    {
+      "file": "1440x1000-button-danger-outlined-focus.png",
+      "sha256": "945913b0c5bd94a83ca5f7859bd8bcae2383f040d33e92a3d2bbdc300893aa44"
+    },
+    {
+      "file": "1440x1000-button-list-bulk-focus.png",
+      "sha256": "f89e9aa127ae33f933d926592fe2af6594dcfacaa869155713b5dd69a96b054e"
+    },
+    {
+      "file": "1440x1000-button-success-focus.png",
+      "sha256": "e9d4540ecdcd09b984fe63c3f84481a16b6659c72fb08b4c6ae52bcfa7cbe570"
+    },
+    {
+      "file": "1440x1000-toggle-off-hover.png",
+      "sha256": "799a37ee2a4dba41af6b07e17c8d1b099893108c79d2877bc6da6f8563acb2bf"
+    },
+    {
+      "file": "1440x1000-toggle-off-focus.png",
+      "sha256": "2a50165406e95d7faa7834e102d016d24ca2859770b2e4cf33e7dd7e4f3edd3a"
+    },
+    {
+      "file": "1440x1000-toggle-on-focus.png",
+      "sha256": "edc5f7bd0db09e0659dacd0b5aba6f38ea657682a08f65c8d0a2543703a5d955"
+    },
+    {
+      "file": "1440x1000-toggle-on-hover.png",
+      "sha256": "f766f9000864c74c4f0c0012bd9ea8134a051c4102526d1c4135721345dd85d3"
+    },
+    {
+      "file": "1440x1000-toggle-off-disabled.png",
+      "sha256": "aa2eb8bbb9c275a4f34ba77c442c0ea361127739bb8080de3e43cb6144397928"
+    },
+    {
+      "file": "1440x1000-toggle-on-disabled.png",
+      "sha256": "507c43545b786c6fcb4ac8fa65b1ede6b9fa95382aa7f11c7d7f93037bc07372"
+    },
+    {
+      "file": "1440x1000-menu-color-focus-hover.png",
+      "sha256": "5dbd4b82c9a6f648733d6349f2302f2e353813e40f2fec92a7f09acff245ff11"
+    },
+    {
+      "file": "1440x1000-menu-bulk-keyboard-focus.png",
+      "sha256": "29152cf8ee45419d9463c93d43543895d0d301c8bb6afcb6b2341f6fd6b13c9a"
+    },
+    {
+      "file": "1440x1000-checkbox-off-hover.png",
+      "sha256": "86f31594422a85bbb3e1d8b4b7bc196ae6ea9fc3921d6f291f61fb8e8a5bd1e3"
+    },
+    {
+      "file": "1440x1000-checkbox-off-focus.png",
+      "sha256": "1f16470602c5f87f155fdafb1c53117bbca3b30357062c95c40076e668990eed"
+    },
+    {
+      "file": "1440x1000-checkbox-on-focus.png",
+      "sha256": "af95cd6749a3d3cf203bf796cc3b2fdd9f0fdf58eaa17dc77645323a05598f84"
+    },
+    {
+      "file": "1440x1000-checkbox-on-hover.png",
+      "sha256": "ebab2d68b568cacd3b0cd6db5de9468a92ca3611fa68254aa7ca792887b4ff7c"
+    },
+    {
+      "file": "1440x1000-checkbox-off-disabled.png",
+      "sha256": "ec1f97a05f09345c89398600fe2c05e2ec4dd15d8559951248ddbff0fa1f56a7"
+    },
+    {
+      "file": "1440x1000-checkbox-on-disabled.png",
+      "sha256": "3ded3ca18242ffe582680408eb592f698afcde1b17d3055b595c0f20ad6d3b4e"
+    },
+    {
+      "file": "1440x1000-checkbox-table-selected-mouse.png",
+      "sha256": "9ba64e752684e9506fa3103aef3eeac28620fb8d636b571b1abbede2977d98ee"
+    },
+    {
+      "file": "1440x1000-checkbox-table-selected-keyboard.png",
+      "sha256": "0818a850e6fb57b21ceb19a871ccf0ae5c534fe935f0969a4ed1d46ef602f1e3"
+    },
+    {
+      "file": "1440x1000-overlay-drawer-navigation-mask.png",
+      "sha256": "8a774118ebc7ebd5846525ddbd0413f5c483b81396ce73b5ad86a4e0a4b17c55"
+    },
+    {
+      "file": "1440x1000-overlay-dialog-navigation-mask.png",
+      "sha256": "26d057e3c604b081c816c535328aa5353e9fc9c57f5406db2777c11e01f959ba"
+    },
+    {
+      "file": "1440x1000-close-drawer-hover.png",
+      "sha256": "deb1810077c3ba06a626379e93c6ac1b75f773ef2bacbf1fb627bfbacae1e59d"
+    },
+    {
+      "file": "1440x1000-close-drawer-focus.png",
+      "sha256": "8305fc35bcab6c34d1e908378601d3fe8b00abe444f9a3a2823cd2eab292b902"
+    },
+    {
+      "file": "1440x1000-close-dialog-hover.png",
+      "sha256": "96ac005a689a4ec6c007bba174ff02fe26f8fa611f01d5d1986406b52e8380ac"
+    },
+    {
+      "file": "1440x1000-close-dialog-focus.png",
+      "sha256": "b8bef6e9ffd4afe05c013c36871793e16e0e4a805469593b3bcd67b0353c87cf"
+    }
+  ],
+  "extensionOutputs": {
+    "production": {
+      "requiredFilesPresent": true,
+      "manifestUnchanged": true,
+      "standaloneExtensionEntries": true,
+      "fixtureAndPrototypeMarkersAbsent": true
+    },
+    "development": {
+      "requiredFilesPresent": true,
+      "manifestUnchanged": true,
+      "standaloneExtensionEntries": true,
+      "fixtureAndPrototypeMarkersAbsent": true
+    }
+  },
+  "tableHeaderReferenceRegion": {
+    "rectangle": {
+      "x": 94,
+      "y": 553,
+      "width": 1322,
+      "height": 56
+    },
+    "differentPixels": 0,
+    "bounds": null
+  },
+  "toggleReferenceRegions": [
+    {
+      "rectangle": {
+        "x": 420,
+        "y": 217,
+        "width": 60,
+        "height": 37
+      },
+      "differentPixels": 0,
+      "bounds": null
+    },
+    {
+      "rectangle": {
+        "x": 754,
+        "y": 217,
+        "width": 60,
+        "height": 37
+      },
+      "differentPixels": 0,
+      "bounds": null
+    }
+  ],
+  "drawerCornerPixelValues": [
+    {
+      "x": 1136,
+      "y": 236,
+      "reference": [
+        162,
+        178,
+        195,
+        255
+      ],
+      "current": [
+        162,
+        178,
+        196,
+        255
+      ]
+    },
+    {
+      "x": 1153,
+      "y": 236,
+      "reference": [
+        162,
+        178,
+        195,
+        255
+      ],
+      "current": [
+        162,
+        178,
+        196,
+        255
+      ]
+    },
+    {
+      "x": 1136,
+      "y": 253,
+      "reference": [
+        162,
+        178,
+        195,
+        255
+      ],
+      "current": [
+        162,
+        178,
+        196,
+        255
+      ]
+    },
+    {
+      "x": 1153,
+      "y": 253,
+      "reference": [
+        162,
+        178,
+        195,
+        255
+      ],
+      "current": [
+        162,
+        178,
+        196,
+        255
+      ]
+    }
+  ],
+  "modalScenarioChecks": {
+    "current": [
+      {
+        "file": "1440x1000-import-dialog.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "1440x1000-list-settings.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "1440x1000-export-dialog.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "1440x1000-transfer-progress.png",
+        "selector": ".p-dialog-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1103",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "1440x1000-transfer-warning.png",
+        "selector": ".p-dialog-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1103",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "1440x1000-delete-confirmation.png",
+        "selector": ".p-dialog-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1103",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "390x844-import-dialog.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "file": "2560x1440-import-dialog.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 2560,
+          "height": 1440
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 2560,
+        "height": 1440
+      },
+      {
+        "file": "3200x1440-import-dialog.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 3200,
+          "height": 1440
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 3200,
+        "height": 1440
+      }
+    ],
+    "repeat": [
+      {
+        "file": "1440x1000-import-dialog.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "1440x1000-list-settings.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "1440x1000-export-dialog.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "1440x1000-transfer-progress.png",
+        "selector": ".p-dialog-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1103",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "1440x1000-transfer-warning.png",
+        "selector": ".p-dialog-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1103",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "1440x1000-delete-confirmation.png",
+        "selector": ".p-dialog-mask",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1103",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "file": "390x844-import-dialog.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "file": "2560x1440-import-dialog.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 2560,
+          "height": 1440
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 2560,
+        "height": 1440
+      },
+      {
+        "file": "3200x1440-import-dialog.png",
+        "selector": ".p-drawer-mask",
+        "viewport": {
+          "width": 3200,
+          "height": 1440
+        },
+        "background": "rgba(0, 0, 0, 0.32)",
+        "zIndex": "1101",
+        "width": 3200,
+        "height": 1440
+      }
+    ]
+  },
+  "modalReferenceRegions": [
+    {
+      "file": "1440x1000-list-settings.png",
+      "rectangle": {
+        "x": 0,
+        "y": 0,
+        "width": 60,
+        "height": 1000
+      },
+      "previous": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "current": {
+        "differentPixels": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "rectangle": {
+        "x": 0,
+        "y": 0,
+        "width": 60,
+        "height": 1000
+      },
+      "previous": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "current": {
+        "differentPixels": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-transfer-warning.png",
+      "rectangle": {
+        "x": 0,
+        "y": 0,
+        "width": 60,
+        "height": 1000
+      },
+      "previous": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "current": {
+        "differentPixels": 0,
+        "bounds": null
+      }
+    }
+  ],
+  "checkboxSelectionHaloRegion": {
+    "file": "1440x1000-table-selection.png",
+    "rectangle": {
+      "x": 99,
+      "y": 634,
+      "width": 40,
+      "height": 40
+    },
+    "differentPixels": 0,
+    "bounds": null
+  },
+  "checkboxScenarioComparison": [
+    {
+      "file": "1440x1000-lists.png",
+      "previous": {
+        "differentPixels": 0,
+        "bounds": null
+      },
+      "current": {
+        "differentPixels": 0,
+        "bounds": null
+      }
+    },
+    {
+      "file": "1440x1000-table-selection.png",
+      "previous": {
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      "current": {
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "previous": {
+        "differentPixels": 30373,
+        "bounds": [
+          60,
+          0,
+          1423,
+          999
+        ]
+      },
+      "current": {
+        "differentPixels": 30319,
+        "bounds": [
+          60,
+          0,
+          1423,
+          999
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "previous": {
+        "differentPixels": 71743,
+        "bounds": [
+          60,
+          0,
+          1423,
+          999
+        ]
+      },
+      "current": {
+        "differentPixels": 71689,
+        "bounds": [
+          60,
+          0,
+          1423,
+          999
+        ]
+      }
+    },
+    {
+      "file": "1440x1000-transfer-warning.png",
+      "previous": {
+        "differentPixels": 16889,
+        "bounds": [
+          60,
+          0,
+          1079,
+          999
+        ]
+      },
+      "current": {
+        "differentPixels": 16885,
+        "bounds": [
+          60,
+          0,
+          1079,
+          999
+        ]
+      }
+    }
+  ],
+  "checkboxReferenceRegions": [
+    {
+      "file": "1440x1000-list-settings.png",
+      "rectangle": {
+        "x": 1136,
+        "y": 236,
+        "width": 18,
+        "height": 18
+      },
+      "differentPixels": 4,
+      "bounds": [
+        1136,
+        236,
+        1153,
+        253
+      ]
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "rectangle": {
+        "x": 110,
+        "y": 645,
+        "width": 18,
+        "height": 18
+      },
+      "differentPixels": 0,
+      "bounds": null
+    }
+  ],
+  "pending": [
+    "Four checked-checkbox drawer corner pixels differ by one blue-channel value; unchanged after restoring relative box positioning",
+    "Remaining icon and other selection-control states, complete button-state acceptance",
+    "Remaining overlay configurations, menu visuals and selected-file visual acceptance",
+    "Full Angular 18 UI acceptance before Angular 19",
+    "Residual repeat capture differences recorded above"
+  ],
+  "referenceIdentityChanges": [
+    {
+      "file": "2560x1440-table.png",
+      "previousByteIdentical": true,
+      "currentByteIdentical": false,
+      "differentPixels": 4,
+      "bounds": [
+        179,
+        148,
+        180,
+        149
+      ]
+    },
+    {
+      "file": "3200x1440-table.png",
+      "previousByteIdentical": true,
+      "currentByteIdentical": false,
+      "differentPixels": 4,
+      "bounds": [
+        179,
+        148,
+        180,
+        149
+      ]
+    },
+    {
+      "file": "3200x1440-empty-table.png",
+      "previousByteIdentical": false,
+      "currentByteIdentical": true,
+      "differentPixels": 0,
+      "bounds": null
+    }
+  ]
+}

@@ -294,7 +294,11 @@ export const BrickHunterPreset = definePreset(Material, {
       footer: { padding: '1rem 1.5rem' },
       css: `
         .p-dialog { border: 0; }
-        .p-dialog .p-dialog-header .p-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; }
+        .p-dialog .p-dialog-header .p-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
+        .p-dialog .p-dialog-header .p-button svg { width: 0.875rem; height: 0.875rem; }
+        .p-dialog .p-dialog-header .p-button:enabled:focus,
+        .p-dialog .p-dialog-header .p-button:enabled:active { background: transparent; color: rgba(0, 0, 0, 0.6); outline: 0; box-shadow: none; }
+        .p-dialog .p-dialog-header .p-button:enabled:hover { background: rgba(0, 0, 0, 0.04); color: rgba(0, 0, 0, 0.6); }
       `,
     },
     drawer: {
@@ -304,6 +308,10 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-drawer { border: 0; }
         .p-drawer-header:has(.p-button) { justify-content: flex-end; }
         .p-drawer .p-drawer-header .p-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
+        .p-drawer .p-drawer-header .p-button svg { width: 0.875rem; height: 0.875rem; }
+        .p-drawer .p-drawer-header .p-button:enabled:focus,
+        .p-drawer .p-drawer-header .p-button:enabled:active { background: transparent; color: rgba(0, 0, 0, 0.6); outline: 0; box-shadow: none; }
+        .p-drawer .p-drawer-header .p-button:enabled:hover { background: rgba(0, 0, 0, 0.04); color: rgba(0, 0, 0, 0.6); }
       `,
     },
     fileupload: {
