@@ -125,7 +125,7 @@ async function main() {
             values[selector] = { width: rect.width, height: rect.height, fontSize: css.fontSize,
               fontFamily: css.fontFamily, color: css.color, backgroundColor: css.backgroundColor,
               borderRadius: css.borderRadius, padding: css.padding, boxShadow: css.boxShadow,
-              x: rect.x, y: rect.y, lineHeight: css.lineHeight, zIndex: css.zIndex };
+              x: rect.x, y: rect.y, lineHeight: css.lineHeight, zIndex: css.zIndex, verticalAlign: css.verticalAlign };
           }
           return values;
         });
@@ -437,9 +437,10 @@ async function main() {
             const css = getComputedStyle(element), rect = element.getBoundingClientRect();
             return { color: css.color, backgroundColor: css.backgroundColor, boxShadow: css.boxShadow,
               outlineWidth: css.outlineWidth, opacity: css.opacity, width: rect.width, height: rect.height,
-              padding: css.padding, fontSize: css.fontSize };
+              padding: css.padding, fontSize: css.fontSize, verticalAlign: css.verticalAlign };
           });
           report.buttonMeasurements[name] = style;
+          if (style.verticalAlign !== 'bottom') throw new Error(`${name}: inline button lost legacy bottom alignment`);
           for (const [property, value] of Object.entries(expected)) {
             if (style[property] !== value) throw new Error(`${name}: ${property}=${style[property]}, expected ${value}`);
           }
@@ -510,6 +511,36 @@ async function main() {
         await buttonStyle(deleteList, 'danger-outlined-focus', { backgroundColor: 'rgba(211, 47, 47, 0.12)' });
         await additionalCapture('button-danger-outlined-focus');
         report.interactionChecks.buttonDangerOutlinedStates = true;
+
+        await open('parts-lists');
+        const listBulkButton = page.locator('app-parts-list-list .p-datatable-thead button');
+        await buttonStyle(listBulkButton, 'list-bulk-disabled', { width: 48, height: 23,
+          backgroundColor: 'rgba(0, 0, 0, 0.12)', color: 'rgba(0, 0, 0, 0.38)' });
+        const listGeometry = await page.locator('app-parts-list-list .p-datatable').evaluate(table => ({
+          headerHeight: table.querySelector('thead tr').getBoundingClientRect().height,
+          rowHeight: table.querySelector('tbody tr').getBoundingClientRect().height,
+        }));
+        if (listGeometry.headerHeight !== 56 || listGeometry.rowHeight !== 46.84375)
+          throw new Error(`List header or row geometry changed: ${JSON.stringify(listGeometry)}`);
+        report.buttonListGeometry = listGeometry;
+        await page.locator('app-parts-list-list .p-datatable-tbody input[type="checkbox"]').first().check();
+        if (!await listBulkButton.isEnabled()) throw new Error('List selection did not enable the bulk button');
+        await listBulkButton.hover();
+        await buttonStyle(listBulkButton, 'list-bulk-hover', { width: 48, height: 23, backgroundColor: 'rgba(10, 52, 99, 0.92)' });
+        await page.mouse.move(600, 60);
+        await listBulkButton.focus();
+        await buttonStyle(listBulkButton, 'list-bulk-focus', { width: 48, height: 23, backgroundColor: 'rgba(10, 52, 99, 0.76)' });
+        await additionalCapture('button-list-bulk-focus');
+        await page.keyboard.down('Space');
+        await buttonStyle(listBulkButton, 'list-bulk-active', { width: 48, height: 23, backgroundColor: 'rgba(10, 52, 99, 0.68)' });
+        await page.keyboard.up('Space');
+        const listBulkPopup = page.locator('app-parts-list-list .bh-menu-panel:visible');
+        await listBulkPopup.waitFor();
+        await listBulkPopup.locator('[role="menu"]').press('Escape');
+        await listBulkPopup.waitFor({ state: 'hidden' });
+        if (!await listBulkButton.evaluate(element => document.activeElement === element))
+          throw new Error('List bulk-menu Escape did not restore button focus');
+        report.interactionChecks.buttonListHeaderGeometryBulkStatesAndSpaceMenu = true;
 
         await open('browse-parts');
         const haveIt = page.locator('app-browse-parts-grid-item .p-button-success').first();

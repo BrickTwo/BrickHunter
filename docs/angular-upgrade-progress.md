@@ -814,3 +814,36 @@ git commit -m "fix: restore modal mask opacity and navigation stacking"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 22: Inline-Button-Ausrichtung und Listenübersicht
+
+Ausgangspunkt: Commit **`82fda9d`** (Modal-Masken und Navigation). Angular **18.2.14** / PrimeNG **18.0.2**, Paketdateien und Lockfile bleiben unverändert.
+
+### Erfolgreich umgesetzt
+
+- Inline-Buttons im erhaltenen Angular-17-Entwicklungsbuild mit dem aktuellen Referenzbuild verglichen: beide Bulk-Buttons **48 × 23 px**, beide Delete-Buttons **99.625 × 41.84375 px**. Die alte Ausrichtung ist **`vertical-align: bottom`**, die neue **`baseline`**. Bei gleicher Button-Größe wächst dadurch der Kopf der Listenübersicht von **56** auf **56.5 px**; alle nachfolgenden Zeilen beginnen um **0.5 px** zu tief. Die ursprüngliche Ausrichtung ist nun innerhalb des Button-Presets wiederhergestellt.
+- Die Messung des alten regulären Builds verwendet ausschließlich eine lokale Beispielzeile und blockierte externe Anfragen; wegen fehlender Referenz-Fixtures ist sie kein Bild-Abnahmenachweis. Die gespeicherten Angular-17-Referenzbilder bleiben Grundlage des anschließenden Pixelvergleichs.
+- Zusätzliche Browserprüfung kontrolliert Listenheader und Zeilenhöhe sowie die Bulk-Button-Größe im deaktivierten Zustand und nach Auswahl. Hover, Fokus und Active verwenden die ursprünglichen primären Farben; Space öffnet das tatsächliche Menü und Escape stellt den Trigger-Fokus wieder her. Ein neues Zusatzbild sichert den fokussierten Bulk-Button mit ausgewählter Liste.
+- Alle vorhandenen Button-Zustandsmessungen prüfen zusätzlich die wiederhergestellte Ausrichtung. Die Hauptszenarien erfassen `verticalAlign` für spätere Vergleiche.
+
+### Validierung und verbleibende Arbeit
+
+- **46 Tests**, Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich, Exitcode 0. Produktionsumfang **2.34 MB**, Budgets unverändert; bestehende Budget-/CommonJS-Warnungen bleiben bestehen.
+- Reguläre Outputs geprüft: erforderliche UI-/Extension-Dateien vorhanden, Chrome-Manifest byteidentisch, standalone Extension-Einstiege ohne `webpackChunk`-Verweise und keine Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Zwei Abschlussläufe mit jeweils **39 Hauptszenarien plus 41 Zusatzbildern**, **44 erfolgreichen Browserprüfungen**, ohne aufgezeichnete Browser-/Konsolenfehler oder bekannte NG0100-Meldungen. Das neue Bulk-Fokusbild ist visuell geprüft und im Wiederholungspaar byteidentisch. Die gemessenen Bulk-Buttons bleiben in allen geprüften Zuständen **48 × 23 px**; Header **56 px**, Zeile **46.84375 px**.
+- Wiederholung **66/80 PNGs byteidentisch** (**33/39 Hauptbilder**, **33/41 Zusatzbilder**). Die übrigen 14 Bilder unterscheiden sich ausschließlich in jeweils vier Pixeln an der Tabs-Unterstreichung. D3D11-Renderer, GPU-Compositing und Rasterization sind vor/nach beiden Läufen identisch; die vier Pixel werden nicht ausgefiltert.
+- Listenübersicht in **1440 × 1000, 390 × 844, 2560 × 1440 und 3200 × 1440** in beiden Läufen vollständig pixelgleich zur Originalreferenz. Zuvor **11.030 / 2.673 / 18.870 / 23.352** abweichende Pixel, jetzt jeweils **0**. Desktop-Header beginnt bei **y = 182.65625**, erste Zeile bei **y = 238.65625**.
+- Zur Originalreferenz im ersten Abschlusslauf jetzt **12/39 Hauptbilder byteidentisch**. Gegenüber Commit-Punkt 21 **28/39 Hauptbilder unverändert**; Änderungen und Wiederholungsabweichungen sind im Bericht aufgelistet. Tabellenkopf und Checkbox-Halo bleiben in den dokumentierten Rechtecken pixelgleich, die Modal-Navigation ebenfalls. Vier Drawer-Häkchen-Eckpixel bleiben bestehen. Messwerte und Prüfsummen: [angular-18-button-alignment-check.json](angular-upgrade-reference/angular-18-button-alignment-check.json). Originalbilder bleiben unverändert.
+
+Noch offen vor Angular 19: vier Drawer-Häkchen-Eckpixel, übrige Icon-/Auswahlkomponenten-Zustände, weiterer Menü-/Overlay-/Dateiauswahl-Abgleich, vollständiger Button-Abgleich und übrige Referenzabweichungen. Die Listenübersicht ist in den vier Referenzgrößen abgeglichen. **Angular 19 beginnt erst nach der vollständigen UI-Abnahme auf Version 18.**
+
+Logs: `artefacts/angular-upgrade/angular-18/button-alignment-tests.log`, `button-alignment-visual-build.log`, `button-alignment-production.log`, `button-alignment-development.log`, `button-alignment-capture.log`, `button-alignment-capture-repeat.log` und `button-alignment-comparison.log`. Reguläre Outputs: `artefacts/angular-upgrade/angular-18/button-alignment-verified/{production,development}/`. Abschlussbilder: `artefacts/angular-upgrade/visual/angular-18-button-alignment-final/` und `angular-18-button-alignment-final-repeat/`.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src/app/shared/theme/brickhunter-preset.ts scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: restore inline button alignment and list header geometry"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

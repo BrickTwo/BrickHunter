@@ -118,7 +118,8 @@ export const BrickHunterPreset = definePreset(Material, {
         },
       },
       css: options => `${Material.components.button.css(options)}
-        .p-button { border: 0; min-width: 4rem; }
+        /* PrimeNG 17 aligned inline buttons to the line bottom, including table cells. */
+        .p-button { border: 0; min-width: 4rem; vertical-align: bottom; }
         .p-button.p-button:not(:disabled):hover, .p-button.p-button:not(:disabled):active { border: 0; }
         .p-button-label { flex: 1 1 auto; }
         .p-button-icon-only { min-width: auto; padding: 0.714rem; }
