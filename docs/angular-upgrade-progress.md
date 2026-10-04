@@ -745,3 +745,36 @@ git commit -m "fix: restore checkbox SVG and interaction states"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 20: Tabellencheckbox-Hover und Tastaturfokus
+
+Ausgangspunkt: Commit **`121b64d`** (Checkbox-SVG und Zustandswerte). Angular **18.2.14** / PrimeNG **18.0.2**, Paketdateien und Lockfile bleiben unverändert.
+
+### Erfolgreich umgesetzt
+
+- Die Ursache der verbliebenen **880 Pixel** im Tabellencheckbox-Halo gegen den erhaltenen PrimeNG-17-Code geprüft: TableCheckbox/TableHeaderCheckbox hatten eigenes Markup ohne den Checked-Zustand am Root. Damit waren ihre Halos schwarz. Der Mausklick wurde am Root verarbeitet und fokussierte den versteckten Input nicht. PrimeNG 18 verwendet dort die normale öffentliche Checkbox mit Checked-Root und direkt anklickbarem Input.
+- Begrenzte CSS-Regeln innerhalb von Tabellen stellen die bisherige Zustandsdarstellung wieder her: schwarzer Hover-Halo mit **0.04**, schwarzer Tastaturfokus mit **0.12**, kein zusätzlicher Fokus-Halo bei Mausbedienung ohne Hover. `:focus-visible` unterscheidet die Bedienung. Der doppelte Root-Klassenselektor überstimmt gezielt die generischen Checked-/Unchecked-Regeln; die normalen Checkboxen im Settings-Drawer behalten ihre blauen Zustände. Auswahl und Events bleiben bei PrimeNGs öffentlichen Komponenten.
+- Eine zusätzliche Browserprüfung trennt Mausklick und anschließendes Tab/Shift+Tab mit Fokus-/Modellprüfung, danach Abwählen per Space. Die vorhandene Tabellenprüfung erfasst jetzt zusätzlich den schwarzen Fokus bei ausgewählter Headercheckbox. Zwei neue Zusatzbilder sichern ausgewählte Tabellencheckboxen nach Maus- und Tastaturbedienung.
+- Ursprüngliches `position: relative` an der Checkbox-Box wiederhergestellt. Die vier Drawer-Eckpixel ändern sich dadurch nicht. Sie sind nun exakt quantifiziert: an **(1136,236), (1153,236), (1136,253), (1153,253)** jeweils RGBA **[162,178,195,255]** in der Referenz gegenüber **[162,178,196,255]** im aktuellen Bild. Ausschließlich der Blaukanal unterscheidet sich um **1**. Eine Ursache dieser Rasterabweichung ist damit nicht bewiesen; sie wird nicht ausgeblendet oder als beseitigt behandelt.
+
+### Validierung und verbleibende Arbeit
+
+- **46 Tests**, Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich, Exitcode 0. Produktionsumfang **2.34 MB**, Budgets unverändert; vorhandene Budget-/CommonJS-Warnungen bleiben bestehen.
+- Reguläre Outputs geprüft: notwendige UI-/Extension-Dateien vorhanden, Chrome-Manifest byteidentisch, standalone Extension-Einstiege ohne `webpackChunk`-Verweise und keine Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Zwei Abschlussläufe mit jeweils **39 Hauptszenarien plus 38 Zusatzbildern**, **40 erfolgreichen Browserprüfungen**, ohne aufgezeichnete Browser-/Konsolenfehler oder bekannte NG0100-Meldungen. Beide neuen Checkboxbilder sind visuell geprüft und im Wiederholungspaar byteidentisch.
+- Wiederholung **68/77 PNGs byteidentisch** (**36/39 Hauptbilder**, **32/38 Zusatzbilder**). Neun andere Bilder unterscheiden sich ausschließlich in jeweils vier Pixeln an der Tabs-Unterstreichung. D3D11-Renderer, GPU-Compositing und Rasterization stimmen vor/nach beiden Läufen überein.
+- Desktop-Auswahlbild jetzt **4** statt **884** unterschiedliche Pixel zur Originalreferenz, ausschließlich an der Tabs-Unterstreichung. Der Tabellencheckbox-Halo im dokumentierten **40 × 40-px-Rechteck** ist pixelgleich. Das Tabellen-Häkchen im Settings-Drawer-Bild bleibt im dokumentierten **18 × 18-px-Rechteck** pixelgleich. Die vier Drawer-Häkchen-Eckpixel bleiben wie oben beschrieben bestehen.
+- Zur Originalreferenz weiterhin **7/39 Hauptbilder byteidentisch**; gegenüber Commit-Punkt 19 **36/39 Hauptbilder unverändert**. Listenübersicht und vollständiges Settings-Drawer-Bild sind weiterhin nicht pixelgleich; ihre bisherigen **11.030** bzw. **100.363** Unterschiede bleiben bestehen. Messwerte, Prüfsummen, RGBA-Eckwerte und Vergleichsrechtecke: [angular-18-checkbox-table-check.json](angular-upgrade-reference/angular-18-checkbox-table-check.json). Originalbilder bleiben erhalten.
+
+Noch offen vor Angular 19: die dokumentierten vier Drawer-Eckpixel, übrige Icon-/Auswahlkomponenten-Zustände, verbleibender Menü-/Overlay-/Dateiauswahl-Abgleich, vollständiger Button-Abgleich und übrige Referenzabweichungen. Tabellencheckbox-Maus-Hover und Tastaturfokus sind für die geprüften Abläufe abgeglichen. **Angular 19 startet erst nach der vollständigen UI-Abnahme auf Version 18.**
+
+Logs: `artefacts/angular-upgrade/angular-18/checkbox-table-tests.log`, `checkbox-table-visual-build.log`, `checkbox-table-production.log`, `checkbox-table-development.log`, `checkbox-table-capture.log`, `checkbox-table-capture-repeat.log` und `checkbox-table-comparison.log`. Outputs: `artefacts/angular-upgrade/angular-18/checkbox-table-verified/{production,development}/`. Abschlussbilder: `artefacts/angular-upgrade/visual/angular-18-checkbox-table-verified/` und `angular-18-checkbox-table-verified-repeat/`.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src/app/shared/theme/brickhunter-preset.ts scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: restore table checkbox mouse and keyboard halos"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

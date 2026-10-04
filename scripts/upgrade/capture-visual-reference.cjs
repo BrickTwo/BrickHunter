@@ -795,7 +795,7 @@ async function main() {
         const headerCheckbox = page.locator('app-parts-table .p-datatable-thead input[type="checkbox"]');
         await rowCheckbox.press('Space');
         await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-table')).selectedParts.length === 1);
-        await checkboxStyle(rowCheckbox, 'table-row-selected', true, false, 'rgba(10, 52, 99, 0.12)');
+        await checkboxStyle(rowCheckbox, 'table-row-selected', true, false, 'rgba(0, 0, 0, 0.12)');
         await headerCheckbox.press('Space');
         await page.waitForFunction(() => {
           const table = window.ng.getComponent(document.querySelector('app-parts-table'));
@@ -803,11 +803,27 @@ async function main() {
         });
         if ((await page.locator('app-parts-table .p-datatable-tbody input[type="checkbox"]').evaluateAll(inputs => inputs.filter(input => input.checked).length)) !== 8)
           throw new Error('Header checkbox did not select all eight fixture parts');
+        await checkboxStyle(headerCheckbox, 'table-header-selected-keyboard', true, false, 'rgba(0, 0, 0, 0.12)');
         await headerCheckbox.press('Space');
         await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-table')).selectedParts.length === 0);
         if (await page.locator('app-parts-table .p-datatable-tbody input[type="checkbox"]').evaluateAll(inputs => inputs.some(input => input.checked)))
           throw new Error('Header checkbox did not clear the row selections');
         report.interactionChecks.checkboxTableRowAndHeaderSpaceSelection = true;
+        await open('parts-lists/upgrade-reference');
+        await rowCheckbox.click();
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-table')).selectedParts.length === 1);
+        await checkboxStyle(rowCheckbox, 'table-row-selected-mouse', true, false, 'rgba(0, 0, 0, 0.04)');
+        await additionalCapture('checkbox-table-selected-mouse');
+        await rowCheckbox.press('Tab');
+        await page.keyboard.press('Shift+Tab');
+        if (!await rowCheckbox.evaluate(element => document.activeElement === element && element.matches(':focus-visible')))
+          throw new Error('Tab/Shift+Tab did not return keyboard focus to the selected row checkbox');
+        await checkboxStyle(rowCheckbox, 'table-row-selected-keyboard-hover', true, false, 'rgba(0, 0, 0, 0.12)');
+        await additionalCapture('checkbox-table-selected-keyboard');
+        await rowCheckbox.press('Space');
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-table')).selectedParts.length === 0);
+        await checkboxStyle(rowCheckbox, 'table-row-cleared-keyboard-hover', false, false, 'rgba(0, 0, 0, 0.12)');
+        report.interactionChecks.checkboxTableMouseHoverAndKeyboardFocus = true;
       }
       await context.close();
     }
