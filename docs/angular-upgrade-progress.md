@@ -568,3 +568,38 @@ git commit -m "fix: align Select controls and isolate popup Escape handling"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 15: Buttonfarben, Interaktionszustände und Hover-Geometrie
+
+Ausgangspunkt: Commit **`6e7b960`**, der Select-Felder und verschachteltes Escape (Commit-Punkt 14) sichert. Paketversionen und Lockfile bleiben unverändert auf Angular **18.2.14** / PrimeNG **18.0.2**.
+
+### Erfolgreich umgesetzt
+
+- Button-Tokens für die verwendeten Varianten Primary, Danger und Success an die ursprüngliche Theme-Datei angeglichen: **#0a3463**, **#d32f2f** und **#689f38**. Text- und umrandete Buttons verwenden bei Hover **0.04**, bei Fokus **0.12** und beim Drücken **0.16** Deckkraft der jeweiligen Farbe. Gefüllte Buttons verwenden bei Hover **0.92**, bei Fokus **0.76** und beim Drücken **0.68**. Ripple-Flächen der Text-/Outlined-Varianten sind ebenfalls angeglichen. Material-Regeln anderer Varianten bleiben erhalten; dies ist keine Abnahme aller Buttonvarianten.
+- Eine tatsächliche Größenänderung bei Hover/Active beseitigt: Die installierte PrimeNG-18-Komponente setzt in diesen Zuständen erneut einen **1-px-Rahmen**. Das bisherige Theme hat keinen äußeren Buttonrahmen. Der begrenzte Button-Preset-Override erhält deshalb den Nullrahmen auch in diesen Zuständen. Der umrandete Button behält den bisherigen inset-Schatten. Standardbuttons messen nun auch beim Hover/Drücken **41.84375 px** Höhe, statt vor der Korrektur **43.84375 px**. Icon-only-Padding ist wieder **0.714 rem**; runde Tabellenaktionen bleiben **48 × 48 px**, die bestehenden kleinen Kartenaktionen **35 × 35 px**.
+- Die Fokusdarstellung entspricht den ursprünglichen Material-Zustandsregeln, einschließlich Nullbreite des zusätzlichen Fokusrings. Fokus wird weiterhin durch die farbige Fläche angezeigt. Deaktivierte Buttons behalten die ursprünglichen grauen Werte; der Browser prüft zusätzlich, dass ein direkter Klick auf das deaktivierte ReSync keinen Befehl ausführt.
+- Sechs Browserprüfungen ergänzen die bisherigen 20: roter Tabellenbutton einschließlich Hover/Fokus/Active und Löschen per Space; umrandeter Settings-Button einschließlich Öffnen des Drawers per Enter; gefüllter Transferbutton einschließlich Space-Aktivierung; deaktiviertes ReSync; roter umrandeter Listenbutton; grüner Kartenbutton einschließlich Speicherung in der Have-it-Liste per Enter. Alle Aktionen verwenden die isolierte Referenz-Fixture. Der Transferdienst ist dort durch eine lokale Testimplementierung ersetzt.
+- Sechs neue Zusatzbilder dokumentieren Button-Hover und -Fokus. Für die Fokusaufnahmen verlässt die Maus den Button in einen neutralen Kopfbereich, damit die Hover-Navigation nicht zusätzlich geöffnet wird. Farben, Geometrie, Padding und Fokuswerte werden gesondert im Browserbericht aufgezeichnet. Originalbilder und Hauptszenarien bleiben erhalten.
+
+API-Grundlage: [PrimeNG 18 Button](https://v18.primeng.org/button). Tokens und Zustandsselektoren wurden zusätzlich gegen die installierten 18.0.2-Quellen und die unveränderte ursprüngliche Theme-Datei geprüft.
+
+### Validierung und verbleibende Arbeit
+
+- **45 Tests erfolgreich** mit Headless Edge, Exitcode 0. Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang **2.33 MB**, unter der unveränderten 3-MB-Fehlergrenze. Bisherige Budget-/CommonJS-Warnungen bestehen fort.
+- Reguläre Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden; Chrome-Manifest byteidentisch zur Quelle; standalone Extension-Einstiege ohne `webpackChunk`-Verweise; keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Zwei Abschlussläufe mit jeweils **39 Hauptszenarien plus 22 Zusatzbildern**, **26 erfolgreichen Browserprüfungen**, ohne aufgezeichnete Konsolen-/Browserfehler oder bekannte NG0100-Meldungen. Fokusbild des roten Tabellenbuttons zusätzlich visuell geprüft. Die bisherige Hauptgeometrie bleibt erhalten: Standardbutton **41.84375 px**, Karten **196.390625 × 320 px / 8 px Padding**, Tabellenkopf **56 px**, Teilezeilen **91 px** ab **y=608.875**, Navigation **60 px**, Transferwarndialog **720 × 755.84375 px**. Der Erfolgstoast bleibt im bisherigen **400 × 86-px-Bereich pixelgleich** zur Originalreferenz.
+- Wiederholung: **52/61 PNGs byteidentisch** (**37/39 Hauptbilder**, **15/22 Zusatzbilder**). Neun Bilder unterscheiden sich ausschließlich in jeweils **vier Pixeln** am rechten Ende der Tabs-Unterstreichung; genaue Grenzen stehen im Bericht. Renderer, GPU-Compositing und Rasterization stimmen vor/nach beiden Läufen überein. Dies ist weiterhin kein Nachweis allgemeiner Reproduzierbarkeit über beliebige Browser-/Treiberstände.
+- Zur ursprünglichen Angular-17-Referenz weiterhin **4/39 Hauptbilder byteidentisch** (Settings-Seite in allen vier Viewports). Gegen Commit-Punkt 14 bleiben **13/39 Hauptbilder unverändert**. Die Desktop-Teiletabelle hat noch **3.100 unterschiedliche Pixel** zur Originalreferenz, zuvor **3.812**; die Pixelabweichungen an den roten Tabellenaktionen sind beseitigt. Die übrigen Unterschiede bleiben offen. Prüfsummen, Pixelgrenzen, Button-Messwerte und Output-/Interaktionsprüfungen: [angular-18-button-check.json](angular-upgrade-reference/angular-18-button-check.json). Originalbilder bleiben unverändert.
+
+Noch offen: übrige Icon-/Toggle-Zustände, vollständige Menü-/Overlay-/Dateiauswahl-Abnahme, vollständiger Button-Abgleich und verbliebene Referenzabweichungen einschließlich gelegentlicher Rasterunterschiede an der Tabs-Unterstreichung. **Angular 19 bleibt bis zur vollständigen UI-Abnahme auf Version 18 zurückgestellt.**
+
+Logs: `artefacts/angular-upgrade/angular-18/button-tests.log`, `button-visual-build-final.log`, `button-production-final.log`, `button-development-final.log`, `button-capture-accepted.log` und `button-capture-accepted-repeat.log`. Reguläre Outputs: `artefacts/angular-upgrade/angular-18/button-verified/{production,development}/`. Abschlussbilder: `artefacts/angular-upgrade/visual/angular-18-button-accepted/` und `angular-18-button-accepted-repeat/`. Preview-/Verified-/Final-Aufnahmen sind Diagnose-Zwischenstände.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src/app/shared/theme/brickhunter-preset.ts scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: restore button colors and prevent hover geometry changes"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

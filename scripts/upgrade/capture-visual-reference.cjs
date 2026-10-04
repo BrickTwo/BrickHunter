@@ -407,6 +407,102 @@ async function main() {
         if (!await page.evaluate(() => localStorage.getItem('country') === 'ch' && localStorage.getItem('language') === 'fr'))
           throw new Error('Locale Select values were not persisted');
         report.interactionChecks.selectLocaleLabelsMouseKeyboardAndSave = true;
+
+        // Exercise real buttons without triggering destructive extension actions.
+        // All clicks below use the disposable reference database.
+        report.buttonMeasurements = {};
+        async function buttonStyle(button, name, expected) {
+          await page.waitForTimeout(250); // Legacy color transitions take 200 ms.
+          const style = await button.evaluate(element => {
+            const css = getComputedStyle(element), rect = element.getBoundingClientRect();
+            return { color: css.color, backgroundColor: css.backgroundColor, boxShadow: css.boxShadow,
+              outlineWidth: css.outlineWidth, opacity: css.opacity, width: rect.width, height: rect.height,
+              padding: css.padding, fontSize: css.fontSize };
+          });
+          report.buttonMeasurements[name] = style;
+          for (const [property, value] of Object.entries(expected)) {
+            if (style[property] !== value) throw new Error(`${name}: ${property}=${style[property]}, expected ${value}`);
+          }
+        }
+        await open('parts-lists/upgrade-reference');
+        const remove = page.locator('app-parts-table .p-datatable-tbody .p-button-danger').first();
+        await buttonStyle(remove, 'danger-text-rest', { color: 'rgb(211, 47, 47)', backgroundColor: 'rgba(0, 0, 0, 0)', width: 48, height: 48 });
+        await remove.hover();
+        await buttonStyle(remove, 'danger-text-hover', { backgroundColor: 'rgba(211, 47, 47, 0.04)', width: 48, height: 48 });
+        await additionalCapture('button-danger-hover');
+        await page.mouse.move(600, 60); // Neutral header area, outside hover navigation.
+        await remove.focus();
+        await buttonStyle(remove, 'danger-text-focus', { backgroundColor: 'rgba(211, 47, 47, 0.12)', outlineWidth: '0px', boxShadow: 'none' });
+        await additionalCapture('button-danger-focus');
+        await page.keyboard.down('Space');
+        await buttonStyle(remove, 'danger-text-active', { backgroundColor: 'rgba(211, 47, 47, 0.16)', width: 48, height: 48 });
+        await page.keyboard.up('Space');
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-list-detail')).partsList.parts.length === 7);
+        report.interactionChecks.buttonDangerMouseFocusActiveAndSpaceDelete = true;
+
+        await open('parts-lists/upgrade-reference');
+        const settingsButton = page.getByRole('button', { name: 'Settings', exact: true });
+        await settingsButton.hover();
+        await buttonStyle(settingsButton, 'primary-outlined-hover', { backgroundColor: 'rgba(10, 52, 99, 0.04)', height: 41.84375 });
+        await page.mouse.move(600, 60); // Neutral header area, outside hover navigation.
+        await settingsButton.focus();
+        await buttonStyle(settingsButton, 'primary-outlined-focus', { backgroundColor: 'rgba(10, 52, 99, 0.12)' });
+        await additionalCapture('button-outlined-focus');
+        await settingsButton.press('Enter');
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-list-settings')).display);
+        report.interactionChecks.buttonOutlinedHoverFocusAndEnterOpensDrawer = true;
+        await page.keyboard.press('Escape');
+        const transferButton = page.getByRole('button', { name: 'Transfer', exact: true }).first();
+        await transferButton.hover();
+        await buttonStyle(transferButton, 'primary-solid-hover', { backgroundColor: 'rgba(10, 52, 99, 0.92)', height: 41.84375 });
+        await page.mouse.move(600, 60); // Neutral header area, outside hover navigation.
+        await transferButton.focus();
+        await buttonStyle(transferButton, 'primary-solid-focus', { backgroundColor: 'rgba(10, 52, 99, 0.76)' });
+        await additionalCapture('button-solid-focus');
+        await page.keyboard.down('Space');
+        await buttonStyle(transferButton, 'primary-solid-active', { backgroundColor: 'rgba(10, 52, 99, 0.68)', height: 41.84375 });
+        await page.keyboard.up('Space');
+        await page.waitForFunction(() => window.ng.getComponent(document.querySelector('app-parts-list-transfer')).show);
+        report.interactionChecks.buttonSolidHoverFocusActiveAndSpaceTransfer = true;
+
+        await open('parts-lists/upgrade-reference');
+        await page.evaluate(() => {
+          const detail = window.ng.getComponent(document.querySelector('app-parts-list-detail'));
+          detail.pabIsLoading = true;
+          window.ng.applyChanges(detail);
+        });
+        const resync = page.getByRole('button', { name: 'ReSync', exact: true });
+        if (!await resync.isDisabled()) throw new Error('Loading ReSync must be disabled');
+        await resync.hover({ force: true });
+        await buttonStyle(resync, 'primary-outlined-disabled-hover', { backgroundColor: 'rgba(0, 0, 0, 0)', color: 'rgba(0, 0, 0, 0.38)', opacity: '1' });
+        await resync.click({ force: true });
+        if (!await page.evaluate(() => window.ng.getComponent(document.querySelector('app-parts-list-detail')).pabIsLoading))
+          throw new Error('Disabled ReSync invoked its command');
+        report.interactionChecks.buttonDisabledBlocksCommand = true;
+
+        await open('parts-lists');
+        const deleteList = page.locator('app-parts-list-list .p-button-danger.p-button-outlined').first();
+        await buttonStyle(deleteList, 'danger-outlined-rest', { color: 'rgb(211, 47, 47)' });
+        await deleteList.hover();
+        await buttonStyle(deleteList, 'danger-outlined-hover', { backgroundColor: 'rgba(211, 47, 47, 0.04)' });
+        await page.mouse.move(600, 60); // Neutral header area, outside hover navigation.
+        await deleteList.focus();
+        await buttonStyle(deleteList, 'danger-outlined-focus', { backgroundColor: 'rgba(211, 47, 47, 0.12)' });
+        await additionalCapture('button-danger-outlined-focus');
+        report.interactionChecks.buttonDangerOutlinedStates = true;
+
+        await open('browse-parts');
+        const haveIt = page.locator('app-browse-parts-grid-item .p-button-success').first();
+        await buttonStyle(haveIt, 'success-text-rest', { color: 'rgb(104, 159, 56)' });
+        await haveIt.hover();
+        await buttonStyle(haveIt, 'success-text-hover', { backgroundColor: 'rgba(104, 159, 56, 0.04)' });
+        await page.mouse.move(600, 60); // Neutral header area, outside hover navigation.
+        await haveIt.focus();
+        await buttonStyle(haveIt, 'success-text-focus', { backgroundColor: 'rgba(104, 159, 56, 0.12)' });
+        await additionalCapture('button-success-focus');
+        await haveIt.press('Enter');
+        await page.waitForFunction(() => JSON.parse(localStorage.getItem('haveIts')).length === 1);
+        report.interactionChecks.buttonSuccessStatesAndEnterPersistsHaveIt = true;
       }
       await context.close();
     }

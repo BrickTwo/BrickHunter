@@ -1,6 +1,13 @@
 import { definePreset } from '@primeng/themes';
 import Material from '@primeng/themes/material';
 
+// The legacy Material theme uses the same state opacities for these button colors.
+const buttonColors = { primary: '10, 52, 99', danger: '211, 47, 47', success: '104, 159, 56' };
+const buttonVariants = Object.fromEntries(Object.entries(buttonColors).map(([severity, rgb]) => [severity, {
+  color: `rgb(${rgb})`, borderColor: `rgb(${rgb})`,
+  hoverBackground: `rgba(${rgb}, 0.04)`, activeBackground: `rgba(${rgb}, 0.16)`,
+}]));
+
 // Measured Angular-17 reference values. Component geometry is verified separately.
 export const BrickHunterPreset = definePreset(Material, {
   primitive: { borderRadius: { xs: '2px', sm: '4px', md: '4px', lg: '4px', xl: '4px' } },
@@ -94,15 +101,36 @@ export const BrickHunterPreset = definePreset(Material, {
         borderRadius: '4px',
         gap: '0.5rem',
         label: { fontWeight: '500' },
+        focusRing: { width: '0', shadow: 'none' },
         sm: { fontSize: '0.875rem', paddingX: '0.875rem', paddingY: '0.62475rem' },
         lg: { fontSize: '1.25rem', paddingX: '1.25rem', paddingY: '0.8925rem' },
       },
-      // Preserve Material's state rules; only restore the measured legacy geometry.
+      colorScheme: {
+        light: {
+          root: Object.fromEntries(Object.entries(buttonColors).map(([severity, rgb]) => [severity, {
+            background: `rgb(${rgb})`, hoverBackground: `rgba(${rgb}, 0.92)`, activeBackground: `rgba(${rgb}, 0.68)`,
+            borderColor: `rgb(${rgb})`, hoverBorderColor: 'transparent', activeBorderColor: 'transparent',
+            color: '#ffffff', hoverColor: '#ffffff', activeColor: '#ffffff',
+          }])),
+          outlined: buttonVariants,
+          text: buttonVariants,
+        },
+      },
       css: options => `${Material.components.button.css(options)}
         .p-button { border: 0; min-width: 4rem; }
+        .p-button.p-button:not(:disabled):hover, .p-button.p-button:not(:disabled):active { border: 0; }
         .p-button-label { flex: 1 1 auto; }
-        .p-button-icon-only { min-width: auto; }
+        .p-button-icon-only { min-width: auto; padding: 0.714rem; }
         .p-button-outlined { box-shadow: inset 0 0 0 1px; }
+        ${Object.entries(buttonColors).map(([severity, rgb]) => {
+          const selector = severity === 'primary' ? '.p-button' : `.p-button.p-button-${severity}`;
+          return `${selector}:enabled:focus { background: rgba(${rgb}, 0.76); }
+            ${selector}:enabled:active { background: rgba(${rgb}, 0.68); }
+            ${selector}.p-button-text:enabled:focus, ${selector}.p-button-outlined:enabled:focus { background: rgba(${rgb}, 0.12); }
+            ${selector}.p-button-text:enabled:active, ${selector}.p-button-outlined:enabled:active { background: rgba(${rgb}, 0.16); }
+            ${selector}.p-button-text .p-ink, ${selector}.p-button-outlined .p-ink { background: rgba(${rgb}, 0.16); }`;
+        }).join('\n')}
+        .p-button-outlined:enabled:focus { box-shadow: inset 0 0 0 1px; }
         .p-button:disabled { background: rgba(0, 0, 0, 0.12); color: rgba(0, 0, 0, 0.38); opacity: 1; }
         .p-button:disabled.p-button-text, .p-button:disabled.p-button-outlined { background: transparent; }
       `,

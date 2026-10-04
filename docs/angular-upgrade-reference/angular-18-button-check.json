@@ -1,0 +1,1424 @@
+{
+  "stage": "Angular 18 primary, danger and success button states and hover geometry; full visual acceptance pending",
+  "startingCommit": "6e7b960",
+  "angular": "18.2.14",
+  "primeng": "18.0.2",
+  "browser": "154.0.4258.53",
+  "screenshots": 39,
+  "byteIdentical": 4,
+  "images": [
+    {
+      "file": "1440x1000-lists.png",
+      "baselineSha256": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca",
+      "currentSha256": "99024e0115f5bb2779ceca4977763db9f8dd1d5badd2f6bc53af93b5e141728a"
+    },
+    {
+      "file": "1440x1000-import-dialog.png",
+      "baselineSha256": "df949b788d1dcb125f1018505b4565f1c5d97252373bc73ccd970a0f777d4548",
+      "currentSha256": "793161fc5789a6998332a8994161b66b8746364ce15ae4b807561320e1d4383a"
+    },
+    {
+      "file": "1440x1000-table.png",
+      "baselineSha256": "1fba567d71c355a096753665ae526e57d60f8614c2ae5f8864cfa8da629f13fe",
+      "currentSha256": "92afa7e658ea76493b6ab83a53785a849fda1be50034bfc0f45ab53b932505bd"
+    },
+    {
+      "file": "1440x1000-success-message.png",
+      "baselineSha256": "9a55cc2deaa9fe8432bd46b0fb43d6fc451e788f437c0355a310ab87f9aa636a",
+      "currentSha256": "829f3eb04fa7307c3361e74759b063dcc6171acfc42e5c4982c5fc06ea5bd120"
+    },
+    {
+      "file": "1440x1000-table-loading-disabled.png",
+      "baselineSha256": "fdd38268cc9877af9156b9c12d7cb459a4f4fbfb1eb97e666973288a590a3550",
+      "currentSha256": "b3af2cd51aed01ad2f3cd094770af617d10c49d095465dfd4e9b0681f207cafc"
+    },
+    {
+      "file": "1440x1000-table-inline-edit.png",
+      "baselineSha256": "602983fe139a13fffa811047dc7e2665eaa496f2eaf50c4fd60aec3b5ed4973b",
+      "currentSha256": "5697a2ce5a4fa65824d7ae1de79e91a4d17a49627a56e4c91da09ef15ae4a3e6"
+    },
+    {
+      "file": "1440x1000-table-selection.png",
+      "baselineSha256": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325",
+      "currentSha256": "d78ebb2671b2ee6d756b09391072b7262dc10afd8a2b412960a5f9d2f738751d"
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "baselineSha256": "6c0ce8b12894a6cd5f552d0f7688d4f384fb289f4fb29780d681107ff6bc8445",
+      "currentSha256": "43f2b4f55e20064cc2a44a6debeaeb84dd35090270341a2d8a0ea5dbfdc46a4d"
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "baselineSha256": "de7a5fef1ee65d8f3a3b1b2b3f4df492eff597aac04463476a83bcf58d5742a2",
+      "currentSha256": "bdcde8bb35e97fba320afbd881ee45f9b77b2aa20e7bb50c1bdada11868080fc"
+    },
+    {
+      "file": "1440x1000-transfer-progress.png",
+      "baselineSha256": "a0327d8420760b8e84484ddffdeca8a3dba07acb2764ef8bc7e6596bd0d56421",
+      "currentSha256": "30677303dd81cb3252aadb0b4561c6375da6c7daa83675c3e171a8d31a0a1f7a"
+    },
+    {
+      "file": "1440x1000-transfer-warning.png",
+      "baselineSha256": "31731f05874f484460240abcf45532c5bcb641866ca295e31f85ed44965f9c23",
+      "currentSha256": "1351d6822c935cba02364fe77d06f6919f8a328aaafc7ee768f64c154d95218f"
+    },
+    {
+      "file": "1440x1000-delete-confirmation.png",
+      "baselineSha256": "4dc06aac4c8941689cdea61fd5be926d43bb6b38b171318beb0814522b29b779",
+      "currentSha256": "951cdc2fb007d1e111a78d74051b36b9b923e7e042a660da1961196011bfb0c4"
+    },
+    {
+      "file": "1440x1000-empty-table.png",
+      "baselineSha256": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e",
+      "currentSha256": "0b132b86d4059c47d89d13defbed7a218cfb7095ddbbc51b68f9dcc03c22ef65"
+    },
+    {
+      "file": "1440x1000-settings.png",
+      "baselineSha256": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726",
+      "currentSha256": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726"
+    },
+    {
+      "file": "1440x1000-browse.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "db2ad294e54215bceb999ab6525740ebf6078d85b61575af09c2e9765085fb6c"
+    },
+    {
+      "file": "1440x1000-filter-hover.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "db2ad294e54215bceb999ab6525740ebf6078d85b61575af09c2e9765085fb6c"
+    },
+    {
+      "file": "1440x1000-filter-focus.png",
+      "baselineSha256": "6d6120ac73cb4f6aa9573358ff80bbb861d204b1bfd1f5197e40520230337464",
+      "currentSha256": "db2ad294e54215bceb999ab6525740ebf6078d85b61575af09c2e9765085fb6c"
+    },
+    {
+      "file": "1440x1000-color-menu.png",
+      "baselineSha256": "2a6fd447f668e8fe973f2125fa5c710f1ee5c4b670705de9ca86e4d7cef0adc5",
+      "currentSha256": "bbb0f636df6df27d42663fee451667e1f67b2590569957d550a3b2d1b16f3aab"
+    },
+    {
+      "file": "1440x1000-empty-search.png",
+      "baselineSha256": "19385cb4107fa2141de7037d79eba06de66355f410f08061981c08b2e97fd354",
+      "currentSha256": "ab905207f736457c61857fe96c151731f231139566e9200da80eb675c2c23049"
+    },
+    {
+      "file": "1440x1000-large-search.png",
+      "baselineSha256": "915eabe4d98c5a4a2c44c65684ce487d735e25d73e9906037fd0c4a4a5bf63eb",
+      "currentSha256": "95434fe4bc4ddd1039ef824eecdaacf1538843b14514e068661c053d0835dc38"
+    },
+    {
+      "file": "1440x1000-large-search-scrolled.png",
+      "baselineSha256": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb",
+      "currentSha256": "9cd73dd8c69e790d07d426c348747e6745032b52bd2c4c65575d29176daf4337"
+    },
+    {
+      "file": "390x844-lists.png",
+      "baselineSha256": "4f52f34d250550ee1a32c37c8aa003f39022768ab811de84fc9e2ef1678fc4c6",
+      "currentSha256": "065c7bae321806306665d000c8cf5f5dd393f69958be4b94f65f4084f40adfe8"
+    },
+    {
+      "file": "390x844-import-dialog.png",
+      "baselineSha256": "6f8dc0eb5e33b9269adc02ed62708b59a3c8851aeb87816f112e72b5fa2fa05c",
+      "currentSha256": "bbd14d4e37885a7863c6d1eefdef546bb43a4d9a8c0696ef749951eab003002e"
+    },
+    {
+      "file": "390x844-table.png",
+      "baselineSha256": "525be948636a7fd23d83939daa566f055a99094d149b542d64a24d738778a3a4",
+      "currentSha256": "92f5399d0dccbd2b0a09f9239bc53295a8e2653bc5f6af0a109a1c6c455f9998"
+    },
+    {
+      "file": "390x844-empty-table.png",
+      "baselineSha256": "76160d69839acf2a83b701ad34b9355cefa527ca033a5a9fbf73b187664e1c2e",
+      "currentSha256": "6f1178ace33ab0d92f0d534e12f1a737cc0cb326cb87ce241ecaab1ca444b4de"
+    },
+    {
+      "file": "390x844-settings.png",
+      "baselineSha256": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719",
+      "currentSha256": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719"
+    },
+    {
+      "file": "390x844-browse.png",
+      "baselineSha256": "b19a1ea429919cb7030850594de63008ace6390f37c3326fa383917bdaf89ea7",
+      "currentSha256": "fe7900e4fc4f68da3e8d45680ee5cdbf99b78074baf6e56625cfcb769792a96a"
+    },
+    {
+      "file": "2560x1440-lists.png",
+      "baselineSha256": "8fef4acc75550e7c4b3b1563ac8b8950d63e10f6d98d6eac226ba2261e8c65a5",
+      "currentSha256": "8429d46223226f0a5f8d72849b8cffdc51c972fbd176cc0f5dd5572a93024bb5"
+    },
+    {
+      "file": "2560x1440-import-dialog.png",
+      "baselineSha256": "4b558e5f1ad65de965245420fca15fefd3cc083205cbcc23dbf9772c91bffc95",
+      "currentSha256": "66bfb10391c0567a32311e7f9171abdc647705c6ae23bb46789bc50365a26ea5"
+    },
+    {
+      "file": "2560x1440-table.png",
+      "baselineSha256": "9d0448f7dd1d90d6871b521c2e868dda4d17d57105fde8ea86bbcdcd6fe2cb19",
+      "currentSha256": "3356dbf4651f6352d84c337138473726f3ca9c9bd32a56f4e928d70be50afd2b"
+    },
+    {
+      "file": "2560x1440-empty-table.png",
+      "baselineSha256": "fb206cdf3fa3e4cdfaeabab3486d13260f425f048cc80dc5330cb81a4f6d9fe9",
+      "currentSha256": "a2e1b94ac6f113d6fbd36bd531827296282131b0f3a599506f373c48c2855a4c"
+    },
+    {
+      "file": "2560x1440-settings.png",
+      "baselineSha256": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4",
+      "currentSha256": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4"
+    },
+    {
+      "file": "2560x1440-browse.png",
+      "baselineSha256": "fd1445ea80927fb9bde3a42352bac72f128c8fd2fe75dc7a70a10c8f256d7fc9",
+      "currentSha256": "4e2855b9ec0296b34dc1d370ce2bdf4dd685306749acd6f715f796b1cd1966f7"
+    },
+    {
+      "file": "3200x1440-lists.png",
+      "baselineSha256": "db1d513274b920f9eea5fdf1eddaf22408c0492d54e07ce660a1637c8484f7b3",
+      "currentSha256": "8b135cee1573099a8bb67af64505501f904d18fb4b52d3b7ada63e43603a7f19"
+    },
+    {
+      "file": "3200x1440-import-dialog.png",
+      "baselineSha256": "1da658b9739f4aa9079c15236b21c1786dcbcae41a975446ae8e164e830e9186",
+      "currentSha256": "3b5159773697b23bd1fda2731910399d7b1d94000fe88dffaccb78804b9d029e"
+    },
+    {
+      "file": "3200x1440-table.png",
+      "baselineSha256": "ce9425beb28b804451a5b0b8fc06dd4b77d7ffd9ff9bdab8dd224775cfc08806",
+      "currentSha256": "944edf62c89c3eb6f801c15aff2fcc85e90877a97f7c269af1de18b3fbaf944a"
+    },
+    {
+      "file": "3200x1440-empty-table.png",
+      "baselineSha256": "c9cc38d70cb0c8715e738bf14477ca90a50f19675b67231d3e80b64d600d5019",
+      "currentSha256": "f87f0a0d058edc79b7f41b5566077b56e08b66a10d002bce20357cbeef271d34"
+    },
+    {
+      "file": "3200x1440-settings.png",
+      "baselineSha256": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33",
+      "currentSha256": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33"
+    },
+    {
+      "file": "3200x1440-browse.png",
+      "baselineSha256": "373f583e6fa6095ce98ac069fa27b4e7159c990e62698148c54c717866263d1d",
+      "currentSha256": "9ca342d0b2c914526c72c0fd6ed7386450c59459e61d7747d7773877b99f5fd6"
+    }
+  ],
+  "pageErrors": 0,
+  "consoleErrors": 0,
+  "knownErrors": 0,
+  "tests": {
+    "total": 45,
+    "success": 45
+  },
+  "interactionChecks": {
+    "categorySelection": true,
+    "onlyPrintedToggle": true,
+    "deliveryChannelSelection": true,
+    "paginatorPageSelection": true,
+    "publicColorMenuSelection": true,
+    "publicListBulkMenuCommand": true,
+    "publicPartsBulkMenuCommand": true,
+    "importFileChooserJson": true,
+    "importCancelAndCloseReset": true,
+    "importXmlDrop": true,
+    "toastSeverityDisplayAndClose": true,
+    "toastKeyboardClosePreservesOtherMessage": true,
+    "tableKeyboardSortAscendingDescending": true,
+    "tableSortedHeaderHover": true,
+    "tableTabKeyboardFilter": true,
+    "selectUnitMouseSaveAndReopen": true,
+    "selectUnitKeyboardAndEscape": true,
+    "selectDisabledBlocksPopup": true,
+    "selectNestedPopupAndDrawerEscape": true,
+    "selectLocaleLabelsMouseKeyboardAndSave": true,
+    "buttonDangerMouseFocusActiveAndSpaceDelete": true,
+    "buttonOutlinedHoverFocusAndEnterOpensDrawer": true,
+    "buttonSolidHoverFocusActiveAndSpaceTransfer": true,
+    "buttonDisabledBlocksCommand": true,
+    "buttonDangerOutlinedStates": true,
+    "buttonSuccessStatesAndEnterPersistsHaveIt": true
+  },
+  "renderer": {
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+    "compositing": "enabled",
+    "rasterization": "enabled"
+  },
+  "rendererAtEnd": {
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+    "compositing": "enabled",
+    "rasterization": "enabled"
+  },
+  "repeatCapture": {
+    "directory": "artefacts/angular-upgrade/visual/angular-18-button-accepted-repeat",
+    "total": 61,
+    "byteIdentical": 52,
+    "referenceScenarioByteIdentical": 37,
+    "additionalByteIdentical": 15,
+    "changedImages": [
+      {
+        "file": "1440x1000-transfer-progress.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "3200x1440-table.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          148,
+          180,
+          149
+        ]
+      },
+      {
+        "file": "1440x1000-table-sort-ascending.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-table-sort-descending.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-table-header-hover.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-button-danger-hover.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-button-danger-focus.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-button-outlined-focus.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          550,
+          180,
+          551
+        ]
+      },
+      {
+        "file": "1440x1000-button-solid-focus.png",
+        "differentPixels": 4,
+        "bounds": [
+          179,
+          376,
+          180,
+          377
+        ]
+      }
+    ],
+    "renderer": {
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+      "compositing": "enabled",
+      "rasterization": "enabled"
+    },
+    "rendererAtEnd": {
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+      "compositing": "enabled",
+      "rasterization": "enabled"
+    },
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "knownErrors": 0,
+    "interactionChecks": {
+      "categorySelection": true,
+      "onlyPrintedToggle": true,
+      "deliveryChannelSelection": true,
+      "paginatorPageSelection": true,
+      "publicColorMenuSelection": true,
+      "publicListBulkMenuCommand": true,
+      "publicPartsBulkMenuCommand": true,
+      "importFileChooserJson": true,
+      "importCancelAndCloseReset": true,
+      "importXmlDrop": true,
+      "toastSeverityDisplayAndClose": true,
+      "toastKeyboardClosePreservesOtherMessage": true,
+      "tableKeyboardSortAscendingDescending": true,
+      "tableSortedHeaderHover": true,
+      "tableTabKeyboardFilter": true,
+      "selectUnitMouseSaveAndReopen": true,
+      "selectUnitKeyboardAndEscape": true,
+      "selectDisabledBlocksPopup": true,
+      "selectNestedPopupAndDrawerEscape": true,
+      "selectLocaleLabelsMouseKeyboardAndSave": true,
+      "buttonDangerMouseFocusActiveAndSpaceDelete": true,
+      "buttonOutlinedHoverFocusAndEnterOpensDrawer": true,
+      "buttonSolidHoverFocusActiveAndSpaceTransfer": true,
+      "buttonDisabledBlocksCommand": true,
+      "buttonDangerOutlinedStates": true,
+      "buttonSuccessStatesAndEnterPersistsHaveIt": true
+    }
+  },
+  "previousCheckpointComparison": {
+    "directory": "artefacts/angular-upgrade/visual/angular-18-select-verified",
+    "byteIdentical": 13,
+    "changedImages": [
+      "1440x1000-lists.png",
+      "1440x1000-import-dialog.png",
+      "1440x1000-table.png",
+      "1440x1000-success-message.png",
+      "1440x1000-table-loading-disabled.png",
+      "1440x1000-table-inline-edit.png",
+      "1440x1000-table-selection.png",
+      "1440x1000-list-settings.png",
+      "1440x1000-export-dialog.png",
+      "1440x1000-transfer-progress.png",
+      "1440x1000-transfer-warning.png",
+      "1440x1000-delete-confirmation.png",
+      "1440x1000-browse.png",
+      "1440x1000-filter-hover.png",
+      "1440x1000-filter-focus.png",
+      "1440x1000-color-menu.png",
+      "1440x1000-large-search.png",
+      "1440x1000-large-search-scrolled.png",
+      "2560x1440-lists.png",
+      "2560x1440-import-dialog.png",
+      "2560x1440-table.png",
+      "2560x1440-browse.png",
+      "3200x1440-lists.png",
+      "3200x1440-import-dialog.png",
+      "3200x1440-table.png",
+      "3200x1440-browse.png"
+    ]
+  },
+  "referenceMeasurements": {
+    "button": {
+      "before": {
+        "width": 252,
+        "height": 41.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgb(255, 255, 255)",
+        "backgroundColor": "rgb(10, 52, 99)",
+        "borderRadius": "4px",
+        "padding": "11.424px 16px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 252,
+        "height": 41.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgb(255, 255, 255)",
+        "backgroundColor": "rgb(10, 52, 99)",
+        "borderRadius": "4px",
+        "padding": "11.424px 16px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 284.8125,
+        "lineHeight": "normal"
+      }
+    },
+    "card": {
+      "before": {
+        "width": 196.390625,
+        "height": 320,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "8px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 196.390625,
+        "height": 320,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "8px",
+        "boxShadow": "none",
+        "x": 398,
+        "y": 433.21875,
+        "lineHeight": "normal"
+      }
+    },
+    "partRow": {
+      "before": {
+        "width": 1322,
+        "height": 91,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none"
+      },
+      "after": {
+        "width": 1322,
+        "height": 91,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(245, 245, 245)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none",
+        "x": 94,
+        "y": 608.875,
+        "lineHeight": "normal"
+      }
+    },
+    "navigationWidth": {
+      "before": 60,
+      "after": 60
+    },
+    "warningDialog": {
+      "before": {
+        "width": 720,
+        "height": 755.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgb(0, 0, 0)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "4px",
+        "padding": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px"
+      },
+      "after": {
+        "width": 720,
+        "height": 755.84375,
+        "fontSize": "16px",
+        "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px",
+        "x": 360,
+        "y": 122.078125,
+        "lineHeight": "normal"
+      }
+    }
+  },
+  "tableMeasurements": {
+    ".p-datatable-thead tr": {
+      "width": 1322,
+      "height": 56,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 552.875,
+      "lineHeight": "normal"
+    },
+    ".p-datatable-tbody tr": {
+      "width": 1322,
+      "height": 91,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgb(245, 245, 245)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 608.875,
+      "lineHeight": "normal"
+    },
+    ".p-datatable-tbody tr:nth-child(2)": {
+      "width": 1322,
+      "height": 91,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0.02)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 699.875,
+      "lineHeight": "normal"
+    },
+    ".p-sortable-column-icon": {
+      "width": 14,
+      "height": 14,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.6)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 286.90625,
+      "y": 571.875,
+      "lineHeight": "normal"
+    },
+    "app-pab-price .p-tag": {
+      "width": 67.046875,
+      "height": 22,
+      "fontSize": "12px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(33, 37, 41)",
+      "backgroundColor": "rgb(251, 192, 45)",
+      "borderRadius": "4px",
+      "padding": "4px 6.4px",
+      "boxShadow": "none",
+      "x": 1135.890625,
+      "y": 659.375,
+      "lineHeight": "normal"
+    },
+    "app-pab-price .p-tag-info": {
+      "width": 61.59375,
+      "height": 22,
+      "fontSize": "12px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgb(33, 150, 243)",
+      "borderRadius": "4px",
+      "padding": "4px 6.4px",
+      "boxShadow": "none",
+      "x": 1135.890625,
+      "y": 750.375,
+      "lineHeight": "normal"
+    },
+    "app-pab-price .p-tag-danger": {
+      "width": 81.109375,
+      "height": 22,
+      "fontSize": "12px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgb(211, 47, 47)",
+      "borderRadius": "4px",
+      "padding": "4px 6.4px",
+      "boxShadow": "none",
+      "x": 1135.890625,
+      "y": 943.375,
+      "lineHeight": "normal"
+    },
+    ".p-tab": {
+      "width": 87.140625,
+      "height": 49,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgb(10, 52, 99)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "4px 4px 0px 0px",
+      "padding": "16px 24px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 502.875,
+      "lineHeight": "16px"
+    },
+    ".p-tablist": {
+      "width": 1322,
+      "height": 50,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 502.875,
+      "lineHeight": "normal"
+    },
+    ".p-tablist-active-bar": {
+      "width": 87,
+      "height": 2,
+      "fontSize": "16px",
+      "fontFamily": "Roboto, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "backgroundColor": "rgb(10, 52, 99)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "boxShadow": "none",
+      "x": 94,
+      "y": 549.875,
+      "lineHeight": "normal"
+    }
+  },
+  "tablePixelComparison": {
+    "file": "1440x1000-table.png",
+    "previous": {
+      "differentPixels": 3812,
+      "bounds": [
+        94,
+        217,
+        1415,
+        934
+      ]
+    },
+    "current": {
+      "differentPixels": 3100,
+      "bounds": [
+        94,
+        217,
+        1415,
+        608
+      ]
+    }
+  },
+  "successToastReferenceRegion": {
+    "file": "1440x1000-success-message.png",
+    "rectangle": {
+      "x": 1020,
+      "y": 20,
+      "width": 400,
+      "height": 86
+    },
+    "differentPixels": 0,
+    "bounds": null
+  },
+  "selectMeasurements": {
+    "1440x1000-select-unit-popup.png": {
+      ".p-select": {
+        "width": 136,
+        "height": 53,
+        "x": 1288,
+        "y": 407.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-label": {
+        "width": 96.296875,
+        "height": 51,
+        "x": 1289,
+        "y": 408.8125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 1385.296875,
+        "y": 408.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": {
+        "width": 136,
+        "height": 102,
+        "x": 1288,
+        "y": 460.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px",
+        "opacity": "1"
+      },
+      ".p-select-list": {
+        "width": 136,
+        "height": 102,
+        "x": 1288,
+        "y": 460.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option": {
+        "width": 136,
+        "height": 51,
+        "x": 1288,
+        "y": 460.8125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option-selected": {
+        "width": 136,
+        "height": 51,
+        "x": 1288,
+        "y": 460.8125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option.p-focus": {
+        "width": 136,
+        "height": 51,
+        "x": 1288,
+        "y": 460.8125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      }
+    },
+    "1440x1000-select-unit-selected.png": {
+      ".p-select": {
+        "width": 136,
+        "height": 53,
+        "x": 1288,
+        "y": 407.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-label": {
+        "width": 96.296875,
+        "height": 51,
+        "x": 1289,
+        "y": 408.8125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 1385.296875,
+        "y": 408.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": null,
+      ".p-select-list": null,
+      ".p-select-option": null,
+      ".p-select-option-selected": null,
+      ".p-select-option.p-focus": null
+    },
+    "1440x1000-select-unit-disabled.png": {
+      ".p-select": {
+        "width": 136,
+        "height": 53,
+        "x": 1288,
+        "y": 407.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "0.38"
+      },
+      ".p-select-label": {
+        "width": 96.296875,
+        "height": 51,
+        "x": 1289,
+        "y": 408.8125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 1385.296875,
+        "y": 408.8125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": null,
+      ".p-select-list": null,
+      ".p-select-option": null,
+      ".p-select-option-selected": null,
+      ".p-select-option.p-focus": null
+    },
+    "1440x1000-select-locale-dialog.png": {
+      ".p-select": {
+        "width": 252,
+        "height": 53,
+        "x": 594,
+        "y": 374.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-label": {
+        "width": 212.296875,
+        "height": 51,
+        "x": 595,
+        "y": 375.578125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 807.296875,
+        "y": 375.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": null,
+      ".p-select-list": null,
+      ".p-select-option": null,
+      ".p-select-option-selected": null,
+      ".p-select-option.p-focus": null
+    },
+    "1440x1000-select-country-popup.png": {
+      ".p-select": {
+        "width": 252,
+        "height": 53,
+        "x": 594,
+        "y": 374.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-label": {
+        "width": 212.296875,
+        "height": 51,
+        "x": 595,
+        "y": 375.578125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 807.296875,
+        "y": 375.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": {
+        "width": 252,
+        "height": 200,
+        "x": 594,
+        "y": 427.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px",
+        "opacity": "1"
+      },
+      ".p-select-list": {
+        "width": 252,
+        "height": 1275,
+        "x": 594,
+        "y": 427.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 427.578125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option-selected": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 733.578125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option.p-focus": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 733.578125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      }
+    },
+    "1440x1000-select-language-popup.png": {
+      ".p-select": {
+        "width": 252,
+        "height": 53,
+        "x": 594,
+        "y": 374.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-label": {
+        "width": 212.296875,
+        "height": 51,
+        "x": 595,
+        "y": 375.578125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-dropdown": {
+        "width": 37.703125,
+        "height": 51,
+        "x": 807.296875,
+        "y": 375.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.6)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px 4px 4px 0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-overlay": {
+        "width": 252,
+        "height": 153,
+        "x": 594,
+        "y": 523.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px",
+        "opacity": "1"
+      },
+      ".p-select-list": {
+        "width": 252,
+        "height": 153,
+        "x": 594,
+        "y": 523.578125,
+        "padding": "0px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 523.578125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option-selected": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 523.578125,
+        "padding": "16px",
+        "color": "rgb(10, 52, 99)",
+        "backgroundColor": "rgba(10, 52, 99, 0.12)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      },
+      ".p-select-option.p-focus": {
+        "width": 252,
+        "height": 51,
+        "x": 594,
+        "y": 574.578125,
+        "padding": "16px",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "backgroundColor": "rgba(0, 0, 0, 0.04)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "opacity": "1"
+      }
+    }
+  },
+  "buttonMeasurements": {
+    "danger-text-rest": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 48,
+      "height": 48,
+      "padding": "11.424px",
+      "fontSize": "16px"
+    },
+    "danger-text-hover": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(211, 47, 47, 0.04)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 48,
+      "height": 48,
+      "padding": "11.424px",
+      "fontSize": "16px"
+    },
+    "danger-text-focus": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(211, 47, 47, 0.12)",
+      "boxShadow": "none",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 48,
+      "height": 48,
+      "padding": "11.424px",
+      "fontSize": "16px"
+    },
+    "danger-text-active": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(211, 47, 47, 0.16)",
+      "boxShadow": "none",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 48,
+      "height": 48,
+      "padding": "11.424px",
+      "fontSize": "16px"
+    },
+    "primary-outlined-hover": {
+      "color": "rgb(10, 52, 99)",
+      "backgroundColor": "rgba(10, 52, 99, 0.04)",
+      "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px"
+    },
+    "primary-outlined-focus": {
+      "color": "rgb(10, 52, 99)",
+      "backgroundColor": "rgba(10, 52, 99, 0.12)",
+      "boxShadow": "rgb(10, 52, 99) 0px 0px 0px 1px inset",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px"
+    },
+    "primary-solid-hover": {
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgba(10, 52, 99, 0.92)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px"
+    },
+    "primary-solid-focus": {
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgba(10, 52, 99, 0.76)",
+      "boxShadow": "none",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px"
+    },
+    "primary-solid-active": {
+      "color": "rgb(255, 255, 255)",
+      "backgroundColor": "rgba(10, 52, 99, 0.68)",
+      "boxShadow": "none",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px"
+    },
+    "primary-outlined-disabled-hover": {
+      "color": "rgba(0, 0, 0, 0.38)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "boxShadow": "rgba(0, 0, 0, 0.38) 0px 0px 0px 1px inset",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 318.5,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px"
+    },
+    "danger-outlined-rest": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "boxShadow": "rgb(211, 47, 47) 0px 0px 0px 1px inset",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 99.625,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px"
+    },
+    "danger-outlined-hover": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(211, 47, 47, 0.04)",
+      "boxShadow": "rgb(211, 47, 47) 0px 0px 0px 1px inset",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 99.625,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px"
+    },
+    "danger-outlined-focus": {
+      "color": "rgb(211, 47, 47)",
+      "backgroundColor": "rgba(211, 47, 47, 0.12)",
+      "boxShadow": "rgb(211, 47, 47) 0px 0px 0px 1px inset",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 99.625,
+      "height": 41.84375,
+      "padding": "11.424px 16px",
+      "fontSize": "16px"
+    },
+    "success-text-rest": {
+      "color": "rgb(104, 159, 56)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 35,
+      "height": 35,
+      "padding": "11.424px",
+      "fontSize": "20px"
+    },
+    "success-text-hover": {
+      "color": "rgb(104, 159, 56)",
+      "backgroundColor": "rgba(104, 159, 56, 0.04)",
+      "boxShadow": "none",
+      "outlineWidth": "3px",
+      "opacity": "1",
+      "width": 35,
+      "height": 35,
+      "padding": "11.424px",
+      "fontSize": "20px"
+    },
+    "success-text-focus": {
+      "color": "rgb(104, 159, 56)",
+      "backgroundColor": "rgba(104, 159, 56, 0.12)",
+      "boxShadow": "none",
+      "outlineWidth": "0px",
+      "opacity": "1",
+      "width": 35,
+      "height": 35,
+      "padding": "11.424px",
+      "fontSize": "20px"
+    }
+  },
+  "additionalScreenshots": [
+    {
+      "file": "1440x1000-import-selected-json.png",
+      "sha256": "e45c09fa0369bf190fa6c9835064e2164a57d27f056fd2c2330b68ae821b9724"
+    },
+    {
+      "file": "1440x1000-import-dropped-xml.png",
+      "sha256": "eae77d91286d1208f9da609de0209a90ef9cb1ea893120fed96416a2e8edd7f4"
+    },
+    {
+      "file": "1440x1000-toast-success.png",
+      "sha256": "73c74e071d62bb76191746f322931bd7e3829d8710fafd26084a9224d2f7beeb"
+    },
+    {
+      "file": "1440x1000-toast-info.png",
+      "sha256": "802801f785cf9ea88cd05feb6875d9b2140e2aed592ead723eb34dfc7ccd2f10"
+    },
+    {
+      "file": "1440x1000-toast-warn.png",
+      "sha256": "8dbeb95ef51f734d8efd909a43443a7235f255b0d03948b840c2e00ed74bbae6"
+    },
+    {
+      "file": "1440x1000-toast-error.png",
+      "sha256": "0d53ba014629bee2cd4cc693c16048ee0f58ff039b462c737fada091673717b8"
+    },
+    {
+      "file": "1440x1000-table-sort-ascending.png",
+      "sha256": "a772e7c3f48e80ace0466510bc93127507d7112a67250710afcf06f71aa3cef9"
+    },
+    {
+      "file": "1440x1000-table-sort-descending.png",
+      "sha256": "9283f45e77c8324df0fc115a56b768e794e36b4a56fd08ea651f71bdbfb07eca"
+    },
+    {
+      "file": "1440x1000-table-header-hover.png",
+      "sha256": "9283f45e77c8324df0fc115a56b768e794e36b4a56fd08ea651f71bdbfb07eca"
+    },
+    {
+      "file": "1440x1000-table-tab-keyboard.png",
+      "sha256": "e161f701d8de27aa5940531d80a52428244ab2e4d8074af688c6f61dddd1c6aa"
+    },
+    {
+      "file": "1440x1000-select-unit-popup.png",
+      "sha256": "ee0ab70dbd5d6f095b8a1851b7348f2f4844919562e6cda0b71a77a7ec34d029"
+    },
+    {
+      "file": "1440x1000-select-unit-selected.png",
+      "sha256": "490a11be1122dd4232074aa883ea9c2c99519e524ee5c36c782aca72ca94bf54"
+    },
+    {
+      "file": "1440x1000-select-unit-disabled.png",
+      "sha256": "037216b6e558096c4bae59347f943c326355dd92b1900c355c614ec4d7319951"
+    },
+    {
+      "file": "1440x1000-select-locale-dialog.png",
+      "sha256": "fb273b9dda25807828cf0b29f52c04199f5b5de7e46b1726d0cc29b0fb394df9"
+    },
+    {
+      "file": "1440x1000-select-country-popup.png",
+      "sha256": "2c7598bb2d3b242b9fa9b1840eef6bd1f58ffcb7d5ba8e986625dd27698f4d71"
+    },
+    {
+      "file": "1440x1000-select-language-popup.png",
+      "sha256": "2cf76f541ce97f652bc529c78b7180a849c7648ab158d3ea6c6870e7f8137221"
+    },
+    {
+      "file": "1440x1000-button-danger-hover.png",
+      "sha256": "234446da7cc622c98c0c4263819aa3ba19aeba1f1e21feae98b04ac049661749"
+    },
+    {
+      "file": "1440x1000-button-danger-focus.png",
+      "sha256": "5f8aa51323aa6999a5aed44cc3550b201380d4594733d6e1e1b986b60ed95a8e"
+    },
+    {
+      "file": "1440x1000-button-outlined-focus.png",
+      "sha256": "101383303e82c6828c31c5cc4eafb2f1fca52f0688a014b1d73754868f3bac76"
+    },
+    {
+      "file": "1440x1000-button-solid-focus.png",
+      "sha256": "27eb69ea9ef0d838abc02e55d898b34029da25bf2486bcbe4668d1b449f45ecb"
+    },
+    {
+      "file": "1440x1000-button-danger-outlined-focus.png",
+      "sha256": "5b46bbb782410967747840fc9fd49a30f8392aaa44ead2611599c3137328a80a"
+    },
+    {
+      "file": "1440x1000-button-success-focus.png",
+      "sha256": "e46615099cdd211bc0d5c1ab8ac675a45a027e731b07dbdacfe2b1af518216ec"
+    }
+  ],
+  "extensionOutputs": {
+    "production": {
+      "requiredFilesPresent": true,
+      "manifestUnchanged": true,
+      "standaloneExtensionEntries": true,
+      "fixtureAndPrototypeMarkersAbsent": true
+    },
+    "development": {
+      "requiredFilesPresent": true,
+      "manifestUnchanged": true,
+      "standaloneExtensionEntries": true,
+      "fixtureAndPrototypeMarkersAbsent": true
+    }
+  },
+  "pending": [
+    "Remaining icon and toggle states, complete button-state acceptance",
+    "Complete menu, overlay and selected-file visual acceptance",
+    "Full Angular 18 UI acceptance before Angular 19",
+    "Residual repeat capture differences recorded above"
+  ]
+}
