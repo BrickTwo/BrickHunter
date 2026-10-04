@@ -491,3 +491,41 @@ git commit -m "fix: align PrimeNG toasts and stabilize reference rendering"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.
+
+## Commit-Punkt 13: Tabellen, Preis-Tags und Tabs-Geometrie
+
+Ausgangspunkt: Commit **`e22821e`**, der Toasts und die Renderer-Prüfung (Commit-Punkt 12) sichert. Paketversionen und Lockfile bleiben unverändert auf Angular **18.2.14** / PrimeNG **18.0.2**.
+
+### Erfolgreich umgesetzt
+
+- Die vier Tabellen verwenden jetzt den öffentlichen **`stripedRows`-Input** statt einer `styleClass`, die PrimeNG 18 auf den Host setzt. Die begrenzten Tabellenregeln stellen die bisherige Reihenfolge wieder her: erste/ungerade Zeilen **#f5f5f5**, gerade Zeilen **rgba(0, 0, 0, 0.02)**. PrimeNG 18 verwendet im Theme selbst die umgekehrte Streifenreihenfolge; deshalb ist die Reihenfolge im vorhandenen BrickHunter-Layer ausdrücklich festgelegt. Zeilen mit der öffentlichen Auswahlklasse behalten die vorgesehene Highlight-Farbe. Tabellenlisten, Teile, Transferwarnung und Produktvorschläge verwenden denselben Input.
+- Preis-Tags verwenden den öffentlichen **`value`-Input**, damit projizierter Text neben einem leeren Label keinen zusätzlichen 4-px-Gap erzeugt. Die lokale `align-self`-Regel verhindert, dass PrimeNGs neuer Tag-Host in der Preisspalte auf die ganze Spaltenbreite gestreckt wird. Gemessen: Bestseller **67.046875 × 22 px**, Standard **61.59375 × 22 px**, Out Of Stock **81.109375 × 22 px**. Die bisherigen Info-/Danger-/Success-Farben sind im Preset ergänzt; Warnfarbe, Schrift und Padding bleiben erhalten.
+- Sortiericons wieder **14 × 14 px**, **8 px** Abstand zum Text, unselektiert **rgba(0, 0, 0, 0.6)** und sortiert **rgba(0, 0, 0, 0.87)**. PrimeNG 18.0.2 liefert in SortIcon noch `.p-sortable-column-icon`, obwohl die Tabellen-Styles die neue Iconklasse erwarten; die begrenzte Preset-Regel berücksichtigt den tatsächlich installierten öffentlichen Komponenten-DOM.
+- Hover-/Fokus-Regeln für sortierbare Spalten auf die neuen Klassen umgestellt und die überholten doppelten Regeln entfernt. Sortierte Spalten behalten den bisherigen weißen Grundzustand und **#f5f5f5** bei Hover/Fokus. Der zusätzliche Fokusrahmen ist entfernt, passend zur bisherigen Darstellung; die Browserprüfung bestätigt `outline-width: 0px` und keinen Box-Shadow beim Tastatursortieren.
+- Die Tabs-Zeilenhöhe und der untere Abstand sind angeglichen: Tab **49 px**, gesamtes Tablist-Band **50 px**. Die Mindesthöhe des kleinen Kopfzeilenbuttons beträgt wieder **23 px**; dadurch misst der Tabellenkopf **56 px**. Teilezeilen bleiben **91 px** hoch und beginnen in der Desktopaufnahme wieder bei **y=608.875**.
+- Drei neue Browser-Interaktionsprüfungen ergänzen die vorhandenen zwölf: Quantity per Enter auf- und absteigend sortieren einschließlich Daten-/ARIA-Zustand und Fokusdarstellung; Hover der sortierten Spalte; ArrowRight fokussiert den nächsten Tab und Enter aktiviert den Bestseller-Filter. Vier Zusatzbilder dokumentieren diese Zustände. Die ursprünglichen 39 Szenarien bleiben erhalten; Zusatzbilder sind kein Ersatz für die Referenz.
+
+API-Grundlage: [PrimeNG 18 Table](https://v18.primeng.org/table), [Tag](https://v18.primeng.org/tag), [Tabs](https://v18.primeng.org/tabs). DOM, Theme-Tokens und Klassen wurden zusätzlich gegen die installierten 18.0.2-Quellen und die ursprüngliche Theme-Datei geprüft.
+
+### Validierung und verbleibende Arbeit
+
+- **44 Tests erfolgreich** mit Headless Edge, Exitcode 0. Abschließende CSS-Fokuskorrektur zusätzlich in den folgenden Browserläufen und Builds geprüft; Anwendungstypprüfung erfolgreich.
+- Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktionsumfang **2.33 MB**, unter der unveränderten 3-MB-Fehlergrenze. Bisherige Budget-/CommonJS-Warnungen bestehen fort.
+- Beide regulären Outputs geprüft: benötigte UI-/Extension-Dateien vorhanden; Chrome-Manifest byteidentisch zur Quelle; standalone Extension-Einstiege ohne `webpackChunk`-Verweise; keine Referenz-Fixture-/Prototyp-Marker in regulären JS-Bundles.
+- Zwei abschließende Browserläufe mit jeweils **39 Referenzszenarien plus zehn Zusatzbildern**, **15 erfolgreichen Interaktionsprüfungen** und **0 Konsolenfehlern / 0 unbehandelten Browserfehlern / 0 bekannten NG0100-Meldungen** in diesen kontrollierten Szenarien. Desktop-/schmale Tabelle sowie absteigende Sortierung wurden zusätzlich visuell geprüft. Die bereits in der Ausgangsreferenz vorhandene horizontale Überbreite der schmalen Ansicht bleibt separat dokumentiert.
+- Im abschließenden Wiederholungspaar sind **49/49 PNGs byteidentisch** (**39/39 Hauptszenarien**, **10/10 Zusatzbilder**). Renderer, GPU-Compositing und Rasterization stimmen vor/nach beiden Läufen überein. In einem vorherigen Diagnosepaar dieses Abschnitts traten noch die bekannten vier Pixel am rechten Ende der Tabs-Unterstreichung auf. Sie sind im Abschlussvergleich nicht aufgetreten; die zwei übereinstimmenden Läufe beweisen keine allgemeine Reproduzierbarkeit über beliebige Browser-/Treiberstände.
+- Die Desktop-Teiletabelle weist gegenüber der unveränderten Angular-17-Referenz noch **3.812 unterschiedliche Pixel** auf; vor diesem Abschnitt waren es **281.864**. Die restlichen Icon-/Button-/Toggle-/Unterstreichungsdetails und die übrigen Szenarien bleiben abzugleichen. Weiterhin **0/39 vollständige Referenzbilder byteidentisch**; gegenüber Commit-Punkt 12 sind **15/39 Hauptbilder unverändert**.
+- Buttonhöhe **41.84375 px**, Karten **196.390625 × 320 px / 8 px Padding**, Tabellenzeilen **91 px**, Navigation **60 px** und Transferwarndialog **720 × 755.84375 px** bleiben erhalten. Der Erfolgstoast bleibt im gemessenen **400 × 86-px-Bereich pixelgleich** zur ursprünglichen Referenz. Messwerte, Prüfsummen, Pixelzahlen, Renderer sowie Output-/Interaktionsprüfungen: [angular-18-table-check.json](angular-upgrade-reference/angular-18-table-check.json).
+
+Noch offen: übrige Select-/Icon-/Button-/Toggle-Zustände und der vollständige Hover-/Fokus-/Disabled-Abgleich, vollständige Menü-/Overlay-/Dateiauswahl-Abnahme sowie übrige Referenzabweichungen. Die ursprünglichen Angular-17-Bilder bleiben die Abnahmebasis. **Angular 19 bleibt bis zur vollständigen UI-Abnahme auf Version 18 zurückgestellt.**
+
+Logs: `artefacts/angular-upgrade/angular-18/table-tests.log`, `table-build-accepted.log`, `table-production-accepted.log`, `table-development-accepted.log`, `table-capture-accepted.log` und `table-capture-accepted-repeat.log`. Outputs: `artefacts/angular-upgrade/angular-18/table-accepted/{production,development}/`. Abschließende Bilder: `artefacts/angular-upgrade/visual/angular-18-table-accepted/` und `angular-18-table-accepted-repeat/`. Preview-/`table-final`-/`table-repeat`-Aufnahmen sind Diagnose-Zwischenstände.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: restore table styling and compact price tags on PrimeNG 18"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Die Umsetzung hält hier auf Wunsch des Nutzers am geprüften Commit-Punkt an. Nach dem Commit und `weiter` folgt der nächste Abschnitt auf Version 18.

@@ -110,7 +110,10 @@ async function main() {
             '.p-drawer-mask', '.p-drawer-header', '.p-fileupload-header', '.p-fileupload-content',
             'app-parts-list-import textarea', '.p-fileupload-choose-button',
             '.p-toast', '.p-toast-message', '.p-toast-message-content', '.p-toast-message-icon',
-            '.p-toast-message-text', '.p-toast-summary', '.p-toast-detail', '.p-toast-close-button'];
+            '.p-toast-message-text', '.p-toast-summary', '.p-toast-detail', '.p-toast-close-button',
+            '.p-tablist', '.p-tablist-active-bar', '.p-sortable-column-icon',
+            '.p-datatable-tbody tr:nth-child(2)', 'app-pab-price .p-tag',
+            'app-pab-price .p-tag-info', 'app-pab-price .p-tag-danger'];
           const values = {};
           for (const selector of selectors) {
             const element = document.querySelector(selector);
@@ -119,7 +122,8 @@ async function main() {
             const css = getComputedStyle(element);
             values[selector] = { width: rect.width, height: rect.height, fontSize: css.fontSize,
               fontFamily: css.fontFamily, color: css.color, backgroundColor: css.backgroundColor,
-              borderRadius: css.borderRadius, padding: css.padding, boxShadow: css.boxShadow };
+              borderRadius: css.borderRadius, padding: css.padding, boxShadow: css.boxShadow,
+              x: rect.x, y: rect.y, lineHeight: css.lineHeight };
           }
           return values;
         });
@@ -273,6 +277,50 @@ async function main() {
         await page.waitForFunction(() => document.querySelectorAll('.p-toast-message').length === 1 && document.querySelector('.p-toast-message').textContent.includes('Second message'));
         await page.evaluate(() => window.brickHunterReference.clearMessages());
         report.interactionChecks.toastKeyboardClosePreservesOtherMessage = true;
+        await open('parts-lists/upgrade-reference');
+        async function additionalCapture(name) {
+          await settle();
+          const file = `1440x1000-${name}.png`;
+          await page.screenshot({ path: path.join(output, file), animations: 'disabled' });
+          report.additionalScreenshots.push(file);
+        }
+        const quantityHeader = page.locator('app-parts-table th[pSortableColumn="qty"]');
+        await quantityHeader.press('Enter');
+        await page.waitForFunction(() => {
+          const table = window.ng.getComponent(document.querySelector('app-parts-table'));
+          return table.parts[0].qty === 10 && document.querySelector('th[psortablecolumn="qty"]').getAttribute('aria-sort') === 'ascending';
+        });
+        await additionalCapture('table-sort-ascending');
+        const headerFocus = await quantityHeader.evaluate(element => {
+          const css = getComputedStyle(element);
+          return { outlineWidth: css.outlineWidth, boxShadow: css.boxShadow };
+        });
+        if (headerFocus.outlineWidth !== '0px' || headerFocus.boxShadow !== 'none')
+          throw new Error(`Unexpected table header focus: ${JSON.stringify(headerFocus)}`);
+        await quantityHeader.press('Enter');
+        await page.waitForFunction(() => {
+          const table = window.ng.getComponent(document.querySelector('app-parts-table'));
+          return table.parts[0].qty === 120 && document.querySelector('th[psortablecolumn="qty"]').getAttribute('aria-sort') === 'descending';
+        });
+        await additionalCapture('table-sort-descending');
+        report.interactionChecks.tableKeyboardSortAscendingDescending = true;
+        await quantityHeader.hover();
+        const hoverBackground = await quantityHeader.evaluate(element => getComputedStyle(element).backgroundColor);
+        if (hoverBackground !== 'rgb(245, 245, 245)') throw new Error(`Unexpected table header hover: ${hoverBackground}`);
+        await additionalCapture('table-header-hover');
+        report.interactionChecks.tableSortedHeaderHover = true;
+        await open('parts-lists/upgrade-reference');
+        const tabs = page.getByRole('tab');
+        await tabs.first().press('ArrowRight');
+        if (!await tabs.nth(1).evaluate(element => element === document.activeElement))
+          throw new Error('ArrowRight did not focus the next table tab');
+        await tabs.nth(1).press('Enter');
+        await page.waitForFunction(() => {
+          const detail = window.ng.getComponent(document.querySelector('app-parts-list-detail'));
+          return detail.activeItem.id === 'pab' && document.querySelector('[role="tab"][aria-selected="true"]').textContent.includes('PaB Bestseller');
+        });
+        await additionalCapture('table-tab-keyboard');
+        report.interactionChecks.tableTabKeyboardFilter = true;
       }
       await context.close();
     }

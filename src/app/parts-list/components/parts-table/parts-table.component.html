@@ -2,7 +2,7 @@
 <p-table
   [value]="parts"
   [tableStyle]="{ 'min-width': '50rem' }"
-  styleClass="p-datatable-striped"
+  [stripedRows]="true"
   [scrollHeight]="'calc(100vh - ' + scrollHeightSubtraction + 'px)'"
   #tableRef
   [scrollable]="false"

@@ -135,10 +135,31 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-paginator-page, .p-paginator-first, .p-paginator-prev, .p-paginator-next, .p-paginator-last { margin: 0.143rem; font: inherit; }
       `,
     },
-    datatable: { headerCell: { padding: '1rem' }, columnTitle: { fontWeight: '500' } },
+    datatable: {
+      headerCell: {
+        padding: '1rem',
+        selectedBackground: '#ffffff',
+        selectedColor: 'rgba(0, 0, 0, 0.87)',
+      },
+      bodyCell: { borderColor: '#e4e4e4' },
+      columnTitle: { fontWeight: '500' },
+      // SortIcon in 18.0.2 still emits the legacy class, unlike Table's own CSS.
+      css: options => `${Material.components.datatable.css(options)}
+        .p-datatable .p-sortable-column-icon { color: rgba(0, 0, 0, 0.6); margin-left: 0.5rem; vertical-align: middle; width: 0.875rem; height: 0.875rem; }
+        .p-datatable .p-datatable-column-sorted .p-sortable-column-icon { color: rgba(0, 0, 0, 0.87); }
+        .p-datatable-thead .p-button { min-height: 1.4375rem; }
+      `,
+    },
     tag: {
       root: { fontSize: '0.75rem', padding: '0.25rem 0.4rem' },
-      colorScheme: { light: { warn: { background: '#fbc02d', color: '#212529' } } },
+      colorScheme: {
+        light: {
+          warn: { background: '#fbc02d', color: '#212529' },
+          info: { background: '#2196f3', color: '#ffffff' },
+          danger: { background: '#d32f2f', color: '#ffffff' },
+          success: { background: '#689f38', color: '#ffffff' },
+        },
+      },
     },
     tabs: {
       tab: {
@@ -148,10 +169,12 @@ export const BrickHunterPreset = definePreset(Material, {
         hoverColor: 'rgba(0, 0, 0, 0.6)',
         hoverBackground: 'rgba(10, 52, 99, 0.04)',
         activeBorderColor: 'rgba(0, 0, 0, 0.12)',
+        margin: '0',
       },
+      activeBar: { bottom: '0' },
       tabpanel: { padding: '0' },
       css: options => `${Material.components.tabs.css(options)}
-        .p-tab { font-family: inherit; font-size: 1rem; border-top-left-radius: 4px; border-top-right-radius: 4px; }
+        .p-tab { font-family: inherit; font-size: 1rem; line-height: 1; border-top-left-radius: 4px; border-top-right-radius: 4px; }
         .p-tabpanels { padding: 0; }
       `,
     },

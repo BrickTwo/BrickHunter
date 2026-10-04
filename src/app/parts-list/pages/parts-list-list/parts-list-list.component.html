@@ -20,7 +20,7 @@
   <p-table
     [value]="partsLists"
     [(selection)]="selectedPartsLists"
-    styleClass="p-datatable-striped"
+    [stripedRows]="true"
     [tableStyle]="{ 'min-width': '50rem' }"
     dataKey="uuid">
     <ng-template pTemplate="header">
