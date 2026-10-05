@@ -3,9 +3,10 @@ import { Subscription } from 'rxjs';
 import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-parts.service';
 
 @Component({
-  selector: 'app-browse-parts-filter',
-  templateUrl: './browse-parts-filter.component.html',
-  styleUrls: ['./browse-parts-filter.component.scss'],
+    selector: 'app-browse-parts-filter',
+    templateUrl: './browse-parts-filter.component.html',
+    styleUrls: ['./browse-parts-filter.component.scss'],
+    standalone: false
 })
 export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
   keyword: string;

@@ -3,9 +3,10 @@ import { LocaleService } from 'src/app/core/services/locale.service';
 import { Part } from 'src/app/models/parts-list';
 
 @Component({
-  selector: 'app-pab-price',
-  templateUrl: './pab-price.component.html',
-  styleUrls: ['./pab-price.component.scss'],
+    selector: 'app-pab-price',
+    templateUrl: './pab-price.component.html',
+    styleUrls: ['./pab-price.component.scss'],
+    standalone: false
 })
 export class PabPriceComponent implements OnInit {
   @Input() part: Part;

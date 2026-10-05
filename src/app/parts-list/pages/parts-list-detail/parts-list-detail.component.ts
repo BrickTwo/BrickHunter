@@ -27,9 +27,10 @@ import { BrickHunterApiService } from 'src/app/core/http/brickhunterapi.service'
 import { GetProductSuggestionsRequest, GetProductSuggestionsResponse } from 'src/app/models/brickhunter-api';
 
 @Component({
-  selector: 'app-parts-list-detail',
-  templateUrl: './parts-list-detail.component.html',
-  styleUrls: ['./parts-list-detail.component.scss'],
+    selector: 'app-parts-list-detail',
+    templateUrl: './parts-list-detail.component.html',
+    styleUrls: ['./parts-list-detail.component.scss'],
+    standalone: false
 })
 export class PartsListDetailComponent implements OnInit, OnDestroy {
   faClipboardList = faClipboardList;

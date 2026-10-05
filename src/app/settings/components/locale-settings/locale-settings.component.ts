@@ -3,9 +3,10 @@ import { LocaleService } from 'src/app/core/services/locale.service';
 import { Country, Language } from 'src/app/models/global';
 
 @Component({
-  selector: 'app-locale-settings',
-  templateUrl: './locale-settings.component.html',
-  styleUrls: ['./locale-settings.component.scss'],
+    selector: 'app-locale-settings',
+    templateUrl: './locale-settings.component.html',
+    styleUrls: ['./locale-settings.component.scss'],
+    standalone: false
 })
 export class LocaleSettingsComponent implements OnInit, AfterViewChecked {
   countries: Country[];

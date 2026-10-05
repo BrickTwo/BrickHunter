@@ -3,9 +3,10 @@ import { LocaleService } from 'src/app/core/services/locale.service';
 import { Country, Language } from 'src/app/models/global';
 
 @Component({
-  selector: 'app-locale',
-  templateUrl: './locale.component.html',
-  styleUrls: ['./locale.component.scss'],
+    selector: 'app-locale',
+    templateUrl: './locale.component.html',
+    styleUrls: ['./locale.component.scss'],
+    standalone: false
 })
 export class LocaleComponent {
   visible = false;

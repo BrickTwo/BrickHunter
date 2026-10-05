@@ -11,10 +11,9 @@ export interface BrickHunterMenuItem extends MenuItem {
 
 // Keep BrickHunter templates behind the public PrimeNG Menu API.
 @Component({
-  selector: 'bh-menu',
-  standalone: true,
-  imports: [CommonModule, RouterModule, PrimeMenuModule],
-  template: `
+    selector: 'bh-menu',
+    imports: [CommonModule, RouterModule, PrimeMenuModule],
+    template: `
     <p-menu
       #menu
       [model]="visibleModel"
@@ -78,8 +77,8 @@ export interface BrickHunterMenuItem extends MenuItem {
       <ng-template pTemplate="submenuheader" let-item>{{ item.label }}</ng-template>
     </p-menu>
   `,
-  styleUrls: ['./menu.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./menu.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class MenuComponent implements OnDestroy {
   @Input() popup = false;

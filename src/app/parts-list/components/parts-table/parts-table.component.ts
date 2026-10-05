@@ -16,9 +16,10 @@ import { ConfirmEventType, ConfirmationService, MenuItem, MessageService } from 
 import { BlukAction } from 'src/app/models/shared';
 
 @Component({
-  selector: 'app-parts-table',
-  templateUrl: './parts-table.component.html',
-  styleUrls: ['./parts-table.component.scss'],
+    selector: 'app-parts-table',
+    templateUrl: './parts-table.component.html',
+    styleUrls: ['./parts-table.component.scss'],
+    standalone: false
 })
 export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input()

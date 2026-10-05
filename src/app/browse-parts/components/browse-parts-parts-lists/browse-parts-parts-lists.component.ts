@@ -5,9 +5,10 @@ import { PartsListService } from 'src/app/parts-list/services/parts-list.service
 import { BrowsePartsService } from '../../service/browse-parts.service';
 
 @Component({
-  selector: 'app-browse-parts-parts-lists',
-  templateUrl: './browse-parts-parts-lists.component.html',
-  styleUrls: ['./browse-parts-parts-lists.component.scss'],
+    selector: 'app-browse-parts-parts-lists',
+    templateUrl: './browse-parts-parts-lists.component.html',
+    styleUrls: ['./browse-parts-parts-lists.component.scss'],
+    standalone: false
 })
 export class BrowsePartsPartsListsComponent implements OnInit, OnDestroy {
   partsLists: PartsList[];

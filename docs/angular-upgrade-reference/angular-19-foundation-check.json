@@ -1,0 +1,1268 @@
+{
+  "baseCommit": "dfd137f",
+  "status": "angular-19-foundation-verified-ui-review-pending",
+  "visualAcceptance": false,
+  "unitTestsPassed": 50,
+  "versions": {
+    "angular": "19.2.25",
+    "primeng": "19.1.4",
+    "playwright": "1.62.1"
+  },
+  "mainScreenshots": 39,
+  "additionalScreenshots": 49,
+  "browserChecks": {
+    "categorySelection": true,
+    "onlyPrintedToggle": true,
+    "deliveryChannelSelection": true,
+    "paginatorPageSelection": true,
+    "publicColorMenuSelection": true,
+    "publicListBulkMenuCommand": true,
+    "publicPartsBulkMenuCommand": true,
+    "importFileChooserJson": true,
+    "importCancelAndCloseReset": true,
+    "importXmlDrop": true,
+    "toastSeverityDisplayAndClose": true,
+    "toastKeyboardClosePreservesOtherMessage": true,
+    "tableHeaderBorderAndSortIconAlignment": true,
+    "tableKeyboardSortAscendingDescending": true,
+    "tableSortedHeaderHover": true,
+    "tableTabKeyboardFilter": true,
+    "selectUnitMouseSaveAndReopen": true,
+    "selectUnitKeyboardAndEscape": true,
+    "selectDisabledBlocksPopup": true,
+    "selectNestedPopupAndDrawerEscape": true,
+    "selectLocaleLabelsMouseKeyboardAndSave": true,
+    "buttonDangerMouseFocusActiveAndSpaceDelete": true,
+    "buttonOutlinedHoverFocusAndEnterOpensDrawer": true,
+    "buttonSolidHoverFocusActiveAndSpaceTransfer": true,
+    "buttonDisabledBlocksCommand": true,
+    "buttonDangerOutlinedStates": true,
+    "buttonListHeaderGeometryBulkStatesAndSpaceMenu": true,
+    "buttonSuccessStatesAndEnterPersistsHaveIt": true,
+    "togglePrintedMouseSpaceBindingAndStates": true,
+    "toggleDisabledOnOffBlocksClick": true,
+    "toggleAffiliateSpaceAndLabelBinding": true,
+    "menuColorFocusSurvivesHover": true,
+    "menuEscapeReturnsTriggerFocus": true,
+    "menuOutsideClickAndTriggerToggleClose": true,
+    "menuScrollResizeReopenAndSpaceSelection": true,
+    "menuBulkHomeEndSpaceAndTableZIndex": true,
+    "menuRouteDestroyRemovesListenersAndKeyboardNavigation": true,
+    "checkboxMouseSpaceLabelAndSettingsSave": true,
+    "checkboxDisabledOnOffBlocksInputAndLabel": true,
+    "checkboxTableRowAndHeaderSpaceSelection": true,
+    "checkboxTableMouseHoverAndKeyboardFocus": true,
+    "overlayDrawerMasksNavigationAndDismissRestoresClicks": true,
+    "overlayNestedSelectAboveDrawerAndEscapeCleanup": true,
+    "overlayDialogMasksNavigationAndCancelRemovesMask": true,
+    "closeDrawerMouseSpaceStatesAndMaskCleanup": true,
+    "closeDialogMouseSpaceStatesAndMaskCleanup": true,
+    "quantityGeometryMouseAndKeyboard": true,
+    "confirmationDefaultAcceptFocusSvgAndKeyboardCancel": true,
+    "warningPreservesInitialFocusAndKeyboardCancel": true,
+    "verticalExportMouseKeyboardAndJsonDownload": true,
+    "radioMouseSpaceExclusiveSelectionAndGeometry": true,
+    "browseQuantityContainedMouseAndKeyboard": true,
+    "copyTargetVerticalLeftAlignmentAndKeyboardSelection": true,
+    "pdfVerticalOptionKeyboardSelectionAndDownload": true,
+    "mobileBrowseQuantityContainedInCard": true,
+    "mobileTabsWheelScrollWithoutNavigator": true
+  },
+  "pageErrors": [],
+  "consoleErrors": [],
+  "knownConsoleErrors": [],
+  "renderer": {
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+    "compositing": "enabled",
+    "rasterization": "enabled"
+  },
+  "rendererAtEnd": {
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+    "compositing": "enabled",
+    "rasterization": "enabled"
+  },
+  "measurements": {
+    "quantity": {
+      "width": 68,
+      "height": 38,
+      "padding": "2px",
+      "totalWidth": 116
+    },
+    "confirmation": {
+      "width": 720,
+      "focusedLabel": "Yes",
+      "icons": [
+        {
+          "width": 14,
+          "height": 14
+        },
+        {
+          "width": 14,
+          "height": 14
+        }
+      ]
+    },
+    "export": {
+      "choices": [
+        {
+          "x": 1136,
+          "y": 140.8125,
+          "width": 288,
+          "height": 43.84375
+        },
+        {
+          "x": 1136,
+          "y": 184.65625,
+          "width": 288,
+          "height": 43.84375
+        },
+        {
+          "x": 1136,
+          "y": 228.5,
+          "width": 288,
+          "height": 43.84375
+        },
+        {
+          "x": 1136,
+          "y": 272.34375,
+          "width": 288,
+          "height": 43.84375
+        },
+        {
+          "x": 1136,
+          "y": 316.1875,
+          "width": 288,
+          "height": 43.84375
+        },
+        {
+          "x": 1136,
+          "y": 360.03125,
+          "width": 288,
+          "height": 43.84375
+        }
+      ],
+      "filename": "BrickHunter_Upgrade-Referenz-All.json",
+      "parts": 8
+    },
+    "radio": {
+      "width": 20,
+      "height": 20,
+      "borderWidth": "2px",
+      "borderColor": "rgb(10, 52, 99)"
+    },
+    "browseQuantity": {
+      "width": 60,
+      "height": 26,
+      "totalWidth": 120,
+      "padding": "2px",
+      "buttonWidths": [
+        30,
+        30
+      ],
+      "containedInCard": true
+    },
+    "copyTargets": [
+      {
+        "width": 288,
+        "labelInset": 17,
+        "textAlign": "left"
+      },
+      {
+        "width": 288,
+        "labelInset": 17,
+        "textAlign": "left"
+      }
+    ],
+    "pdf": {
+      "filename": "BrickHunter_Upgrade-Referenz-All.pdf",
+      "bytes": 172093
+    },
+    "mobileBrowseQuantity": {
+      "width": 120,
+      "containedInCard": true
+    },
+    "mobileTabs": {
+      "width": 272,
+      "contentWidth": 1073,
+      "scroll": 0,
+      "scrollAfterWheel": 801
+    }
+  },
+  "captureLabel": "angular-19-foundation-controls",
+  "comparisonBase": "angular-18-ui-accepted-complete",
+  "noPixelFiltering": true,
+  "originalReferenceUnchanged": true,
+  "outputChecks": {
+    "production": {
+      "requiredFilesPresent": true,
+      "chromeManifestByteIdentical": true,
+      "standaloneExtensionEntries": true,
+      "noReferenceFixtureMarkers": true
+    },
+    "development": {
+      "requiredFilesPresent": true,
+      "chromeManifestByteIdentical": true,
+      "standaloneExtensionEntries": true,
+      "noReferenceFixtureMarkers": true
+    }
+  },
+  "images": [
+    {
+      "file": "1440x1000-browse.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+      "angular19Sha256": "c2abd19dced2caa9eef63568c1e924062de0d36f306b5f5bb3236df4b9beda8e"
+    },
+    {
+      "file": "1440x1000-button-danger-focus.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "71429f4587049aee51c3cd0d3b12469e2d04a504d20d86f9479966811a1b8d86",
+      "angular19Sha256": "71429f4587049aee51c3cd0d3b12469e2d04a504d20d86f9479966811a1b8d86"
+    },
+    {
+      "file": "1440x1000-button-danger-hover.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "ba03366470f94b52252f9dbf469a1b95ad9cdfe0043bf30314b15b68dce46b64",
+      "angular19Sha256": "ba03366470f94b52252f9dbf469a1b95ad9cdfe0043bf30314b15b68dce46b64"
+    },
+    {
+      "file": "1440x1000-button-danger-outlined-focus.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "945913b0c5bd94a83ca5f7859bd8bcae2383f040d33e92a3d2bbdc300893aa44",
+      "angular19Sha256": "945913b0c5bd94a83ca5f7859bd8bcae2383f040d33e92a3d2bbdc300893aa44"
+    },
+    {
+      "file": "1440x1000-button-list-bulk-focus.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "f89e9aa127ae33f933d926592fe2af6594dcfacaa869155713b5dd69a96b054e",
+      "angular19Sha256": "f89e9aa127ae33f933d926592fe2af6594dcfacaa869155713b5dd69a96b054e"
+    },
+    {
+      "file": "1440x1000-button-outlined-focus.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "05e16bc16bafed1a0863378cb4d5ef07628619f7bba5240ccfee52c09074ec99",
+      "angular19Sha256": "05e16bc16bafed1a0863378cb4d5ef07628619f7bba5240ccfee52c09074ec99"
+    },
+    {
+      "file": "1440x1000-button-solid-focus.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "903981faf763d721eabcfdf3b43e0d803498c3e3403dda99705fb85875fe3704",
+      "angular19Sha256": "903981faf763d721eabcfdf3b43e0d803498c3e3403dda99705fb85875fe3704"
+    },
+    {
+      "file": "1440x1000-button-success-focus.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "30d40c4f4cf9d65a2f6cb86be5b416888f7ec587375a9fd3fb4d69bea07e7889",
+      "angular19Sha256": "8dc61918737f23ba860bb11089cc06fa6ce177d8dac80cbb4a7ec5384a544d80"
+    },
+    {
+      "file": "1440x1000-checkbox-off-disabled.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "e7cab734fdecf516f08f2769a435077bc32b3a9cbbed993b324602670660296f",
+      "angular19Sha256": "7d5599d416c65db38c13e1893407cc77927a588d4c497fc884010ec7dce8805a"
+    },
+    {
+      "file": "1440x1000-checkbox-off-focus.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "5c8fb6877e6867b33e2765eecc689d8367964e136060226f9d3751112e59a55f",
+      "angular19Sha256": "1be09dec2f48138d83a3ac6b26b6278e6e50b2011d361d961aec4ec2be47f3c9"
+    },
+    {
+      "file": "1440x1000-checkbox-off-hover.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "0702d7a9294da9cf17e66a2551c5b0dd16b999f06cfae0ebefdd23255a3c6815",
+      "angular19Sha256": "a44a08c5fa8028c5e283f45ac0c3f4373576c9f6be9dbf77a5a5607028609967"
+    },
+    {
+      "file": "1440x1000-checkbox-on-disabled.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "3e64a8ee1d040f00ba3d87e85a9e082d0e14fad26d509cdecbe225b63e2014ed",
+      "angular19Sha256": "55d60f9ecc8fd08c0e9350444d9264006616a28a498906ea851f683919abb94b"
+    },
+    {
+      "file": "1440x1000-checkbox-on-focus.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "f9d85560f7e4d1da4e4456989648e6e0295df6776766a02a7bc6cc2dfcb0c7db",
+      "angular19Sha256": "1c6480033a6ab158ad2c6ba0095797c17428836fbddd25d9b1e046e4add357ed"
+    },
+    {
+      "file": "1440x1000-checkbox-on-hover.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "bfcba7d3d444ad0ef1ac3d941fed5bd3b5c32320d4e741472cf0884df9ecc834",
+      "angular19Sha256": "95e368135b24a4c4858c60695bace2104156caf5cb87369db455fafac13d7d27"
+    },
+    {
+      "file": "1440x1000-checkbox-table-selected-keyboard.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "0818a850e6fb57b21ceb19a871ccf0ae5c534fe935f0969a4ed1d46ef602f1e3",
+      "angular19Sha256": "17f7f56bfe0a9531a5845742465829a158c09f70bd0a71c02b6f242b5bf83a22"
+    },
+    {
+      "file": "1440x1000-checkbox-table-selected-mouse.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "9ba64e752684e9506fa3103aef3eeac28620fb8d636b571b1abbede2977d98ee",
+      "angular19Sha256": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325"
+    },
+    {
+      "file": "1440x1000-close-dialog-focus.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "ab61ccbb94bb9c57a6adc89adf1bd1ee40bb332d14c7669504b72dbd02795784",
+      "angular19Sha256": "ab61ccbb94bb9c57a6adc89adf1bd1ee40bb332d14c7669504b72dbd02795784"
+    },
+    {
+      "file": "1440x1000-close-dialog-hover.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "4f1ff3f7d7390ff6fa00fb881d624c931f717bc95508a54cf34672f629c060e4",
+      "angular19Sha256": "4f1ff3f7d7390ff6fa00fb881d624c931f717bc95508a54cf34672f629c060e4"
+    },
+    {
+      "file": "1440x1000-close-drawer-focus.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "180b6edcd39c609fdd7c0d7a9b2bec3e0a085ce5e79958003f1ffb09216049eb",
+      "angular19Sha256": "180b6edcd39c609fdd7c0d7a9b2bec3e0a085ce5e79958003f1ffb09216049eb"
+    },
+    {
+      "file": "1440x1000-close-drawer-hover.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "bb0b20921f9a3a03df2db9285e628231e05b921c83e43fea95518695bb5d77ba",
+      "angular19Sha256": "bb0b20921f9a3a03df2db9285e628231e05b921c83e43fea95518695bb5d77ba"
+    },
+    {
+      "file": "1440x1000-color-menu.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "b24d80c8c3158a206e7556fb287cc3c779c9a4990c956cf70557793436a59972",
+      "angular19Sha256": "873b504ac414223152d23e14df63c1f316b421f4d2702de3a2f8037ca34088da"
+    },
+    {
+      "file": "1440x1000-copy-target-keyboard-selection.png",
+      "byteIdentical": false,
+      "differentPixels": 2409,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        1136,
+        322,
+        1423,
+        466
+      ],
+      "angular18Sha256": "c0b38940bc0fab954035efe290e09f6ad5d764661e953de966399ef123ca847d",
+      "angular19Sha256": "d2ec580847e4798eab8a590e5f600998b4d272dc768923d2bd343dfdfe1ebeb8"
+    },
+    {
+      "file": "1440x1000-delete-confirmation.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "255fc3d43b2ddb36ab19322092bc7fd8506e5c30b3bbb055f6b1fb8a259ca961",
+      "angular19Sha256": "b6c7cab5291b9e99f600c43003324da1ae989fb961f26af96b668cf076d39aef"
+    },
+    {
+      "file": "1440x1000-empty-search.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "9f50a5ec3a49bbe9480537d9f695639558ebe7234e8607762f85199d73eaf3f0",
+      "angular19Sha256": "61fd0406bb765cde6ccd73c038f7de5dd71c0bd72981e57485836d9ef811f00e"
+    },
+    {
+      "file": "1440x1000-empty-table.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e",
+      "angular19Sha256": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e"
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "byteIdentical": false,
+      "differentPixels": 23123,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        141,
+        1423,
+        679
+      ],
+      "angular18Sha256": "a63881771dfa46f622953ab252b6dee865df38176fbed6e468189480e4f2dea6",
+      "angular19Sha256": "391cd416dfc557dff2d323a80bde8bd61f23e6f3bb267a163c937bcde31152e4"
+    },
+    {
+      "file": "1440x1000-filter-focus.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+      "angular19Sha256": "c2abd19dced2caa9eef63568c1e924062de0d36f306b5f5bb3236df4b9beda8e"
+    },
+    {
+      "file": "1440x1000-filter-hover.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+      "angular19Sha256": "c2abd19dced2caa9eef63568c1e924062de0d36f306b5f5bb3236df4b9beda8e"
+    },
+    {
+      "file": "1440x1000-import-dialog.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "3d8e66e1c46f595f022aa20afbe5968fde00fe64e9d50892e4dfa00150eb7b13",
+      "angular19Sha256": "3d8e66e1c46f595f022aa20afbe5968fde00fe64e9d50892e4dfa00150eb7b13"
+    },
+    {
+      "file": "1440x1000-import-dropped-xml.png",
+      "byteIdentical": false,
+      "differentPixels": 28785,
+      "maximumChannelDelta": 255,
+      "bounds": [
+        756,
+        236,
+        1423,
+        741
+      ],
+      "angular18Sha256": "92f7a761c0342957ddaeab80378f95c555ada758ddf067fbd686e4f152dd3b74",
+      "angular19Sha256": "b0f3a773cb71183ebb472bff055cf114f35d9f47f2fbed072bcfbcb3b94b0500"
+    },
+    {
+      "file": "1440x1000-import-selected-json.png",
+      "byteIdentical": false,
+      "differentPixels": 25031,
+      "maximumChannelDelta": 255,
+      "bounds": [
+        756,
+        236,
+        1423,
+        741
+      ],
+      "angular18Sha256": "4b8c68a5d3c598ca1f4f8a81172883d917508b1a7705148bf48866c0e52cd485",
+      "angular19Sha256": "8a7431462099b1620db176d66f63ac6c27cb26cd1998900e0fafcac66412ca5f"
+    },
+    {
+      "file": "1440x1000-large-search-scrolled.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb",
+      "angular19Sha256": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb"
+    },
+    {
+      "file": "1440x1000-large-search.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "6259be225741b2362c99437089b3b85677062c3f2f02a50cae6254bc1475f98c",
+      "angular19Sha256": "af150875abbceac1554160a00707b54222f91dc6f944ddc3dbd426e9c115ea51"
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "d7328909849f79c3cbba723c7fe7aefd8815bdb0015cd1d2f398a8bae8c2ca06",
+      "angular19Sha256": "d7328909849f79c3cbba723c7fe7aefd8815bdb0015cd1d2f398a8bae8c2ca06"
+    },
+    {
+      "file": "1440x1000-lists.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca",
+      "angular19Sha256": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca"
+    },
+    {
+      "file": "1440x1000-menu-bulk-keyboard-focus.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "29152cf8ee45419d9463c93d43543895d0d301c8bb6afcb6b2341f6fd6b13c9a",
+      "angular19Sha256": "29152cf8ee45419d9463c93d43543895d0d301c8bb6afcb6b2341f6fd6b13c9a"
+    },
+    {
+      "file": "1440x1000-menu-color-focus-hover.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "6e164af06b08331ff2fc9bc5f43e557e3424157388637c565b27f66c6baa8f28",
+      "angular19Sha256": "7b2bab0c86bf1d0a8c5cc1abd322992e5104eb202851dcbb8d5e1f8435eb54c3"
+    },
+    {
+      "file": "1440x1000-overlay-dialog-navigation-mask.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "b6b87633ea1fd04b57a9bdc62e9e9a4e508ab751e4e901e511830ee592e2ac57",
+      "angular19Sha256": "ad6cfb7d952570c09e6950c3618466531e05ef725752abb216069e0c8b5ed2ef"
+    },
+    {
+      "file": "1440x1000-overlay-drawer-navigation-mask.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "78bc230eb4d9675ceb724b06f016d067ee08e189e650cd3206f4e12205842001",
+      "angular19Sha256": "78bc230eb4d9675ceb724b06f016d067ee08e189e650cd3206f4e12205842001"
+    },
+    {
+      "file": "1440x1000-pdf-option-keyboard-selection.png",
+      "byteIdentical": false,
+      "differentPixels": 26853,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        141,
+        1423,
+        679
+      ],
+      "angular18Sha256": "80a485e5cf73a9195efb1e0149b5b51cc016208fe762809c44efdfddb89caebd",
+      "angular19Sha256": "66045f620e4bff69daeb3322b91bb53a6e1ccecffe1ccc176986f9af1f32c155"
+    },
+    {
+      "file": "1440x1000-radio-keyboard-selection.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "9e67a91db502fd1c7d6aedad296e95b92b4801e70592aa55dc31dcd81bc81b39",
+      "angular19Sha256": "2782ad8947886b6f60165b0dbcb83ce6d4e83d66ea50b5ee5164fe78379b6d47"
+    },
+    {
+      "file": "1440x1000-select-country-popup.png",
+      "byteIdentical": false,
+      "differentPixels": 16129,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        594,
+        443,
+        845,
+        627
+      ],
+      "angular18Sha256": "b634f7786b7ae922355cc437d57dd4783d032c69d8a1922b4aed9d8ea65fa7fb",
+      "angular19Sha256": "5fb7aa8a4e9f7c6c194827bbfe96fd6f1aae63749a9cc9e3fee7274d455bc9c4"
+    },
+    {
+      "file": "1440x1000-select-language-popup.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "fec169692e77ec0b354a61ab07e6cf7f667f77938b40dee64411d5c375cdd5f4",
+      "angular19Sha256": "fec169692e77ec0b354a61ab07e6cf7f667f77938b40dee64411d5c375cdd5f4"
+    },
+    {
+      "file": "1440x1000-select-locale-dialog.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "1e4fe0185a7ac9104a1f0763ac74a3b3608c9dee2e170f665c2b9823ca86041f",
+      "angular19Sha256": "1e4fe0185a7ac9104a1f0763ac74a3b3608c9dee2e170f665c2b9823ca86041f"
+    },
+    {
+      "file": "1440x1000-select-unit-disabled.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        426,
+        180,
+        427
+      ],
+      "angular18Sha256": "7b69e5c75c09954f2c5a27178b034ff2ff7c68489bb9acf42425845c2b8c8f9a",
+      "angular19Sha256": "41e84377bf59b43086fd18064dc0bb7bcaa776e910744590859f3d84d607ff05"
+    },
+    {
+      "file": "1440x1000-select-unit-popup.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "cd25b535582fe2ae419423cb26a86a455adaca7ac98410000e91a116385069b7",
+      "angular19Sha256": "62c8dcc9a1e31a57d1319a67ef3cdb3a5efa73544156cfadc229d7e67696d600"
+    },
+    {
+      "file": "1440x1000-select-unit-selected.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        426,
+        180,
+        427
+      ],
+      "angular18Sha256": "285219ad37d7fb8d4757db2810f15e89165ab06c2935899e394ad5fa784798c3",
+      "angular19Sha256": "4543d98d01e30cd6223542b59bcacb851e77be128e202dc483ddf9bc9f03289e"
+    },
+    {
+      "file": "1440x1000-settings.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726",
+      "angular19Sha256": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726"
+    },
+    {
+      "file": "1440x1000-success-message.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "39ffdd314ae0532b6766abd43b1b3e2c2c938ceca54bf686e3e3f34e3e8ea298",
+      "angular19Sha256": "9a55cc2deaa9fe8432bd46b0fb43d6fc451e788f437c0355a310ab87f9aa636a"
+    },
+    {
+      "file": "1440x1000-table-header-hover.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "f8e76a84dea5f790b3f45332f839676081a48a1701380c5397c93fa220d14311",
+      "angular19Sha256": "8abb5f3145eeb47357fb18082eae2e84d40f555796e117e0e76a8028ce557af8"
+    },
+    {
+      "file": "1440x1000-table-inline-edit.png",
+      "byteIdentical": false,
+      "differentPixels": 10,
+      "maximumChannelDelta": 199,
+      "bounds": [
+        888,
+        631,
+        890,
+        673
+      ],
+      "angular18Sha256": "03f3aee7a8b840a792cbc5566b06e0de363d47b28c982ed35cf4979499a17b74",
+      "angular19Sha256": "c5b8f427f4417a655f7509fe08db7ca895be243c2e7e1ab180536f8a737adcd8"
+    },
+    {
+      "file": "1440x1000-table-loading-disabled.png",
+      "byteIdentical": false,
+      "differentPixels": 80,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        550,
+        1244,
+        586
+      ],
+      "angular18Sha256": "3e61924e424d37732dbbff1e313446713c87b969e642e92a983c97358aa12a4c",
+      "angular19Sha256": "8bdd1aa77f40857d637319bd23ee67dbd46f68f9109858a0423c67f7341a0db5"
+    },
+    {
+      "file": "1440x1000-table-selection.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325",
+      "angular19Sha256": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325"
+    },
+    {
+      "file": "1440x1000-table-sort-ascending.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "1f7418c6d8ca3ecd2f40746ad3c1a21388a1b33bf110c403f9fa5657c1cc00bb",
+      "angular19Sha256": "bbae896da9c8bbc45a145901db5e7c9687d6f5b7b5df414afa50bd5b061df2da"
+    },
+    {
+      "file": "1440x1000-table-sort-descending.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "f8e76a84dea5f790b3f45332f839676081a48a1701380c5397c93fa220d14311",
+      "angular19Sha256": "8abb5f3145eeb47357fb18082eae2e84d40f555796e117e0e76a8028ce557af8"
+    },
+    {
+      "file": "1440x1000-table-tab-keyboard.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "2fa84c636dd4cb8afb39f814630745d188cd7882eeee065028715e9b5936f1a7",
+      "angular19Sha256": "2fa84c636dd4cb8afb39f814630745d188cd7882eeee065028715e9b5936f1a7"
+    },
+    {
+      "file": "1440x1000-table.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "a7f71a31f6e2f610eff1caadbd5e8ebef2e55b6c829ac1f9ea1515078056cc42",
+      "angular19Sha256": "1fba567d71c355a096753665ae526e57d60f8614c2ae5f8864cfa8da629f13fe"
+    },
+    {
+      "file": "1440x1000-toast-error.png",
+      "byteIdentical": false,
+      "differentPixels": 848,
+      "maximumChannelDelta": 156,
+      "bounds": [
+        1364,
+        44,
+        1395,
+        75
+      ],
+      "angular18Sha256": "27c851763eef8a6302a9aa6aa0963a2a9988fe269e43e72e8ceb37382504068e",
+      "angular19Sha256": "98132aa984f408c600b76af32764031513e13aa9ddad0eb48f76ec6ab1f707e3"
+    },
+    {
+      "file": "1440x1000-toast-info.png",
+      "byteIdentical": false,
+      "differentPixels": 840,
+      "maximumChannelDelta": 51,
+      "bounds": [
+        1364,
+        44,
+        1395,
+        75
+      ],
+      "angular18Sha256": "c1de0cddfb1545e70b97504e84eb61e91e8fe78fa3d0606801d998d0cb0b012a",
+      "angular19Sha256": "b432aefbaaec137c0ec465c1a7fedf098250ca18eed6a4161e9ae68543f04271"
+    },
+    {
+      "file": "1440x1000-toast-success.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "b564ab039685b862dffb22c3de41e42a217148e701ce0a34a5c3d0a54e534ef4",
+      "angular19Sha256": "b564ab039685b862dffb22c3de41e42a217148e701ce0a34a5c3d0a54e534ef4"
+    },
+    {
+      "file": "1440x1000-toast-warn.png",
+      "byteIdentical": false,
+      "differentPixels": 848,
+      "maximumChannelDelta": 105,
+      "bounds": [
+        1364,
+        44,
+        1395,
+        75
+      ],
+      "angular18Sha256": "2511d012b80aa7e6ad2f65eca064ea0775551e54e9b1019c7d52dbe3b3511acf",
+      "angular19Sha256": "aefd505fc9c350ae869e5d19f61b5ab5771b301dd0588ff61097d8d4171d71b0"
+    },
+    {
+      "file": "1440x1000-toggle-off-disabled.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "93a59d8baed6ff6cbdac63278d71bfa2372b2223132ba2b8d69582d573d2dbe4",
+      "angular19Sha256": "ed7a7f34d3815b099b7da5fe09fb73693e05d7e83282547e6ba5df385786aaa2"
+    },
+    {
+      "file": "1440x1000-toggle-off-focus.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "a8eca34d9048808c894a2ed3fed73398b72a1d52ebabd5a059294220095994cf",
+      "angular19Sha256": "31d498482369a9c19eb2d7deca701028b7bf5c4fbe8616c55d87648ab90b0677"
+    },
+    {
+      "file": "1440x1000-toggle-off-hover.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "0549a55ca91e790038bc1ac8d14bb2d6726190123b24c92899e337279c8705a2",
+      "angular19Sha256": "5d22dfe38510926491275dee35064c7c98e26f9a97b960f70d3a937f1ed58a0f"
+    },
+    {
+      "file": "1440x1000-toggle-on-disabled.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "80d391d49ae945e4a942deed43773f679c3604c7a5893f2abe6c74577718b7f7",
+      "angular19Sha256": "211f7b35aadbd2626c693718045fe74bc3b3531dd67f5054bf5cf176f3507e61"
+    },
+    {
+      "file": "1440x1000-toggle-on-focus.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "ae46b31cb6c27bc4a8b9f3f67f1c31bcecd9c0fbc5485783f0cd21e0f049945c",
+      "angular19Sha256": "2eb8fc80dc6e7d7b66d993543a3e348f13d43178a6d75d742e3b3af1e3b0eef8"
+    },
+    {
+      "file": "1440x1000-toggle-on-hover.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1180,
+        222
+      ],
+      "angular18Sha256": "4484f16d64baf722759d167925c6cfd96e4e2f6e30a829da89609e00e2a83837",
+      "angular19Sha256": "b2e9773f061d09ff405c134aecb0779191e5ba51d213dbd2d0b5095ce79a4fd3"
+    },
+    {
+      "file": "1440x1000-transfer-progress.png",
+      "byteIdentical": false,
+      "differentPixels": 882,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        419,
+        475,
+        551
+      ],
+      "angular18Sha256": "fe42d27cd3ba7ba9d968972ee70d6e21dc3bd044ab9b3abbda80e61e25edb000",
+      "angular19Sha256": "cd39373599b0703a063ca1dd3894e0902406cc7b5ae2dc412ab8a9fa6ff52121"
+    },
+    {
+      "file": "1440x1000-transfer-warning.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        179,
+        550,
+        180,
+        551
+      ],
+      "angular18Sha256": "ad6cfb7d952570c09e6950c3618466531e05ef725752abb216069e0c8b5ed2ef",
+      "angular19Sha256": "b6b87633ea1fd04b57a9bdc62e9e9a4e508ab751e4e901e511830ee592e2ac57"
+    },
+    {
+      "file": "2560x1440-browse.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        1740,
+        222
+      ],
+      "angular18Sha256": "fb4ed184676582ec63c3ba07a8b5f1a2c2e23c4948f30765196c73e6207117f3",
+      "angular19Sha256": "a8f855b55d1b463091548a3f182c5d2b16cfe4d9c9cb979481aad84a060b6ae6"
+    },
+    {
+      "file": "2560x1440-empty-table.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "fb206cdf3fa3e4cdfaeabab3486d13260f425f048cc80dc5330cb81a4f6d9fe9",
+      "angular19Sha256": "fb206cdf3fa3e4cdfaeabab3486d13260f425f048cc80dc5330cb81a4f6d9fe9"
+    },
+    {
+      "file": "2560x1440-import-dialog.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "5af0f5c32377dba378420e68cb5e8c0506ce06d7100b4ee50eaf8b921d406706",
+      "angular19Sha256": "5af0f5c32377dba378420e68cb5e8c0506ce06d7100b4ee50eaf8b921d406706"
+    },
+    {
+      "file": "2560x1440-lists.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "8fef4acc75550e7c4b3b1563ac8b8950d63e10f6d98d6eac226ba2261e8c65a5",
+      "angular19Sha256": "8fef4acc75550e7c4b3b1563ac8b8950d63e10f6d98d6eac226ba2261e8c65a5"
+    },
+    {
+      "file": "2560x1440-settings.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4",
+      "angular19Sha256": "16fe1edb7c018ef5bfd2548e413cd50ad8db08a747aad5c1f6eff2a2b1d1b3b4"
+    },
+    {
+      "file": "2560x1440-table.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        148,
+        180,
+        149
+      ],
+      "angular18Sha256": "20e377e40c9766c46683292e951e5dfe900c30d65b4818bd391422daadd819bf",
+      "angular19Sha256": "9d0448f7dd1d90d6871b521c2e868dda4d17d57105fde8ea86bbcdcd6fe2cb19"
+    },
+    {
+      "file": "3200x1440-browse.png",
+      "byteIdentical": false,
+      "differentPixels": 3526,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        394,
+        170,
+        2060,
+        222
+      ],
+      "angular18Sha256": "e1fedbd91a5231fe54c52af4cd1bec5dc99014d28f69aa3b86816ad6ee5e63d0",
+      "angular19Sha256": "ee56a5296714ee2705dc3a6a81f0b6c7af4032b1966443159e3c52a8649cc82a"
+    },
+    {
+      "file": "3200x1440-empty-table.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "c9cc38d70cb0c8715e738bf14477ca90a50f19675b67231d3e80b64d600d5019",
+      "angular19Sha256": "c9cc38d70cb0c8715e738bf14477ca90a50f19675b67231d3e80b64d600d5019"
+    },
+    {
+      "file": "3200x1440-import-dialog.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "4c11f024ac1318dfbef29d4df4004d0c17e510d3c4ddacf6f3905ec5d30f909b",
+      "angular19Sha256": "4c11f024ac1318dfbef29d4df4004d0c17e510d3c4ddacf6f3905ec5d30f909b"
+    },
+    {
+      "file": "3200x1440-lists.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "db1d513274b920f9eea5fdf1eddaf22408c0492d54e07ce660a1637c8484f7b3",
+      "angular19Sha256": "db1d513274b920f9eea5fdf1eddaf22408c0492d54e07ce660a1637c8484f7b3"
+    },
+    {
+      "file": "3200x1440-settings.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33",
+      "angular19Sha256": "7658557c2ad2765795507a7cb910ffa396d0bf54185390b9f93dcfc42af82c33"
+    },
+    {
+      "file": "3200x1440-table.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        148,
+        180,
+        149
+      ],
+      "angular18Sha256": "cb2ac70587ba18bf0adca865e7618b54b3f344bdbe024c384f156cd1d93749cc",
+      "angular19Sha256": "ce9425beb28b804451a5b0b8fc06dd4b77d7ffd9ff9bdab8dd224775cfc08806"
+    },
+    {
+      "file": "390x844-browse-selected-list.png",
+      "byteIdentical": false,
+      "differentPixels": 145,
+      "maximumChannelDelta": 31,
+      "bounds": [
+        94,
+        663,
+        218,
+        793
+      ],
+      "angular18Sha256": "bdf172f1b79178f213a8dabf589dcfb0e8574fcf20f6834efb7f1288360da85c",
+      "angular19Sha256": "25e914762033e3c2fd5a3162faabc3ba56f5209c60dd92ed08c587bd39865b2a"
+    },
+    {
+      "file": "390x844-browse.png",
+      "byteIdentical": false,
+      "differentPixels": 145,
+      "maximumChannelDelta": 31,
+      "bounds": [
+        94,
+        663,
+        218,
+        793
+      ],
+      "angular18Sha256": "06ab0a19276fa6e702955bbabdc05018653f67cabc429a75f9da115141465ffc",
+      "angular19Sha256": "b181e7a3666b3364b7826a452ff1942c71f19928835a8ff92ceab48c5e5e2122"
+    },
+    {
+      "file": "390x844-empty-table.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "76160d69839acf2a83b701ad34b9355cefa527ca033a5a9fbf73b187664e1c2e",
+      "angular19Sha256": "76160d69839acf2a83b701ad34b9355cefa527ca033a5a9fbf73b187664e1c2e"
+    },
+    {
+      "file": "390x844-import-dialog.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "5474abcbea53138735166b7ef41534ae3f4b52f74524980132f6893372dd58a8",
+      "angular19Sha256": "5474abcbea53138735166b7ef41534ae3f4b52f74524980132f6893372dd58a8"
+    },
+    {
+      "file": "390x844-lists.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "4f52f34d250550ee1a32c37c8aa003f39022768ab811de84fc9e2ef1678fc4c6",
+      "angular19Sha256": "4f52f34d250550ee1a32c37c8aa003f39022768ab811de84fc9e2ef1678fc4c6"
+    },
+    {
+      "file": "390x844-settings.png",
+      "byteIdentical": true,
+      "differentPixels": 0,
+      "maximumChannelDelta": 0,
+      "bounds": null,
+      "angular18Sha256": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719",
+      "angular19Sha256": "fdcf03f556fb95fda1ab85e698e8ed3225feade714eea10644dac1327805c719"
+    },
+    {
+      "file": "390x844-table.png",
+      "byteIdentical": false,
+      "differentPixels": 4,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        179,
+        607,
+        180,
+        608
+      ],
+      "angular18Sha256": "680eca4af2cdccf96b462838bc5531f2eb079e640bbda8eb4a0781f90a68d975",
+      "angular19Sha256": "3d3b905d406ee95ce9b88eba6aea3412befcb7b1cada7231e6ad090f2a3f1742"
+    }
+  ]
+}

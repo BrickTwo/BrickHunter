@@ -10,9 +10,10 @@ import {
 import { VersionService } from 'src/app/core/services/version.service';
 
 @Component({
-  selector: 'app-side-navigation',
-  templateUrl: './side-navigation.component.html',
-  styleUrls: ['./side-navigation.component.scss'],
+    selector: 'app-side-navigation',
+    templateUrl: './side-navigation.component.html',
+    styleUrls: ['./side-navigation.component.scss'],
+    standalone: false
 })
 export class SideNavigationComponent {
   faBook = faBook;

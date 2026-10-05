@@ -1,9 +1,12 @@
 import { Directive, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 
-// 18.0.2 drops defaultFocus and never populates its declared Dialog ViewChild.
+// PrimeNG 18.0.2 and 19.1.4 never populate the Dialog reference used for defaultFocus.
 // Observe only this host's overlay creation, including appendTo="body" moves.
-@Directive({ selector: 'p-confirmDialog[bhConfirmDialogFocus]' })
+@Directive({
+    selector: 'p-confirmDialog[bhConfirmDialogFocus]',
+    standalone: false
+})
 export class ConfirmDialogFocusDirective implements OnInit, OnDestroy {
   private observer?: MutationObserver;
   private mask?: HTMLElement;

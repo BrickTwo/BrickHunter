@@ -6,9 +6,10 @@ import { ColorService } from 'src/app/core/services/color.service';
 import { Color } from 'src/app/models/shared';
 
 @Component({
-  selector: 'app-browse-parts-color-filter',
-  templateUrl: './browse-parts-color-filter.component.html',
-  styleUrls: ['./browse-parts-color-filter.component.scss'],
+    selector: 'app-browse-parts-color-filter',
+    templateUrl: './browse-parts-color-filter.component.html',
+    styleUrls: ['./browse-parts-color-filter.component.scss'],
+    standalone: false
 })
 export class BrowsePartsColorFilterComponent implements OnInit, OnDestroy {
   colorSubscription: Subscription;

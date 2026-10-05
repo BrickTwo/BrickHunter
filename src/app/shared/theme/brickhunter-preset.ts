@@ -346,8 +346,6 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-dialog-footer button { margin: 0 0.5rem 0 0; }
         .p-confirmdialog .p-dialog-footer svg { width: 0.875rem; height: 0.875rem; }
         .p-dialog-content:last-of-type { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
-        /* ConfirmDialog 18.0.2 drops its style inputs when creating the body overlay. */
-        .p-confirmdialog { width: 50vw; }
         .p-dialog .p-dialog-header .p-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
         .p-dialog .p-dialog-header .p-button svg { width: 0.875rem; height: 0.875rem; }
         .p-dialog .p-dialog-header .p-button:enabled:focus,

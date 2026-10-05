@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 import { VersionService } from 'src/app/core/services/version.service';
 
 @Component({
-  selector: 'app-changelog',
-  templateUrl: './changelog.component.html',
-  styleUrls: ['./changelog.component.scss'],
+    selector: 'app-changelog',
+    templateUrl: './changelog.component.html',
+    styleUrls: ['./changelog.component.scss'],
+    standalone: false
 })
 export class ChangelogComponent {
   @Input() versionCheck = true;

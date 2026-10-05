@@ -10,9 +10,10 @@ import { ImportService } from '../../services/import.service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-parts-list-export',
-  templateUrl: './parts-list-export.component.html',
-  styleUrls: ['./parts-list-export.component.scss'],
+    selector: 'app-parts-list-export',
+    templateUrl: './parts-list-export.component.html',
+    styleUrls: ['./parts-list-export.component.scss'],
+    standalone: false
 })
 export class PartsListExportComponent {
   display = false;

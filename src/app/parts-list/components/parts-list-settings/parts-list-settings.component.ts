@@ -11,9 +11,10 @@ interface SubtractUnit {
 }
 
 @Component({
-  selector: 'app-parts-list-settings',
-  templateUrl: './parts-list-settings.component.html',
-  styleUrls: ['./parts-list-settings.component.scss'],
+    selector: 'app-parts-list-settings',
+    templateUrl: './parts-list-settings.component.html',
+    styleUrls: ['./parts-list-settings.component.scss'],
+    standalone: false
 })
 export class PartsListSettingsComponent implements OnChanges {
   display = false;

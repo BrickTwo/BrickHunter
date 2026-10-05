@@ -3,7 +3,8 @@ import { NgModel } from '@angular/forms';
 import { Subscription, debounceTime, distinctUntilChanged, skip } from 'rxjs';
 
 @Directive({
-  selector: '[ngModelChangeDebounced]',
+    selector: '[ngModelChangeDebounced]',
+    standalone: false
 })
 export class NgModelChangeDebouncedDirective implements OnDestroy {
   @Output()

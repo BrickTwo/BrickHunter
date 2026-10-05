@@ -218,7 +218,7 @@ async function main() {
         await printed.check();
         if (!(await printed.isChecked())) throw new Error('Only Printed toggle failed');
         await printed.uncheck();
-        const standard = page.locator('app-browse-parts-filter .p-selectbutton button').filter({ hasText: 'Standard' });
+        const standard = page.locator('app-browse-parts-filter .p-selectbutton .p-togglebutton').filter({ hasText: 'Standard' });
         const wasPressed = await standard.getAttribute('aria-pressed');
         await standard.click();
         if (await standard.getAttribute('aria-pressed') === wasPressed) throw new Error('Delivery-channel selection failed');
@@ -1039,7 +1039,7 @@ async function main() {
         await open('parts-lists/upgrade-reference');
         await page.getByRole('button', { name: 'Export', exact: true }).first().click();
         const exportPanel = page.locator('app-parts-list-export .p-drawer');
-        const exportButtons = exportPanel.locator('.p-selectbutton').first().locator('button');
+        const exportButtons = exportPanel.locator('.p-selectbutton').first().locator('.p-togglebutton');
         const exportGeometry = await exportButtons.evaluateAll(elements => elements.map(element => {
           const r = element.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height };
         }));
@@ -1051,7 +1051,7 @@ async function main() {
         if (await exportButtons.nth(1).getAttribute('aria-pressed') !== 'true')
           throw new Error('Export filter keyboard selection failed');
         await exportButtons.first().click();
-        await exportPanel.getByRole('button', { name: 'BrickHunter', exact: true }).click();
+        await exportPanel.locator('.p-togglebutton').filter({ hasText: /^BrickHunter$/ }).click();
         const downloadPromise = page.waitForEvent('download');
         await exportPanel.getByRole('button', { name: 'Export', exact: true }).click();
         const download = await downloadPromise;
@@ -1098,7 +1098,7 @@ async function main() {
 
         await open('parts-lists/upgrade-reference');
         await component('app-parts-list-copy-or-move-to', 'open', ['upgrade-reference', 'copy', []]);
-        const copyChoices = page.locator('app-parts-list-copy-or-move-to .p-selectbutton button');
+        const copyChoices = page.locator('app-parts-list-copy-or-move-to .p-selectbutton .p-togglebutton');
         await copyChoices.nth(1).focus(); await page.keyboard.press('Space');
         if (await copyChoices.nth(1).getAttribute('aria-pressed') !== 'true') throw new Error('Copy target keyboard selection failed');
         const copyGeometry = await copyChoices.evaluateAll(elements => elements.map(element => {
@@ -1116,8 +1116,8 @@ async function main() {
         // provides the PDF workflow and shares the vertical option styles.
         await page.getByRole('button', { name: 'Export', exact: true }).first().click();
         const pdfPanel = page.locator('app-parts-list-export .p-drawer');
-        const pdfOption = pdfPanel.getByRole('button', { name: 'PDF', exact: true });
-        await pdfPanel.getByRole('button', { name: 'CSV', exact: true }).click();
+        const pdfOption = pdfPanel.locator('.p-togglebutton').filter({ hasText: /^PDF$/ });
+        await pdfPanel.locator('.p-togglebutton').filter({ hasText: /^CSV$/ }).click();
         await pdfOption.focus(); await page.keyboard.press('Space');
         if (await pdfOption.getAttribute('aria-pressed') !== 'true') throw new Error('PDF option keyboard selection failed');
         await additionalCapture('pdf-option-keyboard-selection');

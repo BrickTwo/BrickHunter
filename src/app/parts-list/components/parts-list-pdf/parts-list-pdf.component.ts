@@ -6,9 +6,10 @@ import { Part, PartsList } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 
 @Component({
-  selector: 'app-parts-list-pdf',
-  templateUrl: './parts-list-pdf.component.html',
-  styleUrls: ['./parts-list-pdf.component.scss'],
+    selector: 'app-parts-list-pdf',
+    templateUrl: './parts-list-pdf.component.html',
+    styleUrls: ['./parts-list-pdf.component.scss'],
+    standalone: false
 })
 export class PartsListPdfComponent {
   display = false;

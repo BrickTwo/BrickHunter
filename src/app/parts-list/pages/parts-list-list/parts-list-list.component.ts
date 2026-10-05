@@ -8,9 +8,10 @@ import { PartsListImportComponent } from '../../components/parts-list-import/par
 import { PartsListService } from '../../services/parts-list.service';
 
 @Component({
-  selector: 'app-parts-list-list',
-  templateUrl: './parts-list-list.component.html',
-  styleUrls: ['./parts-list-list.component.scss'],
+    selector: 'app-parts-list-list',
+    templateUrl: './parts-list-list.component.html',
+    styleUrls: ['./parts-list-list.component.scss'],
+    standalone: false
 })
 export class PartsListListComponent implements OnInit, OnDestroy {
   faList = faList;

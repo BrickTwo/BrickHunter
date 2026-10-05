@@ -4,9 +4,10 @@ import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-
 import { TreeNode } from 'primeng/api';
 
 @Component({
-  selector: 'app-browse-parts-category-selection',
-  templateUrl: './browse-parts-category-selection.component.html',
-  styleUrls: ['./browse-parts-category-selection.component.scss'],
+    selector: 'app-browse-parts-category-selection',
+    templateUrl: './browse-parts-category-selection.component.html',
+    styleUrls: ['./browse-parts-category-selection.component.scss'],
+    standalone: false
 })
 export class BrowsePartsCategorySelectionComponent implements OnInit, OnDestroy {
   categories: TreeNode[];

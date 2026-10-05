@@ -6,9 +6,10 @@ import { Subscription } from 'dexie';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-parts-list-copy-or-move-to',
-  templateUrl: './parts-list-copy-or-move-to.component.html',
-  styleUrls: ['./parts-list-copy-or-move-to.component.scss'],
+    selector: 'app-parts-list-copy-or-move-to',
+    templateUrl: './parts-list-copy-or-move-to.component.html',
+    styleUrls: ['./parts-list-copy-or-move-to.component.scss'],
+    standalone: false
 })
 export class PartsListCopyOrMoveToComponent implements OnInit, OnDestroy {
   display = false;

@@ -4,9 +4,10 @@ import { BrowsePartsPart } from 'src/app/models/browse-parts';
 import { Subscription, fromEvent } from 'rxjs';
 
 @Component({
-  selector: 'app-browse-parts-data-view',
-  templateUrl: './browse-parts-data-view.component.html',
-  styleUrls: ['./browse-parts-data-view.component.scss'],
+    selector: 'app-browse-parts-data-view',
+    templateUrl: './browse-parts-data-view.component.html',
+    styleUrls: ['./browse-parts-data-view.component.scss'],
+    standalone: false
 })
 export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
   layout = 'grid';

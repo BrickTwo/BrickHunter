@@ -11,9 +11,10 @@ import * as xml2js from 'xml2js';
 import { ImportService } from '../../services/import.service';
 
 @Component({
-  selector: 'app-parts-list-import',
-  templateUrl: './parts-list-import.component.html',
-  styleUrls: ['./parts-list-import.component.scss'],
+    selector: 'app-parts-list-import',
+    templateUrl: './parts-list-import.component.html',
+    styleUrls: ['./parts-list-import.component.scss'],
+    standalone: false
 })
 export class PartsListImportComponent implements OnDestroy {
   display = false;

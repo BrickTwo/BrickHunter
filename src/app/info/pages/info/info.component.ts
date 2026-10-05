@@ -3,9 +3,10 @@ import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { VersionService } from 'src/app/core/services/version.service';
 
 @Component({
-  selector: 'app-info',
-  templateUrl: './info.component.html',
-  styleUrls: ['./info.component.scss'],
+    selector: 'app-info',
+    templateUrl: './info.component.html',
+    styleUrls: ['./info.component.scss'],
+    standalone: false
 })
 export class InfoComponent implements OnInit {
   faCircleInfo = faCircleInfo;

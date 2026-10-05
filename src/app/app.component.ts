@@ -4,9 +4,10 @@ import { VersionService } from './core/services/version.service';
 import { LocaleService } from './core/services/locale.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
   constructor(

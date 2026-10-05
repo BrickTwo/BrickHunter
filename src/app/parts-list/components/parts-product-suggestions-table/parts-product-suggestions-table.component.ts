@@ -4,9 +4,10 @@ import { PartsProductSuggestionsDetailComponent } from '../parts-product-suggest
 import { BlukAction } from 'src/app/models/shared';
 
 @Component({
-  selector: 'app-parts-product-suggestions-table',
-  templateUrl: './parts-product-suggestions-table.component.html',
-  styleUrls: ['./parts-product-suggestions-table.component.scss'],
+    selector: 'app-parts-product-suggestions-table',
+    templateUrl: './parts-product-suggestions-table.component.html',
+    styleUrls: ['./parts-product-suggestions-table.component.scss'],
+    standalone: false
 })
 export class PartsProductSuggestionsTableComponent {
   @Input()

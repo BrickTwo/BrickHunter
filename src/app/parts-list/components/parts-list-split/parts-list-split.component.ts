@@ -19,9 +19,10 @@ interface SummaryDetail {
 }
 
 @Component({
-  selector: 'app-parts-list-split',
-  templateUrl: './parts-list-split.component.html',
-  styleUrls: ['./parts-list-split.component.scss'],
+    selector: 'app-parts-list-split',
+    templateUrl: './parts-list-split.component.html',
+    styleUrls: ['./parts-list-split.component.scss'],
+    standalone: false
 })
 export class PartsListSplitComponent {
   display = false;

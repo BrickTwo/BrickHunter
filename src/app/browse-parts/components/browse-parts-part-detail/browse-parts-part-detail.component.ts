@@ -6,9 +6,10 @@ import { BrowsePartsService } from '../../service/browse-parts.service';
 import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
 
 @Component({
-  selector: 'app-browse-parts-part-detail',
-  templateUrl: './browse-parts-part-detail.component.html',
-  styleUrls: ['./browse-parts-part-detail.component.scss'],
+    selector: 'app-browse-parts-part-detail',
+    templateUrl: './browse-parts-part-detail.component.html',
+    styleUrls: ['./browse-parts-part-detail.component.scss'],
+    standalone: false
 })
 export class BrowsePartsPartDetailComponent implements OnInit {
   part: BrowsePartsPart;

@@ -8,9 +8,10 @@ import jsPDF from 'jspdf';
 import { BlukAction } from 'src/app/models/shared';
 
 @Component({
-  selector: 'app-parts-product-suggestions-detail',
-  templateUrl: './parts-product-suggestions-detail.component.html',
-  styleUrls: ['./parts-product-suggestions-detail.component.scss'],
+    selector: 'app-parts-product-suggestions-detail',
+    templateUrl: './parts-product-suggestions-detail.component.html',
+    styleUrls: ['./parts-product-suggestions-detail.component.scss'],
+    standalone: false
 })
 export class PartsProductSuggestionsDetailComponent {
   show = false;

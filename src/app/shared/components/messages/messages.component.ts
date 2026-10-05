@@ -5,10 +5,9 @@ import { MessageModule } from 'primeng/message';
 
 // Array-based application warnings, rendered through PrimeNG's public Message API.
 @Component({
-  selector: 'bh-messages',
-  standalone: true,
-  imports: [CommonModule, MessageModule],
-  template: `
+    selector: 'bh-messages',
+    imports: [CommonModule, MessageModule],
+    template: `
     <p-message
       *ngFor="let message of messages"
       [severity]="message.severity || 'info'"
@@ -19,8 +18,8 @@ import { MessageModule } from 'primeng/message';
       <span class="bh-message-detail">{{ message.detail }}</span>
     </p-message>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .bh-message-banner {
         margin: 1rem 0;
       }
@@ -45,8 +44,8 @@ import { MessageModule } from 'primeng/message';
         margin-left: 0.5rem;
       }
     `,
-  ],
-  encapsulation: ViewEncapsulation.None,
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class MessagesComponent {
   @Input() messages: ToastMessageOptions[] = [];

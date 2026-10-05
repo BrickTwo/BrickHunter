@@ -1,5 +1,11 @@
 # Direkte Pakete: Upgrade-Prüfung
 
+## Geprüfte Angular-19-Zwischenkombination
+
+Am 5. Oktober 2026 über die offizielle npm-Registry erneut geprüft und in Commit-Punkt 25 installiert: Framework/Compiler/Localize **19.2.25**, CLI/Build-Devkit **19.2.27**, CDK **19.2.19**, Custom Webpack **19.0.1**, NgRx Store/Effects/Operators/Devtools **19.2.1**, PrimeNG/Themes **19.1.4**, Angular Font Awesome **1.0.0**, Zone.js **0.15.1**. Node **20.20.2**, TypeScript **5.5.4** und RxJS **7.8.1** sind für diese Stufe kompatibel. Lockfile aktualisiert, drei Builds und 50 Unit-Tests erfolgreich; die UI-Abnahme bleibt offen. Metadaten: `artefacts/angular-upgrade/angular-19/metadata.json`; Details im [Fortschrittsprotokoll](angular-upgrade-progress.md).
+
+Die folgende Tabelle dokumentiert weiterhin die ursprüngliche Bestands-/Zielprüfung, nicht den aktuellen Zwischenstand.
+
 Abfrage: 4. Oktober 2026, offizielle npm-Registry. Alle 46 direkten Pakete aus package.json wurden mit der gelockten und der aktuellen latest-Version abgefragt. Latest ist ein Kandidat, keine freigegebene Installationskombination. TypeScript muss für Angular 22 auf 6.0.x begrenzt werden.
 
 Die vollständigen Metadaten einschließlich optionaler Peers liegen lokal unter artefacts/angular-upgrade/baseline/package-audit.json. Reproduzierbare Abfrage: node scripts/upgrade/package-audit.cjs. Framework-Pakete werden pro Major zusammen aktualisiert; Engines werden mit der jeweiligen Zwischenruntime geprüft.

@@ -5,9 +5,10 @@ import { LocaleService } from 'src/app/core/services/locale.service';
 import { BrowsePartCountry } from 'src/app/models/browse-parts';
 
 @Component({
-  selector: 'app-browse-parts-page-settings',
-  templateUrl: './browse-parts-page-settings.component.html',
-  styleUrls: ['./browse-parts-page-settings.component.scss'],
+    selector: 'app-browse-parts-page-settings',
+    templateUrl: './browse-parts-page-settings.component.html',
+    styleUrls: ['./browse-parts-page-settings.component.scss'],
+    standalone: false
 })
 export class BrowsePartsPageSettingsComponent implements OnInit, OnDestroy {
   page: number = 0;

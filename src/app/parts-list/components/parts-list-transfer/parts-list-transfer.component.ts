@@ -8,9 +8,10 @@ import { TransferWarningComponent } from '../transfer-warning/transfer-warning.c
 import { Affiliate } from 'src/app/models/global';
 
 @Component({
-  selector: 'app-parts-list-transfer',
-  templateUrl: './parts-list-transfer.component.html',
-  styleUrls: ['./parts-list-transfer.component.scss'],
+    selector: 'app-parts-list-transfer',
+    templateUrl: './parts-list-transfer.component.html',
+    styleUrls: ['./parts-list-transfer.component.scss'],
+    standalone: false
 })
 export class PartsListTransferComponent implements OnDestroy {
   transferStep = 0;

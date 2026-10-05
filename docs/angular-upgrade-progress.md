@@ -922,3 +922,43 @@ git commit -m "fix: complete Angular 18 UI acceptance"
 ```
 
 Keine weitere manuelle Einrichtung für Angular 18 erforderlich. **Nach diesem Commit und `weiter` folgt Angular 19.** Für spätere Paketstufen bleiben die im Upgrade-Plan vorgesehenen Builds, Browser-/Extension-Prüfungen und migrationsabhängigen Anpassungen bestehen.
+
+## Commit-Punkt 25: Angular-19-Pakete und offizielle Migrationen
+
+Ausgangspunkt: **`dfd137f`**, gesicherte Angular-18-UI-Abnahme. Installiert und im Lockfile festgeschrieben: Angular **19.2.25**, CLI/Build-Devkit **19.2.27**, CDK **19.2.19**, NgRx Store/Effects/Operators/Devtools **19.2.1**, Custom Webpack **19.0.1**, PrimeNG/Themes **19.1.4**, Angular Font Awesome **1.0.0**, Zone.js **0.15.1**. Node **20.20.2** und TypeScript **5.5.4** bleiben für diese kompatible Zwischenstufe erhalten. **Die Paket-/Build-Migration ist geprüft; die Angular-19-UI-Abnahme ist noch nicht abgeschlossen.**
+
+### Erfolgreich umgesetzt
+
+- Stabile 19er-Versionen, Engines und Peers über die offizielle npm-Registry geprüft (`artefacts/angular-upgrade/angular-19/metadata.json`). Alle Framework-Pakete ausdrücklich auf 19.2.25 begrenzt. Der erste gruppierte Update-Versuch wollte einzelne Angular-Pakete auf Major 20 auflösen und wurde ohne Änderungen von der Peer-Prüfung gestoppt. Der explizite zweite Versuch besteht diese Prüfung. Kein `--force`, kein `--legacy-peer-deps`.
+- `ng update` aktualisiert Paketdateien/Lockfile und führt beide erforderlichen CLI-Migrationen aus, jeweils ohne Konfigurationsänderung. Der optionale Application-Builder-Wechsel bleibt aus: Custom Webpack und beide Extension-Entries bleiben erhalten.
+- Nach der Installation unterbrach ein fehlender Modul-Suchpfad im NgRx-Migrationsmodul den Gesamtlauf. Das Devkit ist bereits unter der CLI installiert; die offenen offiziellen Migrationen wurden mit passendem `NODE_PATH`, `--migrate-only`, explizitem `--from`/`--to` und der installierten CLI 19 ausgeführt. Keine zusätzliche Dependency, kein veränderter Bibliothekscode. Der automatische Versionscheck wird für diese historischen Migrationen deaktiviert, nachdem er sonst CLI 22 mit unpassender Node-Anforderung starten wollte.
+- Angulars `explicit-standalone-flag` passt **39 Dateien** an: deklarierte Komponenten/Directives erhalten `standalone: false`, bereits eigenständige Deklarationen benötigen kein explizites `true` mehr. NgModules und Zone bleiben erhalten. PendingTasks-/Server-Kontext-Migration ohne Änderungen; CDK-v19-Migration erfolgreich, ohne Änderungen. Store/Effects/Devtools besitzen im Bereich 18.1.1 → 19.2.1 keine anzuwendenden Migrationen; die CLI-Prüfungen laufen erfolgreich durch. Der optionale Initializer-Umbau bleibt aus.
+- Ein bestehender Test erkennt eine PrimeNG-19-Regression: Select stoppt Escape auch bei geschlossenem Popup. Die vorhandene `bhSelectEscape`-Directive schließt ein geöffnetes Popup allein und reicht Escape bei geschlossenem Popup vom Elternknoten an den umgebenden Drawer/Dialog weiter. Der Test prüft beide Schritte und ist wieder erfolgreich.
+- ConfirmDialog 19.1.4 reicht `style` wieder an Dialog weiter; der globale **50vw**-CSS-Fallback wird entfernt. Die bestehenden Style-Eingänge bleiben erhalten. Der Dialog-Verweis für die native Fokuslogik fehlt weiterhin und deren Selektoren passen nicht zu den aktuellen Klassen. Die begrenzte Fokus-Directive bleibt daher erhalten; Kommentar auf den geprüften 19er-Stand aktualisiert.
+- Aufnahme-Script verwendet `.p-togglebutton` statt vorausgesetzter nativer `button`-Elemente in SelectButton. PrimeNG 19 verschiebt Klassen und Handler auf den Host und setzt dort keine Button-Rolle; ein versuchter Rollen-Selektor konnte deshalb ebenfalls nicht auflösen. Die bisherigen fehlgeschlagenen Aufnahmen bleiben unverändert als Diagnoseartefakte erhalten; keine Abschwächung der Bedien-/Geometrieprüfungen.
+
+### Erfolgreiche technische Validierung
+
+- **50 Unit-Tests erfolgreich**, einschließlich Select-Escape und vier ConfirmDialog-Fokus-Tests. Erster Lauf: 49 erfolgreich, ein Escape-Fehler; nach Korrektur alle 50 erfolgreich (`unit-tests-final.log`).
+- Produktions-, Entwicklungs- und Referenzbuild erfolgreich, Exitcode 0. Produktion weiterhin **2.34 MB**. Bestehende Budget-/CommonJS-Warnungen sichtbar, Budgets unverändert. Logs unter `artefacts/angular-upgrade/angular-19/`: `production-build.log`, `development-build.log`, `visual-build-final.log`.
+- Outputs unter `artefacts/angular-upgrade/angular-19/verified/{production,development}/`: `index.html`, Chrome-Manifest und beide Extension-Entries vorhanden; Manifest byteidentisch zum Quellmanifest; `background.js` und `legocontentscript.js` ohne `webpackChunk`-Runtime-Abhängigkeit; keine Referenz-Fixture-Marker in regulären Root-JS-Bundles. `npm ls --depth=0` ohne Abhängigkeitsfehler. `git diff --check` erfolgreich.
+- Vollständiger Offline-Browserlauf `angular-19-foundation-controls`: **56 erfolgreiche Bedienprüfungen, 39 Hauptbilder und 49 Zusatzbilder**, keine aufgezeichneten Browser-/Konsolenfehler oder bekannten NG0100-Meldungen. AMD Radeon 8060S / ANGLE Direct3D11, Compositing/Rasterization aktiviert und Renderer vor/nach dem Lauf identisch. Geprüft sind unter anderem echte JSON-/PDF-Downloads, Auswahl per Maus/Space, Escape in Popup/Drawer, mobile Tabs und Browse-Mengenfelder sowie ConfirmDialog ohne Breiten-Fallback (**720 px**, Fokus **Yes**, Icons **14 px**). Aufnahme-/Vergleichslogs: `browser-capture-controls.log`, `comparison-controls.log`. **35/88 Bilder byteidentisch** zur akzeptierten Angular-18-Ausgabe; die übrigen Rohdifferenzen sind im Bericht erhalten und noch nicht als UI-Abnahme bewertet. Ein Wiederholungslauf folgt nach den Darstellungskorrekturen.
+
+### Noch offen: UI-Abnahme auf Angular 19
+
+Originalreferenz und Angular-18-Abnahme bleiben unverändert. Der [Prüfbericht](angular-upgrade-reference/angular-19-foundation-check.json) enthält unverfilterte Bilddifferenzen zur akzeptierten Angular-18-Ausgabe sowie den aktuellen Browserprüfstand. **`visualAcceptance: false`**; dieser Zwischencommit gibt Angular 20 noch nicht frei.
+
+- Schrift-/Rahmenabweichungen der Browse-Auswahl und größere Höhenabweichungen der vertikalen Export-Auswahl korrigieren. Host-/Nachbarselektoren gegen das neue ToggleButton-DOM abgleichen.
+- Spinner-Palette und deaktivierte Ladezustände gegen das neue Theme-/DOM-Verhalten prüfen; kleine SVG-Strichabweichungen separat bewerten.
+- Weitere neue Rohdifferenzen untersuchen: Datei-Import nach JSON-/XML-Auswahl (**25.031 / 28.785 Pixel**), Länder-Popup (**16.129**), Copy-Auswahl (**2.409**), Toast-Zustände (**840–848**) und mobiles Browse (**145**). Erfolgreiche Bedienprüfungen allein bewerten diese Bilder noch nicht als visuell gleichwertig.
+- Vollständige Angular-19-UI-Abnahme einschließlich mobiler Ansichten und zwei stabiler GPU-Läufe durchführen. Echte LEGO-Konto-/Warenkorbtransfers bleiben außerhalb des Offline-Referenzumfangs.
+- Vor Angular 20 auf eine passende Node-22-Runtime wechseln, wie im Plan vorgesehen. Jetzt noch keine manuelle Runtime-/Lizenz-Einrichtung erforderlich.
+
+### Jetzt manuell: Migrationsstand sichern
+
+```powershell
+git add package.json package-lock.json src scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "chore: migrate Angular 19 packages and NgModule metadata"
+```
+
+Die Umsetzung hält hier am technischen Zwischencommit an. Nach dem Commit und `weiter` folgt die Anpassung und vollständige UI-Abnahme auf Angular 19.

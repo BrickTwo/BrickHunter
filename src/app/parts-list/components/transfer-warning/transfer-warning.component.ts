@@ -6,9 +6,10 @@ import { GlobalSettingsService } from 'src/app/core/services/global-settings.ser
 import { ToastMessageOptions } from 'primeng/api';
 
 @Component({
-  selector: 'app-transfer-warning',
-  templateUrl: './transfer-warning.component.html',
-  styleUrls: ['./transfer-warning.component.scss'],
+    selector: 'app-transfer-warning',
+    templateUrl: './transfer-warning.component.html',
+    styleUrls: ['./transfer-warning.component.scss'],
+    standalone: false
 })
 export class TransferWarningComponent {
   show = false;

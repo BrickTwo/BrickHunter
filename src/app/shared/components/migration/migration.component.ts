@@ -3,9 +3,10 @@ import { VersionService } from 'src/app/core/services/version.service';
 import { ToastMessageOptions } from 'primeng/api';
 
 @Component({
-  selector: 'app-migration',
-  templateUrl: './migration.component.html',
-  styleUrls: ['./migration.component.scss'],
+    selector: 'app-migration',
+    templateUrl: './migration.component.html',
+    styleUrls: ['./migration.component.scss'],
+    standalone: false
 })
 export class MigrationComponent implements OnInit {
   showDialog = false;

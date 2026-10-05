@@ -10,10 +10,11 @@ import { BrowsePartsPartDetailComponent } from '../browse-parts-part-detail/brow
 import { LocaleService } from 'src/app/core/services/locale.service';
 
 @Component({
-  selector: 'app-browse-parts-grid-item',
-  templateUrl: './browse-parts-grid-item.component.html',
-  styleUrls: ['./browse-parts-grid-item.component.scss'],
-  providers: [DialogService],
+    selector: 'app-browse-parts-grid-item',
+    templateUrl: './browse-parts-grid-item.component.html',
+    styleUrls: ['./browse-parts-grid-item.component.scss'],
+    providers: [DialogService],
+    standalone: false
 })
 export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   @Input()
