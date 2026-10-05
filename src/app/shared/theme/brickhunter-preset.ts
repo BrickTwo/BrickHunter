@@ -44,7 +44,7 @@ export const BrickHunterPreset = definePreset(Material, {
   },
   components: {
     progressspinner: { colorScheme: { light: { root: {
-      'color.1': '#d62d20', 'color.2': '#0057e7', 'color.3': '#008744', 'color.4': '#ffa700',
+      colorOne: '#d62d20', colorTwo: '#0057e7', colorThree: '#008744', colorFour: '#ffa700',
     } } } },
     radiobutton: {
       root: { borderColor: '#757575', hoverBorderColor: '#757575', focusBorderColor: '#757575' },
@@ -227,7 +227,7 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-selectbutton { display: inline-block; }
         .p-selectbutton p-togglebutton { display: inline-block; vertical-align: bottom; }
         .p-selectbutton .p-togglebutton { vertical-align: bottom; border-left-width: 1px; }
-        .p-selectbutton p-togglebutton:not(:last-child) .p-togglebutton { border-right-width: 0; }
+        .p-selectbutton .p-togglebutton:not(:last-child) { border-right-width: 0; }
       `,
     },
     toggleswitch: {

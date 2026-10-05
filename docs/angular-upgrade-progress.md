@@ -962,3 +962,36 @@ git commit -m "chore: migrate Angular 19 packages and NgModule metadata"
 ```
 
 Die Umsetzung hält hier am technischen Zwischencommit an. Nach dem Commit und `weiter` folgt die Anpassung und vollständige UI-Abnahme auf Angular 19.
+
+## Commit-Punkt 26: Auswahlgruppen und Spinner auf Angular 19
+
+Ausgangspunkt: **`b4d2dc3`**, gesicherte Angular-19-Paketmigration. Versionen und Lockfile bleiben unverändert. Dieser Abschnitt korrigiert die durch PrimeNG 19 geänderten Rahmen- und Tokenverträge; **die vollständige UI-Abnahme bleibt bis zur Bewertung der übrigen Bilder offen.**
+
+### Erfolgreich umgesetzt
+
+- PrimeNG 19 setzt `.p-togglebutton` direkt auf `p-togglebutton`, während Version 18 ein inneres natives Button-Element verwendete. Die bisherigen Nachbar-/Eckenregeln trafen deshalb nicht mehr. Horizontale SelectButton-Gruppen entfernen die rechte Rahmenkante jetzt direkt am jeweiligen Host; vertikale Export-, Copy/Move- und PDF-Gruppen wenden Rahmen-/Eckenregeln ebenfalls direkt am Host an. Kein pauschaler Schrift- oder Größenumbau: gemessene **16 px / Gewicht 500 / line-height normal** stimmen bereits.
+- Die fünf ersten Exportzeilen sind wieder **288 × 42.84375 px**, die letzte **288 × 43.84375 px**, mit exakt aneinanderliegenden Kanten. Copy-Ziele bleiben links ausgerichtet, Label-Einzug **17 px**. Ausgewählte/unausgewählte Zustände sowie Klick und Space werden durch die bestehende Browserprüfung bestätigt.
+- ProgressSpinner verwendet in Version 19 `colorOne`, `colorTwo`, `colorThree`, `colorFour` statt der 18er-Namen `color.1` bis `color.4`. Das Preset bindet die ursprüngliche Palette **#d62d20 / #0057e7 / #008744 / #ffa700** an die neuen Tokens.
+
+### Validierung und Bildvergleich
+
+- **50 Unit-Tests** sowie Produktions-, Entwicklungs- und Referenzbuild erfolgreich. Produktion weiterhin **2.34 MB**, bestehende Budget-/CommonJS-Warnungen sichtbar, Budgets unverändert. Reguläre Ausgaben unter `artefacts/angular-upgrade/angular-19/theme-controls-verified/{production,development}/`: Manifest byteidentisch, beide Extension-Entries vorhanden und ohne `webpackChunk`-Runtime-Abhängigkeit, keine Referenz-Fixture-Marker in regulären Root-JS-Bundles.
+- Vollständiger erster GPU-Lauf `angular-19-theme-controls`: **56 erfolgreiche Bedienprüfungen, 39 Hauptbilder plus 49 Zusatzbilder**, keine aufgezeichneten Browser-/Konsolenfehler oder bekannten NG0100-Meldungen. Renderer AMD Radeon 8060S / ANGLE D3D11, Compositing/Rasterization aktiviert und vor/nach dem Lauf unverändert. JSON enthält **8 Teile**, PDF-Download **172.093 Bytes** mit gültigem Header. ConfirmDialog-Fokus/Breite, echte Escape-Bedienung, Mengenfelder und mobile Tabs bleiben erfolgreich.
+- Zum akzeptierten Angular-18-Lauf jetzt **56/88 Bilder byteidentisch**, zuvor **35/88** im Migrationsstand. Browse ist auf allen vier Viewports byteidentisch; auch Copy-Auswahl ist byteidentisch. Desktop-Export **23.123 → 4**, PDF-Auswahl **26.853 → 4**, Copy-Auswahl **2.409 → 0**, Transferfortschritt **882 → 4**, deaktiviertes Laden **80 → 4** abweichende Pixel. Die jeweiligen vier Restpixel liegen ausschließlich in der bereits dokumentierten Tabs-Unterstreichung; Originalbilder und Rohdifferenzen bleiben unverändert.
+- Vollständiger Wiederholungslauf `angular-19-theme-controls-repeat` ebenfalls mit **56 erfolgreichen Prüfungen und 88 Bildern**, ohne aufgezeichnete Browser-/Konsolenfehler. **88/88 PNGs byteidentisch** zum ersten Lauf; GPU-Pipeline in beiden Läufen unverändert. Wiederholungslogs: `theme-controls-capture-repeat.log`, `theme-controls-repeat-comparison.log`. `git diff --check` erfolgreich.
+
+Messwerte, Hashes, unverfilterte Differenzen und Browserprüfungen: [angular-19-theme-controls-check.json](angular-upgrade-reference/angular-19-theme-controls-check.json). Logs unter `artefacts/angular-upgrade/angular-19/`: `theme-controls-tests.log`, `theme-controls-build.log`, `theme-controls-production.log`, `theme-controls-development.log`, `theme-controls-capture.log`, `theme-controls-comparison.log`; Rahmenmessungen `select-inspect-before.log` / `select-inspect-after.log`.
+
+### Noch offen
+
+- Datei-Import nach JSON-/XML-Auswahl (**25.031 / 28.785 Pixel**), Länder-Popup (**16.129**) und Toast-Zustände (**840–848**) untersuchen und korrigieren; dies sind noch nicht freigegebene Unterschiede.
+- Kleinere verbleibende SVG-/Rasterungsunterschiede im vollständigen Rohbericht bewerten. Danach vollständige Angular-19-UI-Abnahme dokumentieren. **`visualAcceptance: false`**, Angular 20 beginnt weiterhin erst nach dieser Abnahme und passendem Node-22-Wechsel.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src/app/shared/theme/brickhunter-preset.ts src/app/parts-list/components docs
+git commit -m "fix: restore Angular 19 selection borders and spinner palette"
+```
+
+Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Nach dem Commit und `weiter` folgt der nächste UI-Abschnitt auf Angular 19.
