@@ -995,3 +995,35 @@ git commit -m "fix: restore Angular 19 selection borders and spinner palette"
 ```
 
 Weitere manuelle Einrichtung ist aktuell nicht erforderlich. Nach dem Commit und `weiter` folgt der nächste UI-Abschnitt auf Angular 19.
+
+## Commit-Punkt 27: Datei-Import und Toast-Hover auf Angular 19
+
+Ausgangspunkt: **`1f0b507`**, gesicherte Auswahlgruppen-/Spinner-Korrektur. Paketversionen und Lockfile unverändert. Die Änderungen betreffen ausschließlich das BrickHunter-Preset.
+
+### Erfolgreich umgesetzt
+
+- FileUpload 19 legt seinen **4-px-Fortschrittsbalken** in den normalen Flex-Fluss und innerhalb des Content-Paddings. Das verschob Datei-Zeile, Textarea und übrige Formularfelder um vier Pixel; der Balken war zusätzlich eingerückt. Das Preset stellt die bisherige absolute Position **top: 0 / left: 0 / width: 100%** im bereits relativ positionierten Content wieder her. Der vorhandene Balkenradius bleibt erhalten; keine Änderung an Datei-Auswahl, Drag/Drop oder Importlogik.
+- Toast 18 verwendete zum Schließen ein PrimeNG-Text-Button, Version 19 ein natives Button-Element. Der vorhandene generische Hover-Override hatte gegenüber den Regeln je Meldungstyp zu geringe Spezifität. Abgleich mit der erhaltenen Angular-18-Entwicklungsausgabe bestätigt den tatsächlich wirksamen Text-Button-Hover: **rgba(10, 52, 99, 0.04)**, Icon **#0a3463**. Der begrenzte Toast-Selektor stellt diese beiden Werte wieder her. Geometrie, Meldungsfarben und Schließen-Logik bleiben erhalten.
+- Der zunächst verstärkte weiße Hover-Override war nicht der tatsächlich sichtbare alte Button-Hover. Der erste Bildvergleich ließ noch den vollständigen Schließen-Kreis abweichen; mit dem alten Hintergrund verblieben **63 Icon-Pixel**, die anschließend ebenfalls durch Übernahme der alten Hover-Farbe korrigiert wurden. Die Diagnoseaufnahmen bleiben unverändert unter `artefacts/`; Originalreferenzen werden weder ersetzt noch gefiltert.
+
+### Prüfung des verbleibenden Länder-Popups
+
+Die größere Differenz stammt nicht von Breite, Schrift oder Farben: PrimeNG 19 ruft in `Select.onOverlayAnimationStart` für die ausgewählte Option ausdrücklich **`scrollIntoView({ block: 'nearest', inline: 'nearest' })`** auf. Beim Öffnen mit ausgewähltem Germany sieht man deshalb Canada/Switzerland/Czech Republic/Germany statt Austria/Australia/Belgium/Canada im akzeptierten 18er-Bild. Dieser Abschnitt verändert das Scrollverhalten noch nicht. Auswahl per Maus/Tastatur und Save funktionieren; Gleichheit des Öffnungs-/Scrollverhaltens bleibt vor vollständiger Angular-19-UI-Abnahme zu klären.
+
+### Erfolgreiche Validierung
+
+- **50 Unit-Tests** erfolgreich. Produktions-, Entwicklungs- und Referenzbuild mit den endgültigen Styles erfolgreich; Produktion **2.34 MB**, bestehende Budget-/CommonJS-Warnungen sichtbar, Budgets unverändert. Reguläre Outputs unter `artefacts/angular-upgrade/angular-19/import-toast-verified/{production,development}/`: Manifest byteidentisch, Extension-Entries vorhanden und ohne `webpackChunk`-Runtime-Abhängigkeit, keine Referenz-Fixture-Marker in regulären JS-Bundles.
+- Vollständiger Lauf `angular-19-import-toast-verified`: **56 erfolgreiche Bedienprüfungen, 39 Hauptbilder und 49 Zusatzbilder**, keine aufgezeichneten Browser-/Konsolenfehler oder bekannten NG0100-Meldungen. AMD Radeon 8060S / ANGLE D3D11, Compositing/Rasterization aktiviert und Renderer vor/nach dem Lauf identisch. Datei-Auswahl, Cancel/Reset, XML-Drop und Toast-Schließen per Maus/Enter erfolgreich; Mengenfelder, Dialoge, mobile Tabs und echte JSON-/PDF-Downloads bestehen weiterhin.
+- Zum akzeptierten Angular-18-Lauf **61/88 Bilder byteidentisch**, zuvor **56/88**. JSON-Import **25.031 → 0**, XML-Import **28.785 → 0**, Info-Toast **840 → 0**, Warn-/Fehler-Toast jeweils **848 → 0** abweichende Pixel. Der einzige verbleibende größere Rohunterschied ist das Länder-Popup (**16.129 Pixel**); kleine Tabs-/SVG-Unterschiede bleiben vollständig im Bericht. **`visualAcceptance: false`**.
+- Vollständiger Wiederholungslauf `angular-19-import-toast-verified-repeat` ebenfalls mit **56 erfolgreichen Prüfungen und 88 Bildern**, ohne aufgezeichnete Browser-/Konsolenfehler. **88/88 PNGs byteidentisch** zum ersten Lauf; GPU-Pipeline in beiden Läufen unverändert. Logs: `import-toast-capture-verified-repeat.log`, `import-toast-repeat-comparison.log`. `git diff --check` erfolgreich.
+
+Bericht: [angular-19-import-toast-check.json](angular-upgrade-reference/angular-19-import-toast-check.json). Logs unter `artefacts/angular-upgrade/angular-19/`: `import-toast-tests.log`, `import-toast-build-verified.log`, `import-toast-production-verified.log`, `import-toast-development-verified.log`, `import-toast-capture-verified.log`, `import-toast-comparison-verified.log`.
+
+### Jetzt manuell: Zwischencommit
+
+```powershell
+git add src/app/shared/theme/brickhunter-preset.ts docs
+git commit -m "fix: restore Angular 19 import layout and toast hover"
+```
+
+Keine zusätzliche manuelle Einrichtung erforderlich. Nach Sicherung und `weiter` folgt die Prüfung des Länder-Popup-Verhaltens und der verbleibenden kleinen Bildunterschiede; Angular 20 bleibt bis zur vollständigen Angular-19-Abnahme zurückgestellt.

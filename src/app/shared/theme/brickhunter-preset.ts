@@ -121,7 +121,8 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-toast-message-icon { width: 0.875rem; height: auto; }
         .p-toast-message-icon svg { width: 0.875rem; height: 0.875rem; }
         .p-toast .p-toast-close-button { min-width: 0; width: 2rem; height: 2rem; margin: 0; right: 0; padding: 0; color: inherit; justify-content: center; }
-        .p-toast-close-button:hover { background: rgba(255, 255, 255, 0.3); }
+        /* Toast 18 used a text Button; retain its primary-color hover on the native close button in 19. */
+        .p-toast .p-toast-message .p-toast-close-button:hover { background: rgba(10, 52, 99, 0.04); color: #0a3463; }
       `,
     },
     button: {
@@ -379,6 +380,7 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-fileupload-header .p-button svg { width: 0.875rem; height: 0.875rem; margin-right: 0.5rem; }
         .p-fileupload-header .p-button:disabled { opacity: 0.38; }
         .p-fileupload-content { border: 0; border-top: 1px solid #e0e0e0; position: relative; }
+        .p-fileupload-content .p-progressbar { position: absolute; top: 0; left: 0; }
       `,
     },
   },
