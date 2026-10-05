@@ -16,15 +16,15 @@
   </div>
   <div class="justify-content-end">
     <!-- <p-selectButton
-      [options]="layoutOptions"
-      [ngModel]="layout"
-      optionLabel="icon"
-      optionValue="value"
-      (onChange)="onLayoutChanged($event.value)">
-      <ng-template let-item>
-        <i [class]="item.icon"></i>
-      </ng-template>
-    </p-selectButton> -->
+    [options]="layoutOptions"
+    [ngModel]="layout"
+    optionLabel="icon"
+    optionValue="value"
+    (onChange)="onLayoutChanged($event.value)">
+    <ng-template let-item>
+      <i [class]="item.icon"></i>
+    </ng-template>
+  </p-selectButton> -->
     <p-select
       id="country"
       [options]="countries"
@@ -35,15 +35,17 @@
       [style]="{ width: '100%' }"
       (onChange)="onCountrySelect()">
       <ng-template pTemplate="selectedItem">
-        <div class="flex align-items-center gap-2" *ngIf="selectedCountry">
-          <img
-            src="/assets/flag_placeholder.png"
-            [class]="'flag flag-' + selectedCountry?.countryCode?.toLowerCase()"
-            style="width: 18px" />
-          <div>
-            {{ selectedCountry.countryCode | uppercase }} {{ selectedCountry.lastUpdate + 'Z' | date : 'short' }}
+        @if (selectedCountry) {
+          <div class="flex align-items-center gap-2">
+            <img
+              src="/assets/flag_placeholder.png"
+              [class]="'flag flag-' + selectedCountry?.countryCode?.toLowerCase()"
+              style="width: 18px" />
+            <div>
+              {{ selectedCountry.countryCode | uppercase }} {{ selectedCountry.lastUpdate + 'Z' | date: 'short' }}
+            </div>
           </div>
-        </div>
+        }
       </ng-template>
       <ng-template let-country pTemplate="item">
         <div class="flex align-items-center gap-2">
@@ -51,7 +53,7 @@
             src="/assets/flag_placeholder.png"
             [class]="'flag flag-' + country.countryCode.toLowerCase()"
             style="width: 18px" />
-          <div>{{ country.countryCode | uppercase }} {{ country.lastUpdate + 'Z' | date : 'short' }}</div>
+          <div>{{ country.countryCode | uppercase }} {{ country.lastUpdate + 'Z' | date: 'short' }}</div>
         </div>
       </ng-template>
     </p-select>

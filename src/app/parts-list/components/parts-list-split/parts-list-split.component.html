@@ -2,9 +2,9 @@
   <h2>Split</h2>
   <div class="flex flex-column card-container green-container gap-3">
     <div>
-      If the parts list contains more than {{ maxPaBLotPerOrder }} BaP Bestsellers or Standard parts or the maximum number of orderable
-      parts of a specific part, BrickHunter tries to split it into as few parts lists as possible that exceed the
-      minimum fee.
+      If the parts list contains more than {{ maxPaBLotPerOrder }} BaP Bestsellers or Standard parts or the maximum
+      number of orderable parts of a specific part, BrickHunter tries to split it into as few parts lists as possible
+      that exceed the minimum fee.
     </div>
     <div style="color: red">"have" quantities will be subtracted before the split!</div>
     <form (ngSubmit)="onSplit()" [formGroup]="form">
@@ -24,43 +24,44 @@
     </form>
 
     <h2>Preview</h2>
-    <div *ngFor="let summary of newPartsListSummary; index as index">
-      <h3>{{ partListName.value }} {{ index + 1 }}</h3>
-
-      <div id="pr_id_1" class="p-datatable-striped p-datatable p-component">
-        <div class="p-datatable-wrapper">
-          <table role="table" class="p-datatable-table ng-star-inserted">
-            <thead class="p-datatable-thead">
-              <tr class="ng-star-inserted">
-                <th>Type</th>
-                <th>Lots</th>
-                <th>Pieces</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody class="p-element p-datatable-tbody">
-              <tr class="ng-star-inserted">
-                <td>Bestseller</td>
-                <td>{{ summary.pab.lots }}</td>
-                <td>{{ summary.pab.pieces }}</td>
-                <td>{{ summary.pab.price.toFixed(2) }}</td>
-              </tr>
-              <tr class="ng-star-inserted">
-                <td>Standard</td>
-                <td>{{ summary.bap.lots }}</td>
-                <td>{{ summary.bap.pieces }}</td>
-                <td>{{ summary.bap.price.toFixed(2) }}</td>
-              </tr>
-              <tr class="ng-star-inserted">
-                <td>BrickLink</td>
-                <td>{{ summary.brickLink.lots }}</td>
-                <td>{{ summary.brickLink.pieces }}</td>
-                <td>{{ summary.brickLink.price.toFixed(2) }}</td>
-              </tr>
-            </tbody>
-          </table>
+    @for (summary of newPartsListSummary; track summary; let index = $index) {
+      <div>
+        <h3>{{ partListName.value }} {{ index + 1 }}</h3>
+        <div id="pr_id_1" class="p-datatable-striped p-datatable p-component">
+          <div class="p-datatable-wrapper">
+            <table role="table" class="p-datatable-table ng-star-inserted">
+              <thead class="p-datatable-thead">
+                <tr class="ng-star-inserted">
+                  <th>Type</th>
+                  <th>Lots</th>
+                  <th>Pieces</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody class="p-element p-datatable-tbody">
+                <tr class="ng-star-inserted">
+                  <td>Bestseller</td>
+                  <td>{{ summary.pab.lots }}</td>
+                  <td>{{ summary.pab.pieces }}</td>
+                  <td>{{ summary.pab.price.toFixed(2) }}</td>
+                </tr>
+                <tr class="ng-star-inserted">
+                  <td>Standard</td>
+                  <td>{{ summary.bap.lots }}</td>
+                  <td>{{ summary.bap.pieces }}</td>
+                  <td>{{ summary.bap.price.toFixed(2) }}</td>
+                </tr>
+                <tr class="ng-star-inserted">
+                  <td>BrickLink</td>
+                  <td>{{ summary.brickLink.lots }}</td>
+                  <td>{{ summary.brickLink.pieces }}</td>
+                  <td>{{ summary.brickLink.price.toFixed(2) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    }
   </div>
 </p-drawer>

@@ -1142,3 +1142,45 @@ git commit -m "fix: complete Angular 20 UI acceptance"
 ```
 
 Keine zusätzliche manuelle Einrichtung für die Fortsetzung erforderlich. Nach diesem Commit und `weiter` kann Angular 21 beginnen. Der Community-Lizenzschlüssel wird weiterhin erst vor dem PrimeNG-22-Setup benötigt.
+
+
+## Commit-Punkt 31: Angular-21-Grundmigration und erste Regressionserfassung
+
+Ausgangspunkt **`2fb4c9b`**, vollständige gesicherte Angular-20-UI-Abnahme. Der Arbeitsstand war sauber. Die aktuelle Etappe sichert die neue Paket-/Compilerbasis samt offiziellen Migrationen; **Angular-21-UI-Abnahme und Freigabe für Angular 22 sind noch nicht abgeschlossen**.
+
+### Erfolgreich umgesetzt
+
+- Offizielle Registry-Metadaten erneut geprüft: Framework/Compiler/Localize und CLI/Build-Devkit **21.2.25**, CDK **21.2.14**, Custom Webpack **21.1.0**, NgRx Store/Effects/Operators/Devtools **21.1.1**, PrimeNG **21.1.10**, PrimeUIx-Themes **2.0.3**, Angular Font Awesome **4.0.0**. Node **22.23.3** / npm **10.9.9**, TypeScript **5.9.3**, Zone.js **0.15.1**, RxJS **7.8.1** bleiben erhalten. Versionen reproduzierbar im Lockfile. Keine Verwendung von `--force` oder `--legacy-peer-deps`.
+- `ng update` mit expliziten Zwischenversionen installiert alle 21 betroffenen direkten Pakete. CLI-Migrationen erfolgreich, `tsconfig` verwendet weiterhin ES2022; redundante explizite `lib`-Liste entfernt. Custom-Webpack-Builder und Extension-Entries erhalten, optionalen Application-Builder-Wechsel nicht ausgeführt.
+- Wie bei Angular 19 unterbrach ein fehlender NgRx-Modul-Suchpfad den Gesamtlauf nach der Installation und den CLI-Migrationen. Alle noch offenen offiziellen CDK-/Core-/NgRx-Migrationen mit dem bereits installierten CLI-Devkit über `NODE_PATH`, `--migrate-only` und explizitem `--from`/`--to` erfolgreich nachgeholt. Kein zusätzlicher Paket-Workaround und keine Bibliotheksdateien geändert. Logs je Paket erhalten.
+- Angular 21 liefert die Control-Flow-Umstellung als reguläre Migration: **25 Templates** inklusive Inline-Templates auf `@if`/`@for` umgestellt; vorhandene TrackBy-Funktion der eigenen Teileansicht erhalten. Keine eigenständige Signals-/Standalone-Architekturmigration.
+- Offizielle Bootstrap-Migration ergänzt **`provideZoneChangeDetection()`** für Hauptanwendung und lokalen Referenzeinstieg über `applicationProviders`. Zone.js-Polyfills bleiben erhalten. Damit wird der neue zoneless Standard ausdrücklich überschrieben und das bisherige Änderungsverhalten bewahrt.
+- PrimeNG-Menü verwendet nun CSS-Motion: Der eigene Window-Scroll-Listener wird **sofort beim Aufruf von hide** entfernt, statt bis zum verzögerten Schließen-Ereignis weiterzulaufen. Der Lifecycle-Test wartet auf das tatsächliche `onHide`-Ereignis; `NoopAnimationsModule` beendet CSS-Animationen nicht. Erwartungen für genau ein Schließen-Ereignis und Listener-Cleanup bleiben bestehen.
+
+### Validierung
+
+- Sauberes **`npm ci`** und **`npm ls --all`** erfolgreich. Installiert 1081 Pakete; npm meldet weiterhin Audit-Funde (32), kein pauschales `audit fix` ausgeführt.
+- Abschließender Testlauf nach sauberer Installation und Lifecycle-Testanpassung: **52 Unit-Tests erfolgreich**. Frühere fehlgeschlagene Diagnoseläufe bleiben in den Logs, werden nicht als Abnahme gezählt.
+- **Produktions-, Entwicklungs- und Referenzbuild erfolgreich**. Produktionsbundle **2.58 MB**, bestehende 500-kB-Warnschwelle überschritten, unveränderte 3-MB-Fehlergrenze eingehalten. CommonJS-Warnungen weiterhin sichtbar. Produktions-/Entwicklungsoutputs unter `artefacts/angular-upgrade/angular-21/verified/`.
+
+- Reguläre Builds: Einstieg, Chrome-Manifest und beide Extension-Entries vorhanden; Manifest byteidentisch, Background/Content-Script ohne `webpackChunk`-Runtime-Abhängigkeit. Keine Referenz-Fixture-Marker in regulären JS-Bundles. Originalreferenz gegen SHA-256-Inventar unverändert bestätigt; `git diff --check` erfolgreich.
+- Erster und abschließender Browserlauf reproduzieren denselben Drawer-Timeout. Abschlusslauf **`angular-21-foundation-verified`** enthält **16 erfolgreiche Teilprüfungen, 21 Hauptbilder plus 11 Zusatzbilder**, keine bis zum Abbruch aufgezeichneten Browser-/Konsolenfehler. **0/32 Bilder byteidentisch** zur Angular-20-Abnahme; ungefilterte Differenzen und Hashes im Bericht, noch nicht visuell akzeptiert. Start-Renderer AMD Radeon 8060S / ANGLE D3D11 mit aktiviertem Compositing/Rasterization; wegen Abbruch kein Abschluss-Renderer erfasst und keine Behauptung eines vollständigen stabilen GPU-Laufs.
+- Nachweise: `npm-ci.log`, `npm-ls.log`, `update.log`, `migrate-*.log`, `production-verified.log`, `development-verified.log`, `reference-verified.log`, `tests-lifecycle-verified.log`, `capture-initial.log`, `capture-verified.log`, `foundation-comparison.log`.
+
+### Noch offen für die Angular-21-UI-Etappe
+
+- **Drawer-Maske:** Nach Speichern/Schließen der Einstellungen bleibt `.p-drawer-mask.p-overlay-mask-leave-active` bestehen und blockiert den nächsten Settings-Klick. Der Referenzlauf beendet sich hier mit Timeout. Ursache und Korrektur der neuen CSS-Motion-/Masken-Lifecycle-Verknüpfung einschließlich reduzierter Bewegung prüfen; kein Wegklicken oder Entfernen der Maske durch das Testskript.
+- **Font Awesome:** Integration 4.0.0 ist die einzige geprüfte stabile Version mit Angular-21-Peer und bringt SVG-Core 7 mit Standardbreite 1.25 em mit. Den bereits bei Angular 20 festgestellten Breitenunterschied jetzt appseitig über die öffentliche Styling-API ausgleichen und alle verwendeten SVGs prüfen. CSS-/Glyphenpakete und Fonts der Version 6 weiterhin erhalten; der vollständige Iconpaket-Wechsel bleibt ein eigener Abschnitt.
+- **Animationen:** Die alten `showTransitionOptions`/`hideTransitionOptions` des eigenen Menü-Wrappers werden von PrimeNG 21 ignoriert; bisherige Dauer/Easing auf CSS-Motion übertragen. Den Drawer-Transform-Fix mit `ng-animating` auf die neue Enter-/Leave-Klassenlogik abstimmen, Animationen erhalten.
+- Danach **alle 59 Browserprüfungen, 88 Bilder, ungefilterten Vergleich zum akzeptierten Angular-20-Stand und vollständige Wiederholung** abschließen. `visualAcceptance` und `angular22UiGateSatisfied` bleiben im Bericht ausdrücklich **false**. Offline-Fixtures ersetzen weiterhin keine echten LEGO-Konto-/Warenkorbtests.
+
+Quellen: [Angular-Kompatibilität](https://angular.dev/reference/versions), [Angular zoneless / Zone-Provider](https://angular.dev/guide/zoneless), [PrimeNG-21-Migration und CSS-Animationen](https://primeng.dev/migration/v21). Registry-Metadaten und Migrations-/Installations-/Build-/Testlogs unter `artefacts/angular-upgrade/angular-21/`; [Grundprüfungsbericht](angular-upgrade-reference/angular-21-foundation-check.json). Frühere Abnahmeberichte und Originalreferenzen bleiben unverändert.
+
+### Jetzt manuell: Grundmigration sichern
+
+```powershell
+git add package.json package-lock.json tsconfig.json src docs
+git commit -m "chore: migrate Angular 21 foundation"
+```
+
+Keine zusätzliche manuelle Einrichtung nötig. Nach diesem Zwischencommit und `weiter` folgen die Angular-21-UI-Korrekturen; Angular 22 erst nach vollständiger Abnahme. Community-Lizenzschlüssel weiterhin erst vor PrimeNG 22.

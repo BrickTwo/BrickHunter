@@ -11,39 +11,41 @@
         Percentage used<p-sortIcon field="containesPercentage"></p-sortIcon>
       </th>
       <th pSortableColumn="containesPieces">Pieces used<p-sortIcon field="containesPieces"></p-sortIcon></th>
-      <th pSortableColumn="containedPicesPrice">
-        PaB Price<p-sortIcon field="containedPicesPrice"></p-sortIcon>
-      </th>
+      <th pSortableColumn="containedPicesPrice">PaB Price<p-sortIcon field="containedPicesPrice"></p-sortIcon></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-product let-expanded="expanded">
     <tr (click)="onOpenDetail(product)" style="cursor: pointer">
       <!-- <td>
-        <button
-          type="button"
-          pButton
-          pRipple
-          [pRowToggler]="product"
-          (click)="showParts(product.id)"
-          class="p-button-text p-button-rounded p-button-plain"
-          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-      </td> -->
+      <button
+        type="button"
+        pButton
+        pRipple
+        [pRowToggler]="product"
+        (click)="showParts(product.id)"
+        class="p-button-text p-button-rounded p-button-plain"
+      [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+    </td> -->
       <td>{{ product.id }}</td>
       <td>{{ product.name }}</td>
       <td>
-        <img *ngIf="product.imageUrl" [src]="product.imageUrl" [alt]="product.name" width="50" />
+        @if (product.imageUrl) {
+          <img [src]="product.imageUrl" [alt]="product.name" width="50" />
+        }
       </td>
-      <td>{{ product.price.toFixed(2) | currency : product.currencyCode }}</td>
+      <td>{{ product.price.toFixed(2) | currency: product.currencyCode }}</td>
       <td>{{ product.pieceCount }}</td>
       <td>{{ product.containesPercentage.toFixed(1) }}%</td>
       <td>{{ product.containesPieces }}</td>
-      <td>{{ product.containedPicesPrice.toFixed(2) | currency : product.currencyCode }}</td>
+      <td>{{ product.containedPicesPrice.toFixed(2) | currency: product.currencyCode }}</td>
     </tr>
   </ng-template>
   <ng-template pTemplate="rowexpansion" let-product>
     <tr>
       <td colspan="9">
-        <app-parts-table *ngIf="parts" [parts]="parts" [allowEdit]="true"></app-parts-table>
+        @if (parts) {
+          <app-parts-table [parts]="parts" [allowEdit]="true"></app-parts-table>
+        }
       </td>
     </tr>
   </ng-template>

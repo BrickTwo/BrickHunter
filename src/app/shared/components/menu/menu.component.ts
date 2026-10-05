@@ -1,5 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, NgModule, OnDestroy, Output, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  NgModule,
+  OnDestroy,
+  Output,
+  Renderer2,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Menu, MenuModule as PrimeMenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
@@ -11,9 +21,9 @@ export interface BrickHunterMenuItem extends MenuItem {
 
 // Keep BrickHunter templates behind the public PrimeNG Menu API.
 @Component({
-    selector: 'bh-menu',
-    imports: [CommonModule, RouterModule, PrimeMenuModule],
-    template: `
+  selector: 'bh-menu',
+  imports: [CommonModule, RouterModule, PrimeMenuModule],
+  template: `
     <p-menu
       #menu
       [model]="visibleModel"
@@ -30,28 +40,28 @@ export interface BrickHunterMenuItem extends MenuItem {
       (onShow)="handleShow($event)"
       (onHide)="handleHide($event)">
       <ng-template pTemplate="item" let-item>
-        <a
-          *ngIf="item.routerLink; else externalLink"
-          class="p-menu-item-link"
-          data-pc-section="action"
-          tabindex="-1"
-          [attr.href]="item.routerLink ? null : item.url || null"
-          [routerLink]="item.routerLink"
-          [queryParams]="item.queryParams"
-          [fragment]="item.fragment"
-          [target]="item.target"
-          [queryParamsHandling]="item.queryParamsHandling"
-          [preserveFragment]="item.preserveFragment"
-          [skipLocationChange]="item.skipLocationChange"
-          [replaceUrl]="item.replaceUrl"
-          [state]="item.state"
-          [routerLinkActive]="'p-menuitem-link-active'"
-          [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
-          [attr.title]="item.title"
-          [attr.data-automationid]="item.automationId">
-          <ng-container *ngTemplateOutlet="content"></ng-container>
-        </a>
-        <ng-template #externalLink>
+        @if (item.routerLink) {
+          <a
+            class="p-menu-item-link"
+            data-pc-section="action"
+            tabindex="-1"
+            [attr.href]="item.routerLink ? null : item.url || null"
+            [routerLink]="item.routerLink"
+            [queryParams]="item.queryParams"
+            [fragment]="item.fragment"
+            [target]="item.target"
+            [queryParamsHandling]="item.queryParamsHandling"
+            [preserveFragment]="item.preserveFragment"
+            [skipLocationChange]="item.skipLocationChange"
+            [replaceUrl]="item.replaceUrl"
+            [state]="item.state"
+            [routerLinkActive]="'p-menuitem-link-active'"
+            [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
+            [attr.title]="item.title"
+            [attr.data-automationid]="item.automationId">
+            <ng-container *ngTemplateOutlet="content"></ng-container>
+          </a>
+        } @else {
           <a
             class="p-menu-item-link"
             data-pc-section="action"
@@ -62,23 +72,28 @@ export interface BrickHunterMenuItem extends MenuItem {
             [attr.data-automationid]="item.automationId">
             <ng-container *ngTemplateOutlet="content"></ng-container>
           </a>
-        </ng-template>
+        }
         <ng-template #content>
-          <span
-            *ngIf="item.icon"
-            class="p-menu-item-icon"
-            [ngClass]="[item.icon, item.iconClass || '']"
-            [ngStyle]="item.iconStyle"></span>
-          <span *ngIf="item.swatch" class="bh-menu-swatch" [style.background-color]="item.swatch.rgb"></span>
+          @if (item.icon) {
+            <span
+              class="p-menu-item-icon"
+              [ngClass]="[item.icon, item.iconClass || '']"
+              [ngStyle]="item.iconStyle"></span>
+          }
+          @if (item.swatch) {
+            <span class="bh-menu-swatch" [style.background-color]="item.swatch.rgb"></span>
+          }
           <span class="p-menu-item-label">{{ item.label }}</span>
-          <span *ngIf="item.badge" class="bh-menu-badge" [ngClass]="item.badgeStyleClass">{{ item.badge }}</span>
+          @if (item.badge) {
+            <span class="bh-menu-badge" [ngClass]="item.badgeStyleClass">{{ item.badge }}</span>
+          }
         </ng-template>
       </ng-template>
       <ng-template pTemplate="submenuheader" let-item>{{ item.label }}</ng-template>
     </p-menu>
   `,
-    styleUrls: ['./menu.component.scss'],
-    encapsulation: ViewEncapsulation.None
+  styleUrls: ['./menu.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MenuComponent implements OnDestroy {
   @Input() popup = false;
@@ -128,6 +143,8 @@ export class MenuComponent implements OnDestroy {
     this.menu.show(event);
   }
   hide() {
+    // CSS leave animations finish later; stop listening as soon as hiding starts.
+    this.clearWindowScrollListener();
     this.menu.hide();
   }
 

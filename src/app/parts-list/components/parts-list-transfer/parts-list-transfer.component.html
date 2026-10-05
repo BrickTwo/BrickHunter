@@ -22,25 +22,26 @@
       </p>
     </div>
   </div>
-  <p-message severity="error" [text]="errorMessage" *ngIf="!!errorMessage"></p-message>
+  @if (!!errorMessage) {
+    <p-message severity="error" [text]="errorMessage"></p-message>
+  }
   <ng-template pTemplate="footer">
-    <p-button
-      icon="pi pi-check"
-      (click)="onOpenLegoWebsite()"
-      label="open LEGO.com"
-      styleClass="p-button-solid"
-      *ngIf="transferStep === 1 && !!errorMessage"></p-button>
-    <p-button
-      icon="pi pi-check"
-      (click)="onRetry()"
-      label="Retry"
-      styleClass="p-button-outlined"
-      *ngIf="transferStep === 1 && !!errorMessage"></p-button>
-    <p-button
-      icon="pi pi-check"
-      (click)="onClose()"
-      label="Close"
-      styleClass="p-button-outlined p-button-danger"
-      *ngIf="!!errorMessage"></p-button>
+    @if (transferStep === 1 && !!errorMessage) {
+      <p-button
+        icon="pi pi-check"
+        (click)="onOpenLegoWebsite()"
+        label="open LEGO.com"
+        styleClass="p-button-solid"></p-button>
+    }
+    @if (transferStep === 1 && !!errorMessage) {
+      <p-button icon="pi pi-check" (click)="onRetry()" label="Retry" styleClass="p-button-outlined"></p-button>
+    }
+    @if (!!errorMessage) {
+      <p-button
+        icon="pi pi-check"
+        (click)="onClose()"
+        label="Close"
+        styleClass="p-button-outlined p-button-danger"></p-button>
+    }
   </ng-template>
 </p-dialog>

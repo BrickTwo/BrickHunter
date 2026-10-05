@@ -5,22 +5,27 @@
         <p-inputgroup-addon>
           <i class="fa fa-magnifying-glass"></i>
         </p-inputgroup-addon>
-        <p-button
-          icon="fa fa-circle-xmark"
-          styleClass="p-button-rounded p-button-text"
-          *ngIf="keyword"
-          (click)="onChangeKeyword('')"></p-button>
+        @if (keyword) {
+          <p-button
+            icon="fa fa-circle-xmark"
+            styleClass="p-button-rounded p-button-text"
+            (click)="onChangeKeyword('')"></p-button>
+        }
         <input type="text" pInputText [(ngModel)]="keyword" (ngModelChangeDebounced)="onChangeKeyword($event)" />
       </p-inputgroup>
     </div>
     <div class="field col-6">
       <p-inputgroup>
-        <p-inputgroup-addon (click)="onChangeSortDirection()" style="cursor: pointer" *ngIf="sortDirection === 'DESC'">
-          <i class="fa fa-arrow-up-z-a"></i>
-        </p-inputgroup-addon>
-        <p-inputgroup-addon (click)="onChangeSortDirection()" style="cursor: pointer" *ngIf="sortDirection === 'ASC'">
-          <i class="fa fa-arrow-down-z-a"></i>
-        </p-inputgroup-addon>
+        @if (sortDirection === 'DESC') {
+          <p-inputgroup-addon (click)="onChangeSortDirection()" style="cursor: pointer">
+            <i class="fa fa-arrow-up-z-a"></i>
+          </p-inputgroup-addon>
+        }
+        @if (sortDirection === 'ASC') {
+          <p-inputgroup-addon (click)="onChangeSortDirection()" style="cursor: pointer">
+            <i class="fa fa-arrow-down-z-a"></i>
+          </p-inputgroup-addon>
+        }
         <p-select
           [options]="sortOptions"
           [(ngModel)]="selectedSort"
@@ -37,11 +42,11 @@
     <div class="field col-12">
       <div class="flex justify-content-between">
         <!-- <p-selectButton
-          [options]="keywordOptions"
-          [(ngModel)]="keywordOption"
-          [multiple]="true"
-          optionLabel="name"
-          optionValue="value"></p-selectButton> -->
+        [options]="keywordOptions"
+        [(ngModel)]="keywordOption"
+        [multiple]="true"
+        optionLabel="name"
+      optionValue="value"></p-selectButton> -->
         <p-selectButton
           [options]="deliveryChannelOptions"
           [(ngModel)]="deliveryChannels"
@@ -71,10 +76,12 @@
             [minDate]="minDate"></p-datepicker>
         </span>
         <div class="flex flex-nowrap align-items-center gap-1">
-          <span class="bh-toggleswitch"><p-toggleswitch
-            [(ngModel)]="onlyPrinted"
-            inputId="onlyPrinted"
-            (onChange)="onChangeOnlyPrinted($event.checked)"></p-toggleswitch></span>
+          <span class="bh-toggleswitch"
+            ><p-toggleswitch
+              [(ngModel)]="onlyPrinted"
+              inputId="onlyPrinted"
+              (onChange)="onChangeOnlyPrinted($event.checked)"></p-toggleswitch
+          ></span>
           <label for="onlyPrinted">Only Printed</label>
         </div>
       </div>

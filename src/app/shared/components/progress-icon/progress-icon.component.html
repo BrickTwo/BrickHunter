@@ -1,5 +1,11 @@
 [
-<fa-icon [icon]="faCheck" class="icon" *ngIf="currentStep > step"></fa-icon>
-<fa-icon [icon]="faRightLong" class="icon" *ngIf="currentStep === step"></fa-icon>
-<fa-icon [icon]="faO" class="icon" *ngIf="currentStep < step"></fa-icon>
+@if (currentStep > step) {
+  <fa-icon [icon]="faCheck" class="icon"></fa-icon>
+}
+@if (currentStep === step) {
+  <fa-icon [icon]="faRightLong" class="icon"></fa-icon>
+}
+@if (currentStep < step) {
+  <fa-icon [icon]="faO" class="icon"></fa-icon>
+}
 ]

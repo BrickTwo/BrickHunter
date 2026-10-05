@@ -1,6 +1,10 @@
 <p-drawer [appendTo]="null" [(visible)]="display" position="right">
-  <h2 *ngIf="action === 'copy'">Copy to</h2>
-  <h2 *ngIf="action === 'move'">Move to</h2>
+  @if (action === 'copy') {
+    <h2>Copy to</h2>
+  }
+  @if (action === 'move') {
+    <h2>Move to</h2>
+  }
   <form (ngSubmit)="onCreatePartsList(form)" #form="ngForm">
     <div class="field">
       <label for="partsListName" class="block">Parts List name</label>
@@ -26,21 +30,11 @@
       optionValue="uuid"></p-selectButton>
   </div>
   <div class="field">
-    <button
-      pButton
-      pRipple
-      type="button"
-      label="Copy"
-      style="width: 100%"
-      (click)="onSubmit()"
-      *ngIf="action === 'copy'"></button>
-    <button
-      pButton
-      pRipple
-      type="button"
-      label="Move"
-      style="width: 100%"
-      (click)="onSubmit()"
-      *ngIf="action === 'move'"></button>
+    @if (action === 'copy') {
+      <button pButton pRipple type="button" label="Copy" style="width: 100%" (click)="onSubmit()"></button>
+    }
+    @if (action === 'move') {
+      <button pButton pRipple type="button" label="Move" style="width: 100%" (click)="onSubmit()"></button>
+    }
   </div>
 </p-drawer>

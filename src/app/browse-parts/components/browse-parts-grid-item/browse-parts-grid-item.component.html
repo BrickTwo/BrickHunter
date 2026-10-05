@@ -2,33 +2,45 @@
   <div class="align-items-center" style="height: 120px">
     <div [style]="getImageStyle()" (click)="onOpenPartDetail()">
       <div>
-        <p-tag severity="warn" *ngIf="part.deliveryChannel === 'pab'">Bestseller</p-tag>
-        <p-tag severity="info" *ngIf="part.deliveryChannel === 'bap'">Standard</p-tag>
-        <p-tag severity="danger" *ngIf="part.deliveryChannel === 'oos'">Out Of Stock</p-tag>
-        <p-tag severity="primary" styleClass="not-listed-tag" *ngIf="part.deliveryChannel === ''"> Not Listed </p-tag>
+        @if (part.deliveryChannel === 'pab') {
+          <p-tag severity="warn">Bestseller</p-tag>
+        }
+        @if (part.deliveryChannel === 'bap') {
+          <p-tag severity="info">Standard</p-tag>
+        }
+        @if (part.deliveryChannel === 'oos') {
+          <p-tag severity="danger">Out Of Stock</p-tag>
+        }
+        @if (part.deliveryChannel === '') {
+          <p-tag severity="primary" styleClass="not-listed-tag"> Not Listed </p-tag>
+        }
       </div>
       <div class="flex justify-content-end" style="width: 100%; position: relative; top: -34px; right: -10px">
         <div class="flex justify-content-end flex-column">
-          <p-button
-            icon="fa-solid fa-heart"
-            styleClass="p-button-rounded p-button-text p-button-danger text-xl special-button"
-            *ngIf="isInWishList"
-            (click)="onRemoveFromWishList(); $event.stopPropagation()"></p-button>
-          <p-button
-            icon="fa-regular fa-heart"
-            styleClass="p-button-rounded p-button-text p-button-danger text-xl special-button"
-            *ngIf="!isInWishList"
-            (click)="onAddToWishList(); $event.stopPropagation()"></p-button>
-          <p-button
-            icon="fa-solid fa-circle-check"
-            styleClass="p-button-rounded p-button-text p-button-success text-xl special-button"
-            *ngIf="isInHaveItList"
-            (click)="onRemoveFromHaveItList(); $event.stopPropagation()"></p-button>
-          <p-button
-            icon="fa-regular fa-circle-check"
-            styleClass="p-button-rounded p-button-text p-button-success text-xl special-button"
-            *ngIf="!isInHaveItList"
-            (click)="onAddToHaveItList(); $event.stopPropagation()"></p-button>
+          @if (isInWishList) {
+            <p-button
+              icon="fa-solid fa-heart"
+              styleClass="p-button-rounded p-button-text p-button-danger text-xl special-button"
+              (click)="onRemoveFromWishList(); $event.stopPropagation()"></p-button>
+          }
+          @if (!isInWishList) {
+            <p-button
+              icon="fa-regular fa-heart"
+              styleClass="p-button-rounded p-button-text p-button-danger text-xl special-button"
+              (click)="onAddToWishList(); $event.stopPropagation()"></p-button>
+          }
+          @if (isInHaveItList) {
+            <p-button
+              icon="fa-solid fa-circle-check"
+              styleClass="p-button-rounded p-button-text p-button-success text-xl special-button"
+              (click)="onRemoveFromHaveItList(); $event.stopPropagation()"></p-button>
+          }
+          @if (!isInHaveItList) {
+            <p-button
+              icon="fa-regular fa-circle-check"
+              styleClass="p-button-rounded p-button-text p-button-success text-xl special-button"
+              (click)="onAddToHaveItList(); $event.stopPropagation()"></p-button>
+          }
           <p-button
             icon="fa fa-solid fa-arrow-up-right-from-square"
             styleClass="p-button-rounded p-button-text text-xl special-button"
@@ -55,40 +67,42 @@
             [class]="'flag flag-' + part.country.toLowerCase()"
             style="width: 18px" />
         </div>
-        <div>{{ part.priceAmount | currency : part.priceCurrency : 'symbol-narrow' : '1.2-2' : this.language }}</div>
+        <div>{{ part.priceAmount | currency: part.priceCurrency : 'symbol-narrow' : '1.2-2' : this.language }}</div>
       </div>
       <div style="overflow: hidden; cursor: pointer" (click)="onSetColorFilter(part.colorId)">
         <app-color [colorId]="part.colorId" [onlyMainColor]="true"></app-color>
       </div>
-      <div
-        *ngIf="partsListPart"
-        style="height: 42px; background-color: #ffc107; border-radius: 4px; padding: 8px"
-        class="flex flex-row justify-content-between">
-        <p-inputNumber
-          [(ngModel)]="partsListPart.qty"
-          [showButtons]="true"
-          buttonLayout="horizontal"
-          class="quantity-edit"
-          [min]="0"
-          [inputStyle]="{ 'text-align': 'right', width: '60px' }"
-          decrementButtonClass="quantity-edit-button"
-          incrementButtonClass="quantity-edit-button"
-          incrementButtonIcon="fa fa-plus"
-          decrementButtonIcon="fa fa-minus"
-          (onBlur)="onChangeQuantity()"
-          (onInput)="onChangeQuantity()"></p-inputNumber>
+      @if (partsListPart) {
+        <div
+          style="height: 42px; background-color: #ffc107; border-radius: 4px; padding: 8px"
+          class="flex flex-row justify-content-between">
+          <p-inputNumber
+            [(ngModel)]="partsListPart.qty"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            class="quantity-edit"
+            [min]="0"
+            [inputStyle]="{ 'text-align': 'right', width: '60px' }"
+            decrementButtonClass="quantity-edit-button"
+            incrementButtonClass="quantity-edit-button"
+            incrementButtonIcon="fa fa-plus"
+            decrementButtonIcon="fa fa-minus"
+            (onBlur)="onChangeQuantity()"
+            (onInput)="onChangeQuantity()"></p-inputNumber>
+          <p-button
+            icon="fa fa-trash-can"
+            styleClass="p-button-rounded p-button-danger p-button-text remove-button"
+            (click)="onRemovePart()"></p-button>
+        </div>
+      }
+      @if (!partsListPart) {
         <p-button
-          icon="fa fa-trash-can"
-          styleClass="p-button-rounded p-button-danger p-button-text remove-button"
-          (click)="onRemovePart()"></p-button>
-      </div>
-      <p-button
-        icon="fa fa-plus"
-        label="Add"
-        styleClass="p-button-solid text-md"
-        class="full-width-button"
-        *ngIf="!partsListPart"
-        (click)="onAddPart()"></p-button>
+          icon="fa fa-plus"
+          label="Add"
+          styleClass="p-button-solid text-md"
+          class="full-width-button"
+          (click)="onAddPart()"></p-button>
+      }
     </div>
   </div>
 </div>

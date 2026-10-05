@@ -1,25 +1,25 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ToastMessageOptions } from 'primeng/api';
 import { MessageModule } from 'primeng/message';
 
 // Array-based application warnings, rendered through PrimeNG's public Message API.
 @Component({
-    selector: 'bh-messages',
-    imports: [CommonModule, MessageModule],
-    template: `
-    <p-message
-      *ngFor="let message of messages"
-      [severity]="message.severity || 'info'"
-      [closable]="false"
-      styleClass="bh-message-banner"
-      [icon]="message.icon || severityIcon(message.severity)">
-      <span class="bh-message-summary">{{ message.summary }}</span>
-      <span class="bh-message-detail">{{ message.detail }}</span>
-    </p-message>
+  selector: 'bh-messages',
+  imports: [MessageModule],
+  template: `
+    @for (message of messages; track message) {
+      <p-message
+        [severity]="message.severity || 'info'"
+        [closable]="false"
+        styleClass="bh-message-banner"
+        [icon]="message.icon || severityIcon(message.severity)">
+        <span class="bh-message-summary">{{ message.summary }}</span>
+        <span class="bh-message-detail">{{ message.detail }}</span>
+      </p-message>
+    }
   `,
-    styles: [
-        `
+  styles: [
+    `
       .bh-message-banner {
         margin: 1rem 0;
       }
@@ -44,8 +44,8 @@ import { MessageModule } from 'primeng/message';
         margin-left: 0.5rem;
       }
     `,
-    ],
-    encapsulation: ViewEncapsulation.None
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MessagesComponent {
   @Input() messages: ToastMessageOptions[] = [];

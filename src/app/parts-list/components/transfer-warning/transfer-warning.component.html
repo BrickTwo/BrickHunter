@@ -40,7 +40,9 @@
         <td>
           <div class="flex flex-column">
             <div>{{ part.part.qty }}</div>
-            <div *ngIf="part.part.have" style="color: grey; font-size: 12px">have: {{ part.part.have }}</div>
+            @if (part.part.have) {
+              <div style="color: grey; font-size: 12px">have: {{ part.part.have }}</div>
+            }
           </div>
         </td>
         <td>{{ part.cart?.quantity }}</td>
@@ -48,8 +50,12 @@
         <td>
           <app-pab-price [part]="part.part"></app-pab-price>
         </td>
-        <td *ngIf="!part.cart">Not transfered</td>
-        <td *ngIf="part.cart">Amount reduced to {{ part.part.lego.maxOrderQuantity - part.cart?.quantity }}</td>
+        @if (!part.cart) {
+          <td>Not transfered</td>
+        }
+        @if (part.cart) {
+          <td>Amount reduced to {{ part.part.lego.maxOrderQuantity - part.cart?.quantity }}</td>
+        }
       </tr>
     </ng-template>
   </p-table>

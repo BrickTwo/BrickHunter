@@ -28,10 +28,18 @@
     <div class="flex justify-content-between gap-3"><strong>Max Order Quantity:</strong> {{ maxOrderQuantity }}</div>
     <div class="flex justify-content-between gap-3">
       <strong>Delivery Channel:</strong>
-      <p-tag severity="warn" *ngIf="part.deliveryChannel === 'pab'">Bestseller</p-tag>
-      <p-tag severity="info" *ngIf="part.deliveryChannel === 'bap'">Standard</p-tag>
-      <p-tag severity="danger" *ngIf="part.deliveryChannel === 'oos'">Out Of Stock</p-tag>
-      <p-tag severity="primary" styleClass="not-listed-tag" *ngIf="part.deliveryChannel === ''"> Not Listed </p-tag>
+      @if (part.deliveryChannel === 'pab') {
+        <p-tag severity="warn">Bestseller</p-tag>
+      }
+      @if (part.deliveryChannel === 'bap') {
+        <p-tag severity="info">Standard</p-tag>
+      }
+      @if (part.deliveryChannel === 'oos') {
+        <p-tag severity="danger">Out Of Stock</p-tag>
+      }
+      @if (part.deliveryChannel === '') {
+        <p-tag severity="primary" styleClass="not-listed-tag"> Not Listed </p-tag>
+      }
     </div>
     <div class="flex justify-content-between gap-3">
       <strong>Price:</strong>
@@ -42,18 +50,18 @@
             [class]="'flag flag-' + part.country.toLowerCase()"
             style="width: 18px" />
         </div>
-        <div>{{ part.priceAmount | currency : part.priceCurrency : 'symbol-narrow' }}</div>
+        <div>{{ part.priceAmount | currency: part.priceCurrency : 'symbol-narrow' }}</div>
       </div>
     </div>
   </div>
   <div>
     <div class="flex justify-content-between gap-3">
       <strong>First Availability Date:</strong>
-      {{ part?.firstAvailabilityDate + 'Z' | date : 'short' }}
+      {{ part?.firstAvailabilityDate + 'Z' | date: 'short' }}
     </div>
     <div class="flex justify-content-between gap-3">
       <strong>Last Availability Date:</strong>
-      {{ part?.lastAvailabilityDate + 'Z' | date : 'short' }}
+      {{ part?.lastAvailabilityDate + 'Z' | date: 'short' }}
     </div>
   </div>
 </div>

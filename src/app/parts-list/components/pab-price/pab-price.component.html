@@ -1,9 +1,17 @@
-<div class="flex flex-column" *ngIf="part.lego">
-  <div>
-    {{ part.lego.price.amount | currency : part.lego.price.currencyCode : 'symbol-narrow' : '1.2-2' : this.language }}
+@if (part.lego) {
+  <div class="flex flex-column">
+    <div>
+      {{ part.lego.price.amount | currency: part.lego.price.currencyCode : 'symbol-narrow' : '1.2-2' : this.language }}
+    </div>
+    <div style="color: grey; font-size: 12px">[{{ part.lego.designNumber }} {{ part.lego.elementId }}]</div>
+    @if (part.lego.deliveryChannel === 'pab') {
+      <p-tag severity="warn" value="Bestseller"></p-tag>
+    }
+    @if (part.lego.deliveryChannel === 'bap') {
+      <p-tag severity="info" value="Standard"></p-tag>
+    }
+    @if (!part.lego.inStock) {
+      <p-tag severity="danger" value="Out Of Stock"></p-tag>
+    }
   </div>
-  <div style="color: grey; font-size: 12px">[{{ part.lego.designNumber }} {{ part.lego.elementId }}]</div>
-  <p-tag severity="warn" value="Bestseller" *ngIf="part.lego.deliveryChannel === 'pab'"></p-tag>
-  <p-tag severity="info" value="Standard" *ngIf="part.lego.deliveryChannel === 'bap'"></p-tag>
-  <p-tag severity="danger" value="Out Of Stock" *ngIf="!part.lego.inStock"></p-tag>
-</div>
+}

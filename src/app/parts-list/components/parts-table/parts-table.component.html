@@ -11,18 +11,20 @@
   [(selection)]="selectedParts">
   <ng-template pTemplate="header">
     <tr>
-      <th style="width: 6rem" *ngIf="showSelection">
-        <div class="flex flex-row gap-2">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-          <button
-            pButton
-            type="button"
-            (click)="bulkMenu.toggle($event)"
-            icon="fa fa-bars"
-            style="padding: 2px"
-            [disabled]="!selectedParts.length"></button>
-        </div>
-      </th>
+      @if (showSelection) {
+        <th style="width: 6rem">
+          <div class="flex flex-row gap-2">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            <button
+              pButton
+              type="button"
+              (click)="bulkMenu.toggle($event)"
+              icon="fa fa-bars"
+              style="padding: 2px"
+              [disabled]="!selectedParts.length"></button>
+          </div>
+        </th>
+      }
       <th pRipple pSortableColumn="designId">DesignId<p-sortIcon field="designId"></p-sortIcon></th>
       <th pRipple pSortableColumn="elementId">ElementId<p-sortIcon field="elementId"></p-sortIcon></th>
       <th>Image</th>
@@ -31,101 +33,123 @@
       <th pRipple pSortableColumn="maxPrice">BrickLink<p-sortIcon field="maxPrice"></p-sortIcon></th>
       <th pRipple pSortableColumn="lego.price.amount">
         Pick a Brick <p-sortIcon field="lego.price.amount"></p-sortIcon>
-        <span class="vertical-align-middle" *ngIf="pabIsLoading">
-          <p-progressSpinner [style]="{ width: '19px', height: '19px' }"></p-progressSpinner>
-        </span>
+        @if (pabIsLoading) {
+          <span class="vertical-align-middle">
+            <p-progressSpinner [style]="{ width: '19px', height: '19px' }"></p-progressSpinner>
+          </span>
+        }
       </th>
-      <th *ngIf="showAction">Action</th>
+      @if (showAction) {
+        <th>Action</th>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-part let-rowIndex="rowIndex">
     <!-- <tr [style]="getTopStyle()" *ngIf="rowIndex === 0 && rowsTop > 0">
-      <td colspan="8"></td>
-    </tr> -->
+    <td colspan="8"></td>
+  </tr> -->
     <!-- <tr style="height: 91px" *ngIf="rowIndex === 0 && rowsTop % 2 === 0 && rowsTop > 0">
-      <td colspan="8"></td>
-    </tr> -->
-    <tr style="height: 91px" *ngIf="rowIndex <= rowsTop - 1">
-      <td colspan="8"></td>
-    </tr>
-    <tr style="height: 91px" *ngIf="rowIndex > rowsTop - 1 && rowIndex < rowsTop + 5 + rowsVisible">
-      <td *ngIf="showSelection">
-        <p-tableCheckbox [value]="part"></p-tableCheckbox>
-      </td>
-      <td>{{ part.designId }}</td>
-      <td>{{ part.elementId }}</td>
-      <td>
-        <p-image
-          #imgRef
-          [src]="caclImageUrl(part)"
-          (onImageError)="onImageError(imgRef)"
-          imageClass="part-image"
-          [preview]="true"></p-image>
-      </td>
-      <td>
-        <app-color [colorId]="part.color"></app-color>
-      </td>
-      <td [pEditableColumn] *ngIf="allowEdit">
-        <p-cellEditor>
-          <ng-template pTemplate="input">
-            <span style="display: flex; width: 170px; margin: 2px">
-              <div style="width: 50px">Qty:</div>
-              <p-inputNumber
-                [(ngModel)]="part.qty"
-                (ngModelChange)="onQuantityChange($event, part.id)"
-                class="in-place-edit"
-                [min]="0"
-                [inputStyle]="{ 'text-align': 'right', width: '68px' }"
-                [showButtons]="true"></p-inputNumber>
-            </span>
-            <span style="display: flex; width: 170px; margin: 2px">
-              <div style="width: 50px">Have:</div>
-              <p-inputNumber
-                [(ngModel)]="part.have"
-                (ngModelChange)="onHaveChange($event, part.id)"
-                class="in-place-edit"
-                [min]="0"
-                [inputStyle]="{ 'text-align': 'right', width: '68px' }"
-                [showButtons]="true"></p-inputNumber>
-            </span>
-          </ng-template>
-          <ng-template pTemplate="output">
+  <td colspan="8"></td>
+</tr> -->
+    @if (rowIndex <= rowsTop - 1) {
+      <tr style="height: 91px">
+        <td colspan="8"></td>
+      </tr>
+    }
+    @if (rowIndex > rowsTop - 1 && rowIndex < rowsTop + 5 + rowsVisible) {
+      <tr style="height: 91px">
+        @if (showSelection) {
+          <td>
+            <p-tableCheckbox [value]="part"></p-tableCheckbox>
+          </td>
+        }
+        <td>{{ part.designId }}</td>
+        <td>{{ part.elementId }}</td>
+        <td>
+          <p-image
+            #imgRef
+            [src]="caclImageUrl(part)"
+            (onImageError)="onImageError(imgRef)"
+            imageClass="part-image"
+            [preview]="true"></p-image>
+        </td>
+        <td>
+          <app-color [colorId]="part.color"></app-color>
+        </td>
+        @if (allowEdit) {
+          <td [pEditableColumn]>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <span style="display: flex; width: 170px; margin: 2px">
+                  <div style="width: 50px">Qty:</div>
+                  <p-inputNumber
+                    [(ngModel)]="part.qty"
+                    (ngModelChange)="onQuantityChange($event, part.id)"
+                    class="in-place-edit"
+                    [min]="0"
+                    [inputStyle]="{ 'text-align': 'right', width: '68px' }"
+                    [showButtons]="true"></p-inputNumber>
+                </span>
+                <span style="display: flex; width: 170px; margin: 2px">
+                  <div style="width: 50px">Have:</div>
+                  <p-inputNumber
+                    [(ngModel)]="part.have"
+                    (ngModelChange)="onHaveChange($event, part.id)"
+                    class="in-place-edit"
+                    [min]="0"
+                    [inputStyle]="{ 'text-align': 'right', width: '68px' }"
+                    [showButtons]="true"></p-inputNumber>
+                </span>
+              </ng-template>
+              <ng-template pTemplate="output">
+                <div class="flex flex-column">
+                  <div>{{ part.qty }}</div>
+                  @if (part.have) {
+                    <div style="color: grey; font-size: 12px">have: {{ part.have }}</div>
+                  }
+                  @if (part.lego && part.lego.maxOrderQuantity < part.qty) {
+                    <div style="color: red; font-size: 12px">max: {{ part.lego.maxOrderQuantity }}</div>
+                  }
+                </div>
+              </ng-template>
+            </p-cellEditor>
+          </td>
+        }
+        @if (!allowEdit) {
+          <td [pEditableColumn]>
             <div class="flex flex-column">
               <div>{{ part.qty }}</div>
-              <div *ngIf="part.have" style="color: grey; font-size: 12px">have: {{ part.have }}</div>
-              <div *ngIf="part.lego && part.lego.maxOrderQuantity < part.qty" style="color: red; font-size: 12px">
-                max: {{ part.lego.maxOrderQuantity }}
-              </div>
+              @if (part.have) {
+                <div style="color: grey; font-size: 12px">have: {{ part.have }}</div>
+              }
+              @if (part.lego && part.lego.maxOrderQuantity < part.qty) {
+                <div style="color: red; font-size: 12px">max: {{ part.lego.maxOrderQuantity }}</div>
+              }
             </div>
-          </ng-template>
-        </p-cellEditor>
-      </td>
-      <td [pEditableColumn] *ngIf="!allowEdit">
-        <div class="flex flex-column">
-          <div>{{ part.qty }}</div>
-          <div *ngIf="part.have" style="color: grey; font-size: 12px">have: {{ part.have }}</div>
-          <div *ngIf="part.lego && part.lego.maxOrderQuantity < part.qty" style="color: red; font-size: 12px">
-            max: {{ part.lego.maxOrderQuantity }}
-          </div>
-        </div>
-      </td>
-      <td>{{ (part.maxPrice || 0) > 0 ? part.maxPrice : '' }}</td>
-      <td>
-        <app-pab-price [part]="part"></app-pab-price>
-      </td>
-      <td *ngIf="showAction">
-        <p-button
-          icon="fa fa-trash-can"
-          styleClass="p-button-rounded p-button-danger p-button-text"
-          (click)="onDeletePart(part)"></p-button>
-      </td>
-    </tr>
-    <tr style="height: 91px" *ngIf="rowIndex > rowsTop + 5 + rowsVisible">
-      <td colspan="8"></td>
-    </tr>
+          </td>
+        }
+        <td>{{ (part.maxPrice || 0) > 0 ? part.maxPrice : '' }}</td>
+        <td>
+          <app-pab-price [part]="part"></app-pab-price>
+        </td>
+        @if (showAction) {
+          <td>
+            <p-button
+              icon="fa fa-trash-can"
+              styleClass="p-button-rounded p-button-danger p-button-text"
+              (click)="onDeletePart(part)"></p-button>
+          </td>
+        }
+      </tr>
+    }
+    @if (rowIndex > rowsTop + 5 + rowsVisible) {
+      <tr style="height: 91px">
+        <td colspan="8"></td>
+      </tr>
+    }
     <!-- <tr [style]="getBottomStyle()" *ngIf="rowIndex === rowsVisible - 1 && rowsBottom > 0">
-      <td colspan="9"></td>
-    </tr> -->
+<td colspan="9"></td>
+</tr> -->
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>

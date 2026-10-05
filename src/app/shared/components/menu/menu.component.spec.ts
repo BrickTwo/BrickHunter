@@ -153,8 +153,12 @@ describe('BrickHunter public menu wrapper', () => {
       await fixture.whenStable();
       expect(fixture.componentInstance.menu.visible).toBeTrue();
       expect(shown).toHaveBeenCalledTimes(1);
+      const hiddenEvent = new Promise<void>(resolve => fixture.componentInstance.onHide.subscribe(() => resolve()));
       fixture.componentInstance.hide();
       fixture.detectChanges();
+      await fixture.whenStable();
+      // NoopAnimationsModule only controls Angular animations, not PrimeNG 21 CSS motion.
+      await hiddenEvent;
       await fixture.whenStable();
       expect(fixture.componentInstance.menu.visible).toBeFalse();
       expect(hidden).toHaveBeenCalledTimes(1);

@@ -2,14 +2,20 @@
   <app-browse-parts-page-settings></app-browse-parts-page-settings>
   <div id="pabparts">
     <div [style]="getTopStyle()" id="rowsTop"></div>
-    <div class="flex justify-content-center" *ngIf="isLoading">
-      <span class="vertical-align-middle"><p-progressSpinner></p-progressSpinner></span>
-    </div>
-    <div class="grid-style" *ngIf="!isLoading">
-      <div class="p-1" *ngFor="let part of getParts(); index as i; trackBy: trackItem">
-        <app-browse-parts-grid-item [part]="part"></app-browse-parts-grid-item>
+    @if (isLoading) {
+      <div class="flex justify-content-center">
+        <span class="vertical-align-middle"><p-progressSpinner></p-progressSpinner></span>
       </div>
-    </div>
+    }
+    @if (!isLoading) {
+      <div class="grid-style">
+        @for (part of getParts(); track trackItem(i, part); let i = $index) {
+          <div class="p-1">
+            <app-browse-parts-grid-item [part]="part"></app-browse-parts-grid-item>
+          </div>
+        }
+      </div>
+    }
     <div [style]="getBottomStyle()" id="rowsBottom"></div>
   </div>
   <app-browse-parts-page-settings></app-browse-parts-page-settings>

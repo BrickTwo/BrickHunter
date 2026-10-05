@@ -16,77 +16,86 @@
     class="flex-grow-1"
     style="background-color: #6c757d"
     label="All"></button>
-  <button
-    pButton
-    pRipple
-    type="button"
-    (click)="menuTrans.toggle($event)"
-    class="flex-grow-1 p-button-outlined"
-    style="background-color: #f8f9fa; color: black"
-    label="Trans"
-    *ngIf="trans?.length"></button>
-  <button
-    pButton
-    pRipple
-    type="button"
-    (click)="menuBlack.toggle($event)"
-    class="flex-grow-1"
-    style="background-color: #343a40"
-    *ngIf="black?.length"></button>
-  <button
-    pButton
-    pRipple
-    type="button"
-    (click)="menuBrown.toggle($event)"
-    class="flex-grow-1"
-    style="background-color: #7f1e06"
-    *ngIf="brown?.length"></button>
-  <button
-    pButton
-    pRipple
-    type="button"
-    (click)="menuRed.toggle($event)"
-    class="flex-grow-1"
-    style="background-color: #dc3545"
-    *ngIf="red?.length"></button>
-  <button
-    pButton
-    pRipple
-    type="button"
-    (click)="menuOrange.toggle($event)"
-    class="flex-grow-1"
-    style="background-color: #fd7e14"
-    *ngIf="orange?.length"></button>
-  <button
-    pButton
-    pRipple
-    type="button"
-    (click)="menuYellow.toggle($event)"
-    class="flex-grow-1"
-    style="background-color: #ffc107"
-    *ngIf="yellow?.length"></button>
-  <button
-    pButton
-    pRipple
-    type="button"
-    (click)="menuGreen.toggle($event)"
-    class="flex-grow-1"
-    style="background-color: #28a745"
-    *ngIf="green?.length"></button>
-  <button
-    pButton
-    pRipple
-    type="button"
-    (click)="menuBlue.toggle($event)"
-    class="flex-grow-1"
-    style="background-color: #007bff"
-    *ngIf="blue?.length"></button>
-  <button
-    pButton
-    pRipple
-    type="button"
-    (click)="menuPurple.toggle($event)"
-    class="flex-grow-1"
-    style="background-color: #6f42c1"
-    *ngIf="purple?.length"></button>
+  @if (trans?.length) {
+    <button
+      pButton
+      pRipple
+      type="button"
+      (click)="menuTrans.toggle($event)"
+      class="flex-grow-1 p-button-outlined"
+      style="background-color: #f8f9fa; color: black"
+      label="Trans"></button>
+  }
+  @if (black?.length) {
+    <button
+      pButton
+      pRipple
+      type="button"
+      (click)="menuBlack.toggle($event)"
+      class="flex-grow-1"
+      style="background-color: #343a40"></button>
+  }
+  @if (brown?.length) {
+    <button
+      pButton
+      pRipple
+      type="button"
+      (click)="menuBrown.toggle($event)"
+      class="flex-grow-1"
+      style="background-color: #7f1e06"></button>
+  }
+  @if (red?.length) {
+    <button
+      pButton
+      pRipple
+      type="button"
+      (click)="menuRed.toggle($event)"
+      class="flex-grow-1"
+      style="background-color: #dc3545"></button>
+  }
+  @if (orange?.length) {
+    <button
+      pButton
+      pRipple
+      type="button"
+      (click)="menuOrange.toggle($event)"
+      class="flex-grow-1"
+      style="background-color: #fd7e14"></button>
+  }
+  @if (yellow?.length) {
+    <button
+      pButton
+      pRipple
+      type="button"
+      (click)="menuYellow.toggle($event)"
+      class="flex-grow-1"
+      style="background-color: #ffc107"></button>
+  }
+  @if (green?.length) {
+    <button
+      pButton
+      pRipple
+      type="button"
+      (click)="menuGreen.toggle($event)"
+      class="flex-grow-1"
+      style="background-color: #28a745"></button>
+  }
+  @if (blue?.length) {
+    <button
+      pButton
+      pRipple
+      type="button"
+      (click)="menuBlue.toggle($event)"
+      class="flex-grow-1"
+      style="background-color: #007bff"></button>
+  }
+  @if (purple?.length) {
+    <button
+      pButton
+      pRipple
+      type="button"
+      (click)="menuPurple.toggle($event)"
+      class="flex-grow-1"
+      style="background-color: #6f42c1"></button>
+  }
 </div>

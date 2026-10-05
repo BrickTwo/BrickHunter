@@ -6,30 +6,35 @@
       styleClass="p-button-rounded p-button-text config-button"
       (click)="configMode = !configMode"></p-button>
   </div>
-  <p-tree
-    *ngIf="!configMode"
-    [value]="categories"
-    [(selection)]="selectedCategory"
-    selectionMode="single"
-    (onNodeSelect)="onSelectCategory($event.node.key)">
-    <ng-template let-category pTemplate="default"> {{ category.label }} ({{ category.data }}) </ng-template>
-  </p-tree>
-  <div *ngIf="configMode">
-    <div class="flex flex-nowrap align-items-center gap-1 mb-3">
-      <span class="bh-toggleswitch"><p-toggleswitch
-        [(ngModel)]="excludeSelectedCategoryIds"
-        inputId="onlyPrinted"
-        (onChange)="onChangeExcludeSeclectedCategoryIds($event.checked)"></p-toggleswitch></span>
-      <label for="onlyPrinted">Ignore selected Categories</label>
-    </div>
+  @if (!configMode) {
     <p-tree
-      [value]="configCategories"
-      [(selection)]="selectedConfigCategories"
-      selectionMode="checkbox"
-      (onNodeSelect)="onConfigCategory($event.node.key)">
-      <ng-template let-category pTemplate="default">
-        {{ category.label }}
-      </ng-template>
+      [value]="categories"
+      [(selection)]="selectedCategory"
+      selectionMode="single"
+      (onNodeSelect)="onSelectCategory($event.node.key)">
+      <ng-template let-category pTemplate="default"> {{ category.label }} ({{ category.data }}) </ng-template>
     </p-tree>
-  </div>
+  }
+  @if (configMode) {
+    <div>
+      <div class="flex flex-nowrap align-items-center gap-1 mb-3">
+        <span class="bh-toggleswitch"
+          ><p-toggleswitch
+            [(ngModel)]="excludeSelectedCategoryIds"
+            inputId="onlyPrinted"
+            (onChange)="onChangeExcludeSeclectedCategoryIds($event.checked)"></p-toggleswitch
+        ></span>
+        <label for="onlyPrinted">Ignore selected Categories</label>
+      </div>
+      <p-tree
+        [value]="configCategories"
+        [(selection)]="selectedConfigCategories"
+        selectionMode="checkbox"
+        (onNodeSelect)="onConfigCategory($event.node.key)">
+        <ng-template let-category pTemplate="default">
+          {{ category.label }}
+        </ng-template>
+      </p-tree>
+    </div>
+  }
 </p-card>

@@ -1,5 +1,5 @@
 // Dedicated local reference entry point. Never used by the extension build.
-import { ApplicationRef, Injector, NgModule, NgZone } from '@angular/core';
+import { ApplicationRef, Injector, NgModule, NgZone, provideZoneChangeDetection } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { delay, of, Subject, Subscriber } from 'rxjs';
@@ -28,8 +28,11 @@ lists[0].parts = referenceTableParts();
 const database = {
   partsLists: {
     toArray: () => Promise.resolve(structuredClone(lists)),
-    add: (list: typeof lists[number]) => { lists.push(structuredClone(list)); return Promise.resolve(); },
-    put: (list: typeof lists[number]) => {
+    add: (list: (typeof lists)[number]) => {
+      lists.push(structuredClone(list));
+      return Promise.resolve();
+    },
+    put: (list: (typeof lists)[number]) => {
       const index = lists.findIndex(item => item.uuid === list.uuid);
       if (index >= 0) lists[index] = structuredClone(list);
       return Promise.resolve();
@@ -43,16 +46,23 @@ const database = {
   colors: { toArray: () => Promise.resolve(structuredClone(referenceColors)), bulkPut: () => Promise.resolve() },
 };
 const api = {
-  getBrickHunterGlobalSettings: () => of({ maxPaBLotPerOrder: 200, defaultMaxQuantityPerLot: 100,
-    paBServiceFeeUnder: [], baPServiceFeeUnder: [] }),
+  getBrickHunterGlobalSettings: () =>
+    of({ maxPaBLotPerOrder: 200, defaultMaxQuantityPerLot: 100, paBServiceFeeUnder: [], baPServiceFeeUnder: [] }),
   getRebrickableColors: () => of(structuredClone(referenceColors)),
   getPickABrickParts: () => of(referenceSearch(searchCount)).pipe(delay(0)),
-  getProductsSuggestions: () => of([]), getRebrickableParts: () => of([]), getBrickLinkParts: () => of([]),
+  getProductsSuggestions: () => of([]),
+  getRebrickableParts: () => of([]),
+  getBrickLinkParts: () => of([]),
 };
 const pickABrick = {
-  pabLoading: new Subject<boolean>(), pabLoadError: '', getParts: () => {},
-  transferParts: async (subscriber: Subscriber<number>) => { subscriber.next(2); },
-  continueTransfer: async () => {}, cancelTransfer: () => {},
+  pabLoading: new Subject<boolean>(),
+  pabLoadError: '',
+  getParts: () => {},
+  transferParts: async (subscriber: Subscriber<number>) => {
+    subscriber.next(2);
+  },
+  continueTransfer: async () => {},
+  cancelTransfer: () => {},
 };
 
 @NgModule({
@@ -60,8 +70,16 @@ const pickABrick = {
   providers: [
     { provide: BrickHunterApiService, useValue: api },
     { provide: IndexedDBService, useValue: database },
-    { provide: VersionService, useValue: { oldVersion: '2.4.8', currentVersion: '2.4.8', devmode: true,
-      migration$: new Subject(), isVersionGreater: VersionService.prototype.isVersionGreater } },
+    {
+      provide: VersionService,
+      useValue: {
+        oldVersion: '2.4.8',
+        currentVersion: '2.4.8',
+        devmode: true,
+        migration$: new Subject(),
+        isVersionGreater: VersionService.prototype.isVersionGreater,
+      },
+    },
   ],
   bootstrap: [AppComponent],
 })
@@ -70,16 +88,26 @@ class VisualReferenceModule {
     (window as any).brickHunterReference = {
       runInAngular: (action: () => void) => zone.run(action),
       clearMessages: () => zone.run(() => injector.get(MessageService).clear()),
-      showMessage: (severity: 'success' | 'info' | 'warn' | 'error' = 'success',
-        summary = 'PaB Data successfully updated', detail?: string) => zone.run(() => injector.get(MessageService).add({
-        severity, summary, detail, sticky: true,
-      })),
-      setSearchCount: (count: number) => zone.run(() => {
-        if (!Number.isInteger(count) || count < 0 || count > 1000) throw new Error('Invalid reference count');
-        searchCount = count;
-        injector.get(BrowsePartsService).sendRequest();
-        app.tick();
-      }),
+      showMessage: (
+        severity: 'success' | 'info' | 'warn' | 'error' = 'success',
+        summary = 'PaB Data successfully updated',
+        detail?: string
+      ) =>
+        zone.run(() =>
+          injector.get(MessageService).add({
+            severity,
+            summary,
+            detail,
+            sticky: true,
+          })
+        ),
+      setSearchCount: (count: number) =>
+        zone.run(() => {
+          if (!Number.isInteger(count) || count < 0 || count > 1000) throw new Error('Invalid reference count');
+          searchCount = count;
+          injector.get(BrowsePartsService).sendRequest();
+          app.tick();
+        }),
     };
   }
 }
@@ -92,4 +120,6 @@ PickABrickService.prototype.cancelTransfer = pickABrick.cancelTransfer;
 PickABrickService.prototype.getParts = function () {
   queueMicrotask(() => this.pabLoading.next(false));
 };
-platformBrowserDynamic().bootstrapModule(VisualReferenceModule).catch(error => console.error(error));
+platformBrowserDynamic()
+  .bootstrapModule(VisualReferenceModule, { applicationProviders: [provideZoneChangeDetection()] })
+  .catch(error => console.error(error));

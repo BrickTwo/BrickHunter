@@ -91,10 +91,14 @@
               style="width: 100%"
               [disabled]="pabIsLoading"
               (click)="onTransfer(cartType.Bestseller)"></button>
-            <div class="flex flex-nowrap align-items-center gap-2" *ngIf="!!affiliate">
-              <span class="bh-toggleswitch"><p-toggleswitch [(ngModel)]="useAffiliatePaB" inputId="useAffiliatePaB"></p-toggleswitch></span>
-              <label for="useAffiliatePaB">Use Affiliate Link</label>
-            </div>
+            @if (!!affiliate) {
+              <div class="flex flex-nowrap align-items-center gap-2">
+                <span class="bh-toggleswitch"
+                  ><p-toggleswitch [(ngModel)]="useAffiliatePaB" inputId="useAffiliatePaB"></p-toggleswitch
+                ></span>
+                <label for="useAffiliatePaB">Use Affiliate Link</label>
+              </div>
+            }
           </div>
         </div>
         <div class="col-3 xxl:col-12">
@@ -124,10 +128,14 @@
               style="width: 100%"
               [disabled]="pabIsLoading"
               (click)="onTransfer(cartType.Standard)"></button>
-            <div class="flex flex-nowrap align-items-center gap-2" *ngIf="!!affiliate">
-              <span class="bh-toggleswitch"><p-toggleswitch [(ngModel)]="useAffiliateBaP" inputId="useAffiliateBaP"></p-toggleswitch></span>
-              <label for="useAffiliateBaP">Use Affiliate Link</label>
-            </div>
+            @if (!!affiliate) {
+              <div class="flex flex-nowrap align-items-center gap-2">
+                <span class="bh-toggleswitch"
+                  ><p-toggleswitch [(ngModel)]="useAffiliateBaP" inputId="useAffiliateBaP"></p-toggleswitch
+                ></span>
+                <label for="useAffiliateBaP">Use Affiliate Link</label>
+              </div>
+            }
           </div>
         </div>
         <div class="col-3 xxl:col-12">
@@ -173,57 +181,64 @@
     <p-card>
       <p-tabs [value]="activeItem.id" (valueChange)="onTabChange($event)" [scrollable]="true" [showNavigators]="false">
         <p-tablist>
-          <p-tab *ngFor="let item of items" [value]="item.id" [disabled]="item.disabled || false">{{
-            item.label
-          }}</p-tab>
+          @for (item of items; track item) {
+            <p-tab [value]="item.id" [disabled]="item.disabled || false">{{ item.label }}</p-tab>
+          }
         </p-tablist>
         <p-tabpanels>
           <p-tabpanel [value]="activeItem.id">
-            <app-parts-table
-              *ngIf="activeItem.id != 'setSuggestions'"
-              [parts]="parts"
-              [pabIsLoading]="pabIsLoading"
-              [partsListUuid]="uuid"
-              [allowEdit]="true"
-              (bulkAction)="onBulkAction($event)"></app-parts-table>
-            <span class="vertical-align-middle" *ngIf="activeItem.id === 'setSuggestions' && setSugestionIsLoading">
-              <p-progressSpinner [style]="{ width: '25px', height: '25px', margin: '10px' }"></p-progressSpinner>
-            </span>
-            <app-parts-product-suggestions-table
-              *ngIf="
-                activeItem.id === 'setSuggestions' &&
-                setSuggestionsLoaded &&
-                !setSugestionIsLoading &&
-                products?.length > 0
-              "
-              [products]="products"
-              [partsListUuid]="partsList.uuid"
-              (bulkAction)="onBulkAction($event)"></app-parts-product-suggestions-table>
-            <p
-              *ngIf="
-                activeItem.id === 'setSuggestions' &&
-                setSuggestionsLoaded &&
-                !setSugestionIsLoading &&
-                products?.length == 0
-              "></p>
-            <p *ngIf="activeItem.id === 'setSuggestions' && !setSuggestionsLoaded && !setSugestionIsLoading"></p>
-            <p-message
-              *ngIf="
-                activeItem.id === 'setSuggestions' &&
-                setSuggestionsLoaded &&
-                !setSugestionIsLoading &&
-                products?.length == 0
-              "
-              severity="error"
-              text="No sets found!"></p-message>
-            <p-message
-              *ngIf="activeItem.id === 'setSuggestions' && !setSuggestionsLoaded && !setSugestionIsLoading"
-              severity="info"
-              text='Please use "Check for Sets" function.'></p-message>
+            @if (activeItem.id != 'setSuggestions') {
+              <app-parts-table
+                [parts]="parts"
+                [pabIsLoading]="pabIsLoading"
+                [partsListUuid]="uuid"
+                [allowEdit]="true"
+                (bulkAction)="onBulkAction($event)"></app-parts-table>
+            }
+            @if (activeItem.id === 'setSuggestions' && setSugestionIsLoading) {
+              <span class="vertical-align-middle">
+                <p-progressSpinner [style]="{ width: '25px', height: '25px', margin: '10px' }"></p-progressSpinner>
+              </span>
+            }
+            @if (
+              activeItem.id === 'setSuggestions' &&
+              setSuggestionsLoaded &&
+              !setSugestionIsLoading &&
+              products?.length > 0
+            ) {
+              <app-parts-product-suggestions-table
+                [products]="products"
+                [partsListUuid]="partsList.uuid"
+                (bulkAction)="onBulkAction($event)"></app-parts-product-suggestions-table>
+            }
+            @if (
+              activeItem.id === 'setSuggestions' &&
+              setSuggestionsLoaded &&
+              !setSugestionIsLoading &&
+              products?.length == 0
+            ) {
+              <p></p>
+            }
+            @if (activeItem.id === 'setSuggestions' && !setSuggestionsLoaded && !setSugestionIsLoading) {
+              <p></p>
+            }
+            @if (
+              activeItem.id === 'setSuggestions' &&
+              setSuggestionsLoaded &&
+              !setSugestionIsLoading &&
+              products?.length == 0
+            ) {
+              <p-message severity="error" text="No sets found!"></p-message>
+            }
+            @if (activeItem.id === 'setSuggestions' && !setSuggestionsLoaded && !setSugestionIsLoading) {
+              <p-message severity="info" text='Please use "Check for Sets" function.'></p-message>
+            }
           </p-tabpanel>
-          <ng-container *ngFor="let item of items">
-            <p-tabpanel *ngIf="item.id !== activeItem.id" [value]="item.id"></p-tabpanel>
-          </ng-container>
+          @for (item of items; track item) {
+            @if (item.id !== activeItem.id) {
+              <p-tabpanel [value]="item.id"></p-tabpanel>
+            }
+          }
         </p-tabpanels>
       </p-tabs>
     </p-card>

@@ -1,188 +1,236 @@
-<section *ngIf="isVersionGreater('2.4.8')">
-  <h2>2.4.8</h2>
-  <h3>Feature</h3>
-  <ul>
-    <li>Support of new API structure for parts availability information.</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.4.7')">
-  <h2>2.4.7</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Fixed an issue where the error 'Couldn't read shopping cart' appeared in certain cases when the cart was empty.</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.4.6')">
-  <h2>2.4.6</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Fixed an issue for error "Couldn't read shopping cart" caused by an API change on lego.com</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.4.5')">
-  <h2>2.4.5</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Forwarding to new Pick a Brick service after transferring the Bricks</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.4.4')">
-  <h2>2.4.4</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Fixed an issue wehre having pieces are subtracted twice from the qty on splited lists</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.4.3')">
-  <h2>2.4.3</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Compatibility update to latest API changes of lego.com</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.4.2')">
-  <h2>2.4.2</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Compatibility update to latest API changes of lego.com</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.4.1')">
-  <h2>2.4.1</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Compatibility update to latest API changes of lego.com</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.4.0')">
-  <h2>2.4.0</h2>
-  <h3>Feature</h3>
-  <ul>
-    <li>Added support for Slovenia.</li>
-    <li>Split function is now no longer in beta.</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.3.3')">
-  <h2>2.3.3</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Compatibility update to latest API changes of lego.com</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.3.2')">
-  <h2>2.3.2</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Prices not shown on some language selection in Browse Parts section.</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.3.1')">
-  <h2>2.3.1</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Prices not shown in parts lists on some language selection.</li>
- </ul>
-</section>
-<section *ngIf="isVersionGreater('2.3.0')">
-  <h2>2.3.0</h2>
-  <h3>Feature</h3>
-  <ul>
-    <li>Set suggestion added to parts list. Combined Parts Lists are currently not fully supported.</li>
-    <li>Added support for Slovakia.</li>
-    <li>PaB Price is now on default exported on BrickLink WantedList.</li>
-  </ul>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Fixed error with ReSync of Parts List of type "Mixed".</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.2.8')">
-  <h2>2.2.8</h2>
-  <h3>Features</h3>
-  <ul>
-    <li>Support WantedList file format exported from BrickStore.</li>
-    <li>Improved some warning/info texts.</li>
-  </ul>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>WantedLists with only one item aren't imported.</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.2.7')">
-  <h2>2.2.7</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Adjust to API changes when transfering parts to LEGO PaB cart.</li>
-    <li>Split function only adds quantity 1 in some cases.</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.2.6')">
-  <h2>2.2.6</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Error when Parts List name is empty.</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.2.5')">
-  <h2>2.2.5</h2>
-  <ul>
-    <li>Compatibility fix for Chrome version.</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.2.4')">
-  <h2>2.2.4</h2>
-  <ul>
-    <li>
-      Changed Affiliate Link Partner. Added Affiliate Link (opt-out) for the following countries: Australia, Canada,
-      Czech Republic, Hungary, Poland
-    </li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.2.3')">
-  <h2>2.2.3</h2>
-  <h3>Feature</h3>
-  <ul>
-    <li>Browser Parts filter has been extendet with a "Parts at Risk after (Date)" filter.</li>
-    <li>Part Detail window added to Browse Parts.</li>
-    <li>Add function to delete selected parts from Parts List.</li>
-    <li>Adjusted exported file names.</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.1.1')">
-  <h2>2.1.1</h2>
-  <h3>Feature</h3>
-  <ul>
-    <li>Select multiple Parts Lists for bulk delete or open as a temporary combined Parts List</li>
-    <li>
-      Added a function for splitting a Parts List to meet the lot limit and max order quantity of pieces per order.
-      (Beta)
-    </li>
-  </ul>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>BrickLink price calculation leads to negative price</li>
-    <li>PaB prices where not autmatically loaded when open a Parts List</li>
-    <li>Exported BrickLink file can't be imported in BrickLink</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.0.22')">
-  <h2>2.0.22</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Migration of old parts lists when position has no color info.</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.0.21')">
-  <h2>2.0.21</h2>
-  <h3>Bugfix</h3>
-  <ul>
-    <li>Migration of old parts lists.</li>
-  </ul>
-</section>
-<section *ngIf="isVersionGreater('2.0.20')">
-  <h2>2.0.20</h2>
-  <h3>Public Release</h3>
-  <ul>
-    <li>New major release.</li>
-  </ul>
-</section>
+@if (isVersionGreater('2.4.8')) {
+  <section>
+    <h2>2.4.8</h2>
+    <h3>Feature</h3>
+    <ul>
+      <li>Support of new API structure for parts availability information.</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.4.7')) {
+  <section>
+    <h2>2.4.7</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>
+        Fixed an issue where the error 'Couldn't read shopping cart' appeared in certain cases when the cart was empty.
+      </li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.4.6')) {
+  <section>
+    <h2>2.4.6</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Fixed an issue for error "Couldn't read shopping cart" caused by an API change on lego.com</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.4.5')) {
+  <section>
+    <h2>2.4.5</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Forwarding to new Pick a Brick service after transferring the Bricks</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.4.4')) {
+  <section>
+    <h2>2.4.4</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Fixed an issue wehre having pieces are subtracted twice from the qty on splited lists</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.4.3')) {
+  <section>
+    <h2>2.4.3</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Compatibility update to latest API changes of lego.com</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.4.2')) {
+  <section>
+    <h2>2.4.2</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Compatibility update to latest API changes of lego.com</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.4.1')) {
+  <section>
+    <h2>2.4.1</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Compatibility update to latest API changes of lego.com</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.4.0')) {
+  <section>
+    <h2>2.4.0</h2>
+    <h3>Feature</h3>
+    <ul>
+      <li>Added support for Slovenia.</li>
+      <li>Split function is now no longer in beta.</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.3.3')) {
+  <section>
+    <h2>2.3.3</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Compatibility update to latest API changes of lego.com</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.3.2')) {
+  <section>
+    <h2>2.3.2</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Prices not shown on some language selection in Browse Parts section.</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.3.1')) {
+  <section>
+    <h2>2.3.1</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Prices not shown in parts lists on some language selection.</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.3.0')) {
+  <section>
+    <h2>2.3.0</h2>
+    <h3>Feature</h3>
+    <ul>
+      <li>Set suggestion added to parts list. Combined Parts Lists are currently not fully supported.</li>
+      <li>Added support for Slovakia.</li>
+      <li>PaB Price is now on default exported on BrickLink WantedList.</li>
+    </ul>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Fixed error with ReSync of Parts List of type "Mixed".</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.2.8')) {
+  <section>
+    <h2>2.2.8</h2>
+    <h3>Features</h3>
+    <ul>
+      <li>Support WantedList file format exported from BrickStore.</li>
+      <li>Improved some warning/info texts.</li>
+    </ul>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>WantedLists with only one item aren't imported.</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.2.7')) {
+  <section>
+    <h2>2.2.7</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Adjust to API changes when transfering parts to LEGO PaB cart.</li>
+      <li>Split function only adds quantity 1 in some cases.</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.2.6')) {
+  <section>
+    <h2>2.2.6</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Error when Parts List name is empty.</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.2.5')) {
+  <section>
+    <h2>2.2.5</h2>
+    <ul>
+      <li>Compatibility fix for Chrome version.</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.2.4')) {
+  <section>
+    <h2>2.2.4</h2>
+    <ul>
+      <li>
+        Changed Affiliate Link Partner. Added Affiliate Link (opt-out) for the following countries: Australia, Canada,
+        Czech Republic, Hungary, Poland
+      </li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.2.3')) {
+  <section>
+    <h2>2.2.3</h2>
+    <h3>Feature</h3>
+    <ul>
+      <li>Browser Parts filter has been extendet with a "Parts at Risk after (Date)" filter.</li>
+      <li>Part Detail window added to Browse Parts.</li>
+      <li>Add function to delete selected parts from Parts List.</li>
+      <li>Adjusted exported file names.</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.1.1')) {
+  <section>
+    <h2>2.1.1</h2>
+    <h3>Feature</h3>
+    <ul>
+      <li>Select multiple Parts Lists for bulk delete or open as a temporary combined Parts List</li>
+      <li>
+        Added a function for splitting a Parts List to meet the lot limit and max order quantity of pieces per order.
+        (Beta)
+      </li>
+    </ul>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>BrickLink price calculation leads to negative price</li>
+      <li>PaB prices where not autmatically loaded when open a Parts List</li>
+      <li>Exported BrickLink file can't be imported in BrickLink</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.0.22')) {
+  <section>
+    <h2>2.0.22</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Migration of old parts lists when position has no color info.</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.0.21')) {
+  <section>
+    <h2>2.0.21</h2>
+    <h3>Bugfix</h3>
+    <ul>
+      <li>Migration of old parts lists.</li>
+    </ul>
+  </section>
+}
+@if (isVersionGreater('2.0.20')) {
+  <section>
+    <h2>2.0.20</h2>
+    <h3>Public Release</h3>
+    <ul>
+      <li>New major release.</li>
+    </ul>
+  </section>
+}

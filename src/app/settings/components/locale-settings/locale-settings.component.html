@@ -12,13 +12,15 @@
       [style]="{ width: '100%' }"
       (onChange)="onCountrySelect()">
       <ng-template pTemplate="selectedItem">
-        <div class="flex align-items-center gap-2" *ngIf="selectedCountry">
-          <img
-            src="/assets/flag_placeholder.png"
-            [class]="'flag flag-' + selectedCountry.code.toLowerCase()"
-            style="width: 18px" />
-          <div>{{ selectedCountry.text }}</div>
-        </div>
+        @if (selectedCountry) {
+          <div class="flex align-items-center gap-2">
+            <img
+              src="/assets/flag_placeholder.png"
+              [class]="'flag flag-' + selectedCountry.code.toLowerCase()"
+              style="width: 18px" />
+            <div>{{ selectedCountry.text }}</div>
+          </div>
+        }
       </ng-template>
       <ng-template let-country pTemplate="item">
         <div class="flex align-items-center gap-2">
@@ -44,13 +46,15 @@
       [style]="{ width: '100%' }"
       (onChange)="onLanguageSelect()">
       <ng-template pTemplate="selectedItem">
-        <div class="flex align-items-center gap-2" *ngIf="selectedLanguage">
-          <img
-            src="/assets/flag_placeholder.png"
-            [class]="'flag flag-' + selectedLanguage.flag.toLowerCase()"
-            style="width: 18px" />
-          <div>{{ selectedLanguage.text }}</div>
-        </div>
+        @if (selectedLanguage) {
+          <div class="flex align-items-center gap-2">
+            <img
+              src="/assets/flag_placeholder.png"
+              [class]="'flag flag-' + selectedLanguage.flag.toLowerCase()"
+              style="width: 18px" />
+            <div>{{ selectedLanguage.text }}</div>
+          </div>
+        }
       </ng-template>
       <ng-template let-language pTemplate="item">
         <div class="flex align-items-center gap-2">
