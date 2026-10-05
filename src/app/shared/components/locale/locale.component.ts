@@ -34,6 +34,15 @@ export class LocaleComponent {
     this.selectedLanguage = this.localeService.language;
   }
 
+  onCountryShow() {
+    // Keep the legacy list opening at the beginning; subsequent keyboard
+    // navigation retains Select's normal focus and scrolling behavior.
+    const listboxId = document.getElementById('country')?.getAttribute('aria-controls');
+    const listbox = listboxId ? document.getElementById(listboxId) : null;
+    const container = listbox?.closest<HTMLElement>('.p-select-list-container');
+    if (container) container.scrollTop = 0;
+  }
+
   onLanguageSelect() {
     this.localeService.setLanguage(this.selectedLanguage.code);
   }

@@ -413,6 +413,18 @@ async function main() {
         await country.click();
         await page.getByRole('listbox').waitFor();
         await additionalCapture('select-country-popup');
+        const countryScroll = page.locator('.p-select-list-container');
+        if (await countryScroll.evaluate(element => element.scrollTop) !== 0)
+          throw new Error('Country popup no longer opens at the beginning');
+        await country.press('End');
+        await settle();
+        if (await countryScroll.evaluate(element => element.scrollTop) <= 0)
+          throw new Error('Country End key did not scroll the list');
+        await country.press('Home');
+        await settle();
+        if (await countryScroll.evaluate(element => element.scrollTop) !== 0)
+          throw new Error('Country Home key did not return to the beginning');
+        report.interactionChecks.selectCountryInitialScrollAndHomeEnd = true;
         await page.getByRole('option', { name: 'Switzerland', exact: true }).click();
         await settle();
         await language.press('ArrowDown');

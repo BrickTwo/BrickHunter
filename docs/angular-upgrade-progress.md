@@ -1027,3 +1027,33 @@ git commit -m "fix: restore Angular 19 import layout and toast hover"
 ```
 
 Keine zusätzliche manuelle Einrichtung erforderlich. Nach Sicherung und `weiter` folgt die Prüfung des Länder-Popup-Verhaltens und der verbleibenden kleinen Bildunterschiede; Angular 20 bleibt bis zur vollständigen Angular-19-Abnahme zurückgestellt.
+
+## Commit-Punkt 28: Vollständige automatisierte UI-Abnahme auf Angular 19
+
+Ausgangspunkt: **`b8b83dc`**, gesicherter Datei-Import-/Toast-Stand. Der Auftrag, bis zur kompletten UI-Abnahme dieser Version weiterzufahren, wird ohne weitere Zwischencommit-Pausen ausgeführt. Angular **19.2.25** / PrimeNG **19.1.4** und Lockfile bleiben unverändert. **Die automatisierte Abnahme bestätigt Darstellung und Bedienung im dokumentierten Offline-Referenzumfang; echte LEGO-Konto-/Warenkorbtransfers gehören nicht zu diesem Umfang.**
+
+### Erfolgreich umgesetzt und geprüft
+
+- Länder-Popup öffnet wieder am ursprünglichen Listenanfang. `LocaleComponent` setzt über Selects öffentliches **`onShow`**-Ereignis ausschließlich den Scrollstart des zugehörigen Länder-Listbox-Containers zurück; Zuordnung über `country` und dessen **`aria-controls`**, auch bei `appendTo="body"`. Keine private Select-API, kein Bibliothekspatch, keine wiederholte Scrollsperre. Auswahl, Fokus und nachfolgende Tastaturnavigation bleiben bei Select.
+- Neue echte Browserprüfung: Anfangs-Scroll **0**, **End** scrollt nach unten, **Home** zurück auf **0**. Anschließende Auswahl Switzerland/French und Save erfolgreich. Das Länder-Popup ist jetzt byteidentisch zur akzeptierten Angular-18-Aufnahme; zuvor **16.129** abweichende Pixel. Damit sind alle größeren neu entstandenen Angular-19-Bildabweichungen korrigiert.
+- Mengen-/Have-Felder, Radio-/Auswahlgruppen, mobile Browse-Karten und Tabs, Dialog-/Drawer-Fokus und Abbruch, Datei-Auswahl/Drop/Reset, Menü-/Checkbox-/Button-Zustände und JSON-/PDF-Downloads bestehen die vollständigen Bedienprüfungen. Die bereits gesicherten Korrekturen aus Abschnitt 25–27 sind im Abschlussbuild enthalten.
+- **50 Unit-Tests** sowie Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich. Produktion **2.34 MB**, bestehende Budget-/CommonJS-Warnungen unverändert sichtbar, Budgets nicht angehoben. Outputs `artefacts/angular-upgrade/angular-19/ui-acceptance-verified/{production,development}/`: Manifest byteidentisch, beide eigenständigen Extension-Entries vorhanden und ohne `webpackChunk`-Runtime-Abhängigkeit, keine Referenz-Fixture-Marker in regulären JS-Bundles.
+- Vollständiger Abschlusslauf `angular-19-ui-accepted-complete`: **57 erfolgreiche Browserprüfungen, 39 Hauptbilder plus 49 Zusatzbilder**, keine aufgezeichneten Browser-/Konsolenfehler oder bekannten NG0100-Meldungen. AMD Radeon 8060S / ANGLE D3D11, Compositing/Rasterization aktiviert, Renderer vor/nach dem Lauf unverändert. Zum akzeptierten Angular-18-Lauf **62/88 Bilder byteidentisch**; Länder-Popup, Browse aller vier Größen, Import-/Toast- und Auswahlgruppen-Korrekturen bleiben bestätigt.
+- Vollständige Wiederholung `angular-19-ui-accepted-complete-repeat` ebenfalls mit **57 erfolgreichen Prüfungen und 88 Bildern**, ohne aufgezeichnete Browser-/Konsolenfehler. **88/88 PNGs byteidentisch**, GPU-Pipeline in beiden Läufen unverändert. Originalreferenz vollständig gegen ihr SHA-256-Inventar geprüft. Abnahmebericht setzt **`visualAcceptance: true`** und **`angular20UiGateSatisfied: true`**; die Angular-19-UI-Abnahme ist damit abgeschlossen. Wiederholungslogs: `ui-acceptance-capture-repeat.log`, `ui-acceptance-repeat-comparison.log`. `git diff --check` erfolgreich.
+
+### Einzelbewertung der Restpixel
+
+- Alle anderen Angular-18-Abweichungen außer der Mengenbearbeitung betreffen jeweils **vier Pixel** in einer **2 × 2** großen Tabs-Unterstreichungsecke. Dateien, Koordinaten und Rohwerte bleiben im Bericht; dieser Rasterungswechsel ist bereits in der Angular-18-Abnahme bewertet. Kein Pixel wird ausgefiltert oder ersetzt.
+- Mengenbearbeitung: **zehn Pixel**, begrenzt auf **x=888–890 / y=631–673** an den beiden Pfeilkanten. Die erhaltene Angular-18-Entwicklungsausgabe und die installierten 19er-Icons besitzen exakt gleiche SVG-Pfade und **14 × 14 / viewBox 0 0 14 14**; Pfad-Hashes im Bericht. Browsermessung bestätigt weiße `currentColor`-Icons und 14-px-Abmessungen. Eingaben **68 × 38 px**, Gesamtbreite **116 px**, Plus und Tastatureingabe erfolgreich. Diese konkrete begrenzte Rasterungsabweichung wird akzeptiert, keine pauschale Toleranz.
+- Die ursprünglichen Angular-17-/Angular-18-Unterschiede bleiben durch den gesonderten [Angular-18-Abnahmebericht](angular-upgrade-reference/angular-18-ui-acceptance-check.json) bewertet. Der neue Bericht vergleicht jedes Angular-19-Bild mit dieser akzeptierten Ausgabe; das SHA-256-Inventar der Originalreferenz wird unverändert geprüft. Die Abnahme behauptet keine vollständige Byteidentität zur ursprünglichen Angular-17-Referenz.
+
+Abnahmebericht: [angular-19-ui-acceptance-check.json](angular-upgrade-reference/angular-19-ui-acceptance-check.json). Logs unter `artefacts/angular-upgrade/angular-19/`: `ui-acceptance-tests.log`, `ui-acceptance-build.log`, `ui-acceptance-production.log`, `ui-acceptance-development.log`, `ui-acceptance-capture.log`, `ui-acceptance-comparison.log`; zusätzliche Icon-Vertrags-/Geometriemessung `ui-icon-contract.json`, `ui-icon-measurements.json`.
+
+### Jetzt manuell: Abnahme sichern
+
+```powershell
+git add src/app/shared/components/locale scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "fix: complete Angular 19 UI acceptance"
+```
+
+Keine weitere manuelle Einrichtung für Angular 19 erforderlich. Nach diesem Commit und `weiter` folgen der geplante Node-22-Wechsel und Angular 20. Der Community-Lizenzschlüssel wird weiterhin erst vor dem PrimeNG-22-Setup benötigt.

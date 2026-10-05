@@ -16,6 +16,7 @@
       dataKey="code"
       placeholder="Select a Country"
       appendTo="body"
+      (onShow)="onCountryShow()"
       [style]="{ width: '100%' }"
       (onChange)="onCountrySelect()">
       <ng-template pTemplate="selectedItem">
