@@ -1,0 +1,665 @@
+{
+  "baseCommit": "0193d3f",
+  "status": "angular-20-foundation-verified-ui-review-pending",
+  "visualAcceptance": false,
+  "angular21UiGateSatisfied": false,
+  "nodeRuntime": {
+    "version": "v22.23.3",
+    "source": "https://nodejs.org/dist/v22.23.3/node-v22.23.3-win-x64.zip",
+    "sha256": "2b0ff57b049cda1bbcea2240eec20467018713c1efe1f7360c2681859b90ed71",
+    "officialSha256Verified": true
+  },
+  "unitTestsPassed": 50,
+  "browserSuiteComplete": false,
+  "versions": {
+    "angular": "20.3.33",
+    "primeng": "20.4.0",
+    "playwright": "1.62.1"
+  },
+  "captureLabel": "angular-20-foundation-verified",
+  "mainScreenshots": 21,
+  "additionalScreenshots": 16,
+  "browserChecks": {
+    "categorySelection": true,
+    "onlyPrintedToggle": true,
+    "deliveryChannelSelection": true,
+    "paginatorPageSelection": true,
+    "publicColorMenuSelection": true,
+    "publicListBulkMenuCommand": true,
+    "publicPartsBulkMenuCommand": true,
+    "importFileChooserJson": true,
+    "importCancelAndCloseReset": true,
+    "importXmlDrop": true,
+    "toastSeverityDisplayAndClose": true,
+    "toastKeyboardClosePreservesOtherMessage": true,
+    "tableHeaderBorderAndSortIconAlignment": true,
+    "tableKeyboardSortAscendingDescending": true,
+    "tableSortedHeaderHover": true,
+    "tableTabKeyboardFilter": true,
+    "selectUnitMouseSaveAndReopen": true,
+    "selectUnitKeyboardAndEscape": true,
+    "selectDisabledBlocksPopup": true,
+    "selectNestedPopupAndDrawerEscape": true,
+    "selectCountryInitialScrollAndHomeEnd": true,
+    "selectLocaleLabelsMouseKeyboardAndSave": true
+  },
+  "pageErrors": [],
+  "consoleErrors": [],
+  "knownConsoleErrors": [],
+  "renderer": {
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+    "compositing": "enabled",
+    "rasterization": "enabled"
+  },
+  "measurements": {
+    "tableHeader": {
+      "height": 56,
+      "borderColor": "rgb(228, 228, 228)",
+      "icons": [
+        {
+          "wrapperDisplay": "inline",
+          "verticalAlign": "middle",
+          "width": 14,
+          "height": 14,
+          "x": 286.90625,
+          "y": 574.640625,
+          "color": "rgba(0, 0, 0, 0.6)"
+        },
+        {
+          "wrapperDisplay": "inline",
+          "verticalAlign": "middle",
+          "width": 14,
+          "height": 14,
+          "x": 451.765625,
+          "y": 574.640625,
+          "color": "rgba(0, 0, 0, 0.6)"
+        },
+        {
+          "wrapperDisplay": "inline",
+          "verticalAlign": "middle",
+          "width": 14,
+          "height": 14,
+          "x": 708.59375,
+          "y": 574.640625,
+          "color": "rgba(0, 0, 0, 0.6)"
+        },
+        {
+          "wrapperDisplay": "inline",
+          "verticalAlign": "middle",
+          "width": 14,
+          "height": 14,
+          "x": 891.40625,
+          "y": 574.640625,
+          "color": "rgba(0, 0, 0, 0.6)"
+        },
+        {
+          "wrapperDisplay": "inline",
+          "verticalAlign": "middle",
+          "width": 14,
+          "height": 14,
+          "x": 1049.828125,
+          "y": 574.640625,
+          "color": "rgba(0, 0, 0, 0.6)"
+        },
+        {
+          "wrapperDisplay": "inline",
+          "verticalAlign": "middle",
+          "width": 14,
+          "height": 14,
+          "x": 1232.078125,
+          "y": 574.640625,
+          "color": "rgba(0, 0, 0, 0.6)"
+        }
+      ]
+    }
+  },
+  "comparisonBase": "angular-19-ui-accepted-complete",
+  "noPixelFiltering": true,
+  "originalReferenceInventoryVerified": true,
+  "outputChecks": {
+    "production": {
+      "requiredFilesPresent": true,
+      "chromeManifestByteIdentical": true,
+      "standaloneExtensionEntries": true,
+      "noReferenceFixtureMarkers": true
+    },
+    "development": {
+      "requiredFilesPresent": true,
+      "chromeManifestByteIdentical": true,
+      "standaloneExtensionEntries": true,
+      "noReferenceFixtureMarkers": true
+    }
+  },
+  "images": [
+    {
+      "file": "1440x1000-browse.png",
+      "byteIdentical": false,
+      "differentPixels": 9945,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1341,
+        969
+      ],
+      "angular19Sha256": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+      "angular20Sha256": "78d5706a37725cbd21abb538eef01bfc26056b58921e4ed4ee66c8bb95126281"
+    },
+    {
+      "file": "1440x1000-color-menu.png",
+      "byteIdentical": false,
+      "differentPixels": 9945,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1341,
+        969
+      ],
+      "angular19Sha256": "b24d80c8c3158a206e7556fb287cc3c779c9a4990c956cf70557793436a59972",
+      "angular20Sha256": "33bfc9f1d897175ece4c279bdbc48d8bfc1062d22fba2f6b214e4a2f8bb3ecb7"
+    },
+    {
+      "file": "1440x1000-delete-confirmation.png",
+      "byteIdentical": false,
+      "differentPixels": 17598,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        0,
+        1031,
+        999
+      ],
+      "angular19Sha256": "b6c7cab5291b9e99f600c43003324da1ae989fb961f26af96b668cf076d39aef",
+      "angular20Sha256": "14d402c59178ee4fa46614c2ba9e689bc2abba0c4ab138eaef5b65e4a3d4fcf9"
+    },
+    {
+      "file": "1440x1000-empty-search.png",
+      "byteIdentical": false,
+      "differentPixels": 7865,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1325,
+        969
+      ],
+      "angular19Sha256": "9f50a5ec3a49bbe9480537d9f695639558ebe7234e8607762f85199d73eaf3f0",
+      "angular20Sha256": "e7d7f896c2627f20386ecbec8b672c334021ff51fb1c98a5cbc43c636506bd84"
+    },
+    {
+      "file": "1440x1000-empty-table.png",
+      "byteIdentical": false,
+      "differentPixels": 8615,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        966,
+        969
+      ],
+      "angular19Sha256": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e",
+      "angular20Sha256": "27370473bb6b7aca4009e8dc71fbc4a85766a8b0b57e1fe871536bdb816d286f"
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "byteIdentical": false,
+      "differentPixels": 39403,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        16,
+        0,
+        1423,
+        999
+      ],
+      "angular19Sha256": "de7a5fef1ee65d8f3a3b1b2b3f4df492eff597aac04463476a83bcf58d5742a2",
+      "angular20Sha256": "1574ec16247ee52935649dc2512cd2c9cb65dd13ecd71cb74207db7c8d96fbe8"
+    },
+    {
+      "file": "1440x1000-filter-focus.png",
+      "byteIdentical": false,
+      "differentPixels": 9945,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1341,
+        969
+      ],
+      "angular19Sha256": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+      "angular20Sha256": "78d5706a37725cbd21abb538eef01bfc26056b58921e4ed4ee66c8bb95126281"
+    },
+    {
+      "file": "1440x1000-filter-hover.png",
+      "byteIdentical": false,
+      "differentPixels": 9945,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1341,
+        969
+      ],
+      "angular19Sha256": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+      "angular20Sha256": "78d5706a37725cbd21abb538eef01bfc26056b58921e4ed4ee66c8bb95126281"
+    },
+    {
+      "file": "1440x1000-import-dialog.png",
+      "byteIdentical": false,
+      "differentPixels": 31150,
+      "maximumChannelDelta": 126,
+      "bounds": [
+        16,
+        0,
+        1423,
+        999
+      ],
+      "angular19Sha256": "3d8e66e1c46f595f022aa20afbe5968fde00fe64e9d50892e4dfa00150eb7b13",
+      "angular20Sha256": "61808cb671555f1768593c366b6aa626df51dda9f4e49b961fdc71e37ca25b08"
+    },
+    {
+      "file": "1440x1000-import-dropped-xml.png",
+      "byteIdentical": false,
+      "differentPixels": 34919,
+      "maximumChannelDelta": 255,
+      "bounds": [
+        16,
+        0,
+        1423,
+        999
+      ],
+      "angular19Sha256": "92f7a761c0342957ddaeab80378f95c555ada758ddf067fbd686e4f152dd3b74",
+      "angular20Sha256": "b813149158553809197db1e76c713d52dfd33966075f7ff57bf1dd464899c59b"
+    },
+    {
+      "file": "1440x1000-import-selected-json.png",
+      "byteIdentical": false,
+      "differentPixels": 34635,
+      "maximumChannelDelta": 255,
+      "bounds": [
+        16,
+        0,
+        1423,
+        999
+      ],
+      "angular19Sha256": "4b8c68a5d3c598ca1f4f8a81172883d917508b1a7705148bf48866c0e52cd485",
+      "angular20Sha256": "6e4250ac4be5ea33b06f6739534d58033918c988c883baba4b5d37eebac9acec"
+    },
+    {
+      "file": "1440x1000-large-search-scrolled.png",
+      "byteIdentical": false,
+      "differentPixels": 6488,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        300,
+        1341,
+        969
+      ],
+      "angular19Sha256": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb",
+      "angular20Sha256": "86154041a4f631ab33e7ddf860c3b38179b8ec3e9ce018b337954de5cb8d022c"
+    },
+    {
+      "file": "1440x1000-large-search.png",
+      "byteIdentical": false,
+      "differentPixels": 9945,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1341,
+        969
+      ],
+      "angular19Sha256": "6259be225741b2362c99437089b3b85677062c3f2f02a50cae6254bc1475f98c",
+      "angular20Sha256": "acbbd2fda645e4d57154af67b337908570894e7029e8732fa69c7b9ac1b64260"
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "byteIdentical": false,
+      "differentPixels": 39437,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        16,
+        0,
+        1423,
+        999
+      ],
+      "angular19Sha256": "d7328909849f79c3cbba723c7fe7aefd8815bdb0015cd1d2f398a8bae8c2ca06",
+      "angular20Sha256": "cb611830ff8fb3ce4846c0dc5db115d1265a8438c76f98525fce2457c5480bd3"
+    },
+    {
+      "file": "1440x1000-lists.png",
+      "byteIdentical": false,
+      "differentPixels": 4272,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        24,
+        1387,
+        969
+      ],
+      "angular19Sha256": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca",
+      "angular20Sha256": "60fc4cf6a14260dae38f963baa7cc455819f4d11dc08a99a24ed4f00285f0665"
+    },
+    {
+      "file": "1440x1000-select-country-popup.png",
+      "byteIdentical": false,
+      "differentPixels": 48795,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        16,
+        0,
+        1387,
+        999
+      ],
+      "angular19Sha256": "b634f7786b7ae922355cc437d57dd4783d032c69d8a1922b4aed9d8ea65fa7fb",
+      "angular20Sha256": "efcecac46728decaa39373b6e92c2ad61ed7e4bd166281b95934af7f68246291"
+    },
+    {
+      "file": "1440x1000-select-language-popup.png",
+      "byteIdentical": false,
+      "differentPixels": 48795,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        16,
+        0,
+        1387,
+        999
+      ],
+      "angular19Sha256": "fec169692e77ec0b354a61ab07e6cf7f667f77938b40dee64411d5c375cdd5f4",
+      "angular20Sha256": "b1b550ab37ba6162847a0c0eb60e7127ac1d3c2750d1b46323831a08d97f9374"
+    },
+    {
+      "file": "1440x1000-select-locale-dialog.png",
+      "byteIdentical": false,
+      "differentPixels": 52119,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        16,
+        0,
+        1387,
+        999
+      ],
+      "angular19Sha256": "1e4fe0185a7ac9104a1f0763ac74a3b3608c9dee2e170f665c2b9823ca86041f",
+      "angular20Sha256": "bcc8d83af4758c2827dcb71a7062d15c0dc9a8fcd8b61ef8dcb0fa6f1dc49c4b"
+    },
+    {
+      "file": "1440x1000-select-unit-disabled.png",
+      "byteIdentical": false,
+      "differentPixels": 36817,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        16,
+        0,
+        1423,
+        999
+      ],
+      "angular19Sha256": "41e84377bf59b43086fd18064dc0bb7bcaa776e910744590859f3d84d607ff05",
+      "angular20Sha256": "8a7c1b70e4e6e331310d6b295b44a4a875d8ca173521cdbea0705cd7cd4e5919"
+    },
+    {
+      "file": "1440x1000-select-unit-popup.png",
+      "byteIdentical": false,
+      "differentPixels": 39429,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        16,
+        0,
+        1423,
+        999
+      ],
+      "angular19Sha256": "62c8dcc9a1e31a57d1319a67ef3cdb3a5efa73544156cfadc229d7e67696d600",
+      "angular20Sha256": "f24d023ca918b48435cca870e14a46773f66fa311182507187974397da19d048"
+    },
+    {
+      "file": "1440x1000-select-unit-selected.png",
+      "byteIdentical": false,
+      "differentPixels": 36808,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        16,
+        0,
+        1423,
+        999
+      ],
+      "angular19Sha256": "4543d98d01e30cd6223542b59bcacb851e77be128e202dc483ddf9bc9f03289e",
+      "angular20Sha256": "127bedfd2c200c69a4d522af86e0799c39029fabd1121306bd230e758940f124"
+    },
+    {
+      "file": "1440x1000-settings.png",
+      "byteIdentical": false,
+      "differentPixels": 1723,
+      "maximumChannelDelta": 172,
+      "bounds": [
+        16,
+        22,
+        202,
+        969
+      ],
+      "angular19Sha256": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726",
+      "angular20Sha256": "7ea314babbea135671f08ee544b6acbbaf50471ecc967a264edfc87b51748c11"
+    },
+    {
+      "file": "1440x1000-success-message.png",
+      "byteIdentical": false,
+      "differentPixels": 22807,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1436,
+        969
+      ],
+      "angular19Sha256": "9a55cc2deaa9fe8432bd46b0fb43d6fc451e788f437c0355a310ab87f9aa636a",
+      "angular20Sha256": "17dcb5d239fbcf761508421a290935e906f13ca1583bab16d9c3711b5f413016"
+    },
+    {
+      "file": "1440x1000-table-header-hover.png",
+      "byteIdentical": false,
+      "differentPixels": 9857,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        966,
+        969
+      ],
+      "angular19Sha256": "8abb5f3145eeb47357fb18082eae2e84d40f555796e117e0e76a8028ce557af8",
+      "angular20Sha256": "5a720611a6dc0f65731d14c9e14a39a392c630402b93457120710ca078d25f69"
+    },
+    {
+      "file": "1440x1000-table-inline-edit.png",
+      "byteIdentical": false,
+      "differentPixels": 44193,
+      "maximumChannelDelta": 250,
+      "bounds": [
+        16,
+        22,
+        1381,
+        999
+      ],
+      "angular19Sha256": "c5b8f427f4417a655f7509fe08db7ca895be243c2e7e1ab180536f8a737adcd8",
+      "angular20Sha256": "fcc9d0d2c1832390703f9da87f3af8fe3822db186c703cffe6d4df1ca0a448f0"
+    },
+    {
+      "file": "1440x1000-table-loading-disabled.png",
+      "byteIdentical": false,
+      "differentPixels": 11798,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1375,
+        969
+      ],
+      "angular19Sha256": "fdd38268cc9877af9156b9c12d7cb459a4f4fbfb1eb97e666973288a590a3550",
+      "angular20Sha256": "e8b1a65468e3d48110882ebe22ce5afd1ad8af200041b64918213177d085953c"
+    },
+    {
+      "file": "1440x1000-table-selection.png",
+      "byteIdentical": false,
+      "differentPixels": 9857,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        966,
+        969
+      ],
+      "angular19Sha256": "a07858ad50772aa0a4d3274324260f709965703d88d4f382d855a782c7043325",
+      "angular20Sha256": "46a6553d5ea01f9137ad1e53a46cada92c341b058b22273bb25eaf1402c3f6e1"
+    },
+    {
+      "file": "1440x1000-table-sort-ascending.png",
+      "byteIdentical": false,
+      "differentPixels": 9857,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        966,
+        969
+      ],
+      "angular19Sha256": "bbae896da9c8bbc45a145901db5e7c9687d6f5b7b5df414afa50bd5b061df2da",
+      "angular20Sha256": "cff9283340e208793805e4e4a0e5cb93f5a4a3a04f7a8bec4b63278ce05861b1"
+    },
+    {
+      "file": "1440x1000-table-sort-descending.png",
+      "byteIdentical": false,
+      "differentPixels": 9857,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        966,
+        969
+      ],
+      "angular19Sha256": "8abb5f3145eeb47357fb18082eae2e84d40f555796e117e0e76a8028ce557af8",
+      "angular20Sha256": "5a720611a6dc0f65731d14c9e14a39a392c630402b93457120710ca078d25f69"
+    },
+    {
+      "file": "1440x1000-table-tab-keyboard.png",
+      "byteIdentical": false,
+      "differentPixels": 9853,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        966,
+        969
+      ],
+      "angular19Sha256": "2fa84c636dd4cb8afb39f814630745d188cd7882eeee065028715e9b5936f1a7",
+      "angular20Sha256": "9a19ffc144916db3e5bdc5d2e0aad22d9c44d19a6581149c6b29a65e65ef2b30"
+    },
+    {
+      "file": "1440x1000-table.png",
+      "byteIdentical": false,
+      "differentPixels": 11615,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1372,
+        969
+      ],
+      "angular19Sha256": "1fba567d71c355a096753665ae526e57d60f8614c2ae5f8864cfa8da629f13fe",
+      "angular20Sha256": "4d6cd748dfe5f873ffb10b9b879cf06e204901ec9877f4d876f75b01628e394d"
+    },
+    {
+      "file": "1440x1000-toast-error.png",
+      "byteIdentical": false,
+      "differentPixels": 10075,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1057,
+        969
+      ],
+      "angular19Sha256": "27c851763eef8a6302a9aa6aa0963a2a9988fe269e43e72e8ceb37382504068e",
+      "angular20Sha256": "25f29f4771ebb0f9de0691df39c72762fdd37f2ed4f9699e434c6dc6db2ac08b"
+    },
+    {
+      "file": "1440x1000-toast-info.png",
+      "byteIdentical": false,
+      "differentPixels": 10051,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1057,
+        969
+      ],
+      "angular19Sha256": "c1de0cddfb1545e70b97504e84eb61e91e8fe78fa3d0606801d998d0cb0b012a",
+      "angular20Sha256": "4b7ad44e3c2f077c1dde2a19f004661da3a1fe540327c04a69580112797ef9ef"
+    },
+    {
+      "file": "1440x1000-toast-success.png",
+      "byteIdentical": false,
+      "differentPixels": 11693,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1372,
+        969
+      ],
+      "angular19Sha256": "b564ab039685b862dffb22c3de41e42a217148e701ce0a34a5c3d0a54e534ef4",
+      "angular20Sha256": "66860b76c35266a4bf29582d6b57b5a97ef0bf1dedc3f3e34352b005b556fe03"
+    },
+    {
+      "file": "1440x1000-toast-warn.png",
+      "byteIdentical": false,
+      "differentPixels": 10035,
+      "maximumChannelDelta": 245,
+      "bounds": [
+        16,
+        22,
+        1057,
+        969
+      ],
+      "angular19Sha256": "2511d012b80aa7e6ad2f65eca064ea0775551e54e9b1019c7d52dbe3b3511acf",
+      "angular20Sha256": "7804e689f8a4c3e04e3fbdef5e79613f96c9d689093158467c317c13ec941359"
+    },
+    {
+      "file": "1440x1000-transfer-progress.png",
+      "byteIdentical": false,
+      "differentPixels": 74851,
+      "maximumChannelDelta": 223,
+      "bounds": [
+        16,
+        0,
+        1135,
+        999
+      ],
+      "angular19Sha256": "a0327d8420760b8e84484ddffdeca8a3dba07acb2764ef8bc7e6596bd0d56421",
+      "angular20Sha256": "25231314656276e30011ac4b54220b87e4bf5c573e3af1e18a8ade78d18918b5"
+    },
+    {
+      "file": "1440x1000-transfer-warning.png",
+      "byteIdentical": false,
+      "differentPixels": 14546,
+      "maximumChannelDelta": 166,
+      "bounds": [
+        16,
+        0,
+        1372,
+        999
+      ],
+      "angular19Sha256": "b6b87633ea1fd04b57a9bdc62e9e9a4e508ab751e4e901e511830ee592e2ac57",
+      "angular20Sha256": "56cb4de82ef37f403b027bf26a448de678774f960a2ab94b160dc0deb36a0757"
+    }
+  ],
+  "browserRunStop": {
+    "check": "danger-text-rest",
+    "actualBackground": "rgba(211, 47, 47, 0.12)",
+    "expectedBackground": "rgba(0, 0, 0, 0)",
+    "remainingChecksNotExecuted": true
+  },
+  "cleanInstallPassed": true,
+  "dependencyTreeValid": true,
+  "limitations": [
+    "Incomplete browser run; final renderer and repeatability were not verified.",
+    "Angular 20 UI acceptance remains open; no Angular 21 migration authorized by this gate."
+  ]
+}

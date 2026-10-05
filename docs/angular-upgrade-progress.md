@@ -1057,3 +1057,48 @@ git commit -m "fix: complete Angular 19 UI acceptance"
 ```
 
 Keine weitere manuelle Einrichtung für Angular 19 erforderlich. Nach diesem Commit und `weiter` folgen der geplante Node-22-Wechsel und Angular 20. Der Community-Lizenzschlüssel wird weiterhin erst vor dem PrimeNG-22-Setup benötigt.
+
+## Commit-Punkt 29: Node 22 und Angular-20-Grundmigration
+
+Ausgangspunkt: **`0193d3f`**, gesicherte vollständige Angular-19-UI-Abnahme. Angular **20.3.33** / PrimeNG **20.4.0** installiert; **die Angular-20-UI-Abnahme ist noch offen**. Dieser Abschnitt bildet den prüfbaren Paket-/Tooling-Wechsel vor weiteren UI-Korrekturen.
+
+### Erfolgreich umgesetzt
+
+- Separate Node-Runtime **22.23.3**, npm **10.9.9**, aus dem offiziellen Windows-x64-ZIP. SHA-256 **`2b0ff57b049cda1bbcea2240eec20467018713c1efe1f7360c2681859b90ed71`** gegen die offiziellen `SHASUMS256.txt` geprüft. Runtime unter dem ignorierten `tmp/upgrade-runtime/node-v22.23.3-win-x64`; verwendete Befehle aktivieren diese Runtime über den Prozess-PATH. Nachweis `artefacts/angular-upgrade/angular-20/node-runtime.json`.
+- Alle Framework-Pakete gemeinsam auf **20.3.33**, CLI/Build-Devkit **20.3.38**, CDK **20.2.14**, Custom Webpack **20.0.0**, NgRx **20.1.0**, Angular Font Awesome **3.0.0**, TypeScript **5.9.3**. Zone.js **0.15.1** und RxJS **7.8.1** bleiben erhalten. Kandidaten anhand offizieller npm-Metadaten geprüft; keine erzwungene Peer-Auflösung und kein `--legacy-peer-deps`.
+- Offizielle CLI-/CDK-/Core-/NgRx-Migrationen erfolgreich. CLI ergänzt die bisherigen Dateityp-Suffixe als Schematics-Defaults und setzt `moduleResolution` auf **`bundler`**. Übrige Pflichtmigrationen melden keine nötigen Quellcodeänderungen. Optionale Application-Builder-/Control-Flow-/Router-Signal-Migrationen nicht ausgeführt; Custom-Webpack-Extension-Entries, NgModules und vorhandene Animationen bleiben erhalten.
+- PrimeNG 20 verwendet PrimeUIx: **`@primeng/themes` entfernt**, **`@primeuix/themes` 1.2.5** installiert und die beiden Material-/Preset-Imports umgestellt. `ExtendedCSS` ist jetzt String, Funktion oder `undefined`; ein typisierter Helper übernimmt vorhandene Material-CSS korrekt für alle drei Formen. Der nicht mehr gültige `button.root.focusRing.shadow`-Token entfällt; Material definiert Schatten bereits je Farbvariante als `none`, Ringbreite bleibt 0. Die visuelle Wirkung wird im nächsten Abschnitt abgenommen.
+- `safe-buffer` konnte im ersten Build den früher indirekt verfügbaren Browser-Polyfill nicht mehr auflösen. **`buffer` 6.0.3** wird deshalb explizit als direkte Abhängigkeit aufgenommen. Der XML-/JSON-Dateiimport besteht anschließend die Browserprüfungen.
+- Sortiericons tragen jetzt **`p-datatable-sort-icon`** und rendern direkt als SVG im `p-sorticon`-Host. BrickHunter-Styles und Messselektor angepasst, Host wieder inline. Tabellenkopf **56 px**, Border **rgb(228, 228, 228)**, sechs **14 × 14 px** große Icons mit mittiger Ausrichtung bestätigt. Maus-/Tastatursortierung und Filter bestehen; Messanforderungen nicht gelockert.
+
+### Erfolgreiche technische Validierung
+
+- **`npm ci` erfolgreich**, anschließend **`npm ls --all` mit Exit 0**, keine ungültigen Peer-Abhängigkeiten. **50 Unit-Tests erfolgreich** nach der sauberen Installation.
+- Produktions-, Entwicklungs- und visueller Referenzbuild erfolgreich mit dem endgültigen Quellstand. Produktion **2.53 MB**; bestehende 500-kB-Warnschwelle überschritten, 3-MB-Fehlergrenze eingehalten, Budgets unverändert. CommonJS-Warnungen weiterhin sichtbar.
+- Reguläre Outputs unter `artefacts/angular-upgrade/angular-20/verified/{production,development}/`: UI-Einstieg, Manifest und beide Extension-Entries vorhanden; Chrome-Manifest byteidentisch, `background.js` und `legocontentscript.js` ohne `webpackChunk`-Runtime-Abhängigkeit. Keine Referenz-Fixture-Marker in regulären JS-Bundles.
+- Originale Angular-17-Bilder und Bericht erneut vollständig gegen das SHA-256-Inventar geprüft. Angular-18-/19-Abnahmeberichte unverändert. **`git diff --check` erfolgreich**.
+
+### Offene Angular-20-UI-Abnahme
+
+- Lauf **`angular-20-foundation-verified`** besteht **22 Browserprüfungen**: Kategorien/Filter/Paginator, öffentliche Menüs, JSON-Dateiauswahl und XML-Drop, Import-Reset, Toast-Schließen, Tabellenkopf/Sortierung sowie Select-Auswahl, Nested-Escape, Länder-Home/End und Locale-Save. Bis zum Abbruch **21 Hauptbilder und 16 Zusatzbilder**, keine aufgezeichneten Browser-/Konsolenfehler. D3D11-GPU-Compositing und Rasterization beim Start aktiv; wegen Abbruch kein Abschluss-Renderervergleich.
+- Abbruch bei **`danger-text-rest`**: gemessener Hintergrund **rgba(211, 47, 47, 0.12)** statt transparent. Das ist ein offener UI-Befund, kein erfolgreicher Gesamtlauf. Verbleibende Prüfungen wurden nicht ausgeführt; Fokus-/Button-/weitere Theme-Zustände sind im nächsten Abschnitt zu untersuchen.
+- **0/37 PNGs byteidentisch** zur vollständig akzeptierten Angular-19-Ausgabe. Alle Rohpixelabweichungen samt Grenzen und Hashes im neuen Grundstandsbericht erhalten; kein Filter und keine pauschale Toleranz. Die Bilder sind ausschließlich ein unvollständiger Diagnosebestand. **`browserSuiteComplete: false`**, **`visualAcceptance: false`**, **`angular21UiGateSatisfied: false`**.
+- Die beiden früheren Diagnoseläufe `angular-20-foundation` und `angular-20-foundation-sort-icons` bleiben unverändert erhalten; beide stoppten an der Tabellenkopfprüfung, bevor die Icon-Klassen-/Host-Anpassung abgeschlossen war.
+
+Bericht: [angular-20-foundation-check.json](angular-upgrade-reference/angular-20-foundation-check.json). Metadaten/Logs unter `artefacts/angular-upgrade/angular-20/`: `metadata.json`, `update.log`, `theme-install.log`, `buffer-install.log`, `npm-ci.log`, `npm-ls.log`, `tests.log`, `reference-build.log`, `production.log`, `development.log`, `capture-verified.log`, `comparison.log`.
+
+### Jetzt manuell: Grundmigration sichern
+
+```powershell
+git add package.json package-lock.json angular.json tsconfig.json src/app/shared/theme/brickhunter-preset.ts scripts/upgrade/capture-visual-reference.cjs docs
+git commit -m "chore: migrate Angular 20 foundation and Node 22 runtime"
+```
+
+Für eigene lokale Prüfungen diese Runtime im aktuellen Terminal aktivieren, oder lokal Node **22.23.3** verwenden:
+
+```powershell
+$env:PATH="$PWD\tmp\upgrade-runtime\node-v22.23.3-win-x64;$env:PATH"
+node --version
+```
+
+Die heruntergeladene Runtime wird nicht eingecheckt. Für die Fortsetzung hier ist keine zusätzliche manuelle Einrichtung nötig. Nach dem Zwischencommit und `weiter` folgen die Angular-20-UI-Korrekturen bis zur vollständigen Abnahme; Angular 21 bleibt bis dahin zurückgestellt. Der Community-Schlüssel wird erst vor PrimeNG 22 benötigt.

@@ -113,7 +113,7 @@ async function main() {
             'app-parts-list-import textarea', '.p-fileupload-choose-button',
             '.p-toast', '.p-toast-message', '.p-toast-message-content', '.p-toast-message-icon',
             '.p-toast-message-text', '.p-toast-summary', '.p-toast-detail', '.p-toast-close-button',
-            '.p-tablist', '.p-tablist-active-bar', '.p-sortable-column-icon',
+            '.p-tablist', '.p-tablist-active-bar', '.p-datatable-sort-icon',
             '.p-datatable-thead th', '.p-drawer-header .p-button', '.p-drawer-header svg',
             '.p-dialog-header .p-button', '.p-dialog-header svg',
             '.p-datatable-tbody tr:nth-child(2)', 'app-pab-price .p-tag',
@@ -312,7 +312,7 @@ async function main() {
         report.tableHeaderMeasurements = await page.locator('app-parts-table .p-datatable-thead').evaluate(header => {
           const row = header.querySelector('tr'), cell = header.querySelector('th');
           return { height: row.getBoundingClientRect().height, borderColor: getComputedStyle(cell).borderBottomColor,
-            icons: [...header.querySelectorAll('p-sorticon svg.p-sortable-column-icon')].map(icon => {
+            icons: [...header.querySelectorAll('p-sorticon svg.p-datatable-sort-icon')].map(icon => {
               const rect = icon.getBoundingClientRect();
               return { wrapperDisplay: getComputedStyle(icon.parentElement).display,
                 verticalAlign: getComputedStyle(icon).verticalAlign, width: rect.width, height: rect.height,

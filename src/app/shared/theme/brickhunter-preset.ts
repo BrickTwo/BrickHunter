@@ -1,5 +1,10 @@
-import { definePreset } from '@primeng/themes';
-import Material from '@primeng/themes/material';
+import { definePreset } from '@primeuix/themes';
+import Material from '@primeuix/themes/material';
+import type { ExtendedCSS } from '@primeuix/themes/types';
+type PresetStyleOptions = Parameters<Exclude<ExtendedCSS, string | undefined>>[0];
+
+const presetCss = (css: ExtendedCSS, options: PresetStyleOptions): string =>
+  typeof css === 'function' ? css(options) : css ?? '';
 
 // The legacy Material theme uses the same state opacities for these button colors.
 const buttonColors = { primary: '10, 52, 99', danger: '211, 47, 47', success: '104, 159, 56' };
@@ -91,7 +96,7 @@ export const BrickHunterPreset = definePreset(Material, {
         selectedBackground: 'rgba(10, 52, 99, 0.12)',
         selectedFocusBackground: 'rgba(10, 52, 99, 0.12)',
       },
-      css: options => `${Material.components.select.css(options)}
+      css: options => `${presetCss(Material.components.select.css, options)}
         .p-select-overlay { border: 0; }
         .p-select.p-disabled { opacity: 0.38; }
         .p-select-dropdown svg { width: 0.875rem; height: 0.875rem; }
@@ -132,7 +137,7 @@ export const BrickHunterPreset = definePreset(Material, {
         borderRadius: '4px',
         gap: '0',
         label: { fontWeight: '500' },
-        focusRing: { width: '0', shadow: 'none' },
+        focusRing: { width: '0' },
         sm: { fontSize: '0.875rem', paddingX: '0.875rem', paddingY: '0.62475rem' },
         lg: { fontSize: '1.25rem', paddingX: '1.25rem', paddingY: '0.8925rem' },
       },
@@ -147,7 +152,7 @@ export const BrickHunterPreset = definePreset(Material, {
           text: buttonVariants,
         },
       },
-      css: options => `${Material.components.button.css(options)}
+      css: options => `${presetCss(Material.components.button.css, options)}
         /* PrimeNG 17 aligned inline buttons to the line bottom, including table cells. */
         .p-button { border: 0; min-width: 4rem; vertical-align: bottom; justify-content: normal; }
         .p-button.p-button:not(:disabled):hover, .p-button.p-button:not(:disabled):active { border: 0; }
@@ -281,13 +286,13 @@ export const BrickHunterPreset = definePreset(Material, {
       },
       bodyCell: { borderColor: '#e4e4e4' },
       columnTitle: { fontWeight: '500' },
-      // SortIcon in 18.0.2 still emits the legacy class, unlike Table's own CSS.
-      css: options => `${Material.components.datatable.css(options)}
-        .p-datatable p-sorticon .p-iconwrapper { display: inline; }
-        /* BaseIcon 18 emits unlayered baseline alignment; restore the legacy table alignment. */
-        .p-datatable p-sorticon svg.p-sortable-column-icon { vertical-align: middle !important; }
-        .p-datatable .p-sortable-column-icon { color: rgba(0, 0, 0, 0.6); margin-left: 0.5rem; vertical-align: middle; width: 0.875rem; height: 0.875rem; }
-        .p-datatable .p-datatable-column-sorted .p-sortable-column-icon { color: rgba(0, 0, 0, 0.87); }
+      // PrimeNG 20 uses the same sort-icon class as Table's own CSS.
+      css: options => `${presetCss(Material.components.datatable.css, options)}
+        /* Icons now render directly inside p-sorticon rather than a separate wrapper. */
+        .p-datatable p-sorticon { display: inline; }
+        .p-datatable p-sorticon svg.p-datatable-sort-icon { vertical-align: middle !important; }
+        .p-datatable .p-datatable-sort-icon { color: rgba(0, 0, 0, 0.6); margin-left: 0.5rem; vertical-align: middle; width: 0.875rem; height: 0.875rem; }
+        .p-datatable .p-datatable-column-sorted .p-datatable-sort-icon { color: rgba(0, 0, 0, 0.87); }
         .p-datatable-thead .p-button { min-height: 1.4375rem; }
       `,
     },
@@ -315,7 +320,7 @@ export const BrickHunterPreset = definePreset(Material, {
       },
       activeBar: { bottom: '0' },
       tabpanel: { padding: '0' },
-      css: options => `${Material.components.tabs.css(options)}
+      css: options => `${presetCss(Material.components.tabs.css, options)}
         .p-tab { font-family: inherit; font-size: 1rem; line-height: 1; border-top-left-radius: 4px; border-top-right-radius: 4px; }
         .p-tabpanels { padding: 0; }
         .p-tablist-content:not(.p-tablist-viewport) { overflow: hidden; }

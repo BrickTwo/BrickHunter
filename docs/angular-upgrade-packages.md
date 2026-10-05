@@ -1,8 +1,12 @@
 # Direkte Pakete: Upgrade-Prüfung
 
-## Geprüfte Angular-19-Zwischenkombination
+## Geprüfte Angular-20-Zwischenkombination
 
-Am 5. Oktober 2026 über die offizielle npm-Registry erneut geprüft und in Commit-Punkt 25 installiert: Framework/Compiler/Localize **19.2.25**, CLI/Build-Devkit **19.2.27**, CDK **19.2.19**, Custom Webpack **19.0.1**, NgRx Store/Effects/Operators/Devtools **19.2.1**, PrimeNG/Themes **19.1.4**, Angular Font Awesome **1.0.0**, Zone.js **0.15.1**. Node **20.20.2**, TypeScript **5.5.4** und RxJS **7.8.1** sind für diese Stufe kompatibel. Lockfile aktualisiert, drei Builds und 50 Unit-Tests erfolgreich; die UI-Abnahme bleibt offen. Metadaten: `artefacts/angular-upgrade/angular-19/metadata.json`; Details im [Fortschrittsprotokoll](angular-upgrade-progress.md).
+Am 5. Oktober 2026 über die offizielle npm-Registry geprüft und in Commit-Punkt 29 installiert: Framework/Compiler/Localize **20.3.33**, CLI/Build-Devkit **20.3.38**, CDK **20.2.14**, Custom Webpack **20.0.0**, NgRx Store/Effects/Operators/Devtools **20.1.0**, PrimeNG **20.4.0**, **`@primeuix/themes` 1.2.5** anstelle von `@primeng/themes`, Angular Font Awesome **3.0.0**, TypeScript **5.9.3**. Zone.js **0.15.1** und RxJS **7.8.1** bleiben erhalten. Node **22.23.3** / npm **10.9.9**, offizielles Node-ZIP gegen SHA-256 geprüft. `buffer` **6.0.3** wird als direkte Browser-Abhängigkeit deklariert: Nach dem CLI-Update war der vorher indirekt verfügbare Polyfill für `safe-buffer` nicht mehr auflösbar. 49 direkte Pakete, `npm ci` und `npm ls --all`, drei Builds und 50 Unit-Tests erfolgreich. Die UI-Abnahme ist offen; 22 Browserprüfungen bestehen vor dem dokumentierten Button-Befund. Metadaten und Logs unter `artefacts/angular-upgrade/angular-20/`; Details im [Fortschrittsprotokoll](angular-upgrade-progress.md).
+
+## Gesicherte Angular-19-Zwischenkombination
+
+Am 5. Oktober 2026 über die offizielle npm-Registry erneut geprüft und in Commit-Punkt 25 installiert: Framework/Compiler/Localize **19.2.25**, CLI/Build-Devkit **19.2.27**, CDK **19.2.19**, Custom Webpack **19.0.1**, NgRx Store/Effects/Operators/Devtools **19.2.1**, PrimeNG/Themes **19.1.4**, Angular Font Awesome **1.0.0**, Zone.js **0.15.1**. Node **20.20.2**, TypeScript **5.5.4** und RxJS **7.8.1** sind für diese Stufe kompatibel. Die UI-Abnahme wurde in Commit-Punkt 28 abgeschlossen und mit `0193d3f` gesichert: drei Builds, 50 Unit-Tests und zweimal 57 Browserprüfungen. Metadaten: `artefacts/angular-upgrade/angular-19/metadata.json`; Details im [Fortschrittsprotokoll](angular-upgrade-progress.md).
 
 Die folgende Tabelle dokumentiert weiterhin die ursprüngliche Bestands-/Zielprüfung, nicht den aktuellen Zwischenstand.
 
