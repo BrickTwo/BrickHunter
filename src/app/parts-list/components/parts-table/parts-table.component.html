@@ -31,10 +31,9 @@
       <th pRipple pSortableColumn="maxPrice">BrickLink<p-sortIcon field="maxPrice"></p-sortIcon></th>
       <th pRipple pSortableColumn="lego.price.amount">
         Pick a Brick <p-sortIcon field="lego.price.amount"></p-sortIcon>
-        <p-progressSpinner
-          [style]="{ width: '19px', height: '19px' }"
-          class="vertical-align-middle"
-          *ngIf="pabIsLoading"></p-progressSpinner>
+        <span class="vertical-align-middle" *ngIf="pabIsLoading">
+          <p-progressSpinner [style]="{ width: '19px', height: '19px' }"></p-progressSpinner>
+        </span>
       </th>
       <th *ngIf="showAction">Action</th>
     </tr>

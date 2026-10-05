@@ -1,6 +1,23 @@
 <app-side-navigation></app-side-navigation>
 <div style="margin-left: 70px">
-  <p-toast></p-toast>
+  <p-toast>
+    <ng-template #message let-message>
+      <span class="p-toast-message-icon" [ngClass]="message.icon" aria-hidden="true">
+        @if (!message.icon) {
+          @switch (message.severity) {
+            @case ('success') { <svg data-p-icon="check" /> }
+            @case ('error') { <svg data-p-icon="times-circle" /> }
+            @case ('warn') { <svg data-p-icon="exclamation-triangle" /> }
+            @default { <svg data-p-icon="info-circle" /> }
+          }
+        }
+      </span>
+      <div class="p-toast-message-text">
+        <div class="p-toast-summary">{{ message.summary }}</div>
+        <div class="p-toast-detail">{{ message.detail }}</div>
+      </div>
+    </ng-template>
+  </p-toast>
   <router-outlet></router-outlet>
 </div>
 <app-changelog-dialog></app-changelog-dialog>

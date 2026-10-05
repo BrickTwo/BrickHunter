@@ -294,6 +294,7 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-datatable .p-datatable-sort-icon { color: rgba(0, 0, 0, 0.6); margin-left: 0.5rem; vertical-align: middle; width: 0.875rem; height: 0.875rem; }
         .p-datatable .p-datatable-column-sorted .p-datatable-sort-icon { color: rgba(0, 0, 0, 0.87); }
         .p-datatable-thead .p-button { min-height: 1.4375rem; }
+        .p-datatable .p-editable-column.p-cell-editing { padding: 2px 1rem; }
       `,
     },
     tag: {
@@ -321,7 +322,8 @@ export const BrickHunterPreset = definePreset(Material, {
       activeBar: { bottom: '0' },
       tabpanel: { padding: '0' },
       css: options => `${presetCss(Material.components.tabs.css, options)}
-        .p-tab { font-family: inherit; font-size: 1rem; line-height: 1; border-top-left-radius: 4px; border-top-right-radius: 4px; }
+        .p-tab { display: flex; align-items: center; font-family: inherit; font-size: 1rem; line-height: 1; border-top-left-radius: 4px; border-top-right-radius: 4px; }
+        .p-tablist { background: transparent; }
         .p-tabpanels { padding: 0; }
         .p-tablist-content:not(.p-tablist-viewport) { overflow: hidden; }
       `,
@@ -352,27 +354,28 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-dialog-footer button { margin: 0 0.5rem 0 0; }
         .p-confirmdialog .p-dialog-footer svg { width: 0.875rem; height: 0.875rem; }
         .p-dialog-content:last-of-type { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
-        .p-dialog .p-dialog-header .p-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
-        .p-dialog .p-dialog-header .p-button svg { width: 0.875rem; height: 0.875rem; }
-        .p-dialog .p-dialog-header .p-button:enabled:focus,
-        .p-dialog .p-dialog-header .p-button:enabled:active { background: transparent; color: rgba(0, 0, 0, 0.6); outline: 0; box-shadow: none; }
-        .p-dialog .p-dialog-header .p-button:enabled:hover { background: rgba(0, 0, 0, 0.04); color: rgba(0, 0, 0, 0.6); }
+        .p-dialog .p-dialog-header .p-dialog-close-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
+        .p-dialog .p-dialog-header .p-dialog-close-button svg { width: 0.875rem; height: 0.875rem; }
+        .p-dialog .p-dialog-header .p-dialog-close-button:enabled:focus,
+        .p-dialog .p-dialog-header .p-dialog-close-button:enabled:active { background: transparent; color: rgba(0, 0, 0, 0.6); outline: 0; box-shadow: none; }
+        .p-dialog .p-dialog-header .p-dialog-close-button:enabled:hover { background: rgba(0, 0, 0, 0.04); color: rgba(0, 0, 0, 0.6); }
       `,
     },
     drawer: {
       header: { padding: '1rem' },
       content: { padding: '0 1rem 1rem' },
+      footer: { padding: '1rem' },
       css: `
         .p-drawer { border: 0; }
         /* PrimeNG 17 clears the transform after opening. Preserve animations,
            then restore its stable shadow/text rasterization and containing block. */
-        .p-drawer-active:not(.ng-animating) { transform: none !important; }
-        .p-drawer-header:has(.p-button) { justify-content: flex-end; }
-        .p-drawer .p-drawer-header .p-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
-        .p-drawer .p-drawer-header .p-button svg { width: 0.875rem; height: 0.875rem; }
-        .p-drawer .p-drawer-header .p-button:enabled:focus,
-        .p-drawer .p-drawer-header .p-button:enabled:active { background: transparent; color: rgba(0, 0, 0, 0.6); outline: 0; box-shadow: none; }
-        .p-drawer .p-drawer-header .p-button:enabled:hover { background: rgba(0, 0, 0, 0.04); color: rgba(0, 0, 0, 0.6); }
+        .p-drawer-open:not(.ng-animating) { transform: none !important; }
+        .p-drawer-header:has(.p-drawer-close-button) { justify-content: flex-end; }
+        .p-drawer .p-drawer-header .p-drawer-close-button button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
+        .p-drawer .p-drawer-header .p-drawer-close-button button svg { width: 0.875rem; height: 0.875rem; }
+        .p-drawer .p-drawer-header .p-drawer-close-button button:enabled:focus,
+        .p-drawer .p-drawer-header .p-drawer-close-button button:enabled:active { background: transparent; color: rgba(0, 0, 0, 0.6); outline: 0; box-shadow: none; }
+        .p-drawer .p-drawer-header .p-drawer-close-button button:enabled:hover { background: rgba(0, 0, 0, 0.04); color: rgba(0, 0, 0, 0.6); }
       `,
     },
     fileupload: {
@@ -381,6 +384,9 @@ export const BrickHunterPreset = definePreset(Material, {
       content: { padding: '2rem 1rem', gap: '0' },
       css: `
         .p-fileupload-header { display: block; }
+        /* Only JSON/XML are accepted here. Badge host styles are unlayered. */
+        app-parts-list-import .p-fileupload-file-thumbnail,
+        app-parts-list-import .p-fileupload-file-badge { display: none !important; }
         .p-fileupload-header .p-button { margin-right: 0.5rem; }
         .p-fileupload-header .p-button svg { width: 0.875rem; height: 0.875rem; margin-right: 0.5rem; }
         .p-fileupload-header .p-button:disabled { opacity: 0.38; }

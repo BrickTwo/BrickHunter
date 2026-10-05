@@ -16,7 +16,7 @@ describe('ConfirmDialogFocusDirective', () => {
     directive = new ConfirmDialogFocusDirective(new ElementRef(host), confirmation);
     directive.ngOnInit();
     mask = document.createElement('div'); mask.className = 'p-dialog-mask';
-    mask.innerHTML = '<div class="p-confirmdialog"><div class="p-dialog-header"><button class="p-button">Close</button></div>' +
+    mask.innerHTML = '<div class="p-confirmdialog"><div class="p-dialog-header"><button class="p-dialog-close-button">Close</button></div>' +
       '<button class="p-confirmdialog-reject-button">No</button><button class="p-confirmdialog-accept-button">Yes</button></div>';
   });
   afterEach(() => { directive.ngOnDestroy(); mask.remove(); host.remove(); });

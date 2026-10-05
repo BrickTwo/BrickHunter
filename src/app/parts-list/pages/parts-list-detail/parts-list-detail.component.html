@@ -92,7 +92,7 @@
               [disabled]="pabIsLoading"
               (click)="onTransfer(cartType.Bestseller)"></button>
             <div class="flex flex-nowrap align-items-center gap-2" *ngIf="!!affiliate">
-              <p-toggleswitch [(ngModel)]="useAffiliatePaB" inputId="useAffiliatePaB"></p-toggleswitch>
+              <span class="bh-toggleswitch"><p-toggleswitch [(ngModel)]="useAffiliatePaB" inputId="useAffiliatePaB"></p-toggleswitch></span>
               <label for="useAffiliatePaB">Use Affiliate Link</label>
             </div>
           </div>
@@ -125,7 +125,7 @@
               [disabled]="pabIsLoading"
               (click)="onTransfer(cartType.Standard)"></button>
             <div class="flex flex-nowrap align-items-center gap-2" *ngIf="!!affiliate">
-              <p-toggleswitch [(ngModel)]="useAffiliateBaP" inputId="useAffiliateBaP"></p-toggleswitch>
+              <span class="bh-toggleswitch"><p-toggleswitch [(ngModel)]="useAffiliateBaP" inputId="useAffiliateBaP"></p-toggleswitch></span>
               <label for="useAffiliateBaP">Use Affiliate Link</label>
             </div>
           </div>
@@ -186,10 +186,9 @@
               [partsListUuid]="uuid"
               [allowEdit]="true"
               (bulkAction)="onBulkAction($event)"></app-parts-table>
-            <p-progressSpinner
-              *ngIf="activeItem.id === 'setSuggestions' && setSugestionIsLoading"
-              [style]="{ width: '25px', height: '25px', margin: '10px' }"
-              class="vertical-align-middle"></p-progressSpinner>
+            <span class="vertical-align-middle" *ngIf="activeItem.id === 'setSuggestions' && setSugestionIsLoading">
+              <p-progressSpinner [style]="{ width: '25px', height: '25px', margin: '10px' }"></p-progressSpinner>
+            </span>
             <app-parts-product-suggestions-table
               *ngIf="
                 activeItem.id === 'setSuggestions' &&
@@ -239,8 +238,8 @@
   position="top"
   [baseZIndex]="10000"
   rejectButtonStyleClass="p-button-outlined">
-  <ng-template pTemplate="accepticon"><CheckIcon styleClass="p-button-icon p-button-icon-left" /></ng-template>
-  <ng-template pTemplate="rejecticon"><TimesIcon styleClass="p-button-icon p-button-icon-left" /></ng-template>
+  <ng-template pTemplate="accepticon"><svg data-p-icon="check" class="p-button-icon p-button-icon-left" /></ng-template>
+  <ng-template pTemplate="rejecticon"><svg data-p-icon="times" class="p-button-icon p-button-icon-left" /></ng-template>
 </p-confirmDialog>
 <app-parts-list-settings [partsList]="partsList"></app-parts-list-settings>
 <app-parts-list-split></app-parts-list-split>
@@ -255,7 +254,7 @@
   [closable]="false"
   [modal]="true">
   <div class="flex flex-wrap card-container blue-container gap-3">
-    <p-progressSpinner></p-progressSpinner>
+    <span><p-progressSpinner></p-progressSpinner></span>
     <div>
       <p class="align-items-center justify-content-center">
         <app-progress-icon [step]="1" [currentStep]="importStep"></app-progress-icon> Prepare list

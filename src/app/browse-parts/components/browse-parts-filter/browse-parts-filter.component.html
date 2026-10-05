@@ -71,10 +71,10 @@
             [minDate]="minDate"></p-datepicker>
         </span>
         <div class="flex flex-nowrap align-items-center gap-1">
-          <p-toggleswitch
+          <span class="bh-toggleswitch"><p-toggleswitch
             [(ngModel)]="onlyPrinted"
             inputId="onlyPrinted"
-            (onChange)="onChangeOnlyPrinted($event.checked)"></p-toggleswitch>
+            (onChange)="onChangeOnlyPrinted($event.checked)"></p-toggleswitch></span>
           <label for="onlyPrinted">Only Printed</label>
         </div>
       </div>

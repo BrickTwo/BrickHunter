@@ -114,8 +114,8 @@ async function main() {
             '.p-toast', '.p-toast-message', '.p-toast-message-content', '.p-toast-message-icon',
             '.p-toast-message-text', '.p-toast-summary', '.p-toast-detail', '.p-toast-close-button',
             '.p-tablist', '.p-tablist-active-bar', '.p-datatable-sort-icon',
-            '.p-datatable-thead th', '.p-drawer-header .p-button', '.p-drawer-header svg',
-            '.p-dialog-header .p-button', '.p-dialog-header svg',
+            '.p-datatable-thead th', '.p-drawer-header .p-drawer-close-button button', '.p-drawer-header svg',
+            '.p-dialog-header .p-dialog-close-button', '.p-dialog-header svg',
             '.p-datatable-tbody tr:nth-child(2)', 'app-pab-price .p-tag',
             'app-pab-price .p-tag-info', 'app-pab-price .p-tag-danger',
             '.p-select', '.p-select-label', '.p-select-dropdown', '.p-select-overlay', '.p-select-option'];
@@ -408,6 +408,9 @@ async function main() {
           window.ng.applyChanges(locale);
         });
         await additionalCapture('select-locale-dialog');
+        if (await page.getByRole('dialog').getByRole('button', { name: 'Save', exact: true }).evaluate(element => element !== document.activeElement))
+          throw new Error('Locale dialog lost the legacy initial Save focus');
+        report.interactionChecks.localeDialogInitialSaveFocus = true;
         const country = page.getByRole('combobox', { name: 'Country', exact: true });
         const language = page.getByRole('combobox', { name: 'Language', exact: true });
         await country.click();
@@ -462,6 +465,9 @@ async function main() {
         }
         await open('parts-lists/upgrade-reference');
         const remove = page.locator('app-parts-table .p-datatable-tbody .p-button-danger').first();
+        if (await remove.evaluate(element => element.hasAttribute('autofocus') || element === document.activeElement))
+          throw new Error('Unspecified button autofocus stole the initial page focus');
+        report.interactionChecks.buttonUnspecifiedAutofocusPreservesInitialFocus = true;
         await buttonStyle(remove, 'danger-text-rest', { color: 'rgb(211, 47, 47)', backgroundColor: 'rgba(0, 0, 0, 0)', width: 48, height: 48 });
         await remove.hover();
         await buttonStyle(remove, 'danger-text-hover', { backgroundColor: 'rgba(211, 47, 47, 0.04)', width: 48, height: 48 });
@@ -621,7 +627,7 @@ async function main() {
           await printedSwitch.evaluate(element => element.blur());
           await page.evaluate(() => {
             const toggle = window.ng.getComponent(document.querySelector('p-toggleswitch'));
-            toggle.disabled = true;
+            toggle.setDisabledState(true);
             window.ng.applyChanges(toggle);
           });
           await printedSwitch.hover({ force: true });

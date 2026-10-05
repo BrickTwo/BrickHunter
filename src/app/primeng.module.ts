@@ -4,7 +4,8 @@ import { BrickHunterPreset } from './shared/theme/brickhunter-preset';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
-import { CheckIcon, TimesIcon } from 'primeng/icons';
+import { ButtonFocusDefaultsDirective } from './shared/directives/button-focus-defaults.directive';
+import { CheckIcon, TimesIcon, InfoCircleIcon, TimesCircleIcon, ExclamationTriangleIcon } from 'primeng/icons';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -38,13 +39,17 @@ import { TreeModule } from 'primeng/tree';
 import { TreeTableModule } from 'primeng/treetable';
 
 @NgModule({
-  imports: [MessagesComponent, CheckIcon, TimesIcon],
+  imports: [MessagesComponent, CheckIcon, TimesIcon, InfoCircleIcon, TimesCircleIcon, ExclamationTriangleIcon, ButtonFocusDefaultsDirective],
   exports: [
     AvatarModule,
     BadgeModule,
     ButtonModule,
+    ButtonFocusDefaultsDirective,
     CheckIcon,
     TimesIcon,
+    InfoCircleIcon,
+    TimesCircleIcon,
+    ExclamationTriangleIcon,
     DatePickerModule,
     CardModule,
     CheckboxModule,

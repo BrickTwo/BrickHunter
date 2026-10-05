@@ -3,7 +3,7 @@
     Transfer {{ cartType === 'pab' ? 'Bestseller' : 'Standard' }} parts to LEGO shopping cart
   </ng-template>
   <div class="flex flex-wrap card-container blue-container gap-3">
-    <p-progressSpinner></p-progressSpinner>
+    <span><p-progressSpinner></p-progressSpinner></span>
     <div>
       <p class="align-items-center justify-content-center">
         <app-progress-icon [step]="1" [currentStep]="transferStep"></app-progress-icon> Check for open lego.com tab
