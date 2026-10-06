@@ -11,14 +11,9 @@
       <input id="partsListName" name="partsListName" type="text" pInputText style="width: 100%" ngModel />
     </div>
     <div class="field">
-      <button
-        pButton
-        pRipple
-        type="submit"
-
-
-        styleClass="p-button-solid text-md"
-        style="width: 100%"><span pButtonIcon class="fa fa-plus"></span><span pButtonLabel>Create Parts List</span></button>
+      <button pButton pRipple type="submit" styleClass="p-button-solid text-md" style="width: 100%">
+        <span pButtonIcon class="fa fa-plus"></span><span pButtonLabel>Create Parts List</span>
+      </button>
     </div>
   </form>
   <div class="field">
@@ -31,10 +26,16 @@
   </div>
   <div class="field">
     @if (action === 'copy') {
-      <button pButton pRipple type="button" style="width: 100%" (click)="onSubmit()"><span pButtonLabel>Copy</span></button>
+      <button pButton pRipple type="button" style="width: 100%" (click)="onSubmit()">
+        <span pButtonLabel>Copy</span>
+      </button>
     }
     @if (action === 'move') {
-      <button pButton pRipple type="button" style="width: 100%" (click)="onSubmit()"><span pButtonLabel>Move</span></button>
+      <button pButton pRipple type="button" style="width: 100%" (click)="onSubmit()">
+        <span pButtonLabel>Move</span>
+      </button>
     }
   </div>
+
+  <ng-template #closeicon><svg data-p-icon="times" /></ng-template>
 </p-drawer>

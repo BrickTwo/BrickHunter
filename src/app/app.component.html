@@ -1,20 +1,35 @@
 <app-side-navigation></app-side-navigation>
 <div style="margin-left: 70px">
-  <p-toast>
-    <ng-template #message let-message>
-      <span class="p-toast-message-icon" [ngClass]="message.icon" aria-hidden="true">
-        @if (!message.icon) {
-          @switch (message.severity) {
-            @case ('success') { <svg data-p-icon="check" /> }
-            @case ('error') { <svg data-p-icon="times-circle" /> }
-            @case ('warn') { <svg data-p-icon="exclamation-triangle" /> }
-            @default { <svg data-p-icon="info-circle" /> }
+  <p-toast mode="expanded" [stackGap]="16">
+    <ng-template #headless let-message let-close="closeFn">
+      <div class="p-toast-message-content">
+        <span class="p-toast-message-icon" [ngClass]="message.icon" aria-hidden="true">
+          @if (!message.icon) {
+            @switch (message.severity) {
+              @case ('success') {
+                <svg data-p-icon="check" />
+              }
+              @case ('error') {
+                <svg data-p-icon="times-circle" />
+              }
+              @case ('warn') {
+                <svg data-p-icon="exclamation-triangle" />
+              }
+              @default {
+                <svg data-p-icon="info-circle" />
+              }
+            }
           }
-        }
-      </span>
-      <div class="p-toast-message-text">
-        <div class="p-toast-summary">{{ message.summary }}</div>
-        <div class="p-toast-detail">{{ message.detail }}</div>
+        </span>
+        <div class="p-toast-message-text">
+          <div class="p-toast-summary">{{ message.summary }}</div>
+          <div class="p-toast-detail">{{ message.detail }}</div>
+        </div>
+        <div>
+          <button type="button" class="p-toast-close-button" aria-label="Close" (click)="close($event)">
+            <svg data-p-icon="times" class="p-toast-close-icon" />
+          </button>
+        </div>
       </div>
     </ng-template>
   </p-toast>

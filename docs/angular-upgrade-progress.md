@@ -1253,3 +1253,39 @@ git commit -m "chore: migrate Angular 22 foundation"
 ```
 
 Keine weitere manuelle Lizenzeinrichtung auf diesem Rechner erforderlich. Nach diesem Zwischencommit und `weiter` folgt die vollständige Angular-22-UI-Abnahme. Weitere Paketabschnitte und finale Chrome-/Firefox-Release-Abnahme bleiben anschließend im Gesamtplan offen.
+
+
+## Commit-Punkt 34: Angular-22-UI-Abnahme vollständig abschließen
+
+Abgeschlossen am **6. Oktober 2026**, Ausgangscommit **`9d02acb`** (`chore: migrate Angular 22 foundation`). Paketversionen und Lockfile unverändert. Die Angaben zu offenen Prüfungen in Abschnitt 33 beschreiben den damaligen Zwischenstand; dieser Abschnitt schließt die dokumentierte **automatisierte Offline-UI-Abnahme dieser Version** ab. Historische Abnahmeberichte einschließlich Angular-22-Grundmigration und Originalreferenzen unverändert.
+
+### Erfolgreich umgesetzt
+
+- Offizielles **Material-Compat-Preset** aus Themes 3 verwendet und bestehende Referenzwerte ergänzt. Tabellenköpfe wieder **56 px**, bisherige Buttonbreiten, Icon-Abstände, Header-/Close-Button-Geometrie und 400-px-Meldungsbreite erhalten. Öffentliche Icon-Templates bewahren die bisherigen SVGs bei Dialog/Drawer, Select, Tree, Checkboxen, Tabellen, FileUpload, Paginator und InputNumber. Der Inline-Editor verwendet wie zuvor **AngleUp/AngleDown**, nicht Chevron. ConfirmDialog bietet kein Close-Icon-Template; eine lokale Maske mit dem bisherigen Times-Pfad bewahrt die Darstellung. Kein Eingriff in Bibliotheksdateien oder Laufzeit-DOM.
+- Neue Icon-Wrapper auf die bisherige Ausrichtung abgestimmt. Table-SortIcon-Slot-Wrapper mit `display: contents` macht die tatsächlichen SVG-Geometrien identisch; die Browserprüfung misst weiterhin den öffentlichen `p-sorticon`-Host. FileUpload-Dateigröße wieder 16 px. Tree-/Select-/Paginator-Icons und native Button-Labels erhalten ihre bisherige Geometrie. Message-/Tag-Klassen auf den in PrimeNG 22 tatsächlich gerenderten Host gelegt.
+- Tabs-Unterstreichungsbreite erhalten und horizontaler Scrollbereich wieder aktiviert; mobile Wheel-/Touch-Prüfung erfolgreich. Die öffentliche Menü-CSS gibt die temporäre Compositing-Ebene nach dem Ein-/Ausblenden frei; dadurch stimmen auch Text- und Schattenraster wieder überein. Animationen bleiben unverändert aktiv.
+- Toast verwendet die öffentliche **Headless-Vorlage**, `mode="expanded"` und 16-px-Stack-Abstand. Bisherige Texte, Legacy-Icons und Schließen-Button samt Position, Hover und Tastaturverhalten erhalten. Der Test stellt den bislang impliziten Hover bei aufeinanderfolgenden Meldungen ausdrücklich her, statt vom Hover eines bereits entfernten Buttons abzuhängen. Native Buttons schließen über Klick bzw. Enter; die bestehende Fokusprüfung bleibt erhalten.
+- PrimeNG-22-ProgressSpinner über öffentliche Theme-CSS auf bisherigen Radius, sichtbaren Kreis und Dash-Zeiten abgestimmt. Track ausgeblendet, neue doppelte SVG-Koordinaten entsprechend umgerechnet. Transfer-Spinner entspricht der Referenz; am kleinen 19-px-Spinner bleiben nur fünf einzeln aufgeführte RGB-Rundungspixel.
+- **Bildfehler behoben:** Der alte Fallback schrieb direkt auf `Image.src` und überschrieb damit in PrimeNG 22 das Input-Signal. Fehlgeschlagene Teilebilder werden jetzt über den gebundenen URL-Wert auf den Platzhalter umgestellt; neuer Regressionstest bestätigt fehlende Exception und korrekte URL. Der Motion-Lauf blockiert externe Bilder absichtlich und bestätigt diesen realen Fehlerpfad ohne Browserfehler.
+- **Schnelles Escape behoben:** Das verzögerte Overlay-onShow konnte eine bereits geschlossene Auswahlliste wieder öffnen. Die bestehende Directive merkt die Schließanforderung bis zur nächsten Öffnungsinteraktion und schließt beim verspäteten onShow beide öffentlichen Visibility-Modelle. Disabled-/Nested-Escape- und bestehende schnelle ArrowDown/Escape-Prüfungen bestehen unverändert. Event-Abonnements werden beim Zerstören entfernt.
+- Permanente Seitennavigation setzt ausdrücklich `closeOnEscape="false"`. Das Escape des Tabelleneditors oder eines Overlays entfernt dadurch nicht mehr die Navigation. Keine Änderung an Benutzer- oder Extension-Daten.
+
+Quelle für Compat-Presets und öffentliche PrimeNG-22-Änderungen: [offizielle Migration](https://primeng.dev/migration/v22). Legacy-Icon-Exports sind in 22 verfügbar und als veraltet markiert; ihre spätere Ablösung gehört zu einer weiteren Major-Migration.
+
+### Vollständige Validierung
+
+- Aktuelles **`npm ls --all`**, **56 Unit-Tests**, davon drei bestehende IndexedDB-Kompatibilitätsprüfungen und ein neuer Bildfehler-Test, sowie **`npm run typecheck:build-config`** erfolgreich. Sauberes `npm ci` für exakt dieselbe unveränderte Paket-/Lockfile-Kombination bereits im Grundmigrationscommit 33 nachgewiesen; hier keine Paketinstallation oder Versionsänderung.
+- Produktions-, Entwicklungs- und Referenzbuild erfolgreich. Produktion **2,82 MB** initial, Entwicklung **9,32 MB**; Warnschwelle 500 kB und Fehlergrenze 3 MB unverändert. Beide regulären Ausgaben enthalten identisches Chrome-Manifest, UI-Einstieg und eigenständige `background.js`-/`legocontentscript.js`-Entries ohne Referenz-Fixture-Marker.
+- Zwei unabhängige vollständige Captures **`angular-22-ui-final`** und **`angular-22-ui-final-repeat`**: jeweils **39 Hauptbilder + 49 Zusatzbilder, sämtliche 60 Browserprüfungen**, Viewports 1440×1000, 390×844, 2560×1440 und 3200×1440. Geprüft sind u. a. Import (Chooser/Drop), Tastatur/Fokus, Buttons, Checkboxen, Select und Nested-Escape, Tabs/Scroll, Menüaktionen, Masken und Z-Index, Formzustände, Export/Transfer-Fixtures und Meldungen. Keine Page-/Console-/bekannten Lifecycle-Fehler. Renderer vor/nach beiden Läufen identisch, Hardware-Compositing und Rasterization über D3D11 aktiv. Kein ungültiger Lizenzbanner.
+- **51 von 88 Bildern byteidentisch zur akzeptierten Angular-21-Referenz; 77 von 88 byteidentisch in der Wiederholung.** Sonstige Unterschiede ausschließlich vier bzw. acht einzeln erfasste Pixel an den Tabs-Unterstreichungsecken; zusätzlich fünf exakte Koordinaten am kleinen Spinner mit maximal einer RGB-Stufe Unterschied. Keine Maskierung, Pixel-Filterung oder pauschale Toleranz. Alle Roh-RGBA-Werte, Koordinaten, Bildgrenzen und SHA-256-Hashes im [Angular-22-Abnahmebericht](angular-upgrade-reference/angular-22-ui-acceptance-check.json).
+- **13 zusätzliche Motion-/Cleanup-Prüfungen** mit normalen Animationen und reduzierter Bewegung: Drawer-Schließen über Save/Button/Escape/Mask, permanente Navigation, Select-Raster nach Einblenden und Menü-Motion. Bisherige Zeiten und Easing bestätigt, Masken/Scroll-Locks entfernt, keine Browserfehler. Angular-17-Originalinventar erneut per SHA-256 verifiziert; historische Berichte unverändert. Lizenzinhalt fehlt in allen versionierten/nicht ignorierten Dateien; lokale Lizenzdateien bleiben ignoriert.
+- Nachweise: `artefacts/angular-upgrade/angular-22/ui-{npm-ls,tests,build-config,production,development}.log`, `ui-reference-final.log`, `ui-capture-final.log`, `ui-capture-final-repeat.log`, `ui-motion-final.log`, `ui-motion-verification-final.json`; Bildordner unter `artefacts/angular-upgrade/visual/`. Fehlgeschlagene Vorläufe bleiben als Diagnose erhalten. Bestehende Budget-/CommonJS-/Sass-/Webpack-/Karma-Deprecationshinweise bleiben sichtbar.
+
+### Jetzt manuell: UI-Abnahme als Zwischencommit sichern
+
+```powershell
+git add README.md src scripts docs
+git commit -m "fix: preserve Angular 22 UI and complete acceptance"
+```
+
+Keine weitere manuelle Aktion war für diese UI-Abnahme erforderlich. **Hier ist der sinnvolle Commit-Stopp 34.** Kein Commit automatisch erstellt. Nach dem Zwischencommit folgt mit `weiter` der nächste Abschnitt des Gesamtplans. Weitere npm-Paket-Upgrades, echte LEGO-Konto-/Warenkorbtransfers sowie Chrome-/Firefox-Installation, Background-/Content-Script-Messaging und finale Release-Abnahme sind gesondert offen; diese Offline-UI-Abnahme behauptet deren Erfolg nicht.

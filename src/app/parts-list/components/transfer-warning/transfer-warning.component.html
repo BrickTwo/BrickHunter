@@ -59,6 +59,30 @@
         }
       </tr>
     </ng-template>
+
+    <ng-template #sorticon let-order>
+      @switch (order) {
+        @case (1) {
+          <svg data-p-icon="sort-amount-up-alt" class="p-datatable-sort-icon" />
+        }
+        @case (-1) {
+          <svg data-p-icon="sort-amount-down" class="p-datatable-sort-icon" />
+        }
+        @default {
+          <svg data-p-icon="sort-alt" class="p-datatable-sort-icon" />
+        }
+      }
+    </ng-template>
+    <ng-template #checkboxicon let-checked>
+      @if (checked) {
+        <svg data-p-icon="check" class="p-checkbox-icon" />
+      }
+    </ng-template>
+    <ng-template #headercheckboxicon let-checked>
+      @if (checked) {
+        <svg data-p-icon="check" class="p-checkbox-icon" />
+      }
+    </ng-template>
   </p-table>
   <ng-template #footer>
     <p-button
@@ -68,4 +92,6 @@
       styleClass="p-button-outlined p-button-danger"></p-button>
     <p-button icon="pi pi-check" (click)="onContinue()" label="Continue" styleClass="p-button-solid"></p-button>
   </ng-template>
+
+  <ng-template #closeicon><svg data-p-icon="times" /></ng-template>
 </p-dialog>

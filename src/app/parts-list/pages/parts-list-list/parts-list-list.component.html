@@ -1,14 +1,9 @@
 <h2><fa-icon [icon]="faList" class="page-title-icon"></fa-icon>Parts Lists</h2>
 <p-card>
   <div class="flex justify-content-between">
-    <button
-      pButton
-      pRipple
-      type="button"
-
-      class="p-button-solid"
-
-      (click)="onImport()"><span pButtonIcon class="fa fa-plus"></span><span pButtonLabel>Import</span></button>
+    <button pButton pRipple type="button" class="p-button-solid" (click)="onImport()">
+      <span pButtonIcon class="fa fa-plus"></span><span pButtonLabel>Import</span>
+    </button>
     <a target="_blank" href="https://www.paypal.com/donate?hosted_button_id=MPV9V9JUKRD6N">
       <img alt="donate" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" style="cursor: pointer" />
     </a>
@@ -30,9 +25,11 @@
             pButton
             type="button"
             (click)="bulkMenu.toggle($event)"
-
             style="padding: 2px"
-            [disabled]="!selectedPartsLists.length" [iconOnly]="true"><span pButtonIcon class="fa fa-bars"></span></button>
+            [disabled]="!selectedPartsLists.length"
+            [iconOnly]="true">
+            <span pButtonIcon class="fa fa-bars"></span>
+          </button>
         </th>
         <th>Name</th>
         <th>Type</th>
@@ -51,12 +48,36 @@
             pButton
             pRipple
             type="button"
-
             class="p-button-outlined p-button-danger"
-
-            (click)="onDeletePartsList(partsList.uuid)"><span pButtonIcon class="fa fa-trash-can"></span><span pButtonLabel>Delete</span></button>
+            (click)="onDeletePartsList(partsList.uuid)">
+            <span pButtonIcon class="fa fa-trash-can"></span><span pButtonLabel>Delete</span>
+          </button>
         </td>
       </tr>
+    </ng-template>
+
+    <ng-template #sorticon let-order>
+      @switch (order) {
+        @case (1) {
+          <svg data-p-icon="sort-amount-up-alt" class="p-datatable-sort-icon" />
+        }
+        @case (-1) {
+          <svg data-p-icon="sort-amount-down" class="p-datatable-sort-icon" />
+        }
+        @default {
+          <svg data-p-icon="sort-alt" class="p-datatable-sort-icon" />
+        }
+      }
+    </ng-template>
+    <ng-template #checkboxicon let-checked>
+      @if (checked) {
+        <svg data-p-icon="check" class="p-checkbox-icon" />
+      }
+    </ng-template>
+    <ng-template #headercheckboxicon let-checked>
+      @if (checked) {
+        <svg data-p-icon="check" class="p-checkbox-icon" />
+      }
     </ng-template>
   </p-table>
 </p-card>

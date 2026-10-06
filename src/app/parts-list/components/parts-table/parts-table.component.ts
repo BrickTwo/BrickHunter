@@ -175,8 +175,10 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
     });
   }
 
-  onImageError(imgRef: any) {
-    imgRef.src = './assets/placeholder.png';
+  private readonly failedImages = new WeakSet<Part>();
+
+  onImageError(part: Part) {
+    this.failedImages.add(part);
   }
 
   resolveFieldData(data: any, field: any): any {
@@ -233,6 +235,7 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
   }
 
   caclImageUrl(part: Part) {
+    if (this.failedImages.has(part)) return './assets/placeholder.png';
     if (part.source.source === 'BrickLink')
       return `https://img.bricklink.com/ItemImage/PN/${part.source.color}/${part.source.id}.png`;
     return `https://brickhunter.blob.core.windows.net/parts/pab/${part.elementId}.jpg`;

@@ -1,5 +1,5 @@
 import { definePreset } from '@primeuix/themes';
-import Material from '@primeuix/themes/material';
+import Material from '@primeuix/themes/material-compat';
 import type { ExtendedCSS } from '@primeuix/themes/types';
 type PresetStyleOptions = Parameters<Exclude<ExtendedCSS, string | undefined>>[0];
 
@@ -8,11 +8,19 @@ const presetCss = (css: ExtendedCSS, options: PresetStyleOptions): string =>
 
 // The legacy Material theme uses the same state opacities for these button colors.
 const buttonColors = { primary: '10, 52, 99', danger: '211, 47, 47', success: '104, 159, 56' };
-const buttonVariants = Object.fromEntries(Object.entries(buttonColors).map(([severity, rgb]) => [severity, {
-  color: `rgb(${rgb})`, borderColor: `rgb(${rgb})`,
-  hoverBackground: `rgba(${rgb}, 0.04)`, activeBackground: `rgba(${rgb}, 0.16)`,
-}]));
-const switchHandleShadow = '0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)';
+const buttonVariants = Object.fromEntries(
+  Object.entries(buttonColors).map(([severity, rgb]) => [
+    severity,
+    {
+      color: `rgb(${rgb})`,
+      borderColor: `rgb(${rgb})`,
+      hoverBackground: `rgba(${rgb}, 0.04)`,
+      activeBackground: `rgba(${rgb}, 0.16)`,
+    },
+  ])
+);
+const switchHandleShadow =
+  '0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)';
 
 // Measured Angular-17 reference values. Component geometry is verified separately.
 export const BrickHunterPreset = definePreset(Material, {
@@ -48,9 +56,31 @@ export const BrickHunterPreset = definePreset(Material, {
     },
   },
   components: {
-    progressspinner: { colorScheme: { light: { root: {
-      colorOne: '#d62d20', colorTwo: '#0057e7', colorThree: '#008744', colorFour: '#ffa700',
-    } } } },
+    progressspinner: {
+      css: `
+      .p-progressspinner-circle-track { display: none; }
+      .p-progressspinner-circle-range { r: 40; stroke-dasharray: 178, 400; }
+      [data-state="indeterminate"] .p-progressspinner-circle-range {
+        stroke-dasharray: 178, 400;
+        animation-name: bh-progressspinner-dash, p-progressspinner-color;
+      }
+      @keyframes bh-progressspinner-dash {
+        0% { stroke-dasharray: 2, 400; stroke-dashoffset: 0; }
+        50% { stroke-dasharray: 178, 400; stroke-dashoffset: -70px; }
+        100% { stroke-dasharray: 178, 400; stroke-dashoffset: -248px; }
+      }
+    `,
+      colorScheme: {
+        light: {
+          root: {
+            colorOne: '#d62d20',
+            colorTwo: '#0057e7',
+            colorThree: '#008744',
+            colorFour: '#ffa700',
+          },
+        },
+      },
+    },
     radiobutton: {
       root: { borderColor: '#757575', hoverBorderColor: '#757575', focusBorderColor: '#757575' },
       css: `
@@ -65,8 +95,18 @@ export const BrickHunterPreset = definePreset(Material, {
     },
     inputnumber: {
       button: { width: '3rem' },
-      colorScheme: { light: { button: { background: '#0a3463', hoverBackground: 'rgba(10, 52, 99, 0.92)',
-        activeBackground: 'rgba(10, 52, 99, 0.68)', color: '#ffffff', hoverColor: '#ffffff', activeColor: '#ffffff' } } },
+      colorScheme: {
+        light: {
+          button: {
+            background: '#0a3463',
+            hoverBackground: 'rgba(10, 52, 99, 0.92)',
+            activeBackground: 'rgba(10, 52, 99, 0.68)',
+            color: '#ffffff',
+            hoverColor: '#ffffff',
+            activeColor: '#ffffff',
+          },
+        },
+      },
       css: `
         .p-inputnumber-stacked .p-inputnumber-button-group { position: static; height: auto; z-index: auto; }
         .p-inputnumber-stacked .p-inputnumber-button { min-height: 19px; }
@@ -74,15 +114,21 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-inputnumber-stacked .p-inputnumber-increment-button { border-top-right-radius: 4px; }
         .p-inputnumber-stacked .p-inputnumber-decrement-button { border-bottom-right-radius: 4px; }
         .p-inputnumber-button svg { width: 0.875rem; height: 0.875rem; }
+        .p-inputnumber-button svg { display: block !important; }
         .p-inputnumber-button { font: inherit; vertical-align: bottom; }
       `,
     },
     select: {
-      root: { disabledBackground: '#ffffff', disabledColor: 'rgba(0, 0, 0, 0.87)', focusRing: { width: '0', shadow: 'none' } },
+      root: {
+        disabledBackground: '#ffffff',
+        disabledColor: 'rgba(0, 0, 0, 0.87)',
+        focusRing: { width: '0', shadow: 'none' },
+      },
       dropdown: { width: '2.357rem', color: 'rgba(0, 0, 0, 0.6)' },
       overlay: {
         borderColor: 'transparent',
-        shadow: '0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)',
+        shadow:
+          '0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)',
       },
       list: { padding: '0', gap: '0' },
       option: {
@@ -103,6 +149,7 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-overlay-content:has(> .p-select-overlay):not([class*="-enter-"]):not([class*="-leave-"]) { will-change: auto; }
         .p-select.p-disabled { opacity: 0.38; }
         .p-select-dropdown svg { width: 0.875rem; height: 0.875rem; }
+        .p-select-dropdown-icon { display: flex; }
       `,
     },
     toast: {
@@ -123,12 +170,12 @@ export const BrickHunterPreset = definePreset(Material, {
         },
       },
       css: `
-        .p-toast { opacity: 0.9; }
+        .p-toast { opacity: 0.9; width: 25rem; }
         .p-toast-message { backdrop-filter: none; box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12); }
         .p-toast-message-text { margin-left: 1rem; }
         .p-toast-message-icon { width: 0.875rem; height: auto; }
         .p-toast-message-icon svg { width: 0.875rem; height: 0.875rem; }
-        .p-toast .p-toast-close-button { min-width: 0; width: 2rem; height: 2rem; margin: 0; right: 0; padding: 0; color: inherit; justify-content: center; }
+        .p-toast .p-toast-close-button { position: relative; top: auto; min-width: 0; width: 2rem; height: 2rem; margin: 0; right: 0; padding: 0; color: inherit; justify-content: center; }
         /* Toast 18 used a text Button; retain its primary-color hover on the native close button in 19. */
         .p-toast .p-toast-message .p-toast-close-button:hover { background: rgba(10, 52, 99, 0.04); color: #0a3463; }
       `,
@@ -146,11 +193,22 @@ export const BrickHunterPreset = definePreset(Material, {
       },
       colorScheme: {
         light: {
-          root: Object.fromEntries(Object.entries(buttonColors).map(([severity, rgb]) => [severity, {
-            background: `rgb(${rgb})`, hoverBackground: `rgba(${rgb}, 0.92)`, activeBackground: `rgba(${rgb}, 0.68)`,
-            borderColor: `rgb(${rgb})`, hoverBorderColor: 'transparent', activeBorderColor: 'transparent',
-            color: '#ffffff', hoverColor: '#ffffff', activeColor: '#ffffff',
-          }])),
+          root: Object.fromEntries(
+            Object.entries(buttonColors).map(([severity, rgb]) => [
+              severity,
+              {
+                background: `rgb(${rgb})`,
+                hoverBackground: `rgba(${rgb}, 0.92)`,
+                activeBackground: `rgba(${rgb}, 0.68)`,
+                borderColor: `rgb(${rgb})`,
+                hoverBorderColor: 'transparent',
+                activeBorderColor: 'transparent',
+                color: '#ffffff',
+                hoverColor: '#ffffff',
+                activeColor: '#ffffff',
+              },
+            ])
+          ),
           outlined: buttonVariants,
           text: buttonVariants,
         },
@@ -161,20 +219,24 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-button.p-button:not(:disabled):hover, .p-button.p-button:not(:disabled):active { border: 0; }
         .p-button-label { flex: 1 1 auto; }
         .p-button .p-button-icon-left { margin-right: 0.5rem; }
+        .p-button:not(.p-button-icon-only) > .p-button-icon:first-child { margin-right: 0.5rem; }
         .p-button .p-button-icon-right { margin-left: 0.5rem; }
+        .p-button-icon > svg { display: block; }
         .p-button .p-button-icon-top { margin-bottom: 0.5rem; }
         .p-button .p-button-icon-bottom { margin-top: 0.5rem; }
         .p-button.p-button-icon-only .p-button-icon { margin: 0; }
         .p-button-icon-only { min-width: auto; padding: 0.714rem; justify-content: center; }
         .p-button-outlined { box-shadow: inset 0 0 0 1px; }
-        ${Object.entries(buttonColors).map(([severity, rgb]) => {
-          const selector = severity === 'primary' ? '.p-button' : `.p-button.p-button-${severity}`;
-          return `${selector}:enabled:focus { background: rgba(${rgb}, 0.76); }
+        ${Object.entries(buttonColors)
+          .map(([severity, rgb]) => {
+            const selector = severity === 'primary' ? '.p-button' : `.p-button.p-button-${severity}`;
+            return `${selector}:enabled:focus { background: rgba(${rgb}, 0.76); }
             ${selector}:enabled:active { background: rgba(${rgb}, 0.68); }
             ${selector}.p-button-text:enabled:focus, ${selector}.p-button-outlined:enabled:focus { background: rgba(${rgb}, 0.12); }
             ${selector}.p-button-text:enabled:active, ${selector}.p-button-outlined:enabled:active { background: rgba(${rgb}, 0.16); }
             ${selector}.p-button-text .p-ink, ${selector}.p-button-outlined .p-ink { background: rgba(${rgb}, 0.16); }`;
-        }).join('\n')}
+          })
+          .join('\n')}
         .p-button-outlined:enabled:focus { box-shadow: inset 0 0 0 1px; }
         .p-button:disabled { background: rgba(0, 0, 0, 0.12); color: rgba(0, 0, 0, 0.38); opacity: 1; }
         .p-button:disabled.p-button-text, .p-button:disabled.p-button-outlined { background: transparent; }
@@ -196,11 +258,15 @@ export const BrickHunterPreset = definePreset(Material, {
     tree: {
       root: { gap: '0' },
       node: { padding: '0.5rem', borderRadius: '4px', gap: '0' },
+      css: `.p-tree-node-toggle-button svg { width: 0.875rem; height: 0.875rem; }`,
     },
     checkbox: {
       root: {
-        borderColor: '#757575', hoverBorderColor: '#757575', focusBorderColor: '#757575',
-        disabledBackground: '#ffffff', checkedDisabledBorderColor: '#757575',
+        borderColor: '#757575',
+        hoverBorderColor: '#757575',
+        focusBorderColor: '#757575',
+        disabledBackground: '#ffffff',
+        checkedDisabledBorderColor: '#757575',
       },
       // Keep the public CheckIcon SVG used in 17 instead of Material 18's larger CSS tick.
       css: `
@@ -278,6 +344,7 @@ export const BrickHunterPreset = definePreset(Material, {
       css: `
         .p-paginator-page, .p-paginator-first, .p-paginator-prev, .p-paginator-next, .p-paginator-last { margin: 0.143rem; font: inherit; }
         .p-paginator svg { width: 0.875rem; height: 0.875rem; }
+        .p-paginator svg { display: block !important; }
       `,
     },
     datatable: {
@@ -295,6 +362,7 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-datatable p-sorticon { display: inline; }
         .p-datatable p-sorticon svg.p-datatable-sort-icon { vertical-align: middle !important; }
         .p-datatable .p-datatable-sort-icon { color: rgba(0, 0, 0, 0.6); margin-left: 0.5rem; vertical-align: middle; width: 0.875rem; height: 0.875rem; }
+        .p-datatable span.p-datatable-sort-icon { display: contents; }
         .p-datatable .p-datatable-column-sorted .p-datatable-sort-icon { color: rgba(0, 0, 0, 0.87); }
         .p-datatable-thead .p-button { min-height: 1.4375rem; }
         .p-datatable .p-editable-column.p-cell-editing { padding: 2px 1rem; }
@@ -327,8 +395,9 @@ export const BrickHunterPreset = definePreset(Material, {
       css: options => `${presetCss(Material.components.tabs.css, options)}
         .p-tab { display: flex; align-items: center; font-family: inherit; font-size: 1rem; line-height: 1; border-top-left-radius: 4px; border-top-right-radius: 4px; }
         .p-tablist { background: transparent; }
+        .p-tablist-active-bar { width: calc(var(--px-active-bar-width) + 2px); }
         .p-tabpanels { padding: 0; }
-        .p-tablist-content:not(.p-tablist-viewport) { overflow: hidden; }
+        .p-tablist-content { overflow-x: auto; overflow-y: hidden; }
       `,
     },
     message: {
@@ -369,6 +438,14 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-dialog-content:last-of-type { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
         .p-dialog .p-dialog-header .p-dialog-close-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
         .p-dialog .p-dialog-header .p-dialog-close-button svg { width: 0.875rem; height: 0.875rem; }
+        .p-dialog .p-dialog-header .p-dialog-close-button svg { display: block; }
+        /* ConfirmDialog does not expose Dialog's close-icon template. */
+        .p-confirmdialog .p-dialog-close-button svg { visibility: hidden; }
+        .p-confirmdialog .p-dialog-close-button::after {
+          content: ''; visibility: visible; position: absolute; width: 0.875rem; height: 0.875rem;
+          background-color: currentColor;
+          mask: url('assets/icons/close-legacy.svg') center / contain no-repeat;
+        }
         .p-dialog .p-dialog-header .p-dialog-close-button:enabled:focus,
         .p-dialog .p-dialog-header .p-dialog-close-button:enabled:active { background: transparent; color: rgba(0, 0, 0, 0.6); outline: 0; box-shadow: none; }
         .p-dialog .p-dialog-header .p-dialog-close-button:enabled:hover { background: rgba(0, 0, 0, 0.04); color: rgba(0, 0, 0, 0.6); }
@@ -388,11 +465,12 @@ export const BrickHunterPreset = definePreset(Material, {
            then restore its stable shadow/text rasterization and containing block. */
         .p-drawer-open:not([class*="p-drawer-enter-"]):not([class*="p-drawer-leave-"]) { transform: none !important; }
         .p-drawer-header:has(.p-drawer-close-button) { justify-content: flex-end; }
-        .p-drawer .p-drawer-header .p-drawer-close-button button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
-        .p-drawer .p-drawer-header .p-drawer-close-button button svg { width: 0.875rem; height: 0.875rem; }
-        .p-drawer .p-drawer-header .p-drawer-close-button button:enabled:focus,
-        .p-drawer .p-drawer-header .p-drawer-close-button button:enabled:active { background: transparent; color: rgba(0, 0, 0, 0.6); outline: 0; box-shadow: none; }
-        .p-drawer .p-drawer-header .p-drawer-close-button button:enabled:hover { background: rgba(0, 0, 0, 0.04); color: rgba(0, 0, 0, 0.6); }
+        .p-drawer .p-drawer-header .p-drawer-close-button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
+        .p-drawer .p-drawer-header .p-drawer-close-button svg { width: 0.875rem; height: 0.875rem; }
+        .p-drawer .p-drawer-header .p-drawer-close-button svg { display: block; }
+        .p-drawer .p-drawer-header .p-drawer-close-button:enabled:focus,
+        .p-drawer .p-drawer-header .p-drawer-close-button:enabled:active { background: transparent; color: rgba(0, 0, 0, 0.6); outline: 0; box-shadow: none; }
+        .p-drawer .p-drawer-header .p-drawer-close-button:enabled:hover { background: rgba(0, 0, 0, 0.04); color: rgba(0, 0, 0, 0.6); }
       `,
     },
     fileupload: {
@@ -407,8 +485,10 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-fileupload-header .p-button { margin-right: 0.5rem; }
         .p-fileupload-header .p-button svg { width: 0.875rem; height: 0.875rem; margin-right: 0.5rem; }
         .p-fileupload-header .p-button:disabled { opacity: 0.38; }
+        .p-fileupload-file-size { font-size: 1rem; color: inherit; }
         .p-fileupload-content { border: 0; border-top: 1px solid #e0e0e0; position: relative; }
         .p-fileupload-content .p-progressbar { position: absolute; top: 0; left: 0; }
+        .p-fileupload button span > svg { display: block !important; }
       `,
     },
   },

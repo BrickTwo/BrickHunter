@@ -1,16 +1,29 @@
-import { Directive, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Directive, ElementRef, OnDestroy, OnInit, OutputRefSubscription } from '@angular/core';
 import { Select } from 'primeng/select';
 
 @Directive({
-    selector: 'p-select[bhSelectEscape]',
-    standalone: false
+  selector: 'p-select[bhSelectEscape]',
+  standalone: false,
 })
 export class SelectEscapeDirective implements OnInit, OnDestroy {
-  constructor(private readonly element: ElementRef<HTMLElement>, private readonly select: Select) {}
+  constructor(
+    private readonly element: ElementRef<HTMLElement>,
+    private readonly select: Select
+  ) {}
+
+  private closeRequested = false;
+  private showSubscription?: OutputRefSubscription;
+  private readonly onPointerdown = () => {
+    this.closeRequested = false;
+  };
 
   private readonly onKeydown = (event: KeyboardEvent) => {
-    if (event.key !== 'Escape') return;
+    if (event.key !== 'Escape') {
+      this.closeRequested = false;
+      return;
+    }
     if (this.select.overlayVisible()) {
+      this.closeRequested = true;
       this.select.hide(true);
       event.preventDefault();
       event.stopPropagation();
@@ -19,9 +32,17 @@ export class SelectEscapeDirective implements OnInit, OnDestroy {
       // so the enclosing Drawer/Dialog can handle the second Escape as before.
       event.stopImmediatePropagation();
       const forwarded = new KeyboardEvent(event.type, {
-        key: event.key, code: event.code, location: event.location, repeat: event.repeat,
-        ctrlKey: event.ctrlKey, shiftKey: event.shiftKey, altKey: event.altKey, metaKey: event.metaKey,
-        bubbles: event.bubbles, cancelable: event.cancelable, composed: event.composed,
+        key: event.key,
+        code: event.code,
+        location: event.location,
+        repeat: event.repeat,
+        ctrlKey: event.ctrlKey,
+        shiftKey: event.shiftKey,
+        altKey: event.altKey,
+        metaKey: event.metaKey,
+        bubbles: event.bubbles,
+        cancelable: event.cancelable,
+        composed: event.composed,
       });
       if (!this.element.nativeElement.parentElement?.dispatchEvent(forwarded)) event.preventDefault();
     }
@@ -29,9 +50,23 @@ export class SelectEscapeDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.element.nativeElement.addEventListener('keydown', this.onKeydown, true);
+    this.element.nativeElement.addEventListener('pointerdown', this.onPointerdown, true);
+    // Overlay's delayed before-enter event can restore visibility after a quick
+    // Escape. Keep the user's close request until the next opening interaction.
+    this.showSubscription = this.select.onShow.subscribe(() => {
+      if (this.closeRequested || this.select.$disabled()) {
+        const overlay = this.select.overlayViewChild();
+        // Close both public visibility models: before-enter has already opened
+        // Overlay even when Select's input binding still remembers false.
+        overlay?.visible.set(false);
+        this.select.hide(true);
+      }
+    });
   }
 
   ngOnDestroy() {
     this.element.nativeElement.removeEventListener('keydown', this.onKeydown, true);
+    this.element.nativeElement.removeEventListener('pointerdown', this.onPointerdown, true);
+    this.showSubscription?.unsubscribe();
   }
 }

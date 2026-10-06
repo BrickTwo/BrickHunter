@@ -12,7 +12,7 @@
           <p-tag severity="danger">Out Of Stock</p-tag>
         }
         @if (part.deliveryChannel === '') {
-          <p-tag severity="primary" styleClass="not-listed-tag"> Not Listed </p-tag>
+          <p-tag severity="primary" class="not-listed-tag"> Not Listed </p-tag>
         }
       </div>
       <div class="flex justify-content-end" style="width: 100%; position: relative; top: -34px; right: -10px">
@@ -88,7 +88,10 @@
             incrementButtonIcon="fa fa-plus"
             decrementButtonIcon="fa fa-minus"
             (onBlur)="onChangeQuantity()"
-            (onInput)="onChangeQuantity()"></p-inputnumber>
+            (onInput)="onChangeQuantity()">
+            <ng-template #incrementbuttonicon><svg data-p-icon="chevron-up" /></ng-template
+            ><ng-template #decrementbuttonicon><svg data-p-icon="chevron-down" /></ng-template>
+          </p-inputnumber>
           <p-button
             icon="fa fa-trash-can"
             styleClass="p-button-rounded p-button-danger p-button-text remove-button"

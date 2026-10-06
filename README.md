@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Local setup (Angular 22)
 
-Use Node **24.21.0** (see `.node-version`) and npm **11.19.0**. The staged upgrade and remaining UI acceptance work are documented in [the upgrade plan](docs/angular-upgrade-plan.md).
+Use Node **24.21.0** (see `.node-version`) and npm **11.19.0**. The staged upgrade, completed Angular 22 offline UI acceptance, and remaining extension release checks are documented in [the upgrade plan](docs/angular-upgrade-plan.md).
 
 Install dependencies and configure your PrimeUI Community license from a file outside the repository:
 

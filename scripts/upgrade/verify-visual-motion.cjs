@@ -33,12 +33,24 @@ const fs = require('node:fs/promises'),
     args: ['--use-angle=d3d11'],
   });
   const result = { checks: {}, measurements: [], errors: [] };
+  let diagnosticPage;
   try {
     for (const reducedMotion of ['no-preference', 'reduce']) {
       const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion });
+      diagnosticPage = page;
       page.on('pageerror', e => result.errors.push(e.message));
+      page.on('console', message => {
+        if (message.type() === 'error' && !message.text().startsWith('Failed to load resource'))
+          result.errors.push(message.text());
+      });
       await page.route('**/*', r => (r.request().url().startsWith('http://127.0.0.1:4317') ? r.continue() : r.abort()));
       await page.goto('http://127.0.0.1:4317/#/parts-lists/upgrade-reference');
+      await page.waitForFunction(() => window.brickHunterReference && document.querySelector('app-parts-table'));
+      await page.evaluate(async () => {
+        await document.fonts.ready;
+        window.brickHunterReference.clearMessages();
+      });
+      await page.waitForTimeout(400);
       await page.getByRole('button', { name: 'Settings', exact: true }).waitFor();
       for (const close of ['save', 'button', 'escape', 'mask']) {
         await page.getByRole('button', { name: 'Settings', exact: true }).click();
@@ -127,6 +139,18 @@ const fs = require('node:fs/promises'),
     }
     if (result.errors.length) throw Error('Browser errors');
   } finally {
+    if (Object.keys(result.checks).length < 13 && diagnosticPage && !diagnosticPage.isClosed()) {
+      await diagnosticPage.screenshot({ path: path.join(evidenceDir, 'ui-motion-incomplete.png') });
+      result.incompleteDom = await diagnosticPage.evaluate(() => ({
+        settings: window.ng.getComponent(document.querySelector('app-parts-list-settings'))?.display,
+        visible: window.ng.getComponent(document.querySelector('app-parts-list-settings p-drawer'))?.visible(),
+        modalVisible: window.ng
+          .getComponent(document.querySelector('app-parts-list-settings p-drawer'))
+          ?.modalVisible(),
+        drawer: document.querySelector('app-parts-list-settings p-drawer')?.outerHTML.slice(0, 1800),
+        active: document.activeElement?.outerHTML.slice(0, 400),
+      }));
+    }
     await fs.writeFile(
       path.join(evidenceDir, 'ui-motion-verification-final.json'),
       JSON.stringify(result, null, 2) + '\n'

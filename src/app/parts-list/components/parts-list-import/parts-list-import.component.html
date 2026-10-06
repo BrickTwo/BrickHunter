@@ -12,6 +12,10 @@
         <ng-template #toolbar>
           <div>Select file or drag below.</div>
         </ng-template>
+
+        <ng-template #chooseicon><svg data-p-icon="plus" /></ng-template
+        ><ng-template #uploadicon><svg data-p-icon="upload" /></ng-template
+        ><ng-template #cancelicon><svg data-p-icon="times" /></ng-template>
       </p-fileupload>
     </div>
     <div class="field">
@@ -26,6 +30,8 @@
       <button pButton pRipple type="submit" style="width: 100%"><span pButtonLabel>Import</span></button>
     </div>
   </form>
+
+  <ng-template #closeicon><svg data-p-icon="times" /></ng-template>
 </p-drawer>
 <p-dialog
   header="Importing new Parts List"
@@ -47,4 +53,6 @@
       </p>
     </div>
   </div>
+
+  <ng-template #closeicon><svg data-p-icon="times" /></ng-template>
 </p-dialog>

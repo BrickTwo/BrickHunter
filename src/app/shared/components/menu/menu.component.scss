@@ -5,6 +5,11 @@
   border-radius: 4px;
   font: inherit;
 
+  // Release the temporary compositing layer after the public enter/leave motion.
+  &:not([class*='enter-']):not([class*='leave-']) {
+    will-change: auto;
+  }
+
   &.p-menu-overlay {
     border: 0;
     box-shadow:

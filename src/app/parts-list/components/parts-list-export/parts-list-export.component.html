@@ -17,10 +17,20 @@
   </div>
   @if (selectedExportToValue == 'brickLink') {
     <div class="field-checkbox">
-      <p-checkbox [(ngModel)]="brickLinkExportPrice" [binary]="true" [label]="'Export PaB Price'"></p-checkbox>
+      <p-checkbox [(ngModel)]="brickLinkExportPrice" [binary]="true" [label]="'Export PaB Price'">
+        <ng-template #icon let-checked="checked">
+          @if (checked) {
+            <svg data-p-icon="check" class="p-checkbox-icon" />
+          }
+        </ng-template>
+      </p-checkbox>
     </div>
   }
   <div class="field">
-    <button pButton pRipple type="button" style="width: 100%" (click)="onExport()"><span pButtonLabel>Export</span></button>
+    <button pButton pRipple type="button" style="width: 100%" (click)="onExport()">
+      <span pButtonLabel>Export</span>
+    </button>
   </div>
+
+  <ng-template #closeicon><svg data-p-icon="times" /></ng-template>
 </p-drawer>

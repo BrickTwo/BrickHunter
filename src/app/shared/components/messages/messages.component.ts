@@ -11,7 +11,7 @@ import { MessageModule } from 'primeng/message';
       <p-message
         [severity]="message.severity || 'info'"
         [closable]="false"
-        styleClass="bh-message-banner"
+        class="bh-message-banner"
         [icon]="message.icon || severityIcon(message.severity)">
         <span class="bh-message-summary">{{ message.summary }}</span>
         <span class="bh-message-detail">{{ message.detail }}</span>

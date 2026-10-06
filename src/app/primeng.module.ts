@@ -5,7 +5,26 @@ import { primeUILicense } from './primeui-license.local';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
-import { CheckIcon, TimesIcon, InfoCircleIcon, TimesCircleIcon, ExclamationTriangleIcon } from 'primeng/icons';
+import {
+  CheckIcon,
+  TimesIcon,
+  InfoCircleIcon,
+  TimesCircleIcon,
+  ExclamationTriangleIcon,
+  SortAltIcon,
+  SortAmountUpAltIcon,
+  SortAmountDownIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  AngleUpIcon,
+  AngleDownIcon,
+  PlusIcon,
+  UploadIcon,
+  AngleDoubleLeftIcon,
+  AngleLeftIcon,
+  AngleRightIcon,
+  AngleDoubleRightIcon,
+} from 'primeng/icons';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -39,11 +58,44 @@ import { TreeModule } from 'primeng/tree';
 import { TreeTableModule } from 'primeng/treetable';
 
 @NgModule({
-  imports: [MessagesComponent, CheckIcon, TimesIcon, InfoCircleIcon, TimesCircleIcon, ExclamationTriangleIcon],
+  imports: [
+    MessagesComponent,
+    CheckIcon,
+    TimesIcon,
+    InfoCircleIcon,
+    TimesCircleIcon,
+    ExclamationTriangleIcon,
+    SortAltIcon,
+    SortAmountUpAltIcon,
+    SortAmountDownIcon,
+    ChevronDownIcon,
+    ChevronRightIcon,
+    AngleUpIcon,
+    AngleDownIcon,
+    PlusIcon,
+    UploadIcon,
+    AngleDoubleLeftIcon,
+    AngleLeftIcon,
+    AngleRightIcon,
+    AngleDoubleRightIcon,
+  ],
   exports: [
     AvatarModule,
     BadgeModule,
     ButtonModule,
+    SortAltIcon,
+    SortAmountUpAltIcon,
+    SortAmountDownIcon,
+    ChevronDownIcon,
+    ChevronRightIcon,
+    AngleUpIcon,
+    AngleDownIcon,
+    PlusIcon,
+    UploadIcon,
+    AngleDoubleLeftIcon,
+    AngleLeftIcon,
+    AngleRightIcon,
+    AngleDoubleRightIcon,
     CheckIcon,
     TimesIcon,
     InfoCircleIcon,

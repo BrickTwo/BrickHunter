@@ -7,24 +7,33 @@
         <input id="partsListName" formControlName="partsListName" type="text" pInputText style="width: 100%" />
       </div>
       <div class="field-checkbox">
-        <p-checkbox
-          formControlName="subtractHaveFromQuantity"
-          [binary]="true"
-          inputId="subtractHaveFromQuantity"></p-checkbox>
+        <p-checkbox formControlName="subtractHaveFromQuantity" [binary]="true" inputId="subtractHaveFromQuantity">
+          <ng-template #icon let-checked="checked">
+            @if (checked) {
+              <svg data-p-icon="check" class="p-checkbox-icon" />
+            }
+          </ng-template>
+        </p-checkbox>
         <label for="subtractHaveFromQuantity">Subtract Have from quantity on transfer</label>
       </div>
       <div class="field-checkbox">
-        <p-checkbox
-          formControlName="ignoreBrickLinkPrices"
-          [binary]="true"
-          inputId="ignoreBrickLinkPrices"></p-checkbox>
+        <p-checkbox formControlName="ignoreBrickLinkPrices" [binary]="true" inputId="ignoreBrickLinkPrices">
+          <ng-template #icon let-checked="checked">
+            @if (checked) {
+              <svg data-p-icon="check" class="p-checkbox-icon" />
+            }
+          </ng-template>
+        </p-checkbox>
         <label for="ignoreBrickLinkPrices">Ignore BrickLink prices</label>
       </div>
       <div class="field-checkbox">
-        <p-checkbox
-          formControlName="subtractBrickLinkPrice"
-          [binary]="true"
-          inputId="subtractBrickLinkPrice"></p-checkbox>
+        <p-checkbox formControlName="subtractBrickLinkPrice" [binary]="true" inputId="subtractBrickLinkPrice">
+          <ng-template #icon let-checked="checked">
+            @if (checked) {
+              <svg data-p-icon="check" class="p-checkbox-icon" />
+            }
+          </ng-template>
+        </p-checkbox>
         <label for="subtractBrickLinkPrice">Reduce BrickLink price for comparsion by:</label>
       </div>
       <div class="grid">
@@ -33,7 +42,10 @@
             inputId="integeronly"
             formControlName="subtractBrickLinkPriceAmount"
             mode="decimal"
-            [minFractionDigits]="2"></p-inputnumber>
+            [minFractionDigits]="2">
+            <ng-template #incrementbuttonicon><svg data-p-icon="chevron-up" /></ng-template
+            ><ng-template #decrementbuttonicon><svg data-p-icon="chevron-down" /></ng-template>
+          </p-inputnumber>
         </div>
         <div class="col-6">
           <p-select
@@ -44,10 +56,14 @@
             optionLabel="name"
             dataKey="code"
             ariaLabel="Price reduction unit"
-            [style]="{ width: '100%' }"></p-select>
+            [style]="{ width: '100%' }">
+            <ng-template #dropdownicon><svg data-p-icon="chevron-down" /></ng-template>
+          </p-select>
         </div>
       </div>
       <button pButton pRipple type="submit" style="width: 100%"><span pButtonLabel>Save</span></button>
     </div>
   </form>
+
+  <ng-template #closeicon><svg data-p-icon="times" /></ng-template>
 </p-drawer>

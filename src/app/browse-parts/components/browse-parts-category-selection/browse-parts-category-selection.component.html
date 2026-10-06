@@ -13,6 +13,14 @@
       selectionMode="single"
       (onNodeSelect)="onSelectCategory($event.node.key)">
       <ng-template let-category #node> {{ category.label }} ({{ category.data }}) </ng-template>
+
+      <ng-template #togglericon let-expanded>
+        @if (expanded) {
+          <svg data-p-icon="chevron-down" />
+        } @else {
+          <svg data-p-icon="chevron-right" />
+        }
+      </ng-template>
     </p-tree>
   }
   @if (configMode) {
@@ -33,6 +41,14 @@
         (onNodeSelect)="onConfigCategory($event.node.key)">
         <ng-template let-category #node>
           {{ category.label }}
+        </ng-template>
+
+        <ng-template #togglericon let-expanded>
+          @if (expanded) {
+            <svg data-p-icon="chevron-down" />
+          } @else {
+            <svg data-p-icon="chevron-right" />
+          }
         </ng-template>
       </p-tree>
     </div>

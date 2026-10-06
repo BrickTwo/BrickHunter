@@ -19,9 +19,11 @@
               pButton
               type="button"
               (click)="bulkMenu.toggle($event)"
-
               style="padding: 2px"
-              [disabled]="!selectedParts.length" [iconOnly]="true"><span pButtonIcon class="fa fa-bars"></span></button>
+              [disabled]="!selectedParts.length"
+              [iconOnly]="true">
+              <span pButtonIcon class="fa fa-bars"></span>
+            </button>
           </div>
         </th>
       }
@@ -67,9 +69,8 @@
         <td>{{ part.elementId }}</td>
         <td>
           <p-image
-            #imgRef
             [src]="caclImageUrl(part)"
-            (onImageError)="onImageError(imgRef)"
+            (onImageError)="onImageError(part)"
             imageClass="part-image"
             [preview]="true"></p-image>
         </td>
@@ -88,7 +89,10 @@
                     class="in-place-edit"
                     [min]="0"
                     [inputStyle]="{ 'text-align': 'right', width: '68px' }"
-                    [showButtons]="true"></p-inputnumber>
+                    [showButtons]="true">
+                    <ng-template #incrementbuttonicon><svg data-p-icon="angle-up" /></ng-template
+                    ><ng-template #decrementbuttonicon><svg data-p-icon="angle-down" /></ng-template>
+                  </p-inputnumber>
                 </span>
                 <span style="display: flex; width: 170px; margin: 2px">
                   <div style="width: 50px">Have:</div>
@@ -98,7 +102,10 @@
                     class="in-place-edit"
                     [min]="0"
                     [inputStyle]="{ 'text-align': 'right', width: '68px' }"
-                    [showButtons]="true"></p-inputnumber>
+                    [showButtons]="true">
+                    <ng-template #incrementbuttonicon><svg data-p-icon="angle-up" /></ng-template
+                    ><ng-template #decrementbuttonicon><svg data-p-icon="angle-down" /></ng-template>
+                  </p-inputnumber>
                 </span>
               </ng-template>
               <ng-template #output>
@@ -155,5 +162,29 @@
     <tr>
       <td colspan="9">No parts in this list.</td>
     </tr>
+  </ng-template>
+
+  <ng-template #sorticon let-order>
+    @switch (order) {
+      @case (1) {
+        <svg data-p-icon="sort-amount-up-alt" class="p-datatable-sort-icon" />
+      }
+      @case (-1) {
+        <svg data-p-icon="sort-amount-down" class="p-datatable-sort-icon" />
+      }
+      @default {
+        <svg data-p-icon="sort-alt" class="p-datatable-sort-icon" />
+      }
+    }
+  </ng-template>
+  <ng-template #checkboxicon let-checked>
+    @if (checked) {
+      <svg data-p-icon="check" class="p-checkbox-icon" />
+    }
+  </ng-template>
+  <ng-template #headercheckboxicon let-checked>
+    @if (checked) {
+      <svg data-p-icon="check" class="p-checkbox-icon" />
+    }
   </ng-template>
 </p-table>

@@ -6,62 +6,38 @@
         <div class="col-3 xxl:col-12">
           <h3>General</h3>
           <div class="flex flex-column gap-2">
+            <button pButton pRipple type="button" class="p-button-outlined" style="width: 100%" (click)="onSetting()">
+              <span pButtonIcon class="fa fa-gear"></span><span pButtonLabel>Settings</span>
+            </button>
+            <button pButton pRipple type="button" class="p-button-outlined" style="width: 100%" (click)="onDelete()">
+              <span pButtonIcon class="fa fa-trash-can"></span><span pButtonLabel>Delete</span>
+            </button>
+            <button pButton pRipple type="button" class="p-button-outlined" style="width: 100%" (click)="onSplit()">
+              <span pButtonIcon class="fa fa-scissors"></span><span pButtonLabel>Split</span>
+            </button>
             <button
               pButton
               pRipple
               type="button"
-
               class="p-button-outlined"
-
-              style="width: 100%"
-              (click)="onSetting()"><span pButtonIcon class="fa fa-gear"></span><span pButtonLabel>Settings</span></button>
-            <button
-              pButton
-              pRipple
-              type="button"
-
-              class="p-button-outlined"
-
-              style="width: 100%"
-              (click)="onDelete()"><span pButtonIcon class="fa fa-trash-can"></span><span pButtonLabel>Delete</span></button>
-            <button
-              pButton
-              pRipple
-              type="button"
-
-              class="p-button-outlined"
-
-              style="width: 100%"
-              (click)="onSplit()"><span pButtonIcon class="fa fa-scissors"></span><span pButtonLabel>Split</span></button>
-            <button
-              pButton
-              pRipple
-              type="button"
-
-              class="p-button-outlined"
-
               style="width: 100%"
               [disabled]="pabIsLoading || setSugestionIsLoading"
-              (click)="onReSync()"><span pButtonIcon class="fa fa-arrows-rotate"></span><span pButtonLabel>ReSync</span></button>
+              (click)="onReSync()">
+              <span pButtonIcon class="fa fa-arrows-rotate"></span><span pButtonLabel>ReSync</span>
+            </button>
             <button
               pButton
               pRipple
               type="button"
-
               class="p-button-outlined"
-
               style="width: 100%"
               [disabled]="pabIsLoading || setSugestionIsLoading"
-              (click)="getSetSuggestions()"><span pButtonIcon class="fa fa-boxes-stacked"></span><span pButtonLabel>Check for Sets (Beta)</span></button>
-            <button
-              pButton
-              pRipple
-              type="button"
-
-              class="p-button-outlined"
-
-              style="width: 100%"
-              (click)="onExport()"><span pButtonIcon class="fa fa-download"></span><span pButtonLabel>Export</span></button>
+              (click)="getSetSuggestions()">
+              <span pButtonIcon class="fa fa-boxes-stacked"></span><span pButtonLabel>Check for Sets (Beta)</span>
+            </button>
+            <button pButton pRipple type="button" class="p-button-outlined" style="width: 100%" (click)="onExport()">
+              <span pButtonIcon class="fa fa-download"></span><span pButtonLabel>Export</span>
+            </button>
           </div>
         </div>
         <div class="col-3 xxl:col-12">
@@ -85,12 +61,12 @@
               pButton
               pRipple
               type="button"
-
               class="p-button-solid"
-
               style="width: 100%"
               [disabled]="pabIsLoading"
-              (click)="onTransfer(cartType.Bestseller)"><span pButtonIcon class="fa fa-cart-shopping"></span><span pButtonLabel>Transfer</span></button>
+              (click)="onTransfer(cartType.Bestseller)">
+              <span pButtonIcon class="fa fa-cart-shopping"></span><span pButtonLabel>Transfer</span>
+            </button>
             @if (!!affiliate) {
               <div class="flex flex-nowrap align-items-center gap-2">
                 <span class="bh-toggleswitch"
@@ -122,12 +98,12 @@
               pButton
               pRipple
               type="button"
-
               class="p-button-solid"
-
               style="width: 100%"
               [disabled]="pabIsLoading"
-              (click)="onTransfer(cartType.Standard)"><span pButtonIcon class="fa fa-cart-shopping"></span><span pButtonLabel>Transfer</span></button>
+              (click)="onTransfer(cartType.Standard)">
+              <span pButtonIcon class="fa fa-cart-shopping"></span><span pButtonLabel>Transfer</span>
+            </button>
             @if (!!affiliate) {
               <div class="flex flex-nowrap align-items-center gap-2">
                 <span class="bh-toggleswitch"
@@ -282,4 +258,6 @@
       </p>
     </div>
   </div>
+
+  <ng-template #closeicon><svg data-p-icon="times" /></ng-template>
 </p-dialog>

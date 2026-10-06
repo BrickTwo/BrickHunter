@@ -51,6 +51,15 @@ describe('PartsTableComponent upgrade reference', () => {
     expect(TestBed.inject(IndexedDBService).partsLists.put).toHaveBeenCalled();
   });
 
+  it('renders the placeholder after an image failure without corrupting the Image input signal', () => {
+    const image: HTMLImageElement = fixture.nativeElement.querySelector('p-image img');
+    expect(image).toBeTruthy();
+    image.dispatchEvent(new Event('error'));
+    expect(() => fixture.detectChanges()).not.toThrow();
+    expect(image.getAttribute('src')).toBe('./assets/placeholder.png');
+    expect(component.caclImageUrl(component.parts[0])).toBe('./assets/placeholder.png');
+  });
+
   it('emits selected parts for copy without changing the source list', () => {
     component.selectedParts = [component.parts[0], component.parts[1]];
     const copy = jasmine.createSpy('bulk copy');

@@ -25,21 +25,15 @@
               pButton
               pRipple
               type="button"
-
               class="p-button-outlined"
-
               style="width: 100%"
               [disabled]="currentPartListUuid == 'multiple'"
-              (click)="onRemoveParts()"><span pButtonIcon class="fa fa-trash-can"></span><span pButtonLabel>Remove parts from Parts List</span></button>
-            <button
-              pButton
-              pRipple
-              type="button"
-
-              class="p-button-outlined"
-
-              style="width: 100%"
-              (click)="onExportPdf()"><span pButtonIcon class="fa fa-file-pdf"></span><span pButtonLabel>PDF</span></button>
+              (click)="onRemoveParts()">
+              <span pButtonIcon class="fa fa-trash-can"></span><span pButtonLabel>Remove parts from Parts List</span>
+            </button>
+            <button pButton pRipple type="button" class="p-button-outlined" style="width: 100%" (click)="onExportPdf()">
+              <span pButtonIcon class="fa fa-file-pdf"></span><span pButtonLabel>PDF</span>
+            </button>
           </div>
           <img [src]="product.imageUrl" [alt]="product.name" class="productImage" />
           <div class="shortInfoTitle">Bestseller Price</div>
@@ -60,4 +54,6 @@
       styleClass="p-button-outlined p-button-danger"></p-button>
     <!-- <p-button icon="pi pi-check" (click)="onContinue()" label="Continue" styleClass="p-button-solid"></p-button> -->
   </ng-template>
+
+  <ng-template #closeicon><svg data-p-icon="times" /></ng-template>
 </p-dialog>

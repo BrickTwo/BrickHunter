@@ -40,6 +40,8 @@
           <div>{{ country.text }}</div>
         </div>
       </ng-template>
+
+      <ng-template #dropdownicon><svg data-p-icon="chevron-down" /></ng-template>
     </p-select>
   </div>
   <div class="field">
@@ -76,6 +78,8 @@
           <div>{{ language.text }}</div>
         </div>
       </ng-template>
+
+      <ng-template #dropdownicon><svg data-p-icon="chevron-down" /></ng-template>
     </p-select>
   </div>
   <div class="field">
@@ -85,4 +89,6 @@
   <ng-template #footer>
     <p-button (click)="onSave()" label="Save" styleClass="p-button-solid" [autofocus]="true"></p-button>
   </ng-template>
+
+  <ng-template #closeicon><svg data-p-icon="times" /></ng-template>
 </p-dialog>

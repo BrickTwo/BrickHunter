@@ -5,14 +5,21 @@
       optionLabel="label"
       optionValue="value"
       [(ngModel)]="perPage"
-      (onChange)="onPerPageChange()"></p-select>
+      (onChange)="onPerPageChange()">
+      <ng-template #dropdownicon><svg data-p-icon="chevron-down" /></ng-template>
+    </p-select>
   </div>
   <div class="flex-1">
     <p-paginator
       (onPageChange)="onPageChange($event.page)"
       [first]="page * perPage"
       [rows]="perPage"
-      [totalRecords]="totalParts"></p-paginator>
+      [totalRecords]="totalParts">
+      <ng-template #firstpagelinkicon><svg data-p-icon="angle-double-left" /></ng-template
+      ><ng-template #previouspagelinkicon><svg data-p-icon="angle-left" /></ng-template
+      ><ng-template #nextpagelinkicon><svg data-p-icon="angle-right" /></ng-template
+      ><ng-template #lastpagelinkicon><svg data-p-icon="angle-double-right" /></ng-template>
+    </p-paginator>
   </div>
   <div class="justify-content-end">
     <!-- <p-selectbutton
@@ -56,6 +63,8 @@
           <div>{{ country.countryCode | uppercase }} {{ country.lastUpdate + 'Z' | date: 'short' }}</div>
         </div>
       </ng-template>
+
+      <ng-template #dropdownicon><svg data-p-icon="chevron-down" /></ng-template>
     </p-select>
   </div>
 </div>

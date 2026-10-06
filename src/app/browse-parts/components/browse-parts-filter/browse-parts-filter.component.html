@@ -36,7 +36,9 @@
             'border-top-left-radius': '0px',
             'border-bottom-left-radius': '0px'
           }"
-          (onChange)="onChangeSort($event.value)"></p-select>
+          (onChange)="onChangeSort($event.value)">
+          <ng-template #dropdownicon><svg data-p-icon="chevron-down" /></ng-template>
+        </p-select>
       </p-inputgroup>
     </div>
     <div class="field col-12">
@@ -73,7 +75,9 @@
             (onSelect)="onChangeAtRiskAsOf($event)"
             (onClear)="onChangeAtRiskAsOf($event)"
             (onClearClick)="onChangeAtRiskAsOf($event)"
-            [minDate]="minDate"></p-datepicker>
+            [minDate]="minDate">
+            <ng-template #clearicon><svg data-p-icon="times" class="p-datepicker-clear-icon" /></ng-template>
+          </p-datepicker>
         </span>
         <div class="flex flex-nowrap align-items-center gap-1">
           <span class="bh-toggleswitch"

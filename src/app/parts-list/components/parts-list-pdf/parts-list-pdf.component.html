@@ -8,6 +8,10 @@
       optionValue="value"></p-selectbutton>
   </div>
   <div class="field">
-    <button pButton pRipple type="button" style="width: 100%" (click)="onExport()"><span pButtonLabel>Download PDF</span></button>
+    <button pButton pRipple type="button" style="width: 100%" (click)="onExport()">
+      <span pButtonLabel>Download PDF</span>
+    </button>
   </div>
+
+  <ng-template #closeicon><svg data-p-icon="times" /></ng-template>
 </p-drawer>
