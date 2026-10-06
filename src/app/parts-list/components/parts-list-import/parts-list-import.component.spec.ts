@@ -19,16 +19,19 @@ describe('Parts list local file selection', () => {
     const transfer = new DataTransfer();
     transfer.items.add(file);
     // FileReader events are not tracked by Angular's stability API.
-    const loaded = file.type === 'text/plain' ? Promise.resolve() : new Promise<void>(resolve => {
-      const subscription = component.form.controls.content.valueChanges.subscribe(() => {
-        subscription.unsubscribe();
-        resolve();
-      });
-    });
+    const loaded =
+      file.type === 'text/plain'
+        ? Promise.resolve()
+        : new Promise<void>(resolve => {
+            const subscription = component.form.controls.content.valueChanges.subscribe(() => {
+              subscription.unsubscribe();
+              resolve();
+            });
+          });
     if (drop) {
-      fixture.nativeElement.querySelector('.p-fileupload-content').dispatchEvent(
-        new DragEvent('drop', { dataTransfer: transfer, bubbles: true, cancelable: true })
-      );
+      fixture.nativeElement
+        .querySelector('.p-fileupload-content')
+        .dispatchEvent(new DragEvent('drop', { dataTransfer: transfer, bubbles: true, cancelable: true }));
     } else {
       const input: HTMLInputElement = fixture.nativeElement.querySelector('input[type="file"]');
       input.files = transfer.files;
@@ -40,11 +43,20 @@ describe('Parts list local file selection', () => {
   }
 
   it('reads a selected XML file locally and preserves the wanted-list conversion', async () => {
-    await select(new File(['<INVENTORY><ITEM><ITEMID>3001</ITEMID><ITEMTYPE>P</ITEMTYPE><COLOR>5</COLOR><MINQTY>3</MINQTY></ITEM></INVENTORY>'],
-      'wanted.xml', { type: 'text/xml' }));
+    await select(
+      new File(
+        [
+          '<INVENTORY><ITEM><ITEMID>3001</ITEMID><ITEMTYPE>P</ITEMTYPE><COLOR>5</COLOR><MINQTY>3</MINQTY></ITEM></INVENTORY>',
+        ],
+        'wanted.xml',
+        { type: 'text/xml' }
+      )
+    );
     expect(component.form.value.partsListName).toBe('wanted');
     expect(component.source).toBe('BrickLink');
-    expect(component.wantedList[0]).toEqual(jasmine.objectContaining({ itemId: '3001', itemType: 'P', color: 5, minQty: 3 }));
+    expect(component.wantedList[0]).toEqual(
+      jasmine.objectContaining({ itemId: '3001', itemType: 'P', color: 5, minQty: 3 })
+    );
     expect(component.fileUpload.files.length).toBe(1);
     expect(fixture.nativeElement.querySelector('.p-fileupload-upload-button')).toBeNull();
   });
@@ -55,6 +67,25 @@ describe('Parts list local file selection', () => {
     expect(component.form.value.content).toBe(content);
     expect(component.form.value.partsListName).toBe('Imported JSON');
     expect(component.source).toBe('BrickHunterV1');
+  });
+
+  it('accepts BrickLink Y/N and previously used T/F and boolean notification values', async () => {
+    const xml =
+      '<INVENTORY>' +
+      ['Y', 'N', 'T', 'F', 'true', 'false']
+        .map(
+          (notify, index) =>
+            `<ITEM><ITEMID>${3000 + index}</ITEMID><ITEMTYPE>P</ITEMTYPE><NOTIFY>${notify}</NOTIFY></ITEM>`
+        )
+        .join('') +
+      '</INVENTORY>';
+    await select(new File([xml], 'notifications.xml', { type: 'text/xml' }));
+    expect(component.wantedList.map(item => item.notify)).toEqual([true, false, true, false, true, false]);
+  });
+
+  it('imports an empty exported inventory as an empty list', async () => {
+    await select(new File(['<INVENTORY/>'], 'empty.xml', { type: 'text/xml' }));
+    expect(component.wantedList).toEqual([]);
   });
 
   it('does not read rejected file types into the form', async () => {

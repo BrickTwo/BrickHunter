@@ -3,8 +3,8 @@ import { Part, PartsList, Product } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 import { ColorService } from 'src/app/core/services/color.service';
-import autoTable, { ColumnInput } from 'jspdf-autotable';
-import jsPDF from 'jspdf';
+import { autoTable, ColumnInput } from 'jspdf-autotable';
+import { jsPDF } from 'jspdf';
 import { BlukAction } from 'src/app/models/shared';
 
 @Component({

@@ -1317,3 +1317,36 @@ git commit -m "chore: remove unused translation dependencies"
 ```
 
 **Hier ist Commit-Stopp 35.** Kein Commit automatisch erstellt. Keine weitere manuelle Aktion erforderlich. Nach diesem Commit folgt mit `weiter` die gekoppelte jsPDF-/AutoTable-Migration einschließlich PDF-/XML-Abnahme. Danach bleiben insbesondere Font Awesome 7 sowie die echte Chrome-/Firefox-Extension-Release-Abnahme offen.
+
+
+## Commit-Punkt 36: jsPDF/AutoTable migrieren und PDF-/XML-Abnahme abschließen
+
+Abgeschlossen am **6. Oktober 2026**, Ausgangscommit **`baecaf9`** (`chore: remove unused translation dependencies`), anfangs sauberer Arbeitsstand. Angular-/PrimeNG-Versionen und Theme unverändert. Die historische Angular-22-UI-Abnahme sowie sämtliche bisherigen Prüfberichte bleiben erhalten.
+
+### Erfolgreich umgesetzt
+
+- **jsPDF 2.5.1 → 4.2.1 / AutoTable 3.8.1 → 5.0.8** regulär und gemeinsam installiert, ohne Force- oder Peer-Umgehung. Versions-/Peer-Metadaten erneut über das offizielle npm-Register geprüft; AutoTable akzeptiert jsPDF 4. Alle drei PDF-Komponenten verwenden benannte Imports und den ausdrücklichen Aufruf `autoTable(doc, options)`. Die bisher ungemountete separate PDF-Komponente bleibt im Modul und wird mitkompiliert. Der PDF-Schalter wartet seinen asynchronen Export ab.
+- **Asynchronen XML-Datenverlust behoben:** früher gestartete Farb-Abfragen wurden nicht abgewartet. Der Vorher-Test mit verzögerten Antworten erzeugte trotz acht Teilen ein leeres Inventory. `Promise.all` wartet jetzt alle relevanten Abfragen ab und erhält die Quellreihenfolge auch bei umgekehrter Abschlussreihenfolge. Teile ohne BrickLink-Zuordnung werden weiterhin übersprungen; Filter und Preisoptionen bleiben erhalten.
+- **Benachrichtigungen erhalten:** Export schreibt BrickLink-konforme Y/N-Werte; Import akzeptiert zusätzlich die bestehenden T/F- und true/false-Werte. Mengen, gefüllte Mengen einschließlich 0, Preise, Farben, Zustand und XML-escaped Umlaute/Bemerkungen bleiben erhalten. Fehlende optionale Werte werden weiter ausgelassen.
+- **XML-Dateidownload korrigiert:** Builder erzeugt headerloses Upload-XML direkt; kein manuelles Abschneiden der Deklaration. `encodeURIComponent` verhindert Fragmentbildung und abgeschnittene Bemerkungen mit #. Der Vorher-Test bestätigt den Fehler, der Nachher-Test vergleicht die tatsächlich heruntergeladene Datei mit der headerlosen Serialisierung. Leeres Inventory wird als [] wiederimportiert. `xml2js` bleibt auf 0.6.2.
+- Wiederverwendbare Offline-Prüfung `scripts/upgrade/verify-export-reference.cjs` und read-only PDF-Prüfung `scripts/upgrade/inspect-export-pdfs.py` ergänzt. Die Browser-Fixture verwendet ein isoliertes Profil, synthetische Daten und lokale Bildantworten. Nur die externe XML-Anreicherung wird im Test ersetzt; echte Serialisierung, verzögerte Farben, Download-Callback und lokale Dateiauswahl laufen. Der UI-Capture kann optional einen expliziten Buildordner verwenden; bisheriger Standard bleibt erhalten.
+
+API-Quellen: [jsPDF-Releases](https://github.com/parallax/jsPDF/releases), [AutoTable-Migration](https://github.com/simonbengtsson/jsPDF-AutoTable/releases). XML-Quelle: [BrickLink-Uploadformat](https://www.bricklink.com/help.asp?helpID=207), insbesondere headerloses Inventory, Y/N und escaped Bemerkungen.
+
+### Vollständige Validierung dieser Etappe
+
+- Sauberes **`npm ci`**, **`npm ls --all`**, **64 Unit-Tests** und **`npm run typecheck:build-config`** erfolgreich. Acht zusätzliche fachliche Regressionstests prüfen verzögerte Farben, Reihenfolge, Filter, Preisoptionen, XML-Escaping, Benachrichtigungs-Rückwärtskompatibilität, leere Listen und lokalen Datei-Roundtrip. Vorhandene IndexedDB-Prüfungen bleiben enthalten. Der Launcher meldet zunächst ChromeHeadless-/Temp-Verzeichnis-Fehler; Edge verbindet sich dennoch, alle 64 Tests bestehen und die CLI endet mit 0. Vollständige Meldungen bleiben in tests.log. npm-Audit-/Installationsskript-, Webpack-/Karma-/Sass-/CommonJS-Hinweise bleiben sichtbar; kein pauschales Force-Upgrade.
+- Produktions-, Entwicklungs- und Referenzbuild erfolgreich; **Budgets unverändert**. Initialwerte: Produktion **2,82 MB**, Entwicklung **9,32 MB**. Manifest bytegleich zur Chrome-Quelldatei, eigenständige background.js-/legocontentscript.js-Entries und keine Fixture-Marker in beiden regulären Ausgaben bestätigt.
+- **Sechs echte PDF-Downloads / zehn Seiten / 98 Zeilen**: Einzelseite, 70-zeilige Liste über fünf Seiten, Bestseller-Filter, leere Liste, fehlgeschlagene externe Bilder mit Platzhalter und Set-Vorschlagsexport. Mit pypdf/pdfplumber Umlaute, sieben Spalten, exakte Reihenfolge, Mengen-/Preissummen, wiederholte Header und sämtliche Seitenzähler geprüft. Alle zehn Seiten mit Poppler gerendert und ungefiltert verglichen: **0 abweichende Pixel**, extrahierte Seitentexte identisch. Jede Seite visuell geprüft; keine abgeschnittenen Texte oder Überlappungen. PDF-Dateibytes unterscheiden sich erwartbar durch Bibliotheks-Metadaten/Datei-ID; Byteidentität der PDFs wird nicht behauptet.
+- **60 UI-Browserprüfungen und 88 Bilder** über alle vier bisherigen Viewports. Keine Page-/Console-/bekannten Lifecycle-Fehler oder ungültiger Lizenzbanner. D3D11-Renderer vor/nach unverändert, Hardware-Compositing/Rasterization aktiv. **77/88 Bilder byteidentisch** zum abgenommenen Angular-22-Stand; Rest ausschließlich vier vollständig erfasste Tabs-Unterstreichungseckpixel, keine Maskierung oder pauschale Toleranz. Keine neue Motion-Prüfung nötig: Theme, Styles und Animationscode unverändert; die Abnahme aus Abschnitt 34 bleibt erhalten.
+- Originalinventar Angular 17 per SHA-256 bestätigt, historische Berichte unverändert und Lizenzinhalt in allen versionierten/nicht ignorierten Dateien ausgeschlossen. Vollständige Änderungen des Lockfiles, Export-/Bildhashes, Roh-UI-Differenzen und Prüfstatus im [PDF-/XML-Abnahmebericht](angular-upgrade-reference/post-angular22-pdf-xml-check.json).
+- Logs unter `artefacts/angular-upgrade/post-angular22/pdf-xml/`: install.log, npm-ci.log, npm-ls.log, tests.log, build-config.log, production.log, development.log, visual-reference.log, metadata.json und validation.json. Alte Referenz `baseline-accepted`, ergänzender Vorher-Download `baseline-download`, neue Exporte/Render/Prüfung `final`. UI-Capture `artefacts/angular-upgrade/visual/angular-22-pdf-xml-final`; sämtliche Testdaten bleiben ignoriert.
+
+### Jetzt manuell: PDF-/XML-Etappe sichern
+
+```powershell
+git add package.json package-lock.json src/app/parts-list scripts/upgrade docs
+git commit -m "chore: upgrade PDF libraries and preserve XML exports"
+```
+
+**Hier ist Commit-Stopp 36.** Kein Commit automatisch erstellt. Keine weitere manuelle Aktion in dieser Etappe erforderlich. Nach dem Commit und `weiter` folgt Font Awesome 7 mit separatem Iconabgleich. Lazyload-Nutzungsprüfung und echte Chrome-/Firefox-Extension-Release-Abnahme bleiben im Gesamtplan offen; reale LEGO-/BrickLink-Konten und Warenkorbübertragungen gehören nicht zur Offline-Abnahme.

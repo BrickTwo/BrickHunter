@@ -4,8 +4,8 @@ import { ColorService } from 'src/app/core/services/color.service';
 import { Part, PartsList } from 'src/app/models/parts-list';
 import * as xml2js from 'xml2js';
 import { BrickHunterV2, BrickHunterV2Item } from 'src/app/models/brickhunter';
-import autoTable, { ColumnInput } from 'jspdf-autotable';
-import jsPDF from 'jspdf';
+import { autoTable, ColumnInput } from 'jspdf-autotable';
+import { jsPDF } from 'jspdf';
 import { ImportService } from '../../services/import.service';
 import { Observable } from 'rxjs';
 
@@ -53,7 +53,7 @@ export class PartsListExportComponent {
   async onExport() {
     switch (this.selectedExportToValue) {
       case 'pdf':
-        this.exportPDF();
+        await this.exportPDF();
         break;
       case 'brickHunter':
         this.exportBrickHunter();
@@ -200,9 +200,7 @@ export class PartsListExportComponent {
       this.importService.import(subscriber, this.partsList.name, 'BrickHunter', syncList, this.partsList.uuid);
     }).subscribe({
       complete: async () => {
-        let xmlContent = 'data:text/xml;charset=utf-8,';
-        xmlContent += await this.creatXml();
-        const data = encodeURI(xmlContent);
+        const data = 'data:text/xml;charset=utf-8,' + encodeURIComponent(await this.creatXml(false));
 
         var a = document.createElement('a');
         a.href = data;
@@ -217,25 +215,18 @@ export class PartsListExportComponent {
 
   async creatXml(withHeader = true) {
     var wantedList = await this.createBrickLinkObject();
-    var builder = new xml2js.Builder();
-    var xml = builder.buildObject(wantedList);
-    if (withHeader) return xml;
-    var startpos = xml.substr(xml).indexOf('>') + 2;
-    return xml.substr(startpos, xml.length);
+    const builder = new xml2js.Builder({ headless: !withHeader });
+    return builder.buildObject(wantedList);
   }
 
   async createBrickLinkObject() {
-    let wantedList = { INVENTORY: Array() };
-
     const parts = this.partsListService.getParts(this.partsList.uuid, this.selectedFilterValue);
+    const inventory = await Promise.all(
+      parts.map(async part => {
+        if (!part.brickLink) return undefined;
+        const color = await this.colorService.getColor(part.color);
 
-    console.log('brickLinkExportPrice', this.brickLinkExportPrice);
-
-    parts.map(async part => {
-      const color = await this.colorService.getColor(part.color);
-
-      if (part.brickLink) {
-        let item = {
+        const item = {
           ITEM: {
             ITEMTYPE: part.brickLink.itemType,
             ITEMID: part.brickLink.itemNo,
@@ -244,7 +235,7 @@ export class PartsListExportComponent {
             MINQTY: part.qty,
             QTYFILLED: part.have,
             CONDITION: part.condition,
-            NOTIFY: part.notify,
+            NOTIFY: part.notify == null ? undefined : part.notify ? 'Y' : 'N',
             REMARKS: part.remarks,
           },
         };
@@ -255,11 +246,10 @@ export class PartsListExportComponent {
           }
         });
 
-        wantedList.INVENTORY.push(item);
-      }
-    });
-
-    return wantedList;
+        return item;
+      })
+    );
+    return { INVENTORY: inventory.filter(item => item !== undefined) };
   }
 
   exportCsv() {

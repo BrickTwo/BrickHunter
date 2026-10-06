@@ -1,6 +1,10 @@
 # Direkte Pakete: Upgrade-Prüfung
 
-## Aktuell: Ungenutzte Übersetzungspakete bereinigt
+## Aktuell: PDF-Bibliotheken und XML-Roundtrip abgenommen
+
+Commit-Punkt 36 am 6. Oktober 2026, Basis **`baecaf9`**: **jsPDF 2.5.1 → 4.2.1**, **AutoTable 3.8.1 → 5.0.8** gemeinsam aktualisiert. AutoTable-Peer `^2 || ^3 || ^4` live verifiziert; benannte `jsPDF`-/`autoTable`-Imports an allen drei Aufrufstellen. **xml2js 0.6.2 unverändert**. Sauberes `npm ci`, `npm ls --all`, 64 Unit-Tests, Typprüfung und Produktions-/Entwicklungs-/Referenzbuild erfolgreich. PDF-Rendering sämtlicher zehn Testseiten pixelidentisch zur alten Kombination; Tabellenzeilen und Mengen-/Preissummen erhalten. XML-Abnahme findet und behebt fehlendes Abwarten asynchroner Farb-Abfragen, verlorene Benachrichtigungswerte und abgeschnittene #-Bemerkungen im Download. Headerloser XML-Download und leerer Wiederimport geprüft. Vollständige UI-Regression mit 60 Checks und 88 Bildern; 77/88 byteidentisch zum abgenommenen Angular-22-Stand, übrige Unterschiede nur einzeln dokumentierte Tabs-Eckpixel. [Nachweis und vollständige Lockänderungen](angular-upgrade-reference/post-angular22-pdf-xml-check.json). Nächste gesonderte Etappe: Font Awesome 7.
+
+## Gesichert: Ungenutzte Übersetzungspakete bereinigt
 
 Commit-Punkt 35 am 6. Oktober 2026, Basis **`d37eae4`**: **`@ngx-translate/core` 15.0.0** und **`@ngx-translate/http-loader` 8.0.0** aus Manifest und Lockfile entfernt. Prüfung aller 234 relevanten Quelldateien: keine Imports, TranslateModule-/Service-/Loader-Konfiguration, Pipe oder Direktive und keine Übersetzungsdateien. Die Länder-/Sprachwahl verwendet den eigenen `LocaleService`; Angular-Locales bleiben unverändert. Die geplante Provider-/Loader-Prüfung ist damit abgeschlossen; ein Upgrade oder eine neue Übersetzungsintegration ist für den bestehenden Funktionsumfang nicht erforderlich.
 

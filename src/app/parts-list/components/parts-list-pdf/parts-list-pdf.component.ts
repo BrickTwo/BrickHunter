@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { jsPDF } from 'jspdf';
-import autoTable, { ColumnInput } from 'jspdf-autotable';
+import { autoTable, ColumnInput } from 'jspdf-autotable';
 import { ColorService } from 'src/app/core/services/color.service';
 import { Part, PartsList } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';

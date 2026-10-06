@@ -7,7 +7,7 @@ const { chromium } = require('playwright');
 
 const label = process.argv[2] || 'angular-17-baseline';
 if (!/^[a-z0-9-]+$/.test(label)) throw new Error('Invalid artifact label');
-const root = path.resolve('artefacts/angular-upgrade/visual-app');
+const root = path.resolve(process.argv[3] || 'artefacts/angular-upgrade/visual-app');
 const output = path.resolve('artefacts/angular-upgrade/visual', label);
 const mime = {
   '.html': 'text/html',

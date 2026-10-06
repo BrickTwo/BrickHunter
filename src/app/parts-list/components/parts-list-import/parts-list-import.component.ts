@@ -172,7 +172,7 @@ export class PartsListImportComponent implements OnDestroy {
           case 'qtyFilled':
             return Number(value);
           case 'notify':
-            return value === 'T' ? true : false;
+            return value === 'Y' || value === 'T' || value === 'true';
           default:
             return value;
         }
@@ -187,6 +187,7 @@ export class PartsListImportComponent implements OnDestroy {
         valueProcessors: valueProcessor,
       })
       .then(result => {
+        if (result.inventory.item == null) return [];
         if (!Array.isArray(result.inventory.item)) {
           return [result.inventory.item] as BrickLinkWantedListItem[];
         }
