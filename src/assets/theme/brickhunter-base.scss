@@ -77,11 +77,18 @@
 * { box-sizing: border-box; }
 .p-component { font-family: var(--font-family); }
 
-// PrimeNG 18.0.2 injects Drawer mask CSS and hard-coded keyframes outside its
-// theme layer. Its generic mask animation also affects Dialogs; restore both modal masks.
+// Preserve the app's modal mask color and timing with PrimeNG 21 CSS motion.
 .p-drawer-mask, .p-dialog-mask { background-color: rgba(0, 0, 0, 0.32); }
-.p-drawer-mask.p-overlay-mask-enter, .p-dialog-mask.p-overlay-mask-enter { animation-name: bh-drawer-mask-enter; }
-.p-drawer-mask.p-overlay-mask-leave, .p-dialog-mask.p-overlay-mask-leave { animation-name: bh-drawer-mask-leave; }
+// Keep the completed mask fade, as before, to preserve underlying text/shadow rasterization.
+.p-dialog-mask:not(.p-overlay-mask-leave-active) { animation: bh-drawer-mask-enter 0.15s forwards; }
+.p-drawer-mask.p-overlay-mask-enter-active, .p-dialog-mask.p-overlay-mask-enter-active {
+  animation-name: bh-drawer-mask-enter;
+  animation-duration: 0.15s;
+}
+.p-drawer-mask.p-overlay-mask-leave-active, .p-dialog-mask.p-overlay-mask-leave-active {
+  animation-name: bh-drawer-mask-leave;
+  animation-duration: 0.15s;
+}
 @keyframes bh-drawer-mask-enter {
   from { background-color: transparent; }
   to { background-color: rgba(0, 0, 0, 0.32); }

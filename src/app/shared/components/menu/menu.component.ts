@@ -33,8 +33,7 @@ export interface BrickHunterMenuItem extends MenuItem {
       [autoZIndex]="autoZIndex"
       [style]="style"
       [styleClass]="'bh-menu-panel ' + styleClass"
-      [showTransitionOptions]="showTransitionOptions"
-      [hideTransitionOptions]="hideTransitionOptions"
+      [motionOptions]="motionOptions"
       [ariaLabel]="ariaLabel"
       [ariaLabelledBy]="ariaLabelledBy"
       (onShow)="handleShow($event)"
@@ -102,8 +101,7 @@ export class MenuComponent implements OnDestroy {
   @Input() autoZIndex = true;
   @Input() style: Record<string, string> | null = null;
   @Input() styleClass = '';
-  @Input() showTransitionOptions = '.12s cubic-bezier(0, 0, 0.2, 1)';
-  @Input() hideTransitionOptions = '.1s linear';
+  readonly motionOptions = { duration: { enter: 120, leave: 100 } };
   @Input() ariaLabel: string | undefined;
   @Input() ariaLabelledBy: string | undefined;
   @Output() onShow = new EventEmitter<Event>();

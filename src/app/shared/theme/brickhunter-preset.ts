@@ -98,6 +98,9 @@ export const BrickHunterPreset = definePreset(Material, {
       },
       css: options => `${presetCss(Material.components.select.css, options)}
         .p-select-overlay { border: 0; }
+        /* Release settled popup layers so fractional-height flag sprites use the legacy rasterization. */
+        .p-select-overlay:not([class*="-enter-"]):not([class*="-leave-"]),
+        .p-overlay-content:has(> .p-select-overlay):not([class*="-enter-"]):not([class*="-leave-"]) { will-change: auto; }
         .p-select.p-disabled { opacity: 0.38; }
         .p-select-dropdown svg { width: 0.875rem; height: 0.875rem; }
       `,
@@ -348,6 +351,16 @@ export const BrickHunterPreset = definePreset(Material, {
       footer: { padding: '1rem 1.5rem' },
       css: `
         .p-dialog { position: relative; border: 0; background: transparent; color: initial; }
+        .p-dialog-top .p-dialog { margin-top: 0.75rem; }
+        .p-dialog:not(.p-dialog-enter-active):not(.p-dialog-leave-active) { will-change: auto; }
+        .p-dialog-enter-active, .p-dialog-leave-active {
+          animation-duration: 0.15s;
+          animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+        }
+        .p-dialog-enter-active { animation-name: bh-dialog-enter; }
+        .p-dialog-leave-active { animation-name: bh-dialog-leave; }
+        @keyframes bh-dialog-enter { from { opacity: 0; transform: scale(0.7); } }
+        @keyframes bh-dialog-leave { to { opacity: 0; transform: scale(0.7); } }
         .p-dialog-header, .p-dialog-content, .p-dialog-footer { background: #ffffff; color: rgba(0, 0, 0, 0.87); }
         .p-dialog-header { border-top-left-radius: 4px; border-top-right-radius: 4px; }
         .p-dialog-footer { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; display: block; text-align: right; }
@@ -367,9 +380,13 @@ export const BrickHunterPreset = definePreset(Material, {
       footer: { padding: '1rem' },
       css: `
         .p-drawer { border: 0; }
+        .p-drawer[class*="p-drawer-enter-"], .p-drawer[class*="p-drawer-leave-"] {
+          animation-duration: 0.15s;
+          animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+        }
         /* PrimeNG 17 clears the transform after opening. Preserve animations,
            then restore its stable shadow/text rasterization and containing block. */
-        .p-drawer-open:not(.ng-animating) { transform: none !important; }
+        .p-drawer-open:not([class*="p-drawer-enter-"]):not([class*="p-drawer-leave-"]) { transform: none !important; }
         .p-drawer-header:has(.p-drawer-close-button) { justify-content: flex-end; }
         .p-drawer .p-drawer-header .p-drawer-close-button button { min-width: 0; width: 2.5rem; height: 2.5rem; padding: 0; color: rgba(0, 0, 0, 0.6); }
         .p-drawer .p-drawer-header .p-drawer-close-button button svg { width: 0.875rem; height: 0.875rem; }

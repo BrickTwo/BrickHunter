@@ -1,10 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MessagesComponent } from './messages.component';
 
 describe('Application warning messages', () => {
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [MessagesComponent, NoopAnimationsModule] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [MessagesComponent] }).compileComponents();
   });
 
   it('renders every summary and detail as text through public Message components', () => {

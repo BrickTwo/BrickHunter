@@ -1,6 +1,10 @@
 # Direkte Pakete: Upgrade-Prüfung
 
-## Geprüfte Angular-21-Zwischenkombination
+## Abgenommener Angular-21-UI-Stand
+
+Abgeschlossen am 6. Oktober 2026 in Commit-Punkt 32, auf Basis der gesicherten Grundmigration **`f17f847`**. Paketversionen unverändert: Angular/CLI **21.2.25**, PrimeNG **21.1.10**, Themes **2.0.3**, Angular Font Awesome **4.0.0** / SVG-Core **7.3.1**. Die natürliche Breite der vorhandenen Version-6-Glyphen ist über die öffentliche CSS-Variable **`--fa-width: auto`** wiederhergestellt; ausdrücklich feste SVG-Breiten bleiben möglich. Free-CSS, Solid-Glyphen und lokale Font-Dateien bleiben auf Version 6. Legacy-Animationsmodule aus Anwendung und Fixtures entfernt, CSS-Motion bewahrt die bisherigen Zeiten. Die installierte Framework-Animationsdependency wurde in dieser UI-Etappe nicht separat entfernt. `npm ci` / `npm ls --all`, 52 Unit-Tests, drei Builds, zweimal 60 Browserprüfungen sowie dreizehn zusätzliche Motion-Prüfungen erfolgreich. **UI-Abnahme abgeschlossen** mit den einzeln dokumentierten Tabs-Rasterpixeln; [Abnahmebericht](angular-upgrade-reference/angular-21-ui-acceptance-check.json).
+
+## Historie: Angular-21-Grundmigration vor der UI-Abnahme
 
 Am 5. Oktober 2026 über die offizielle npm-Registry geprüft und in Commit-Punkt 31 installiert: Framework/Compiler/Localize und CLI/Build-Devkit **21.2.25**, CDK **21.2.14**, Custom Webpack **21.1.0**, NgRx Store/Effects/Operators/Devtools **21.1.1**, PrimeNG **21.1.10**, **`@primeuix/themes` 2.0.3**, Angular Font Awesome **4.0.0**. Die einzige veröffentlichte stabile Integration mit Angular-21-Peer verlangt SVG-Core **^7.1.0**; dessen geänderte Iconbreiten müssen im anschließenden UI-Abgleich behandelt werden. Free-CSS, Solid-Glyphen und vendorte Font-Dateien bleiben auf Version 6; dies ist noch kein kompletter Font-Awesome-7-Wechsel. Node **22.23.3** / npm **10.9.9**, TypeScript **5.9.3**, Zone.js **0.15.1** und RxJS **7.8.1** bleiben kompatibel. `npm ci`, `npm ls --all`, 52 Unit-Tests und drei Builds erfolgreich. Die vollständige UI-Abnahme bleibt offen, insbesondere Drawer-Masken-Cleanup und CSS-Animationen. Metadaten/Logs unter `artefacts/angular-upgrade/angular-21/`, Details im [Fortschrittsprotokoll](angular-upgrade-progress.md) und [Grundprüfungsbericht](angular-upgrade-reference/angular-21-foundation-check.json).
 

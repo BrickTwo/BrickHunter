@@ -1,6 +1,5 @@
 // Dedicated local reference entry point. Never used by the extension build.
 import { ApplicationRef, Injector, NgModule, NgZone, provideZoneChangeDetection } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { delay, of, Subject, Subscriber } from 'rxjs';
 import { AppModule } from '../app/app.module';
@@ -66,7 +65,7 @@ const pickABrick = {
 };
 
 @NgModule({
-  imports: [AppModule, NoopAnimationsModule],
+  imports: [AppModule],
   providers: [
     { provide: BrickHunterApiService, useValue: api },
     { provide: IndexedDBService, useValue: database },

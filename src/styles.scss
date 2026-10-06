@@ -16,6 +16,9 @@
 
 @layer primeng, brickhunter;
 
+// SVG Core 7 defaults to fixed widths. Keep the natural widths of our v6 glyphs.
+.svg-inline--fa:not(.fa-fw):not(.fa-width-fixed) { --fa-width: auto; }
+
 // PrimeFlex 4 uses the new surface palette; preserve the app's legacy border utility.
 .surface-border { border-color: var(--surface-border) !important; }
 

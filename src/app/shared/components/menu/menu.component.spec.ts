@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { providePrimeNG } from 'primeng/config';
 import { BrickHunterPreset } from '../../theme/brickhunter-preset';
@@ -11,7 +10,7 @@ describe('BrickHunter public menu wrapper', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MenuComponent, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+      imports: [MenuComponent, RouterTestingModule.withRoutes([])],
       providers: [providePrimeNG({ theme: { preset: BrickHunterPreset, options: { darkModeSelector: false } } })],
     }).compileComponents();
     fixture = TestBed.createComponent(MenuComponent);
@@ -157,7 +156,7 @@ describe('BrickHunter public menu wrapper', () => {
       fixture.componentInstance.hide();
       fixture.detectChanges();
       await fixture.whenStable();
-      // NoopAnimationsModule only controls Angular animations, not PrimeNG 21 CSS motion.
+      // PrimeNG emits onHide after its CSS leave animation finishes.
       await hiddenEvent;
       await fixture.whenStable();
       expect(fixture.componentInstance.menu.visible).toBeFalse();

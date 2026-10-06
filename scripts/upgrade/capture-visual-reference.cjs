@@ -181,6 +181,10 @@ async function main() {
         await open('parts-lists/upgrade-reference');
         await component('app-transfer-warning', 'open', [[{ part: referenceWarningPart(), cart: undefined }], true]);
         await capture('transfer-warning');
+        const warningScrollerHeight = await page.locator('app-transfer-warning .p-virtualscroller').evaluate(element => element.getBoundingClientRect().height);
+        if (warningScrollerHeight !== viewport.height / 2)
+          throw new Error(`Transfer warning scroller height=${warningScrollerHeight}, expected ${viewport.height / 2}`);
+        report.warningScrollerHeight = warningScrollerHeight;
         await open('parts-lists/upgrade-reference');
         await page.getByRole('button', { name: 'Delete', exact: true }).first().click();
         await capture('delete-confirmation');
@@ -225,7 +229,8 @@ async function main() {
         await page.evaluate(() => window.brickHunterReference.setSearchCount(1000));
         await page.locator('.p-paginator-page').filter({ hasText: /^\s*2\s*$/ }).first().click();
         await page.waitForFunction(() => document.querySelector('.p-paginator-page-selected')?.textContent.trim() === '2');
-        report.interactionChecks = { categorySelection: true, onlyPrintedToggle: true, deliveryChannelSelection: true, paginatorPageSelection: true };
+        report.interactionChecks = { transferWarningPreservesHalfViewportScroller: report.warningScrollerHeight === 500,
+          categorySelection: true, onlyPrintedToggle: true, deliveryChannelSelection: true, paginatorPageSelection: true };
         report.interactionChecks.publicColorMenuSelection = true;
         await open('parts-lists');
         await page.locator('.p-datatable-tbody .p-checkbox').first().click();
@@ -388,6 +393,8 @@ async function main() {
           !await page.evaluate(() => window.ng.getComponent(document.querySelector('app-parts-list-settings')).form.value.subtractBrickLinkPriceUnit.code === 'absolute'))
           throw new Error('Escape changed the selected unit or left the popup open');
         report.interactionChecks.selectUnitKeyboardAndEscape = true;
+        // PrimeNG 21 removes the popup after its CSS leave animation, after aria-expanded changes.
+        await page.getByRole('listbox').waitFor({ state: 'detached' });
         await page.evaluate(() => {
           const settings = window.ng.getComponent(document.querySelector('app-parts-list-settings'));
           settings.form.controls.subtractBrickLinkPriceUnit.disable();
@@ -395,6 +402,7 @@ async function main() {
         });
         if (await unit.getAttribute('aria-disabled') !== 'true') throw new Error('Disabled Select is not exposed as disabled');
         await page.locator('app-parts-list-settings .p-select').click({ force: true });
+        await settle();
         if (await page.getByRole('listbox').count() !== 0) throw new Error('Disabled Select opened its popup');
         await additionalCapture('select-unit-disabled');
         report.interactionChecks.selectDisabledBlocksPopup = true;
