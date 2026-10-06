@@ -35,8 +35,6 @@
     "@ngrx/effects": "^22.0.1",
     "@ngrx/operators": "^22.0.1",
     "@ngrx/store": "^22.0.1",
-    "@ngx-translate/core": "^15.0.0",
-    "@ngx-translate/http-loader": "^8.0.0",
     "@primeuix/themes": "^3.0.1",
     "buffer": "^6.0.3",
     "dexie": "4.4.6",

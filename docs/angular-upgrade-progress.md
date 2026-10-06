@@ -1289,3 +1289,31 @@ git commit -m "fix: preserve Angular 22 UI and complete acceptance"
 ```
 
 Keine weitere manuelle Aktion war für diese UI-Abnahme erforderlich. **Hier ist der sinnvolle Commit-Stopp 34.** Kein Commit automatisch erstellt. Nach dem Zwischencommit folgt mit `weiter` der nächste Abschnitt des Gesamtplans. Weitere npm-Paket-Upgrades, echte LEGO-Konto-/Warenkorbtransfers sowie Chrome-/Firefox-Installation, Background-/Content-Script-Messaging und finale Release-Abnahme sind gesondert offen; diese Offline-UI-Abnahme behauptet deren Erfolg nicht.
+
+
+## Commit-Punkt 35: Ungenutzte Übersetzungs-Abhängigkeiten entfernen
+
+Abgeschlossen am **6. Oktober 2026**, Ausgangscommit **`d37eae4`** (`fix: preserve Angular 22 UI and complete acceptance`), anfangs sauberer Arbeitsstand. Diese Etappe erledigt die im Plan vorgesehene Nutzungsprüfung für ngx-translate. Die vollständige UI-Abnahme aus Abschnitt 34 und alle historischen Berichte bleiben unverändert.
+
+### Erfolgreich umgesetzt
+
+- Gesamten Quellbaum und Konfiguration geprüft: keine ngx-translate-Imports, TranslateModule-/TranslateService-/Loader-Konfiguration, Translate-Pipe oder -Direktive; keine Übersetzungsdateien. Der bestehende `LocaleService` verwaltet Land, Sprache, Währung und `languageCountryCode`, Angular registriert die vorhandenen Locales. Keine Migration einer tatsächlich eingesetzten Übersetzungs-API nötig.
+- `@ngx-translate/core` **15.0.0** und `@ngx-translate/http-loader` **8.0.0** regulär mit npm entfernt. Änderungen beschränken sich auf zwei Manifest-Dependencies und deren zwei Lockeinträge. **Alle übrigen Lockeinträge bytegleich als JSON-Datensätze**, keine Versionsupdates oder pauschale Lock-Neuauflösung. Keine Anwendung, Sprach-/Länderauswahl oder Layouts geändert.
+- Kein zusätzlicher Translate-Provider und keine neuen Sprachressourcen eingebaut. Eine künftig gewünschte Übersetzung der UI-Texte wäre ein eigenes Feature. Die ursprüngliche Paketmatrix mit v18-Kandidaten bleibt als Historie erhalten. Die aktuelle [offizielle Migration](https://ngx-translate.org/getting-started/migration-guide/) beschreibt die API-Umstellung; sie betrifft hier keinen verwendeten Quellcode.
+
+### Validierung
+
+- Sauberes **`npm ci`** (909 installierte Pakete), **`npm ls --all`**, **56 Unit-Tests** und **`npm run typecheck:build-config`** erfolgreich. Bekannte npm-Audit-/Installationsskript- und Webpack-/Karma-/Sass-/CommonJS-Hinweise bleiben sichtbar; keine pauschale Installationsskript-Freigabe und kein Audit-Force-Upgrade.
+- Im Testlauf zunächst ChromeHeadless-Launcher-Fehler und eine Warnung beim Anlegen des temporären Karma-Verzeichnisses. Edge verbindet sich dennoch; alle 56 Tests erfolgreich, CLI-Exitcode 0. Die vollständigen Launcher-Meldungen bleiben in `tests.log` erhalten.
+- Produktions-, Entwicklungs- und Visual-Reference-Build erfolgreich. Produktionsbundle weiterhin **2,82 MB**, Entwicklungsbundle **9,32 MB**; Budgets unverändert.
+- Vollständiger ungefilterter Byte-/SHA-256-Vergleich sämtlicher Builddateien zum abgenommenen Angular-22-Stand: Produktion **77 Dateien**, Entwicklung **92 Dateien**, Referenz **92 Dateien**, jeweils **alle byteidentisch**. Einschließlich Bundles, Styles, Assets, Manifest und Extension-Entries. Deshalb kein zusätzlicher Browserlauf für diese reine Dependency-Bereinigung erforderlich; kein neuer UI-Capture oder ersetzter Abnahmebericht behauptet.
+- Nutzungsprüfung über **234 Quelldateien**, Lockfilevergleich und alle Buildinventare/Hashes im [Bereinigungsbericht](angular-upgrade-reference/post-angular22-unused-translate-check.json). Logs unter `artefacts/angular-upgrade/post-angular22/dependency-cleanup/`: `uninstall.log`, `npm-ci.log`, `npm-ls.log`, `tests.log`, `build-config.log`, `production.log`, `development.log`, `visual-reference.log`, `validation.json`.
+
+### Jetzt manuell: Paketbereinigung sichern
+
+```powershell
+git add package.json package-lock.json docs
+git commit -m "chore: remove unused translation dependencies"
+```
+
+**Hier ist Commit-Stopp 35.** Kein Commit automatisch erstellt. Keine weitere manuelle Aktion erforderlich. Nach diesem Commit folgt mit `weiter` die gekoppelte jsPDF-/AutoTable-Migration einschließlich PDF-/XML-Abnahme. Danach bleiben insbesondere Font Awesome 7 sowie die echte Chrome-/Firefox-Extension-Release-Abnahme offen.

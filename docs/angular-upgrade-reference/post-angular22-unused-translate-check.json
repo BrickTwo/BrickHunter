@@ -1,0 +1,1698 @@
+{
+  "baseCommit": "d37eae4",
+  "completedAt": "2026-10-06T19:03:35.670Z",
+  "status": "unused-translation-dependencies-removed-and-validated",
+  "removedPackages": [
+    {
+      "name": "@ngx-translate/core",
+      "previousVersion": "15.0.0"
+    },
+    {
+      "name": "@ngx-translate/http-loader",
+      "previousVersion": "8.0.0"
+    }
+  ],
+  "otherLockedPackagesUnchanged": true,
+  "sourceUsageCheck": {
+    "filesChecked": 234,
+    "matches": 0
+  },
+  "localeImplementationUnchanged": true,
+  "cleanInstallPassed": true,
+  "peerValidationPassed": true,
+  "unitTestsPassed": 56,
+  "testLauncherNotes": "Initial ChromeHeadless launcher errors and a temporary-directory warning are retained in tests.log; Edge connected, all 56 tests passed and the CLI exited with code 0.",
+  "buildConfigTypecheckPassed": true,
+  "buildsPassed": [
+    "production",
+    "development",
+    "visual-reference"
+  ],
+  "validation": [
+    {
+      "label": "npm-ls",
+      "exitCode": 0,
+      "command": [
+        "C:\\Users\\Tobias\\Development\\BrickHunter\\tmp\\upgrade-runtime\\node-v24.21.0-win-x64\\node.exe",
+        "C:\\Users\\Tobias\\Development\\BrickHunter\\tmp\\upgrade-runtime\\node-v24.21.0-win-x64\\node_modules\\npm\\bin\\npm-cli.js",
+        "ls",
+        "--all"
+      ]
+    },
+    {
+      "label": "tests",
+      "exitCode": 0,
+      "command": [
+        "C:\\Users\\Tobias\\Development\\BrickHunter\\tmp\\upgrade-runtime\\node-v24.21.0-win-x64\\node.exe",
+        "node_modules/@angular/cli/bin/ng.js",
+        "test",
+        "--watch=false",
+        "--browsers=ChromeHeadless",
+        "--progress=false"
+      ]
+    },
+    {
+      "label": "build-config",
+      "exitCode": 0,
+      "command": [
+        "C:\\Users\\Tobias\\Development\\BrickHunter\\tmp\\upgrade-runtime\\node-v24.21.0-win-x64\\node.exe",
+        "C:\\Users\\Tobias\\Development\\BrickHunter\\tmp\\upgrade-runtime\\node-v24.21.0-win-x64\\node_modules\\npm\\bin\\npm-cli.js",
+        "run",
+        "typecheck:build-config"
+      ]
+    },
+    {
+      "label": "production",
+      "exitCode": 0,
+      "command": [
+        "C:\\Users\\Tobias\\Development\\BrickHunter\\tmp\\upgrade-runtime\\node-v24.21.0-win-x64\\node.exe",
+        "node_modules/@angular/cli/bin/ng.js",
+        "build",
+        "--configuration",
+        "production",
+        "--output-path",
+        "artefacts/angular-upgrade/post-angular22/dependency-cleanup/production"
+      ]
+    },
+    {
+      "label": "development",
+      "exitCode": 0,
+      "command": [
+        "C:\\Users\\Tobias\\Development\\BrickHunter\\tmp\\upgrade-runtime\\node-v24.21.0-win-x64\\node.exe",
+        "node_modules/@angular/cli/bin/ng.js",
+        "build",
+        "--configuration",
+        "development",
+        "--output-path",
+        "artefacts/angular-upgrade/post-angular22/dependency-cleanup/development"
+      ]
+    },
+    {
+      "label": "visual-reference",
+      "exitCode": 0,
+      "command": [
+        "C:\\Users\\Tobias\\Development\\BrickHunter\\tmp\\upgrade-runtime\\node-v24.21.0-win-x64\\node.exe",
+        "node_modules/@angular/cli/bin/ng.js",
+        "build",
+        "--configuration",
+        "development,visual-reference",
+        "--output-path",
+        "artefacts/angular-upgrade/post-angular22/dependency-cleanup/visual-reference"
+      ]
+    }
+  ],
+  "outputs": {
+    "production": {
+      "comparisonBase": "artefacts/angular-upgrade/angular-22/ui-acceptance/production",
+      "totalFiles": 77,
+      "allFilesByteIdentical": true,
+      "files": [
+        {
+          "file": "199.js",
+          "byteIdentical": true,
+          "previousSha256": "5dafee40bdffb9adc535b84173da477f720e9040d42a9b8d1dc2964f924b3b60",
+          "currentSha256": "5dafee40bdffb9adc535b84173da477f720e9040d42a9b8d1dc2964f924b3b60"
+        },
+        {
+          "file": "239.js",
+          "byteIdentical": true,
+          "previousSha256": "36af1661cf0faba7758be5dfccad497fdbb883c3c5ed00d876779853adbb2557",
+          "currentSha256": "36af1661cf0faba7758be5dfccad497fdbb883c3c5ed00d876779853adbb2557"
+        },
+        {
+          "file": "348.js",
+          "byteIdentical": true,
+          "previousSha256": "b4c7767cd6029d6c13d686c3b25234dd7dff9d2ded4e37242f32ea8055404aff",
+          "currentSha256": "b4c7767cd6029d6c13d686c3b25234dd7dff9d2ded4e37242f32ea8055404aff"
+        },
+        {
+          "file": "3rdpartylicenses.txt",
+          "byteIdentical": true,
+          "previousSha256": "4109398d2d42a68670dab210992084d8c39b83546b62ebce820ef3f69e8eb30b",
+          "currentSha256": "4109398d2d42a68670dab210992084d8c39b83546b62ebce820ef3f69e8eb30b"
+        },
+        {
+          "file": "512.js",
+          "byteIdentical": true,
+          "previousSha256": "e23a0f4779457842588611c2f66d9713f91c4bb0a89106f13cc71723d56c38a9",
+          "currentSha256": "e23a0f4779457842588611c2f66d9713f91c4bb0a89106f13cc71723d56c38a9"
+        },
+        {
+          "file": "799.js",
+          "byteIdentical": true,
+          "previousSha256": "9097c3e0fd192d14659a5851f98ee503414071ef34bc5a3466a3e4ac713d04a1",
+          "currentSha256": "9097c3e0fd192d14659a5851f98ee503414071ef34bc5a3466a3e4ac713d04a1"
+        },
+        {
+          "file": "93.js",
+          "byteIdentical": true,
+          "previousSha256": "7eb186cc4ebd2a51ee34ffdcbc3f09ff4340a53d36f217e7bc85eda28b284997",
+          "currentSha256": "7eb186cc4ebd2a51ee34ffdcbc3f09ff4340a53d36f217e7bc85eda28b284997"
+        },
+        {
+          "file": "973.js",
+          "byteIdentical": true,
+          "previousSha256": "4bb84eee52644ea628a08707e88294f36abfdc1a41e9625db0c3e4fd7e5ccf53",
+          "currentSha256": "4bb84eee52644ea628a08707e88294f36abfdc1a41e9625db0c3e4fd7e5ccf53"
+        },
+        {
+          "file": "assets\\flag_placeholder.png",
+          "byteIdentical": true,
+          "previousSha256": "bdb66bf929c8f1e9830c282f042d9441b73776c02bfaf1bbb8a0fe221b548920",
+          "currentSha256": "bdb66bf929c8f1e9830c282f042d9441b73776c02bfaf1bbb8a0fe221b548920"
+        },
+        {
+          "file": "assets\\flags.css",
+          "byteIdentical": true,
+          "previousSha256": "2aaeffad600f9b273e15ba897a69d5526e3d128e14a93a80a6a40aea72e35e81",
+          "currentSha256": "2aaeffad600f9b273e15ba897a69d5526e3d128e14a93a80a6a40aea72e35e81"
+        },
+        {
+          "file": "assets\\flags_responsive.png",
+          "byteIdentical": true,
+          "previousSha256": "c6b443c1466f439bc165dc49efc6697ed5300992598b392e4ec82982599e0c18",
+          "currentSha256": "c6b443c1466f439bc165dc49efc6697ed5300992598b392e4ec82982599e0c18"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\all.css",
+          "byteIdentical": true,
+          "previousSha256": "dc62ff84967aa6566f6f1e2c6d7dd7d190afb130cf441c2b1c56a53b9f4595e1",
+          "currentSha256": "dc62ff84967aa6566f6f1e2c6d7dd7d190afb130cf441c2b1c56a53b9f4595e1"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\all.min.css",
+          "byteIdentical": true,
+          "previousSha256": "faa6616fa47d604e36227abce1bd1f61dddfa8c151ea8372f6506e42c64c13b8",
+          "currentSha256": "faa6616fa47d604e36227abce1bd1f61dddfa8c151ea8372f6506e42c64c13b8"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\brands.css",
+          "byteIdentical": true,
+          "previousSha256": "568fea8cdce98e8593ceb58073520b293cd9d21275c3df5e591fc79365d8d5da",
+          "currentSha256": "568fea8cdce98e8593ceb58073520b293cd9d21275c3df5e591fc79365d8d5da"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\brands.min.css",
+          "byteIdentical": true,
+          "previousSha256": "240692733fb3f0dcf07cd126fbc8f2e73f8a445c765ec70bd53bc70d3637b350",
+          "currentSha256": "240692733fb3f0dcf07cd126fbc8f2e73f8a445c765ec70bd53bc70d3637b350"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\fontawesome.css",
+          "byteIdentical": true,
+          "previousSha256": "f810cdc1018b998a4214bb75a5023a33e5c7b6af3daa12553df4a46f67a7e456",
+          "currentSha256": "f810cdc1018b998a4214bb75a5023a33e5c7b6af3daa12553df4a46f67a7e456"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\fontawesome.min.css",
+          "byteIdentical": true,
+          "previousSha256": "2ebbf8b61e07799dacc87fcfe94327ddb958814532cae19117a5d4161afc63e3",
+          "currentSha256": "2ebbf8b61e07799dacc87fcfe94327ddb958814532cae19117a5d4161afc63e3"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\regular.css",
+          "byteIdentical": true,
+          "previousSha256": "2439048356ec66f432fe8333572d92496738884b9f1c067b9317d32a54edd8b4",
+          "currentSha256": "2439048356ec66f432fe8333572d92496738884b9f1c067b9317d32a54edd8b4"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\regular.min.css",
+          "byteIdentical": true,
+          "previousSha256": "63f5c1f5e3fcb8009699ab0d5644bf8ac4edfcb25cf379566920e4ca5e3aa701",
+          "currentSha256": "63f5c1f5e3fcb8009699ab0d5644bf8ac4edfcb25cf379566920e4ca5e3aa701"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\solid.css",
+          "byteIdentical": true,
+          "previousSha256": "50e66fe796cbb07dbcb3642e137eeab03dbb9fd742558f0f916431a7cd66dcc7",
+          "currentSha256": "50e66fe796cbb07dbcb3642e137eeab03dbb9fd742558f0f916431a7cd66dcc7"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\solid.min.css",
+          "byteIdentical": true,
+          "previousSha256": "e5ff486d48b4297ec438473b440a81ad3d4187ccabb393cc3ab4376afea033b9",
+          "currentSha256": "e5ff486d48b4297ec438473b440a81ad3d4187ccabb393cc3ab4376afea033b9"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\svg-with-js.css",
+          "byteIdentical": true,
+          "previousSha256": "218896ced6462945f68cb22e0eb537277e355eaa2fa3bd578ba119c4d431666e",
+          "currentSha256": "218896ced6462945f68cb22e0eb537277e355eaa2fa3bd578ba119c4d431666e"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\svg-with-js.min.css",
+          "byteIdentical": true,
+          "previousSha256": "ed72217c3ea052364201bbefa166735287fad6bc031fa3a118cca3560d1f8bda",
+          "currentSha256": "ed72217c3ea052364201bbefa166735287fad6bc031fa3a118cca3560d1f8bda"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-font-face.css",
+          "byteIdentical": true,
+          "previousSha256": "08f2691ee6bc6f29056450b186179ae1ea03279dcac4addc4e64078ba4e31c46",
+          "currentSha256": "08f2691ee6bc6f29056450b186179ae1ea03279dcac4addc4e64078ba4e31c46"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-font-face.min.css",
+          "byteIdentical": true,
+          "previousSha256": "ec6039da4b1a765b244a94fa49b8e9d570666f5fea43915c4821c0a661cfa4be",
+          "currentSha256": "ec6039da4b1a765b244a94fa49b8e9d570666f5fea43915c4821c0a661cfa4be"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-shims.css",
+          "byteIdentical": true,
+          "previousSha256": "117cb851d20e553ad6fcaff8ae09b8226d91f5a55b3456605128852321ca017a",
+          "currentSha256": "117cb851d20e553ad6fcaff8ae09b8226d91f5a55b3456605128852321ca017a"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-shims.min.css",
+          "byteIdentical": true,
+          "previousSha256": "4ceae3f7a11cec88290418b6b732c646bea36a8f8d3e1fd11193ea1329272d4f",
+          "currentSha256": "4ceae3f7a11cec88290418b6b732c646bea36a8f8d3e1fd11193ea1329272d4f"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v5-font-face.css",
+          "byteIdentical": true,
+          "previousSha256": "d5051afcc7433e11828f3ce9f75cfcbb9563b275bb46816d6c3a3ae78a4516df",
+          "currentSha256": "d5051afcc7433e11828f3ce9f75cfcbb9563b275bb46816d6c3a3ae78a4516df"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v5-font-face.min.css",
+          "byteIdentical": true,
+          "previousSha256": "2c1871707874355ba62c77c968593c441aba6574ff204bb5cff187b4335d7aa3",
+          "currentSha256": "2c1871707874355ba62c77c968593c441aba6574ff204bb5cff187b4335d7aa3"
+        },
+        {
+          "file": "assets\\fontawesome\\js\\all.min.js",
+          "byteIdentical": true,
+          "previousSha256": "4272a8e31cf615d7cf60f80dfa05548bc2376b5bc41a7dae7d40e975e39e40be",
+          "currentSha256": "4272a8e31cf615d7cf60f80dfa05548bc2376b5bc41a7dae7d40e975e39e40be"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-brands-400.ttf",
+          "byteIdentical": true,
+          "previousSha256": "2ef6fdde707193e437c22753755cb32fb8921dde7ff67439b58e6dca3c5a0bef",
+          "currentSha256": "2ef6fdde707193e437c22753755cb32fb8921dde7ff67439b58e6dca3c5a0bef"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-brands-400.woff2",
+          "byteIdentical": true,
+          "previousSha256": "f461742308b7791fee6e9698e1212aa6e8fd1d5e5b41795bfd68e93aa011073d",
+          "currentSha256": "f461742308b7791fee6e9698e1212aa6e8fd1d5e5b41795bfd68e93aa011073d"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-regular-400.ttf",
+          "byteIdentical": true,
+          "previousSha256": "12dea17b68aafb3f43ca81628a01b33fed73d9bbd434dbd2bc8512bcff0534a6",
+          "currentSha256": "12dea17b68aafb3f43ca81628a01b33fed73d9bbd434dbd2bc8512bcff0534a6"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-regular-400.woff2",
+          "byteIdentical": true,
+          "previousSha256": "7ba24c4138c4c3cfe694a8fc8943b8ce21b9bfbb14edcb290b8654fcaa365d6b",
+          "currentSha256": "7ba24c4138c4c3cfe694a8fc8943b8ce21b9bfbb14edcb290b8654fcaa365d6b"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-solid-900.ttf",
+          "byteIdentical": true,
+          "previousSha256": "67a880b4ba529b9acc303d729b56b4fd7086fb22d425660410b8c51e1784f629",
+          "currentSha256": "67a880b4ba529b9acc303d729b56b4fd7086fb22d425660410b8c51e1784f629"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-solid-900.woff2",
+          "byteIdentical": true,
+          "previousSha256": "e2c5cf547e2e8d74a17d05c5ad9f1f593ca526452e228124294fa983b908ff82",
+          "currentSha256": "e2c5cf547e2e8d74a17d05c5ad9f1f593ca526452e228124294fa983b908ff82"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-v4compatibility.ttf",
+          "byteIdentical": true,
+          "previousSha256": "8d9500e8440179eb4187f339e0b1a2e84a0f298a899250e6ac6d218b6e5a407f",
+          "currentSha256": "8d9500e8440179eb4187f339e0b1a2e84a0f298a899250e6ac6d218b6e5a407f"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-v4compatibility.woff2",
+          "byteIdentical": true,
+          "previousSha256": "7c377405b7e79354546bdddb7dcd73bd38760c95c2be44ea1e3097582dac642c",
+          "currentSha256": "7c377405b7e79354546bdddb7dcd73bd38760c95c2be44ea1e3097582dac642c"
+        },
+        {
+          "file": "assets\\icons\\close-legacy.svg",
+          "byteIdentical": true,
+          "previousSha256": "4b99c2194841e74cfaaae0b332971ce53d315cf4f2459535ff37aa72214d0f60",
+          "currentSha256": "4b99c2194841e74cfaaae0b332971ce53d315cf4f2459535ff37aa72214d0f60"
+        },
+        {
+          "file": "assets\\icons\\icon-trans32.png",
+          "byteIdentical": true,
+          "previousSha256": "e4806ca5382ead51a8351893aa8d002a916c617a4018449a8f550b038dcdc788",
+          "currentSha256": "e4806ca5382ead51a8351893aa8d002a916c617a4018449a8f550b038dcdc788"
+        },
+        {
+          "file": "assets\\icons\\icon-trans48.png",
+          "byteIdentical": true,
+          "previousSha256": "647b94e0412ec000a441a35d327fa22b76466b6476c8849af605f0465d5d5b62",
+          "currentSha256": "647b94e0412ec000a441a35d327fa22b76466b6476c8849af605f0465d5d5b62"
+        },
+        {
+          "file": "assets\\icons\\icon.png",
+          "byteIdentical": true,
+          "previousSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251",
+          "currentSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251"
+        },
+        {
+          "file": "assets\\icons\\icon128.png",
+          "byteIdentical": true,
+          "previousSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251",
+          "currentSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251"
+        },
+        {
+          "file": "assets\\icons\\icon16.png",
+          "byteIdentical": true,
+          "previousSha256": "6b451280bd8395e3d93c6c1934372ad86add6481b4f68409bff4801be62af47b",
+          "currentSha256": "6b451280bd8395e3d93c6c1934372ad86add6481b4f68409bff4801be62af47b"
+        },
+        {
+          "file": "assets\\icons\\icon24.png",
+          "byteIdentical": true,
+          "previousSha256": "f5166fb624feaac7c15e03f78cd82a07c3a47cd0ac900a26f9d5eb5ab1ac624f",
+          "currentSha256": "f5166fb624feaac7c15e03f78cd82a07c3a47cd0ac900a26f9d5eb5ab1ac624f"
+        },
+        {
+          "file": "assets\\icons\\icon32.png",
+          "byteIdentical": true,
+          "previousSha256": "fae33438e9251935b7cbe7f2a3815836648feb06741da916d7137649c67d569a",
+          "currentSha256": "fae33438e9251935b7cbe7f2a3815836648feb06741da916d7137649c67d569a"
+        },
+        {
+          "file": "assets\\icons\\icon48.png",
+          "byteIdentical": true,
+          "previousSha256": "dd6b236fe0f12b4f94aa6537f087d79ab64b6b018f66aa5acf460e65c25680e6",
+          "currentSha256": "dd6b236fe0f12b4f94aa6537f087d79ab64b6b018f66aa5acf460e65c25680e6"
+        },
+        {
+          "file": "assets\\icons\\icon96.png",
+          "byteIdentical": true,
+          "previousSha256": "e059e192ebff14a85372f73c9b37fdacd335a899c96784f9a77e70bd48a57a83",
+          "currentSha256": "e059e192ebff14a85372f73c9b37fdacd335a899c96784f9a77e70bd48a57a83"
+        },
+        {
+          "file": "assets\\icons\\logo.png",
+          "byteIdentical": true,
+          "previousSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e",
+          "currentSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e"
+        },
+        {
+          "file": "assets\\logo.png",
+          "byteIdentical": true,
+          "previousSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e",
+          "currentSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e"
+        },
+        {
+          "file": "assets\\placeholder.png",
+          "byteIdentical": true,
+          "previousSha256": "ad83b8e84ae8c749d12d50fd26be27bb31d276ff3a83f6d74f76411a358d6f06",
+          "currentSha256": "ad83b8e84ae8c749d12d50fd26be27bb31d276ff3a83f6d74f76411a358d6f06"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-500.woff",
+          "byteIdentical": true,
+          "previousSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7",
+          "currentSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-500.woff2",
+          "byteIdentical": true,
+          "previousSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278",
+          "currentSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-700.woff",
+          "byteIdentical": true,
+          "previousSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8",
+          "currentSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-700.woff2",
+          "byteIdentical": true,
+          "previousSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5",
+          "currentSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-regular.woff",
+          "byteIdentical": true,
+          "previousSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada",
+          "currentSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-regular.woff2",
+          "byteIdentical": true,
+          "previousSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1",
+          "currentSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1"
+        },
+        {
+          "file": "assets\\theme\\brickhunter-base.scss",
+          "byteIdentical": true,
+          "previousSha256": "664abf4ffec636a0315247be96666c28568b165756a8d61e62bf564e89295e9e",
+          "currentSha256": "664abf4ffec636a0315247be96666c28568b165756a8d61e62bf564e89295e9e"
+        },
+        {
+          "file": "assets\\theme\\temp_theme.css",
+          "byteIdentical": true,
+          "previousSha256": "7c6ef94c29d049bc2c7ff97d3f09ddd78170341a243143d3dd1e58cba34ed56f",
+          "currentSha256": "7c6ef94c29d049bc2c7ff97d3f09ddd78170341a243143d3dd1e58cba34ed56f"
+        },
+        {
+          "file": "assets\\theme\\theme.css",
+          "byteIdentical": true,
+          "previousSha256": "4f0ab7e3f49dc62dd901e8f91da6e664d4ec029b999926c787c822b468d920f7",
+          "currentSha256": "4f0ab7e3f49dc62dd901e8f91da6e664d4ec029b999926c787c822b468d920f7"
+        },
+        {
+          "file": "background.js",
+          "byteIdentical": true,
+          "previousSha256": "28346daf7327cadde395a9ada82bf65340bf90fad1147ce206bb2dcee6b27160",
+          "currentSha256": "28346daf7327cadde395a9ada82bf65340bf90fad1147ce206bb2dcee6b27160"
+        },
+        {
+          "file": "common.js",
+          "byteIdentical": true,
+          "previousSha256": "30b56525b36cba73074d4133f4128a6f7215a4d2226a548aea2f3c23b7418a7f",
+          "currentSha256": "30b56525b36cba73074d4133f4128a6f7215a4d2226a548aea2f3c23b7418a7f"
+        },
+        {
+          "file": "fa-solid-900.ttf",
+          "byteIdentical": true,
+          "previousSha256": "fbbf06d7437aa30f3cd44c968380193545a8fc3eadfb7ad897bbb101eefec5a2",
+          "currentSha256": "fbbf06d7437aa30f3cd44c968380193545a8fc3eadfb7ad897bbb101eefec5a2"
+        },
+        {
+          "file": "fa-solid-900.woff2",
+          "byteIdentical": true,
+          "previousSha256": "9fc85f3a4544ab0d570c7f8f9bbb88db8d92c359b2707580ea8b07c75673eae2",
+          "currentSha256": "9fc85f3a4544ab0d570c7f8f9bbb88db8d92c359b2707580ea8b07c75673eae2"
+        },
+        {
+          "file": "index.html",
+          "byteIdentical": true,
+          "previousSha256": "1b0a9e424d102fad84222bd68aa5b15c71d42147bf4ec2f9b19f2a88ad108316",
+          "currentSha256": "1b0a9e424d102fad84222bd68aa5b15c71d42147bf4ec2f9b19f2a88ad108316"
+        },
+        {
+          "file": "legocontentscript.js",
+          "byteIdentical": true,
+          "previousSha256": "1fbac41e669bb2e2523de67e3478a99c05501187dc3d512631fd36ab14aaf4f1",
+          "currentSha256": "1fbac41e669bb2e2523de67e3478a99c05501187dc3d512631fd36ab14aaf4f1"
+        },
+        {
+          "file": "main.js",
+          "byteIdentical": true,
+          "previousSha256": "4d7a6616cafb4383cb9dc37ecdc0916044c814a87e129a65543bd816b88232dc",
+          "currentSha256": "4d7a6616cafb4383cb9dc37ecdc0916044c814a87e129a65543bd816b88232dc"
+        },
+        {
+          "file": "manifest.json",
+          "byteIdentical": true,
+          "previousSha256": "8fe9c39a291a0e8c7aa3573ab9535c0b8191f887030e416295cfe67ddea11d54",
+          "currentSha256": "8fe9c39a291a0e8c7aa3573ab9535c0b8191f887030e416295cfe67ddea11d54"
+        },
+        {
+          "file": "polyfills.js",
+          "byteIdentical": true,
+          "previousSha256": "b9d7ebb744100708215be670363c65e384c4de196768de1589daefcf3828f6d7",
+          "currentSha256": "b9d7ebb744100708215be670363c65e384c4de196768de1589daefcf3828f6d7"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-500.woff",
+          "byteIdentical": true,
+          "previousSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7",
+          "currentSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-500.woff2",
+          "byteIdentical": true,
+          "previousSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278",
+          "currentSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-700.woff",
+          "byteIdentical": true,
+          "previousSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8",
+          "currentSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-700.woff2",
+          "byteIdentical": true,
+          "previousSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5",
+          "currentSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-regular.woff",
+          "byteIdentical": true,
+          "previousSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada",
+          "currentSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-regular.woff2",
+          "byteIdentical": true,
+          "previousSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1",
+          "currentSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1"
+        },
+        {
+          "file": "runtime.js",
+          "byteIdentical": true,
+          "previousSha256": "eff813be4ba2b4beffea9946d2a5d819e5479517b58993c0f4774b5378492c8f",
+          "currentSha256": "eff813be4ba2b4beffea9946d2a5d819e5479517b58993c0f4774b5378492c8f"
+        },
+        {
+          "file": "styles.css",
+          "byteIdentical": true,
+          "previousSha256": "b34409ee579db915236a0516c7bd1d7ec099905d3fa99206b83deba088bf24cd",
+          "currentSha256": "b34409ee579db915236a0516c7bd1d7ec099905d3fa99206b83deba088bf24cd"
+        }
+      ]
+    },
+    "development": {
+      "comparisonBase": "artefacts/angular-upgrade/angular-22/ui-acceptance/development",
+      "totalFiles": 92,
+      "allFilesByteIdentical": true,
+      "files": [
+        {
+          "file": "assets\\flag_placeholder.png",
+          "byteIdentical": true,
+          "previousSha256": "bdb66bf929c8f1e9830c282f042d9441b73776c02bfaf1bbb8a0fe221b548920",
+          "currentSha256": "bdb66bf929c8f1e9830c282f042d9441b73776c02bfaf1bbb8a0fe221b548920"
+        },
+        {
+          "file": "assets\\flags.css",
+          "byteIdentical": true,
+          "previousSha256": "2aaeffad600f9b273e15ba897a69d5526e3d128e14a93a80a6a40aea72e35e81",
+          "currentSha256": "2aaeffad600f9b273e15ba897a69d5526e3d128e14a93a80a6a40aea72e35e81"
+        },
+        {
+          "file": "assets\\flags_responsive.png",
+          "byteIdentical": true,
+          "previousSha256": "c6b443c1466f439bc165dc49efc6697ed5300992598b392e4ec82982599e0c18",
+          "currentSha256": "c6b443c1466f439bc165dc49efc6697ed5300992598b392e4ec82982599e0c18"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\all.css",
+          "byteIdentical": true,
+          "previousSha256": "dc62ff84967aa6566f6f1e2c6d7dd7d190afb130cf441c2b1c56a53b9f4595e1",
+          "currentSha256": "dc62ff84967aa6566f6f1e2c6d7dd7d190afb130cf441c2b1c56a53b9f4595e1"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\all.min.css",
+          "byteIdentical": true,
+          "previousSha256": "faa6616fa47d604e36227abce1bd1f61dddfa8c151ea8372f6506e42c64c13b8",
+          "currentSha256": "faa6616fa47d604e36227abce1bd1f61dddfa8c151ea8372f6506e42c64c13b8"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\brands.css",
+          "byteIdentical": true,
+          "previousSha256": "568fea8cdce98e8593ceb58073520b293cd9d21275c3df5e591fc79365d8d5da",
+          "currentSha256": "568fea8cdce98e8593ceb58073520b293cd9d21275c3df5e591fc79365d8d5da"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\brands.min.css",
+          "byteIdentical": true,
+          "previousSha256": "240692733fb3f0dcf07cd126fbc8f2e73f8a445c765ec70bd53bc70d3637b350",
+          "currentSha256": "240692733fb3f0dcf07cd126fbc8f2e73f8a445c765ec70bd53bc70d3637b350"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\fontawesome.css",
+          "byteIdentical": true,
+          "previousSha256": "f810cdc1018b998a4214bb75a5023a33e5c7b6af3daa12553df4a46f67a7e456",
+          "currentSha256": "f810cdc1018b998a4214bb75a5023a33e5c7b6af3daa12553df4a46f67a7e456"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\fontawesome.min.css",
+          "byteIdentical": true,
+          "previousSha256": "2ebbf8b61e07799dacc87fcfe94327ddb958814532cae19117a5d4161afc63e3",
+          "currentSha256": "2ebbf8b61e07799dacc87fcfe94327ddb958814532cae19117a5d4161afc63e3"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\regular.css",
+          "byteIdentical": true,
+          "previousSha256": "2439048356ec66f432fe8333572d92496738884b9f1c067b9317d32a54edd8b4",
+          "currentSha256": "2439048356ec66f432fe8333572d92496738884b9f1c067b9317d32a54edd8b4"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\regular.min.css",
+          "byteIdentical": true,
+          "previousSha256": "63f5c1f5e3fcb8009699ab0d5644bf8ac4edfcb25cf379566920e4ca5e3aa701",
+          "currentSha256": "63f5c1f5e3fcb8009699ab0d5644bf8ac4edfcb25cf379566920e4ca5e3aa701"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\solid.css",
+          "byteIdentical": true,
+          "previousSha256": "50e66fe796cbb07dbcb3642e137eeab03dbb9fd742558f0f916431a7cd66dcc7",
+          "currentSha256": "50e66fe796cbb07dbcb3642e137eeab03dbb9fd742558f0f916431a7cd66dcc7"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\solid.min.css",
+          "byteIdentical": true,
+          "previousSha256": "e5ff486d48b4297ec438473b440a81ad3d4187ccabb393cc3ab4376afea033b9",
+          "currentSha256": "e5ff486d48b4297ec438473b440a81ad3d4187ccabb393cc3ab4376afea033b9"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\svg-with-js.css",
+          "byteIdentical": true,
+          "previousSha256": "218896ced6462945f68cb22e0eb537277e355eaa2fa3bd578ba119c4d431666e",
+          "currentSha256": "218896ced6462945f68cb22e0eb537277e355eaa2fa3bd578ba119c4d431666e"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\svg-with-js.min.css",
+          "byteIdentical": true,
+          "previousSha256": "ed72217c3ea052364201bbefa166735287fad6bc031fa3a118cca3560d1f8bda",
+          "currentSha256": "ed72217c3ea052364201bbefa166735287fad6bc031fa3a118cca3560d1f8bda"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-font-face.css",
+          "byteIdentical": true,
+          "previousSha256": "08f2691ee6bc6f29056450b186179ae1ea03279dcac4addc4e64078ba4e31c46",
+          "currentSha256": "08f2691ee6bc6f29056450b186179ae1ea03279dcac4addc4e64078ba4e31c46"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-font-face.min.css",
+          "byteIdentical": true,
+          "previousSha256": "ec6039da4b1a765b244a94fa49b8e9d570666f5fea43915c4821c0a661cfa4be",
+          "currentSha256": "ec6039da4b1a765b244a94fa49b8e9d570666f5fea43915c4821c0a661cfa4be"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-shims.css",
+          "byteIdentical": true,
+          "previousSha256": "117cb851d20e553ad6fcaff8ae09b8226d91f5a55b3456605128852321ca017a",
+          "currentSha256": "117cb851d20e553ad6fcaff8ae09b8226d91f5a55b3456605128852321ca017a"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-shims.min.css",
+          "byteIdentical": true,
+          "previousSha256": "4ceae3f7a11cec88290418b6b732c646bea36a8f8d3e1fd11193ea1329272d4f",
+          "currentSha256": "4ceae3f7a11cec88290418b6b732c646bea36a8f8d3e1fd11193ea1329272d4f"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v5-font-face.css",
+          "byteIdentical": true,
+          "previousSha256": "d5051afcc7433e11828f3ce9f75cfcbb9563b275bb46816d6c3a3ae78a4516df",
+          "currentSha256": "d5051afcc7433e11828f3ce9f75cfcbb9563b275bb46816d6c3a3ae78a4516df"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v5-font-face.min.css",
+          "byteIdentical": true,
+          "previousSha256": "2c1871707874355ba62c77c968593c441aba6574ff204bb5cff187b4335d7aa3",
+          "currentSha256": "2c1871707874355ba62c77c968593c441aba6574ff204bb5cff187b4335d7aa3"
+        },
+        {
+          "file": "assets\\fontawesome\\js\\all.min.js",
+          "byteIdentical": true,
+          "previousSha256": "4272a8e31cf615d7cf60f80dfa05548bc2376b5bc41a7dae7d40e975e39e40be",
+          "currentSha256": "4272a8e31cf615d7cf60f80dfa05548bc2376b5bc41a7dae7d40e975e39e40be"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-brands-400.ttf",
+          "byteIdentical": true,
+          "previousSha256": "2ef6fdde707193e437c22753755cb32fb8921dde7ff67439b58e6dca3c5a0bef",
+          "currentSha256": "2ef6fdde707193e437c22753755cb32fb8921dde7ff67439b58e6dca3c5a0bef"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-brands-400.woff2",
+          "byteIdentical": true,
+          "previousSha256": "f461742308b7791fee6e9698e1212aa6e8fd1d5e5b41795bfd68e93aa011073d",
+          "currentSha256": "f461742308b7791fee6e9698e1212aa6e8fd1d5e5b41795bfd68e93aa011073d"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-regular-400.ttf",
+          "byteIdentical": true,
+          "previousSha256": "12dea17b68aafb3f43ca81628a01b33fed73d9bbd434dbd2bc8512bcff0534a6",
+          "currentSha256": "12dea17b68aafb3f43ca81628a01b33fed73d9bbd434dbd2bc8512bcff0534a6"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-regular-400.woff2",
+          "byteIdentical": true,
+          "previousSha256": "7ba24c4138c4c3cfe694a8fc8943b8ce21b9bfbb14edcb290b8654fcaa365d6b",
+          "currentSha256": "7ba24c4138c4c3cfe694a8fc8943b8ce21b9bfbb14edcb290b8654fcaa365d6b"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-solid-900.ttf",
+          "byteIdentical": true,
+          "previousSha256": "67a880b4ba529b9acc303d729b56b4fd7086fb22d425660410b8c51e1784f629",
+          "currentSha256": "67a880b4ba529b9acc303d729b56b4fd7086fb22d425660410b8c51e1784f629"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-solid-900.woff2",
+          "byteIdentical": true,
+          "previousSha256": "e2c5cf547e2e8d74a17d05c5ad9f1f593ca526452e228124294fa983b908ff82",
+          "currentSha256": "e2c5cf547e2e8d74a17d05c5ad9f1f593ca526452e228124294fa983b908ff82"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-v4compatibility.ttf",
+          "byteIdentical": true,
+          "previousSha256": "8d9500e8440179eb4187f339e0b1a2e84a0f298a899250e6ac6d218b6e5a407f",
+          "currentSha256": "8d9500e8440179eb4187f339e0b1a2e84a0f298a899250e6ac6d218b6e5a407f"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-v4compatibility.woff2",
+          "byteIdentical": true,
+          "previousSha256": "7c377405b7e79354546bdddb7dcd73bd38760c95c2be44ea1e3097582dac642c",
+          "currentSha256": "7c377405b7e79354546bdddb7dcd73bd38760c95c2be44ea1e3097582dac642c"
+        },
+        {
+          "file": "assets\\icons\\close-legacy.svg",
+          "byteIdentical": true,
+          "previousSha256": "4b99c2194841e74cfaaae0b332971ce53d315cf4f2459535ff37aa72214d0f60",
+          "currentSha256": "4b99c2194841e74cfaaae0b332971ce53d315cf4f2459535ff37aa72214d0f60"
+        },
+        {
+          "file": "assets\\icons\\icon-trans32.png",
+          "byteIdentical": true,
+          "previousSha256": "e4806ca5382ead51a8351893aa8d002a916c617a4018449a8f550b038dcdc788",
+          "currentSha256": "e4806ca5382ead51a8351893aa8d002a916c617a4018449a8f550b038dcdc788"
+        },
+        {
+          "file": "assets\\icons\\icon-trans48.png",
+          "byteIdentical": true,
+          "previousSha256": "647b94e0412ec000a441a35d327fa22b76466b6476c8849af605f0465d5d5b62",
+          "currentSha256": "647b94e0412ec000a441a35d327fa22b76466b6476c8849af605f0465d5d5b62"
+        },
+        {
+          "file": "assets\\icons\\icon.png",
+          "byteIdentical": true,
+          "previousSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251",
+          "currentSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251"
+        },
+        {
+          "file": "assets\\icons\\icon128.png",
+          "byteIdentical": true,
+          "previousSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251",
+          "currentSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251"
+        },
+        {
+          "file": "assets\\icons\\icon16.png",
+          "byteIdentical": true,
+          "previousSha256": "6b451280bd8395e3d93c6c1934372ad86add6481b4f68409bff4801be62af47b",
+          "currentSha256": "6b451280bd8395e3d93c6c1934372ad86add6481b4f68409bff4801be62af47b"
+        },
+        {
+          "file": "assets\\icons\\icon24.png",
+          "byteIdentical": true,
+          "previousSha256": "f5166fb624feaac7c15e03f78cd82a07c3a47cd0ac900a26f9d5eb5ab1ac624f",
+          "currentSha256": "f5166fb624feaac7c15e03f78cd82a07c3a47cd0ac900a26f9d5eb5ab1ac624f"
+        },
+        {
+          "file": "assets\\icons\\icon32.png",
+          "byteIdentical": true,
+          "previousSha256": "fae33438e9251935b7cbe7f2a3815836648feb06741da916d7137649c67d569a",
+          "currentSha256": "fae33438e9251935b7cbe7f2a3815836648feb06741da916d7137649c67d569a"
+        },
+        {
+          "file": "assets\\icons\\icon48.png",
+          "byteIdentical": true,
+          "previousSha256": "dd6b236fe0f12b4f94aa6537f087d79ab64b6b018f66aa5acf460e65c25680e6",
+          "currentSha256": "dd6b236fe0f12b4f94aa6537f087d79ab64b6b018f66aa5acf460e65c25680e6"
+        },
+        {
+          "file": "assets\\icons\\icon96.png",
+          "byteIdentical": true,
+          "previousSha256": "e059e192ebff14a85372f73c9b37fdacd335a899c96784f9a77e70bd48a57a83",
+          "currentSha256": "e059e192ebff14a85372f73c9b37fdacd335a899c96784f9a77e70bd48a57a83"
+        },
+        {
+          "file": "assets\\icons\\logo.png",
+          "byteIdentical": true,
+          "previousSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e",
+          "currentSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e"
+        },
+        {
+          "file": "assets\\logo.png",
+          "byteIdentical": true,
+          "previousSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e",
+          "currentSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e"
+        },
+        {
+          "file": "assets\\placeholder.png",
+          "byteIdentical": true,
+          "previousSha256": "ad83b8e84ae8c749d12d50fd26be27bb31d276ff3a83f6d74f76411a358d6f06",
+          "currentSha256": "ad83b8e84ae8c749d12d50fd26be27bb31d276ff3a83f6d74f76411a358d6f06"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-500.woff",
+          "byteIdentical": true,
+          "previousSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7",
+          "currentSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-500.woff2",
+          "byteIdentical": true,
+          "previousSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278",
+          "currentSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-700.woff",
+          "byteIdentical": true,
+          "previousSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8",
+          "currentSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-700.woff2",
+          "byteIdentical": true,
+          "previousSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5",
+          "currentSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-regular.woff",
+          "byteIdentical": true,
+          "previousSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada",
+          "currentSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-regular.woff2",
+          "byteIdentical": true,
+          "previousSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1",
+          "currentSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1"
+        },
+        {
+          "file": "assets\\theme\\brickhunter-base.scss",
+          "byteIdentical": true,
+          "previousSha256": "664abf4ffec636a0315247be96666c28568b165756a8d61e62bf564e89295e9e",
+          "currentSha256": "664abf4ffec636a0315247be96666c28568b165756a8d61e62bf564e89295e9e"
+        },
+        {
+          "file": "assets\\theme\\temp_theme.css",
+          "byteIdentical": true,
+          "previousSha256": "7c6ef94c29d049bc2c7ff97d3f09ddd78170341a243143d3dd1e58cba34ed56f",
+          "currentSha256": "7c6ef94c29d049bc2c7ff97d3f09ddd78170341a243143d3dd1e58cba34ed56f"
+        },
+        {
+          "file": "assets\\theme\\theme.css",
+          "byteIdentical": true,
+          "previousSha256": "4f0ab7e3f49dc62dd901e8f91da6e664d4ec029b999926c787c822b468d920f7",
+          "currentSha256": "4f0ab7e3f49dc62dd901e8f91da6e664d4ec029b999926c787c822b468d920f7"
+        },
+        {
+          "file": "background.js",
+          "byteIdentical": true,
+          "previousSha256": "56ed4b46037d2e2e88c3c120c24404bf9585a0dda4609487f924076753471aa7",
+          "currentSha256": "56ed4b46037d2e2e88c3c120c24404bf9585a0dda4609487f924076753471aa7"
+        },
+        {
+          "file": "background.js.map",
+          "byteIdentical": true,
+          "previousSha256": "20e86f46665964b33dce42ca4ec4eba3ea2bf9d0756975d904fa960e8c6185b9",
+          "currentSha256": "20e86f46665964b33dce42ca4ec4eba3ea2bf9d0756975d904fa960e8c6185b9"
+        },
+        {
+          "file": "common.js",
+          "byteIdentical": true,
+          "previousSha256": "f5f58a2c944e4a3e09b830ab4f2e03df1327d7e397cd6202f56d54b859645267",
+          "currentSha256": "f5f58a2c944e4a3e09b830ab4f2e03df1327d7e397cd6202f56d54b859645267"
+        },
+        {
+          "file": "common.js.map",
+          "byteIdentical": true,
+          "previousSha256": "b3a5a45b939fb031083bad1ba80c7f964f7149e0d3c24d465238b30fc9ac7c14",
+          "currentSha256": "b3a5a45b939fb031083bad1ba80c7f964f7149e0d3c24d465238b30fc9ac7c14"
+        },
+        {
+          "file": "fa-solid-900.ttf",
+          "byteIdentical": true,
+          "previousSha256": "fbbf06d7437aa30f3cd44c968380193545a8fc3eadfb7ad897bbb101eefec5a2",
+          "currentSha256": "fbbf06d7437aa30f3cd44c968380193545a8fc3eadfb7ad897bbb101eefec5a2"
+        },
+        {
+          "file": "fa-solid-900.woff2",
+          "byteIdentical": true,
+          "previousSha256": "9fc85f3a4544ab0d570c7f8f9bbb88db8d92c359b2707580ea8b07c75673eae2",
+          "currentSha256": "9fc85f3a4544ab0d570c7f8f9bbb88db8d92c359b2707580ea8b07c75673eae2"
+        },
+        {
+          "file": "index.html",
+          "byteIdentical": true,
+          "previousSha256": "b51a1e9f5c420d47bd4c0358aa31150ef6947db61790cbcf3be2b91f315d4950",
+          "currentSha256": "b51a1e9f5c420d47bd4c0358aa31150ef6947db61790cbcf3be2b91f315d4950"
+        },
+        {
+          "file": "legocontentscript.js",
+          "byteIdentical": true,
+          "previousSha256": "d8c7948e5d888e6459ecd92a70b557293efd46a7fe7c984d9d14366813477500",
+          "currentSha256": "d8c7948e5d888e6459ecd92a70b557293efd46a7fe7c984d9d14366813477500"
+        },
+        {
+          "file": "legocontentscript.js.map",
+          "byteIdentical": true,
+          "previousSha256": "ed79f95f247c3511f8e1a3c5c44a62410cf4926d6ab0135f1f76d8a2a21066f1",
+          "currentSha256": "ed79f95f247c3511f8e1a3c5c44a62410cf4926d6ab0135f1f76d8a2a21066f1"
+        },
+        {
+          "file": "main.js",
+          "byteIdentical": true,
+          "previousSha256": "d446b0de490dc65c0024f4fd405ed7a537c67cd7dac992cda4c6a1c6306141e1",
+          "currentSha256": "d446b0de490dc65c0024f4fd405ed7a537c67cd7dac992cda4c6a1c6306141e1"
+        },
+        {
+          "file": "main.js.map",
+          "byteIdentical": true,
+          "previousSha256": "0cada01523d999ee73b7ebc4c5c306b67f2602e8973b2df7b754438b2c0b5c3b",
+          "currentSha256": "0cada01523d999ee73b7ebc4c5c306b67f2602e8973b2df7b754438b2c0b5c3b"
+        },
+        {
+          "file": "manifest.json",
+          "byteIdentical": true,
+          "previousSha256": "8fe9c39a291a0e8c7aa3573ab9535c0b8191f887030e416295cfe67ddea11d54",
+          "currentSha256": "8fe9c39a291a0e8c7aa3573ab9535c0b8191f887030e416295cfe67ddea11d54"
+        },
+        {
+          "file": "node_modules_canvg_lib_index_es_js.js",
+          "byteIdentical": true,
+          "previousSha256": "c88666666cf5e6ac772fb714d3960c0bccdb261e04350682a0e9884bd73af2ed",
+          "currentSha256": "c88666666cf5e6ac772fb714d3960c0bccdb261e04350682a0e9884bd73af2ed"
+        },
+        {
+          "file": "node_modules_canvg_lib_index_es_js.js.map",
+          "byteIdentical": true,
+          "previousSha256": "0db0f1a6649a0d8e74c19587e3e8b240119abda3c6128dc822fda96637c54171",
+          "currentSha256": "0db0f1a6649a0d8e74c19587e3e8b240119abda3c6128dc822fda96637c54171"
+        },
+        {
+          "file": "node_modules_dompurify_dist_purify_js.js",
+          "byteIdentical": true,
+          "previousSha256": "ca89530206ce822ee84455a303d4a38177d03b71fa8028b95574c5d6757f3fe7",
+          "currentSha256": "ca89530206ce822ee84455a303d4a38177d03b71fa8028b95574c5d6757f3fe7"
+        },
+        {
+          "file": "node_modules_dompurify_dist_purify_js.js.map",
+          "byteIdentical": true,
+          "previousSha256": "d544362848569d7e31b94d6512d79013f31598ca84c7b00019a5add1739876bd",
+          "currentSha256": "d544362848569d7e31b94d6512d79013f31598ca84c7b00019a5add1739876bd"
+        },
+        {
+          "file": "node_modules_html2canvas_dist_html2canvas_js.js",
+          "byteIdentical": true,
+          "previousSha256": "5d27901d0fe29da70b82ee305442ce5609745dd17904201217f87685726b3ad8",
+          "currentSha256": "5d27901d0fe29da70b82ee305442ce5609745dd17904201217f87685726b3ad8"
+        },
+        {
+          "file": "node_modules_html2canvas_dist_html2canvas_js.js.map",
+          "byteIdentical": true,
+          "previousSha256": "cf75eaa134adab8c961c0593a1221ee3224c33c31573e8852822698d64748dfe",
+          "currentSha256": "cf75eaa134adab8c961c0593a1221ee3224c33c31573e8852822698d64748dfe"
+        },
+        {
+          "file": "polyfills.js",
+          "byteIdentical": true,
+          "previousSha256": "337921a0b8e142e0704dad310935ab7d9bf123f42b331d6b6145054ece1cd407",
+          "currentSha256": "337921a0b8e142e0704dad310935ab7d9bf123f42b331d6b6145054ece1cd407"
+        },
+        {
+          "file": "polyfills.js.map",
+          "byteIdentical": true,
+          "previousSha256": "175966ca19ddb231e04e8f997b4346abeabb383f67d2e741956ebaad07ff72c5",
+          "currentSha256": "175966ca19ddb231e04e8f997b4346abeabb383f67d2e741956ebaad07ff72c5"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-500.woff",
+          "byteIdentical": true,
+          "previousSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7",
+          "currentSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-500.woff2",
+          "byteIdentical": true,
+          "previousSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278",
+          "currentSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-700.woff",
+          "byteIdentical": true,
+          "previousSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8",
+          "currentSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-700.woff2",
+          "byteIdentical": true,
+          "previousSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5",
+          "currentSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-regular.woff",
+          "byteIdentical": true,
+          "previousSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada",
+          "currentSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-regular.woff2",
+          "byteIdentical": true,
+          "previousSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1",
+          "currentSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1"
+        },
+        {
+          "file": "runtime.js",
+          "byteIdentical": true,
+          "previousSha256": "38d93b0f6dd4950c3b75c841fd975525571dc3ad7e58e1e2af601846866c5dff",
+          "currentSha256": "38d93b0f6dd4950c3b75c841fd975525571dc3ad7e58e1e2af601846866c5dff"
+        },
+        {
+          "file": "runtime.js.map",
+          "byteIdentical": true,
+          "previousSha256": "c7441d981ec13fdb34d857af28c87b6b3d5bea64da43cc3acd49d6de2111d21d",
+          "currentSha256": "c7441d981ec13fdb34d857af28c87b6b3d5bea64da43cc3acd49d6de2111d21d"
+        },
+        {
+          "file": "src_app_browse-parts_browse-parts_module_ts.js",
+          "byteIdentical": true,
+          "previousSha256": "7c1f77339bd6c020b32e6f412152b7f1336a0942fd95c0d9d688a52b2a66d581",
+          "currentSha256": "7c1f77339bd6c020b32e6f412152b7f1336a0942fd95c0d9d688a52b2a66d581"
+        },
+        {
+          "file": "src_app_browse-parts_browse-parts_module_ts.js.map",
+          "byteIdentical": true,
+          "previousSha256": "a09d2bb132cdd7b82ad53b51a4e77d462da72a50d6645050de3cd2d16300c8ff",
+          "currentSha256": "a09d2bb132cdd7b82ad53b51a4e77d462da72a50d6645050de3cd2d16300c8ff"
+        },
+        {
+          "file": "src_app_info_info_module_ts.js",
+          "byteIdentical": true,
+          "previousSha256": "546e99e15939051d5ed2ed46f194e0399745f3467434824b2f88ee5e9aa78c4d",
+          "currentSha256": "546e99e15939051d5ed2ed46f194e0399745f3467434824b2f88ee5e9aa78c4d"
+        },
+        {
+          "file": "src_app_info_info_module_ts.js.map",
+          "byteIdentical": true,
+          "previousSha256": "d1def3b6dfb3e05c9532a290741a0d00e15cd0ca7030f2bd7cb5dfceac541e67",
+          "currentSha256": "d1def3b6dfb3e05c9532a290741a0d00e15cd0ca7030f2bd7cb5dfceac541e67"
+        },
+        {
+          "file": "src_app_parts-list_parts-list_module_ts.js",
+          "byteIdentical": true,
+          "previousSha256": "87be68f9456ca142f5c7e8fe24fdcb74677a51632c24e9224cc5d0838a0a392a",
+          "currentSha256": "87be68f9456ca142f5c7e8fe24fdcb74677a51632c24e9224cc5d0838a0a392a"
+        },
+        {
+          "file": "src_app_parts-list_parts-list_module_ts.js.map",
+          "byteIdentical": true,
+          "previousSha256": "81b2204330fb15d0fc500c2a901b37d93562ca443478f73cf4c004ae2101cc5a",
+          "currentSha256": "81b2204330fb15d0fc500c2a901b37d93562ca443478f73cf4c004ae2101cc5a"
+        },
+        {
+          "file": "src_app_settings_settings_module_ts.js",
+          "byteIdentical": true,
+          "previousSha256": "db1fd4c671eec36c6910628f9c752fb940f1988e6697ff5ecda0a76331900133",
+          "currentSha256": "db1fd4c671eec36c6910628f9c752fb940f1988e6697ff5ecda0a76331900133"
+        },
+        {
+          "file": "src_app_settings_settings_module_ts.js.map",
+          "byteIdentical": true,
+          "previousSha256": "e085dca32d4925b315fb4106d6ae396a124a5b77f49455eedf3eaff530a34b61",
+          "currentSha256": "e085dca32d4925b315fb4106d6ae396a124a5b77f49455eedf3eaff530a34b61"
+        },
+        {
+          "file": "styles.css",
+          "byteIdentical": true,
+          "previousSha256": "f6af6e7bea428e8f3ef8ac8ec9f619a7b3724ebcb4e513d7c68c21728d0097e0",
+          "currentSha256": "f6af6e7bea428e8f3ef8ac8ec9f619a7b3724ebcb4e513d7c68c21728d0097e0"
+        },
+        {
+          "file": "styles.css.map",
+          "byteIdentical": true,
+          "previousSha256": "156d6a4d43b5a5262f026c2e76156ce37b2ce9cd0e20051fa0e902353e044d52",
+          "currentSha256": "156d6a4d43b5a5262f026c2e76156ce37b2ce9cd0e20051fa0e902353e044d52"
+        },
+        {
+          "file": "vendor.js",
+          "byteIdentical": true,
+          "previousSha256": "f75678a4abdff79f04c2d02587ba32af080c4f97816b6d0809e20ad63cf9fc1f",
+          "currentSha256": "f75678a4abdff79f04c2d02587ba32af080c4f97816b6d0809e20ad63cf9fc1f"
+        },
+        {
+          "file": "vendor.js.map",
+          "byteIdentical": true,
+          "previousSha256": "9dc9696ffa1b853e1482db7dac9779d84a978a6eb05a908e69d3d3d412e41d8b",
+          "currentSha256": "9dc9696ffa1b853e1482db7dac9779d84a978a6eb05a908e69d3d3d412e41d8b"
+        }
+      ]
+    },
+    "visual-reference": {
+      "comparisonBase": "artefacts/angular-upgrade/visual-app",
+      "totalFiles": 92,
+      "allFilesByteIdentical": true,
+      "files": [
+        {
+          "file": "assets\\flag_placeholder.png",
+          "byteIdentical": true,
+          "previousSha256": "bdb66bf929c8f1e9830c282f042d9441b73776c02bfaf1bbb8a0fe221b548920",
+          "currentSha256": "bdb66bf929c8f1e9830c282f042d9441b73776c02bfaf1bbb8a0fe221b548920"
+        },
+        {
+          "file": "assets\\flags.css",
+          "byteIdentical": true,
+          "previousSha256": "2aaeffad600f9b273e15ba897a69d5526e3d128e14a93a80a6a40aea72e35e81",
+          "currentSha256": "2aaeffad600f9b273e15ba897a69d5526e3d128e14a93a80a6a40aea72e35e81"
+        },
+        {
+          "file": "assets\\flags_responsive.png",
+          "byteIdentical": true,
+          "previousSha256": "c6b443c1466f439bc165dc49efc6697ed5300992598b392e4ec82982599e0c18",
+          "currentSha256": "c6b443c1466f439bc165dc49efc6697ed5300992598b392e4ec82982599e0c18"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\all.css",
+          "byteIdentical": true,
+          "previousSha256": "dc62ff84967aa6566f6f1e2c6d7dd7d190afb130cf441c2b1c56a53b9f4595e1",
+          "currentSha256": "dc62ff84967aa6566f6f1e2c6d7dd7d190afb130cf441c2b1c56a53b9f4595e1"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\all.min.css",
+          "byteIdentical": true,
+          "previousSha256": "faa6616fa47d604e36227abce1bd1f61dddfa8c151ea8372f6506e42c64c13b8",
+          "currentSha256": "faa6616fa47d604e36227abce1bd1f61dddfa8c151ea8372f6506e42c64c13b8"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\brands.css",
+          "byteIdentical": true,
+          "previousSha256": "568fea8cdce98e8593ceb58073520b293cd9d21275c3df5e591fc79365d8d5da",
+          "currentSha256": "568fea8cdce98e8593ceb58073520b293cd9d21275c3df5e591fc79365d8d5da"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\brands.min.css",
+          "byteIdentical": true,
+          "previousSha256": "240692733fb3f0dcf07cd126fbc8f2e73f8a445c765ec70bd53bc70d3637b350",
+          "currentSha256": "240692733fb3f0dcf07cd126fbc8f2e73f8a445c765ec70bd53bc70d3637b350"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\fontawesome.css",
+          "byteIdentical": true,
+          "previousSha256": "f810cdc1018b998a4214bb75a5023a33e5c7b6af3daa12553df4a46f67a7e456",
+          "currentSha256": "f810cdc1018b998a4214bb75a5023a33e5c7b6af3daa12553df4a46f67a7e456"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\fontawesome.min.css",
+          "byteIdentical": true,
+          "previousSha256": "2ebbf8b61e07799dacc87fcfe94327ddb958814532cae19117a5d4161afc63e3",
+          "currentSha256": "2ebbf8b61e07799dacc87fcfe94327ddb958814532cae19117a5d4161afc63e3"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\regular.css",
+          "byteIdentical": true,
+          "previousSha256": "2439048356ec66f432fe8333572d92496738884b9f1c067b9317d32a54edd8b4",
+          "currentSha256": "2439048356ec66f432fe8333572d92496738884b9f1c067b9317d32a54edd8b4"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\regular.min.css",
+          "byteIdentical": true,
+          "previousSha256": "63f5c1f5e3fcb8009699ab0d5644bf8ac4edfcb25cf379566920e4ca5e3aa701",
+          "currentSha256": "63f5c1f5e3fcb8009699ab0d5644bf8ac4edfcb25cf379566920e4ca5e3aa701"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\solid.css",
+          "byteIdentical": true,
+          "previousSha256": "50e66fe796cbb07dbcb3642e137eeab03dbb9fd742558f0f916431a7cd66dcc7",
+          "currentSha256": "50e66fe796cbb07dbcb3642e137eeab03dbb9fd742558f0f916431a7cd66dcc7"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\solid.min.css",
+          "byteIdentical": true,
+          "previousSha256": "e5ff486d48b4297ec438473b440a81ad3d4187ccabb393cc3ab4376afea033b9",
+          "currentSha256": "e5ff486d48b4297ec438473b440a81ad3d4187ccabb393cc3ab4376afea033b9"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\svg-with-js.css",
+          "byteIdentical": true,
+          "previousSha256": "218896ced6462945f68cb22e0eb537277e355eaa2fa3bd578ba119c4d431666e",
+          "currentSha256": "218896ced6462945f68cb22e0eb537277e355eaa2fa3bd578ba119c4d431666e"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\svg-with-js.min.css",
+          "byteIdentical": true,
+          "previousSha256": "ed72217c3ea052364201bbefa166735287fad6bc031fa3a118cca3560d1f8bda",
+          "currentSha256": "ed72217c3ea052364201bbefa166735287fad6bc031fa3a118cca3560d1f8bda"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-font-face.css",
+          "byteIdentical": true,
+          "previousSha256": "08f2691ee6bc6f29056450b186179ae1ea03279dcac4addc4e64078ba4e31c46",
+          "currentSha256": "08f2691ee6bc6f29056450b186179ae1ea03279dcac4addc4e64078ba4e31c46"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-font-face.min.css",
+          "byteIdentical": true,
+          "previousSha256": "ec6039da4b1a765b244a94fa49b8e9d570666f5fea43915c4821c0a661cfa4be",
+          "currentSha256": "ec6039da4b1a765b244a94fa49b8e9d570666f5fea43915c4821c0a661cfa4be"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-shims.css",
+          "byteIdentical": true,
+          "previousSha256": "117cb851d20e553ad6fcaff8ae09b8226d91f5a55b3456605128852321ca017a",
+          "currentSha256": "117cb851d20e553ad6fcaff8ae09b8226d91f5a55b3456605128852321ca017a"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v4-shims.min.css",
+          "byteIdentical": true,
+          "previousSha256": "4ceae3f7a11cec88290418b6b732c646bea36a8f8d3e1fd11193ea1329272d4f",
+          "currentSha256": "4ceae3f7a11cec88290418b6b732c646bea36a8f8d3e1fd11193ea1329272d4f"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v5-font-face.css",
+          "byteIdentical": true,
+          "previousSha256": "d5051afcc7433e11828f3ce9f75cfcbb9563b275bb46816d6c3a3ae78a4516df",
+          "currentSha256": "d5051afcc7433e11828f3ce9f75cfcbb9563b275bb46816d6c3a3ae78a4516df"
+        },
+        {
+          "file": "assets\\fontawesome\\css\\v5-font-face.min.css",
+          "byteIdentical": true,
+          "previousSha256": "2c1871707874355ba62c77c968593c441aba6574ff204bb5cff187b4335d7aa3",
+          "currentSha256": "2c1871707874355ba62c77c968593c441aba6574ff204bb5cff187b4335d7aa3"
+        },
+        {
+          "file": "assets\\fontawesome\\js\\all.min.js",
+          "byteIdentical": true,
+          "previousSha256": "4272a8e31cf615d7cf60f80dfa05548bc2376b5bc41a7dae7d40e975e39e40be",
+          "currentSha256": "4272a8e31cf615d7cf60f80dfa05548bc2376b5bc41a7dae7d40e975e39e40be"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-brands-400.ttf",
+          "byteIdentical": true,
+          "previousSha256": "2ef6fdde707193e437c22753755cb32fb8921dde7ff67439b58e6dca3c5a0bef",
+          "currentSha256": "2ef6fdde707193e437c22753755cb32fb8921dde7ff67439b58e6dca3c5a0bef"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-brands-400.woff2",
+          "byteIdentical": true,
+          "previousSha256": "f461742308b7791fee6e9698e1212aa6e8fd1d5e5b41795bfd68e93aa011073d",
+          "currentSha256": "f461742308b7791fee6e9698e1212aa6e8fd1d5e5b41795bfd68e93aa011073d"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-regular-400.ttf",
+          "byteIdentical": true,
+          "previousSha256": "12dea17b68aafb3f43ca81628a01b33fed73d9bbd434dbd2bc8512bcff0534a6",
+          "currentSha256": "12dea17b68aafb3f43ca81628a01b33fed73d9bbd434dbd2bc8512bcff0534a6"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-regular-400.woff2",
+          "byteIdentical": true,
+          "previousSha256": "7ba24c4138c4c3cfe694a8fc8943b8ce21b9bfbb14edcb290b8654fcaa365d6b",
+          "currentSha256": "7ba24c4138c4c3cfe694a8fc8943b8ce21b9bfbb14edcb290b8654fcaa365d6b"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-solid-900.ttf",
+          "byteIdentical": true,
+          "previousSha256": "67a880b4ba529b9acc303d729b56b4fd7086fb22d425660410b8c51e1784f629",
+          "currentSha256": "67a880b4ba529b9acc303d729b56b4fd7086fb22d425660410b8c51e1784f629"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-solid-900.woff2",
+          "byteIdentical": true,
+          "previousSha256": "e2c5cf547e2e8d74a17d05c5ad9f1f593ca526452e228124294fa983b908ff82",
+          "currentSha256": "e2c5cf547e2e8d74a17d05c5ad9f1f593ca526452e228124294fa983b908ff82"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-v4compatibility.ttf",
+          "byteIdentical": true,
+          "previousSha256": "8d9500e8440179eb4187f339e0b1a2e84a0f298a899250e6ac6d218b6e5a407f",
+          "currentSha256": "8d9500e8440179eb4187f339e0b1a2e84a0f298a899250e6ac6d218b6e5a407f"
+        },
+        {
+          "file": "assets\\fontawesome\\webfonts\\fa-v4compatibility.woff2",
+          "byteIdentical": true,
+          "previousSha256": "7c377405b7e79354546bdddb7dcd73bd38760c95c2be44ea1e3097582dac642c",
+          "currentSha256": "7c377405b7e79354546bdddb7dcd73bd38760c95c2be44ea1e3097582dac642c"
+        },
+        {
+          "file": "assets\\icons\\close-legacy.svg",
+          "byteIdentical": true,
+          "previousSha256": "4b99c2194841e74cfaaae0b332971ce53d315cf4f2459535ff37aa72214d0f60",
+          "currentSha256": "4b99c2194841e74cfaaae0b332971ce53d315cf4f2459535ff37aa72214d0f60"
+        },
+        {
+          "file": "assets\\icons\\icon-trans32.png",
+          "byteIdentical": true,
+          "previousSha256": "e4806ca5382ead51a8351893aa8d002a916c617a4018449a8f550b038dcdc788",
+          "currentSha256": "e4806ca5382ead51a8351893aa8d002a916c617a4018449a8f550b038dcdc788"
+        },
+        {
+          "file": "assets\\icons\\icon-trans48.png",
+          "byteIdentical": true,
+          "previousSha256": "647b94e0412ec000a441a35d327fa22b76466b6476c8849af605f0465d5d5b62",
+          "currentSha256": "647b94e0412ec000a441a35d327fa22b76466b6476c8849af605f0465d5d5b62"
+        },
+        {
+          "file": "assets\\icons\\icon.png",
+          "byteIdentical": true,
+          "previousSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251",
+          "currentSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251"
+        },
+        {
+          "file": "assets\\icons\\icon128.png",
+          "byteIdentical": true,
+          "previousSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251",
+          "currentSha256": "81e14ac6caba747a641c6f798138becbbd26ae00c50d8e3e5904ca9e55921251"
+        },
+        {
+          "file": "assets\\icons\\icon16.png",
+          "byteIdentical": true,
+          "previousSha256": "6b451280bd8395e3d93c6c1934372ad86add6481b4f68409bff4801be62af47b",
+          "currentSha256": "6b451280bd8395e3d93c6c1934372ad86add6481b4f68409bff4801be62af47b"
+        },
+        {
+          "file": "assets\\icons\\icon24.png",
+          "byteIdentical": true,
+          "previousSha256": "f5166fb624feaac7c15e03f78cd82a07c3a47cd0ac900a26f9d5eb5ab1ac624f",
+          "currentSha256": "f5166fb624feaac7c15e03f78cd82a07c3a47cd0ac900a26f9d5eb5ab1ac624f"
+        },
+        {
+          "file": "assets\\icons\\icon32.png",
+          "byteIdentical": true,
+          "previousSha256": "fae33438e9251935b7cbe7f2a3815836648feb06741da916d7137649c67d569a",
+          "currentSha256": "fae33438e9251935b7cbe7f2a3815836648feb06741da916d7137649c67d569a"
+        },
+        {
+          "file": "assets\\icons\\icon48.png",
+          "byteIdentical": true,
+          "previousSha256": "dd6b236fe0f12b4f94aa6537f087d79ab64b6b018f66aa5acf460e65c25680e6",
+          "currentSha256": "dd6b236fe0f12b4f94aa6537f087d79ab64b6b018f66aa5acf460e65c25680e6"
+        },
+        {
+          "file": "assets\\icons\\icon96.png",
+          "byteIdentical": true,
+          "previousSha256": "e059e192ebff14a85372f73c9b37fdacd335a899c96784f9a77e70bd48a57a83",
+          "currentSha256": "e059e192ebff14a85372f73c9b37fdacd335a899c96784f9a77e70bd48a57a83"
+        },
+        {
+          "file": "assets\\icons\\logo.png",
+          "byteIdentical": true,
+          "previousSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e",
+          "currentSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e"
+        },
+        {
+          "file": "assets\\logo.png",
+          "byteIdentical": true,
+          "previousSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e",
+          "currentSha256": "178ebb07303a597b4fffed6abd0f18cccc8cccb13f67c9e55d0d1b1290ceab7e"
+        },
+        {
+          "file": "assets\\placeholder.png",
+          "byteIdentical": true,
+          "previousSha256": "ad83b8e84ae8c749d12d50fd26be27bb31d276ff3a83f6d74f76411a358d6f06",
+          "currentSha256": "ad83b8e84ae8c749d12d50fd26be27bb31d276ff3a83f6d74f76411a358d6f06"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-500.woff",
+          "byteIdentical": true,
+          "previousSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7",
+          "currentSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-500.woff2",
+          "byteIdentical": true,
+          "previousSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278",
+          "currentSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-700.woff",
+          "byteIdentical": true,
+          "previousSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8",
+          "currentSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-700.woff2",
+          "byteIdentical": true,
+          "previousSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5",
+          "currentSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-regular.woff",
+          "byteIdentical": true,
+          "previousSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada",
+          "currentSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada"
+        },
+        {
+          "file": "assets\\theme\\assets\\fonts\\roboto-v20-latin-ext_latin-regular.woff2",
+          "byteIdentical": true,
+          "previousSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1",
+          "currentSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1"
+        },
+        {
+          "file": "assets\\theme\\brickhunter-base.scss",
+          "byteIdentical": true,
+          "previousSha256": "664abf4ffec636a0315247be96666c28568b165756a8d61e62bf564e89295e9e",
+          "currentSha256": "664abf4ffec636a0315247be96666c28568b165756a8d61e62bf564e89295e9e"
+        },
+        {
+          "file": "assets\\theme\\temp_theme.css",
+          "byteIdentical": true,
+          "previousSha256": "7c6ef94c29d049bc2c7ff97d3f09ddd78170341a243143d3dd1e58cba34ed56f",
+          "currentSha256": "7c6ef94c29d049bc2c7ff97d3f09ddd78170341a243143d3dd1e58cba34ed56f"
+        },
+        {
+          "file": "assets\\theme\\theme.css",
+          "byteIdentical": true,
+          "previousSha256": "4f0ab7e3f49dc62dd901e8f91da6e664d4ec029b999926c787c822b468d920f7",
+          "currentSha256": "4f0ab7e3f49dc62dd901e8f91da6e664d4ec029b999926c787c822b468d920f7"
+        },
+        {
+          "file": "background.js",
+          "byteIdentical": true,
+          "previousSha256": "56ed4b46037d2e2e88c3c120c24404bf9585a0dda4609487f924076753471aa7",
+          "currentSha256": "56ed4b46037d2e2e88c3c120c24404bf9585a0dda4609487f924076753471aa7"
+        },
+        {
+          "file": "background.js.map",
+          "byteIdentical": true,
+          "previousSha256": "20e86f46665964b33dce42ca4ec4eba3ea2bf9d0756975d904fa960e8c6185b9",
+          "currentSha256": "20e86f46665964b33dce42ca4ec4eba3ea2bf9d0756975d904fa960e8c6185b9"
+        },
+        {
+          "file": "common.js",
+          "byteIdentical": true,
+          "previousSha256": "0e2a71f47abf867b5ceb7a586639ee692a82422ac119978bd0dd17818a3842fa",
+          "currentSha256": "0e2a71f47abf867b5ceb7a586639ee692a82422ac119978bd0dd17818a3842fa"
+        },
+        {
+          "file": "common.js.map",
+          "byteIdentical": true,
+          "previousSha256": "1707d55d3f8faf3752f3c51ea4f6d568c8324623ee31dcaabdb498adfa3c7377",
+          "currentSha256": "1707d55d3f8faf3752f3c51ea4f6d568c8324623ee31dcaabdb498adfa3c7377"
+        },
+        {
+          "file": "fa-solid-900.ttf",
+          "byteIdentical": true,
+          "previousSha256": "fbbf06d7437aa30f3cd44c968380193545a8fc3eadfb7ad897bbb101eefec5a2",
+          "currentSha256": "fbbf06d7437aa30f3cd44c968380193545a8fc3eadfb7ad897bbb101eefec5a2"
+        },
+        {
+          "file": "fa-solid-900.woff2",
+          "byteIdentical": true,
+          "previousSha256": "9fc85f3a4544ab0d570c7f8f9bbb88db8d92c359b2707580ea8b07c75673eae2",
+          "currentSha256": "9fc85f3a4544ab0d570c7f8f9bbb88db8d92c359b2707580ea8b07c75673eae2"
+        },
+        {
+          "file": "index.html",
+          "byteIdentical": true,
+          "previousSha256": "b51a1e9f5c420d47bd4c0358aa31150ef6947db61790cbcf3be2b91f315d4950",
+          "currentSha256": "b51a1e9f5c420d47bd4c0358aa31150ef6947db61790cbcf3be2b91f315d4950"
+        },
+        {
+          "file": "legocontentscript.js",
+          "byteIdentical": true,
+          "previousSha256": "d8c7948e5d888e6459ecd92a70b557293efd46a7fe7c984d9d14366813477500",
+          "currentSha256": "d8c7948e5d888e6459ecd92a70b557293efd46a7fe7c984d9d14366813477500"
+        },
+        {
+          "file": "legocontentscript.js.map",
+          "byteIdentical": true,
+          "previousSha256": "ed79f95f247c3511f8e1a3c5c44a62410cf4926d6ab0135f1f76d8a2a21066f1",
+          "currentSha256": "ed79f95f247c3511f8e1a3c5c44a62410cf4926d6ab0135f1f76d8a2a21066f1"
+        },
+        {
+          "file": "main.js",
+          "byteIdentical": true,
+          "previousSha256": "f7ac55dfae8abfcf71ac5fad777a2821515ba6d72fdea2d326163e869c0f884e",
+          "currentSha256": "f7ac55dfae8abfcf71ac5fad777a2821515ba6d72fdea2d326163e869c0f884e"
+        },
+        {
+          "file": "main.js.map",
+          "byteIdentical": true,
+          "previousSha256": "a0717502478c1c51aaf7e8ee1d1c970d1358233920cbedf53c3137f72ff3b84c",
+          "currentSha256": "a0717502478c1c51aaf7e8ee1d1c970d1358233920cbedf53c3137f72ff3b84c"
+        },
+        {
+          "file": "manifest.json",
+          "byteIdentical": true,
+          "previousSha256": "8fe9c39a291a0e8c7aa3573ab9535c0b8191f887030e416295cfe67ddea11d54",
+          "currentSha256": "8fe9c39a291a0e8c7aa3573ab9535c0b8191f887030e416295cfe67ddea11d54"
+        },
+        {
+          "file": "node_modules_canvg_lib_index_es_js.js",
+          "byteIdentical": true,
+          "previousSha256": "c88666666cf5e6ac772fb714d3960c0bccdb261e04350682a0e9884bd73af2ed",
+          "currentSha256": "c88666666cf5e6ac772fb714d3960c0bccdb261e04350682a0e9884bd73af2ed"
+        },
+        {
+          "file": "node_modules_canvg_lib_index_es_js.js.map",
+          "byteIdentical": true,
+          "previousSha256": "0db0f1a6649a0d8e74c19587e3e8b240119abda3c6128dc822fda96637c54171",
+          "currentSha256": "0db0f1a6649a0d8e74c19587e3e8b240119abda3c6128dc822fda96637c54171"
+        },
+        {
+          "file": "node_modules_dompurify_dist_purify_js.js",
+          "byteIdentical": true,
+          "previousSha256": "ca89530206ce822ee84455a303d4a38177d03b71fa8028b95574c5d6757f3fe7",
+          "currentSha256": "ca89530206ce822ee84455a303d4a38177d03b71fa8028b95574c5d6757f3fe7"
+        },
+        {
+          "file": "node_modules_dompurify_dist_purify_js.js.map",
+          "byteIdentical": true,
+          "previousSha256": "d544362848569d7e31b94d6512d79013f31598ca84c7b00019a5add1739876bd",
+          "currentSha256": "d544362848569d7e31b94d6512d79013f31598ca84c7b00019a5add1739876bd"
+        },
+        {
+          "file": "node_modules_html2canvas_dist_html2canvas_js.js",
+          "byteIdentical": true,
+          "previousSha256": "5d27901d0fe29da70b82ee305442ce5609745dd17904201217f87685726b3ad8",
+          "currentSha256": "5d27901d0fe29da70b82ee305442ce5609745dd17904201217f87685726b3ad8"
+        },
+        {
+          "file": "node_modules_html2canvas_dist_html2canvas_js.js.map",
+          "byteIdentical": true,
+          "previousSha256": "cf75eaa134adab8c961c0593a1221ee3224c33c31573e8852822698d64748dfe",
+          "currentSha256": "cf75eaa134adab8c961c0593a1221ee3224c33c31573e8852822698d64748dfe"
+        },
+        {
+          "file": "polyfills.js",
+          "byteIdentical": true,
+          "previousSha256": "337921a0b8e142e0704dad310935ab7d9bf123f42b331d6b6145054ece1cd407",
+          "currentSha256": "337921a0b8e142e0704dad310935ab7d9bf123f42b331d6b6145054ece1cd407"
+        },
+        {
+          "file": "polyfills.js.map",
+          "byteIdentical": true,
+          "previousSha256": "175966ca19ddb231e04e8f997b4346abeabb383f67d2e741956ebaad07ff72c5",
+          "currentSha256": "175966ca19ddb231e04e8f997b4346abeabb383f67d2e741956ebaad07ff72c5"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-500.woff",
+          "byteIdentical": true,
+          "previousSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7",
+          "currentSha256": "d092ad8e3d17179cb5546ff15e498e81951bd220550af36d5481a9e59abd01f7"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-500.woff2",
+          "byteIdentical": true,
+          "previousSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278",
+          "currentSha256": "fa074f87d637e60c5639e30dc8f11787bb2400bc759e56fa7ddae1c28bdb4278"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-700.woff",
+          "byteIdentical": true,
+          "previousSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8",
+          "currentSha256": "e24c27524f473d80d475ba13b3453742517bc39c2252436364823dcdd61c07b8"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-700.woff2",
+          "byteIdentical": true,
+          "previousSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5",
+          "currentSha256": "8d9364a0dd956af9d5f0580c8247f61c49aebaefb9e4c48d60fb3d045f1cedd5"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-regular.woff",
+          "byteIdentical": true,
+          "previousSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada",
+          "currentSha256": "e70a908bb6cfbf27aabb21fb5ca2ea8c5a5ac7ee5aba23a70fbeefe379ae5ada"
+        },
+        {
+          "file": "roboto-v20-latin-ext_latin-regular.woff2",
+          "byteIdentical": true,
+          "previousSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1",
+          "currentSha256": "b86b128b0701a436d02aa06fb2027845a0e69e4bebdd22012c1e0578508e34d1"
+        },
+        {
+          "file": "runtime.js",
+          "byteIdentical": true,
+          "previousSha256": "38d93b0f6dd4950c3b75c841fd975525571dc3ad7e58e1e2af601846866c5dff",
+          "currentSha256": "38d93b0f6dd4950c3b75c841fd975525571dc3ad7e58e1e2af601846866c5dff"
+        },
+        {
+          "file": "runtime.js.map",
+          "byteIdentical": true,
+          "previousSha256": "c7441d981ec13fdb34d857af28c87b6b3d5bea64da43cc3acd49d6de2111d21d",
+          "currentSha256": "c7441d981ec13fdb34d857af28c87b6b3d5bea64da43cc3acd49d6de2111d21d"
+        },
+        {
+          "file": "src_app_browse-parts_browse-parts_module_ts.js",
+          "byteIdentical": true,
+          "previousSha256": "76a01622a2cb58367721fd611877c1f267ce48dc03bfb7291ce7c55f7d60db16",
+          "currentSha256": "76a01622a2cb58367721fd611877c1f267ce48dc03bfb7291ce7c55f7d60db16"
+        },
+        {
+          "file": "src_app_browse-parts_browse-parts_module_ts.js.map",
+          "byteIdentical": true,
+          "previousSha256": "71a494b06d51312fc001efd4cd3153846192b5a2783b781dd78ca0795fa97964",
+          "currentSha256": "71a494b06d51312fc001efd4cd3153846192b5a2783b781dd78ca0795fa97964"
+        },
+        {
+          "file": "src_app_info_info_module_ts.js",
+          "byteIdentical": true,
+          "previousSha256": "546e99e15939051d5ed2ed46f194e0399745f3467434824b2f88ee5e9aa78c4d",
+          "currentSha256": "546e99e15939051d5ed2ed46f194e0399745f3467434824b2f88ee5e9aa78c4d"
+        },
+        {
+          "file": "src_app_info_info_module_ts.js.map",
+          "byteIdentical": true,
+          "previousSha256": "d1def3b6dfb3e05c9532a290741a0d00e15cd0ca7030f2bd7cb5dfceac541e67",
+          "currentSha256": "d1def3b6dfb3e05c9532a290741a0d00e15cd0ca7030f2bd7cb5dfceac541e67"
+        },
+        {
+          "file": "src_app_parts-list_parts-list_module_ts.js",
+          "byteIdentical": true,
+          "previousSha256": "faad165e491e12784e2f74c773880acfcf5c4af0c54cf32f65167cec0d9aebe7",
+          "currentSha256": "faad165e491e12784e2f74c773880acfcf5c4af0c54cf32f65167cec0d9aebe7"
+        },
+        {
+          "file": "src_app_parts-list_parts-list_module_ts.js.map",
+          "byteIdentical": true,
+          "previousSha256": "49ea555669aaaa8e973871319413934c647c920cde59269d9a5e25cd59d6ca09",
+          "currentSha256": "49ea555669aaaa8e973871319413934c647c920cde59269d9a5e25cd59d6ca09"
+        },
+        {
+          "file": "src_app_settings_settings_module_ts.js",
+          "byteIdentical": true,
+          "previousSha256": "db1fd4c671eec36c6910628f9c752fb940f1988e6697ff5ecda0a76331900133",
+          "currentSha256": "db1fd4c671eec36c6910628f9c752fb940f1988e6697ff5ecda0a76331900133"
+        },
+        {
+          "file": "src_app_settings_settings_module_ts.js.map",
+          "byteIdentical": true,
+          "previousSha256": "e085dca32d4925b315fb4106d6ae396a124a5b77f49455eedf3eaff530a34b61",
+          "currentSha256": "e085dca32d4925b315fb4106d6ae396a124a5b77f49455eedf3eaff530a34b61"
+        },
+        {
+          "file": "styles.css",
+          "byteIdentical": true,
+          "previousSha256": "f6af6e7bea428e8f3ef8ac8ec9f619a7b3724ebcb4e513d7c68c21728d0097e0",
+          "currentSha256": "f6af6e7bea428e8f3ef8ac8ec9f619a7b3724ebcb4e513d7c68c21728d0097e0"
+        },
+        {
+          "file": "styles.css.map",
+          "byteIdentical": true,
+          "previousSha256": "156d6a4d43b5a5262f026c2e76156ce37b2ce9cd0e20051fa0e902353e044d52",
+          "currentSha256": "156d6a4d43b5a5262f026c2e76156ce37b2ce9cd0e20051fa0e902353e044d52"
+        },
+        {
+          "file": "vendor.js",
+          "byteIdentical": true,
+          "previousSha256": "bc90ea266b71145b428f6b5b163061f8a533daa2f41ac8d21d9c74f564dfa3d9",
+          "currentSha256": "bc90ea266b71145b428f6b5b163061f8a533daa2f41ac8d21d9c74f564dfa3d9"
+        },
+        {
+          "file": "vendor.js.map",
+          "byteIdentical": true,
+          "previousSha256": "712eed5300aac761700b33a15e34d35cc18f712f2b1c4331ed81dd7a033462e3",
+          "currentSha256": "712eed5300aac761700b33a15e34d35cc18f712f2b1c4331ed81dd7a033462e3"
+        }
+      ]
+    }
+  },
+  "historicalUiAcceptanceUnchanged": true,
+  "browserSuiteRerun": false,
+  "uiAcceptanceEvidence": "The complete automated UI acceptance is preserved in angular-22-ui-acceptance-check.json. No new UI acceptance claimed; application output byte comparison is recorded here.",
+  "node": "24.21.0",
+  "npm": "11.19.0"
+}

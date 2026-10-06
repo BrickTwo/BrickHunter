@@ -1,6 +1,13 @@
 # Direkte Pakete: Upgrade-Prüfung
 
-## Aktuell: Angular-22-UI-Abnahme abgeschlossen
+## Aktuell: Ungenutzte Übersetzungspakete bereinigt
+
+Commit-Punkt 35 am 6. Oktober 2026, Basis **`d37eae4`**: **`@ngx-translate/core` 15.0.0** und **`@ngx-translate/http-loader` 8.0.0** aus Manifest und Lockfile entfernt. Prüfung aller 234 relevanten Quelldateien: keine Imports, TranslateModule-/Service-/Loader-Konfiguration, Pipe oder Direktive und keine Übersetzungsdateien. Die Länder-/Sprachwahl verwendet den eigenen `LocaleService`; Angular-Locales bleiben unverändert. Die geplante Provider-/Loader-Prüfung ist damit abgeschlossen; ein Upgrade oder eine neue Übersetzungsintegration ist für den bestehenden Funktionsumfang nicht erforderlich.
+
+Alle anderen Paket-/Lockeinträge unverändert. `npm ci`, `npm ls --all`, **56 Unit-Tests**, Konfigurations-Typecheck und drei Builds erfolgreich. Vollständige Produktions-, Entwicklungs- und Referenzausgaben byteidentisch zum zuvor abgenommenen Angular-22-Stand. [Bereinigungsbericht](angular-upgrade-reference/post-angular22-unused-translate-check.json). Die historischen Tabellen und Versionen unten bleiben erhalten; dort aufgeführte ngx-translate-Zielversionen waren ursprüngliche Kandidaten. Als Nächstes jsPDF/AutoTable und danach der separate Font-Awesome-7-Abgleich.
+
+## Gesicherte Angular-22-UI-Abnahme
+
 
 Am 6. Oktober 2026 erneut anhand offizieller npm-Metadaten geprüft und installiert: Angular Framework/CLI/Compiler/Localize/Build-Devkit und CDK **22.2.1**, Custom Webpack **22.0.1**, NgRx **22.0.1**, PrimeNG Community **22.1.2**, Themes **3.0.1**, Angular Font Awesome **5.1.0**, TypeScript **6.0.3**. Node **24.21.0** / npm **11.19.0** festgeschrieben. Tatsächlich aufgelöste Versionen aller direkten Pakete stehen im [Grundmigrationsbericht](angular-upgrade-reference/angular-22-foundation-check.json); ältere Abschnitte darunter beschreiben die jeweilige Historie und damalige Kandidaten.
 
