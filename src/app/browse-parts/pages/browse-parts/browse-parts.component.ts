@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { faBook } from '../../../shared/icons/reference-icons';
 
 @Component({
   selector: 'app-browse-parts',

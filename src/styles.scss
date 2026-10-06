@@ -14,6 +14,15 @@
 @use '../node_modules/@fortawesome/fontawesome-free/css/solid.min.css';
 @use './assets/flags.css';
 
+// Only the existing pseudo-element artwork uses this unchanged, attributed reference font.
+@font-face {
+  font-family: 'BrickHunter Reference Icons';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url('./assets/icons/brickhunter-reference-solid.woff2') format('woff2');
+}
+
 @layer primeng, brickhunter;
 
 // SVG Core 7 defaults to fixed widths. Keep the natural widths of our v6 glyphs.
@@ -39,7 +48,7 @@
   // theme overrides
 
   .pi {
-    font-family: 'Font Awesome 6 Free';
+    font-family: 'BrickHunter Reference Icons';
     font-style: normal;
   }
 

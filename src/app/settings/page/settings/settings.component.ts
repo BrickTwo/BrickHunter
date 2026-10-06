@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { faGear } from '../../../shared/icons/reference-icons';
 
 @Component({
   selector: 'app-settings',

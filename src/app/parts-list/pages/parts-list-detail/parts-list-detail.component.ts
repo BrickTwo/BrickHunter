@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
+import { faClipboardList } from '../../../shared/icons/reference-icons';
 import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
 import { Part, PartsList, Product } from 'src/app/models/parts-list';

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faList } from '@fortawesome/free-solid-svg-icons';
+import { faList } from '../../../shared/icons/reference-icons';
 import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { PartsList } from 'src/app/models/parts-list';

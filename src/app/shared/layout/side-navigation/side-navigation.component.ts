@@ -6,7 +6,7 @@ import {
   faClockRotateLeft,
   faBook,
   faGear,
-} from '@fortawesome/free-solid-svg-icons';
+} from '../../icons/reference-icons';
 import { VersionService } from 'src/app/core/services/version.service';
 
 @Component({

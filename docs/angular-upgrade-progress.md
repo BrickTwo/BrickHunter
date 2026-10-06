@@ -1350,3 +1350,37 @@ git commit -m "chore: upgrade PDF libraries and preserve XML exports"
 ```
 
 **Hier ist Commit-Stopp 36.** Kein Commit automatisch erstellt. Keine weitere manuelle Aktion in dieser Etappe erforderlich. Nach dem Commit und `weiter` folgt Font Awesome 7 mit separatem Iconabgleich. Lazyload-Nutzungsprüfung und echte Chrome-/Firefox-Extension-Release-Abnahme bleiben im Gesamtplan offen; reale LEGO-/BrickLink-Konten und Warenkorbübertragungen gehören nicht zur Offline-Abnahme.
+
+
+## Commit-Punkt 37: Font Awesome 7 migrieren und Referenzicons erhalten
+
+Abgeschlossen am **6. Oktober 2026**, Ausgangscommit **`96074fa`** (`chore: upgrade PDF libraries and preserve XML exports`), anfangs sauberer Arbeitsstand. Angular/PrimeNG/Theme und PDF-/XML-Implementierung bleiben unverändert; sämtliche bisherigen Prüfberichte werden erhalten.
+
+### Erfolgreich umgesetzt
+
+- **Font Awesome Free / Solid SVG Icons 6.5.1 → 7.3.1** gemeinsam und regulär installiert. Offizielle npm-Metadaten erneut geprüft; Angular Font Awesome **5.1.0**, Angular-22-Peer und SVG Core **7.3.1** passen bereits. Die früher getrennten Common-Types-Einträge werden durch die gemeinsame v7-Kombination dedupliziert; alle Lockänderungen sind im Bericht erfasst. Kein Force- oder Peer-Bypass.
+- Drei bisherige Quellen ausdrücklich geprüft: Angular-SVG-Definitionen aus 6.5.1, separat in index.html geladenes **all.min.js 6.3.0** und Solid-Webfont 6.5.1. Vendorte reguläre CSS-/JS-/WOFF2-Dateien auf **7.3.1** aktualisiert und bytegenau mit dem installierten Paket verglichen. Die vier bisherigen TTF-Dateien entfallen entsprechend der offiziellen WOFF2-Umstellung. Ausschließlich das zuvor eingebundene all.min.js wird als JavaScript-Asset mitgeführt; keine zusätzlichen ungenutzten Paket-Skripte übernommen.
+- **Referenzformen ausdrücklich erhalten:** direktes v7-Rendering verändert Formen/ViewBoxes bzw. die Font-Auflösung. Statt eines ungewollten Designwechsels verwendet die Anwendung zehn lokal typisierte SVG-Definitionen in `src/app/shared/icons/reference-icons.ts`. Sie behalten Pfade, Unicode und natürliche Abmessungen aus 6.5.1. Nicht mehr typisierte numerische Aliaswerte entfernt; verwendete Namen bleiben erhalten. `IconDefinition` kommt aus dem deklarierten v7-SVG-Paket. Der Type-only-Import erzeugt keine Laufzeit-Abhängigkeit; die Umstellung der Typquelle erzeugt identisches JavaScript.
+- **25 Solid-/8 Regular-Referenzdefinitionen** aus dem bisherigen Browser-Asset über die öffentliche `FontAwesome.library.add`-API direkt nach der v7-Laufzeit registriert. Die Regular-Prüfung umfasst zusätzlich konservativ alle verfügbaren Regular-Varianten der verwendeten Namen. Keine Manipulation von node_modules oder SVG-DOM nach dem Rendern. Die vorhandene öffentliche CSS-Einstellung für natürliche SVG-Breiten bleibt bestehen.
+- **19 bestehende Pseudo-Iconcodes** verwenden eine ausdrücklich separat bezeichnete `BrickHunter Reference Icons`-Font. Die WOFF2-Datei ist bytegleich zur bisherigen 6.5.1-Font; das CSS greift dadurch nicht auf eine nach dem Upgrade fehlende v6-Familie zurück. Die reguläre neue Solid-Font ist v7. Diese bewusste Beibehaltung statischer Referenzartwork ist keine vollständige Neuzeichnung aller bisherigen Icons als v7-Artwork. Neue v7-Glyphen bleiben über die aktualisierten Pakete verfügbar; ein späterer Designwechsel müsste separat visuell abgenommen werden.
+- Herkunft, Copyright und vollständige Free-Lizenzen für Referenz-SVGs/Font in `src/assets/icons/REFERENCE-ICONS-LICENSE.txt`, reguläre v7-Lizenz in `src/assets/fontawesome/LICENSE.txt`. Neue reproduzierbare Browserprüfung `scripts/upgrade/verify-icon-reference.cjs` erzeugt Glyphenatlas und Geometriemessungen; auf einem frischen Checkout liest sie das Referenzinventar aus dem dauerhaften Prüfbericht.
+
+Quellen: [offizielle v7-Änderungen](https://docs.fontawesome.com/upgrade/whats-changed/), [Web-Migration](https://docs.fontawesome.com/upgrade/upgrade-on-web/), insbesondere feste Standardbreiten, neue SVG-Canvas und WOFF2-Dateien.
+
+### Validierung
+
+- Sauberes **`npm ci`**, **`npm ls --all`**, **64 Unit-Tests**, Konfigurations-Typecheck sowie Produktions-, Entwicklungs- und Referenzbuild erfolgreich. Bestehende XML- und IndexedDB-Regressionstests enthalten. npm-Audit-/Installationsskript-/Webpack-/Karma-/Sass-/CommonJS-Hinweise bleiben sichtbar; keine pauschale Skriptfreigabe oder Audit-Force-Migration. Der Launcher meldet zunächst ChromeHeadless-/Temp-Verzeichnis-Fehler; Edge verbindet sich dennoch, alle 64 Tests bestehen, CLI-Exitcode 0. Vollständige Meldungen in tests.log.
+- **62 Glyphenvarianten bei jeweils 16, 24 und 32 px**, insgesamt **186 Darstellungen**: Solid-/Regular-Klassen, Angular-Referenzexporte und alle bestehenden Pseudo-Codes. Referenzatlas aus der alten Version vor Installation erfasst, unverändertes v7-Rendering separat dokumentiert, endgültiger Atlas aus dem finalen Build geprüft. **0 abweichende Rohpixel, gesamtes PNG byteidentisch**, sämtliche Pfade/ViewBoxes und Abmessungen identisch. Alle Glyphen visuell vollständig und ohne fehlende Zeichen geprüft. D3D11-Renderer stabil, keine Browserfehler.
+- **60 vollständige UI-Browserprüfungen / 88 Bilder** über vier Viewports. Keine Page-/Console-/bekannten Lifecycle-Fehler oder ungültiger Lizenzbanner. D3D11-Renderer vor/nach unverändert, Hardware-Compositing und Rasterization aktiv. **79/88 Bilder byteidentisch** zum abgenommenen PDF-/XML-Stand; sonst ausschließlich die einzeln dokumentierten Tabs-Eckpixel. Keine Maskierung oder allgemeine Toleranz. Die UI-Prüfung umfasst dynamisch angezeigte Icons, Navigation, Auswahl-/Hover-/Disabled-Zustände, Meldungen, Import/Export und Transfer-Fixtures.
+- Initialbundle Produktion **2.82 MB**, Entwicklung **8.19 MB**, Budgets unverändert. Chrome-Manifest byteidentisch, eigenständige background.js-/legocontentscript.js-Entries und keine Fixture-Marker in regulären Ausgaben bestätigt. Beide Indexdateien laden den externen Referenzregistrierungsscript nach der v7-Laufzeit.
+- Angular-17-Originalinventar per SHA-256 bestätigt; historische UI-/PDF-/XML-Berichte unverändert. Lizenzschlüssel bleibt in ignorierten lokalen Dateien und fehlt in sämtlichen versionierten/nicht ignorierten Dateien. Referenzfont-Hash, vollständiges Glypheninventar, vendorte Pakethashes, Lockänderungen, Atlas-/UI-Rohvergleich und Renderer im [Font-Awesome-Abnahmebericht](angular-upgrade-reference/post-angular22-fontawesome-check.json).
+- Lokale Logs und Atlanten: `artefacts/angular-upgrade/post-angular22/fontawesome/`, insbesondere install.log, npm-ci.log, npm-ls.log, tests.log, build-config.log, production.log, development.log, visual-reference.log, validation.json, metadata.json sowie baseline-complete / raw-v7 / final. Vollständiger UI-Capture unter `artefacts/angular-upgrade/visual/angular-22-fontawesome-final`. Alle Testartefakte bleiben ignoriert.
+
+### Jetzt manuell: Icon-Etappe sichern
+
+```powershell
+git add package.json package-lock.json src scripts/upgrade docs
+git commit -m "chore: upgrade Font Awesome runtime and preserve reference icons"
+```
+
+**Hier ist Commit-Stopp 37.** Kein Commit automatisch erstellt. Keine weitere manuelle Aktion in dieser Etappe erforderlich. Nach diesem Commit und `weiter` folgt die Lazyload-Nutzungs-/Laufzeitprüfung. Echte Chrome-/Firefox-Extension-Release-Abnahme, reale Konten und Warenkorbübertragungen bleiben anschließend offen.

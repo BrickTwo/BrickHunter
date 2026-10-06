@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo } from '../../../shared/icons/reference-icons';
 import { VersionService } from 'src/app/core/services/version.service';
 
 @Component({

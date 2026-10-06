@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { faCheck, faO, faRightLong } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faO, faRightLong } from '../../icons/reference-icons';
 
 @Component({
   selector: 'app-progress-icon',
