@@ -1,14 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'dexie';
 import { PartsList } from 'src/app/models/parts-list';
 import { PartsListService } from 'src/app/parts-list/services/parts-list.service';
 import { BrowsePartsService } from '../../service/browse-parts.service';
 
 @Component({
-    selector: 'app-browse-parts-parts-lists',
-    templateUrl: './browse-parts-parts-lists.component.html',
-    styleUrls: ['./browse-parts-parts-lists.component.scss'],
-    standalone: false
+  selector: 'app-browse-parts-parts-lists',
+  templateUrl: './browse-parts-parts-lists.component.html',
+  styleUrls: ['./browse-parts-parts-lists.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BrowsePartsPartsListsComponent implements OnInit, OnDestroy {
   partsLists: PartsList[];

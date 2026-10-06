@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PartsListService } from '../../services/parts-list.service';
 import { ColorService } from 'src/app/core/services/color.service';
 import { Part, PartsList } from 'src/app/models/parts-list';
@@ -10,10 +10,11 @@ import { ImportService } from '../../services/import.service';
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-parts-list-export',
-    templateUrl: './parts-list-export.component.html',
-    styleUrls: ['./parts-list-export.component.scss'],
-    standalone: false
+  selector: 'app-parts-list-export',
+  templateUrl: './parts-list-export.component.html',
+  styleUrls: ['./parts-list-export.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsListExportComponent {
   display = false;
@@ -228,7 +229,7 @@ export class PartsListExportComponent {
 
     const parts = this.partsListService.getParts(this.partsList.uuid, this.selectedFilterValue);
 
-    console.log("brickLinkExportPrice", this.brickLinkExportPrice)
+    console.log('brickLinkExportPrice', this.brickLinkExportPrice);
 
     parts.map(async part => {
       const color = await this.colorService.getColor(part.color);

@@ -1222,3 +1222,34 @@ git commit -m "fix: complete Angular 21 UI acceptance"
 ```
 
 Keine zusätzliche manuelle Einrichtung für diese Abnahme erforderlich. Nach dem Commit und `weiter` kann Angular 22 beginnen. Der Community-Lizenzschlüssel wird vor dem PrimeNG-22-Setup benötigt.
+
+
+## Commit-Punkt 33: Angular-22-Grundmigration
+
+Umgesetzt am **6. Oktober 2026**, Ausgangspunkt **`51e5999`**, zuvor sauberer Arbeitsstand. Angular-21-Abnahmeberichte und Originalreferenzen bleiben unverändert. **Die vollständige Angular-22-UI-Abnahme ist noch offen.**
+
+### Erfolgreich umgesetzt
+
+- Framework/CLI/CDK **22.2.1**, Custom Webpack/NgRx **22.0.1**, PrimeNG **22.1.2**, Themes **3.0.1**, Angular Font Awesome **5.1.0** und TypeScript **6.0.3** anhand aktueller offizieller Metadaten installiert. Node **24.21.0** / npm **11.19.0** festgelegt; heruntergeladene Runtime gegen offiziellen SHA-256 geprüft. Einzelversionen im Grundmigrationsbericht.
+- Offizielle Angular-Migrationen ausgeführt: explizite `ChangeDetectionStrategy.Eager` erhält bisherige Änderungserkennung, `withXhr()` das bisherige HTTP-Backend, sichere Navigation in zwei Templates migriert. NgModule, Zone, Karma und Extension-Webpack-Entries erhalten. Optionale Application-Builder-/Vitest-Migrationen nicht ausgeführt. `--allow-dirty` nur für die eigenen bereits begonnenen Lizenz-/Template-Anpassungen; kein Force- oder Legacy-Peer-Modus.
+- PrimeNG-22-Templates auf Referenzvariablen und aktuelle Selektoren umgestellt; Tree-`node`, Table-`expandedrow`, Tabellen-Checkboxen und Cell-Editor berücksichtigt. Native `pButton`-Buttons verwenden `pButtonIcon` / `pButtonLabel`, reine Iconbuttons `iconOnly`. Message-Inhalt projiziert. Select-/ConfirmDialog-/FileUpload-/Menü-Signale korrekt gelesen; vorhandene Fokus-, Escape-, Menü- und Importtests erhalten. Obsoleter Button-Autofokus-Workaround entfernt, beide Fokusverträge weiterhin geprüft.
+- TypeScript-6-kompatible explizite `src/*`-Pfadauflösung statt `baseUrl`, unnötiges `downlevelIteration` entfernt. Von der CLI hinzugefügte Extended-Diagnostics-Konfiguration aus App-/Spec-Konfiguration entfernt, da sie mit der unveränderten `strictTemplates: false`-Einstellung NG4003 verursachte. Keine `skipLibCheck`-/`ignoreDeprecations`-Umgehung. Weil Custom Webpack 22 Konfigurationen über jiti lädt, separate `tsconfig.build-config.json` und `npm run typecheck:build-config` hinzugefügt.
+- Dexie **4.4.6** gezielt wegen inkompatibler Dexie-3-TypeScript-Deklarationen aktualisiert. Drei Tests mit nativ vorbereiteten IndexedDB-Daten bestätigen Bestandserhalt, unveränderte bestehende Version-2-Migration und Zugriff auf Legacy-Daten. Tests ausschließlich im isolierten Karma-Origin; keine echten Extension-Daten verändert.
+- `string_decoder` **1.3.0** ergänzt die tatsächlich benötigte SAX/XML-Abhängigkeit. Explizites `chokidar` **5.0.0** korrigiert den optionalen Devkit-Peer. CLI-Migration ergänzt Istanbul 6. Ein veralteter verschachtelter Semver-Lockeintrag wurde nach Backup und exakter Prüfung entfernt und regulär neu aufgelöst; finales `npm ci` / `npm ls --all` bestätigt den gültigen Baum. Kein pauschaler Lockfile-Neuaufbau oder Audit-Force-Upgrade.
+- Nutzerseitig bereitgestellten Community-Schlüssel über externen Dateipfad eingerichtet. Schlüsselinhalt bleibt außerhalb versionierter Dateien; generierte Client-Konfiguration und lokale Pfadnotiz sind ignoriert. Automatische npm-Hooks und Anleitung für neue Checkouts ergänzt. Browserprüfung bricht bei einem ungültigen PrimeUI-Lizenzbanner ab; im bisherigen Lauf kein solcher Banner.
+
+### Validierung und offener UI-Abschnitt
+
+- Abschließendes sauberes **`npm ci`**, **`npm ls --all`**, **55 erfolgreiche Unit-Tests** und Webpack-Konfigurations-Typecheck. npm 11 meldet übersprungene Installationsskripte; Builds und Tests funktionieren ohne pauschale Freigabe. Bestehende Audit-/CommonJS-/Sass-Hinweise sowie Angular-22-Deprecationshinweise für den bestehenden Webpack-/Karma-Aufbau bleiben sichtbar.
+- Produktions-, Entwicklungs- und Referenzbuild erfolgreich. Produktion **2,80 MB** bei unveränderter 500-kB-Warnschwelle / 3-MB-Fehlergrenze. Reguläre Builds enthalten Manifest und beide eigenständigen Extension-Entries, identisches Chrome-Manifest und keine Referenz-Fixture-Marker. Originalreferenz anhand SHA-256-Inventar unverändert bestätigt.
+- Capture **`angular-22-foundation`** bleibt als unvollständiger Diagnose-Lauf erhalten. Abbruch: **Table header border, geometry or sort icon alignment changed**. Tabellenkopf **58 statt 56 px** hoch; Randfarbe und alle sechs 14-px-Sortiericons erfüllen die bisherigen Einzelwerte. **13 erfolgreiche Teilprüfungen / 27 Bilder**, keines byteidentisch zum akzeptierten Angular-21-Stand; übrige Unterschiede noch zu bewerten. Gemessene Werte, ungefilterte Bilddifferenzen und Hashes im [Grundmigrationsbericht](angular-upgrade-reference/angular-22-foundation-check.json). Keine vollständige Browser-/GPU-/Pixelabnahme behauptet. Als Nächstes Tabellenköpfe korrigieren, übrige Geometrie prüfen, alle **60 Browserprüfungen / 88 Bilder** plus Wiederholung und Motion-Cleanup absolvieren.
+- Nachweise unter `artefacts/angular-upgrade/angular-22/`: `update.log`, `preparation-metadata.json`, `node-runtime.json`; unter `foundation/`: `npm-ci-final.log`, `npm-ls-final.log`, `tests-final.log`, `build-config-final.log`, `production.log`, `development.log`, `reference.log`, `browser-capture.log`. Frühere fehlgeschlagene Diagnoseprotokolle bleiben erhalten.
+
+### Jetzt manuell: Grundmigration sichern
+
+```powershell
+git add .gitignore .node-version package.json package-lock.json tsconfig.json tsconfig.app.json tsconfig.spec.json tsconfig.build-config.json README.md src scripts docs
+git commit -m "chore: migrate Angular 22 foundation"
+```
+
+Keine weitere manuelle Lizenzeinrichtung auf diesem Rechner erforderlich. Nach diesem Zwischencommit und `weiter` folgt die vollständige Angular-22-UI-Abnahme. Weitere Paketabschnitte und finale Chrome-/Firefox-Release-Abnahme bleiben anschließend im Gesamtplan offen.

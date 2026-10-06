@@ -10,7 +10,7 @@ export class SelectEscapeDirective implements OnInit, OnDestroy {
 
   private readonly onKeydown = (event: KeyboardEvent) => {
     if (event.key !== 'Escape') return;
-    if (this.select.overlayVisible) {
+    if (this.select.overlayVisible()) {
       this.select.hide(true);
       event.preventDefault();
       event.stopPropagation();

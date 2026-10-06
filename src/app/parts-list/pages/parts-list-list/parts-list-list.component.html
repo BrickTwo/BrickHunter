@@ -5,10 +5,10 @@
       pButton
       pRipple
       type="button"
-      label="Import"
+
       class="p-button-solid"
-      icon="fa fa-plus"
-      (click)="onImport()"></button>
+
+      (click)="onImport()"><span pButtonIcon class="fa fa-plus"></span><span pButtonLabel>Import</span></button>
     <a target="_blank" href="https://www.paypal.com/donate?hosted_button_id=MPV9V9JUKRD6N">
       <img alt="donate" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" style="cursor: pointer" />
     </a>
@@ -23,16 +23,16 @@
     [stripedRows]="true"
     [tableStyle]="{ 'min-width': '50rem' }"
     dataKey="uuid">
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <tr>
         <th style="width: 50px">
           <button
             pButton
             type="button"
             (click)="bulkMenu.toggle($event)"
-            icon="fa fa-bars"
+
             style="padding: 2px"
-            [disabled]="!selectedPartsLists.length"></button>
+            [disabled]="!selectedPartsLists.length" [iconOnly]="true"><span pButtonIcon class="fa fa-bars"></span></button>
         </th>
         <th>Name</th>
         <th>Type</th>
@@ -40,9 +40,9 @@
         <th style="width: 150px">Action</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-partsList>
+    <ng-template #body let-partsList>
       <tr [pSelectableRow]="partsList">
-        <td><p-tableCheckbox [value]="partsList"></p-tableCheckbox></td>
+        <td><p-table-checkbox [value]="partsList"></p-table-checkbox></td>
         <td (click)="openPartsList(partsList)" style="cursor: pointer">{{ partsList.name }}</td>
         <td (click)="openPartsList(partsList)" style="cursor: pointer">{{ partsList.source }}</td>
         <td (click)="openPartsList(partsList)" style="cursor: pointer">{{ partsList.parts.length }}</td>
@@ -51,16 +51,16 @@
             pButton
             pRipple
             type="button"
-            label="Delete"
+
             class="p-button-outlined p-button-danger"
-            icon="fa fa-trash-can"
-            (click)="onDeletePartsList(partsList.uuid)"></button>
+
+            (click)="onDeletePartsList(partsList.uuid)"><span pButtonIcon class="fa fa-trash-can"></span><span pButtonLabel>Delete</span></button>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </p-card>
-<p-confirmDialog
+<p-confirmdialog
   bhConfirmDialogFocus
   acceptIcon="pi pi-check"
   rejectIcon="pi pi-times"
@@ -69,7 +69,7 @@
   position="top"
   [baseZIndex]="10000"
   rejectButtonStyleClass="p-button-outlined">
-  <ng-template pTemplate="accepticon"><svg data-p-icon="check" class="p-button-icon p-button-icon-left" /></ng-template>
-  <ng-template pTemplate="rejecticon"><svg data-p-icon="times" class="p-button-icon p-button-icon-left" /></ng-template>
-</p-confirmDialog>
+  <ng-template #accepticon><svg data-p-icon="check" class="p-button-icon p-button-icon-left" /></ng-template>
+  <ng-template #rejecticon><svg data-p-icon="times" class="p-button-icon p-button-icon-left" /></ng-template>
+</p-confirmdialog>
 <app-parts-list-import></app-parts-list-import>

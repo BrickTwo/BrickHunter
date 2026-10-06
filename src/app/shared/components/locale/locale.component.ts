@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { Country, Language } from 'src/app/models/global';
 
 @Component({
-    selector: 'app-locale',
-    templateUrl: './locale.component.html',
-    styleUrls: ['./locale.component.scss'],
-    standalone: false
+  selector: 'app-locale',
+  templateUrl: './locale.component.html',
+  styleUrls: ['./locale.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LocaleComponent {
   visible = false;

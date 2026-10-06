@@ -1,0 +1,414 @@
+{
+  "baseCommit": "51e5999",
+  "status": "angular-22-foundation-verified-ui-review-pending",
+  "visualAcceptance": false,
+  "angular22UiAcceptanceComplete": false,
+  "browserSuiteComplete": false,
+  "nodeRuntime": {
+    "version": "v24.21.0",
+    "npm": "11.19.0",
+    "source": "https://nodejs.org/dist/v24.21.0/node-v24.21.0-win-x64.zip",
+    "sha256": "158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541",
+    "officialSha256Verified": true
+  },
+  "npmVersion": "11.19.0",
+  "cleanInstallPassed": true,
+  "peerValidationPassed": true,
+  "unitTestsPassed": 55,
+  "indexedDbCompatibilityTestsPassed": 3,
+  "buildConfigTypecheckPassed": true,
+  "buildsPassed": [
+    "production",
+    "development",
+    "visual-reference"
+  ],
+  "productionInitialBundle": "2.80 MB",
+  "versions": {
+    "@angular-builders/custom-webpack": "22.0.1",
+    "@angular/animations": "22.2.1",
+    "@angular/cdk": "22.2.1",
+    "@angular/common": "22.2.1",
+    "@angular/compiler": "22.2.1",
+    "@angular/core": "22.2.1",
+    "@angular/forms": "22.2.1",
+    "@angular/platform-browser": "22.2.1",
+    "@angular/platform-browser-dynamic": "22.2.1",
+    "@angular/router": "22.2.1",
+    "@fortawesome/angular-fontawesome": "5.1.0",
+    "@fortawesome/fontawesome-free": "6.5.1",
+    "@fortawesome/free-solid-svg-icons": "6.5.1",
+    "@ngrx/effects": "22.0.1",
+    "@ngrx/operators": "22.0.1",
+    "@ngrx/store": "22.0.1",
+    "@ngx-translate/core": "15.0.0",
+    "@ngx-translate/http-loader": "8.0.0",
+    "@primeuix/themes": "3.0.1",
+    "buffer": "6.0.3",
+    "dexie": "4.4.6",
+    "jspdf": "2.5.1",
+    "jspdf-autotable": "3.8.1",
+    "ng-lazyload-image": "9.1.3",
+    "primeflex": "4.0.0",
+    "primeng": "22.1.2",
+    "rxjs": "7.8.2",
+    "stream": "0.0.2",
+    "string_decoder": "1.3.0",
+    "timers": "0.1.1",
+    "tslib": "2.8.1",
+    "xml2js": "0.6.2",
+    "zone.js": "0.15.1",
+    "@angular-devkit/build-angular": "22.2.1",
+    "@angular/cli": "22.2.1",
+    "@angular/compiler-cli": "22.2.1",
+    "@angular/localize": "22.2.1",
+    "@ngrx/store-devtools": "22.0.1",
+    "@types/chrome": "0.0.260",
+    "@types/jasmine": "5.1.4",
+    "autoprefixer": "10.6.0",
+    "chokidar": "5.0.0",
+    "istanbul-lib-instrument": "6.0.3",
+    "jasmine-core": "5.1.2",
+    "karma": "6.4.2",
+    "karma-chrome-launcher": "3.2.0",
+    "karma-coverage": "2.2.1",
+    "karma-jasmine": "5.1.0",
+    "karma-jasmine-html-reporter": "2.1.0",
+    "postcss": "8.5.28",
+    "prettier": "3.2.5",
+    "typescript": "6.0.3"
+  },
+  "outputChecks": {
+    "production": {
+      "requiredFilesPresent": true,
+      "chromeManifestByteIdentical": true,
+      "standaloneExtensionEntries": true,
+      "noReferenceFixtureMarkers": true
+    },
+    "development": {
+      "requiredFilesPresent": true,
+      "chromeManifestByteIdentical": true,
+      "standaloneExtensionEntries": true,
+      "noReferenceFixtureMarkers": true
+    }
+  },
+  "licenseConfiguredLocally": true,
+  "noInvalidLicenseBannerUntilCaptureFailure": true,
+  "originalReferenceInventoryVerified": true,
+  "captureLabel": "angular-22-foundation",
+  "comparisonBase": "angular-21-ui-accepted-final-flags-verified",
+  "captureCompleted": false,
+  "mainScreenshots": 21,
+  "additionalScreenshots": 6,
+  "partialBrowserChecks": {
+    "transferWarningPreservesHalfViewportScroller": true,
+    "categorySelection": true,
+    "onlyPrintedToggle": true,
+    "deliveryChannelSelection": true,
+    "paginatorPageSelection": true,
+    "publicColorMenuSelection": true,
+    "publicListBulkMenuCommand": true,
+    "publicPartsBulkMenuCommand": true,
+    "importFileChooserJson": true,
+    "importCancelAndCloseReset": true,
+    "importXmlDrop": true,
+    "toastSeverityDisplayAndClose": true,
+    "toastKeyboardClosePreservesOtherMessage": true
+  },
+  "pageErrors": [],
+  "consoleErrors": [],
+  "knownConsoleErrors": [],
+  "renderer": {
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.31041.1004)",
+    "compositing": "enabled",
+    "rasterization": "enabled"
+  },
+  "tableHeaderMeasurements": {
+    "height": 58,
+    "borderColor": "rgb(228, 228, 228)",
+    "icons": [
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 280.90625,
+        "y": 591.21875,
+        "color": "rgba(0, 0, 0, 0.6)"
+      },
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 448.1875,
+        "y": 591.21875,
+        "color": "rgba(0, 0, 0, 0.6)"
+      },
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 704.140625,
+        "y": 591.21875,
+        "color": "rgba(0, 0, 0, 0.6)"
+      },
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 884.0625,
+        "y": 591.21875,
+        "color": "rgba(0, 0, 0, 0.6)"
+      },
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 1044.859375,
+        "y": 591.21875,
+        "color": "rgba(0, 0, 0, 0.6)"
+      },
+      {
+        "wrapperDisplay": "inline",
+        "verticalAlign": "middle",
+        "width": 14,
+        "height": 14,
+        "x": 1229.609375,
+        "y": 591.21875,
+        "color": "rgba(0, 0, 0, 0.6)"
+      }
+    ]
+  },
+  "captureFailure": {
+    "log": "artefacts/angular-upgrade/angular-22/foundation/browser-capture.log",
+    "description": "Table header border, geometry or sort icon alignment changed"
+  },
+  "noPixelFiltering": true,
+  "images": [
+    {
+      "file": "1440x1000-browse.png",
+      "byteIdentical": false,
+      "differentPixels": 277510,
+      "maximumChannelDelta": 255,
+      "angular21Sha256": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+      "angular22Sha256": "b0547a61dfc382fa061c7565e5a49b31dea3157abbc07340aa81fbe3b38bceb7"
+    },
+    {
+      "file": "1440x1000-color-menu.png",
+      "byteIdentical": false,
+      "differentPixels": 280442,
+      "maximumChannelDelta": 255,
+      "angular21Sha256": "b24d80c8c3158a206e7556fb287cc3c779c9a4990c956cf70557793436a59972",
+      "angular22Sha256": "a681dfa52c95749bb31e8bdc31c51a7ec3e1888d3b4f8b0be70e20b989c1c3db"
+    },
+    {
+      "file": "1440x1000-delete-confirmation.png",
+      "byteIdentical": false,
+      "differentPixels": 309931,
+      "maximumChannelDelta": 245,
+      "angular21Sha256": "255fc3d43b2ddb36ab19322092bc7fd8506e5c30b3bbb055f6b1fb8a259ca961",
+      "angular22Sha256": "5776ae0fd21907712e18d5d9b324e760546c4c4a2c36677333c8249520ba19a4"
+    },
+    {
+      "file": "1440x1000-empty-search.png",
+      "byteIdentical": false,
+      "differentPixels": 120522,
+      "maximumChannelDelta": 245,
+      "angular21Sha256": "9f50a5ec3a49bbe9480537d9f695639558ebe7234e8607762f85199d73eaf3f0",
+      "angular22Sha256": "6bce26970a5be2ff1ee979d75004d5ceeae74c8af590ebc1466d0e1694276b89"
+    },
+    {
+      "file": "1440x1000-empty-table.png",
+      "byteIdentical": false,
+      "differentPixels": 194471,
+      "maximumChannelDelta": 245,
+      "angular21Sha256": "f6dc1d6e24f849425a40d55bbb972190e47d1cff1620bf98b7fe0d28f3b7950e",
+      "angular22Sha256": "d9267daad0e9c0dfb7c9c598a9a48257299da778f9542bbf0f24e672092159b5"
+    },
+    {
+      "file": "1440x1000-export-dialog.png",
+      "byteIdentical": false,
+      "differentPixels": 285548,
+      "maximumChannelDelta": 245,
+      "angular21Sha256": "de7a5fef1ee65d8f3a3b1b2b3f4df492eff597aac04463476a83bcf58d5742a2",
+      "angular22Sha256": "583183abe55feb5473298b9060a2fc750bfbe715ab69de411b616751315ebdd3"
+    },
+    {
+      "file": "1440x1000-filter-focus.png",
+      "byteIdentical": false,
+      "differentPixels": 277510,
+      "maximumChannelDelta": 255,
+      "angular21Sha256": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+      "angular22Sha256": "b0547a61dfc382fa061c7565e5a49b31dea3157abbc07340aa81fbe3b38bceb7"
+    },
+    {
+      "file": "1440x1000-filter-hover.png",
+      "byteIdentical": false,
+      "differentPixels": 277510,
+      "maximumChannelDelta": 255,
+      "angular21Sha256": "e20366b880a8edc0a7bd07d8f077b2f6c5bc3aec7ad094ca837ddd8b9b58a536",
+      "angular22Sha256": "b0547a61dfc382fa061c7565e5a49b31dea3157abbc07340aa81fbe3b38bceb7"
+    },
+    {
+      "file": "1440x1000-import-dialog.png",
+      "byteIdentical": false,
+      "differentPixels": 96892,
+      "maximumChannelDelta": 245,
+      "angular21Sha256": "3d8e66e1c46f595f022aa20afbe5968fde00fe64e9d50892e4dfa00150eb7b13",
+      "angular22Sha256": "4243318e7ca17eead21a4545f524f798f348afd72bf627313b19c672d4c187aa"
+    },
+    {
+      "file": "1440x1000-import-dropped-xml.png",
+      "byteIdentical": false,
+      "differentPixels": 100594,
+      "maximumChannelDelta": 255,
+      "angular21Sha256": "92f7a761c0342957ddaeab80378f95c555ada758ddf067fbd686e4f152dd3b74",
+      "angular22Sha256": "e53181440c8e96fcb04d00bc78809a996f18858a4782730ec0ee05a48cc834ea"
+    },
+    {
+      "file": "1440x1000-import-selected-json.png",
+      "byteIdentical": false,
+      "differentPixels": 96121,
+      "maximumChannelDelta": 255,
+      "angular21Sha256": "4b8c68a5d3c598ca1f4f8a81172883d917508b1a7705148bf48866c0e52cd485",
+      "angular22Sha256": "c0445bb798862ea51b0fd72b9dbd8848b0c6c6bcb265869e3c06cb4cbca05497"
+    },
+    {
+      "file": "1440x1000-large-search-scrolled.png",
+      "byteIdentical": false,
+      "differentPixels": 343693,
+      "maximumChannelDelta": 255,
+      "angular21Sha256": "33bd9fd7a163924ef3f296fe863495ebba6b1077fb7fa6946525bc9c968b47bb",
+      "angular22Sha256": "a7cc1b9745e254feb3e92c47afc09669fb2daa133748543f9ed925463e6135f8"
+    },
+    {
+      "file": "1440x1000-large-search.png",
+      "byteIdentical": false,
+      "differentPixels": 278234,
+      "maximumChannelDelta": 255,
+      "angular21Sha256": "6259be225741b2362c99437089b3b85677062c3f2f02a50cae6254bc1475f98c",
+      "angular22Sha256": "5b4a524e4a5c8e4303bbac43f4cc9b04c6232805c0f8b581ccfc20da53b30ac5"
+    },
+    {
+      "file": "1440x1000-list-settings.png",
+      "byteIdentical": false,
+      "differentPixels": 324972,
+      "maximumChannelDelta": 245,
+      "angular21Sha256": "8458a6a87e72e1a439ddd149eb43822bc423d43757043a91b4b9d384516a0510",
+      "angular22Sha256": "59662a5d891f36382bd251503c6bc7eca28aa5d4d919957046936992314448c8"
+    },
+    {
+      "file": "1440x1000-lists.png",
+      "byteIdentical": false,
+      "differentPixels": 58847,
+      "maximumChannelDelta": 245,
+      "angular21Sha256": "6b375c8a06da79a050dc83b14e28f3a050bf848042229a45d193a988d2ec23ca",
+      "angular22Sha256": "cc10bbaaefc9c4ab6cead591957a81750743cd7098ab21732d79c4ada043d4d5"
+    },
+    {
+      "file": "1440x1000-settings.png",
+      "byteIdentical": false,
+      "differentPixels": 49225,
+      "maximumChannelDelta": 222,
+      "angular21Sha256": "2df0705bf6f5c4414472e52c7dc0191f193ed88753e3f948b456de5468603726",
+      "angular22Sha256": "d81583ba59d8975acfc68d1f7afa138da69295a169dd8b662fd8a797c7a48cf1"
+    },
+    {
+      "file": "1440x1000-success-message.png",
+      "byteIdentical": false,
+      "differentPixels": 310268,
+      "maximumChannelDelta": 250,
+      "angular21Sha256": "9a55cc2deaa9fe8432bd46b0fb43d6fc451e788f437c0355a310ab87f9aa636a",
+      "angular22Sha256": "e3dd8395b57c5186eaa579693348708043846eb051cf210a0e51e69cdc7a4878"
+    },
+    {
+      "file": "1440x1000-table-inline-edit.png",
+      "byteIdentical": false,
+      "differentPixels": 287188,
+      "maximumChannelDelta": 250,
+      "angular21Sha256": "08950f3d3c6ef2ca24a78ef1b11ca95ba109aaed1e731c5910a07ec7121e0fae",
+      "angular22Sha256": "8877fd49d1e88b746e414714b9b50a4644e0adeed8829f7e7ccbaf3a0cdc0807"
+    },
+    {
+      "file": "1440x1000-table-loading-disabled.png",
+      "byteIdentical": false,
+      "differentPixels": 289834,
+      "maximumChannelDelta": 250,
+      "angular21Sha256": "fdd38268cc9877af9156b9c12d7cb459a4f4fbfb1eb97e666973288a590a3550",
+      "angular22Sha256": "6f10ec036c23d369fa1471d262052d8ee3ccc37354014dc168599c4b435f712d"
+    },
+    {
+      "file": "1440x1000-table-selection.png",
+      "byteIdentical": false,
+      "differentPixels": 356624,
+      "maximumChannelDelta": 250,
+      "angular21Sha256": "9ba64e752684e9506fa3103aef3eeac28620fb8d636b571b1abbede2977d98ee",
+      "angular22Sha256": "db60ef93868cc29a4ebf80e1eec7da7a2b960c8b17dfa53f0051e91c91033985"
+    },
+    {
+      "file": "1440x1000-table.png",
+      "byteIdentical": false,
+      "differentPixels": 282765,
+      "maximumChannelDelta": 250,
+      "angular21Sha256": "1fba567d71c355a096753665ae526e57d60f8614c2ae5f8864cfa8da629f13fe",
+      "angular22Sha256": "ab490aef232f404eb8267038237db566c955cd6341d2dbb4d3208548d9d9e4e6"
+    },
+    {
+      "file": "1440x1000-toast-error.png",
+      "byteIdentical": false,
+      "differentPixels": 311161,
+      "maximumChannelDelta": 250,
+      "angular21Sha256": "27c851763eef8a6302a9aa6aa0963a2a9988fe269e43e72e8ceb37382504068e",
+      "angular22Sha256": "7ac3d005f5ac5e15ebfe97118f17c5a603ce012bdb70af7a37179c5f2617ac47"
+    },
+    {
+      "file": "1440x1000-toast-info.png",
+      "byteIdentical": false,
+      "differentPixels": 311141,
+      "maximumChannelDelta": 250,
+      "angular21Sha256": "c1de0cddfb1545e70b97504e84eb61e91e8fe78fa3d0606801d998d0cb0b012a",
+      "angular22Sha256": "d1710b6643d5c7e63294200dfce94717cc3edadc394ff996e640c8ab2107da63"
+    },
+    {
+      "file": "1440x1000-toast-success.png",
+      "byteIdentical": false,
+      "differentPixels": 310319,
+      "maximumChannelDelta": 250,
+      "angular21Sha256": "b564ab039685b862dffb22c3de41e42a217148e701ce0a34a5c3d0a54e534ef4",
+      "angular22Sha256": "a3e291b9dd69dd12c245be5992fcd46eca6c325e3f44cebb632387268c1c3d88"
+    },
+    {
+      "file": "1440x1000-toast-warn.png",
+      "byteIdentical": false,
+      "differentPixels": 311128,
+      "maximumChannelDelta": 250,
+      "angular21Sha256": "2511d012b80aa7e6ad2f65eca064ea0775551e54e9b1019c7d52dbe3b3511acf",
+      "angular22Sha256": "c68fb82a4dd134e8976fd1399236d8387c4c787879baeeaa9f4ca3bc96e66c56"
+    },
+    {
+      "file": "1440x1000-transfer-progress.png",
+      "byteIdentical": false,
+      "differentPixels": 341978,
+      "maximumChannelDelta": 248,
+      "angular21Sha256": "a0327d8420760b8e84484ddffdeca8a3dba07acb2764ef8bc7e6596bd0d56421",
+      "angular22Sha256": "ea969c5f49fde94e73827c1a3a34a4d67af08ff1e0913cac592b08a21884317c"
+    },
+    {
+      "file": "1440x1000-transfer-warning.png",
+      "byteIdentical": false,
+      "differentPixels": 323903,
+      "maximumChannelDelta": 255,
+      "angular21Sha256": "b6b87633ea1fd04b57a9bdc62e9e9a4e508ab751e4e901e511830ee592e2ac57",
+      "angular22Sha256": "f68eb7f7bf1ed12a379dc90a2fedd3d0443fa2eecceb213a323d50e80437dce8"
+    }
+  ],
+  "pending": [
+    "Restore table header appearance and geometry against accepted Angular 21 reference.",
+    "Complete all 60 browser checks and 88 images, repeat the run, compare all screenshots and verify motion cleanup.",
+    "Remaining separately planned package updates and final Chrome/Firefox release checks."
+  ],
+  "scope": "Offline fixtures only; real LEGO accounts and carts are not covered."
+}

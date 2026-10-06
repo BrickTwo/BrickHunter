@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { providePrimeNG } from 'primeng/config';
 import { BrickHunterPreset } from './shared/theme/brickhunter-preset';
+import { primeUILicense } from './primeui-license.local';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
-import { ButtonFocusDefaultsDirective } from './shared/directives/button-focus-defaults.directive';
 import { CheckIcon, TimesIcon, InfoCircleIcon, TimesCircleIcon, ExclamationTriangleIcon } from 'primeng/icons';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CardModule } from 'primeng/card';
@@ -39,12 +39,11 @@ import { TreeModule } from 'primeng/tree';
 import { TreeTableModule } from 'primeng/treetable';
 
 @NgModule({
-  imports: [MessagesComponent, CheckIcon, TimesIcon, InfoCircleIcon, TimesCircleIcon, ExclamationTriangleIcon, ButtonFocusDefaultsDirective],
+  imports: [MessagesComponent, CheckIcon, TimesIcon, InfoCircleIcon, TimesCircleIcon, ExclamationTriangleIcon],
   exports: [
     AvatarModule,
     BadgeModule,
     ButtonModule,
-    ButtonFocusDefaultsDirective,
     CheckIcon,
     TimesIcon,
     InfoCircleIcon,
@@ -84,6 +83,7 @@ import { TreeTableModule } from 'primeng/treetable';
   ],
   providers: [
     providePrimeNG({
+      license: primeUILicense,
       ripple: true,
       theme: {
         preset: BrickHunterPreset,

@@ -41,19 +41,19 @@
     </div>
     <div class="field col-12">
       <div class="flex justify-content-between">
-        <!-- <p-selectButton
+        <!-- <p-selectbutton
         [options]="keywordOptions"
         [(ngModel)]="keywordOption"
         [multiple]="true"
         optionLabel="name"
-      optionValue="value"></p-selectButton> -->
-        <p-selectButton
+      optionValue="value"></p-selectbutton> -->
+        <p-selectbutton
           [options]="deliveryChannelOptions"
           [(ngModel)]="deliveryChannels"
           [multiple]="true"
           optionLabel="name"
           optionValue="value"
-          (onChange)="onDeliveryChannelsChange($event.value)"></p-selectButton>
+          (onChange)="onDeliveryChannelsChange($event.value)"></p-selectbutton>
         <span>
           <p-popover #op> Shows parts that are no longer available in any set at the specified time. </p-popover>
           <p-button

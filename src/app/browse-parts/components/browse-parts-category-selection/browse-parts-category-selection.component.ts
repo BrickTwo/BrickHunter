@@ -1,13 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'dexie';
 import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-parts.service';
 import { TreeNode } from 'primeng/api';
 
 @Component({
-    selector: 'app-browse-parts-category-selection',
-    templateUrl: './browse-parts-category-selection.component.html',
-    styleUrls: ['./browse-parts-category-selection.component.scss'],
-    standalone: false
+  selector: 'app-browse-parts-category-selection',
+  templateUrl: './browse-parts-category-selection.component.html',
+  styleUrls: ['./browse-parts-category-selection.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BrowsePartsCategorySelectionComponent implements OnInit, OnDestroy {
   categories: TreeNode[];

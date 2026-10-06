@@ -2,6 +2,22 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
 
+## Local setup (Angular 22)
+
+Use Node **24.21.0** (see `.node-version`) and npm **11.19.0**. The staged upgrade and remaining UI acceptance work are documented in [the upgrade plan](docs/angular-upgrade-plan.md).
+
+Install dependencies and configure your PrimeUI Community license from a file outside the repository:
+
+```powershell
+npm ci
+node scripts/configure-primeui-license.cjs "C:\path\primengui.lic"
+npm start
+```
+
+The local license path and generated `src/app/primeui-license.local.ts` are ignored by Git. npm start/build/test/watch hooks regenerate the configuration from that path. Alternatively, set `PRIMEUI_LICENSE_FILE` to your license file path. Configure the license once before calling Angular CLI directly in a fresh checkout.
+
+Run `npm run typecheck:build-config` to check the custom Webpack TypeScript configurations separately. Run `npm test -- --watch=false --browsers=ChromeHeadless` for the unit tests; configure `CHROME_BIN` if your browser is installed at a different location.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

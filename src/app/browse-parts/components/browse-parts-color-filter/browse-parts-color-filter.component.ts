@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { BrickHunterMenuItem } from 'src/app/shared/components/menu/menu.component';
 import { BrowsePartsService } from '../../service/browse-parts.service';
 import { Subscription } from 'dexie';
@@ -6,10 +6,11 @@ import { ColorService } from 'src/app/core/services/color.service';
 import { Color } from 'src/app/models/shared';
 
 @Component({
-    selector: 'app-browse-parts-color-filter',
-    templateUrl: './browse-parts-color-filter.component.html',
-    styleUrls: ['./browse-parts-color-filter.component.scss'],
-    standalone: false
+  selector: 'app-browse-parts-color-filter',
+  templateUrl: './browse-parts-color-filter.component.html',
+  styleUrls: ['./browse-parts-color-filter.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BrowsePartsColorFilterComponent implements OnInit, OnDestroy {
   colorSubscription: Subscription;
@@ -24,7 +25,10 @@ export class BrowsePartsColorFilterComponent implements OnInit, OnDestroy {
   blue: BrickHunterMenuItem[];
   purple: BrickHunterMenuItem[];
 
-  constructor(private readonly browsePartsService: BrowsePartsService, private readonly colorService: ColorService) {}
+  constructor(
+    private readonly browsePartsService: BrowsePartsService,
+    private readonly colorService: ColorService
+  ) {}
 
   ngOnInit() {
     this.colorSubscription = this.browsePartsService.colors$.subscribe(colors => {

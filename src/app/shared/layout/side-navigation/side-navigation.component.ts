@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   faList,
   faCircleInfo,
@@ -10,10 +10,11 @@ import {
 import { VersionService } from 'src/app/core/services/version.service';
 
 @Component({
-    selector: 'app-side-navigation',
-    templateUrl: './side-navigation.component.html',
-    styleUrls: ['./side-navigation.component.scss'],
-    standalone: false
+  selector: 'app-side-navigation',
+  templateUrl: './side-navigation.component.html',
+  styleUrls: ['./side-navigation.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class SideNavigationComponent {
   faBook = faBook;

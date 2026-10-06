@@ -15,26 +15,26 @@
         pButton
         pRipple
         type="submit"
-        icon="fa fa-plus"
-        label="Create Parts List"
+
+
         styleClass="p-button-solid text-md"
-        style="width: 100%"></button>
+        style="width: 100%"><span pButtonIcon class="fa fa-plus"></span><span pButtonLabel>Create Parts List</span></button>
     </div>
   </form>
   <div class="field">
     <label>Target Parts List</label>
-    <p-selectButton
+    <p-selectbutton
       [options]="targetPartsLists"
       [(ngModel)]="selectedPartsListUuid"
       optionLabel="name"
-      optionValue="uuid"></p-selectButton>
+      optionValue="uuid"></p-selectbutton>
   </div>
   <div class="field">
     @if (action === 'copy') {
-      <button pButton pRipple type="button" label="Copy" style="width: 100%" (click)="onSubmit()"></button>
+      <button pButton pRipple type="button" style="width: 100%" (click)="onSubmit()"><span pButtonLabel>Copy</span></button>
     }
     @if (action === 'move') {
-      <button pButton pRipple type="button" label="Move" style="width: 100%" (click)="onSubmit()"></button>
+      <button pButton pRipple type="button" style="width: 100%" (click)="onSubmit()"><span pButtonLabel>Move</span></button>
     }
   </div>
 </p-drawer>

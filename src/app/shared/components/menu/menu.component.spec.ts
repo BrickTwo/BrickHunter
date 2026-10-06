@@ -150,7 +150,7 @@ describe('BrickHunter public menu wrapper', () => {
       fixture.componentInstance.toggle({ currentTarget: trigger } as unknown as Event);
       fixture.detectChanges();
       await fixture.whenStable();
-      expect(fixture.componentInstance.menu.visible).toBeTrue();
+      expect(fixture.componentInstance.menu.visible()).toBeTrue();
       expect(shown).toHaveBeenCalledTimes(1);
       const hiddenEvent = new Promise<void>(resolve => fixture.componentInstance.onHide.subscribe(() => resolve()));
       fixture.componentInstance.hide();
@@ -159,7 +159,7 @@ describe('BrickHunter public menu wrapper', () => {
       // PrimeNG emits onHide after its CSS leave animation finishes.
       await hiddenEvent;
       await fixture.whenStable();
-      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      expect(fixture.componentInstance.menu.visible()).toBeFalse();
       expect(hidden).toHaveBeenCalledTimes(1);
     } finally {
       fixture.destroy();
@@ -188,7 +188,7 @@ describe('BrickHunter public menu wrapper', () => {
       expect(Number(panel.style.zIndex)).toBeGreaterThan(2000);
       expect(panel.style.top).not.toBe('');
       key(panel.querySelector('[role="menu"]'), 'Escape');
-      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      expect(fixture.componentInstance.menu.visible()).toBeFalse();
       expect(document.activeElement).toBe(trigger);
     } finally {
       fixture.destroy();
@@ -203,7 +203,7 @@ describe('BrickHunter public menu wrapper', () => {
     try {
       await open(trigger);
       window.dispatchEvent(new Event('scroll'));
-      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      expect(fixture.componentInstance.menu.visible()).toBeFalse();
       fixture.detectChanges();
       await fixture.whenRenderingDone();
       expect(hide).toHaveBeenCalledTimes(1);
@@ -228,13 +228,13 @@ describe('BrickHunter public menu wrapper', () => {
     try {
       await open(trigger);
       document.body.click();
-      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      expect(fixture.componentInstance.menu.visible()).toBeFalse();
       await open(trigger);
       parent.dispatchEvent(new Event('scroll'));
-      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      expect(fixture.componentInstance.menu.visible()).toBeFalse();
       await open(trigger);
       window.dispatchEvent(new Event('resize'));
-      expect(fixture.componentInstance.menu.visible).toBeFalse();
+      expect(fixture.componentInstance.menu.visible()).toBeFalse();
       await open(trigger);
       fixture.destroy();
       await fixture.whenRenderingDone();

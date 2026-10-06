@@ -1,19 +1,19 @@
 <p-drawer [appendTo]="null" [(visible)]="display" position="right">
   <h2>Export</h2>
   <div class="field">
-    <p-selectButton
+    <p-selectbutton
       [options]="filterOptions"
       [(ngModel)]="selectedFilterValue"
       optionLabel="name"
-      optionValue="value"></p-selectButton>
+      optionValue="value"></p-selectbutton>
   </div>
   <div class="field">
     <label>Export To:</label>
-    <p-selectButton
+    <p-selectbutton
       [options]="exportToOptions"
       [(ngModel)]="selectedExportToValue"
       optionLabel="name"
-      optionValue="value"></p-selectButton>
+      optionValue="value"></p-selectbutton>
   </div>
   @if (selectedExportToValue == 'brickLink') {
     <div class="field-checkbox">
@@ -21,6 +21,6 @@
     </div>
   }
   <div class="field">
-    <button pButton pRipple type="button" label="Export" style="width: 100%" (click)="onExport()"></button>
+    <button pButton pRipple type="button" style="width: 100%" (click)="onExport()"><span pButtonLabel>Export</span></button>
   </div>
 </p-drawer>

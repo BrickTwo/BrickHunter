@@ -8,6 +8,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Part } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
@@ -16,10 +17,11 @@ import { ConfirmEventType, ConfirmationService, MenuItem, MessageService } from 
 import { BlukAction } from 'src/app/models/shared';
 
 @Component({
-    selector: 'app-parts-table',
-    templateUrl: './parts-table.component.html',
-    styleUrls: ['./parts-table.component.scss'],
-    standalone: false
+  selector: 'app-parts-table',
+  templateUrl: './parts-table.component.html',
+  styleUrls: ['./parts-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input()
@@ -136,7 +138,7 @@ export class PartsTableComponent implements OnInit, AfterViewInit, OnChanges, On
       accept: () => {
         this.bulkAction.emit({ action: 'delete', parts: this.selectedParts });
       },
-      reject: (type: any) => {
+      reject: (type?: ConfirmEventType) => {
         switch (type) {
           case ConfirmEventType.REJECT:
             this.messageService.add({

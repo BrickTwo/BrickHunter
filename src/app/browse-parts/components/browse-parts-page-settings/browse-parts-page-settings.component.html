@@ -15,7 +15,7 @@
       [totalRecords]="totalParts"></p-paginator>
   </div>
   <div class="justify-content-end">
-    <!-- <p-selectButton
+    <!-- <p-selectbutton
     [options]="layoutOptions"
     [ngModel]="layout"
     optionLabel="icon"
@@ -24,7 +24,7 @@
     <ng-template let-item>
       <i [class]="item.icon"></i>
     </ng-template>
-  </p-selectButton> -->
+  </p-selectbutton> -->
     <p-select
       id="country"
       [options]="countries"
@@ -34,7 +34,7 @@
       autoWidth="false"
       [style]="{ width: '100%' }"
       (onChange)="onCountrySelect()">
-      <ng-template pTemplate="selectedItem">
+      <ng-template #selectedItem>
         @if (selectedCountry) {
           <div class="flex align-items-center gap-2">
             <img
@@ -47,7 +47,7 @@
           </div>
         }
       </ng-template>
-      <ng-template let-country pTemplate="item">
+      <ng-template let-country #item>
         <div class="flex align-items-center gap-2">
           <img
             src="/assets/flag_placeholder.png"

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { Part } from 'src/app/models/parts-list';
@@ -8,10 +8,11 @@ import { TransferWarningComponent } from '../transfer-warning/transfer-warning.c
 import { Affiliate } from 'src/app/models/global';
 
 @Component({
-    selector: 'app-parts-list-transfer',
-    templateUrl: './parts-list-transfer.component.html',
-    styleUrls: ['./parts-list-transfer.component.scss'],
-    standalone: false
+  selector: 'app-parts-list-transfer',
+  templateUrl: './parts-list-transfer.component.html',
+  styleUrls: ['./parts-list-transfer.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsListTransferComponent implements OnDestroy {
   transferStep = 0;
@@ -23,7 +24,10 @@ export class PartsListTransferComponent implements OnDestroy {
   transferWarningComponent: TransferWarningComponent;
   affiliate: Affiliate;
 
-  constructor(private readonly pickabrickService: PickABrickService, private readonly localeService: LocaleService) {}
+  constructor(
+    private readonly pickabrickService: PickABrickService,
+    private readonly localeService: LocaleService
+  ) {}
 
   ngOnDestroy(): void {
     if (this.subscription$) this.subscription$.unsubscribe();

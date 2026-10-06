@@ -1,14 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-parts.service';
 import { Subscription } from 'rxjs';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { BrowsePartCountry } from 'src/app/models/browse-parts';
 
 @Component({
-    selector: 'app-browse-parts-page-settings',
-    templateUrl: './browse-parts-page-settings.component.html',
-    styleUrls: ['./browse-parts-page-settings.component.scss'],
-    standalone: false
+  selector: 'app-browse-parts-page-settings',
+  templateUrl: './browse-parts-page-settings.component.html',
+  styleUrls: ['./browse-parts-page-settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BrowsePartsPageSettingsComponent implements OnInit, OnDestroy {
   page: number = 0;
@@ -35,7 +36,10 @@ export class BrowsePartsPageSettingsComponent implements OnInit, OnDestroy {
     { icon: 'fa fa-bars', value: 'list' },
   ];
 
-  constructor(private readonly browsePartsService: BrowsePartsService, private readonly localeService: LocaleService) {}
+  constructor(
+    private readonly browsePartsService: BrowsePartsService,
+    private readonly localeService: LocaleService
+  ) {}
 
   ngOnInit(): void {
     this.timezoneOffset = new Date().getTimezoneOffset().toString();

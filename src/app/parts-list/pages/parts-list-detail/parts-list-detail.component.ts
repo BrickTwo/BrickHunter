@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
@@ -27,10 +27,11 @@ import { BrickHunterApiService } from 'src/app/core/http/brickhunterapi.service'
 import { GetProductSuggestionsRequest, GetProductSuggestionsResponse } from 'src/app/models/brickhunter-api';
 
 @Component({
-    selector: 'app-parts-list-detail',
-    templateUrl: './parts-list-detail.component.html',
-    styleUrls: ['./parts-list-detail.component.scss'],
-    standalone: false
+  selector: 'app-parts-list-detail',
+  templateUrl: './parts-list-detail.component.html',
+  styleUrls: ['./parts-list-detail.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsListDetailComponent implements OnInit, OnDestroy {
   faClipboardList = faClipboardList;
@@ -51,7 +52,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
   globalSettingsSubscription: Subscription;
   importSubscription: Subscription;
   pabIsLoading: boolean = false;
-  setSuggestionsLoaded: boolean = false
+  setSuggestionsLoaded: boolean = false;
   setSugestionIsLoading: boolean = false;
   pabLoaded: boolean = false;
   uuid: string;
@@ -260,13 +261,15 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
             price: product.price,
             currencyCode: product.currencyCode,
             partsUsed: [
-              ...JSON.parse(JSON.stringify(
-                this.partsList.parts?.filter(part => { 
-                  return product.elements.find(element => element.elementId === part.elementId);
-                })
-              )),
+              ...JSON.parse(
+                JSON.stringify(
+                  this.partsList.parts?.filter(part => {
+                    return product.elements.find(element => element.elementId === part.elementId);
+                  })
+                )
+              ),
             ],
-            partsNotUsed: []
+            partsNotUsed: [],
           };
         });
 
@@ -284,11 +287,11 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
 
       product.partsUsed = product.partsUsed?.map(part => {
         const inventarQty = this.productsResponse
-              .find(p => p.id === product.id)
-              .elements.find(e => e.elementId === part.elementId).quantity;
+          .find(p => p.id === product.id)
+          .elements.find(e => e.elementId === part.elementId).quantity;
         const qtyToBuy = part.qty - (this.gloablSettingsService.subtractHaveFromQuantity ? part.have || 0 : 0);
-        
-        if (inventarQty < qtyToBuy){
+
+        if (inventarQty < qtyToBuy) {
           part.qty = inventarQty;
         } else {
           part.qty = qtyToBuy;
@@ -304,11 +307,10 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       product.containedPicesPrice =
         Math.round(
           product.partsUsed?.reduce((a, b) => {
-            return a +  b.qty * (b.lego?.price.amount || 0);
+            return a + b.qty * (b.lego?.price.amount || 0);
           }, 0) * 100
         ) / 100;
-      });
-
+    });
 
     //   product.containesPieces = product.partsUsed?.reduce((a, b) => {
     //     const inventarQty = this.productsResponse
@@ -419,7 +421,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
           detail: 'Parts list has been successfully deleted',
         });
       },
-      reject: (type: any) => {
+      reject: (type?: ConfirmEventType) => {
         switch (type) {
           case ConfirmEventType.REJECT:
             this.messageService.add({
@@ -487,7 +489,11 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
       value.parts.forEach(part => {
         this.partsListService.deletePartInPartsList(this.partsList.uuid, part.id);
       });
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Parts are successfully deleted from list.' });
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Parts are successfully deleted from list.',
+      });
       return;
     }
     if (value.action === 'removePartsFromSelectedSet') {
@@ -495,7 +501,11 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
         this.partsListService.deletePartInPartsList(this.partsList.uuid, part.id);
       });
       this.getSetSuggestions();
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Parts are successfully removed from list.' });
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Parts are successfully removed from list.',
+      });
       return;
     }
     this.partsListCopyOrMoveToComponent.open(this.uuid, value.action, value.parts);
@@ -530,7 +540,7 @@ export class PartsListDetailComponent implements OnInit, OnDestroy {
           }
           this.checkPermission();
         },
-        reject: (type: any) => {},
+        reject: (type?: ConfirmEventType) => {},
         key: 'positionDialog',
       });
     }

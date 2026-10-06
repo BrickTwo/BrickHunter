@@ -6,13 +6,15 @@ describe('ConfirmDialogFocusDirective', () => {
   let host: HTMLDivElement;
   let mask: HTMLDivElement;
   let confirmation: ConfirmDialog;
+  let defaultFocus: 'accept' | 'close' | 'reject' | 'none';
   let directive: ConfirmDialogFocusDirective;
   let previous: HTMLButtonElement;
 
   beforeEach(() => {
     host = document.createElement('div'); document.body.appendChild(host);
     previous = document.createElement('button'); host.appendChild(previous); previous.focus();
-    confirmation = { defaultFocus: 'accept' } as ConfirmDialog;
+    defaultFocus = 'accept';
+    confirmation = { defaultFocus: () => defaultFocus } as unknown as ConfirmDialog;
     directive = new ConfirmDialogFocusDirective(new ElementRef(host), confirmation);
     directive.ngOnInit();
     mask = document.createElement('div'); mask.className = 'p-dialog-mask';
@@ -35,16 +37,16 @@ describe('ConfirmDialogFocusDirective', () => {
   });
 
   it('honors the configured reject and close targets', async () => {
-    confirmation.defaultFocus = 'close'; await open();
+    defaultFocus = 'close'; await open();
     mask.querySelector<HTMLButtonElement>('.p-confirmdialog-reject-button').focus();
     expect(document.activeElement).toBe(mask.querySelector('.p-dialog-header button'));
-    mask.remove(); confirmation.defaultFocus = 'reject'; await open();
+    mask.remove(); defaultFocus = 'reject'; await open();
     mask.querySelector<HTMLButtonElement>('.p-confirmdialog-accept-button').focus();
     expect(document.activeElement).toBe(mask.querySelector('.p-confirmdialog-reject-button'));
   });
 
   it('restores previous focus for none', async () => {
-    confirmation.defaultFocus = 'none'; await open();
+    defaultFocus = 'none'; await open();
     mask.querySelector<HTMLButtonElement>('.p-confirmdialog-reject-button').focus();
     expect(document.activeElement).toBe(previous);
   });

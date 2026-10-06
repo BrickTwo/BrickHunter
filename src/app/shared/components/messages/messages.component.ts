@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ToastMessageOptions } from 'primeng/api';
 import { MessageModule } from 'primeng/message';
 
@@ -45,6 +45,7 @@ import { MessageModule } from 'primeng/message';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   encapsulation: ViewEncapsulation.None,
 })
 export class MessagesComponent {

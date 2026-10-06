@@ -20,7 +20,7 @@
       (onShow)="onCountryShow()"
       [style]="{ width: '100%' }"
       (onChange)="onCountrySelect()">
-      <ng-template pTemplate="selectedItem">
+      <ng-template #selectedItem>
         @if (selectedCountry) {
           <div class="flex align-items-center gap-2">
             <img
@@ -31,7 +31,7 @@
           </div>
         }
       </ng-template>
-      <ng-template let-country pTemplate="item">
+      <ng-template let-country #item>
         <div class="flex align-items-center gap-2">
           <img
             src="/assets/flag_placeholder.png"
@@ -56,7 +56,7 @@
       appendTo="body"
       [style]="{ width: '100%' }"
       (onChange)="onLanguageSelect()">
-      <ng-template pTemplate="selectedItem">
+      <ng-template #selectedItem>
         @if (selectedLanguage) {
           <div class="flex align-items-center gap-2">
             <img
@@ -67,7 +67,7 @@
           </div>
         }
       </ng-template>
-      <ng-template let-language pTemplate="item">
+      <ng-template let-language #item>
         <div class="flex align-items-center gap-2">
           <img
             src="/assets/flag_placeholder.png"
@@ -82,7 +82,7 @@
     * For checking the availability of parts, showing the price in your currency and it also defines the shopping cart
     at the Pick a Brick service.
   </div>
-  <ng-template pTemplate="footer">
+  <ng-template #footer>
     <p-button (click)="onSave()" label="Save" styleClass="p-button-solid" [autofocus]="true"></p-button>
   </ng-template>
 </p-dialog>

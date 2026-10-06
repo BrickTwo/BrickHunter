@@ -1,12 +1,13 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { Country, Language } from 'src/app/models/global';
 
 @Component({
-    selector: 'app-locale-settings',
-    templateUrl: './locale-settings.component.html',
-    styleUrls: ['./locale-settings.component.scss'],
-    standalone: false
+  selector: 'app-locale-settings',
+  templateUrl: './locale-settings.component.html',
+  styleUrls: ['./locale-settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LocaleSettingsComponent implements OnInit, AfterViewChecked {
   countries: Country[];

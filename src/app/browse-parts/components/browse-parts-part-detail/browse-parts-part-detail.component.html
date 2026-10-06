@@ -1,6 +1,6 @@
 <div style="text-align: center; margin-bottom: 20px">
   <img
-    [src]="'https://brickhunter.blob.core.windows.net' + part?.imageUrl"
+    [src]="'https://brickhunter.blob.core.windows.net' + $safeNavigationMigration(part?.imageUrl)"
     alt=""
     style="max-width: 250px; max-height: 250px" />
 </div>
@@ -57,11 +57,11 @@
   <div>
     <div class="flex justify-content-between gap-3">
       <strong>First Availability Date:</strong>
-      {{ part?.firstAvailabilityDate + 'Z' | date: 'short' }}
+      {{ $safeNavigationMigration(part?.firstAvailabilityDate) + 'Z' | date: 'short' }}
     </div>
     <div class="flex justify-content-between gap-3">
       <strong>Last Availability Date:</strong>
-      {{ part?.lastAvailabilityDate + 'Z' | date: 'short' }}
+      {{ $safeNavigationMigration(part?.lastAvailabilityDate) + 'Z' | date: 'short' }}
     </div>
   </div>
 </div>

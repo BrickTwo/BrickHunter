@@ -1,20 +1,20 @@
 <p-table [value]="products" dataKey="name" [tableStyle]="{ 'min-width': '60rem' }" [stripedRows]="true">
-  <ng-template pTemplate="header">
+  <ng-template #header>
     <tr>
       <!-- <th style="width: 5rem"></th> -->
-      <th pSortableColumn="id">Set Number <p-sortIcon field="id"></p-sortIcon></th>
-      <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+      <th pSortableColumn="id">Set Number <p-sorticon field="id"></p-sorticon></th>
+      <th pSortableColumn="name">Name <p-sorticon field="name"></p-sorticon></th>
       <th>Image</th>
-      <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
-      <th pSortableColumn="pieceCount">Pieces <p-sortIcon field="pieceCount"></p-sortIcon></th>
+      <th pSortableColumn="price">Price <p-sorticon field="price"></p-sorticon></th>
+      <th pSortableColumn="pieceCount">Pieces <p-sorticon field="pieceCount"></p-sorticon></th>
       <th pSortableColumn="containesPercentage">
-        Percentage used<p-sortIcon field="containesPercentage"></p-sortIcon>
+        Percentage used<p-sorticon field="containesPercentage"></p-sorticon>
       </th>
-      <th pSortableColumn="containesPieces">Pieces used<p-sortIcon field="containesPieces"></p-sortIcon></th>
-      <th pSortableColumn="containedPicesPrice">PaB Price<p-sortIcon field="containedPicesPrice"></p-sortIcon></th>
+      <th pSortableColumn="containesPieces">Pieces used<p-sorticon field="containesPieces"></p-sorticon></th>
+      <th pSortableColumn="containedPicesPrice">PaB Price<p-sorticon field="containedPicesPrice"></p-sorticon></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-product let-expanded="expanded">
+  <ng-template #body let-product let-expanded="expanded">
     <tr (click)="onOpenDetail(product)" style="cursor: pointer">
       <!-- <td>
       <button
@@ -40,7 +40,7 @@
       <td>{{ product.containedPicesPrice.toFixed(2) | currency: product.currencyCode }}</td>
     </tr>
   </ng-template>
-  <ng-template pTemplate="rowexpansion" let-product>
+  <ng-template #expandedrow let-product>
     <tr>
       <td colspan="9">
         @if (parts) {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { PartsListService } from '../../services/parts-list.service';
 import { Part, PartsList } from 'src/app/models/parts-list';
 import { MessageService } from 'primeng/api';
@@ -6,10 +6,11 @@ import { Subscription } from 'dexie';
 import { NgForm } from '@angular/forms';
 
 @Component({
-    selector: 'app-parts-list-copy-or-move-to',
-    templateUrl: './parts-list-copy-or-move-to.component.html',
-    styleUrls: ['./parts-list-copy-or-move-to.component.scss'],
-    standalone: false
+  selector: 'app-parts-list-copy-or-move-to',
+  templateUrl: './parts-list-copy-or-move-to.component.html',
+  styleUrls: ['./parts-list-copy-or-move-to.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsListCopyOrMoveToComponent implements OnInit, OnDestroy {
   display = false;
@@ -24,7 +25,10 @@ export class PartsListCopyOrMoveToComponent implements OnInit, OnDestroy {
 
   partsListSubscription: Subscription;
 
-  constructor(private readonly partsListService: PartsListService, private readonly messageService: MessageService) {}
+  constructor(
+    private readonly partsListService: PartsListService,
+    private readonly messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.targetPartsLists = this.partsListService.getPartsLists();

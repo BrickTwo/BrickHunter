@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import autoTable, { ColumnInput } from 'jspdf-autotable';
 import { ColorService } from 'src/app/core/services/color.service';
@@ -6,10 +6,11 @@ import { Part, PartsList } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 
 @Component({
-    selector: 'app-parts-list-pdf',
-    templateUrl: './parts-list-pdf.component.html',
-    styleUrls: ['./parts-list-pdf.component.scss'],
-    standalone: false
+  selector: 'app-parts-list-pdf',
+  templateUrl: './parts-list-pdf.component.html',
+  styleUrls: ['./parts-list-pdf.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsListPdfComponent {
   display = false;
@@ -24,7 +25,10 @@ export class PartsListPdfComponent {
   ];
   selectedValue: string = 'all';
 
-  constructor(private readonly partsListService: PartsListService, private readonly colorService: ColorService) {}
+  constructor(
+    private readonly partsListService: PartsListService,
+    private readonly colorService: ColorService
+  ) {}
 
   public open(partsListUuid: string) {
     this.display = true;

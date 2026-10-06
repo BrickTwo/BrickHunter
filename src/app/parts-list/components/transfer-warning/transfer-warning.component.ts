@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ReadCartItem } from 'src/app/models/background-message';
 import { Part } from 'src/app/models/parts-list';
 import { PickABrickService } from '../../services/pickabrick.service';
@@ -6,10 +6,11 @@ import { GlobalSettingsService } from 'src/app/core/services/global-settings.ser
 import { ToastMessageOptions } from 'primeng/api';
 
 @Component({
-    selector: 'app-transfer-warning',
-    templateUrl: './transfer-warning.component.html',
-    styleUrls: ['./transfer-warning.component.scss'],
-    standalone: false
+  selector: 'app-transfer-warning',
+  templateUrl: './transfer-warning.component.html',
+  styleUrls: ['./transfer-warning.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TransferWarningComponent {
   show = false;

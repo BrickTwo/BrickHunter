@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'dexie';
 import { BrowsePartsPart } from 'src/app/models/browse-parts';
 import { PartsListService } from 'src/app/parts-list/services/parts-list.service';
@@ -10,11 +10,12 @@ import { BrowsePartsPartDetailComponent } from '../browse-parts-part-detail/brow
 import { LocaleService } from 'src/app/core/services/locale.service';
 
 @Component({
-    selector: 'app-browse-parts-grid-item',
-    templateUrl: './browse-parts-grid-item.component.html',
-    styleUrls: ['./browse-parts-grid-item.component.scss'],
-    providers: [DialogService],
-    standalone: false
+  selector: 'app-browse-parts-grid-item',
+  templateUrl: './browse-parts-grid-item.component.html',
+  styleUrls: ['./browse-parts-grid-item.component.scss'],
+  providers: [DialogService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   @Input()
@@ -24,7 +25,7 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
   partsListUuidSubscription: Subscription;
   partsListsSubscription: Subscription;
   language: string;
-  
+
   isInWishList = false;
   wishListSubscription: Subscription;
 
@@ -43,7 +44,7 @@ export class BrowsePartsGridItemComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.language =
-    this.localeService.languageCountryCode.substring(0, 2) === 'de' ? this.localeService.languageCountryCode : 'en';
+      this.localeService.languageCountryCode.substring(0, 2) === 'de' ? this.localeService.languageCountryCode : 'en';
 
     this.partsListPart = this.partsListService
       .getParts(this.browsePartsService.selectedPartsListUuid, 'all')

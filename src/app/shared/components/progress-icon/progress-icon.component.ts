@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { faCheck, faO, faRightLong } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-    selector: 'app-progress-icon',
-    templateUrl: './progress-icon.component.html',
-    styleUrls: ['./progress-icon.component.scss'],
-    standalone: false
+  selector: 'app-progress-icon',
+  templateUrl: './progress-icon.component.html',
+  styleUrls: ['./progress-icon.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ProgressIconComponent {
   faCheck = faCheck;

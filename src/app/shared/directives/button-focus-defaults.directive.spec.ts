@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ButtonModule } from 'primeng/button';
-import { ButtonFocusDefaultsDirective } from './button-focus-defaults.directive';
 
-@Component({ standalone: true, imports: [ButtonModule, ButtonFocusDefaultsDirective],
-  template: '<p-button label="Default" /><p-button label="Explicit" [autofocus]="true" />' })
+@Component({
+  standalone: true,
+  imports: [ButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: '<p-button label="Default" /><p-button label="Explicit" [autofocus]="true" />',
+})
 class FocusTestComponent {}
 
-describe('ButtonFocusDefaultsDirective', () => {
+describe('PrimeNG button focus defaults', () => {
   it('does not add native autofocus when the app leaves autofocus unspecified', () => {
     const fixture = TestBed.createComponent(FocusTestComponent);
     fixture.detectChanges();

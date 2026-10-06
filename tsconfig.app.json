@@ -5,12 +5,6 @@
     "outDir": "./out-tsc/app",
     "types": ["chrome"]
   },
-  "files": [
-    "src/main.ts",
-    "src/background.ts",
-    "src/lego-content-script.ts",
-  ],
-  "include": [
-    "src/**/*.d.ts"
-  ]
+  "files": ["src/main.ts", "src/background.ts", "src/lego-content-script.ts"],
+  "include": ["src/**/*.d.ts"]
 }

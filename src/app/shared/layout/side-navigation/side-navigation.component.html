@@ -1,11 +1,11 @@
 <p-drawer [appendTo]="null" class="sideNav" [visible]="true" [motionOptions]="{ disabled: true }" [showCloseIcon]="false" [modal]="false">
-  <ng-template pTemplate="header">
+  <ng-template #header>
     <div style="margin-top: 5px">
       <p-image src="./assets/logo.png" width="237"></p-image>
     </div>
   </ng-template>
    
-  <ng-template pTemplate="content">
+  <ng-template #content>
     <ul>
       <li>
         <a pRipple routerLink="/parts-lists">
@@ -45,7 +45,7 @@
       </li>
     </ul>
   </ng-template>
-  <ng-template pTemplate="footer">
+  <ng-template #footer>
     <p style="color: grey; font-size: 0.7rem">{{ currentVersion }}</p>
   </ng-template>
 </p-drawer>

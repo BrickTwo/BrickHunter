@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
 import { PartsList } from 'src/app/models/parts-list';
@@ -11,10 +11,11 @@ interface SubtractUnit {
 }
 
 @Component({
-    selector: 'app-parts-list-settings',
-    templateUrl: './parts-list-settings.component.html',
-    styleUrls: ['./parts-list-settings.component.scss'],
-    standalone: false
+  selector: 'app-parts-list-settings',
+  templateUrl: './parts-list-settings.component.html',
+  styleUrls: ['./parts-list-settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsListSettingsComponent implements OnChanges {
   display = false;

@@ -10,58 +10,58 @@
               pButton
               pRipple
               type="button"
-              label="Settings"
+
               class="p-button-outlined"
-              icon="fa fa-gear"
+
               style="width: 100%"
-              (click)="onSetting()"></button>
+              (click)="onSetting()"><span pButtonIcon class="fa fa-gear"></span><span pButtonLabel>Settings</span></button>
             <button
               pButton
               pRipple
               type="button"
-              label="Delete"
+
               class="p-button-outlined"
-              icon="fa fa-trash-can"
+
               style="width: 100%"
-              (click)="onDelete()"></button>
+              (click)="onDelete()"><span pButtonIcon class="fa fa-trash-can"></span><span pButtonLabel>Delete</span></button>
             <button
               pButton
               pRipple
               type="button"
-              label="Split"
+
               class="p-button-outlined"
-              icon="fa fa-scissors"
+
               style="width: 100%"
-              (click)="onSplit()"></button>
+              (click)="onSplit()"><span pButtonIcon class="fa fa-scissors"></span><span pButtonLabel>Split</span></button>
             <button
               pButton
               pRipple
               type="button"
-              label="ReSync"
+
               class="p-button-outlined"
-              icon="fa fa-arrows-rotate"
+
               style="width: 100%"
               [disabled]="pabIsLoading || setSugestionIsLoading"
-              (click)="onReSync()"></button>
+              (click)="onReSync()"><span pButtonIcon class="fa fa-arrows-rotate"></span><span pButtonLabel>ReSync</span></button>
             <button
               pButton
               pRipple
               type="button"
-              label="Check for Sets (Beta)"
+
               class="p-button-outlined"
-              icon="fa fa-boxes-stacked"
+
               style="width: 100%"
               [disabled]="pabIsLoading || setSugestionIsLoading"
-              (click)="getSetSuggestions()"></button>
+              (click)="getSetSuggestions()"><span pButtonIcon class="fa fa-boxes-stacked"></span><span pButtonLabel>Check for Sets (Beta)</span></button>
             <button
               pButton
               pRipple
               type="button"
-              label="Export"
+
               class="p-button-outlined"
-              icon="fa fa-download"
+
               style="width: 100%"
-              (click)="onExport()"></button>
+              (click)="onExport()"><span pButtonIcon class="fa fa-download"></span><span pButtonLabel>Export</span></button>
           </div>
         </div>
         <div class="col-3 xxl:col-12">
@@ -85,12 +85,12 @@
               pButton
               pRipple
               type="button"
-              label="Transfer"
+
               class="p-button-solid"
-              icon="fa fa-cart-shopping"
+
               style="width: 100%"
               [disabled]="pabIsLoading"
-              (click)="onTransfer(cartType.Bestseller)"></button>
+              (click)="onTransfer(cartType.Bestseller)"><span pButtonIcon class="fa fa-cart-shopping"></span><span pButtonLabel>Transfer</span></button>
             @if (!!affiliate) {
               <div class="flex flex-nowrap align-items-center gap-2">
                 <span class="bh-toggleswitch"
@@ -122,12 +122,12 @@
               pButton
               pRipple
               type="button"
-              label="Transfer"
+
               class="p-button-solid"
-              icon="fa fa-cart-shopping"
+
               style="width: 100%"
               [disabled]="pabIsLoading"
-              (click)="onTransfer(cartType.Standard)"></button>
+              (click)="onTransfer(cartType.Standard)"><span pButtonIcon class="fa fa-cart-shopping"></span><span pButtonLabel>Transfer</span></button>
             @if (!!affiliate) {
               <div class="flex flex-nowrap align-items-center gap-2">
                 <span class="bh-toggleswitch"
@@ -197,7 +197,7 @@
             }
             @if (activeItem.id === 'setSuggestions' && setSugestionIsLoading) {
               <span class="vertical-align-middle">
-                <p-progressSpinner [style]="{ width: '25px', height: '25px', margin: '10px' }"></p-progressSpinner>
+                <p-progressspinner [style]="{ width: '25px', height: '25px', margin: '10px' }"></p-progressspinner>
               </span>
             }
             @if (
@@ -228,10 +228,10 @@
               !setSugestionIsLoading &&
               products?.length == 0
             ) {
-              <p-message severity="error" text="No sets found!"></p-message>
+              <p-message severity="error">No sets found!</p-message>
             }
             @if (activeItem.id === 'setSuggestions' && !setSuggestionsLoaded && !setSugestionIsLoading) {
-              <p-message severity="info" text='Please use "Check for Sets" function.'></p-message>
+              <p-message severity="info">Please use "Check for Sets" function.</p-message>
             }
           </p-tabpanel>
           @for (item of items; track item) {
@@ -244,7 +244,7 @@
     </p-card>
   </div>
 </div>
-<p-confirmDialog
+<p-confirmdialog
   bhConfirmDialogFocus
   acceptIcon="pi pi-check"
   rejectIcon="pi pi-times"
@@ -253,9 +253,9 @@
   position="top"
   [baseZIndex]="10000"
   rejectButtonStyleClass="p-button-outlined">
-  <ng-template pTemplate="accepticon"><svg data-p-icon="check" class="p-button-icon p-button-icon-left" /></ng-template>
-  <ng-template pTemplate="rejecticon"><svg data-p-icon="times" class="p-button-icon p-button-icon-left" /></ng-template>
-</p-confirmDialog>
+  <ng-template #accepticon><svg data-p-icon="check" class="p-button-icon p-button-icon-left" /></ng-template>
+  <ng-template #rejecticon><svg data-p-icon="times" class="p-button-icon p-button-icon-left" /></ng-template>
+</p-confirmdialog>
 <app-parts-list-settings [partsList]="partsList"></app-parts-list-settings>
 <app-parts-list-split></app-parts-list-split>
 <app-parts-list-export></app-parts-list-export>
@@ -269,7 +269,7 @@
   [closable]="false"
   [modal]="true">
   <div class="flex flex-wrap card-container blue-container gap-3">
-    <span><p-progressSpinner></p-progressSpinner></span>
+    <span><p-progressspinner></p-progressspinner></span>
     <div>
       <p class="align-items-center justify-content-center">
         <app-progress-icon [step]="1" [currentStep]="importStep"></app-progress-icon> Prepare list

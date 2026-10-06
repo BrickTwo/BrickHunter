@@ -29,11 +29,11 @@
       </div>
       <div class="grid">
         <div class="col-6">
-          <p-inputNumber
+          <p-inputnumber
             inputId="integeronly"
             formControlName="subtractBrickLinkPriceAmount"
             mode="decimal"
-            [minFractionDigits]="2"></p-inputNumber>
+            [minFractionDigits]="2"></p-inputnumber>
         </div>
         <div class="col-6">
           <p-select
@@ -47,7 +47,7 @@
             [style]="{ width: '100%' }"></p-select>
         </div>
       </div>
-      <button pButton pRipple type="submit" label="Save" style="width: 100%"></button>
+      <button pButton pRipple type="submit" style="width: 100%"><span pButtonLabel>Save</span></button>
     </div>
   </form>
 </p-drawer>

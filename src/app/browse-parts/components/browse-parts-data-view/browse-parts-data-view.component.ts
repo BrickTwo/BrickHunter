@@ -1,13 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-parts.service';
 import { BrowsePartsPart } from 'src/app/models/browse-parts';
 import { Subscription, fromEvent } from 'rxjs';
 
 @Component({
-    selector: 'app-browse-parts-data-view',
-    templateUrl: './browse-parts-data-view.component.html',
-    styleUrls: ['./browse-parts-data-view.component.scss'],
-    standalone: false
+  selector: 'app-browse-parts-data-view',
+  templateUrl: './browse-parts-data-view.component.html',
+  styleUrls: ['./browse-parts-data-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BrowsePartsDataViewComponent implements OnInit, OnDestroy {
   layout = 'grid';

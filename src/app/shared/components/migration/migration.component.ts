@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { VersionService } from 'src/app/core/services/version.service';
 import { ToastMessageOptions } from 'primeng/api';
 
 @Component({
-    selector: 'app-migration',
-    templateUrl: './migration.component.html',
-    styleUrls: ['./migration.component.scss'],
-    standalone: false
+  selector: 'app-migration',
+  templateUrl: './migration.component.html',
+  styleUrls: ['./migration.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class MigrationComponent implements OnInit {
   showDialog = false;

@@ -1,5 +1,5 @@
 <p-dialog [(visible)]="show" [style]="{ width: '90vw' }" [modal]="true" [closable]="true">
-  <ng-template pTemplate="header">
+  <ng-template #header>
     <h2 style="margin: 0">{{ product.id }} - {{ product.name }}</h2>
   </ng-template>
   @if (product != null) {
@@ -7,7 +7,7 @@
       <div class="col-9">
         @if (show) {
           <app-parts-table
-            [parts]="product?.partsUsed"
+            [parts]="$safeNavigationMigration(product?.partsUsed)"
             [scrollHeightSubtraction]="325"
             [log]="true"
             [dataTableWrapperIndex]="1"
@@ -25,21 +25,21 @@
               pButton
               pRipple
               type="button"
-              label="Remove parts from Parts List"
+
               class="p-button-outlined"
-              icon="fa fa-trash-can"
+
               style="width: 100%"
               [disabled]="currentPartListUuid == 'multiple'"
-              (click)="onRemoveParts()"></button>
+              (click)="onRemoveParts()"><span pButtonIcon class="fa fa-trash-can"></span><span pButtonLabel>Remove parts from Parts List</span></button>
             <button
               pButton
               pRipple
               type="button"
-              label="PDF"
+
               class="p-button-outlined"
-              icon="fa fa-file-pdf"
+
               style="width: 100%"
-              (click)="onExportPdf()"></button>
+              (click)="onExportPdf()"><span pButtonIcon class="fa fa-file-pdf"></span><span pButtonLabel>PDF</span></button>
           </div>
           <img [src]="product.imageUrl" [alt]="product.name" class="productImage" />
           <div class="shortInfoTitle">Bestseller Price</div>
@@ -52,7 +52,7 @@
       </div>
     </div>
   }
-  <ng-template pTemplate="footer">
+  <ng-template #footer>
     <p-button
       icon="pi pi-check"
       (click)="onClose()"

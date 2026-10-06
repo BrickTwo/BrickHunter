@@ -1,12 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BrowsePartsService, FilterChangedProperty } from '../../service/browse-parts.service';
 
 @Component({
-    selector: 'app-browse-parts-filter',
-    templateUrl: './browse-parts-filter.component.html',
-    styleUrls: ['./browse-parts-filter.component.scss'],
-    standalone: false
+  selector: 'app-browse-parts-filter',
+  templateUrl: './browse-parts-filter.component.html',
+  styleUrls: ['./browse-parts-filter.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BrowsePartsFilterComponent implements OnInit, OnDestroy {
   keyword: string;

@@ -11,7 +11,7 @@
       autoWidth="false"
       [style]="{ width: '100%' }"
       (onChange)="onCountrySelect()">
-      <ng-template pTemplate="selectedItem">
+      <ng-template #selectedItem>
         @if (selectedCountry) {
           <div class="flex align-items-center gap-2">
             <img
@@ -22,7 +22,7 @@
           </div>
         }
       </ng-template>
-      <ng-template let-country pTemplate="item">
+      <ng-template let-country #item>
         <div class="flex align-items-center gap-2">
           <img
             src="/assets/flag_placeholder.png"
@@ -45,7 +45,7 @@
       autoWidth="false"
       [style]="{ width: '100%' }"
       (onChange)="onLanguageSelect()">
-      <ng-template pTemplate="selectedItem">
+      <ng-template #selectedItem>
         @if (selectedLanguage) {
           <div class="flex align-items-center gap-2">
             <img
@@ -56,7 +56,7 @@
           </div>
         }
       </ng-template>
-      <ng-template let-language pTemplate="item">
+      <ng-template let-language #item>
         <div class="flex align-items-center gap-2">
           <img
             src="/assets/flag_placeholder.png"

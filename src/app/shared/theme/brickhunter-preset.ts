@@ -213,9 +213,9 @@ export const BrickHunterPreset = definePreset(Material, {
         .p-checkbox.p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:focus) { box-shadow: 0 0 1px 10px rgba(10, 52, 99, 0.12); }
         /* Table's legacy markup used black halos and did not focus its hidden input on mouse clicks.
            Repeat the root class to override both checked and unchecked generic checkbox states. */
-        .p-datatable :is(p-tableCheckbox, p-tableHeaderCheckbox) .p-checkbox.p-checkbox:not(.p-disabled):has(.p-checkbox-input:focus) { box-shadow: none; }
-        .p-datatable :is(p-tableCheckbox, p-tableHeaderCheckbox) .p-checkbox.p-checkbox:not(.p-disabled):has(.p-checkbox-input:hover) { box-shadow: 0 0 1px 10px rgba(0, 0, 0, 0.04); }
-        .p-datatable :is(p-tableCheckbox, p-tableHeaderCheckbox) .p-checkbox.p-checkbox:not(.p-disabled):has(.p-checkbox-input:focus-visible) { box-shadow: 0 0 1px 10px rgba(0, 0, 0, 0.12); }
+        .p-datatable :is(p-table-checkbox, p-table-header-checkbox) .p-checkbox.p-checkbox:not(.p-disabled):has(.p-checkbox-input:focus) { box-shadow: none; }
+        .p-datatable :is(p-table-checkbox, p-table-header-checkbox) .p-checkbox.p-checkbox:not(.p-disabled):has(.p-checkbox-input:hover) { box-shadow: 0 0 1px 10px rgba(0, 0, 0, 0.04); }
+        .p-datatable :is(p-table-checkbox, p-table-header-checkbox) .p-checkbox.p-checkbox:not(.p-disabled):has(.p-checkbox-input:focus-visible) { box-shadow: 0 0 1px 10px rgba(0, 0, 0, 0.12); }
         .p-checkbox.p-disabled { opacity: 0.38; }
         .p-checkbox.p-checkbox-checked.p-disabled .p-checkbox-box { background: #0a3463; border-color: #0a3463; }
         .p-checkbox.p-checkbox-checked.p-disabled .p-checkbox-icon { color: #ffffff; }

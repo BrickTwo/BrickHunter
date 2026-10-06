@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Part, Product } from 'src/app/models/parts-list';
 import { PartsProductSuggestionsDetailComponent } from '../parts-product-suggestions-detail/parts-product-suggestions-detail.component';
 import { BlukAction } from 'src/app/models/shared';
 
 @Component({
-    selector: 'app-parts-product-suggestions-table',
-    templateUrl: './parts-product-suggestions-table.component.html',
-    styleUrls: ['./parts-product-suggestions-table.component.scss'],
-    standalone: false
+  selector: 'app-parts-product-suggestions-table',
+  templateUrl: './parts-product-suggestions-table.component.html',
+  styleUrls: ['./parts-product-suggestions-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsProductSuggestionsTableComponent {
   @Input()

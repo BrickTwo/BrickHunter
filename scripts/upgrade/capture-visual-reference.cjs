@@ -91,6 +91,9 @@ async function main() {
         await page.waitForFunction(() => window.brickHunterReference && document.querySelector('h2'));
         await page.evaluate(async () => { await document.fonts.ready; });
         await page.waitForTimeout(400); // Let Angular overlays and image layout settle.
+        if (await page.locator('#p-license-host').count())
+          throw new Error('PrimeUI reports an invalid license; verify the configured local license file');
+        report.noInvalidLicenseBanner = true;
       }
       let navigation = 0;
       async function open(route) {

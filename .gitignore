@@ -6,6 +6,8 @@
 /out-tsc
 /bazel-out
 /artefacts
+/.primeui-license-path
+/src/app/primeui-license.local.ts
 
 # Node
 /node_modules

@@ -1,12 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { Part } from 'src/app/models/parts-list';
 
 @Component({
-    selector: 'app-pab-price',
-    templateUrl: './pab-price.component.html',
-    styleUrls: ['./pab-price.component.scss'],
-    standalone: false
+  selector: 'app-pab-price',
+  templateUrl: './pab-price.component.html',
+  styleUrls: ['./pab-price.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PabPriceComponent implements OnInit {
   @Input() part: Part;

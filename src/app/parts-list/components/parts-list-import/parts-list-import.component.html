@@ -2,17 +2,17 @@
   <h2>Import</h2>
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="field">
-      <p-fileUpload
+      <p-fileupload
         #fileUpload
         name="myfile[]"
         url="./upload.php"
         accept="text/xml, application/json"
         (onSelect)="onUpload($event)"
         [showUploadButton]="false">
-        <ng-template pTemplate="toolbar">
+        <ng-template #toolbar>
           <div>Select file or drag below.</div>
         </ng-template>
-      </p-fileUpload>
+      </p-fileupload>
     </div>
     <div class="field">
       <label for="partsListName" class="block">BrickLink WantedList or BrickHunter Json</label>
@@ -23,7 +23,7 @@
       <input id="partsListName" formControlName="partsListName" type="text" pInputText style="width: 100%" />
     </div>
     <div class="field">
-      <button pButton pRipple type="submit" label="Import" style="width: 100%"></button>
+      <button pButton pRipple type="submit" style="width: 100%"><span pButtonLabel>Import</span></button>
     </div>
   </form>
 </p-drawer>
@@ -34,7 +34,7 @@
   [closable]="false"
   [modal]="true">
   <div class="flex flex-wrap card-container blue-container gap-3">
-    <span><p-progressSpinner></p-progressSpinner></span>
+    <span><p-progressspinner></p-progressspinner></span>
     <div>
       <p class="align-items-center justify-content-center">
         <app-progress-icon [step]="1" [currentStep]="importStep"></app-progress-icon> Prepare list

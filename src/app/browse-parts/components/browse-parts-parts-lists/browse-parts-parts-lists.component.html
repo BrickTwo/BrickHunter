@@ -33,12 +33,12 @@
   </div>
   @for (partsList of partsLists; track partsList) {
     <div class="field-checkbox">
-      <p-radioButton
+      <p-radiobutton
         [inputId]="partsList.uuid"
         name="category"
         [value]="partsList.uuid"
         [(ngModel)]="selectedListUuid"
-        (onClick)="onSelectList($event.value)"></p-radioButton>
+        (onClick)="onSelectList($event.value)"></p-radiobutton>
       <span class="ml-2">
         <label [for]="partsList.uuid" style="overflow-wrap: anywhere">
           {{ partsList.name }} ({{ partsList.parts.length }})

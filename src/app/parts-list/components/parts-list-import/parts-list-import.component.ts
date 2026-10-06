@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'dexie';
 import { MessageService } from 'primeng/api';
@@ -11,10 +11,11 @@ import * as xml2js from 'xml2js';
 import { ImportService } from '../../services/import.service';
 
 @Component({
-    selector: 'app-parts-list-import',
-    templateUrl: './parts-list-import.component.html',
-    styleUrls: ['./parts-list-import.component.scss'],
-    standalone: false
+  selector: 'app-parts-list-import',
+  templateUrl: './parts-list-import.component.html',
+  styleUrls: ['./parts-list-import.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsListImportComponent implements OnDestroy {
   display = false;
@@ -37,7 +38,10 @@ export class PartsListImportComponent implements OnDestroy {
   clear() {
     this.fileUpload.clear();
   }
-  constructor(private readonly messageService: MessageService, private importService: ImportService) {}
+  constructor(
+    private readonly messageService: MessageService,
+    private importService: ImportService
+  ) {}
 
   ngOnDestroy(): void {
     if (this.subscription$) this.subscription$.unsubscribe();
@@ -143,11 +147,11 @@ export class PartsListImportComponent implements OnDestroy {
           case 'maxprice':
             return 'maxPrice';
           case 'price':
-              return 'maxPrice';
+            return 'maxPrice';
           case 'minqty':
             return 'minQty';
           case 'qty':
-              return 'minQty';
+            return 'minQty';
           case 'qtyfilled':
             return 'qtyFilled';
           default:
@@ -183,7 +187,7 @@ export class PartsListImportComponent implements OnDestroy {
         valueProcessors: valueProcessor,
       })
       .then(result => {
-        if(!Array.isArray(result.inventory.item)) {
+        if (!Array.isArray(result.inventory.item)) {
           return [result.inventory.item] as BrickLinkWantedListItem[];
         }
 

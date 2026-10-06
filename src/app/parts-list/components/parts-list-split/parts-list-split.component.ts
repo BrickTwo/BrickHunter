@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Part, PartsList } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 import { GlobalSettingsService } from 'src/app/core/services/global-settings.service';
@@ -19,10 +19,11 @@ interface SummaryDetail {
 }
 
 @Component({
-    selector: 'app-parts-list-split',
-    templateUrl: './parts-list-split.component.html',
-    styleUrls: ['./parts-list-split.component.scss'],
-    standalone: false
+  selector: 'app-parts-list-split',
+  templateUrl: './parts-list-split.component.html',
+  styleUrls: ['./parts-list-split.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsListSplitComponent {
   display = false;
@@ -119,13 +120,16 @@ export class PartsListSplitComponent {
   }
 
   private calculateAmountOfCarts(deliveryType: string) {
-    let parts : Part[] = this.partsListService.getParts(this.partsList.uuid, deliveryType).map(part => {
-      if(part.have > 0) {
-        part.qty = part.qty - part.have
-        part.have = 0
-      }
-      return part;
-    }).filter(part => part.qty > 0);
+    let parts: Part[] = this.partsListService
+      .getParts(this.partsList.uuid, deliveryType)
+      .map(part => {
+        if (part.have > 0) {
+          part.qty = part.qty - part.have;
+          part.have = 0;
+        }
+        return part;
+      })
+      .filter(part => part.qty > 0);
 
     if (parts.length === 0) return 0;
     let expectedLots = parts.length;
@@ -204,7 +208,13 @@ export class PartsListSplitComponent {
           newLot = 1;
         }
         //currentPart.qty = currentPart.qty + 1;
-        this.addToSummary(deliveryType, partsListSorted[0].index, newLot, currentPart.qty, currentPart.qty * currentPart.lego.price.amount);
+        this.addToSummary(
+          deliveryType,
+          partsListSorted[0].index,
+          newLot,
+          currentPart.qty,
+          currentPart.qty * currentPart.lego.price.amount
+        );
       }
 
       this.newPartsLists.sort((a, b) => a.index - b.index);
@@ -232,10 +242,12 @@ export class PartsListSplitComponent {
   }
 
   private sortByTopPrioList(a: PartsList, b: PartsList, deliveryType: string) {
-    const maxLists = deliveryType === 'pab' ? this.listCountBestseller : this.listCountStandard ;
-    const listsUsed = this.newPartsListSummary.map(pls => {
-      return deliveryType === 'pab' ? pls.pab.lots : pls.bap.lots;
-    }).filter(el => el > 0).length;
+    const maxLists = deliveryType === 'pab' ? this.listCountBestseller : this.listCountStandard;
+    const listsUsed = this.newPartsListSummary
+      .map(pls => {
+        return deliveryType === 'pab' ? pls.pab.lots : pls.bap.lots;
+      })
+      .filter(el => el > 0).length;
 
     const minPrice =
       deliveryType === 'pab'
@@ -251,7 +263,7 @@ export class PartsListSplitComponent {
       .filter(p => p.lego.deliveryChannel === deliveryType)
       .reduce((a, b) => a + b.qty * b.lego.price.amount, 0);
 
-    if(maxLists <= listsUsed) {
+    if (maxLists <= listsUsed) {
       if (aTotalPrice == 0) {
         return 1;
       }
@@ -273,7 +285,7 @@ export class PartsListSplitComponent {
     ) {
       if (aTotalLots < bTotalLots) return 1;
       if (aTotalLots > bTotalLots) return -1;
-    }  
+    }
 
     if (
       aTotalLots < this.globalSettingsService.maxPaBLotPerOrder &&

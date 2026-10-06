@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faList } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
@@ -8,10 +8,11 @@ import { PartsListImportComponent } from '../../components/parts-list-import/par
 import { PartsListService } from '../../services/parts-list.service';
 
 @Component({
-    selector: 'app-parts-list-list',
-    templateUrl: './parts-list-list.component.html',
-    styleUrls: ['./parts-list-list.component.scss'],
-    standalone: false
+  selector: 'app-parts-list-list',
+  templateUrl: './parts-list-list.component.html',
+  styleUrls: ['./parts-list-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsListListComponent implements OnInit, OnDestroy {
   faList = faList;
@@ -68,7 +69,7 @@ export class PartsListListComponent implements OnInit, OnDestroy {
           detail: 'Parts list has been successfully deleted',
         });
       },
-      reject: (type: any) => {
+      reject: (type?: ConfirmEventType) => {
         switch (type) {
           case ConfirmEventType.REJECT:
             this.messageService.add({
@@ -129,7 +130,7 @@ export class PartsListListComponent implements OnInit, OnDestroy {
           detail: 'Parts lists have been successfully deleted',
         });
       },
-      reject: (type: any) => {
+      reject: (type?: ConfirmEventType) => {
         switch (type) {
           case ConfirmEventType.REJECT:
             this.messageService.add({

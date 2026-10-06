@@ -63,7 +63,7 @@ describe('Parts list local file selection', () => {
     expect(component.fileUpload.files.length).toBe(0);
     expect(component.form.value.content).toBe('Existing content');
     expect(component.form.value.partsListName).toBe('Existing list');
-    expect(component.fileUpload.msgs.length).toBeGreaterThan(0);
+    expect(component.fileUpload.msgs().length).toBeGreaterThan(0);
   });
 
   it('clears the selected file with Cancel and resets the form when the drawer closes', async () => {

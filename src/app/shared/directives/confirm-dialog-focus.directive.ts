@@ -4,7 +4,7 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
 // PrimeNG 18–20 cannot reliably resolve the native targets used for defaultFocus.
 // Observe only this host's overlay creation, including appendTo="body" moves.
 @Directive({
-    selector: 'p-confirmDialog[bhConfirmDialogFocus]',
+    selector: 'p-confirmdialog[bhConfirmDialogFocus]',
     standalone: false
 })
 export class ConfirmDialogFocusDirective implements OnInit, OnDestroy {
@@ -29,7 +29,7 @@ export class ConfirmDialogFocusDirective implements OnInit, OnDestroy {
             accept: '.p-confirmdialog-accept-button', reject: '.p-confirmdialog-reject-button',
             close: '.p-dialog-header .p-dialog-close-button',
           };
-          const selector = selectors[this.confirmation.defaultFocus];
+          const selector = selectors[this.confirmation.defaultFocus()];
           const target = selector ? mask.querySelector<HTMLElement>(selector) : previous;
           if (target?.isConnected) target.focus();
         };

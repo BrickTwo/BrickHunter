@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Part, PartsList, Product } from 'src/app/models/parts-list';
 import { PartsListService } from '../../services/parts-list.service';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
@@ -8,10 +8,11 @@ import jsPDF from 'jspdf';
 import { BlukAction } from 'src/app/models/shared';
 
 @Component({
-    selector: 'app-parts-product-suggestions-detail',
-    templateUrl: './parts-product-suggestions-detail.component.html',
-    styleUrls: ['./parts-product-suggestions-detail.component.scss'],
-    standalone: false
+  selector: 'app-parts-product-suggestions-detail',
+  templateUrl: './parts-product-suggestions-detail.component.html',
+  styleUrls: ['./parts-product-suggestions-detail.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PartsProductSuggestionsDetailComponent {
   show = false;
@@ -26,7 +27,7 @@ export class PartsProductSuggestionsDetailComponent {
     private readonly partsListService: PartsListService,
     private readonly messageService: MessageService,
     private readonly colorService: ColorService,
-    private readonly confirmationService: ConfirmationService,
+    private readonly confirmationService: ConfirmationService
   ) {}
 
   open(partsListUuid: string, product: Product) {
@@ -43,27 +44,14 @@ export class PartsProductSuggestionsDetailComponent {
   getTotalPrice(filter: string): string {
     if (filter === 'all') {
       return (
-        Math.round(
-          this.product?.partsUsed?.reduce(
-              (a, b) =>
-                a +
-                (b.qty) *
-                  (b.lego?.price.amount || 0),
-              0
-            ) * 100
-        ) / 100
+        Math.round(this.product?.partsUsed?.reduce((a, b) => a + b.qty * (b.lego?.price.amount || 0), 0) * 100) / 100
       ).toFixed(2);
     } else {
       return (
         Math.round(
-          this.product?.partsUsed.filter(part => part?.lego?.deliveryChannel === filter)
-            ?.reduce(
-              (a, b) =>
-                a +
-                (b.qty) *
-                  (b.lego?.price.amount || 0),
-              0
-            ) * 100
+          this.product?.partsUsed
+            .filter(part => part?.lego?.deliveryChannel === filter)
+            ?.reduce((a, b) => a + b.qty * (b.lego?.price.amount || 0), 0) * 100
         ) / 100
       ).toFixed(2);
     }
@@ -77,7 +65,7 @@ export class PartsProductSuggestionsDetailComponent {
       accept: () => {
         this.bulkAction.emit({ action: 'removePartsFromSelectedSet', parts: this.product.partsUsed });
       },
-      reject: (type: any) => {
+      reject: (type?: ConfirmEventType) => {
         switch (type) {
           case ConfirmEventType.REJECT:
             this.messageService.add({
@@ -167,9 +155,7 @@ export class PartsProductSuggestionsDetailComponent {
       doc.putTotalPages(totalPagesExp);
     }
 
-    doc.save(
-      `BrickHunter_${this.partsList.name}_${this.product.id}-${this.product.name}.pdf`
-    );
+    doc.save(`BrickHunter_${this.partsList.name}_${this.product.id}-${this.product.name}.pdf`);
   }
 
   caclImageUrl(part: Part) {

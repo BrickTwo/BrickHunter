@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { VersionService } from 'src/app/core/services/version.service';
 
 @Component({
-    selector: 'app-changelog',
-    templateUrl: './changelog.component.html',
-    styleUrls: ['./changelog.component.scss'],
-    standalone: false
+  selector: 'app-changelog',
+  templateUrl: './changelog.component.html',
+  styleUrls: ['./changelog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ChangelogComponent {
   @Input() versionCheck = true;

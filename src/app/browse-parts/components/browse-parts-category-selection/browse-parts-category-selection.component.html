@@ -12,7 +12,7 @@
       [(selection)]="selectedCategory"
       selectionMode="single"
       (onNodeSelect)="onSelectCategory($event.node.key)">
-      <ng-template let-category pTemplate="default"> {{ category.label }} ({{ category.data }}) </ng-template>
+      <ng-template let-category #node> {{ category.label }} ({{ category.data }}) </ng-template>
     </p-tree>
   }
   @if (configMode) {
@@ -31,7 +31,7 @@
         [(selection)]="selectedConfigCategories"
         selectionMode="checkbox"
         (onNodeSelect)="onConfigCategory($event.node.key)">
-        <ng-template let-category pTemplate="default">
+        <ng-template let-category #node>
           {{ category.label }}
         </ng-template>
       </p-tree>

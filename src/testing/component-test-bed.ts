@@ -1,7 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject } from 'rxjs';
@@ -31,34 +31,65 @@ export async function configureComponentTestBed() {
   const lists = referenceLists();
   const colors = structuredClone(referenceColors);
   const api = jasmine.createSpyObj<BrickHunterApiService>('BrickHunterApiService', [
-    'getBrickHunterGlobalSettings', 'getRebrickableColors', 'getPickABrickParts', 'getProductsSuggestions',
-    'getRebrickableParts', 'getBrickLinkParts',
+    'getBrickHunterGlobalSettings',
+    'getRebrickableColors',
+    'getPickABrickParts',
+    'getProductsSuggestions',
+    'getRebrickableParts',
+    'getBrickLinkParts',
   ]);
-  api.getBrickHunterGlobalSettings.and.returnValue(of({
-    maxPaBLotPerOrder: 200, defaultMaxQuantityPerLot: 100, paBServiceFeeUnder: [], baPServiceFeeUnder: [],
-  }));
+  api.getBrickHunterGlobalSettings.and.returnValue(
+    of({
+      maxPaBLotPerOrder: 200,
+      defaultMaxQuantityPerLot: 100,
+      paBServiceFeeUnder: [],
+      baPServiceFeeUnder: [],
+    })
+  );
   // The existing API signature declares one color, while ColorService consumes an array.
-  api.getRebrickableColors.and.returnValue(of(colors) as unknown as ReturnType<BrickHunterApiService['getRebrickableColors']>);
+  api.getRebrickableColors.and.returnValue(
+    of(colors) as unknown as ReturnType<BrickHunterApiService['getRebrickableColors']>
+  );
   api.getPickABrickParts.and.returnValue(of(referenceSearch()));
   api.getProductsSuggestions.and.returnValue(of([]));
   api.getRebrickableParts.and.returnValue(of([]));
   api.getBrickLinkParts.and.returnValue(of([]));
 
   await TestBed.configureTestingModule({
-    imports: [SharedModule, BrowsePartsModule, PartsListsModule, SettingsModule,
-      RouterTestingModule.withRoutes([])],
+    imports: [SharedModule, BrowsePartsModule, PartsListsModule, SettingsModule, RouterTestingModule.withRoutes([])],
     providers: [
-      provideHttpClient(), provideHttpClientTesting(),
-      ConfirmationService, MessageService, ColorService, GlobalSettingsService, GuidService,
-      LocaleService, AffiliateService,
+      provideHttpClient(withXhr()),
+      provideHttpClientTesting(),
+      ConfirmationService,
+      MessageService,
+      ColorService,
+      GlobalSettingsService,
+      GuidService,
+      LocaleService,
+      AffiliateService,
       { provide: BrickHunterApiService, useValue: api },
-      { provide: VersionService, useValue: { oldVersion: '2.4.8', currentVersion: '2.4.8', devmode: true,
-        migration$: new Subject(), isVersionGreater: VersionService.prototype.isVersionGreater } },
-      { provide: IndexedDBService, useValue: {
-        partsLists: { toArray: () => Promise.resolve(structuredClone(lists)),
-          add: jasmine.createSpy('add'), put: jasmine.createSpy('put'), delete: jasmine.createSpy('delete') },
-        colors: { toArray: () => Promise.resolve(structuredClone(colors)), bulkPut: () => Promise.resolve() },
-      } },
+      {
+        provide: VersionService,
+        useValue: {
+          oldVersion: '2.4.8',
+          currentVersion: '2.4.8',
+          devmode: true,
+          migration$: new Subject(),
+          isVersionGreater: VersionService.prototype.isVersionGreater,
+        },
+      },
+      {
+        provide: IndexedDBService,
+        useValue: {
+          partsLists: {
+            toArray: () => Promise.resolve(structuredClone(lists)),
+            add: jasmine.createSpy('add'),
+            put: jasmine.createSpy('put'),
+            delete: jasmine.createSpy('delete'),
+          },
+          colors: { toArray: () => Promise.resolve(structuredClone(colors)), bulkPut: () => Promise.resolve() },
+        },
+      },
       { provide: DynamicDialogRef, useValue: { close: jasmine.createSpy('close') } },
       { provide: DynamicDialogConfig, useValue: { data: { part: referencePart() } } },
     ],

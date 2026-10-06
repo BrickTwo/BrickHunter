@@ -1,9 +1,9 @@
 <p-dialog [(visible)]="show" [style]="{ width: '50vw' }" [modal]="true" [closable]="false">
-  <ng-template pTemplate="header">
+  <ng-template #header>
     Transfer {{ cartType === 'pab' ? 'Bestseller' : 'Standard' }} parts to LEGO shopping cart
   </ng-template>
   <div class="flex flex-wrap card-container blue-container gap-3">
-    <span><p-progressSpinner></p-progressSpinner></span>
+    <span><p-progressspinner></p-progressspinner></span>
     <div>
       <p class="align-items-center justify-content-center">
         <app-progress-icon [step]="1" [currentStep]="transferStep"></app-progress-icon> Check for open lego.com tab
@@ -25,7 +25,7 @@
   @if (!!errorMessage) {
     <p-message severity="error" [text]="errorMessage"></p-message>
   }
-  <ng-template pTemplate="footer">
+  <ng-template #footer>
     @if (transferStep === 1 && !!errorMessage) {
       <p-button
         icon="pi pi-check"

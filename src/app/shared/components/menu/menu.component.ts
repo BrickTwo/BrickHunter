@@ -9,6 +9,7 @@ import {
   Renderer2,
   ViewChild,
   ViewEncapsulation,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Menu, MenuModule as PrimeMenuModule } from 'primeng/menu';
@@ -38,7 +39,7 @@ export interface BrickHunterMenuItem extends MenuItem {
       [ariaLabelledBy]="ariaLabelledBy"
       (onShow)="handleShow($event)"
       (onHide)="handleHide($event)">
-      <ng-template pTemplate="item" let-item>
+      <ng-template #item let-item>
         @if (item.routerLink) {
           <a
             class="p-menu-item-link"
@@ -88,10 +89,11 @@ export interface BrickHunterMenuItem extends MenuItem {
           }
         </ng-template>
       </ng-template>
-      <ng-template pTemplate="submenuheader" let-item>{{ item.label }}</ng-template>
+      <ng-template #submenuheader let-item>{{ item.label }}</ng-template>
     </p-menu>
   `,
   styleUrls: ['./menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   encapsulation: ViewEncapsulation.None,
 })
 export class MenuComponent implements OnDestroy {

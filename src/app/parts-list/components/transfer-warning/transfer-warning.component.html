@@ -9,26 +9,26 @@
     [virtualScroll]="true"
     [virtualScrollOptions]="{ autoSize: false }"
     [virtualScrollItemSize]="rowHeight">
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <tr>
         <th pRipple pSortableColumn="part.lego.designNumber">
-          DesignId<p-sortIcon field="part.lego.designNumber"></p-sortIcon>
+          DesignId<p-sorticon field="part.lego.designNumber"></p-sorticon>
         </th>
         <th pRipple pSortableColumn="part.lego.elementId">
-          ElementId<p-sortIcon field="part.lego.elementId"></p-sortIcon>
+          ElementId<p-sorticon field="part.lego.elementId"></p-sorticon>
         </th>
         <th>Image</th>
-        <th pRipple pSortableColumn="part.color">Color<p-sortIcon field="part.color"></p-sortIcon></th>
-        <th pRipple pSortableColumn="part.qty">Quantity<p-sortIcon field="part.qty"></p-sortIcon></th>
+        <th pRipple pSortableColumn="part.color">Color<p-sorticon field="part.color"></p-sorticon></th>
+        <th pRipple pSortableColumn="part.qty">Quantity<p-sorticon field="part.qty"></p-sorticon></th>
         <th>In Cart</th>
         <th>Max Order Quantity</th>
         <th pRipple pSortableColumn="part.lego.price.amount">
-          Pick a Brick <p-sortIcon field="part.lego.price.amount"></p-sortIcon>
+          Pick a Brick <p-sorticon field="part.lego.price.amount"></p-sorticon>
         </th>
         <th>Warning</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-part>
+    <ng-template #body let-part>
       <tr style="height: 91px">
         <td>{{ part.part.designId }}</td>
         <td>{{ part.part.elementId }}</td>
@@ -60,7 +60,7 @@
       </tr>
     </ng-template>
   </p-table>
-  <ng-template pTemplate="footer">
+  <ng-template #footer>
     <p-button
       icon="pi pi-check"
       (click)="onCancel()"

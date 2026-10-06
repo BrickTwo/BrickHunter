@@ -15,7 +15,7 @@
     (click)="setColor(null)"
     class="flex-grow-1"
     style="background-color: #6c757d"
-    label="All"></button>
+   ><span pButtonLabel>All</span></button>
   @if (trans?.length) {
     <button
       pButton
@@ -24,7 +24,7 @@
       (click)="menuTrans.toggle($event)"
       class="flex-grow-1 p-button-outlined"
       style="background-color: #f8f9fa; color: black"
-      label="Trans"></button>
+     ><span pButtonLabel>Trans</span></button>
   }
   @if (black?.length) {
     <button
