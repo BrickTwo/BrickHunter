@@ -20,8 +20,7 @@ export class AppComponent {
   }
 
   async setPermission() {
-    const permissionsToRequest = {
-      permissions: ['host_permission'],
+    const permissionsToRequest: chrome.permissions.Permissions = {
       origins: ['https://*.lego.com/*'],
     };
 

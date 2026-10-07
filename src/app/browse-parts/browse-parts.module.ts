@@ -11,7 +11,6 @@ import { BrowsePartsCategorySelectionComponent } from './components/browse-parts
 import { BrowsePartsColorFilterComponent } from './components/browse-parts-color-filter/browse-parts-color-filter.component';
 import { BrowsePartsDataViewComponent } from './components/browse-parts-data-view/browse-parts-data-view.component';
 import { BrowsePartsPageSettingsComponent } from './components/browse-parts-page-settings/browse-parts-page-settings.component';
-import { LazyLoadImageModule, LAZYLOAD_IMAGE_HOOKS, ScrollHooks } from 'ng-lazyload-image';
 import { BrowsePartsGridItemComponent } from './components/browse-parts-grid-item/browse-parts-grid-item.component';
 import { BrowsePartsFilterComponent } from './components/browse-parts-filter/browse-parts-filter.component';
 import { BrowsePartsPartDetailComponent } from './components/browse-parts-part-detail/browse-parts-part-detail.component';
@@ -36,8 +35,6 @@ import { BrowsePartsPartDetailComponent } from './components/browse-parts-part-d
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    LazyLoadImageModule,
   ],
-  providers: [{ provide: LAZYLOAD_IMAGE_HOOKS, useClass: ScrollHooks }],
 })
 export class BrowsePartsModule {}

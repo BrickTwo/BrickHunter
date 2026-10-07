@@ -18,6 +18,8 @@ The local license path and generated `src/app/primeui-license.local.ts` are igno
 
 Run `npm run typecheck:build-config` to check the custom Webpack TypeScript configurations separately. Run `npm test -- --watch=false --browsers=ChromeHeadless` for the unit tests; configure `CHROME_BIN` if your browser is installed at a different location.
 
+The verified Karma/Zone.js setup uses Jasmine **5.13.0**; an npm override makes the Karma adapter load that same version. Jasmine 6.3 fails with the retained Zone.js testing integration. Remaining build-tool audit findings and the completed package review are documented in [the audit report](docs/angular-upgrade-audit.md); the [remaining acceptance checklist](docs/angular-upgrade-remaining-acceptance.md) tracks the extension release work.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

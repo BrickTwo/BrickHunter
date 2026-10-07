@@ -1384,3 +1384,69 @@ git commit -m "chore: upgrade Font Awesome runtime and preserve reference icons"
 ```
 
 **Hier ist Commit-Stopp 37.** Kein Commit automatisch erstellt. Keine weitere manuelle Aktion in dieser Etappe erforderlich. Nach diesem Commit und `weiter` folgt die Lazyload-Nutzungs-/Laufzeitprüfung. Echte Chrome-/Firefox-Extension-Release-Abnahme, reale Konten und Warenkorbübertragungen bleiben anschließend offen.
+
+
+## Commit-Punkt 38: Lazyload-Nutzung prüfen und ungenutzte Registrierung entfernen
+
+Abgeschlossen am **7. Oktober 2026**, Ausgangscommit **`d731822`** (`chore: upgrade Font Awesome runtime and preserve reference icons`), zuvor sauberer Arbeitsstand. Angular/PrimeNG, PDF/XML, Icons und die eigene Sichtbarkeitslogik unverändert.
+
+### Erfolgreich umgesetzt
+
+- Alle **233 relevanten TS-/HTML-/SCSS-Dateien** geprüft. Die einzigen bisherigen Bibliotheksstellen waren Import, NgModule-Registrierung und ScrollHooks-Provider im BrowsePartsModule; keine Verwendung von lazyLoad oder Hook-APIs. Die ursprüngliche frühe Bestandsaufnahme hatte diese Registrierung als Aufrufstelle gezählt; die vollständige Nutzungsprüfung korrigiert diese Annahme.
+- **ng-lazyload-image 9.1.3** aus Manifest/Lockfile und alle drei Registrierungsstellen entfernt. Alle anderen Lockeinträge unverändert. Kein neuer Bildloader nötig: Teilebilder werden als CSS-Hintergrund innerhalb der festen 120-px-Fläche geladen; sichtbare Karten steuert die vorhandene eigene window-scroll-/resize-Logik.
+- Wiederverwendbares **scripts/upgrade/verify-grid-reference.cjs** ergänzt: isolierter localhost-/Edge-Kontext, 1.000 synthetische Teile, tatsächliche DOM-Geometrie, vier Viewports, Scrollen an Anfang/Mitte/Ende/zurück, Resize, ausdrücklich zurückgehaltene und anschließend freigegebene externe Bildantwort sowie Leer-/Wiederbefüllung. Keine echten Konten, Profile oder Transfers.
+- Die vollständigen noch offenen Anforderungen des Gesamtplans in [angular-upgrade-remaining-acceptance.md](angular-upgrade-remaining-acceptance.md) konsolidiert: **13 Abschnitte** einschließlich bislang gesondert offener Tooling-/Polyfill-Prüfung und Audit-Bewertung. Erfolgreiche Offline-Abnahmen werden nicht als echte Extension-/Kontenabnahme ausgegeben.
+
+### Validierung
+
+- Sauberes **npm ci** (910 Pakete) und **npm ls --all**, **64 Unit-Tests**, Konfigurations-Typecheck sowie Produktions-/Entwicklungs-/Referenzbuilds erfolgreich. Initialbundle Produktion **2.82 MB**, Entwicklung **8.19 MB**, Referenz **8.25 MB**; Budgetgrenzen unverändert. Bestehende Build-/Deprecation-/Installationsskripthinweise bleiben in den Logs erhalten.
+- Zusatzprüfung vor und nach Entfernung: **18 Grid-Zustände vollständig identisch**, alle 1.000 Teile erreichbar, keine leeren sichtbaren Zeilen; Kartenhöhe **320 px**, Zeilenabstand **328 px**, korrekte Spacer. Verzögerte Bildantwort verändert weder Kartenpositionen/Größen noch Scrollposition. Leerzustand und Wiederbefüllung erfolgreich. D3D11-Renderer stabil, keine Browserfehler.
+- Vollständige UI-Prüfung: **60 erfolgreiche Bedienprüfungen, 39 Haupt- und 49 Zusatzbilder**, keine Page-/Console-/Lifecycle-Fehler oder ungültiger Lizenzbanner. Renderer vor/nach identisch, Hardware-Compositing/Rasterization aktiv. **72/88 Bilder byteidentisch** zum gesicherten Font-Awesome-Stand; übrige 16 Bilder ausschließlich je vier Rohpixel an bereits bewerteten Tabs-Unterstreichungsecken. Koordinaten, RGBA-Werte und Hashes vollständig im Bericht; keine Maskierung oder allgemeine Toleranz.
+- Reguläre Ausgaben enthalten index.html, Chrome-Manifest, eigenständige background.js/legocontentscript.js und keine Offline-Fixture-Marker. Firefox-Paket und tatsächliche Extension-Laufzeit sind weiterhin offen.
+- npm-Audit lesend erfasst: **24 Meldungen (21 high, 2 moderate, 1 low)**. Keine pauschale automatische Behebung; Pfad-/Relevanzprüfung und kompatible Abhilfe gehören zur dokumentierten Restliste.
+- Angular-17-Originalinventar per SHA-256 bestätigt, historische Berichte unverändert, Lizenzinhalt aus allen versionierten/nicht ignorierten Dateien ausgeschlossen; git diff --check erfolgreich. [Dauerhafter Prüfbericht](angular-upgrade-reference/post-angular22-lazyload-check.json). Logs/Grid-Messungen unter artefacts/angular-upgrade/post-angular22/lazyload/, vollständige Bilder unter artefacts/angular-upgrade/visual/angular-22-lazyload-final/.
+
+### Jetzt manuell: Lazyload-Etappe sichern
+
+```powershell
+git add package.json package-lock.json src/app/browse-parts/browse-parts.module.ts scripts/upgrade/verify-grid-reference.cjs docs
+git commit -m "chore: remove unused lazyload registration and verify custom grid"
+```
+
+**Hier ist Commit-Stopp 38.** Kein Commit automatisch erstellt. Keine weitere Handarbeit für diese Etappe erforderlich. Nach dem Commit und weiter folgt die restliche lokale Paket-/Nutzungs-/Auditprüfung. Für spätere Prüfungen werden eine gesicherte Bestandsprofilkopie sowie gegebenenfalls eigene Kontoanmeldungen und Browser-Handgriffe benötigt; konkrete Schritte werden vorher angekündigt. Vollständige aktuelle Restliste: [13 offene Abnahmeabschnitte](angular-upgrade-remaining-acceptance.md).
+
+
+## Commit-Punkt 39: Punkte 1 und 2 – restliche Pakete und Auditbewertung
+
+Abgeschlossen am **7. Oktober 2026**. HEAD weiterhin **`d731822`**; die eigene fertig geprüfte Etappe 38 lag zu Beginn noch uncommitted im Arbeitsbaum. Auf ausdrückliches weiter mit Punkt 1/2 fortgesetzt, sämtliche Änderungen aus 38 erhalten. Keine fremden Änderungen überschrieben, kein Commit automatisch erstellt.
+
+### Erfolgreich umgesetzt
+
+- **45 direkte Pakete** mit gelockter/latest-Version, Engines und Peers über offizielle Registry geprüft. Aktualisiert: Chrome-Typen **0.3.4**, Jasmine **5.13.0** / Typen **5.1.15**, Karma **6.4.4**, HTML-Reporter **2.3.0**, PostCSS **8.5.29**, Autoprefixer **10.6.1**, Prettier **3.9.9**. Chrome-Launcher **3.2.0**, Coverage **2.2.1**, Adapter **5.1.0** bereits latest und beibehalten. Festgelegte Angular-/PrimeNG-/Compiler-/Anwendungspaketkombination erhalten.
+- Unbenutzte **@angular/animations**, **@ngrx/effects**, **@ngrx/operators** und **stream** entfernt. Nur optionaler Animations-Peer vorhanden, keine Quellenverbraucher. Store/Devtools und Zone weiterhin benötigt und erhalten. SAX-Stream-Import hat einen expliziten Fallback; xml2js verwendet die Parser-API. **timers 0.1.1 beibehalten**: indirekter setImmediate-Import in xml2js fehlt in dessen Paketmetadaten. Diagnostischer Entfernungsfehler erhalten und durch Wiederaufnahme korrigiert.
+- Tatsächliche Jasmine-5.13-Vorbereitung: **64 Tests erfolgreich**. Jasmine 6.3 mit Typen 6 erprobt, scheitert vor Teststart an Zone.js 0.15.1 und fehlender jasmine.QueueRunner-Referenz. Diagnose unter jasmine6-incompatible-tests.log erhalten; final wieder 5.13/Typen 5.1.15. Jasmine 7 laut offizieller Migration inkompatibel mit Karma/Zone. Dokumentierter Override **karma-jasmine.jasmine-core: "$jasmine-core"** stellt sicher, dass der Adapter tatsächlich den geprüften Root-Runner statt seiner verschachtelten alten Jasmine-4-Version lädt.
+- Aktuelle Chrome-Typen decken den ungültigen host_permission-Namen in AppComponent.setPermission auf. Öffentlichen Permissions-Typ ergänzt und Hostzugriff korrekt über origins beschrieben; bislang unaufgerufene Methode nicht aktiviert. Produktionscompiler bestätigt den gesamten Extension-Code.
+- Auditpfade gezielt innerhalb erlaubter Versionsspannen aktualisiert. **24 Meldungen → 12 high-Meldungen**, keine low/moderate/critical. Alle verbliebenen Einträge gehen auf **ein ungepatchtes braces-Advisory** zurück; npm-Force-Vorschläge wären unpassende Angular-/Karma-Downgrades. Kein eigener Library-Patch. Vollständige Bewertung: [angular-upgrade-audit.md](angular-upgrade-audit.md).
+
+### Validierung
+
+- Finales sauberes **npm ci** (899 Pakete), **npm ls --all**, **64 Unit-Tests**, Konfigurations-Typecheck und Produktions-/Entwicklungs-/Referenzbuilds erfolgreich. Nach Chrome-Typkorrektur alle drei Builds erfolgreich wiederholt; Diagnoselog erhalten. Initialbundle **2.82 MB / 8.20 MB / 8.26 MB**, bestehende Budgetgrenzen unverändert. Warnungen zu Sass/CommonJS/Budget/Deprecated-Webpack und noch nicht freigegebenen optionalen Installationsskripten unverändert sichtbar.
+- Aktualisierter tmp-Pfad **0.2.7**: Edge verbindet sich im finalen Karma-Lauf direkt, keine bisherigen ChromeHeadless-/Temp-Verzeichnisfehler. Alle 64 Tests erfolgreich; tatsächliche Adapter-/Root-Jasmine-Auflösung geprüft.
+- Produktionsstatistik: **839 Modulressourcen, 14 Chunks**, einschließlich Background/Content-Script und Lazy-Chunks. Loaderpfade und verschachtelte Paketzugehörigkeit berücksichtigt. **Keine der zwölf Audit-Paketressourcen im Extension-Bundle**. Daraus folgt kein Patch der weiterhin installierten Toolchain-Lücke.
+- Echter Browser-Exportlauf mit **sechs PDF-Fällen**, vollständigem XML-Download/Wiederimport, verzögerten Farben und erhaltenen Benachrichtigungswerten erfolgreich. Bekannte PDF-/XML-Implementierung unverändert; keine neue PDF-Rasterabnahme behauptet. Keine Browserfehler.
+- Vollständige UI-Regression: **60 Bedienprüfungen / 88 Bilder**, keine Page-/Console-/Lifecycle-Fehler oder ungültiger Lizenzbanner. D3D11-Renderer stabil, Compositing/Rasterization aktiv. **78/88 Bilder byteidentisch** zur Lazyload-Etappe; übrige zehn Bilder je vier bekannte Tabs-Eckpixel. Alle Koordinaten/RGBA-/Hash-Differenzen dokumentiert, keine Filterung.
+- Reguläre Ausgabe vollständig, Chrome-Manifest identisch, Background/Content-Script eigenständig und ohne Referenz-Fixtures. Angular-17-Originalinventar und historische Berichte unverändert; Lizenzinhalt aus allen versionierten/nicht ignorierten Dateien ausgeschlossen; git diff --check erfolgreich.
+- [Dauerhafter Prüfbericht](angular-upgrade-reference/post-angular22-packages-audit-check.json): vollständige Registry-Metadaten, alle Lockänderungen, Paketentscheidungen, Vorher-/Nachher-Auditpfade, Bundleprüfung, XML- und UI-Nachweise. Logs unter artefacts/angular-upgrade/post-angular22/packages-audit/, UI-Bilder unter artefacts/angular-upgrade/visual/angular-22-packages-audit-final/.
+
+### Verbleibender Befund und manuelle Sicherung
+
+**Punkt 1 abgeschlossen. Punkt 2 vollständig bewertet und soweit kompatibel möglich behoben.** Die technische Behebung des braces-Restbefunds bleibt offen; aktuell keine veröffentlichte gepatchte Version. Nur vertrauenswürdige Projekt-/Proxy-/Glob-Konfigurationen verwenden und lokale Entwicklungs-/Testserver betreiben. Diese Vorgaben ersetzen keinen Patch. Echte Chrome-/Firefox-Abnahme (Punkte 3–13) weiterhin offen; [aktuelle vollständige Restliste](angular-upgrade-remaining-acceptance.md).
+
+Etappen 38 und 39 jetzt gemeinsam sichern:
+
+```powershell
+git add package.json package-lock.json README.md src/app/app.component.ts src/app/browse-parts/browse-parts.module.ts scripts/upgrade/verify-grid-reference.cjs docs
+git commit -m "chore: finalize package audit and verify Angular 22 dependencies"
+```
+
+**Hier ist Commit-Stopp 39.** Keine zusätzliche Handarbeit für diese Paket-/Audit-Etappe erforderlich. Nach Sicherung und weiter können Punkt 3, die getrennten Chrome-/Firefox-Testpakete, vorbereitet werden. Der dokumentierte Toolchain-Restbefund wird dadurch nicht als behoben ausgegeben.
